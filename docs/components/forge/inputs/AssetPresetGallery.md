@@ -1,14 +1,14 @@
 ---
 name: "AssetPresetGallery"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/inputs/AssetPresetGallery"
+subpath: "@nyc-tron/ui/components/forge/inputs/AssetPresetGallery"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.text", "color.textMuted", "radius.control", "space.1.5", "space.2"]
+tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AssetPresetGallery
@@ -23,8 +23,8 @@ One virtual gallery owner for source-backed presets; all previews and saved meta
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/AssetPresetGallery.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AssetPresetGallery } from "@nyc-tron/ui/forge/inputs/AssetPresetGallery";`
-- Peers: react, react-native, zustand
+- Import: `import { AssetPresetGallery } from "@nyc-tron/ui/components/forge/inputs/AssetPresetGallery";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -1,7 +1,7 @@
 ---
 name: "AccessiblePrecisionScrubControl"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/platform/AccessiblePrecisionScrubControl"
+subpath: "@nyc-tron/ui/components/forge/platform/AccessiblePrecisionScrubControl"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ One precision model for native RNGH pointer, keyboard, switch, adjustable action
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/platform/AccessiblePrecisionScrubControl.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AccessiblePrecisionScrubControl } from "@nyc-tron/ui/forge/platform/AccessiblePrecisionScrubControl";`
+- Import: `import { AccessiblePrecisionScrubControl } from "@nyc-tron/ui/components/forge/platform/AccessiblePrecisionScrubControl";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/gestures/GestureHandlerDrag
 

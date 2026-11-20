@@ -1,14 +1,14 @@
 ---
 name: "SpotAndGlobalColorEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/SpotAndGlobalColorEditor"
+subpath: "@nyc-tron/ui/components/forge/color/SpotAndGlobalColorEditor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.2"]
+tokens: ["color.border", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/color/ColorChannelFields", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SpotAndGlobalColorEditor
@@ -23,8 +23,8 @@ Edits named spot/global identity, tint and an explicit sRGB alternate preview.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/SpotAndGlobalColorEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SpotAndGlobalColorEditor } from "@nyc-tron/ui/forge/color/SpotAndGlobalColorEditor";`
-- Peers: react, react-native, zustand
+- Import: `import { SpotAndGlobalColorEditor } from "@nyc-tron/ui/components/forge/color/SpotAndGlobalColorEditor";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/color/ColorChannelFields, @nyc-tron/shell/UnitInput
 
 ```sh

@@ -1,14 +1,14 @@
 ---
 name: "TimecodeDisplay"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/TimecodeDisplay"
+subpath: "@nyc-tron/ui/components/forge/timeline/TimecodeDisplay"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.danger", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.2"]
+tokens: ["color.border", "color.danger", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TimecodeDisplay
@@ -23,8 +23,8 @@ Time readout (D-08) in timecode (with drop-frame at 29.97/59.94), frames, second
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimecodeDisplay.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TimecodeDisplay } from "@nyc-tron/ui/forge/timeline/TimecodeDisplay";`
-- Peers: react, react-native
+- Import: `import { TimecodeDisplay } from "@nyc-tron/ui/components/forge/timeline/TimecodeDisplay";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

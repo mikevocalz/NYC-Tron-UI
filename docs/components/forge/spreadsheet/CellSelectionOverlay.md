@@ -1,14 +1,14 @@
 ---
 name: "CellSelectionOverlay"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/CellSelectionOverlay"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/CellSelectionOverlay"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
 tokens: ["color.primary", "color.surfaceRaised"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CellSelectionOverlay
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/CellSelectionOverlay.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { CellSelectionOverlay } from "@nyc-tron/ui/forge/spreadsheet/CellSelectionOverlay";`
-- Peers: react, react-native, react-native-gesture-handler, zustand
+- Import: `import { CellSelectionOverlay } from "@nyc-tron/ui/components/forge/spreadsheet/CellSelectionOverlay";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

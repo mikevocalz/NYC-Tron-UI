@@ -1,14 +1,14 @@
 ---
 name: "ViewCubeAndAxisGizmo"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/cad/ViewCubeAndAxisGizmo"
+subpath: "@nyc-tron/ui/components/forge/cad/ViewCubeAndAxisGizmo"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ViewCubeAndAxisGizmo
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/ViewCubeAndAxisGizmo.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ViewCubeAndAxisGizmo } from "@nyc-tron/ui/forge/cad/ViewCubeAndAxisGizmo";`
-- Peers: react, react-native
+- Import: `import { ViewCubeAndAxisGizmo } from "@nyc-tron/ui/components/forge/cad/ViewCubeAndAxisGizmo";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -1,14 +1,14 @@
 ---
 name: "EQFrequencyGraph"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/EQFrequencyGraph"
+subpath: "@nyc-tron/ui/components/forge/audio/EQFrequencyGraph"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["border.2", "color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "font.11", "font.12", "leading.14", "leading.16", "opacity.0_3", "opacity.0_45", "opacity.0_55", "opacity.0_6", "radius.card", "radius.control", "space.0.5", "space.1", "space.1.5", "space.2", "space.2.5", "space.3", "space.4"]
+tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EQFrequencyGraph
@@ -23,8 +23,8 @@ Controlled parametric EQ graph.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/EQFrequencyGraph.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { EQFrequencyGraph } from "@nyc-tron/ui/forge/audio/EQFrequencyGraph";`
-- Peers: react, react-native, zustand
+- Import: `import { EQFrequencyGraph } from "@nyc-tron/ui/components/forge/audio/EQFrequencyGraph";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

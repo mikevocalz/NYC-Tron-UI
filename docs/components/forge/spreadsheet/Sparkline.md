@@ -1,14 +1,14 @@
 ---
 name: "Sparkline"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/Sparkline"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/Sparkline"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.accent", "color.border", "color.primary", "color.success", "color.textMuted", "radius.1", "radius.3"]
+tokens: ["color.accent", "color.border", "color.primary", "color.success", "color.textMuted"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # Sparkline
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/Sparkline.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { Sparkline } from "@nyc-tron/ui/forge/spreadsheet/Sparkline";`
-- Peers: react, react-native
+- Import: `import { Sparkline } from "@nyc-tron/ui/components/forge/spreadsheet/Sparkline";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

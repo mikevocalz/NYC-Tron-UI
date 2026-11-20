@@ -1,7 +1,7 @@
 ---
 name: "VectorTypesModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/vector/vector-types"
+subpath: "@nyc-tron/ui/components/forge/vector/vector-types"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Engine-neutral vector contract shared by the vector-tools cluster ({@linkcode Pa
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/vector-types.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { AVAILABLE, IDENTITY_TRANSFORM, MAX_DASH_ENTRIES, MAX_GRADIENT_STOPS, MIN_GRADIENT_STOPS, MITER_LIMIT_RANGE, availabilityReason, deltaToContent } from "@nyc-tron/ui/forge/vector/vector-types";`
+- Import: `import { AVAILABLE, IDENTITY_TRANSFORM, MAX_DASH_ENTRIES, MAX_GRADIENT_STOPS, MIN_GRADIENT_STOPS, MITER_LIMIT_RANGE, availabilityReason, deltaToContent } from "@nyc-tron/ui/components/forge/vector/vector-types";`
 - Peers: react, react-native
 - Requires: none
 

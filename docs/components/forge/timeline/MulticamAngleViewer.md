@@ -1,14 +1,14 @@
 ---
 name: "MulticamAngleViewer"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/MulticamAngleViewer"
+subpath: "@nyc-tron/ui/components/forge/timeline/MulticamAngleViewer"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MulticamAngleViewer
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/MulticamAngleViewer.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MulticamAngleViewer } from "@nyc-tron/ui/forge/timeline/MulticamAngleViewer";`
-- Peers: react, react-native
+- Import: `import { MulticamAngleViewer } from "@nyc-tron/ui/components/forge/timeline/MulticamAngleViewer";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

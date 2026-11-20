@@ -1,14 +1,14 @@
 ---
 name: "PaperSpaceLayout"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/cad/PaperSpaceLayout"
+subpath: "@nyc-tron/ui/components/forge/cad/PaperSpaceLayout"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/document/PageSetupPanel", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PaperSpaceLayout
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/PaperSpaceLayout.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PaperSpaceLayout } from "@nyc-tron/ui/forge/cad/PaperSpaceLayout";`
-- Peers: react, react-native
+- Import: `import { PaperSpaceLayout } from "@nyc-tron/ui/components/forge/cad/PaperSpaceLayout";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/document/PageSetupPanel, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

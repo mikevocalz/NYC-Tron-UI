@@ -1,7 +1,7 @@
 ---
 name: "TimeModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/time"
+subpath: "@nyc-tron/ui/components/forge/timeline/time"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/time.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { SAMPLE_RATE_RANGE, assertSampleRate, formatSampleClock, formatTime, fps, framesToSamples, framesToSeconds, parseTime } from "@nyc-tron/ui/forge/timeline/time";`
+- Import: `import { SAMPLE_RATE_RANGE, assertSampleRate, formatSampleClock, formatTime, fps, framesToSamples, framesToSeconds, parseTime } from "@nyc-tron/ui/components/forge/timeline/time";`
 - Peers: react, react-native
 - Requires: none
 

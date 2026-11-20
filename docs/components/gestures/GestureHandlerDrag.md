@@ -1,7 +1,7 @@
 ---
 name: "GestureHandlerDrag"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/gestures/GestureHandlerDrag"
+subpath: "@nyc-tron/ui/components/gestures/GestureHandlerDrag"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ RNGH 3 native recognizers; value ownership remains in the caller.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/gestures/GestureHandlerDrag.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { GestureHandlerDrag } from "@nyc-tron/ui/gestures/GestureHandlerDrag";`
+- Import: `import { GestureHandlerDrag } from "@nyc-tron/ui/components/gestures/GestureHandlerDrag";`
 - Peers: react, react-native, react-native-gesture-handler
 - Requires: none
 

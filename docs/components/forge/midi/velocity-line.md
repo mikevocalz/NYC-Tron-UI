@@ -1,7 +1,7 @@
 ---
 name: "VelocityLineModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/midi/velocity-line"
+subpath: "@nyc-tron/ui/components/forge/midi/velocity-line"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Batch velocity edits for {@linkcode MIDIVelocityLane}: the line tool (drag a str
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/velocity-line.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { describeVelocityBatch, noteLaneX, notesInTimeOrder, rampRoom, rampVelocities, velocityAtY, velocityLineChanges } from "@nyc-tron/ui/forge/midi/velocity-line";`
+- Import: `import { describeVelocityBatch, noteLaneX, notesInTimeOrder, rampRoom, rampVelocities, velocityAtY, velocityLineChanges } from "@nyc-tron/ui/components/forge/midi/velocity-line";`
 - Peers: react, react-native
 - Requires: none
 

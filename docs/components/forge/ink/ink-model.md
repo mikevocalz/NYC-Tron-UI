@@ -1,7 +1,7 @@
 ---
 name: "InkModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/ink/ink-model"
+subpath: "@nyc-tron/ui/components/forge/ink/ink-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Engine-neutral ink toolbar contract.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/ink-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { INK_BOARD_TOOLS, INK_ENABLED, INK_OPACITY_STEP, INK_SIZES, INK_SIZE_LABELS, INK_SIZE_POINTS, INK_TOOL_LABELS, INK_TOOL_SHORTCUTS } from "@nyc-tron/ui/forge/ink/ink-model";`
+- Import: `import { INK_BOARD_TOOLS, INK_ENABLED, INK_OPACITY_STEP, INK_SIZES, INK_SIZE_LABELS, INK_SIZE_POINTS, INK_TOOL_LABELS, INK_TOOL_SHORTCUTS } from "@nyc-tron/ui/components/forge/ink/ink-model";`
 - Peers: react, react-native
 - Requires: none
 

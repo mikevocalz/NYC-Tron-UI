@@ -1,14 +1,14 @@
 ---
 name: "EyedropperTool"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/EyedropperTool"
+subpath: "@nyc-tron/ui/components/forge/color/EyedropperTool"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EyedropperTool
@@ -23,8 +23,8 @@ Document-space eyedropper with bounded sampling, explicit apply, cancellation an
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/EyedropperTool.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { EyedropperTool } from "@nyc-tron/ui/forge/color/EyedropperTool";`
-- Peers: react, react-native, zustand
+- Import: `import { EyedropperTool } from "@nyc-tron/ui/components/forge/color/EyedropperTool";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh

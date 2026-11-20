@@ -1,7 +1,7 @@
 ---
 name: "LoudnessModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/loudness"
+subpath: "@nyc-tron/ui/components/forge/audio/loudness"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Display math for {@linkcode LoudnessMeter}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/loudness.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { DEFAULT_LOUDNESS_TARGET, LOUDNESS_CEILING_LUFS, LOUDNESS_FLOOR_LUFS, LOUDNESS_TARGETS, PEAK_WARNINGS, barCountForWidth, describeLoudness, formatDbfs } from "@nyc-tron/ui/forge/audio/loudness";`
+- Import: `import { DEFAULT_LOUDNESS_TARGET, LOUDNESS_CEILING_LUFS, LOUDNESS_FLOOR_LUFS, LOUDNESS_TARGETS, PEAK_WARNINGS, barCountForWidth, describeLoudness, formatDbfs } from "@nyc-tron/ui/components/forge/audio/loudness";`
 - Peers: react, react-native
 - Requires: none
 

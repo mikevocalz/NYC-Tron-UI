@@ -1,14 +1,14 @@
 ---
 name: "BatchEditPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/BatchEditPanel"
+subpath: "@nyc-tron/ui/components/forge/timeline/BatchEditPanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "color.textMuted", "space.2"]
+tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/TextField", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BatchEditPanel
@@ -23,8 +23,8 @@ Edits for several clips at once (D-41): shift by a number of frames, set speed (
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/BatchEditPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { BatchEditPanel } from "@nyc-tron/ui/forge/timeline/BatchEditPanel";`
-- Peers: react, react-native
+- Import: `import { BatchEditPanel } from "@nyc-tron/ui/components/forge/timeline/BatchEditPanel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage
 
 ```sh

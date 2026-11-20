@@ -1,14 +1,14 @@
 ---
 name: "FormulaAutocomplete"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/FormulaAutocomplete"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/FormulaAutocomplete"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "color.textMuted", "space.1", "space.1.5"]
+tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FormulaAutocomplete
@@ -23,8 +23,8 @@ Uses the host's parser/catalog replacement range; does not guess function semant
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/FormulaAutocomplete.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FormulaAutocomplete } from "@nyc-tron/ui/forge/spreadsheet/FormulaAutocomplete";`
-- Peers: react, react-native, zustand
+- Import: `import { FormulaAutocomplete } from "@nyc-tron/ui/components/forge/spreadsheet/FormulaAutocomplete";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

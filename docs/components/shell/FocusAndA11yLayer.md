@@ -1,7 +1,7 @@
 ---
 name: "FocusAndA11yLayer"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/FocusAndA11yLayer"
+subpath: "@nyc-tron/ui/components/shell/FocusAndA11yLayer"
 tier: 1
 docs: "handwritten"
 platforms: ["ios", "android", "web"]
@@ -20,7 +20,7 @@ Provider exposing reduce-motion, screen-reader, high-contrast and input-modality
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { FocusAndA11yLayer } from "@nyc-tron/ui/shell/FocusAndA11yLayer";`
+- Import: `import { FocusAndA11yLayer } from "@nyc-tron/ui/components/shell/FocusAndA11yLayer";`
 - Peers: react, react-native, zustand
 - Requires: none
 

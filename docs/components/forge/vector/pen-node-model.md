@@ -1,7 +1,7 @@
 ---
 name: "PenNodeModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/vector/pen-node-model"
+subpath: "@nyc-tron/ui/components/forge/vector/pen-node-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Pure geometry and command planning for {@linkcode PenNodeEditor} (B-21).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/pen-node-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { NODE_KINDS, PEN_HANDLE_SIZE, PEN_INSERT_TOLERANCE, PEN_MAX_NODES, PEN_NODE_SIZE, PEN_TAP_SLOP, PEN_TOUCH_TARGET, closeAvailability } from "@nyc-tron/ui/forge/vector/pen-node-model";`
+- Import: `import { NODE_KINDS, PEN_HANDLE_SIZE, PEN_INSERT_TOLERANCE, PEN_MAX_NODES, PEN_NODE_SIZE, PEN_TAP_SLOP, PEN_TOUCH_TARGET, closeAvailability } from "@nyc-tron/ui/components/forge/vector/pen-node-model";`
 - Peers: react, react-native
 - Requires: none
 

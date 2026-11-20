@@ -1,14 +1,14 @@
 ---
 name: "LayerThumbnail"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/LayerThumbnail"
+subpath: "@nyc-tron/ui/components/forge/layers/LayerThumbnail"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["LayerThumbnail.radius.3_5", "LayerThumbnail.space.0_375", "border.1_5", "color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_6", "opacity.0_7", "radius.1", "radius.8", "radius.control", "space.1", "space.1.5", "space.2"]
+tokens: ["color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LayerThumbnail
@@ -23,8 +23,8 @@ Async, cached preview of a layer, mask or artboard (B-10).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/LayerThumbnail.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LayerThumbnail } from "@nyc-tron/ui/forge/layers/LayerThumbnail";`
-- Peers: react, react-native
+- Import: `import { LayerThumbnail } from "@nyc-tron/ui/components/forge/layers/LayerThumbnail";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

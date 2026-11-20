@@ -1,14 +1,14 @@
 ---
 name: "ColorDiscPicker"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/ColorDiscPicker"
+subpath: "@nyc-tron/ui/components/forge/color/ColorDiscPicker"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["border.1", "border.2", "color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "opacity.0_45"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorDiscPicker
@@ -23,8 +23,8 @@ Controlled hue/saturation disc with a brightness track (C-27): angle is hue, dis
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorDiscPicker.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ColorDiscPicker } from "@nyc-tron/ui/forge/color/ColorDiscPicker";`
-- Peers: react, react-native
+- Import: `import { ColorDiscPicker } from "@nyc-tron/ui/components/forge/color/ColorDiscPicker";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

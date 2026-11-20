@@ -1,14 +1,14 @@
 ---
 name: "PlaybackRateMenu"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/PlaybackRateMenu"
+subpath: "@nyc-tron/ui/components/forge/timeline/PlaybackRateMenu"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_4", "radius.control", "space.0.5", "space.3"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PlaybackRateMenu
@@ -23,8 +23,8 @@ Playback speed picker (D-07): a 44pt button showing the rate that opens a list o
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/PlaybackRateMenu.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PlaybackRateMenu } from "@nyc-tron/ui/forge/timeline/PlaybackRateMenu";`
-- Peers: react, react-native
+- Import: `import { PlaybackRateMenu } from "@nyc-tron/ui/components/forge/timeline/PlaybackRateMenu";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -78,7 +78,7 @@ none
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=PlaybackRateMenu
-import { PlaybackRateMenu } from "@nyc-tron/ui/forge/timeline/PlaybackRateMenu";
+import { PlaybackRateMenu } from "@nyc-tron/ui/components/forge/timeline/PlaybackRateMenu";
 
 export function Example() {
   return <PlaybackRateMenu rate={0} onRateChange={() => {}} />;

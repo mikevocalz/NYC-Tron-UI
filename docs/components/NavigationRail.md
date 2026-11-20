@@ -1,7 +1,7 @@
 ---
 name: "NavigationRail"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/NavigationRail"
+subpath: "@nyc-tron/ui/components/NavigationRail"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,7 +20,7 @@ Vertical rail of icon and label destinations with selected state and a collapsed
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { NavigationRail, NavigationShell } from "@nyc-tron/ui/NavigationRail";`
+- Import: `import { NavigationRail, NavigationShell } from "@nyc-tron/ui/components/NavigationRail";`
 - Peers: react, react-native
 - Requires: none
 

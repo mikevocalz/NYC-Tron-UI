@@ -1,7 +1,7 @@
 ---
 name: "ShortcutModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/shortcut-model"
+subpath: "@nyc-tron/ui/components/shell/shortcut-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Key bindings as portable strings: modifiers in a fixed order, then the key, join
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/shortcut-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { bindingFromChord, bindingKeycaps, bindingSpoken, commandForChord, findConflict, isAssignableBinding, normalizeBinding, validateShortcutCommands } from "@nyc-tron/ui/shell/shortcut-model";`
+- Import: `import { bindingFromChord, bindingKeycaps, bindingSpoken, commandForChord, findConflict, isAssignableBinding, normalizeBinding, validateShortcutCommands } from "@nyc-tron/ui/components/shell/shortcut-model";`
 - Peers: react, react-native
 - Requires: none
 

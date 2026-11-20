@@ -1,14 +1,14 @@
 ---
 name: "AnnotationToolbar"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/AnnotationToolbar"
+subpath: "@nyc-tron/ui/components/forge/pdf/AnnotationToolbar"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.accent", "color.border", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control", "space.0.5", "space.0.75", "space.1", "space.1.5"]
+tokens: ["color.accent", "color.border", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AnnotationToolbar
@@ -23,8 +23,8 @@ PDF markup toolbar (K-06): one 44pt toggle per tool the engine can save, plus un
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/AnnotationToolbar.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AnnotationToolbar } from "@nyc-tron/ui/forge/pdf/AnnotationToolbar";`
-- Peers: react, react-native
+- Import: `import { AnnotationToolbar } from "@nyc-tron/ui/components/forge/pdf/AnnotationToolbar";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh

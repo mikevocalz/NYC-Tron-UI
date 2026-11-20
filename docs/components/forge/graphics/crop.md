@@ -1,7 +1,7 @@
 ---
 name: "CropModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/graphics/crop"
+subpath: "@nyc-tron/ui/components/forge/graphics/crop"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Normalized, bounded and reversible crop manipulations; pixels remain engine-owne
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/graphics/crop.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { cropToPixels, fitCropAspect, moveCrop, resizeCrop, resizeCropWithAspect, validateCrop } from "@nyc-tron/ui/forge/graphics/crop";`
+- Import: `import { cropToPixels, fitCropAspect, moveCrop, resizeCrop, resizeCropWithAspect, validateCrop } from "@nyc-tron/ui/components/forge/graphics/crop";`
 - Peers: react, react-native
 - Requires: none
 

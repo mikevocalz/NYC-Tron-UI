@@ -1,7 +1,7 @@
 ---
 name: "LayerBlendModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/layer-blend-model"
+subpath: "@nyc-tron/ui/components/forge/layers/layer-blend-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/layer-blend-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { defaultAlphaModes, layerBlendProblem, layerOpacityFromPercent, validateLayerBlend } from "@nyc-tron/ui/forge/layers/layer-blend-model";`
+- Import: `import { defaultAlphaModes, layerBlendProblem, layerOpacityFromPercent, validateLayerBlend } from "@nyc-tron/ui/components/forge/layers/layer-blend-model";`
 - Peers: react, react-native
 - Requires: none
 

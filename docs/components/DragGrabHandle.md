@@ -1,12 +1,12 @@
 ---
 name: "DragGrabHandle"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/DragGrabHandle"
+subpath: "@nyc-tron/ui/components/DragGrabHandle"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "primitive"
-tokens: ["border.2", "color.textMuted", "opacity.0_4", "radius.control", "space.0.75"]
+tokens: ["color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/gestures/PanResponderDrag"]
 a11yStatus: "unverified"
 ---
@@ -20,8 +20,8 @@ Three-bar drag handle, 44 by 44 minimum, reporting start, move, commit and cance
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { DragGrabHandle } from "@nyc-tron/ui/DragGrabHandle";`
-- Peers: react, react-native
+- Import: `import { DragGrabHandle } from "@nyc-tron/ui/components/DragGrabHandle";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/gestures/PanResponderDrag
 
 ```sh

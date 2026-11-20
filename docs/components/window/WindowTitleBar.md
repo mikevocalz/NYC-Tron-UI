@@ -1,12 +1,12 @@
 ---
 name: "WindowTitleBar"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/window/WindowTitleBar"
+subpath: "@nyc-tron/ui/components/window/WindowTitleBar"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "shell"
-tokens: ["color.accent", "color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.1.5", "space.2"]
+tokens: ["color.accent", "color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
 a11yStatus: "reviewed-fail"
 ---
@@ -20,7 +20,7 @@ Custom window title bar with macOS or Windows close, minimize and zoom controls 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { WindowTitleBar } from "@nyc-tron/ui/window/WindowTitleBar";`
+- Import: `import { WindowTitleBar } from "@nyc-tron/ui/components/window/WindowTitleBar";`
 - Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: none
 

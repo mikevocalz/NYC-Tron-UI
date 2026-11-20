@@ -1,7 +1,7 @@
 ---
 name: "SheetWindowModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/sheet-window"
+subpath: "@nyc-tron/ui/components/forge/sheet-window"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ The 2-D viewport policy for Tally's visible window.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/sheet-window.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { cellAddress, columnName, frozenSheetWindow, moveSheetSelection, parseCellAddress, rangeAddress, rangeCellCount, rangeContains } from "@nyc-tron/ui/forge/sheet-window";`
+- Import: `import { cellAddress, columnName, frozenSheetWindow, moveSheetSelection, parseCellAddress, rangeAddress, rangeCellCount, rangeContains } from "@nyc-tron/ui/components/forge/sheet-window";`
 - Peers: react, react-native
 - Requires: none
 

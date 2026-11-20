@@ -1,7 +1,7 @@
 ---
 name: "ColorModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color"
+subpath: "@nyc-tron/ui/components/forge/color"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Document-independent sRGB display color math from Nitro Forge color-ui PRs #26 a
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { alphaPercent, assertHsv, assertRgba, hsvToRgb, parseHexColor, rgbToHsv, rgbaEditToHsv, rgbaToHex } from "@nyc-tron/ui/forge/color";`
+- Import: `import { alphaPercent, assertHsv, assertRgba, hsvToRgb, parseHexColor, rgbToHsv, rgbaEditToHsv, rgbaToHex } from "@nyc-tron/ui/components/forge/color";`
 - Peers: react, react-native
 - Requires: none
 

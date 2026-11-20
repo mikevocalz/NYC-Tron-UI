@@ -1,14 +1,14 @@
 ---
 name: "TrackChangesView"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/TrackChangesView"
+subpath: "@nyc-tron/ui/components/forge/document/TrackChangesView"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "color.textMuted", "space.1.5", "space.2"]
+tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TrackChangesView
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/TrackChangesView.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TrackChangesView } from "@nyc-tron/ui/forge/document/TrackChangesView";`
-- Peers: react, react-native
+- Import: `import { TrackChangesView } from "@nyc-tron/ui/components/forge/document/TrackChangesView";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

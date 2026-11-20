@@ -1,14 +1,14 @@
 ---
 name: "TimelinePlayhead"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/TimelinePlayhead"
+subpath: "@nyc-tron/ui/components/forge/timeline/TimelinePlayhead"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.accent", "color.focus", "opacity.0_6", "radius.3", "radius.7", "radius.control", "space.1"]
+tokens: ["color.accent", "color.focus", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TimelinePlayhead
@@ -23,8 +23,8 @@ The playhead (D-11): a line across the ruler and every lane at `frame`, with a 4
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimelinePlayhead.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TimelinePlayhead } from "@nyc-tron/ui/forge/timeline/TimelinePlayhead";`
-- Peers: react, react-native
+- Import: `import { TimelinePlayhead } from "@nyc-tron/ui/components/forge/timeline/TimelinePlayhead";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -1,14 +1,14 @@
 ---
 name: "MixingConsole"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/MixingConsole"
+subpath: "@nyc-tron/ui/components/forge/audio/MixingConsole"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.surfaceRaised", "radius.card", "space.1", "space.2"]
+tokens: ["color.border", "color.surfaceRaised", "radius.card"]
 registryDependencies: ["@nyc-tron/feedback/EmptyState", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/audio/BusAndRoutingMatrix", "@nyc-tron/forge/audio/ChannelStrip", "@nyc-tron/forge/audio/InsertEffectRack", "@nyc-tron/forge/audio/MixGroupBar"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MixingConsole
@@ -23,8 +23,8 @@ Controlled channel-strip console for tracks and buses.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/MixingConsole.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MixingConsole } from "@nyc-tron/ui/forge/audio/MixingConsole";`
-- Peers: react, react-native
+- Import: `import { MixingConsole } from "@nyc-tron/ui/components/forge/audio/MixingConsole";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/EmptyState, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/audio/BusAndRoutingMatrix, @nyc-tron/forge/audio/ChannelStrip, @nyc-tron/forge/audio/InsertEffectRack, @nyc-tron/forge/audio/MixGroupBar
 
 ```sh

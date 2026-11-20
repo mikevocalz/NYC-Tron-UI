@@ -1,14 +1,14 @@
 ---
 name: "PrototypePreviewPlayer"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/design/PrototypePreviewPlayer"
+subpath: "@nyc-tron/ui/components/forge/design/PrototypePreviewPlayer"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PrototypePreviewPlayer
@@ -23,8 +23,8 @@ Surface and transition clock come from the actual prototype runtime; no UI timer
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/PrototypePreviewPlayer.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PrototypePreviewPlayer } from "@nyc-tron/ui/forge/design/PrototypePreviewPlayer";`
-- Peers: react, react-native
+- Import: `import { PrototypePreviewPlayer } from "@nyc-tron/ui/components/forge/design/PrototypePreviewPlayer";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -1,7 +1,7 @@
 ---
 name: "GraphiteFrameModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/graphite-frame"
+subpath: "@nyc-tron/ui/components/forge/canvas/graphite-frame"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/graphite-frame.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { submitCanvasFrame } from "@nyc-tron/ui/forge/canvas/graphite-frame";`
+- Import: `import { submitCanvasFrame } from "@nyc-tron/ui/components/forge/canvas/graphite-frame";`
 - Peers: react, react-native, react-native-skia
 - Requires: none
 

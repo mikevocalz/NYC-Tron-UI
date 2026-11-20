@@ -1,12 +1,12 @@
 ---
 name: "HyperlinkInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/HyperlinkInspector"
+subpath: "@nyc-tron/ui/components/forge/pdf/HyperlinkInspector"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/HyperlinkInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { HyperlinkInspector } from "@nyc-tron/ui/forge/pdf/HyperlinkInspector";`
-- Peers: react, react-native, zustand
+- Import: `import { HyperlinkInspector } from "@nyc-tron/ui/components/forge/pdf/HyperlinkInspector";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

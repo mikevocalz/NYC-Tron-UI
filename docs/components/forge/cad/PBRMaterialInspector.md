@@ -1,12 +1,12 @@
 ---
 name: "PBRMaterialInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/cad/PBRMaterialInspector"
+subpath: "@nyc-tron/ui/components/forge/cad/PBRMaterialInspector"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/forge/inputs/PropertyInspector"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/PBRMaterialInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PBRMaterialInspector } from "@nyc-tron/ui/forge/cad/PBRMaterialInspector";`
-- Peers: react, react-native
+- Import: `import { PBRMaterialInspector } from "@nyc-tron/ui/components/forge/cad/PBRMaterialInspector";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

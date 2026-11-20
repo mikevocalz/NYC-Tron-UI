@@ -1,14 +1,14 @@
 ---
 name: "SheetTabs"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/SheetTabs"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/SheetTabs"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["border.0", "border.1_5", "color.accent", "color.border", "color.focus", "color.info", "color.primary", "color.success", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.1", "radius.10", "radius.3", "radius.control", "space.1", "space.1.5", "space.2", "space.3", "space.4"]
+tokens: ["color.accent", "color.border", "color.focus", "color.info", "color.primary", "color.success", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SheetTabs
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SheetTabs.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SheetTabs } from "@nyc-tron/ui/forge/spreadsheet/SheetTabs";`
-- Peers: react, react-native, zustand
+- Import: `import { SheetTabs } from "@nyc-tron/ui/components/forge/spreadsheet/SheetTabs";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

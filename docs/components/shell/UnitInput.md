@@ -1,12 +1,12 @@
 ---
 name: "UnitInput"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/UnitInput"
+subpath: "@nyc-tron/ui/components/shell/UnitInput"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "input"
-tokens: ["color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_5", "radius.control", "space.1"]
+tokens: ["color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/shell/MenuButton"]
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Number field that parses and formats typed units from a UnitContext, with unit m
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { UnitInput } from "@nyc-tron/ui/shell/UnitInput";`
-- Peers: react, react-native, zustand
+- Import: `import { UnitInput } from "@nyc-tron/ui/components/shell/UnitInput";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/shell/MenuButton
 
 ```sh

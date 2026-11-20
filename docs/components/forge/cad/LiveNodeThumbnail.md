@@ -1,14 +1,14 @@
 ---
 name: "LiveNodeThumbnail"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/cad/LiveNodeThumbnail"
+subpath: "@nyc-tron/ui/components/forge/cad/LiveNodeThumbnail"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LiveNodeThumbnail
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/LiveNodeThumbnail.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LiveNodeThumbnail } from "@nyc-tron/ui/forge/cad/LiveNodeThumbnail";`
-- Peers: react, react-native
+- Import: `import { LiveNodeThumbnail } from "@nyc-tron/ui/components/forge/cad/LiveNodeThumbnail";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

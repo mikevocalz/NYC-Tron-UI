@@ -1,7 +1,7 @@
 ---
 name: "RulerModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/ruler"
+subpath: "@nyc-tron/ui/components/forge/timeline/ruler"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/ruler.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { clockLabel, defaultPxPerFrame, rulerStep, rulerTicks, speedLabel, zoomLimits } from "@nyc-tron/ui/forge/timeline/ruler";`
+- Import: `import { clockLabel, defaultPxPerFrame, rulerStep, rulerTicks, speedLabel, zoomLimits } from "@nyc-tron/ui/components/forge/timeline/ruler";`
 - Peers: react, react-native
 - Requires: none
 

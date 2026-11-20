@@ -1,7 +1,7 @@
 ---
 name: "PanModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/pan"
+subpath: "@nyc-tron/ui/components/forge/audio/pan"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Pan math for {@linkcode PanControl}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/pan.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { PAN_CENTRE_DETENT, PAN_QUANTUM, assertPan, describeBalance, describePan, dragToPan, formatPan, panToPosition } from "@nyc-tron/ui/forge/audio/pan";`
+- Import: `import { PAN_CENTRE_DETENT, PAN_QUANTUM, assertPan, describeBalance, describePan, dragToPan, formatPan, panToPosition } from "@nyc-tron/ui/components/forge/audio/pan";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,7 +1,7 @@
 ---
 name: "TimeRemapCurve"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/TimeRemapCurve"
+subpath: "@nyc-tron/ui/components/forge/motion/TimeRemapCurve"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Source seconds against composition seconds; reverse/freeze segments are retained
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/TimeRemapCurve.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TimeRemapCurve } from "@nyc-tron/ui/forge/motion/TimeRemapCurve";`
+- Import: `import { TimeRemapCurve } from "@nyc-tron/ui/components/forge/motion/TimeRemapCurve";`
 - Peers: react, react-native
 - Requires: none
 

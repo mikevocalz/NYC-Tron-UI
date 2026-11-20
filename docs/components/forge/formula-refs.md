@@ -1,7 +1,7 @@
 ---
 name: "FormulaRefsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/formula-refs"
+subpath: "@nyc-tron/ui/components/forge/formula-refs"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/formula-refs.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { MAX_SHEET_COLUMNS, MAX_SHEET_ROWS, formulaReferences, referenceHighlights } from "@nyc-tron/ui/forge/formula-refs";`
+- Import: `import { MAX_SHEET_COLUMNS, MAX_SHEET_ROWS, formulaReferences, referenceHighlights } from "@nyc-tron/ui/components/forge/formula-refs";`
 - Peers: react, react-native
 - Requires: none
 

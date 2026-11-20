@@ -1,7 +1,7 @@
 ---
 name: "ModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/graph/model"
+subpath: "@nyc-tron/ui/components/forge/graph/model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Engine-neutral graph contract.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/graph/model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { GRAPH_HEADER_HEIGHT, GRAPH_PORT_ROW_HEIGHT, compatiblePorts, cubicGraphPoints, getPortAnchor, validatePatchGraph } from "@nyc-tron/ui/forge/graph/model";`
+- Import: `import { GRAPH_HEADER_HEIGHT, GRAPH_PORT_ROW_HEIGHT, compatiblePorts, cubicGraphPoints, getPortAnchor, validatePatchGraph } from "@nyc-tron/ui/components/forge/graph/model";`
 - Peers: react, react-native
 - Requires: none
 

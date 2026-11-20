@@ -1,7 +1,7 @@
 ---
 name: "UnitExpressionModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/unit-expression"
+subpath: "@nyc-tron/ui/components/shell/unit-expression"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Bounded unit arithmetic for {@linkcode UnitInput}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/unit-expression.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { UNITS, UNIT_EXPRESSION_LIMITS, convertFromBase, formatUnitValue, parseUnitExpression, unitPrecision, unitScale } from "@nyc-tron/ui/shell/unit-expression";`
+- Import: `import { UNITS, UNIT_EXPRESSION_LIMITS, convertFromBase, formatUnitValue, parseUnitExpression, unitPrecision, unitScale } from "@nyc-tron/ui/components/shell/unit-expression";`
 - Peers: react, react-native
 - Requires: none
 

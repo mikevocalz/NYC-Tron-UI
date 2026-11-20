@@ -1,14 +1,14 @@
 ---
 name: "ExpressionEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/ExpressionEditor"
+subpath: "@nyc-tron/ui/components/forge/motion/ExpressionEditor"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.border", "color.text", "color.textMuted", "radius.control", "space.0.5", "space.1.5", "space.2"]
+tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ExpressionEditor
@@ -23,8 +23,8 @@ Native code text input with explicit, cancellable host language services.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/ExpressionEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ExpressionEditor } from "@nyc-tron/ui/forge/motion/ExpressionEditor";`
-- Peers: react, react-native
+- Import: `import { ExpressionEditor } from "@nyc-tron/ui/components/forge/motion/ExpressionEditor";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh

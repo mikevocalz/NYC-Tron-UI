@@ -1,7 +1,7 @@
 ---
 name: "FocusRestoreModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/overlays/focus-restore"
+subpath: "@nyc-tron/ui/components/overlays/focus-restore"
 tier: 2
 docs: "generated"
 platforms: ["web"]
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/overlays/focus-restore.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { useRestoreFocus } from "@nyc-tron/ui/overlays/focus-restore";`
+- Import: `import { useRestoreFocus } from "@nyc-tron/ui/components/overlays/focus-restore";`
 - Peers: react, react-native
 - Requires: none
 

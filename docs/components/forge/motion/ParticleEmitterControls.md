@@ -1,12 +1,12 @@
 ---
 name: "ParticleEmitterControls"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/ParticleEmitterControls"
+subpath: "@nyc-tron/ui/components/forge/motion/ParticleEmitterControls"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/shell/UnitInput"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Deterministic emitter settings; the compositor owns particle simulation and text
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/ParticleEmitterControls.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ParticleEmitterControls } from "@nyc-tron/ui/forge/motion/ParticleEmitterControls";`
-- Peers: react, react-native
+- Import: `import { ParticleEmitterControls } from "@nyc-tron/ui/components/forge/motion/ParticleEmitterControls";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/shell/UnitInput
 
 ```sh

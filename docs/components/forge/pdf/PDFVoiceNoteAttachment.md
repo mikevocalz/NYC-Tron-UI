@@ -1,14 +1,14 @@
 ---
 name: "PDFVoiceNoteAttachment"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/PDFVoiceNoteAttachment"
+subpath: "@nyc-tron/ui/components/forge/pdf/PDFVoiceNoteAttachment"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/audio/LiveRecordingWaveform", "@nyc-tron/forge/audio/NativeAudioTransport"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PDFVoiceNoteAttachment
@@ -23,8 +23,8 @@ The same native recording session supplies transport, measured waveform and the 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFVoiceNoteAttachment.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PDFVoiceNoteAttachment } from "@nyc-tron/ui/forge/pdf/PDFVoiceNoteAttachment";`
-- Peers: react, react-native
+- Import: `import { PDFVoiceNoteAttachment } from "@nyc-tron/ui/components/forge/pdf/PDFVoiceNoteAttachment";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/audio/LiveRecordingWaveform, @nyc-tron/forge/audio/NativeAudioTransport
 
 ```sh

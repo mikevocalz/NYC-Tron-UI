@@ -1,7 +1,7 @@
 ---
 name: "AnchoredPopover"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/overlays/AnchoredPopover"
+subpath: "@nyc-tron/ui/components/overlays/AnchoredPopover"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
@@ -20,7 +20,7 @@ Modal popover placed against an anchor rectangle or trigger element and clamped 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { AnchoredPopover } from "@nyc-tron/ui/overlays/AnchoredPopover";`
+- Import: `import { AnchoredPopover } from "@nyc-tron/ui/components/overlays/AnchoredPopover";`
 - Peers: react, react-native
 - Requires: none
 

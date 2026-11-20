@@ -1,7 +1,7 @@
 ---
 name: "TreeGridModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/data/tree-grid"
+subpath: "@nyc-tron/ui/components/data/tree-grid"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Cycle/duplicate-safe projection.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/data/tree-grid.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { moveColumn, orderTreeColumns, toggleTreeSelection, treeGridKey, treeRangeIds, treeRowAccessibilityLabel, visibleTreeRows } from "@nyc-tron/ui/data/tree-grid";`
+- Import: `import { moveColumn, orderTreeColumns, toggleTreeSelection, treeGridKey, treeRangeIds, treeRowAccessibilityLabel, visibleTreeRows } from "@nyc-tron/ui/components/data/tree-grid";`
 - Peers: react, react-native
 - Requires: none
 

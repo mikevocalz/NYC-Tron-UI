@@ -1,7 +1,7 @@
 ---
 name: "ReferenceColorsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/reference-colors"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/reference-colors"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/reference-colors.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { REFERENCE_TONE_CLASSES, REFERENCE_TONE_COUNT, colorReferences, formulaSegments, referenceEdges } from "@nyc-tron/ui/forge/spreadsheet/reference-colors";`
+- Import: `import { REFERENCE_TONE_CLASSES, REFERENCE_TONE_COUNT, colorReferences, formulaSegments, referenceEdges } from "@nyc-tron/ui/components/forge/spreadsheet/reference-colors";`
 - Peers: react, react-native
 - Requires: none
 

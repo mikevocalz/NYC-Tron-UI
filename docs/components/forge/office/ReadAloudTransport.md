@@ -1,14 +1,14 @@
 ---
 name: "ReadAloudTransport"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/office/ReadAloudTransport"
+subpath: "@nyc-tron/ui/components/forge/office/ReadAloudTransport"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["ReadAloudTransport.leading.25", "color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "font.17", "opacity.0_45", "radius.card", "radius.control", "space.2", "space.2.5", "space.3"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ReadAloudTransport
@@ -23,8 +23,8 @@ Controlled read-aloud transport shared by H-21 and K-18: the current sentence wi
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/office/ReadAloudTransport.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ReadAloudTransport } from "@nyc-tron/ui/forge/office/ReadAloudTransport";`
-- Peers: react, react-native
+- Import: `import { ReadAloudTransport } from "@nyc-tron/ui/components/forge/office/ReadAloudTransport";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh

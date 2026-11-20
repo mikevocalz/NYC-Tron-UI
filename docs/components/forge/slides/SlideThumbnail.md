@@ -1,7 +1,7 @@
 ---
 name: "SlideThumbnail"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/SlideThumbnail"
+subpath: "@nyc-tron/ui/components/forge/slides/SlideThumbnail"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Small, non-interactive drawing of a slide built from its objects: text in place 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideThumbnail.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SlideThumbnail, SlideObjectView } from "@nyc-tron/ui/forge/slides/SlideThumbnail";`
+- Import: `import { SlideThumbnail, SlideObjectView } from "@nyc-tron/ui/components/forge/slides/SlideThumbnail";`
 - Peers: react, react-native
 - Requires: none
 

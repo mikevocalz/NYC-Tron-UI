@@ -1,7 +1,7 @@
 ---
 name: "InsertsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/inserts"
+subpath: "@nyc-tron/ui/components/forge/audio/inserts"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Insert-chain and preset helpers for {@linkcode InsertEffectRack} and {@linkcode 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/inserts.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { INSERT_KINDS, INSERT_KIND_LABELS, MAX_INSERTS, addBlockedReason, describeInsert, filterPresets, moveTarget } from "@nyc-tron/ui/forge/audio/inserts";`
+- Import: `import { INSERT_KINDS, INSERT_KIND_LABELS, MAX_INSERTS, addBlockedReason, describeInsert, filterPresets, moveTarget } from "@nyc-tron/ui/components/forge/audio/inserts";`
 - Peers: react, react-native
 - Requires: none
 

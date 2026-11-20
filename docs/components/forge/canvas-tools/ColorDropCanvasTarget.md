@@ -1,14 +1,14 @@
 ---
 name: "ColorDropCanvasTarget"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas-tools/ColorDropCanvasTarget"
+subpath: "@nyc-tron/ui/components/forge/canvas-tools/ColorDropCanvasTarget"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["ColorDropCanvasTarget.radius.17", "ColorDropCanvasTarget.radius.22", "border.3", "color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "opacity.0_5", "radius.control", "space.2.5"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorDropCanvasTarget
@@ -23,8 +23,8 @@ ColorDrop (B-30): drag the colour chip onto the canvas to flood-fill there.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas-tools/ColorDropCanvasTarget.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ColorDropCanvasTarget } from "@nyc-tron/ui/forge/canvas-tools/ColorDropCanvasTarget";`
-- Peers: react, react-native, zustand
+- Import: `import { ColorDropCanvasTarget } from "@nyc-tron/ui/components/forge/canvas-tools/ColorDropCanvasTarget";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

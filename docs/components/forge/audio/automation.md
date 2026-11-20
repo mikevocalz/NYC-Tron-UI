@@ -1,7 +1,7 @@
 ---
 name: "AutomationModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/automation"
+subpath: "@nyc-tron/ui/components/forge/audio/automation"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Automation lane math for `AutomationLane` and `AutomationModePicker`.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/automation.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { AUTOMATION_GAIN_FLOOR_DB, AUTOMATION_LANE_PAD, AUTOMATION_MODES, AUTOMATION_PPQ, DEFAULT_SNAP_TICKS, assertGeometry, automationKeyEdit, automationSegments } from "@nyc-tron/ui/forge/audio/automation";`
+- Import: `import { AUTOMATION_GAIN_FLOOR_DB, AUTOMATION_LANE_PAD, AUTOMATION_MODES, AUTOMATION_PPQ, DEFAULT_SNAP_TICKS, assertGeometry, automationKeyEdit, automationSegments } from "@nyc-tron/ui/components/forge/audio/automation";`
 - Peers: react, react-native
 - Requires: none
 

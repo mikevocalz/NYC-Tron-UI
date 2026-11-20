@@ -1,14 +1,14 @@
 ---
 name: "PresenterInkOverlay"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/PresenterInkOverlay"
+subpath: "@nyc-tron/ui/components/forge/slides/PresenterInkOverlay"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.danger", "color.surfaceRaised", "color.text", "radius.5"]
+tokens: ["color.danger", "color.surfaceRaised", "color.text"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PresenterInkOverlay
@@ -23,8 +23,8 @@ Shared native recognizer/ink state owner.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/PresenterInkOverlay.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PresenterInkOverlay } from "@nyc-tron/ui/forge/slides/PresenterInkOverlay";`
-- Peers: react, react-native, react-native-gesture-handler, zustand
+- Import: `import { PresenterInkOverlay } from "@nyc-tron/ui/components/forge/slides/PresenterInkOverlay";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

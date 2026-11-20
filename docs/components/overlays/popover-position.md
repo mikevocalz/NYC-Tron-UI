@@ -1,7 +1,7 @@
 ---
 name: "PopoverPositionModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/overlays/popover-position"
+subpath: "@nyc-tron/ui/components/overlays/popover-position"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Compatibility entry; pure placement is shared with isolated native hosts.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/overlays/popover-position.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { hasUsableRegion, placePopover, placementSide } from "@nyc-tron/ui/overlays/popover-position";`
+- Import: `import { hasUsableRegion, placePopover, placementSide } from "@nyc-tron/ui/components/overlays/popover-position";`
 - Peers: @nyc-tron/core, react, react-native
 - Requires: none
 

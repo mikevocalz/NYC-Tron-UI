@@ -1,14 +1,14 @@
 ---
 name: "TextureSetPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/cad/TextureSetPanel"
+subpath: "@nyc-tron/ui/components/forge/cad/TextureSetPanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.1.5", "space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TextureSetPanel
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/TextureSetPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TextureSetPanel } from "@nyc-tron/ui/forge/cad/TextureSetPanel";`
-- Peers: react, react-native
+- Import: `import { TextureSetPanel } from "@nyc-tron/ui/components/forge/cad/TextureSetPanel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

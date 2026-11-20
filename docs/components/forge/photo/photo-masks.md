@@ -1,7 +1,7 @@
 ---
 name: "PhotoMasksModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/photo-masks"
+subpath: "@nyc-tron/ui/components/forge/photo/photo-masks"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/photo-masks.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { MAX_PHOTO_BRUSH_POINTS, photoBrushPoint, photoGradientCoverage, validatePhotoBrush, validatePhotoBrushPoints, validatePhotoGradient, validatePhotoImageSize, validatePhotoRange } from "@nyc-tron/ui/forge/photo/photo-masks";`
+- Import: `import { MAX_PHOTO_BRUSH_POINTS, photoBrushPoint, photoGradientCoverage, validatePhotoBrush, validatePhotoBrushPoints, validatePhotoGradient, validatePhotoImageSize, validatePhotoRange } from "@nyc-tron/ui/components/forge/photo/photo-masks";`
 - Peers: react, react-native
 - Requires: none
 

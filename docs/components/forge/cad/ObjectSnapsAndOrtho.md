@@ -1,14 +1,14 @@
 ---
 name: "ObjectSnapsAndOrtho"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/cad/ObjectSnapsAndOrtho"
+subpath: "@nyc-tron/ui/components/forge/cad/ObjectSnapsAndOrtho"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ObjectSnapsAndOrtho
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/ObjectSnapsAndOrtho.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ObjectSnapsAndOrtho } from "@nyc-tron/ui/forge/cad/ObjectSnapsAndOrtho";`
-- Peers: react, react-native
+- Import: `import { ObjectSnapsAndOrtho } from "@nyc-tron/ui/components/forge/cad/ObjectSnapsAndOrtho";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

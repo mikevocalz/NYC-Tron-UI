@@ -1,7 +1,7 @@
 ---
 name: "ConstraintsPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/design/ConstraintsPanel"
+subpath: "@nyc-tron/ui/components/forge/design/ConstraintsPanel"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/ConstraintsPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ConstraintsPanel } from "@nyc-tron/ui/forge/design/ConstraintsPanel";`
+- Import: `import { ConstraintsPanel } from "@nyc-tron/ui/components/forge/design/ConstraintsPanel";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 

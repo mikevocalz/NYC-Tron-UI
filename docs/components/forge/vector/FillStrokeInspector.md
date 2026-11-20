@@ -1,14 +1,14 @@
 ---
 name: "FillStrokeInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/vector/FillStrokeInspector"
+subpath: "@nyc-tron/ui/components/forge/vector/FillStrokeInspector"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.danger", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "font.13", "radius.14", "radius.control", "space.0.5", "space.1", "space.2", "space.2.5"]
+tokens: ["color.border", "color.danger", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FillStrokeInspector
@@ -23,8 +23,8 @@ Fill and stroke inspector for one vector layer (B-23): fill type and color, fill
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/FillStrokeInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FillStrokeInspector } from "@nyc-tron/ui/forge/vector/FillStrokeInspector";`
-- Peers: react, react-native, zustand
+- Import: `import { FillStrokeInspector } from "@nyc-tron/ui/components/forge/vector/FillStrokeInspector";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

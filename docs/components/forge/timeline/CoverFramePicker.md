@@ -1,14 +1,14 @@
 ---
 name: "CoverFramePicker"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/CoverFramePicker"
+subpath: "@nyc-tron/ui/components/forge/timeline/CoverFramePicker"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/layers/LayerThumbnail", "@nyc-tron/forge/timeline/VideoFilmstrip"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CoverFramePicker
@@ -23,8 +23,8 @@ Chooses actual source frames/assets; applying the exported cover remains an engi
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/CoverFramePicker.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { CoverFramePicker } from "@nyc-tron/ui/forge/timeline/CoverFramePicker";`
-- Peers: react, react-native
+- Import: `import { CoverFramePicker } from "@nyc-tron/ui/components/forge/timeline/CoverFramePicker";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/layers/LayerThumbnail, @nyc-tron/forge/timeline/VideoFilmstrip
 
 ```sh

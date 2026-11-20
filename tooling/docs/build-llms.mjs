@@ -65,6 +65,7 @@ L.push(`- [SKILL.md](${U("SKILL.md")}): how to find an item, the token rules, pr
 L.push(`- [AGENTS.md](${U("AGENTS.md")}): repository rules and the Agent-native section.`);
 L.push(`- [README, Installing from a release](${U("README.md")}): the tarball install, which is the install path that works today.`);
 L.push(`- [Theme tokens](${U("docs/THEME_TOKENS.md")}): the 13 colour variables and 2 radii the consuming app must define. A missing variable fails silently.`);
+L.push(`- [components-contract.md](${U(`${AN}/components-contract.md`)}): where installed files land (\`@components/nyc-tron/ui\`, \`@lib/nyc-tron/core\`), since components.json rejects unknown keys.`);
 L.push(`- [tokens.json](${U(`${AN}/tokens.json`)}): every token with its value, status (existing, proposed, proposed-scoped) and source.`);
 L.push(`- [registry.json](${U("registry.json")}): the shadcn registry index. Item JSON is at \`${U("r/{name}.json")}\`.`);
 L.push("");
@@ -99,6 +100,10 @@ L.push(`- **No component preview exists.** The components are React Native, and 
 L.push(`- **Tier 1 prose reflects source at commit b91dfc3 (1.0.0-rc.2).** Token names in the front matter are what the source maps to today. They do not claim the literal-to-token codemod has run.`);
 L.push("");
 L.push("## Optional");
+if (excl.length) {
+  L.push(`- Native packages, ${excl.length} subpaths, install from the release tarball and rebuild the native app. A registry add cannot install them, so they have no component pages and no \`shadcn add\` command:`);
+  for (const e of excl) L.push(`  - [${e.subpath}](${U("README.md")}): ${e.description}`);
+}
 L.push(`- [llms-full.txt](${U("llms-full.txt")}): every page in one file. Large; read single pages instead when you know the item.`);
 L.push(`- [Design system audit](${U(`${AN}/02-design-system.md`)}): token inventory, closed scale and the proposed layout primitives.`);
 L.push(`- [Accessibility review](${U(`${AN}/05-accessibility-review.md`)}): per-item findings for the ${t1.length} hand-reviewed components.`);

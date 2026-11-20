@@ -1,7 +1,7 @@
 ---
 name: "PresetModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/preset-model"
+subpath: "@nyc-tron/ui/components/shell/preset-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Which presets a {@linkcode PresetGallery} shows.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/preset-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { filterPresets, galleryColumns, gridFocusTarget, validatePresets } from "@nyc-tron/ui/shell/preset-model";`
+- Import: `import { filterPresets, galleryColumns, gridFocusTarget, validatePresets } from "@nyc-tron/ui/components/shell/preset-model";`
 - Peers: react, react-native
 - Requires: none
 

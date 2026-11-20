@@ -1,12 +1,12 @@
 ---
 name: "DocumentTabBar"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/DocumentTabBar"
+subpath: "@nyc-tron/ui/components/shell/DocumentTabBar"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "navigation"
-tokens: ["border.1_5", "border.4", "color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.4", "radius.control", "space.0.5", "space.1"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
 a11yStatus: "unverified"
 ---
@@ -20,8 +20,8 @@ Tab strip for open documents with activate, close and reorder; keyboard shortcut
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { DocumentTabBar } from "@nyc-tron/ui/shell/DocumentTabBar";`
-- Peers: react, react-native
+- Import: `import { DocumentTabBar } from "@nyc-tron/ui/components/shell/DocumentTabBar";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

@@ -1,14 +1,14 @@
 ---
 name: "AudioVideoSync"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/AudioVideoSync"
+subpath: "@nyc-tron/ui/components/forge/audio/AudioVideoSync"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioVideoSync
@@ -23,8 +23,8 @@ Actual presentation telemetry against the audio master clock, without a second U
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AudioVideoSync.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AudioVideoSync } from "@nyc-tron/ui/forge/audio/AudioVideoSync";`
-- Peers: react, react-native
+- Import: `import { AudioVideoSync } from "@nyc-tron/ui/components/forge/audio/AudioVideoSync";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

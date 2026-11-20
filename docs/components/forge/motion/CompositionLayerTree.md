@@ -1,14 +1,14 @@
 ---
 name: "CompositionLayerTree"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/CompositionLayerTree"
+subpath: "@nyc-tron/ui/components/forge/motion/CompositionLayerTree"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "color.textMuted", "space.0.5", "space.1", "space.2"]
+tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CompositionLayerTree
@@ -23,8 +23,8 @@ Virtualized nested composition/shape/text/footage/adjustment hierarchy with stab
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/CompositionLayerTree.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { CompositionLayerTree } from "@nyc-tron/ui/forge/motion/CompositionLayerTree";`
-- Peers: react, react-native
+- Import: `import { CompositionLayerTree } from "@nyc-tron/ui/components/forge/motion/CompositionLayerTree";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

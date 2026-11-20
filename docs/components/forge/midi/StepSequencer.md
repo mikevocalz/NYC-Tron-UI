@@ -1,14 +1,14 @@
 ---
 name: "StepSequencer"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/midi/StepSequencer"
+subpath: "@nyc-tron/ui/components/forge/midi/StepSequencer"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_45", "radius.5", "radius.card", "radius.control", "space.1", "space.2"]
+tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # StepSequencer
@@ -23,8 +23,8 @@ Controlled beat grid over one clip's notes.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/StepSequencer.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { StepSequencer } from "@nyc-tron/ui/forge/midi/StepSequencer";`
-- Peers: react, react-native
+- Import: `import { StepSequencer } from "@nyc-tron/ui/components/forge/midi/StepSequencer";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

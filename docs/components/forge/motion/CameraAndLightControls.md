@@ -1,12 +1,12 @@
 ---
 name: "CameraAndLightControls"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/CameraAndLightControls"
+subpath: "@nyc-tron/ui/components/forge/motion/CameraAndLightControls"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.textMuted", "space.2.5"]
+tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/UnitInput"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Lens/view/depth and lighting values, independent from native app window dimensio
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/CameraAndLightControls.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { CameraAndLightControls } from "@nyc-tron/ui/forge/motion/CameraAndLightControls";`
-- Peers: react, react-native
+- Import: `import { CameraAndLightControls } from "@nyc-tron/ui/components/forge/motion/CameraAndLightControls";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh

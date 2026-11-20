@@ -1,14 +1,14 @@
 ---
 name: "DevicePairingDialog"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/devices/DevicePairingDialog"
+subpath: "@nyc-tron/ui/components/forge/devices/DevicePairingDialog"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.2", "space.4"]
+tokens: ["color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DevicePairingDialog
@@ -23,8 +23,8 @@ Transport-agnostic pairing dialog over a controlled {@linkcode PairingState}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/devices/DevicePairingDialog.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { DevicePairingDialog } from "@nyc-tron/ui/forge/devices/DevicePairingDialog";`
-- Peers: react, react-native
+- Import: `import { DevicePairingDialog } from "@nyc-tron/ui/components/forge/devices/DevicePairingDialog";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button
 
 ```sh

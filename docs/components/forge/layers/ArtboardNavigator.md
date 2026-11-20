@@ -1,14 +1,14 @@
 ---
 name: "ArtboardNavigator"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/ArtboardNavigator"
+subpath: "@nyc-tron/ui/components/forge/layers/ArtboardNavigator"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_9", "radius.1", "radius.card", "radius.control", "space.0.5", "space.1", "space.1.5", "space.2", "space.2.5"]
+tokens: ["color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/DragGrabHandle", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/layers/LayerThumbnail", "@nyc-tron/gestures/PanResponderDrag"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ArtboardNavigator
@@ -23,8 +23,8 @@ Artboard list or grid with previews (B-14).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/ArtboardNavigator.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ArtboardNavigator } from "@nyc-tron/ui/forge/layers/ArtboardNavigator";`
-- Peers: react, react-native, zustand
+- Import: `import { ArtboardNavigator } from "@nyc-tron/ui/components/forge/layers/ArtboardNavigator";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/DragGrabHandle, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/layers/LayerThumbnail, @nyc-tron/gestures/PanResponderDrag
 
 ```sh

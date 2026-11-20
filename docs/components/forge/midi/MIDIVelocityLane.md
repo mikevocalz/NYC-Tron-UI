@@ -1,14 +1,14 @@
 ---
 name: "MIDIVelocityLane"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/midi/MIDIVelocityLane"
+subpath: "@nyc-tron/ui/components/forge/midi/MIDIVelocityLane"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_45", "radius.1", "radius.2", "radius.5", "radius.card", "radius.control", "space.0.5", "space.1.5", "space.2", "space.3", "space.3.5"]
+tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/midi/MIDIPianoRoll", "@nyc-tron/forge/midi/MidiChannelPicker"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MIDIVelocityLane
@@ -23,8 +23,8 @@ Controlled per-note velocity bars under a {@linkcode MIDIPianoRoll}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/MIDIVelocityLane.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MIDIVelocityLane } from "@nyc-tron/ui/forge/midi/MIDIVelocityLane";`
-- Peers: react, react-native, zustand
+- Import: `import { MIDIVelocityLane } from "@nyc-tron/ui/components/forge/midi/MIDIVelocityLane";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/midi/MIDIPianoRoll, @nyc-tron/forge/midi/MidiChannelPicker
 
 ```sh

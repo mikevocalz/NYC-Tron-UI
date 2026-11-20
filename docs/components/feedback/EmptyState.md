@@ -1,7 +1,7 @@
 ---
 name: "EmptyState"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/feedback/EmptyState"
+subpath: "@nyc-tron/ui/components/feedback/EmptyState"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,7 +20,7 @@ Empty-list placeholder with heading title, description, icon or illustration, an
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { EmptyState } from "@nyc-tron/ui/feedback/EmptyState";`
+- Import: `import { EmptyState } from "@nyc-tron/ui/components/feedback/EmptyState";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Button
 

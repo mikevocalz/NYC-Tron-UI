@@ -1,7 +1,7 @@
 ---
 name: "PairingModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/devices/pairing-model"
+subpath: "@nyc-tron/ui/components/forge/devices/pairing-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Transport-agnostic pairing states for `DevicePairingDialog`.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/devices/pairing-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { presentPairing, signalLabel } from "@nyc-tron/ui/forge/devices/pairing-model";`
+- Import: `import { presentPairing, signalLabel } from "@nyc-tron/ui/components/forge/devices/pairing-model";`
 - Peers: react, react-native
 - Requires: none
 

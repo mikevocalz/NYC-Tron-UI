@@ -1,7 +1,7 @@
 ---
 name: "WorkspacePresetModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/workspace-preset-model"
+subpath: "@nyc-tron/ui/components/shell/workspace-preset-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/workspace-preset-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { BUILT_IN_PRESET_IDS, MAX_WORKSPACE_PRESETS, PRESET_NAME_MAX, copyName, layoutsEqual, presetActions, presetNameMessage, presetNameProblem } from "@nyc-tron/ui/shell/workspace-preset-model";`
+- Import: `import { BUILT_IN_PRESET_IDS, MAX_WORKSPACE_PRESETS, PRESET_NAME_MAX, copyName, layoutsEqual, presetActions, presetNameMessage, presetNameProblem } from "@nyc-tron/ui/components/shell/workspace-preset-model";`
 - Peers: react, react-native
 - Requires: none
 

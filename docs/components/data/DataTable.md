@@ -1,12 +1,12 @@
 ---
 name: "DataTable"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/data/DataTable"
+subpath: "@nyc-tron/ui/components/data/DataTable"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "data"
-tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control", "space.1.5", "space.2", "space.2.5", "space.3"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: []
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Sortable data table on TanStack Table that renders cards below a width threshold
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { DataTable } from "@nyc-tron/ui/data/DataTable";`
-- Peers: @tanstack/react-table, react, react-native, zustand
+- Import: `import { DataTable } from "@nyc-tron/ui/components/data/DataTable";`
+- Peers: @nyc-tron/core, @tanstack/react-table, react, react-native, zustand
 - Requires: none
 
 ```sh

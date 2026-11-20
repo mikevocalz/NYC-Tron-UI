@@ -1,7 +1,7 @@
 ---
 name: "KeyValueList"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/content/KeyValueList"
+subpath: "@nyc-tron/ui/components/content/KeyValueList"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,8 +20,8 @@ Label and value list that goes from one to two columns at a measured width, with
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { KeyValueList } from "@nyc-tron/ui/content/KeyValueList";`
-- Peers: react, react-native, zustand
+- Import: `import { KeyValueList } from "@nyc-tron/ui/components/content/KeyValueList";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: none
 
 ```sh

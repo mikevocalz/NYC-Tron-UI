@@ -1,7 +1,7 @@
 ---
 name: "TreeRowHeightsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/data/tree-row-heights"
+subpath: "@nyc-tron/ui/components/data/tree-row-heights"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Rows overlapping a viewport; `end` is exclusive.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/data/tree-row-heights.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { createRowHeightIndex } from "@nyc-tron/ui/data/tree-row-heights";`
+- Import: `import { createRowHeightIndex } from "@nyc-tron/ui/components/data/tree-row-heights";`
 - Peers: react, react-native
 - Requires: none
 

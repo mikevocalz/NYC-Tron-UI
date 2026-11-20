@@ -1,7 +1,7 @@
 ---
 name: "ErrorMessage"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/feedback/ErrorMessage"
+subpath: "@nyc-tron/ui/components/feedback/ErrorMessage"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,7 +20,7 @@ Inline error text with a danger glyph, announced as an alert; renders nothing wh
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { ErrorMessage } from "@nyc-tron/ui/feedback/ErrorMessage";`
+- Import: `import { ErrorMessage } from "@nyc-tron/ui/components/feedback/ErrorMessage";`
 - Peers: react, react-native
 - Requires: none
 

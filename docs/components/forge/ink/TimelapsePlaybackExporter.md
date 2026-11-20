@@ -1,14 +1,14 @@
 ---
 name: "TimelapsePlaybackExporter"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/ink/TimelapsePlaybackExporter"
+subpath: "@nyc-tron/ui/components/forge/ink/TimelapsePlaybackExporter"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TimelapsePlaybackExporter
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/TimelapsePlaybackExporter.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TimelapsePlaybackExporter } from "@nyc-tron/ui/forge/ink/TimelapsePlaybackExporter";`
-- Peers: react, react-native, zustand
+- Import: `import { TimelapsePlaybackExporter } from "@nyc-tron/ui/components/forge/ink/TimelapsePlaybackExporter";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

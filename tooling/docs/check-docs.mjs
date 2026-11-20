@@ -167,15 +167,12 @@ for (const [id, p] of pages) {
   if (!impLine || !impLine[1].includes(`from "${fm.subpath}"`) && !impLine[1].includes(`import "${fm.subpath}"`)) here(2, `Install Import line does not use subpath ${fm.subpath}`);
   // check 10
   const tierLabel = fm.a11yStatus;
-  if (!A11Y_VALUES.includes(tierLabel)) here(10, `a11yStatus ${tierLabel}`);
-  if (tierLabel === "verified") {
-    const ev = (sec["A11y"] ?? "").match(/^Evidence: (\S+)$/m);
-    if (!ev || !exists(ev[1])) here(10, "verified needs an Evidence: <existing path> line");
-  } else if (/^Evidence:/m.test(sec["A11y"] ?? "")) here(10, "Evidence: line on a page that is not verified");
+  if (!A11Y_VALUES.includes(tierLabel)) here(10, `a11yStatus ${tierLabel} is not one of ${A11Y_VALUES.join(", ")}`);
+  if (/^Evidence:/m.test(sec["A11y"] ?? "")) here(10, "Evidence: line on a page that is not verified (verified is reserved for a rendered check)");
   if (fm.tier === 1) {
     const st = a11yJson[it.tier1.name];
     if (!st || A11Y_MAP[st.status] !== tierLabel) here(10, `tier 1 a11yStatus ${tierLabel} != a11y-status.json ${st?.status}`);
-  } else if (tierLabel !== a11yScanStatus(it)) here(10, `a11yStatus ${tierLabel} disagrees with the source scan (${a11yScanStatus(it)})`);
+  } else if (tierLabel !== a11yScanStatus(it)) here(10, `tier 2 a11yStatus must be unverified, found ${tierLabel}`);
   // check 11
   if (fm.tier === 1) {
     const dd = sec["Do/Don't"] ?? "";

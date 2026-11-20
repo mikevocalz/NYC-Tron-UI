@@ -1,14 +1,14 @@
 ---
 name: "FreezeSplitControls"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/FreezeSplitControls"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/FreezeSplitControls"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.surfaceRaised", "color.textMuted", "radius.card", "space.2", "space.3", "space.4"]
+tokens: ["color.border", "color.surfaceRaised", "color.textMuted", "radius.card"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FreezeSplitControls
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/FreezeSplitControls.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FreezeSplitControls } from "@nyc-tron/ui/forge/spreadsheet/FreezeSplitControls";`
-- Peers: react, react-native
+- Import: `import { FreezeSplitControls } from "@nyc-tron/ui/components/forge/spreadsheet/FreezeSplitControls";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

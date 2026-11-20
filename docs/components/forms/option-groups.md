@@ -1,7 +1,7 @@
 ---
 name: "OptionGroupsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forms/option-groups"
+subpath: "@nyc-tron/ui/components/forms/option-groups"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Options under a visible heading, as a select or dropdown shows them.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forms/option-groups.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { flattenOptionGroups, validateOptionGroups } from "@nyc-tron/ui/forms/option-groups";`
+- Import: `import { flattenOptionGroups, validateOptionGroups } from "@nyc-tron/ui/components/forms/option-groups";`
 - Peers: react, react-native
 - Requires: none
 

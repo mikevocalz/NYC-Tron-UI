@@ -1,12 +1,12 @@
 ---
 name: "LevelsEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/LevelsEditor"
+subpath: "@nyc-tron/ui/components/forge/color/LevelsEditor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/shell/UnitInput"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Edits input/output bounds and gamma with noncrossing constraints.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/LevelsEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LevelsEditor } from "@nyc-tron/ui/forge/color/LevelsEditor";`
-- Peers: react, react-native
+- Import: `import { LevelsEditor } from "@nyc-tron/ui/components/forge/color/LevelsEditor";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh

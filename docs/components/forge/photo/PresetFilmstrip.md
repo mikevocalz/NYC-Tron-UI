@@ -1,14 +1,14 @@
 ---
 name: "PresetFilmstrip"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/PresetFilmstrip"
+subpath: "@nyc-tron/ui/components/forge/photo/PresetFilmstrip"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "color.textMuted", "space.1", "space.2"]
+tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PresetFilmstrip
@@ -23,8 +23,8 @@ Horizontal photo preset previews with explicit cancellable apply to the selected
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PresetFilmstrip.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PresetFilmstrip } from "@nyc-tron/ui/forge/photo/PresetFilmstrip";`
-- Peers: react, react-native
+- Import: `import { PresetFilmstrip } from "@nyc-tron/ui/components/forge/photo/PresetFilmstrip";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -1,12 +1,12 @@
 ---
 name: "MatteAndMaskPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/MatteAndMaskPanel"
+subpath: "@nyc-tron/ui/components/forge/motion/MatteAndMaskPanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/shell/UnitInput"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ The host excludes descendants/cycles; self-matting and explicitly unavailable so
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/MatteAndMaskPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MatteAndMaskPanel } from "@nyc-tron/ui/forge/motion/MatteAndMaskPanel";`
-- Peers: react, react-native
+- Import: `import { MatteAndMaskPanel } from "@nyc-tron/ui/components/forge/motion/MatteAndMaskPanel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/shell/UnitInput
 
 ```sh

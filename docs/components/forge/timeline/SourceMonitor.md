@@ -1,7 +1,7 @@
 ---
 name: "SourceMonitor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/SourceMonitor"
+subpath: "@nyc-tron/ui/components/forge/timeline/SourceMonitor"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Source asset preview and in/out marks over the host's actual media surface.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/SourceMonitor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SourceMonitor } from "@nyc-tron/ui/forge/timeline/SourceMonitor";`
+- Import: `import { SourceMonitor } from "@nyc-tron/ui/components/forge/timeline/SourceMonitor";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/timeline/MediaMonitor
 

@@ -1,14 +1,14 @@
 ---
 name: "RatingAndFlagControl"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/RatingAndFlagControl"
+subpath: "@nyc-tron/ui/components/forge/photo/RatingAndFlagControl"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/Select"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RatingAndFlagControl
@@ -23,8 +23,8 @@ Independent star, named color-label and mutually exclusive pick/reject fields.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/RatingAndFlagControl.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { RatingAndFlagControl } from "@nyc-tron/ui/forge/photo/RatingAndFlagControl";`
-- Peers: react, react-native
+- Import: `import { RatingAndFlagControl } from "@nyc-tron/ui/components/forge/photo/RatingAndFlagControl";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/Select
 
 ```sh

@@ -1,12 +1,12 @@
 ---
 name: "PropertyRow"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/PropertyRow"
+subpath: "@nyc-tron/ui/components/shell/PropertyRow"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "input"
-tokens: ["border.3", "color.accent", "color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.3", "radius.control", "space.1", "space.1.5", "space.2"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
 a11yStatus: "reviewed-pass"
 ---
@@ -20,8 +20,8 @@ Row for one inspector property: label and editor, with mixed-value badge, overri
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { PropertyRow } from "@nyc-tron/ui/shell/PropertyRow";`
-- Peers: react, react-native, zustand
+- Import: `import { PropertyRow } from "@nyc-tron/ui/components/shell/PropertyRow";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: none
 
 ```sh

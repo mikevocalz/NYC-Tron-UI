@@ -1,7 +1,7 @@
 ---
 name: "RoutingModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/routing"
+subpath: "@nyc-tron/ui/components/forge/audio/routing"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Routing model for {@linkcode BusAndRoutingMatrix}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/routing.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { DEFAULT_SEND_LEVEL, ROUTING_COLUMNS, ROUTING_GRID_MIN_WIDTH, SEND_PAGE_STEP, SEND_STEP, clampSendLevel, cycleOutput, dragToSendLevel } from "@nyc-tron/ui/forge/audio/routing";`
+- Import: `import { DEFAULT_SEND_LEVEL, ROUTING_COLUMNS, ROUTING_GRID_MIN_WIDTH, SEND_PAGE_STEP, SEND_STEP, clampSendLevel, cycleOutput, dragToSendLevel } from "@nyc-tron/ui/components/forge/audio/routing";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,14 +1,14 @@
 ---
 name: "ClipToggle"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/ClippingMaskControls"
+subpath: "@nyc-tron/ui/components/forge/layers/ClippingMaskControls"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.textMuted", "radius.1"]
+tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ClipToggle
@@ -23,8 +23,8 @@ Clip/unclip switch for one layer (B-13).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/ClippingMaskControls.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ClipToggle, ClipIndicator } from "@nyc-tron/ui/forge/layers/ClippingMaskControls";`
-- Peers: react, react-native
+- Import: `import { ClipToggle, ClipIndicator } from "@nyc-tron/ui/components/forge/layers/ClippingMaskControls";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

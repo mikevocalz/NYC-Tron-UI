@@ -1,7 +1,7 @@
 ---
 name: "PhotoExportModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/photo-export"
+subpath: "@nyc-tron/ui/components/forge/photo/photo-export"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/photo-export.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { defaultPhotoBatchExport, validatePhotoExport, validatePhotoExportProgress } from "@nyc-tron/ui/forge/photo/photo-export";`
+- Import: `import { defaultPhotoBatchExport, validatePhotoExport, validatePhotoExportProgress } from "@nyc-tron/ui/components/forge/photo/photo-export";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,14 +1,14 @@
 ---
 name: "RehearsalTimers"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/RehearsalTimers"
+subpath: "@nyc-tron/ui/components/forge/slides/RehearsalTimers"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "color.textMuted", "space.1.5", "space.2"]
+tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RehearsalTimers
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/RehearsalTimers.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { RehearsalTimers } from "@nyc-tron/ui/forge/slides/RehearsalTimers";`
-- Peers: react, react-native, zustand
+- Import: `import { RehearsalTimers } from "@nyc-tron/ui/components/forge/slides/RehearsalTimers";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -1,14 +1,14 @@
 ---
 name: "PhotoLibraryGrid"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/PhotoLibraryGrid"
+subpath: "@nyc-tron/ui/components/forge/photo/PhotoLibraryGrid"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.text", "color.textMuted", "radius.control", "space.1", "space.2"]
+tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PhotoLibraryGrid
@@ -23,8 +23,8 @@ Virtualized catalog page with host-generated thumbnails; originals are never dec
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PhotoLibraryGrid.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PhotoLibraryGrid } from "@nyc-tron/ui/forge/photo/PhotoLibraryGrid";`
-- Peers: react, react-native, zustand
+- Import: `import { PhotoLibraryGrid } from "@nyc-tron/ui/components/forge/photo/PhotoLibraryGrid";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button
 
 ```sh

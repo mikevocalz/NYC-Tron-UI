@@ -1,14 +1,14 @@
 ---
 name: "LayoutSpreadNavigator"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/LayoutSpreadNavigator"
+subpath: "@nyc-tron/ui/components/forge/document/LayoutSpreadNavigator"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1.5", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LayoutSpreadNavigator
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/LayoutSpreadNavigator.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LayoutSpreadNavigator } from "@nyc-tron/ui/forge/document/LayoutSpreadNavigator";`
-- Peers: react, react-native
+- Import: `import { LayoutSpreadNavigator } from "@nyc-tron/ui/components/forge/document/LayoutSpreadNavigator";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh

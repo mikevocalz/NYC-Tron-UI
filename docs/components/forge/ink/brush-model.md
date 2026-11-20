@@ -1,7 +1,7 @@
 ---
 name: "BrushModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/ink/brush-model"
+subpath: "@nyc-tron/ui/components/forge/ink/brush-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Engine-neutral brush settings.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/brush-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { BRUSH_DYNAMICS_FIELDS, MAX_INK_PREVIEW_SAMPLES, stabilizePreview, validateBrushDynamics, validateBrushTaper, validateInkSamples, validateStabilization } from "@nyc-tron/ui/forge/ink/brush-model";`
+- Import: `import { BRUSH_DYNAMICS_FIELDS, MAX_INK_PREVIEW_SAMPLES, stabilizePreview, validateBrushDynamics, validateBrushTaper, validateInkSamples, validateStabilization } from "@nyc-tron/ui/components/forge/ink/brush-model";`
 - Peers: react, react-native
 - Requires: none
 

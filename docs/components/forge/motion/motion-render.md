@@ -1,7 +1,7 @@
 ---
 name: "MotionRenderModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/motion-render"
+subpath: "@nyc-tron/ui/components/forge/motion/motion-render"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/motion-render.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { moveQueuedRenderJob, validateMotionRenderJobs, validateMotionRenderSettings, validateRenderChoices } from "@nyc-tron/ui/forge/motion/motion-render";`
+- Import: `import { moveQueuedRenderJob, validateMotionRenderJobs, validateMotionRenderSettings, validateRenderChoices } from "@nyc-tron/ui/components/forge/motion/motion-render";`
 - Peers: react, react-native
 - Requires: none
 

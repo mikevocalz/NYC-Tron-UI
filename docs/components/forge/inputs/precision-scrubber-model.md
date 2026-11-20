@@ -1,7 +1,7 @@
 ---
 name: "PrecisionScrubberModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/inputs/precision-scrubber-model"
+subpath: "@nyc-tron/ui/components/forge/inputs/precision-scrubber-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/precision-scrubber-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { SCRUB_PIXELS_PER_STEP, createScrubberModel, initialScrubberState } from "@nyc-tron/ui/forge/inputs/precision-scrubber-model";`
+- Import: `import { SCRUB_PIXELS_PER_STEP, createScrubberModel, initialScrubberState } from "@nyc-tron/ui/components/forge/inputs/precision-scrubber-model";`
 - Peers: react, react-native
 - Requires: none
 

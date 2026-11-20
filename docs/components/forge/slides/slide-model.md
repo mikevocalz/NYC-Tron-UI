@@ -1,7 +1,7 @@
 ---
 name: "SlideModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/slide-model"
+subpath: "@nyc-tron/ui/components/forge/slides/slide-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ RGBA channels 0–255, as presentation engines store document colors.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/slide-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { SLIDE_DEFAULT_SIZE, gridColumns, gridMove, moveBlock, moveId, nextSelection, planMoves, rgbaCss } from "@nyc-tron/ui/forge/slides/slide-model";`
+- Import: `import { SLIDE_DEFAULT_SIZE, gridColumns, gridMove, moveBlock, moveId, nextSelection, planMoves, rgbaCss } from "@nyc-tron/ui/components/forge/slides/slide-model";`
 - Peers: react, react-native
 - Requires: none
 

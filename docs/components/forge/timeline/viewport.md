@@ -1,7 +1,7 @@
 ---
 name: "ViewportModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/viewport"
+subpath: "@nyc-tron/ui/components/forge/timeline/viewport"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/viewport.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { clampViewport, fitRange, followPlayhead, frameToX, minimapScroll, minimapWindow, scrollBy, visibleFrames } from "@nyc-tron/ui/forge/timeline/viewport";`
+- Import: `import { clampViewport, fitRange, followPlayhead, frameToX, minimapScroll, minimapWindow, scrollBy, visibleFrames } from "@nyc-tron/ui/components/forge/timeline/viewport";`
 - Peers: react, react-native
 - Requires: none
 

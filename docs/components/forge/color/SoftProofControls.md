@@ -1,12 +1,12 @@
 ---
 name: "SoftProofControls"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/SoftProofControls"
+subpath: "@nyc-tron/ui/components/forge/color/SoftProofControls"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Select"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Controls a host's proof transform; UI does not pretend to perform ICC conversion
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/SoftProofControls.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SoftProofControls } from "@nyc-tron/ui/forge/color/SoftProofControls";`
-- Peers: react, react-native
+- Import: `import { SoftProofControls } from "@nyc-tron/ui/components/forge/color/SoftProofControls";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Select
 
 ```sh

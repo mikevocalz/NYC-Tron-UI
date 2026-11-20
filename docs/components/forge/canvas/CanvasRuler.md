@@ -1,14 +1,14 @@
 ---
 name: "CanvasRuler"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/CanvasRuler"
+subpath: "@nyc-tron/ui/components/forge/canvas/CanvasRuler"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["CanvasRuler.font.9", "CanvasRuler.leading.12", "color.accent", "color.border", "color.focus", "color.info", "color.surfaceRaised", "color.text", "color.textMuted", "font.10", "opacity.0_35", "opacity.0_6", "radius.control", "space.0.75", "space.1.5"]
+tokens: ["color.accent", "color.border", "color.focus", "color.info", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CanvasRuler
@@ -23,8 +23,8 @@ Canvas rulers and guides (B-03): a top ruler counting x and a side ruler countin
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/CanvasRuler.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { CanvasRuler } from "@nyc-tron/ui/forge/canvas/CanvasRuler";`
-- Peers: react, react-native
+- Import: `import { CanvasRuler } from "@nyc-tron/ui/components/forge/canvas/CanvasRuler";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

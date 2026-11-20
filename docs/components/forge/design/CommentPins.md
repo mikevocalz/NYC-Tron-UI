@@ -1,14 +1,14 @@
 ---
 name: "CommentPins"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/design/CommentPins"
+subpath: "@nyc-tron/ui/components/forge/design/CommentPins"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/pdf/CommentsThreadPanel"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CommentPins
@@ -23,8 +23,8 @@ Pins and the shared thread panel reference the same authoritative thread IDs.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/CommentPins.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { CommentPins } from "@nyc-tron/ui/forge/design/CommentPins";`
-- Peers: react, react-native
+- Import: `import { CommentPins } from "@nyc-tron/ui/components/forge/design/CommentPins";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/pdf/CommentsThreadPanel
 
 ```sh

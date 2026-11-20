@@ -1,14 +1,14 @@
 ---
 name: "AutoReframeGuides"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/AutoReframeGuides"
+subpath: "@nyc-tron/ui/components/forge/timeline/AutoReframeGuides"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/canvas/GuidedCropAndStraighten"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AutoReframeGuides
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/AutoReframeGuides.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AutoReframeGuides } from "@nyc-tron/ui/forge/timeline/AutoReframeGuides";`
-- Peers: react, react-native
+- Import: `import { AutoReframeGuides } from "@nyc-tron/ui/components/forge/timeline/AutoReframeGuides";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/canvas/GuidedCropAndStraighten
 
 ```sh

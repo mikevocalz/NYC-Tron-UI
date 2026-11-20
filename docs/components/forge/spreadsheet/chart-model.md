@@ -1,7 +1,7 @@
 ---
 name: "ChartModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/chart-model"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/chart-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/chart-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { MAX_CHART_CELLS, SHEET_CHART_KINDS, chartSeriesFromCells, parseA1Range } from "@nyc-tron/ui/forge/spreadsheet/chart-model";`
+- Import: `import { MAX_CHART_CELLS, SHEET_CHART_KINDS, chartSeriesFromCells, parseA1Range } from "@nyc-tron/ui/components/forge/spreadsheet/chart-model";`
 - Peers: react, react-native
 - Requires: none
 

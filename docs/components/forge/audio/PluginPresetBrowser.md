@@ -1,14 +1,14 @@
 ---
 name: "PluginPresetBrowser"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/PluginPresetBrowser"
+subpath: "@nyc-tron/ui/components/forge/audio/PluginPresetBrowser"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["border.2", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "font.16", "opacity.0_45", "radius.10", "radius.5", "radius.card", "radius.control", "space.1", "space.1.5", "space.2", "space.2.5", "space.3", "space.4"]
+tokens: ["color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PluginPresetBrowser
@@ -23,8 +23,8 @@ Controlled preset list for one insert effect, with a label search.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/PluginPresetBrowser.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PluginPresetBrowser } from "@nyc-tron/ui/forge/audio/PluginPresetBrowser";`
-- Peers: react, react-native, zustand
+- Import: `import { PluginPresetBrowser } from "@nyc-tron/ui/components/forge/audio/PluginPresetBrowser";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

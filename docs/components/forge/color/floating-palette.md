@@ -1,7 +1,7 @@
 ---
 name: "FloatingPaletteModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/floating-palette"
+subpath: "@nyc-tron/ui/components/forge/color/floating-palette"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/floating-palette.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { FLOATING_PALETTE_WIDTH, PALETTE_MODES, UNDOCK_DISTANCE, nudgePalette, placeFloatingPalette, positionFromGrab, shouldUndock } from "@nyc-tron/ui/forge/color/floating-palette";`
+- Import: `import { FLOATING_PALETTE_WIDTH, PALETTE_MODES, UNDOCK_DISTANCE, nudgePalette, placeFloatingPalette, positionFromGrab, shouldUndock } from "@nyc-tron/ui/components/forge/color/floating-palette";`
 - Peers: react, react-native
 - Requires: none
 

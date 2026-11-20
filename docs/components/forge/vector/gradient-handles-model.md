@@ -1,7 +1,7 @@
 ---
 name: "GradientHandlesModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/vector/gradient-handles-model"
+subpath: "@nyc-tron/ui/components/forge/vector/gradient-handles-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Geometry for {@linkcode GradientOnCanvasHandles} (B-24): where each handle and s
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/gradient-handles-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { FOCAL_LIMIT, MIN_RADIUS, STOP_KEY_STEP, addStop, addStopAvailability, clampFocal, colorAt, gradientAxis } from "@nyc-tron/ui/forge/vector/gradient-handles-model";`
+- Import: `import { FOCAL_LIMIT, MIN_RADIUS, STOP_KEY_STEP, addStop, addStopAvailability, clampFocal, colorAt, gradientAxis } from "@nyc-tron/ui/components/forge/vector/gradient-handles-model";`
 - Peers: react, react-native
 - Requires: none
 

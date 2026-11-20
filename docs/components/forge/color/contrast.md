@@ -1,7 +1,7 @@
 ---
 name: "ContrastModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/contrast"
+subpath: "@nyc-tron/ui/components/forge/color/contrast"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/contrast.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { compositeOver, contrastRating, contrastRatio, relativeLuminance } from "@nyc-tron/ui/forge/color/contrast";`
+- Import: `import { compositeOver, contrastRating, contrastRatio, relativeLuminance } from "@nyc-tron/ui/components/forge/color/contrast";`
 - Peers: react, react-native
 - Requires: none
 

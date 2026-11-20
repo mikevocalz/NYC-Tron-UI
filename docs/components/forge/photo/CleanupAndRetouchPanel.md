@@ -1,7 +1,7 @@
 ---
 name: "CleanupAndRetouchPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/CleanupAndRetouchPanel"
+subpath: "@nyc-tron/ui/components/forge/photo/CleanupAndRetouchPanel"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Localized heal/remove requests over an actual host photo.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/CleanupAndRetouchPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { CleanupAndRetouchPanel } from "@nyc-tron/ui/forge/photo/CleanupAndRetouchPanel";`
+- Import: `import { CleanupAndRetouchPanel } from "@nyc-tron/ui/components/forge/photo/CleanupAndRetouchPanel";`
 - Peers: react, react-native
 - Requires: none
 

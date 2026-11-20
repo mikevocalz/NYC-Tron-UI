@@ -1,14 +1,14 @@
 ---
 name: "PenNodeEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/vector/PenNodeEditor"
+subpath: "@nyc-tron/ui/components/forge/vector/PenNodeEditor"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["border.2", "color.accent", "color.border", "color.surfaceRaised", "color.textMuted", "radius.control", "space.1.5"]
+tokens: ["color.accent", "color.border", "color.surfaceRaised", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PenNodeEditor
@@ -23,8 +23,8 @@ On-canvas node editor for one path layer (B-21).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/PenNodeEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PenNodeEditor } from "@nyc-tron/ui/forge/vector/PenNodeEditor";`
-- Peers: react, react-native, zustand
+- Import: `import { PenNodeEditor } from "@nyc-tron/ui/components/forge/vector/PenNodeEditor";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

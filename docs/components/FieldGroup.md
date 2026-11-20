@@ -1,7 +1,7 @@
 ---
 name: "FieldGroup"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/FieldGroup"
+subpath: "@nyc-tron/ui/components/FieldGroup"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
@@ -20,7 +20,7 @@ Form layout wrapper with titled sections and footer text, exposed as FieldGroup.
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { FieldGroup } from "@nyc-tron/ui/FieldGroup";`
+- Import: `import { FieldGroup } from "@nyc-tron/ui/components/FieldGroup";`
 - Peers: react, react-native
 - Requires: none
 

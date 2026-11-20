@@ -1,14 +1,14 @@
 ---
 name: "HtmlModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/html"
+subpath: "@nyc-tron/ui/components/html"
 tier: 2
 docs: "generated"
 platforms: ["ios", "android", "web"]
 category: "primitive"
-tokens: ["space.0"]
+tokens: []
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # HtmlModule
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/html/semantic.native.tsx,packages/ui/src/components/html/semantic.web.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { Page, Main, Header, Footer, Section, Nav, Article, Aside } from "@nyc-tron/ui/html";`
-- Peers: react, react-native
+- Import: `import { Page, Main, Header, Footer, Section, Nav, Article, Aside } from "@nyc-tron/ui/components/html";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

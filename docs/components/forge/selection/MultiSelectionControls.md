@@ -1,14 +1,14 @@
 ---
 name: "MultiSelectionControls"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/selection/MultiSelectionControls"
+subpath: "@nyc-tron/ui/components/forge/selection/MultiSelectionControls"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.1", "space.2"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/Select", "@nyc-tron/shell/PropertyRow", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MultiSelectionControls
@@ -23,8 +23,8 @@ Ordered range/toggle selection, group commands and honest shared-property state.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/MultiSelectionControls.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MultiSelectionControls } from "@nyc-tron/ui/forge/selection/MultiSelectionControls";`
-- Peers: react, react-native
+- Import: `import { MultiSelectionControls } from "@nyc-tron/ui/components/forge/selection/MultiSelectionControls";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/Select, @nyc-tron/shell/PropertyRow, @nyc-tron/shell/UnitInput
 
 ```sh

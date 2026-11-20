@@ -1,12 +1,12 @@
 ---
 name: "InspectorSection"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/InspectorSection"
+subpath: "@nyc-tron/ui/components/shell/InspectorSection"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "shell"
-tokens: ["border.1_5", "color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_55", "radius.control", "space.1"]
+tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
 a11yStatus: "reviewed-pass"
 ---
@@ -20,8 +20,8 @@ Collapsible inspector group with optional enable switch and reset button, indent
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { InspectorSection } from "@nyc-tron/ui/shell/InspectorSection";`
-- Peers: react, react-native, zustand
+- Import: `import { InspectorSection } from "@nyc-tron/ui/components/shell/InspectorSection";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: none
 
 ```sh

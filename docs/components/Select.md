@@ -1,7 +1,7 @@
 ---
 name: "Select"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/Select"
+subpath: "@nyc-tron/ui/components/Select"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
@@ -20,7 +20,7 @@ Single-select dropdown with flat or grouped options, hint and error text, for Re
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Select } from "@nyc-tron/ui/Select";`
+- Import: `import { Select } from "@nyc-tron/ui/components/Select";`
 - Peers: react, react-native, zustand
 - Requires: none
 

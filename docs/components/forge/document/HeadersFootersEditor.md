@@ -1,7 +1,7 @@
 ---
 name: "HeadersFootersEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/HeadersFootersEditor"
+subpath: "@nyc-tron/ui/components/forge/document/HeadersFootersEditor"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/HeadersFootersEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { HeadersFootersEditor } from "@nyc-tron/ui/forge/document/HeadersFootersEditor";`
+- Import: `import { HeadersFootersEditor } from "@nyc-tron/ui/components/forge/document/HeadersFootersEditor";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 

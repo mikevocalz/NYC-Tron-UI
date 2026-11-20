@@ -1,14 +1,14 @@
 ---
 name: "MediaMonitor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/MediaMonitor"
+subpath: "@nyc-tron/ui/components/forge/timeline/MediaMonitor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/SafeAreaOverlay", "@nyc-tron/forge/timeline/SeekBar", "@nyc-tron/forge/timeline/TimecodeDisplay", "@nyc-tron/forge/timeline/TransportControls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MediaMonitor
@@ -23,8 +23,8 @@ Shared monitor chrome.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/MediaMonitor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MediaMonitor } from "@nyc-tron/ui/forge/timeline/MediaMonitor";`
-- Peers: react, react-native
+- Import: `import { MediaMonitor } from "@nyc-tron/ui/components/forge/timeline/MediaMonitor";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/SafeAreaOverlay, @nyc-tron/forge/timeline/SeekBar, @nyc-tron/forge/timeline/TimecodeDisplay, @nyc-tron/forge/timeline/TransportControls
 
 ```sh

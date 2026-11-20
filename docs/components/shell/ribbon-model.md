@@ -1,7 +1,7 @@
 ---
 name: "RibbonModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/ribbon-model"
+subpath: "@nyc-tron/ui/components/shell/ribbon-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/ribbon-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { inlineGalleryItems, ribbonTabLabel, validateRibbon } from "@nyc-tron/ui/shell/ribbon-model";`
+- Import: `import { inlineGalleryItems, ribbonTabLabel, validateRibbon } from "@nyc-tron/ui/components/shell/ribbon-model";`
 - Peers: react, react-native
 - Requires: @nyc-tron/overlays/CommandPopover
 

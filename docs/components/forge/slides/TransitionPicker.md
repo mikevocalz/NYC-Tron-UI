@@ -1,12 +1,12 @@
 ---
 name: "TransitionPicker"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/TransitionPicker"
+subpath: "@nyc-tron/ui/components/forge/slides/TransitionPicker"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/TransitionPicker.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TransitionPicker } from "@nyc-tron/ui/forge/slides/TransitionPicker";`
-- Peers: react, react-native
+- Import: `import { TransitionPicker } from "@nyc-tron/ui/components/forge/slides/TransitionPicker";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

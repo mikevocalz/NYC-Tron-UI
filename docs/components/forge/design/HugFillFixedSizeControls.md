@@ -1,7 +1,7 @@
 ---
 name: "HugFillFixedSizeControls"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/design/HugFillFixedSizeControls"
+subpath: "@nyc-tron/ui/components/forge/design/HugFillFixedSizeControls"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/HugFillFixedSizeControls.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { HugFillFixedSizeControls } from "@nyc-tron/ui/forge/design/HugFillFixedSizeControls";`
+- Import: `import { HugFillFixedSizeControls } from "@nyc-tron/ui/components/forge/design/HugFillFixedSizeControls";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 

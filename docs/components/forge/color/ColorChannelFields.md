@@ -1,14 +1,14 @@
 ---
 name: "ColorChannelFields"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/ColorChannelFields"
+subpath: "@nyc-tron/ui/components/forge/color/ColorChannelFields"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.1", "space.1.5", "space.2"]
+tokens: ["color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorChannelFields
@@ -23,8 +23,8 @@ Typed color entry (C-06): RGB, HSL or HSV channels, hex and opacity.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorChannelFields.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ColorChannelFields } from "@nyc-tron/ui/forge/color/ColorChannelFields";`
-- Peers: react, react-native
+- Import: `import { ColorChannelFields } from "@nyc-tron/ui/components/forge/color/ColorChannelFields";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

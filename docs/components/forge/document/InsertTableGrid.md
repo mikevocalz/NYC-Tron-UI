@@ -1,14 +1,14 @@
 ---
 name: "InsertTableGrid"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/InsertTableGrid"
+subpath: "@nyc-tron/ui/components/forge/document/InsertTableGrid"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.accent", "color.border", "color.surfaceRaised", "color.text", "space.2"]
+tokens: ["color.accent", "color.border", "color.surfaceRaised", "color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InsertTableGrid
@@ -23,8 +23,8 @@ Native touch selection plus numeric insertion for larger tables and keyboard/acc
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/InsertTableGrid.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { InsertTableGrid } from "@nyc-tron/ui/forge/document/InsertTableGrid";`
-- Peers: react, react-native, react-native-gesture-handler, zustand
+- Import: `import { InsertTableGrid } from "@nyc-tron/ui/components/forge/document/InsertTableGrid";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -68,7 +68,7 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=InsertTableGrid
-import { InsertTableGrid } from "@nyc-tron/ui/forge/document/InsertTableGrid";
+import { InsertTableGrid } from "@nyc-tron/ui/components/forge/document/InsertTableGrid";
 
 export function Example() {
   return <InsertTableGrid onInsert={() => {}} />;

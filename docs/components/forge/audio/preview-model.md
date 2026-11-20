@@ -1,7 +1,7 @@
 ---
 name: "PreviewModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/preview-model"
+subpath: "@nyc-tron/ui/components/forge/audio/preview-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Presentational playback states for `AudioPreview`.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/preview-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { presentPreview } from "@nyc-tron/ui/forge/audio/preview-model";`
+- Import: `import { presentPreview } from "@nyc-tron/ui/components/forge/audio/preview-model";`
 - Peers: react, react-native
 - Requires: none
 

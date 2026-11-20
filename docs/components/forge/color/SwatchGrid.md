@@ -1,14 +1,14 @@
 ---
 name: "SwatchGrid"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/SwatchGrid"
+subpath: "@nyc-tron/ui/components/forge/color/SwatchGrid"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.0.5", "space.1.5", "space.2"]
+tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SwatchGrid
@@ -23,8 +23,8 @@ Searchable swatch groups (C-13).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/SwatchGrid.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SwatchGrid } from "@nyc-tron/ui/forge/color/SwatchGrid";`
-- Peers: react, react-native
+- Import: `import { SwatchGrid } from "@nyc-tron/ui/components/forge/color/SwatchGrid";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button
 
 ```sh

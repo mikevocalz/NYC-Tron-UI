@@ -1,14 +1,14 @@
 ---
 name: "MidiChannelPicker"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/midi/MidiChannelPicker"
+subpath: "@nyc-tron/ui/components/forge/midi/MidiChannelPicker"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_45", "radius.control", "space.1", "space.1.5"]
+tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/forge/midi/MIDIPianoRoll"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MidiChannelPicker
@@ -23,8 +23,8 @@ Controlled MIDI channel stepper for one note or clip: a visible "Ch" label, the 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/MidiChannelPicker.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MidiChannelPicker, MidiValueStepper } from "@nyc-tron/ui/forge/midi/MidiChannelPicker";`
-- Peers: react, react-native
+- Import: `import { MidiChannelPicker, MidiValueStepper } from "@nyc-tron/ui/components/forge/midi/MidiChannelPicker";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/forge/midi/MIDIPianoRoll
 
 ```sh

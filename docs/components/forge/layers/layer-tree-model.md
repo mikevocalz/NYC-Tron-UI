@@ -1,7 +1,7 @@
 ---
 name: "LayerTreeModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/layer-tree-model"
+subpath: "@nyc-tron/ui/components/forge/layers/layer-tree-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/layer-tree-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { flattenLayerTree, moveLayerTree, validateLayerTree, validateLayerTreeMove } from "@nyc-tron/ui/forge/layers/layer-tree-model";`
+- Import: `import { flattenLayerTree, moveLayerTree, validateLayerTree, validateLayerTreeMove } from "@nyc-tron/ui/components/forge/layers/layer-tree-model";`
 - Peers: react, react-native
 - Requires: none
 

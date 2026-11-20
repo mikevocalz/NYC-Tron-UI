@@ -1,12 +1,12 @@
 ---
 name: "StatusBar"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/StatusBar"
+subpath: "@nyc-tron/ui/components/shell/StatusBar"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "shell"
-tokens: ["border.1_5", "border.4", "color.accent", "color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.4", "radius.control", "space.1.5", "space.3"]
+tokens: ["color.accent", "color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/shell/MenuButton"]
 a11yStatus: "unverified"
 ---
@@ -20,8 +20,8 @@ Application status bar with zoom steps and menu, units menu, selection summary a
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { StatusBar } from "@nyc-tron/ui/shell/StatusBar";`
-- Peers: react, react-native
+- Import: `import { StatusBar } from "@nyc-tron/ui/components/shell/StatusBar";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/shell/MenuButton
 
 ```sh

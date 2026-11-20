@@ -1,14 +1,14 @@
 ---
 name: "SlideFilmstrip"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/SlideFilmstrip"
+subpath: "@nyc-tron/ui/components/forge/slides/SlideFilmstrip"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["SlideFilmstrip.space.8", "color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "font.12", "radius.1", "radius.control", "space.0.5", "space.0.75", "space.1", "space.1.5", "space.2"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls", "@nyc-tron/forge/slides/SlideThumbnail"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SlideFilmstrip
@@ -23,8 +23,8 @@ Vertical slide filmstrip (J-01): numbered thumbnails drawn from the slide's obje
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideFilmstrip.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SlideFilmstrip } from "@nyc-tron/ui/forge/slides/SlideFilmstrip";`
-- Peers: react, react-native
+- Import: `import { SlideFilmstrip } from "@nyc-tron/ui/components/forge/slides/SlideFilmstrip";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls, @nyc-tron/forge/slides/SlideThumbnail
 
 ```sh

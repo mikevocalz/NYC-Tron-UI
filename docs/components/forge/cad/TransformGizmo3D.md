@@ -1,12 +1,12 @@
 ---
 name: "TransformGizmo3D"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/cad/TransformGizmo3D"
+subpath: "@nyc-tron/ui/components/forge/cad/TransformGizmo3D"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PointEditor2D", "@nyc-tron/forge/inputs/PropertyInspector", "@nyc-tron/forge/motion/Transform3DInspector"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/TransformGizmo3D.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TransformGizmo3D } from "@nyc-tron/ui/forge/cad/TransformGizmo3D";`
-- Peers: react, react-native
+- Import: `import { TransformGizmo3D } from "@nyc-tron/ui/components/forge/cad/TransformGizmo3D";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D, @nyc-tron/forge/inputs/PropertyInspector, @nyc-tron/forge/motion/Transform3DInspector
 
 ```sh

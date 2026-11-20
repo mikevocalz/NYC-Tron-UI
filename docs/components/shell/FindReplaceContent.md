@@ -1,12 +1,12 @@
 ---
 name: "FindReplaceContent"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/FindReplaceContent"
+subpath: "@nyc-tron/ui/components/shell/FindReplaceContent"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "input"
-tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.2", "space.3"]
+tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Find and replace form with match navigation, replace one or all, and async searc
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { FindReplaceContent } from "@nyc-tron/ui/shell/FindReplaceContent";`
-- Peers: react, react-native, zustand
+- Import: `import { FindReplaceContent } from "@nyc-tron/ui/components/shell/FindReplaceContent";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

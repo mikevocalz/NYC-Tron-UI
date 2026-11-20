@@ -1,12 +1,12 @@
 ---
 name: "ThemeAndTemplateGallery"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/ThemeAndTemplateGallery"
+subpath: "@nyc-tron/ui/components/forge/slides/ThemeAndTemplateGallery"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.3"]
+tokens: []
 registryDependencies: ["@nyc-tron/forge/inputs/AssetPresetGallery", "@nyc-tron/forge/inputs/PropertyInspector"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ThemeAndTemplateGallery.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ThemeAndTemplateGallery } from "@nyc-tron/ui/forge/slides/ThemeAndTemplateGallery";`
-- Peers: react, react-native
+- Import: `import { ThemeAndTemplateGallery } from "@nyc-tron/ui/components/forge/slides/ThemeAndTemplateGallery";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/forge/inputs/AssetPresetGallery, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

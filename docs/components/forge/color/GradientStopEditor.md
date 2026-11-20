@@ -1,12 +1,12 @@
 ---
 name: "GradientStopEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/GradientStopEditor"
+subpath: "@nyc-tron/ui/components/forge/color/GradientStopEditor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/forge/color/ColorChannelFields", "@nyc-tron/shell/UnitInput"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Edits stop positions and RGBA, inserts interpolated stops and prevents fewer tha
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/GradientStopEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { GradientStopEditor } from "@nyc-tron/ui/forge/color/GradientStopEditor";`
-- Peers: react, react-native, zustand
+- Import: `import { GradientStopEditor } from "@nyc-tron/ui/components/forge/color/GradientStopEditor";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/forge/color/ColorChannelFields, @nyc-tron/shell/UnitInput
 
 ```sh

@@ -1,7 +1,7 @@
 ---
 name: "TextField"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/TextField"
+subpath: "@nyc-tron/ui/components/TextField"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,7 +20,7 @@ Labeled TextInput with helper text, error text, start adornment and error border
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { TextField } from "@nyc-tron/ui/TextField";`
+- Import: `import { TextField } from "@nyc-tron/ui/components/TextField";`
 - Peers: react, react-native
 - Requires: none
 

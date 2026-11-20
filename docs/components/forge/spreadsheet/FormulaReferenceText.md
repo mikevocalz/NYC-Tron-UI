@@ -1,7 +1,7 @@
 ---
 name: "FormulaReferenceText"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/FormulaReferenceText"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/FormulaReferenceText"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/FormulaReferenceText.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FormulaReferenceText } from "@nyc-tron/ui/forge/spreadsheet/FormulaReferenceText";`
+- Import: `import { FormulaReferenceText } from "@nyc-tron/ui/components/forge/spreadsheet/FormulaReferenceText";`
 - Peers: react, react-native
 - Requires: none
 
@@ -67,7 +67,7 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=FormulaReferenceText
-import { FormulaReferenceText } from "@nyc-tron/ui/forge/spreadsheet/FormulaReferenceText";
+import { FormulaReferenceText } from "@nyc-tron/ui/components/forge/spreadsheet/FormulaReferenceText";
 
 export function Example() {
   return <FormulaReferenceText formula="" />;

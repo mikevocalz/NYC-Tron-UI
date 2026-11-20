@@ -1,14 +1,14 @@
 ---
 name: "ChartAndTableEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/ChartAndTableEditor"
+subpath: "@nyc-tron/ui/components/forge/slides/ChartAndTableEditor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.3"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/forge/document/TableLayoutInspector", "@nyc-tron/forge/spreadsheet/ChartBuilder", "@nyc-tron/forge/spreadsheet/VirtualSpreadsheetGrid"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ChartAndTableEditor
@@ -23,8 +23,8 @@ One owner for data, chart series/formatting and table cell layout across office 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ChartAndTableEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ChartAndTableEditor } from "@nyc-tron/ui/forge/slides/ChartAndTableEditor";`
-- Peers: react, react-native, zustand
+- Import: `import { ChartAndTableEditor } from "@nyc-tron/ui/components/forge/slides/ChartAndTableEditor";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/forge/document/TableLayoutInspector, @nyc-tron/forge/spreadsheet/ChartBuilder, @nyc-tron/forge/spreadsheet/VirtualSpreadsheetGrid
 
 ```sh
@@ -66,7 +66,7 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=ChartAndTableEditor
-import { ChartAndTableEditor } from "@nyc-tron/ui/forge/slides/ChartAndTableEditor";
+import { ChartAndTableEditor } from "@nyc-tron/ui/components/forge/slides/ChartAndTableEditor";
 
 export function Example() {
   return <ChartAndTableEditor />;

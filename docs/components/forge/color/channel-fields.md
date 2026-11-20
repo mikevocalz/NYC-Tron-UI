@@ -1,7 +1,7 @@
 ---
 name: "ChannelFieldsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/channel-fields"
+subpath: "@nyc-tron/ui/components/forge/color/channel-fields"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/channel-fields.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { CHANNEL_MODELS, channelFields, parseChannel, parseOpacityPercent, readChannels, writeChannel } from "@nyc-tron/ui/forge/color/channel-fields";`
+- Import: `import { CHANNEL_MODELS, channelFields, parseChannel, parseOpacityPercent, readChannels, writeChannel } from "@nyc-tron/ui/components/forge/color/channel-fields";`
 - Peers: react, react-native
 - Requires: none
 

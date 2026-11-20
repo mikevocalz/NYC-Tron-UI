@@ -1,7 +1,7 @@
 ---
 name: "MaskModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/mask-model"
+subpath: "@nyc-tron/ui/components/forge/layers/mask-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Engine-neutral layer-mask contract for `MaskThumbnailAndEditor` (B-12).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/mask-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { FEATHER_RANGE, GROW_RANGE, MASK_FILLS, NO_REFINE, maskBlockedReason, maskFillReason, maskStateLabel, maskStatusText } from "@nyc-tron/ui/forge/layers/mask-model";`
+- Import: `import { FEATHER_RANGE, GROW_RANGE, MASK_FILLS, NO_REFINE, maskBlockedReason, maskFillReason, maskStateLabel, maskStatusText } from "@nyc-tron/ui/components/forge/layers/mask-model";`
 - Peers: react, react-native
 - Requires: none
 

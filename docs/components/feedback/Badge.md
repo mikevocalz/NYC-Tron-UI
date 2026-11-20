@@ -1,12 +1,12 @@
 ---
 name: "Badge"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/feedback/Badge"
+subpath: "@nyc-tron/ui/components/feedback/Badge"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "feedback"
-tokens: ["border.3", "color.accent", "color.border", "color.danger", "color.info", "color.success", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
+tokens: ["color.accent", "color.border", "color.danger", "color.info", "color.success", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
 a11yStatus: "reviewed-pass"
 ---
@@ -20,8 +20,8 @@ Small status badge with neutral, info, success, danger or accent tone, a status 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Badge } from "@nyc-tron/ui/feedback/Badge";`
-- Peers: react, react-native
+- Import: `import { Badge } from "@nyc-tron/ui/components/feedback/Badge";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

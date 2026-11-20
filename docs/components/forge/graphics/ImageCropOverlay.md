@@ -1,14 +1,14 @@
 ---
 name: "ImageCropOverlay"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/graphics/ImageCropOverlay"
+subpath: "@nyc-tron/ui/components/forge/graphics/ImageCropOverlay"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["border.2", "color.accent", "color.surfaceRaised", "color.text", "font.11", "opacity.0_35"]
+tokens: ["color.accent", "color.surfaceRaised", "color.text"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ImageCropOverlay
@@ -23,8 +23,8 @@ Native interactive crop overlay only.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/graphics/ImageCropOverlay.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ImageCropOverlay } from "@nyc-tron/ui/forge/graphics/ImageCropOverlay";`
-- Peers: react, react-native, react-native-gesture-handler, zustand
+- Import: `import { ImageCropOverlay } from "@nyc-tron/ui/components/forge/graphics/ImageCropOverlay";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
 - Requires: none
 
 ```sh

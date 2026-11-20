@@ -1,14 +1,14 @@
 ---
 name: "TransformOriginHandle"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/TransformOriginHandle"
+subpath: "@nyc-tron/ui/components/forge/canvas/TransformOriginHandle"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.text", "opacity.0_5", "radius.6", "radius.control", "space.1", "space.2"]
+tokens: ["color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.text", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TransformOriginHandle
@@ -23,8 +23,8 @@ Pivot editor for one layer (B-08).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/TransformOriginHandle.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TransformOriginHandle } from "@nyc-tron/ui/forge/canvas/TransformOriginHandle";`
-- Peers: react, react-native
+- Import: `import { TransformOriginHandle } from "@nyc-tron/ui/components/forge/canvas/TransformOriginHandle";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

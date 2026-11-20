@@ -1,12 +1,12 @@
 ---
 name: "PropertyInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/inputs/PropertyInspector"
+subpath: "@nyc-tron/ui/components/forge/inputs/PropertyInspector"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.text", "color.textMuted", "radius.control", "space.1", "space.1.5", "space.2", "space.2.5"]
+tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/UnitInput"]
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Form built from a field list of number, choice, boolean and text properties, com
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { PropertyInspector } from "@nyc-tron/ui/forge/inputs/PropertyInspector";`
-- Peers: react, react-native, zustand
+- Import: `import { PropertyInspector } from "@nyc-tron/ui/components/forge/inputs/PropertyInspector";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh

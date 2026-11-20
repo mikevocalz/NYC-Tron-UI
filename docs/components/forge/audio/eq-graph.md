@@ -1,7 +1,7 @@
 ---
 name: "EqGraphModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/eq-graph"
+subpath: "@nyc-tron/ui/components/forge/audio/eq-graph"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Plot math for {@linkcode EQFrequencyGraph}: log-frequency and dB mapping, gridli
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/eq-graph.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { EQ_DEFAULT_RANGE_DB, EQ_FREQ_FINE_OCT, EQ_FREQ_STEP_OCT, EQ_GAIN_LIMIT_DB, EQ_MAX_BANDS, EQ_MAX_HZ, EQ_MAX_Q, EQ_MIN_HZ } from "@nyc-tron/ui/forge/audio/eq-graph";`
+- Import: `import { EQ_DEFAULT_RANGE_DB, EQ_FREQ_FINE_OCT, EQ_FREQ_STEP_OCT, EQ_GAIN_LIMIT_DB, EQ_MAX_BANDS, EQ_MAX_HZ, EQ_MAX_Q, EQ_MIN_HZ } from "@nyc-tron/ui/components/forge/audio/eq-graph";`
 - Peers: react, react-native
 - Requires: none
 

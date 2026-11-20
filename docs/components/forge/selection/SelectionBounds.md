@@ -1,14 +1,14 @@
 ---
 name: "SelectionBounds"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/selection/SelectionBounds"
+subpath: "@nyc-tron/ui/components/forge/selection/SelectionBounds"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.focus", "color.primary", "color.surfaceRaised", "color.text", "font.10", "opacity.0_5", "radius.control"]
+tokens: ["color.focus", "color.primary", "color.surfaceRaised", "color.text", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SelectionBounds
@@ -23,8 +23,8 @@ Scope-safe move/resize/rotation handles.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/SelectionBounds.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SelectionBounds } from "@nyc-tron/ui/forge/selection/SelectionBounds";`
-- Peers: react, react-native, react-native-gesture-handler, zustand
+- Import: `import { SelectionBounds } from "@nyc-tron/ui/components/forge/selection/SelectionBounds";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
 - Requires: none
 
 ```sh

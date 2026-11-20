@@ -1,7 +1,7 @@
 ---
 name: "FrameAndComponentTree"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/design/FrameAndComponentTree"
+subpath: "@nyc-tron/ui/components/forge/design/FrameAndComponentTree"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ One hierarchy owner with native focus, expansion and virtualization.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/FrameAndComponentTree.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FrameAndComponentTree } from "@nyc-tron/ui/forge/design/FrameAndComponentTree";`
+- Import: `import { FrameAndComponentTree } from "@nyc-tron/ui/components/forge/design/FrameAndComponentTree";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/OutlineTree
 

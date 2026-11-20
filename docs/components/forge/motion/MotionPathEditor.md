@@ -1,7 +1,7 @@
 ---
 name: "MotionPathEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/MotionPathEditor"
+subpath: "@nyc-tron/ui/components/forge/motion/MotionPathEditor"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Spatial trajectory editing reuses the vector editor's native gesture, tangent an
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/MotionPathEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MotionPathEditor } from "@nyc-tron/ui/forge/motion/MotionPathEditor";`
+- Import: `import { MotionPathEditor } from "@nyc-tron/ui/components/forge/motion/MotionPathEditor";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/vector/PenNodeEditor
 

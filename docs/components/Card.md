@@ -1,7 +1,7 @@
 ---
 name: "Card"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/Card"
+subpath: "@nyc-tron/ui/components/Card"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,7 +20,7 @@ Static container View with raised, sunken or transparent surface and optional pa
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Card } from "@nyc-tron/ui/Card";`
+- Import: `import { Card } from "@nyc-tron/ui/components/Card";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,14 +1,14 @@
 ---
 name: "BrushStabilizationPreview"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/ink/BrushStabilizationPreview"
+subpath: "@nyc-tron/ui/components/forge/ink/BrushStabilizationPreview"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/ink/InkStrokePreview", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BrushStabilizationPreview
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/BrushStabilizationPreview.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { BrushStabilizationPreview } from "@nyc-tron/ui/forge/ink/BrushStabilizationPreview";`
-- Peers: react, react-native
+- Import: `import { BrushStabilizationPreview } from "@nyc-tron/ui/components/forge/ink/BrushStabilizationPreview";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/ink/InkStrokePreview, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

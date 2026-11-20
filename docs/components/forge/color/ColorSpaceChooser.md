@@ -1,7 +1,7 @@
 ---
 name: "ColorSpaceChooser"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/ColorSpaceChooser"
+subpath: "@nyc-tron/ui/components/forge/color/ColorSpaceChooser"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Selects an application-provided color profile without conflating assign and conv
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorSpaceChooser.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ColorSpaceChooser } from "@nyc-tron/ui/forge/color/ColorSpaceChooser";`
+- Import: `import { ColorSpaceChooser } from "@nyc-tron/ui/components/forge/color/ColorSpaceChooser";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Select
 

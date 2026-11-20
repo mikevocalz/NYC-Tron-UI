@@ -1,14 +1,14 @@
 ---
 name: "CanvasPanZoom"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/CanvasPanZoom"
+subpath: "@nyc-tron/ui/components/forge/canvas/CanvasPanZoom"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
 tokens: ["color.focus"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CanvasPanZoom
@@ -23,7 +23,7 @@ Native RNGH v3 pan/pinch recognition, non-passive browser wheel, and keyboard/ac
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/CanvasPanZoom.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { CanvasPanZoom } from "@nyc-tron/ui/forge/canvas/CanvasPanZoom";`
+- Import: `import { CanvasPanZoom } from "@nyc-tron/ui/components/forge/canvas/CanvasPanZoom";`
 - Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: none
 

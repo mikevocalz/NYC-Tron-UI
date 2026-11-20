@@ -1,14 +1,14 @@
 ---
 name: "MagicSelectionControls"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/selection/MagicSelectionControls"
+subpath: "@nyc-tron/ui/components/forge/selection/MagicSelectionControls"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "opacity.0_6", "radius.card", "radius.control", "space.1", "space.2"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MagicSelectionControls
@@ -23,8 +23,8 @@ Settings for the magic wand and the selection edge tools (B-20): tolerance, cont
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/MagicSelectionControls.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MagicSelectionControls, MagicWandCanvas } from "@nyc-tron/ui/forge/selection/MagicSelectionControls";`
-- Peers: react, react-native, zustand
+- Import: `import { MagicSelectionControls, MagicWandCanvas } from "@nyc-tron/ui/components/forge/selection/MagicSelectionControls";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

@@ -1,7 +1,7 @@
 ---
 name: "CardsModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/cards-model"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/cards-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/cards-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { CARD_PREVIEW_FIELDS, sheetCardAt, sheetCards } from "@nyc-tron/ui/forge/spreadsheet/cards-model";`
+- Import: `import { CARD_PREVIEW_FIELDS, sheetCardAt, sheetCards } from "@nyc-tron/ui/components/forge/spreadsheet/cards-model";`
 - Peers: react, react-native
 - Requires: none
 

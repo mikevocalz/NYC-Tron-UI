@@ -1,14 +1,14 @@
 ---
 name: "JKLShuttleController"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/JKLShuttleController"
+subpath: "@nyc-tron/ui/components/forge/timeline/JKLShuttleController"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_4", "radius.control", "space.1"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # JKLShuttleController
@@ -23,8 +23,8 @@ J/K/L shuttle (D-09): three 44pt keys and the current rate.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/JKLShuttleController.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { JKLShuttleController } from "@nyc-tron/ui/forge/timeline/JKLShuttleController";`
-- Peers: react, react-native
+- Import: `import { JKLShuttleController } from "@nyc-tron/ui/components/forge/timeline/JKLShuttleController";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -75,7 +75,7 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=JKLShuttleController
-import { JKLShuttleController } from "@nyc-tron/ui/forge/timeline/JKLShuttleController";
+import { JKLShuttleController } from "@nyc-tron/ui/components/forge/timeline/JKLShuttleController";
 
 export function Example() {
   return <JKLShuttleController rate={0} onRateChange={() => {}} />;

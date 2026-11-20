@@ -1,7 +1,7 @@
 ---
 name: "SheetTabsModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/sheet-tabs-model"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/sheet-tabs-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Tone of a sheet tab's color stripe.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/sheet-tabs-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { MAX_SHEET_NAME_LENGTH, SHEET_TAB_TONES, duplicateSheetName, nextSheetName, sheetNameError, sheetTabKeyTarget, sheetTabMoveIndex } from "@nyc-tron/ui/forge/spreadsheet/sheet-tabs-model";`
+- Import: `import { MAX_SHEET_NAME_LENGTH, SHEET_TAB_TONES, duplicateSheetName, nextSheetName, sheetNameError, sheetTabKeyTarget, sheetTabMoveIndex } from "@nyc-tron/ui/components/forge/spreadsheet/sheet-tabs-model";`
 - Peers: react, react-native
 - Requires: none
 

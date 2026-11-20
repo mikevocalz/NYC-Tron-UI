@@ -1,14 +1,14 @@
 ---
 name: "StickerMotionLane"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/StickerMotionLane"
+subpath: "@nyc-tron/ui/components/forge/timeline/StickerMotionLane"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/forge/motion/MotionKeyframeTimeline", "@nyc-tron/forge/timeline/InOutRangeHandles", "@nyc-tron/shell/MenuButton"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # StickerMotionLane
@@ -23,8 +23,8 @@ Sticker objects retain their own ranges, transforms and shared editable motion k
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/StickerMotionLane.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { StickerMotionLane } from "@nyc-tron/ui/forge/timeline/StickerMotionLane";`
-- Peers: react, react-native, react-native-gesture-handler
+- Import: `import { StickerMotionLane } from "@nyc-tron/ui/components/forge/timeline/StickerMotionLane";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/motion/MotionKeyframeTimeline, @nyc-tron/forge/timeline/InOutRangeHandles, @nyc-tron/shell/MenuButton
 
 ```sh

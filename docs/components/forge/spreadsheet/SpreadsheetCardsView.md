@@ -1,14 +1,14 @@
 ---
 name: "SpreadsheetCardsView"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/SpreadsheetCardsView"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/SpreadsheetCardsView"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control", "space.1.5", "space.2", "space.3"]
+tokens: ["color.border", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SpreadsheetCardsView
@@ -23,8 +23,8 @@ Explicit record mode.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SpreadsheetCardsView.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SpreadsheetCardsView } from "@nyc-tron/ui/forge/spreadsheet/SpreadsheetCardsView";`
-- Peers: react, react-native, zustand
+- Import: `import { SpreadsheetCardsView } from "@nyc-tron/ui/components/forge/spreadsheet/SpreadsheetCardsView";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

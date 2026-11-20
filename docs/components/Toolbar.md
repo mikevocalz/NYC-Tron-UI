@@ -1,7 +1,7 @@
 ---
 name: "Toolbar"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/Toolbar"
+subpath: "@nyc-tron/ui/components/Toolbar"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
@@ -20,7 +20,7 @@ Header bar with title, leading slot and actions group in default or compact dens
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Toolbar } from "@nyc-tron/ui/Toolbar";`
+- Import: `import { Toolbar } from "@nyc-tron/ui/components/Toolbar";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,7 +1,7 @@
 ---
 name: "SmartGuidesModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/smart-guides-model"
+subpath: "@nyc-tron/ui/components/forge/canvas/smart-guides-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Smart guide math for {@linkcode SmartGuides} (B-05): while a layer moves, find w
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/smart-guides-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { SMART_GUIDE_MAX_OTHERS, SMART_GUIDE_THRESHOLD, computeSmartGuides, smartGuideSummary, validateSmartGuideResult } from "@nyc-tron/ui/forge/canvas/smart-guides-model";`
+- Import: `import { SMART_GUIDE_MAX_OTHERS, SMART_GUIDE_THRESHOLD, computeSmartGuides, smartGuideSummary, validateSmartGuideResult } from "@nyc-tron/ui/components/forge/canvas/smart-guides-model";`
 - Peers: react, react-native
 - Requires: none
 

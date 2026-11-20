@@ -1,7 +1,7 @@
 ---
 name: "ChoiceKeysModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forms/choice-keys"
+subpath: "@nyc-tron/ui/components/forms/choice-keys"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Keyboard models shared by SegmentedControl, TabBar, Toolbar and Select.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forms/choice-keys.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { arrowStep, domIsRTL, isModified, nextChoiceIndex, rovingStop, typeaheadIndex, webKey } from "@nyc-tron/ui/forms/choice-keys";`
+- Import: `import { arrowStep, domIsRTL, isModified, nextChoiceIndex, rovingStop, typeaheadIndex, webKey } from "@nyc-tron/ui/components/forms/choice-keys";`
 - Peers: react, react-native
 - Requires: none
 

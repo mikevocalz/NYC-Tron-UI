@@ -1,14 +1,14 @@
 ---
 name: "MIDIPianoRoll"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/midi/MIDIPianoRoll"
+subpath: "@nyc-tron/ui/components/forge/midi/MIDIPianoRoll"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_45", "radius.2", "radius.card", "radius.control", "space.1", "space.1.5", "space.2", "space.3"]
+tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/midi/MidiChannelPicker"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MIDIPianoRoll
@@ -23,8 +23,8 @@ Controlled MIDI note editor for one clip.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/MIDIPianoRoll.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MIDIPianoRoll } from "@nyc-tron/ui/forge/midi/MIDIPianoRoll";`
-- Peers: react, react-native, zustand
+- Import: `import { MIDIPianoRoll } from "@nyc-tron/ui/components/forge/midi/MIDIPianoRoll";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/midi/MidiChannelPicker
 
 ```sh

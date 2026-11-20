@@ -1,7 +1,7 @@
 ---
 name: "ReusableStylesPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/design/ReusableStylesPanel"
+subpath: "@nyc-tron/ui/components/forge/design/ReusableStylesPanel"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/ReusableStylesPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ReusableStylesPanel } from "@nyc-tron/ui/forge/design/ReusableStylesPanel";`
+- Import: `import { ReusableStylesPanel } from "@nyc-tron/ui/components/forge/design/ReusableStylesPanel";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/AssetPresetGallery
 

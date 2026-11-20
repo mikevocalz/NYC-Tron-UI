@@ -1,7 +1,7 @@
 ---
 name: "DragControllerModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/gestures/drag-controller"
+subpath: "@nyc-tron/ui/components/gestures/drag-controller"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/gestures/drag-controller.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { createDragController } from "@nyc-tron/ui/gestures/drag-controller";`
+- Import: `import { createDragController } from "@nyc-tron/ui/components/gestures/drag-controller";`
 - Peers: react, react-native
 - Requires: none
 

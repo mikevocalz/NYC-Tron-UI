@@ -1,14 +1,14 @@
 ---
 name: "MotionTrackingOverlay"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/MotionTrackingOverlay"
+subpath: "@nyc-tron/ui/components/forge/timeline/MotionTrackingOverlay"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/selection/SelectionBounds"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MotionTrackingOverlay
@@ -23,8 +23,8 @@ Actual tracking measurements over the host frame, plus scoped manual correction.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/MotionTrackingOverlay.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MotionTrackingOverlay } from "@nyc-tron/ui/forge/timeline/MotionTrackingOverlay";`
-- Peers: react, react-native
+- Import: `import { MotionTrackingOverlay } from "@nyc-tron/ui/components/forge/timeline/MotionTrackingOverlay";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/selection/SelectionBounds
 
 ```sh

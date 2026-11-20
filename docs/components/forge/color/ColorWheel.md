@@ -1,14 +1,14 @@
 ---
 name: "ColorWheel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/ColorWheel"
+subpath: "@nyc-tron/ui/components/forge/color/ColorWheel"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["border.1", "border.2", "color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "opacity.0_45"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorWheel
@@ -23,8 +23,8 @@ Controlled hue ring (C-03).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorWheel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ColorWheel } from "@nyc-tron/ui/forge/color/ColorWheel";`
-- Peers: react, react-native
+- Import: `import { ColorWheel } from "@nyc-tron/ui/components/forge/color/ColorWheel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

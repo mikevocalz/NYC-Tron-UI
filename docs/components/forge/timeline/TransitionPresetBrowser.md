@@ -1,14 +1,14 @@
 ---
 name: "TransitionPresetBrowser"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/TransitionPresetBrowser"
+subpath: "@nyc-tron/ui/components/forge/timeline/TransitionPresetBrowser"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["-space.3", "TransitionPresetBrowser.border.6", "TransitionPresetBrowser.opacity.0_85", "border.8", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.2", "radius.3", "radius.control", "space.0.5", "space.0.75", "space.1", "space.1.5", "space.2", "space.3"]
+tokens: ["-space.3", "TransitionPresetBrowser.opacity.0_85", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/TextField", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TransitionPresetBrowser
@@ -23,8 +23,8 @@ Transition chooser (D-37): search, a list of kinds with a drawn diagram each, a 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TransitionPresetBrowser.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TransitionPresetBrowser } from "@nyc-tron/ui/forge/timeline/TransitionPresetBrowser";`
-- Peers: react, react-native
+- Import: `import { TransitionPresetBrowser } from "@nyc-tron/ui/components/forge/timeline/TransitionPresetBrowser";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage
 
 ```sh

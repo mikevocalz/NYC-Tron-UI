@@ -1,7 +1,7 @@
 ---
 name: "PanResponderDrag"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/gestures/PanResponderDrag"
+subpath: "@nyc-tron/ui/components/gestures/PanResponderDrag"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,7 +20,7 @@ Single-touch drag transport on React Native PanResponder, no gesture-handler dep
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { PanResponderDrag } from "@nyc-tron/ui/gestures/PanResponderDrag";`
+- Import: `import { PanResponderDrag } from "@nyc-tron/ui/components/gestures/PanResponderDrag";`
 - Peers: react, react-native
 - Requires: none
 

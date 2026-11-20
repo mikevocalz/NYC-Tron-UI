@@ -1,14 +1,14 @@
 ---
 name: "NavigationOutline"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/NavigationOutline"
+subpath: "@nyc-tron/ui/components/forge/document/NavigationOutline"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control", "space.0.5", "space.1", "space.1.5", "space.2", "space.2.5", "space.3"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # NavigationOutline
@@ -23,8 +23,8 @@ Navigation pane for text documents (H-15): the heading outline with collapse and
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/NavigationOutline.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { NavigationOutline } from "@nyc-tron/ui/forge/document/NavigationOutline";`
-- Peers: react, react-native
+- Import: `import { NavigationOutline } from "@nyc-tron/ui/components/forge/document/NavigationOutline";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh

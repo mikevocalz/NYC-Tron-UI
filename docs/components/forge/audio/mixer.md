@@ -1,7 +1,7 @@
 ---
 name: "MixerModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/mixer"
+subpath: "@nyc-tron/ui/components/forge/audio/mixer"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Mixer state helpers for {@linkcode MixingConsole} and {@linkcode SoloMuteButtons
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/mixer.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { audibility, describeAudibility } from "@nyc-tron/ui/forge/audio/mixer";`
+- Import: `import { audibility, describeAudibility } from "@nyc-tron/ui/components/forge/audio/mixer";`
 - Peers: react, react-native
 - Requires: none
 

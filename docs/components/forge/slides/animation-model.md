@@ -1,7 +1,7 @@
 ---
 name: "AnimationModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/animation-model"
+subpath: "@nyc-tron/ui/components/forge/slides/animation-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ When in a slide's life an effect plays.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/animation-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { ANIMATION_MAX_SECONDS, SLIDE_ANIMATION_EFFECTS, effectLabel, formatSeconds, parseSeconds, playOrder, timelineEnd } from "@nyc-tron/ui/forge/slides/animation-model";`
+- Import: `import { ANIMATION_MAX_SECONDS, SLIDE_ANIMATION_EFFECTS, effectLabel, formatSeconds, parseSeconds, playOrder, timelineEnd } from "@nyc-tron/ui/components/forge/slides/animation-model";`
 - Peers: react, react-native
 - Requires: none
 

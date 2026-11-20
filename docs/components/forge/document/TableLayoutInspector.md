@@ -1,12 +1,12 @@
 ---
 name: "TableLayoutInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/TableLayoutInspector"
+subpath: "@nyc-tron/ui/components/forge/document/TableLayoutInspector"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/TableLayoutInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TableLayoutInspector } from "@nyc-tron/ui/forge/document/TableLayoutInspector";`
-- Peers: react, react-native
+- Import: `import { TableLayoutInspector } from "@nyc-tron/ui/components/forge/document/TableLayoutInspector";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

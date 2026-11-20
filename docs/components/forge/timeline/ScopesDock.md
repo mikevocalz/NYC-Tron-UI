@@ -1,14 +1,14 @@
 ---
 name: "ScopesDock"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/ScopesDock"
+subpath: "@nyc-tron/ui/components/forge/timeline/ScopesDock"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/forge/color/VideoScopesPanel"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ScopesDock
@@ -23,8 +23,8 @@ Actual decoder/compositor measurements, with source/program assignment and stale
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/ScopesDock.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ScopesDock } from "@nyc-tron/ui/forge/timeline/ScopesDock";`
-- Peers: react, react-native
+- Import: `import { ScopesDock } from "@nyc-tron/ui/components/forge/timeline/ScopesDock";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/forge/color/VideoScopesPanel
 
 ```sh

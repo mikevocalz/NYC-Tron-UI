@@ -1,12 +1,12 @@
 ---
 name: "SplitButton"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/SplitButton"
+subpath: "@nyc-tron/ui/components/shell/SplitButton"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "input"
-tokens: ["-space.1", "border.1", "border.1_5", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "opacity.0_4", "opacity.0_5", "radius.control"]
+tokens: ["color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/overlays/CommandPopover", "@nyc-tron/shell/MenuButton"]
 a11yStatus: "unverified"
 ---
@@ -20,8 +20,8 @@ Primary action button joined to a dropdown menu of command items, for React Nati
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { SplitButton } from "@nyc-tron/ui/shell/SplitButton";`
-- Peers: react, react-native
+- Import: `import { SplitButton } from "@nyc-tron/ui/components/shell/SplitButton";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/overlays/CommandPopover, @nyc-tron/shell/MenuButton
 
 ```sh

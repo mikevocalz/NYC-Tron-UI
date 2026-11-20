@@ -1,7 +1,7 @@
 ---
 name: "ShuttleModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/shuttle"
+subpath: "@nyc-tron/ui/components/forge/timeline/shuttle"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ J/K/L shuttle (D-09).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/shuttle.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { DEFAULT_SHUTTLE_LADDER, assertLadder, shuttleLabel, shuttleRate } from "@nyc-tron/ui/forge/timeline/shuttle";`
+- Import: `import { DEFAULT_SHUTTLE_LADDER, assertLadder, shuttleLabel, shuttleRate } from "@nyc-tron/ui/components/forge/timeline/shuttle";`
 - Peers: react, react-native
 - Requires: none
 

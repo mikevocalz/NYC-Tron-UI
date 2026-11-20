@@ -1,14 +1,14 @@
 ---
 name: "SpreadsheetGrid"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/SpreadsheetGrid"
+subpath: "@nyc-tron/ui/components/forge/SpreadsheetGrid"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.danger", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "font.11", "space.2"]
+tokens: ["color.border", "color.danger", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/spreadsheet/FormulaBar", "@nyc-tron/gestures/PanResponderDrag"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SpreadsheetGrid
@@ -23,8 +23,8 @@ Three-pane sheet: frozen headers and frozen rows/columns sit outside the body sc
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/SpreadsheetGrid.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SpreadsheetGrid } from "@nyc-tron/ui/forge/SpreadsheetGrid";`
-- Peers: react, react-native, zustand
+- Import: `import { SpreadsheetGrid } from "@nyc-tron/ui/components/forge/SpreadsheetGrid";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/spreadsheet/FormulaBar, @nyc-tron/gestures/PanResponderDrag
 
 ```sh

@@ -1,12 +1,12 @@
 ---
 name: "ToolRail"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/ToolRail"
+subpath: "@nyc-tron/ui/components/shell/ToolRail"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "shell"
-tokens: ["ToolRail.border.5", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "radius.control"]
+tokens: ["color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/overlays/CommandPopover"]
 a11yStatus: "unverified"
 ---
@@ -20,7 +20,7 @@ Toolbar rail of tool buttons, vertical on the left or right edge or a row at the
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { ToolRail } from "@nyc-tron/ui/shell/ToolRail";`
+- Import: `import { ToolRail } from "@nyc-tron/ui/components/shell/ToolRail";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/overlays/CommandPopover
 

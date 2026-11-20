@@ -1,14 +1,14 @@
 ---
 name: "PrototypeConnectionTool"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/design/PrototypeConnectionTool"
+subpath: "@nyc-tron/ui/components/forge/design/PrototypeConnectionTool"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PointEditor2D"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PrototypeConnectionTool
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/PrototypeConnectionTool.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PrototypeConnectionTool } from "@nyc-tron/ui/forge/design/PrototypeConnectionTool";`
-- Peers: react, react-native
+- Import: `import { PrototypeConnectionTool } from "@nyc-tron/ui/components/forge/design/PrototypeConnectionTool";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D
 
 ```sh

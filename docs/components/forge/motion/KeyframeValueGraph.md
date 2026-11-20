@@ -1,7 +1,7 @@
 ---
 name: "KeyframeValueGraph"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/KeyframeValueGraph"
+subpath: "@nyc-tron/ui/components/forge/motion/KeyframeValueGraph"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Native Bezier value/time handles and exact numeric keyframe edits.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/KeyframeValueGraph.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { KeyframeValueGraph } from "@nyc-tron/ui/forge/motion/KeyframeValueGraph";`
+- Import: `import { KeyframeValueGraph } from "@nyc-tron/ui/components/forge/motion/KeyframeValueGraph";`
 - Peers: react, react-native
 - Requires: none
 

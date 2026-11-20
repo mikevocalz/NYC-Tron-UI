@@ -1,7 +1,7 @@
 ---
 name: "RibbonModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/ribbon-model"
+subpath: "@nyc-tron/ui/components/forge/document/ribbon-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Character toggles on the ribbon's font group.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/ribbon-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { FONT_SIZE_MAX, FONT_SIZE_MIN, FONT_SIZE_STEPS, INLINE_TOGGLES, TEXT_CASE_LABELS, applyTextCase, nextToggle, ribbonShortcut } from "@nyc-tron/ui/forge/document/ribbon-model";`
+- Import: `import { FONT_SIZE_MAX, FONT_SIZE_MIN, FONT_SIZE_STEPS, INLINE_TOGGLES, TEXT_CASE_LABELS, applyTextCase, nextToggle, ribbonShortcut } from "@nyc-tron/ui/components/forge/document/ribbon-model";`
 - Peers: react, react-native
 - Requires: none
 

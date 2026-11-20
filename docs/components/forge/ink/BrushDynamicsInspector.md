@@ -1,14 +1,14 @@
 ---
 name: "BrushDynamicsInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/ink/BrushDynamicsInspector"
+subpath: "@nyc-tron/ui/components/forge/ink/BrushDynamicsInspector"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BrushDynamicsInspector
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/BrushDynamicsInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { BrushDynamicsInspector } from "@nyc-tron/ui/forge/ink/BrushDynamicsInspector";`
-- Peers: react, react-native
+- Import: `import { BrushDynamicsInspector } from "@nyc-tron/ui/components/forge/ink/BrushDynamicsInspector";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

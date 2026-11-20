@@ -1,14 +1,14 @@
 ---
 name: "GamutWarning"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/GamutWarning"
+subpath: "@nyc-tron/ui/components/forge/color/GamutWarning"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1", "space.2", "space.3"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # GamutWarning
@@ -23,8 +23,8 @@ Announces the actual measured sample count; no guessed gamut test or clipping.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/GamutWarning.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { GamutWarning } from "@nyc-tron/ui/forge/color/GamutWarning";`
-- Peers: react, react-native
+- Import: `import { GamutWarning } from "@nyc-tron/ui/components/forge/color/GamutWarning";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button
 
 ```sh

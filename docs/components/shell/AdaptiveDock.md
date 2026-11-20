@@ -1,12 +1,12 @@
 ---
 name: "AdaptiveDock"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/AdaptiveDock"
+subpath: "@nyc-tron/ui/components/shell/AdaptiveDock"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "shell"
-tokens: ["border.2", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.2", "radius.card", "radius.control", "space.0.5", "space.0.75", "space.1"]
+tokens: ["color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/DragGrabHandle", "@nyc-tron/shell/MenuButton", "@nyc-tron/shell/PaneSplitter"]
 a11yStatus: "unverified"
 ---
@@ -20,7 +20,7 @@ Dockable panel layout of tabbed and floating panels; merges into one stack below
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { AdaptiveDock } from "@nyc-tron/ui/shell/AdaptiveDock";`
+- Import: `import { AdaptiveDock } from "@nyc-tron/ui/components/shell/AdaptiveDock";`
 - Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/DragGrabHandle, @nyc-tron/shell/MenuButton, @nyc-tron/shell/PaneSplitter
 

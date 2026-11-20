@@ -1,14 +1,14 @@
 ---
 name: "EasingPresetGallery"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/EasingPresetGallery"
+subpath: "@nyc-tron/ui/components/forge/motion/EasingPresetGallery"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "opacity.0_5", "radius.control", "space.1", "space.2", "space.2.5"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EasingPresetGallery
@@ -23,8 +23,8 @@ Complete typed easing intents.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/EasingPresetGallery.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { EasingPresetGallery } from "@nyc-tron/ui/forge/motion/EasingPresetGallery";`
-- Peers: react, react-native
+- Import: `import { EasingPresetGallery } from "@nyc-tron/ui/components/forge/motion/EasingPresetGallery";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

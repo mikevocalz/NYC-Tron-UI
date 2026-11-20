@@ -1,14 +1,14 @@
 ---
 name: "LiveRecordingWaveform"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/LiveRecordingWaveform"
+subpath: "@nyc-tron/ui/components/forge/audio/LiveRecordingWaveform"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.accent", "color.text", "space.2"]
+tokens: ["color.accent", "color.text"]
 registryDependencies: ["@nyc-tron/forge/audio/LevelMeter"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LiveRecordingWaveform
@@ -23,8 +23,8 @@ A rolling view of measured capture windows.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LiveRecordingWaveform.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LiveRecordingWaveform } from "@nyc-tron/ui/forge/audio/LiveRecordingWaveform";`
-- Peers: react, react-native, zustand
+- Import: `import { LiveRecordingWaveform } from "@nyc-tron/ui/components/forge/audio/LiveRecordingWaveform";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/forge/audio/LevelMeter
 
 ```sh

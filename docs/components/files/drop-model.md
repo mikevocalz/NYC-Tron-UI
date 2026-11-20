@@ -1,7 +1,7 @@
 ---
 name: "DropModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/files/drop-model"
+subpath: "@nyc-tron/ui/components/files/drop-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Platform-free rules shared by the web and native DropZone and FilePicker: `accep
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/files/drop-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { acceptsFile, dragDepth, matchesAccept, matchesMime, parseAccept } from "@nyc-tron/ui/files/drop-model";`
+- Import: `import { acceptsFile, dragDepth, matchesAccept, matchesMime, parseAccept } from "@nyc-tron/ui/components/files/drop-model";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,7 +1,7 @@
 ---
 name: "LoopRangeModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/loop-range"
+subpath: "@nyc-tron/ui/components/forge/timeline/loop-range"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/loop-range.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { loopCommit, loopFromMarks, loopNext, setLoopEdge } from "@nyc-tron/ui/forge/timeline/loop-range";`
+- Import: `import { loopCommit, loopFromMarks, loopNext, setLoopEdge } from "@nyc-tron/ui/components/forge/timeline/loop-range";`
 - Peers: react, react-native
 - Requires: none
 

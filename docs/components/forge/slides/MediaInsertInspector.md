@@ -1,14 +1,14 @@
 ---
 name: "MediaInsertInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/MediaInsertInspector"
+subpath: "@nyc-tron/ui/components/forge/slides/MediaInsertInspector"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1.5", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector", "@nyc-tron/forge/timeline/InOutRangeHandles"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MediaInsertInspector
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/MediaInsertInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MediaInsertInspector } from "@nyc-tron/ui/forge/slides/MediaInsertInspector";`
-- Peers: react, react-native
+- Import: `import { MediaInsertInspector } from "@nyc-tron/ui/components/forge/slides/MediaInsertInspector";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector, @nyc-tron/forge/timeline/InOutRangeHandles
 
 ```sh

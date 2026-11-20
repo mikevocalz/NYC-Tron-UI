@@ -1,14 +1,14 @@
 ---
 name: "AutomationModePicker"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/AutomationModePicker"
+subpath: "@nyc-tron/ui/components/forge/audio/AutomationModePicker"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
 tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AutomationModePicker
@@ -23,7 +23,7 @@ Full mode picker with explicit live-transport capabilities and controlled acknow
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AutomationModePicker.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AutomationModePicker } from "@nyc-tron/ui/forge/audio/AutomationModePicker";`
+- Import: `import { AutomationModePicker } from "@nyc-tron/ui/components/forge/audio/AutomationModePicker";`
 - Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 

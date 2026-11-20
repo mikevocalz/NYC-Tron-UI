@@ -1,7 +1,7 @@
 ---
 name: "BatchModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/batch"
+subpath: "@nyc-tron/ui/components/forge/timeline/batch"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/batch.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { SPEED_RANGE, batchRemove, batchRippleDelete, batchShift, batchSpeed, selectedClips } from "@nyc-tron/ui/forge/timeline/batch";`
+- Import: `import { SPEED_RANGE, batchRemove, batchRippleDelete, batchShift, batchSpeed, selectedClips } from "@nyc-tron/ui/components/forge/timeline/batch";`
 - Peers: react, react-native
 - Requires: none
 

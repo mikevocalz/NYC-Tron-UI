@@ -1,7 +1,7 @@
 ---
 name: "TempoModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/tempo"
+subpath: "@nyc-tron/ui/components/forge/audio/tempo"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Tempo, tap-tempo and time-signature math for {@linkcode TempoAndMetronome}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/tempo.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { MAX_BPM, MAX_NUMERATOR, MIN_BPM, TAP_RESET_MS, TAP_WINDOW, TIME_SIG_DENOMINATORS, addTap, assertBpm } from "@nyc-tron/ui/forge/audio/tempo";`
+- Import: `import { MAX_BPM, MAX_NUMERATOR, MIN_BPM, TAP_RESET_MS, TAP_WINDOW, TIME_SIG_DENOMINATORS, addTap, assertBpm } from "@nyc-tron/ui/components/forge/audio/tempo";`
 - Peers: react, react-native
 - Requires: none
 

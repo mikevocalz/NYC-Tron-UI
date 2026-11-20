@@ -1,7 +1,7 @@
 ---
 name: "FrameThrottleModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/frame-throttle"
+subpath: "@nyc-tron/ui/components/forge/frame-throttle"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Scheduler pair for {@linkcode createFrameThrottle}; defaults to `requestAnimatio
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/frame-throttle.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { animationFrameScheduler, createFrameThrottle } from "@nyc-tron/ui/forge/frame-throttle";`
+- Import: `import { animationFrameScheduler, createFrameThrottle } from "@nyc-tron/ui/components/forge/frame-throttle";`
 - Peers: react, react-native
 - Requires: none
 

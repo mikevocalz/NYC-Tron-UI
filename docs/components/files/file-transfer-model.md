@@ -1,7 +1,7 @@
 ---
 name: "FileTransferModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/files/file-transfer-model"
+subpath: "@nyc-tron/ui/components/files/file-transfer-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Platform-free rules for {@linkcode FileImportExportSheet}: export formats, quali
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/files/file-transfer-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { FILENAME_MAX, applyFormat, buildExportRequest, defaultExportSettings, destinationLabel, exportSummary, filenameProblem, importAccept } from "@nyc-tron/ui/files/file-transfer-model";`
+- Import: `import { FILENAME_MAX, applyFormat, buildExportRequest, defaultExportSettings, destinationLabel, exportSummary, filenameProblem, importAccept } from "@nyc-tron/ui/components/files/file-transfer-model";`
 - Peers: react, react-native
 - Requires: none
 

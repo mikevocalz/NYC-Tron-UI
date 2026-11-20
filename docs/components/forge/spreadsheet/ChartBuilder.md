@@ -1,14 +1,14 @@
 ---
 name: "ChartBuilder"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/ChartBuilder"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/ChartBuilder"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.textMuted", "radius.1", "radius.card", "radius.control", "space.1", "space.2", "space.3", "space.4"]
+tokens: ["color.border", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ChartBuilder
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/ChartBuilder.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ChartBuilder } from "@nyc-tron/ui/forge/spreadsheet/ChartBuilder";`
-- Peers: react, react-native
+- Import: `import { ChartBuilder } from "@nyc-tron/ui/components/forge/spreadsheet/ChartBuilder";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

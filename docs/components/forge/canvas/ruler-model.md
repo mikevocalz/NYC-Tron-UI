@@ -1,7 +1,7 @@
 ---
 name: "RulerModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/ruler-model"
+subpath: "@nyc-tron/ui/components/forge/canvas/ruler-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/ruler-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { DEFAULT_DPI, RULER_GUIDE_PAGE_STEP, RULER_GUIDE_STEP, RULER_MAX_TICKS, RULER_MIN_LABEL_SPACING, RULER_MIN_TICK_SPACING, RULER_THICKNESS, RULER_TOUCH_BAND } from "@nyc-tron/ui/forge/canvas/ruler-model";`
+- Import: `import { DEFAULT_DPI, RULER_GUIDE_PAGE_STEP, RULER_GUIDE_STEP, RULER_MAX_TICKS, RULER_MIN_LABEL_SPACING, RULER_MIN_TICK_SPACING, RULER_THICKNESS, RULER_TOUCH_BAND } from "@nyc-tron/ui/components/forge/canvas/ruler-model";`
 - Peers: react, react-native
 - Requires: none
 

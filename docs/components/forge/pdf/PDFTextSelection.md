@@ -1,14 +1,14 @@
 ---
 name: "PDFTextSelection"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/PDFTextSelection"
+subpath: "@nyc-tron/ui/components/forge/pdf/PDFTextSelection"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.accent", "color.text", "space.2"]
+tokens: ["color.accent", "color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PDFTextSelection
@@ -23,8 +23,8 @@ Native PDF reading order and glyph rectangles are supplied by the renderer; Unic
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFTextSelection.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PDFTextSelection } from "@nyc-tron/ui/forge/pdf/PDFTextSelection";`
-- Peers: react, react-native
+- Import: `import { PDFTextSelection } from "@nyc-tron/ui/components/forge/pdf/PDFTextSelection";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

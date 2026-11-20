@@ -1,14 +1,14 @@
 ---
 name: "RecordingArmButton"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/RecordingArmButton"
+subpath: "@nyc-tron/ui/components/forge/audio/RecordingArmButton"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RecordingArmButton
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/RecordingArmButton.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { RecordingArmButton } from "@nyc-tron/ui/forge/audio/RecordingArmButton";`
-- Peers: react, react-native
+- Import: `import { RecordingArmButton } from "@nyc-tron/ui/components/forge/audio/RecordingArmButton";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

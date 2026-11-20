@@ -1,7 +1,7 @@
 ---
 name: "PlacementModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/placement"
+subpath: "@nyc-tron/ui/components/forge/timeline/placement"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/placement.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { placementEdit, placementPreview, trackAtOffset } from "@nyc-tron/ui/forge/timeline/placement";`
+- Import: `import { placementEdit, placementPreview, trackAtOffset } from "@nyc-tron/ui/components/forge/timeline/placement";`
 - Peers: react, react-native
 - Requires: none
 

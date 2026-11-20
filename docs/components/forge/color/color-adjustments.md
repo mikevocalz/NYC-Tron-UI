@@ -1,7 +1,7 @@
 ---
 name: "ColorAdjustmentsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/color-adjustments"
+subpath: "@nyc-tron/ui/components/forge/color/color-adjustments"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Normalized point used by CurvesEditor; x is input and y is output.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/color-adjustments.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { bounded, evaluateCurve, moveCurvePoint, poolHistogram, poolScope, validateCurve, validateGrade, validateHSLSecondary } from "@nyc-tron/ui/forge/color/color-adjustments";`
+- Import: `import { bounded, evaluateCurve, moveCurvePoint, poolHistogram, poolScope, validateCurve, validateGrade, validateHSLSecondary } from "@nyc-tron/ui/components/forge/color/color-adjustments";`
 - Peers: react, react-native
 - Requires: none
 

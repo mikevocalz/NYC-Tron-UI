@@ -1,7 +1,7 @@
 ---
 name: "MotionEffectsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/motion-effects"
+subpath: "@nyc-tron/ui/components/forge/motion/motion-effects"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/motion-effects.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { moveMotionEffect, validateEffectChoices, validateEffectParameterValue, validateMotionEffects } from "@nyc-tron/ui/forge/motion/motion-effects";`
+- Import: `import { moveMotionEffect, validateEffectChoices, validateEffectParameterValue, validateMotionEffects } from "@nyc-tron/ui/components/forge/motion/motion-effects";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,14 +1,14 @@
 ---
 name: "VideoScopesPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/VideoScopesPanel"
+subpath: "@nyc-tron/ui/components/forge/color/VideoScopesPanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.primary", "color.text", "color.textMuted", "space.1", "space.2"]
+tokens: ["color.primary", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/forge/color/LiveHistogram"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VideoScopesPanel
@@ -23,8 +23,8 @@ Renders actual decoded measurements with bounded density pooling; no synthetic s
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/VideoScopesPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { VideoScopesPanel } from "@nyc-tron/ui/forge/color/VideoScopesPanel";`
-- Peers: react, react-native
+- Import: `import { VideoScopesPanel } from "@nyc-tron/ui/components/forge/color/VideoScopesPanel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/forge/color/LiveHistogram
 
 ```sh

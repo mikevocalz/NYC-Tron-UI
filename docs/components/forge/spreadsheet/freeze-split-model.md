@@ -1,7 +1,7 @@
 ---
 name: "FreezeSplitModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/freeze-split-model"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/freeze-split-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/freeze-split-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { SPLIT_KEY_STEP, dragSplitRatio, freezeFor, splitGeometry } from "@nyc-tron/ui/forge/spreadsheet/freeze-split-model";`
+- Import: `import { SPLIT_KEY_STEP, dragSplitRatio, freezeFor, splitGeometry } from "@nyc-tron/ui/components/forge/spreadsheet/freeze-split-model";`
 - Peers: react, react-native
 - Requires: none
 

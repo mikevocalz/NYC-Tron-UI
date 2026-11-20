@@ -1,14 +1,14 @@
 ---
 name: "ClippingModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/clipping-model"
+subpath: "@nyc-tron/ui/components/forge/layers/clipping-model"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
 tokens: []
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ClippingModelModule
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/clipping-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { CLIP_INDENT, GROUP_INDENT, clipAccessibilityPhrase, clipReason, clipTarget, clipToggleLabel, clippingParent, resolveClipping } from "@nyc-tron/ui/forge/layers/clipping-model";`
+- Import: `import { CLIP_INDENT, GROUP_INDENT, clipAccessibilityPhrase, clipReason, clipTarget, clipToggleLabel, clippingParent, resolveClipping } from "@nyc-tron/ui/components/forge/layers/clipping-model";`
 - Peers: react, react-native
 - Requires: none
 

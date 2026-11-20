@@ -1,14 +1,14 @@
 ---
 name: "AudioInterruptionRecoveryDialog"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/AudioInterruptionRecoveryDialog"
+subpath: "@nyc-tron/ui/components/forge/audio/AudioInterruptionRecoveryDialog"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.danger", "color.surfaceRaised", "color.text", "color.textMuted", "radius.card", "space.2", "space.4"]
+tokens: ["color.border", "color.danger", "color.surfaceRaised", "color.text", "color.textMuted", "radius.card"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioInterruptionRecoveryDialog
@@ -23,8 +23,8 @@ Explicit recovery decisions; rejected actions keep the dialog open with the erro
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AudioInterruptionRecoveryDialog.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AudioInterruptionRecoveryDialog } from "@nyc-tron/ui/forge/audio/AudioInterruptionRecoveryDialog";`
-- Peers: react, react-native, zustand
+- Import: `import { AudioInterruptionRecoveryDialog } from "@nyc-tron/ui/components/forge/audio/AudioInterruptionRecoveryDialog";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button
 
 ```sh

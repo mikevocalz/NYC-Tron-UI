@@ -1,7 +1,7 @@
 ---
 name: "TypographyInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/TypographyInspector"
+subpath: "@nyc-tron/ui/components/forge/document/TypographyInspector"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/TypographyInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TypographyInspector } from "@nyc-tron/ui/forge/document/TypographyInspector";`
+- Import: `import { TypographyInspector } from "@nyc-tron/ui/components/forge/document/TypographyInspector";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 

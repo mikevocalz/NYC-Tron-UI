@@ -1,7 +1,7 @@
 ---
 name: "SparklineModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/sparkline-model"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/sparkline-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ In-cell chart family.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/sparkline-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { SPARKLINE_KINDS, sparklineGeometry, sparklineSpecProblem } from "@nyc-tron/ui/forge/spreadsheet/sparkline-model";`
+- Import: `import { SPARKLINE_KINDS, sparklineGeometry, sparklineSpecProblem } from "@nyc-tron/ui/components/forge/spreadsheet/sparkline-model";`
 - Peers: react, react-native
 - Requires: none
 

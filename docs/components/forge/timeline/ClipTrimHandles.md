@@ -1,14 +1,14 @@
 ---
 name: "ClipTrimHandles"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/ClipTrimHandles"
+subpath: "@nyc-tron/ui/components/forge/timeline/ClipTrimHandles"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.focus", "color.surfaceRaised", "radius.1", "radius.4", "radius.control"]
+tokens: ["color.focus", "color.surfaceRaised", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ClipTrimHandles
@@ -23,8 +23,8 @@ Head and tail trim handles for the selected clip (D-19).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/ClipTrimHandles.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ClipTrimHandles } from "@nyc-tron/ui/forge/timeline/ClipTrimHandles";`
-- Peers: react, react-native
+- Import: `import { ClipTrimHandles } from "@nyc-tron/ui/components/forge/timeline/ClipTrimHandles";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

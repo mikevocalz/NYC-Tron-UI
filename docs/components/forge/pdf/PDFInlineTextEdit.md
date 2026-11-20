@@ -1,14 +1,14 @@
 ---
 name: "PDFInlineTextEdit"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/PDFInlineTextEdit"
+subpath: "@nyc-tron/ui/components/forge/pdf/PDFInlineTextEdit"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.text", "radius.control", "space.2"]
+tokens: ["color.border", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PDFInlineTextEdit
@@ -23,8 +23,8 @@ Actual native PDF hit tests/font admission and save acknowledgement; edits never
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFInlineTextEdit.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PDFInlineTextEdit } from "@nyc-tron/ui/forge/pdf/PDFInlineTextEdit";`
-- Peers: react, react-native, react-native-gesture-handler, zustand
+- Import: `import { PDFInlineTextEdit } from "@nyc-tron/ui/components/forge/pdf/PDFInlineTextEdit";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh

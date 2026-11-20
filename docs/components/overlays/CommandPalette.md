@@ -1,12 +1,12 @@
 ---
 name: "CommandPalette"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/overlays/CommandPalette"
+subpath: "@nyc-tron/ui/components/overlays/CommandPalette"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "overlay"
-tokens: ["CommandPalette.space.1_75", "color.border", "color.danger", "color.primary", "color.surfaceRaised", "color.text", "color.textMuted", "font.12", "opacity.0_4", "radius.control", "space.3", "space.4"]
+tokens: ["color.border", "color.danger", "color.primary", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/TextField"]
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Searchable command list in a modal, with keyboard selection and an empty-results
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { CommandPalette } from "@nyc-tron/ui/overlays/CommandPalette";`
-- Peers: react, react-native, zustand
+- Import: `import { CommandPalette } from "@nyc-tron/ui/components/overlays/CommandPalette";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/TextField
 
 ```sh

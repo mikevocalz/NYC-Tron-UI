@@ -1,14 +1,14 @@
 ---
 name: "SparklineEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/SparklineEditor"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/SparklineEditor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.surfaceRaised", "color.surfaceSunken", "color.textMuted", "font.12", "radius.card", "radius.control", "space.1.5", "space.2", "space.3", "space.4"]
+tokens: ["color.border", "color.surfaceRaised", "color.surfaceSunken", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/spreadsheet/Sparkline"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SparklineEditor
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SparklineEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SparklineEditor } from "@nyc-tron/ui/forge/spreadsheet/SparklineEditor";`
-- Peers: react, react-native
+- Import: `import { SparklineEditor } from "@nyc-tron/ui/components/forge/spreadsheet/SparklineEditor";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/spreadsheet/Sparkline
 
 ```sh

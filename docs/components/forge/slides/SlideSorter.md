@@ -1,14 +1,14 @@
 ---
 name: "SlideSorter"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/SlideSorter"
+subpath: "@nyc-tron/ui/components/forge/slides/SlideSorter"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["-space.0.5", "border.2", "color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.textMuted", "radius.10", "radius.control", "space.0.5", "space.1", "space.1.5", "space.2.5"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls", "@nyc-tron/forge/slides/SlideThumbnail"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SlideSorter
@@ -23,8 +23,8 @@ Slide sorter grid (J-02) with multiselect: a press selects one slide, Cmd/Ctrl a
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideSorter.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SlideSorter } from "@nyc-tron/ui/forge/slides/SlideSorter";`
-- Peers: react, react-native
+- Import: `import { SlideSorter } from "@nyc-tron/ui/components/forge/slides/SlideSorter";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls, @nyc-tron/forge/slides/SlideThumbnail
 
 ```sh

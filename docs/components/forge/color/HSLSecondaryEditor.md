@@ -1,12 +1,12 @@
 ---
 name: "HSLSecondaryEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/HSLSecondaryEditor"
+subpath: "@nyc-tron/ui/components/forge/color/HSLSecondaryEditor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.textMuted", "space.2"]
+tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/shell/UnitInput"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Edits wrapping hue selection, saturation/luma bounds, mask refinement and correc
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/HSLSecondaryEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { HSLSecondaryEditor } from "@nyc-tron/ui/forge/color/HSLSecondaryEditor";`
-- Peers: react, react-native
+- Import: `import { HSLSecondaryEditor } from "@nyc-tron/ui/components/forge/color/HSLSecondaryEditor";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh

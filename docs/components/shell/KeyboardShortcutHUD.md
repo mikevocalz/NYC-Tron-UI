@@ -1,12 +1,12 @@
 ---
 name: "KeyboardShortcutHUD"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/KeyboardShortcutHUD"
+subpath: "@nyc-tron/ui/components/shell/KeyboardShortcutHUD"
 tier: 1
 docs: "handwritten"
 platforms: ["ios", "web"]
 category: "overlay"
-tokens: ["KeyboardShortcutHUD.space.1_25", "border.1_5", "color.border", "color.danger", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control", "space.0.5", "space.0.75", "space.1", "space.1.5", "space.2", "space.2.5", "space.4"]
+tokens: ["color.border", "color.danger", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/shell/InspectorSearch"]
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Searchable keyboard shortcut list grouped by category, with rebinding and Apple 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { KeyboardShortcutHUD } from "@nyc-tron/ui/shell/KeyboardShortcutHUD";`
-- Peers: react, react-native, zustand
+- Import: `import { KeyboardShortcutHUD } from "@nyc-tron/ui/components/shell/KeyboardShortcutHUD";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/shell/InspectorSearch
 
 ```sh

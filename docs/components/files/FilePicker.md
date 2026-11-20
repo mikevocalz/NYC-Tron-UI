@@ -1,14 +1,14 @@
 ---
 name: "FilePicker"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/files/FilePicker"
+subpath: "@nyc-tron/ui/components/files/FilePicker"
 tier: 2
 docs: "generated"
 platforms: ["ios", "android", "web"]
 category: "primitive"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FilePicker
@@ -23,7 +23,7 @@ iOS and Android: a button that opens the OS document picker through `documentSou
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/files/FilePicker.native.tsx,packages/ui/src/components/files/FilePicker.types.ts,packages/ui/src/components/files/FilePicker.web.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FilePicker } from "@nyc-tron/ui/files/FilePicker";`
+- Import: `import { FilePicker } from "@nyc-tron/ui/components/files/FilePicker";`
 - Peers: react, react-native, zustand
 - Requires: none
 
@@ -79,7 +79,7 @@ none
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=FilePicker
-import { FilePicker } from "@nyc-tron/ui/files/FilePicker";
+import { FilePicker } from "@nyc-tron/ui/components/files/FilePicker";
 
 export function Example() {
   return <FilePicker label="" />;

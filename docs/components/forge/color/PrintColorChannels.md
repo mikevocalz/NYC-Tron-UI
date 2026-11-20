@@ -1,12 +1,12 @@
 ---
 name: "PrintColorChannels"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/PrintColorChannels"
+subpath: "@nyc-tron/ui/components/forge/color/PrintColorChannels"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/shell/UnitInput"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Edits actual CMYK percentages or signed Lab channels without approximating ICC c
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/PrintColorChannels.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PrintColorChannels } from "@nyc-tron/ui/forge/color/PrintColorChannels";`
-- Peers: react, react-native
+- Import: `import { PrintColorChannels } from "@nyc-tron/ui/components/forge/color/PrintColorChannels";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/shell/UnitInput
 
 ```sh

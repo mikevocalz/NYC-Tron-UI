@@ -1,14 +1,14 @@
 ---
 name: "SplitSpreadsheetView"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/SplitSpreadsheetView"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/SplitSpreadsheetView"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.textMuted", "radius.2"]
+tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.textMuted"]
 registryDependencies: ["@nyc-tron/gestures/PanResponderDrag"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SplitSpreadsheetView
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SplitSpreadsheetView.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SplitSpreadsheetView } from "@nyc-tron/ui/forge/spreadsheet/SplitSpreadsheetView";`
-- Peers: react, react-native, zustand
+- Import: `import { SplitSpreadsheetView } from "@nyc-tron/ui/components/forge/spreadsheet/SplitSpreadsheetView";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag
 
 ```sh

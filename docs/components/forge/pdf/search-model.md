@@ -1,7 +1,7 @@
 ---
 name: "SearchModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/search-model"
+subpath: "@nyc-tron/ui/components/forge/pdf/search-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Most hits one search keeps.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/search-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { PDF_SEARCH_MAX_HITS, PDF_SEARCH_SNIPPET_RADIUS, findInPageText, groupHitsByPage, insertPageHits, searchPageOrder, searchSummary, stepHit } from "@nyc-tron/ui/forge/pdf/search-model";`
+- Import: `import { PDF_SEARCH_MAX_HITS, PDF_SEARCH_SNIPPET_RADIUS, findInPageText, groupHitsByPage, insertPageHits, searchPageOrder, searchSummary, stepHit } from "@nyc-tron/ui/components/forge/pdf/search-model";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,7 +1,7 @@
 ---
 name: "TransitionPresetsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/transition-presets"
+subpath: "@nyc-tron/ui/components/forge/timeline/transition-presets"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/transition-presets.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { TRANSITION_KINDS, filterTransitionKinds, transitionDiagram } from "@nyc-tron/ui/forge/timeline/transition-presets";`
+- Import: `import { TRANSITION_KINDS, filterTransitionKinds, transitionDiagram } from "@nyc-tron/ui/components/forge/timeline/transition-presets";`
 - Peers: react, react-native
 - Requires: none
 

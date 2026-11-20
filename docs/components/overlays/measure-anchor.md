@@ -1,7 +1,7 @@
 ---
 name: "MeasureAnchorModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/overlays/measure-anchor"
+subpath: "@nyc-tron/ui/components/overlays/measure-anchor"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/overlays/measure-anchor.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { measureAnchor, windowRegions } from "@nyc-tron/ui/overlays/measure-anchor";`
+- Import: `import { measureAnchor, windowRegions } from "@nyc-tron/ui/components/overlays/measure-anchor";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,7 +1,7 @@
 ---
 name: "VerticalFader"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/VerticalFader"
+subpath: "@nyc-tron/ui/components/forge/audio/VerticalFader"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Canonical vertical name for the shared fader owner, including fine/numeric/reset
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/VerticalFader.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { VerticalFader } from "@nyc-tron/ui/forge/audio/VerticalFader";`
+- Import: `import { VerticalFader } from "@nyc-tron/ui/components/forge/audio/VerticalFader";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/audio/LevelFader
 

@@ -1,7 +1,7 @@
 ---
 name: "SplitterModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/splitter-model"
+subpath: "@nyc-tron/ui/components/shell/splitter-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/splitter-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { hingeBands, mirrorBands, resolveSplit, sizeForEdge, startSizeFor, stepSplit } from "@nyc-tron/ui/shell/splitter-model";`
+- Import: `import { hingeBands, mirrorBands, resolveSplit, sizeForEdge, startSizeFor, stepSplit } from "@nyc-tron/ui/components/shell/splitter-model";`
 - Peers: @nyc-tron/core, react, react-native
 - Requires: none
 

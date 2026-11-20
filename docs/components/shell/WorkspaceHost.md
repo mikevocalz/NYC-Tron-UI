@@ -1,12 +1,12 @@
 ---
 name: "WorkspaceHost"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/WorkspaceHost"
+subpath: "@nyc-tron/ui/components/shell/WorkspaceHost"
 tier: 1
 docs: "handwritten"
 platforms: ["ios", "web", "macos"]
 category: "shell"
-tokens: ["border.4", "color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "radius.4", "radius.control", "space.0.5", "space.1", "space.2"]
+tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/shell/AdaptiveDock"]
 a11yStatus: "unverified"
 ---
@@ -20,7 +20,7 @@ Workspace shell with mode tabs, per-mode dock layouts and Ctrl or Cmd+1..9 short
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { WorkspaceHost } from "@nyc-tron/ui/shell/WorkspaceHost";`
+- Import: `import { WorkspaceHost } from "@nyc-tron/ui/components/shell/WorkspaceHost";`
 - Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/shell/AdaptiveDock
 

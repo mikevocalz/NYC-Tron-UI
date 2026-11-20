@@ -1,14 +1,14 @@
 ---
 name: "ChannelStrip"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/ChannelStrip"
+subpath: "@nyc-tron/ui/components/forge/audio/ChannelStrip"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["ChannelStrip.space.2_25", "color.danger", "color.surfaceSunken", "color.text", "color.textMuted", "space.1", "space.1.5", "space.3"]
+tokens: ["color.danger", "color.surfaceSunken", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/forge/audio/LevelFader", "@nyc-tron/forge/audio/LevelMeter", "@nyc-tron/forge/audio/PanControl", "@nyc-tron/forge/audio/SoloMuteButtons"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ChannelStrip
@@ -23,8 +23,8 @@ One mixer column: routing and group line, level fader with dB readout, optional 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/ChannelStrip.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ChannelStrip } from "@nyc-tron/ui/forge/audio/ChannelStrip";`
-- Peers: react, react-native
+- Import: `import { ChannelStrip } from "@nyc-tron/ui/components/forge/audio/ChannelStrip";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/forge/audio/LevelFader, @nyc-tron/forge/audio/LevelMeter, @nyc-tron/forge/audio/PanControl, @nyc-tron/forge/audio/SoloMuteButtons
 
 ```sh

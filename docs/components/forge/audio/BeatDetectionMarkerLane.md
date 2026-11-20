@@ -1,14 +1,14 @@
 ---
 name: "BeatDetectionMarkerLane"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/BeatDetectionMarkerLane"
+subpath: "@nyc-tron/ui/components/forge/audio/BeatDetectionMarkerLane"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/forge/timeline/TimelineMarkers"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BeatDetectionMarkerLane
@@ -23,8 +23,8 @@ Actual host beat detection, sharing timeline marker movement, naming, adding and
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/BeatDetectionMarkerLane.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { BeatDetectionMarkerLane } from "@nyc-tron/ui/forge/audio/BeatDetectionMarkerLane";`
-- Peers: react, react-native
+- Import: `import { BeatDetectionMarkerLane } from "@nyc-tron/ui/components/forge/audio/BeatDetectionMarkerLane";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/timeline/TimelineMarkers
 
 ```sh

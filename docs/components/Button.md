@@ -1,7 +1,7 @@
 ---
 name: "Button"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/Button"
+subpath: "@nyc-tron/ui/components/Button"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,8 +20,8 @@ Pressable text button with primary, secondary, ghost and danger variants, loadin
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Button } from "@nyc-tron/ui/Button";`
-- Peers: react, react-native
+- Import: `import { Button } from "@nyc-tron/ui/components/Button";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

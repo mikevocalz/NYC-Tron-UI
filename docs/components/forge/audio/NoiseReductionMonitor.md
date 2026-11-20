@@ -1,7 +1,7 @@
 ---
 name: "NoiseReductionMonitor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/NoiseReductionMonitor"
+subpath: "@nyc-tron/ui/components/forge/audio/NoiseReductionMonitor"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Original/cleaned audition with actual host measurements and reversible processin
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/NoiseReductionMonitor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { NoiseReductionMonitor } from "@nyc-tron/ui/forge/audio/NoiseReductionMonitor";`
+- Import: `import { NoiseReductionMonitor } from "@nyc-tron/ui/components/forge/audio/NoiseReductionMonitor";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/audio/AudioProcessingPanel
 

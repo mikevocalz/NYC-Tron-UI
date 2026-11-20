@@ -1,14 +1,14 @@
 ---
 name: "CollaborationPresence"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/design/CollaborationPresence"
+subpath: "@nyc-tron/ui/components/forge/design/CollaborationPresence"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["border.1", "border.3", "color.surfaceRaised", "color.text", "space.1", "space.2"]
+tokens: ["color.surfaceRaised", "color.text"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CollaborationPresence
@@ -23,8 +23,8 @@ Geometry is already mapped into viewport points by the collaboration host; no wa
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/CollaborationPresence.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { CollaborationPresence } from "@nyc-tron/ui/forge/design/CollaborationPresence";`
-- Peers: react, react-native
+- Import: `import { CollaborationPresence } from "@nyc-tron/ui/components/forge/design/CollaborationPresence";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button
 
 ```sh

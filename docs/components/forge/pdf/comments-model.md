@@ -1,7 +1,7 @@
 ---
 name: "CommentsModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/comments-model"
+subpath: "@nyc-tron/ui/components/forge/pdf/comments-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ One comment in a thread.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/comments-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { groupThreads, resolveReply, threadCounts, threadLabel } from "@nyc-tron/ui/forge/pdf/comments-model";`
+- Import: `import { groupThreads, resolveReply, threadCounts, threadLabel } from "@nyc-tron/ui/components/forge/pdf/comments-model";`
 - Peers: react, react-native
 - Requires: none
 

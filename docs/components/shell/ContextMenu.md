@@ -1,7 +1,7 @@
 ---
 name: "ContextMenu"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/ContextMenu"
+subpath: "@nyc-tron/ui/components/shell/ContextMenu"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,8 +20,8 @@ Wraps a target to open a command menu on right-click, long-press, keyboard or sc
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { ContextMenu } from "@nyc-tron/ui/shell/ContextMenu";`
-- Peers: react, react-native, zustand
+- Import: `import { ContextMenu } from "@nyc-tron/ui/components/shell/ContextMenu";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/overlays/CommandPopover
 
 ```sh

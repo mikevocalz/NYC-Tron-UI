@@ -1,7 +1,7 @@
 ---
 name: "LayerModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/layer-model"
+subpath: "@nyc-tron/ui/components/forge/layers/layer-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Engine-neutral layer list contract.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/layer-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { LAYER_NAME_MIN_WIDTH, LAYER_OPACITY_READOUT_WIDTH, LAYER_OPACITY_SLIDER_WIDTH, LAYER_OPACITY_STEP, LAYER_STACK_MAX_ROWS, LAYER_THUMBNAIL_SIZE, LAYER_TOUCH_TARGET, dragTargetIndex } from "@nyc-tron/ui/forge/layers/layer-model";`
+- Import: `import { LAYER_NAME_MIN_WIDTH, LAYER_OPACITY_READOUT_WIDTH, LAYER_OPACITY_SLIDER_WIDTH, LAYER_OPACITY_STEP, LAYER_STACK_MAX_ROWS, LAYER_THUMBNAIL_SIZE, LAYER_TOUCH_TARGET, dragTargetIndex } from "@nyc-tron/ui/components/forge/layers/layer-model";`
 - Peers: react, react-native
 - Requires: none
 

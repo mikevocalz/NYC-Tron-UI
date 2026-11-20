@@ -1,12 +1,12 @@
 ---
 name: "AssetBrowser"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/AssetBrowser"
+subpath: "@nyc-tron/ui/components/shell/AssetBrowser"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "data"
-tokens: ["color.border", "color.focus", "color.text", "color.textMuted", "space.1", "space.2", "space.2.5"]
+tokens: ["color.border", "color.focus", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/InspectorSearch"]
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Asset list with breadcrumb path, search, sort, single or multiple selection and 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { AssetBrowser } from "@nyc-tron/ui/shell/AssetBrowser";`
-- Peers: react, react-native, zustand
+- Import: `import { AssetBrowser } from "@nyc-tron/ui/components/shell/AssetBrowser";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/InspectorSearch
 
 ```sh

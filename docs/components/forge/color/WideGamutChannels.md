@@ -1,12 +1,12 @@
 ---
 name: "WideGamutChannels"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/WideGamutChannels"
+subpath: "@nyc-tron/ui/components/forge/color/WideGamutChannels"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/shell/UnitInput"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Edits floating RGB without quantizing to bytes, clipping to sRGB or guessing a t
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/WideGamutChannels.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { WideGamutChannels } from "@nyc-tron/ui/forge/color/WideGamutChannels";`
-- Peers: react, react-native
+- Import: `import { WideGamutChannels } from "@nyc-tron/ui/components/forge/color/WideGamutChannels";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh

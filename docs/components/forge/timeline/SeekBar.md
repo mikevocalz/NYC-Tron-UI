@@ -1,14 +1,14 @@
 ---
 name: "SeekBar"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/SeekBar"
+subpath: "@nyc-tron/ui/components/forge/timeline/SeekBar"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_45", "radius.control"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SeekBar
@@ -23,8 +23,8 @@ Seek track with played and buffered ranges (D-04).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/SeekBar.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SeekBar } from "@nyc-tron/ui/forge/timeline/SeekBar";`
-- Peers: react, react-native
+- Import: `import { SeekBar } from "@nyc-tron/ui/components/forge/timeline/SeekBar";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

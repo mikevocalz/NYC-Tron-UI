@@ -1,7 +1,7 @@
 ---
 name: "TrimModesModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/trim-modes"
+subpath: "@nyc-tron/ui/components/forge/timeline/trim-modes"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/trim-modes.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { TRIM_MODE_PROBLEM_TEXT, nextTouching, previousTouching, rippleDeletePreview, rippleTracks, rippleTrimEdit, rippleTrimPreview, rollEdit } from "@nyc-tron/ui/forge/timeline/trim-modes";`
+- Import: `import { TRIM_MODE_PROBLEM_TEXT, nextTouching, previousTouching, rippleDeletePreview, rippleTracks, rippleTrimEdit, rippleTrimPreview, rollEdit } from "@nyc-tron/ui/components/forge/timeline/trim-modes";`
 - Peers: react, react-native
 - Requires: none
 

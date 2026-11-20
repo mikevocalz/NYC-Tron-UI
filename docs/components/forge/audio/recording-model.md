@@ -1,7 +1,7 @@
 ---
 name: "RecordingModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/recording-model"
+subpath: "@nyc-tron/ui/components/forge/audio/recording-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Presentational recording states.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/recording-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { formatElapsed, presentRecording, spokenElapsed } from "@nyc-tron/ui/forge/audio/recording-model";`
+- Import: `import { formatElapsed, presentRecording, spokenElapsed } from "@nyc-tron/ui/components/forge/audio/recording-model";`
 - Peers: react, react-native
 - Requires: none
 

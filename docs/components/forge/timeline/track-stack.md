@@ -1,7 +1,7 @@
 ---
 name: "TrackStackModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/track-stack"
+subpath: "@nyc-tron/ui/components/forge/timeline/track-stack"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/track-stack.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { stackMoveTarget, stackOrder } from "@nyc-tron/ui/forge/timeline/track-stack";`
+- Import: `import { stackMoveTarget, stackOrder } from "@nyc-tron/ui/components/forge/timeline/track-stack";`
 - Peers: react, react-native
 - Requires: none
 

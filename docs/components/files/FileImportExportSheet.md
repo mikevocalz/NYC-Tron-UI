@@ -1,14 +1,14 @@
 ---
 name: "FileImportExportSheet"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/files/FileImportExportSheet"
+subpath: "@nyc-tron/ui/components/files/FileImportExportSheet"
 tier: 2
 docs: "generated"
 platforms: ["ios", "android", "web"]
 category: "primitive"
-tokens: ["color.border", "color.danger", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_5", "radius.card", "radius.control", "space.1", "space.2", "space.3", "space.4"]
+tokens: ["color.border", "color.danger", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/TextField", "@nyc-tron/files/FilePicker"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FileImportExportSheet
@@ -23,8 +23,8 @@ Controlled file transfer form with the existing native picker transport.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/files/FileImportExportSheet.native.tsx,packages/ui/src/components/files/FileImportExportSheet.shared.tsx,packages/ui/src/components/files/FileImportExportSheet.web.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FileImportExportSheet } from "@nyc-tron/ui/files/FileImportExportSheet";`
-- Peers: react, react-native, zustand
+- Import: `import { FileImportExportSheet } from "@nyc-tron/ui/components/files/FileImportExportSheet";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/TextField, @nyc-tron/files/FilePicker
 
 ```sh

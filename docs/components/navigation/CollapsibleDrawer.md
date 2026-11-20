@@ -1,12 +1,12 @@
 ---
 name: "CollapsibleDrawer"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/navigation/CollapsibleDrawer"
+subpath: "@nyc-tron/ui/components/navigation/CollapsibleDrawer"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "navigation"
-tokens: ["CollapsibleDrawer.font.22", "color.border", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.text", "radius.control", "space.1", "space.1.5", "space.2"]
+tokens: ["color.border", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.text", "radius.control"]
 registryDependencies: []
 a11yStatus: "unverified"
 ---
@@ -20,8 +20,8 @@ Side navigation drawer menu in expanded, compact or minimal mode, with overlay a
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { CollapsibleDrawer } from "@nyc-tron/ui/navigation/CollapsibleDrawer";`
-- Peers: react, react-native
+- Import: `import { CollapsibleDrawer } from "@nyc-tron/ui/components/navigation/CollapsibleDrawer";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

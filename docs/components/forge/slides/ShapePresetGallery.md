@@ -1,14 +1,14 @@
 ---
 name: "ShapePresetGallery"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/ShapePresetGallery"
+subpath: "@nyc-tron/ui/components/forge/slides/ShapePresetGallery"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.accent", "space.3"]
+tokens: ["color.accent"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/AssetPresetGallery", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ShapePresetGallery
@@ -23,8 +23,8 @@ Source-backed vector previews and a selected native drag handle, plus numeric/ke
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ShapePresetGallery.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ShapePresetGallery } from "@nyc-tron/ui/forge/slides/ShapePresetGallery";`
-- Peers: react, react-native, react-native-gesture-handler, zustand
+- Import: `import { ShapePresetGallery } from "@nyc-tron/ui/components/forge/slides/ShapePresetGallery";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/AssetPresetGallery, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

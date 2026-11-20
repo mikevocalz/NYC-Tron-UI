@@ -1,7 +1,7 @@
 ---
 name: "GradientOptionsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/gradient-options"
+subpath: "@nyc-tron/ui/components/forge/color/gradient-options"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/gradient-options.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { changeGradientType, rotateGradient, sampleGradient, validateGradientOptions } from "@nyc-tron/ui/forge/color/gradient-options";`
+- Import: `import { changeGradientType, rotateGradient, sampleGradient, validateGradientOptions } from "@nyc-tron/ui/components/forge/color/gradient-options";`
 - Peers: react, react-native
 - Requires: none
 

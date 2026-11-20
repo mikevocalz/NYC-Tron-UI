@@ -1,7 +1,7 @@
 ---
 name: "AutoLayoutInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/design/AutoLayoutInspector"
+subpath: "@nyc-tron/ui/components/forge/design/AutoLayoutInspector"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/AutoLayoutInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AutoLayoutInspector } from "@nyc-tron/ui/forge/design/AutoLayoutInspector";`
+- Import: `import { AutoLayoutInspector } from "@nyc-tron/ui/components/forge/design/AutoLayoutInspector";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 

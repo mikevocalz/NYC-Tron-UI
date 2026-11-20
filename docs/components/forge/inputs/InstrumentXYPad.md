@@ -1,14 +1,14 @@
 ---
 name: "InstrumentXYPad"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/inputs/InstrumentXYPad"
+subpath: "@nyc-tron/ui/components/forge/inputs/InstrumentXYPad"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["border.1", "border.2", "color.accent", "color.surfaceRaised", "color.surfaceSunken", "color.text", "opacity.0_35", "opacity.0_45", "radius.9", "radius.control", "space.2", "space.4"]
+tokens: ["color.accent", "color.surfaceRaised", "color.surfaceSunken", "color.text", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InstrumentXYPad
@@ -23,8 +23,8 @@ Multi-input pad with bounded normalized coordinates; no duplicate document state
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/InstrumentXYPad.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { InstrumentXYPad } from "@nyc-tron/ui/forge/inputs/InstrumentXYPad";`
-- Peers: react, react-native, zustand
+- Import: `import { InstrumentXYPad } from "@nyc-tron/ui/components/forge/inputs/InstrumentXYPad";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: none
 
 ```sh

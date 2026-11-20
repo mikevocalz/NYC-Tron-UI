@@ -1,14 +1,14 @@
 ---
 name: "SnapGridSettings"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/SnapGridSettings"
+subpath: "@nyc-tron/ui/components/forge/canvas/SnapGridSettings"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "color.textMuted", "space.1"]
+tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SnapGridSettings
@@ -23,8 +23,8 @@ Small settings control for the grid and snapping (B-04): show grid, grid spacing
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/SnapGridSettings.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SnapGridSettings } from "@nyc-tron/ui/forge/canvas/SnapGridSettings";`
-- Peers: react, react-native
+- Import: `import { SnapGridSettings } from "@nyc-tron/ui/components/forge/canvas/SnapGridSettings";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

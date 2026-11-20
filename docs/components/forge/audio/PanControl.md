@@ -1,14 +1,14 @@
 ---
 name: "PanControl"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/PanControl"
+subpath: "@nyc-tron/ui/components/forge/audio/PanControl"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["border.2", "color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_45", "radius.3", "radius.4", "radius.control", "space.1.5"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PanControl
@@ -23,8 +23,8 @@ Controlled mono pan control.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/PanControl.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PanControl } from "@nyc-tron/ui/forge/audio/PanControl";`
-- Peers: react, react-native, zustand
+- Import: `import { PanControl } from "@nyc-tron/ui/components/forge/audio/PanControl";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: none
 
 ```sh

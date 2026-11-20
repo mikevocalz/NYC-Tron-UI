@@ -1,14 +1,14 @@
 ---
 name: "InputMonitorToggle"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/InputMonitorToggle"
+subpath: "@nyc-tron/ui/components/forge/audio/InputMonitorToggle"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InputMonitorToggle
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/InputMonitorToggle.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { InputMonitorToggle } from "@nyc-tron/ui/forge/audio/InputMonitorToggle";`
-- Peers: react, react-native
+- Import: `import { InputMonitorToggle } from "@nyc-tron/ui/components/forge/audio/InputMonitorToggle";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh

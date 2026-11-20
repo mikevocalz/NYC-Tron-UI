@@ -1,12 +1,12 @@
 ---
 name: "PrecisionScrubber"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/inputs/PrecisionScrubber"
+subpath: "@nyc-tron/ui/components/forge/inputs/PrecisionScrubber"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "forge"
-tokens: ["PrecisionScrubber.space.2_75", "PrecisionScrubber.space.n0_375", "color.accent", "color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_5", "opacity.0_55", "opacity.0_9", "radius.control", "space.0.5", "space.1", "space.1.5", "space.2", "space.2.5"]
+tokens: ["color.accent", "color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/gestures/PanResponderDrag"]
 a11yStatus: "unverified"
 ---
@@ -20,8 +20,8 @@ Drag-to-scrub number control with fine, normal and coarse modes, detents, previe
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { PrecisionScrubber } from "@nyc-tron/ui/forge/inputs/PrecisionScrubber";`
-- Peers: react, react-native, zustand
+- Import: `import { PrecisionScrubber } from "@nyc-tron/ui/components/forge/inputs/PrecisionScrubber";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag
 
 ```sh

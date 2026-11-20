@@ -14,7 +14,8 @@ export const SECTION_KEY = {Purpose: "purpose", Install: "install", Props: "prop
 export const FM_KEYS = ["name", "namespace", "subpath", "tier", "docs", "platforms", "category", "tokens", "registryDependencies", "a11yStatus"];
 export const PLATFORM_ORDER = ["ios", "android", "web", "windows", "macos", "qnx"];
 export const CATEGORIES = ["primitive", "input", "display", "feedback", "navigation", "overlay", "layout", "data", "shell", "forge"];
-export const A11Y_VALUES = ["reviewed-pass", "reviewed-fail", "declared", "unverified", "verified"];
+// Decision 34: verified is reserved for a rendered check, so no page may carry it. Tier 2 pages are never reviewed: unverified.
+export const A11Y_VALUES = ["reviewed-pass", "reviewed-fail", "unverified"];
 
 export const read = (p) => fs.readFileSync(path.join(ROOT, p), "utf8");
 export const readJson = (p) => JSON.parse(read(p));

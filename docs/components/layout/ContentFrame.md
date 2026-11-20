@@ -1,7 +1,7 @@
 ---
 name: "ContentFrame"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/layout/ContentFrame"
+subpath: "@nyc-tron/ui/components/layout/ContentFrame"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,8 +20,8 @@ Width-capped container that aligns its content to the start, center or end of th
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { ContentFrame } from "@nyc-tron/ui/layout/ContentFrame";`
-- Peers: react, react-native
+- Import: `import { ContentFrame } from "@nyc-tron/ui/components/layout/ContentFrame";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

@@ -1,7 +1,7 @@
 ---
 name: "A11yModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/a11y-model"
+subpath: "@nyc-tron/ui/components/shell/a11y-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ How the person last moved focus: by keyboard or by pointer (mouse, touch, pen).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/a11y-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { initialA11yState, modalityAfterKey, motionDuration, queueAnnouncement } from "@nyc-tron/ui/shell/a11y-model";`
+- Import: `import { initialA11yState, modalityAfterKey, motionDuration, queueAnnouncement } from "@nyc-tron/ui/components/shell/a11y-model";`
 - Peers: react, react-native
 - Requires: none
 

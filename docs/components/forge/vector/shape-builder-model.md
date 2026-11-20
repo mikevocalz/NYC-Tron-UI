@@ -1,7 +1,7 @@
 ---
 name: "ShapeBuilderModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/vector/shape-builder-model"
+subpath: "@nyc-tron/ui/components/forge/vector/shape-builder-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Rules and labels for {@linkcode ShapeBuilder} (B-22).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/shape-builder-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { BOOLEAN_OPS, booleanAvailability, booleanIds, booleanOpLabel, groupAvailability, layerKindName, operandAccessibilityLabel, validateBooleanGroup } from "@nyc-tron/ui/forge/vector/shape-builder-model";`
+- Import: `import { BOOLEAN_OPS, booleanAvailability, booleanIds, booleanOpLabel, groupAvailability, layerKindName, operandAccessibilityLabel, validateBooleanGroup } from "@nyc-tron/ui/components/forge/vector/shape-builder-model";`
 - Peers: react, react-native
 - Requires: none
 

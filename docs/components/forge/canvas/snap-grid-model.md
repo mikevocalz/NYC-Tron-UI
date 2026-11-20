@@ -1,7 +1,7 @@
 ---
 name: "SnapGridModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/snap-grid-model"
+subpath: "@nyc-tron/ui/components/forge/canvas/snap-grid-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/snap-grid-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { DEFAULT_GRID, DEFAULT_SNAP, GRID_MAX_LINES, GRID_MAX_SPACING, GRID_MAX_SUBDIVISIONS, GRID_MIN_SCREEN_SPACING, GRID_MIN_SPACING, SNAP_MAX_THRESHOLD } from "@nyc-tron/ui/forge/canvas/snap-grid-model";`
+- Import: `import { DEFAULT_GRID, DEFAULT_SNAP, GRID_MAX_LINES, GRID_MAX_SPACING, GRID_MAX_SUBDIVISIONS, GRID_MIN_SCREEN_SPACING, GRID_MIN_SPACING, SNAP_MAX_THRESHOLD } from "@nyc-tron/ui/components/forge/canvas/snap-grid-model";`
 - Peers: react, react-native
 - Requires: none
 

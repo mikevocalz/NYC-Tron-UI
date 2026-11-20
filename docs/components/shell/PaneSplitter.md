@@ -1,12 +1,12 @@
 ---
 name: "PaneSplitter"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/PaneSplitter"
+subpath: "@nyc-tron/ui/components/shell/PaneSplitter"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "layout"
-tokens: ["PaneSplitter.space.n5_5", "color.accent", "color.border", "color.focus", "color.surfaceSunken"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceSunken"]
 registryDependencies: ["@nyc-tron/gestures/PanResponderDrag"]
 a11yStatus: "reviewed-fail"
 ---
@@ -20,7 +20,7 @@ Two-pane splitter, horizontal or vertical, resizable by drag, keys or accessibil
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { PaneSplitter } from "@nyc-tron/ui/shell/PaneSplitter";`
+- Import: `import { PaneSplitter } from "@nyc-tron/ui/components/shell/PaneSplitter";`
 - Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag
 

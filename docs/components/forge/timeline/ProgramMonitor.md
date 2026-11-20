@@ -1,7 +1,7 @@
 ---
 name: "ProgramMonitor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/ProgramMonitor"
+subpath: "@nyc-tron/ui/components/forge/timeline/ProgramMonitor"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Actual presented-frame telemetry, timeline compositor surface and framing overla
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/ProgramMonitor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ProgramMonitor } from "@nyc-tron/ui/forge/timeline/ProgramMonitor";`
+- Import: `import { ProgramMonitor } from "@nyc-tron/ui/components/forge/timeline/ProgramMonitor";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/timeline/MediaMonitor
 

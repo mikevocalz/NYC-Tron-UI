@@ -1,7 +1,7 @@
 ---
 name: "TabBar"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/TabBar"
+subpath: "@nyc-tron/ui/components/TabBar"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
@@ -20,7 +20,7 @@ Tab strip with tablist or link-navigation semantics, icons and compact density, 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { TabBar } from "@nyc-tron/ui/TabBar";`
+- Import: `import { TabBar } from "@nyc-tron/ui/components/TabBar";`
 - Peers: react, react-native
 - Requires: none
 

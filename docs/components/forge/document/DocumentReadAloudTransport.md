@@ -1,7 +1,7 @@
 ---
 name: "DocumentReadAloudTransport"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/DocumentReadAloudTransport"
+subpath: "@nyc-tron/ui/components/forge/document/DocumentReadAloudTransport"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Read Aloud for a text document (H-21).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/DocumentReadAloudTransport.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { DocumentReadAloudTransport } from "@nyc-tron/ui/forge/document/DocumentReadAloudTransport";`
+- Import: `import { DocumentReadAloudTransport } from "@nyc-tron/ui/components/forge/document/DocumentReadAloudTransport";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/office/ReadAloudTransport
 

@@ -1,7 +1,7 @@
 ---
 name: "ShellKeysModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/shell-keys"
+subpath: "@nyc-tron/ui/components/shell/shell-keys"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Keyboard helpers shared by the studio shell controls.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/shell-keys.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { arrowStep, nodeIsRTL, rovingTarget, shellKey } from "@nyc-tron/ui/shell/shell-keys";`
+- Import: `import { arrowStep, nodeIsRTL, rovingTarget, shellKey } from "@nyc-tron/ui/components/shell/shell-keys";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,14 +1,14 @@
 ---
 name: "SelectionMarquee"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/selection/SelectionMarquee"
+subpath: "@nyc-tron/ui/components/forge/selection/SelectionMarquee"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.border", "color.focus", "color.text", "color.textMuted", "opacity.0_6", "radius.control", "space.2"]
+tokens: ["color.border", "color.focus", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SelectionMarquee
@@ -23,8 +23,8 @@ Marquee selection over a host canvas (B-19): rectangle, ellipse, polygon (click 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/SelectionMarquee.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SelectionMarquee } from "@nyc-tron/ui/forge/selection/SelectionMarquee";`
-- Peers: react, react-native, zustand
+- Import: `import { SelectionMarquee } from "@nyc-tron/ui/components/forge/selection/SelectionMarquee";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh

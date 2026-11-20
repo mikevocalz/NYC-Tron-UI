@@ -1,7 +1,7 @@
 ---
 name: "MeterBallisticsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/meter-ballistics"
+subpath: "@nyc-tron/ui/components/forge/audio/meter-ballistics"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Meter ballistics for the mixer's channel meters.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/meter-ballistics.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { PEAK_HOLD_FLOOR, createPeakHold } from "@nyc-tron/ui/forge/audio/meter-ballistics";`
+- Import: `import { PEAK_HOLD_FLOOR, createPeakHold } from "@nyc-tron/ui/components/forge/audio/meter-ballistics";`
 - Peers: react, react-native
 - Requires: none
 

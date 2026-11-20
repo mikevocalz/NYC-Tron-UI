@@ -1,14 +1,14 @@
 ---
 name: "FloatingColorPalette"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/FloatingColorPalette"
+subpath: "@nyc-tron/ui/components/forge/color/FloatingColorPalette"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control", "space.0.5", "space.1.5", "space.2", "space.3"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/color/FloatingPaletteUndockHandle"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FloatingColorPalette
@@ -23,8 +23,8 @@ Dockable color palette (C-26).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/FloatingColorPalette.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FloatingColorPalette } from "@nyc-tron/ui/forge/color/FloatingColorPalette";`
-- Peers: react, react-native
+- Import: `import { FloatingColorPalette } from "@nyc-tron/ui/components/forge/color/FloatingColorPalette";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/color/FloatingPaletteUndockHandle
 
 ```sh

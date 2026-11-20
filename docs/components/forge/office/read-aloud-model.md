@@ -1,7 +1,7 @@
 ---
 name: "ReadAloudModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/office/read-aloud-model"
+subpath: "@nyc-tron/ui/components/forge/office/read-aloud-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Slowest reading speed, as a multiple of the voice's normal rate.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/office/read-aloud-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { READ_ALOUD_MAX_RATE, READ_ALOUD_MAX_SENTENCE, READ_ALOUD_MAX_SENTENCES, READ_ALOUD_MIN_RATE, READ_ALOUD_RATES, clampRate, formatRate, readAloudPosition } from "@nyc-tron/ui/forge/office/read-aloud-model";`
+- Import: `import { READ_ALOUD_MAX_RATE, READ_ALOUD_MAX_SENTENCE, READ_ALOUD_MAX_SENTENCES, READ_ALOUD_MIN_RATE, READ_ALOUD_RATES, clampRate, formatRate, readAloudPosition } from "@nyc-tron/ui/components/forge/office/read-aloud-model";`
 - Peers: react, react-native
 - Requires: none
 

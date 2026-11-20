@@ -1,7 +1,7 @@
 ---
 name: "NightScope"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/theme/NightScope"
+subpath: "@nyc-tron/ui/components/theme/NightScope"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,7 +20,7 @@ Wrapper that applies a named Uniwind theme scheme to its subtree, for React Nati
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { NightScope } from "@nyc-tron/ui/theme/NightScope";`
+- Import: `import { NightScope } from "@nyc-tron/ui/components/theme/NightScope";`
 - Peers: react, react-native, uniwind
 - Requires: none
 

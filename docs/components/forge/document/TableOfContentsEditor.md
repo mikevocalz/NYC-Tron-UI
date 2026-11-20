@@ -1,12 +1,12 @@
 ---
 name: "TableOfContentsEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/TableOfContentsEditor"
+subpath: "@nyc-tron/ui/components/forge/document/TableOfContentsEditor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1.5", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/TableOfContentsEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TableOfContentsEditor } from "@nyc-tron/ui/forge/document/TableOfContentsEditor";`
-- Peers: react, react-native
+- Import: `import { TableOfContentsEditor } from "@nyc-tron/ui/components/forge/document/TableOfContentsEditor";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

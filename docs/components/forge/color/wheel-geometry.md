@@ -1,7 +1,7 @@
 ---
 name: "WheelGeometryModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/wheel-geometry"
+subpath: "@nyc-tron/ui/components/forge/color/wheel-geometry"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/wheel-geometry.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { FINE_HUE_RATE, HUE_RETAIN_RADIUS, RING_INNER_FRACTION, angleDelta, createRingDrag, discPointToHsv, fromPolar, hsvToDiscPoint } from "@nyc-tron/ui/forge/color/wheel-geometry";`
+- Import: `import { FINE_HUE_RATE, HUE_RETAIN_RADIUS, RING_INNER_FRACTION, angleDelta, createRingDrag, discPointToHsv, fromPolar, hsvToDiscPoint } from "@nyc-tron/ui/components/forge/color/wheel-geometry";`
 - Peers: react, react-native
 - Requires: none
 

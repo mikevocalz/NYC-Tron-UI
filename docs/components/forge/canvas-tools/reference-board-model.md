@@ -1,7 +1,7 @@
 ---
 name: "ReferenceBoardModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas-tools/reference-board-model"
+subpath: "@nyc-tron/ui/components/forge/canvas-tools/reference-board-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas-tools/reference-board-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { REFERENCE_BAR_HEIGHT, REFERENCE_FITS, REFERENCE_KEY_STEP, REFERENCE_MIN_HEIGHT, REFERENCE_MIN_OPACITY, REFERENCE_MIN_WIDTH, REFERENCE_OPACITY_STEP, REFERENCE_PLACEMENTS } from "@nyc-tron/ui/forge/canvas-tools/reference-board-model";`
+- Import: `import { REFERENCE_BAR_HEIGHT, REFERENCE_FITS, REFERENCE_KEY_STEP, REFERENCE_MIN_HEIGHT, REFERENCE_MIN_OPACITY, REFERENCE_MIN_WIDTH, REFERENCE_OPACITY_STEP, REFERENCE_PLACEMENTS } from "@nyc-tron/ui/components/forge/canvas-tools/reference-board-model";`
 - Peers: react, react-native
 - Requires: none
 

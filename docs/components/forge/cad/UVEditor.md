@@ -1,14 +1,14 @@
 ---
 name: "UVEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/cad/UVEditor"
+subpath: "@nyc-tron/ui/components/forge/cad/UVEditor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PointEditor2D"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # UVEditor
@@ -23,8 +23,8 @@ The host supplies the active normalized tile and selected vertex subset; mesh se
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/UVEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { UVEditor } from "@nyc-tron/ui/forge/cad/UVEditor";`
-- Peers: react, react-native
+- Import: `import { UVEditor } from "@nyc-tron/ui/components/forge/cad/UVEditor";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D
 
 ```sh

@@ -1,7 +1,7 @@
 ---
 name: "MenuButton"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/MenuButton"
+subpath: "@nyc-tron/ui/components/shell/MenuButton"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,7 +20,7 @@ Button that opens a command popover menu; ArrowDown opens it on web, for React N
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { MenuButton } from "@nyc-tron/ui/shell/MenuButton";`
+- Import: `import { MenuButton } from "@nyc-tron/ui/components/shell/MenuButton";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/overlays/CommandPopover
 

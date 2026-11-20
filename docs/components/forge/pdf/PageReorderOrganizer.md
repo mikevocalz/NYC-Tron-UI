@@ -1,12 +1,12 @@
 ---
 name: "PageReorderOrganizer"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/PageReorderOrganizer"
+subpath: "@nyc-tron/ui/components/forge/pdf/PageReorderOrganizer"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1.5", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/pdf/PDFThumbnailSidebar"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PageReorderOrganizer.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PageReorderOrganizer } from "@nyc-tron/ui/forge/pdf/PageReorderOrganizer";`
-- Peers: react, react-native, zustand
+- Import: `import { PageReorderOrganizer } from "@nyc-tron/ui/components/forge/pdf/PageReorderOrganizer";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/pdf/PDFThumbnailSidebar
 
 ```sh

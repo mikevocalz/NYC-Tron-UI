@@ -1,12 +1,12 @@
 ---
 name: "WorkspacePresetSwitcher"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/WorkspacePresetSwitcher"
+subpath: "@nyc-tron/ui/components/shell/WorkspacePresetSwitcher"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "shell"
-tokens: ["-space.1", "border.2", "border.4", "color.accent", "color.border", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.4", "radius.card", "space.2", "space.4"]
+tokens: ["color.accent", "color.border", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/TextField", "@nyc-tron/shell/MenuButton"]
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Menu to switch, save, rename, duplicate, reset and delete workspace layout prese
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { WorkspacePresetSwitcher } from "@nyc-tron/ui/shell/WorkspacePresetSwitcher";`
-- Peers: react, react-native, zustand
+- Import: `import { WorkspacePresetSwitcher } from "@nyc-tron/ui/components/shell/WorkspacePresetSwitcher";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/TextField, @nyc-tron/shell/MenuButton
 
 ```sh

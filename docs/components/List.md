@@ -1,7 +1,7 @@
 ---
 name: "List"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/List"
+subpath: "@nyc-tron/ui/components/List"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
@@ -20,7 +20,7 @@ Vertical list of rows with title, supporting text, leading and trailing slots; r
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { List, ListItem } from "@nyc-tron/ui/List";`
+- Import: `import { List, ListItem } from "@nyc-tron/ui/components/List";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,14 +1,14 @@
 ---
 name: "VideoFilmstrip"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/VideoFilmstrip"
+subpath: "@nyc-tron/ui/components/forge/timeline/VideoFilmstrip"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/layers/LayerThumbnail"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VideoFilmstrip
@@ -23,8 +23,8 @@ Only visible frame tiles are mounted; the bounded shared thumbnail cache owns th
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/VideoFilmstrip.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { VideoFilmstrip } from "@nyc-tron/ui/forge/timeline/VideoFilmstrip";`
-- Peers: react, react-native
+- Import: `import { VideoFilmstrip } from "@nyc-tron/ui/components/forge/timeline/VideoFilmstrip";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/layers/LayerThumbnail
 
 ```sh

@@ -1,12 +1,12 @@
 ---
 name: "Banner"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/feedback/Banner"
+subpath: "@nyc-tron/ui/components/feedback/Banner"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "feedback"
-tokens: ["-space.2.5", "color.border", "color.danger", "color.focus", "color.info", "color.success", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
+tokens: ["color.border", "color.danger", "color.focus", "color.info", "color.success", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: []
 a11yStatus: "reviewed-pass"
 ---
@@ -20,8 +20,8 @@ Inline status banner with info, success, danger or neutral tone, title, descript
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Banner } from "@nyc-tron/ui/feedback/Banner";`
-- Peers: react, react-native
+- Import: `import { Banner } from "@nyc-tron/ui/components/feedback/Banner";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

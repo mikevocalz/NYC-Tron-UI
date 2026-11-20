@@ -1,7 +1,7 @@
 ---
 name: "MagicSelectionModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/selection/magic-selection-model"
+subpath: "@nyc-tron/ui/components/forge/selection/magic-selection-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Settings and request builders for {@linkcode MagicSelectionControls} and {@linkc
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/magic-selection-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { MAX_SELECTION_RADIUS, MAX_TOLERANCE, WAND_SAMPLES, buildMagicWand, buildModifySelection, describeWand, formatTolerance, modifyProblem } from "@nyc-tron/ui/forge/selection/magic-selection-model";`
+- Import: `import { MAX_SELECTION_RADIUS, MAX_TOLERANCE, WAND_SAMPLES, buildMagicWand, buildModifySelection, describeWand, formatTolerance, modifyProblem } from "@nyc-tron/ui/components/forge/selection/magic-selection-model";`
 - Peers: react, react-native
 - Requires: none
 

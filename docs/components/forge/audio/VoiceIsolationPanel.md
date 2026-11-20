@@ -1,7 +1,7 @@
 ---
 name: "VoiceIsolationPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/VoiceIsolationPanel"
+subpath: "@nyc-tron/ui/components/forge/audio/VoiceIsolationPanel"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Requests the host's admitted speech separation service and reversible output.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/VoiceIsolationPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { VoiceIsolationPanel } from "@nyc-tron/ui/forge/audio/VoiceIsolationPanel";`
+- Import: `import { VoiceIsolationPanel } from "@nyc-tron/ui/components/forge/audio/VoiceIsolationPanel";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/audio/AudioProcessingPanel
 

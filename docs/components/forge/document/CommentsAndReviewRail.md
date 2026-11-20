@@ -1,7 +1,7 @@
 ---
 name: "CommentsAndReviewRail"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/CommentsAndReviewRail"
+subpath: "@nyc-tron/ui/components/forge/document/CommentsAndReviewRail"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ One threaded-comment owner shared by office documents, PDF and range review.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/CommentsAndReviewRail.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { CommentsAndReviewRail } from "@nyc-tron/ui/forge/document/CommentsAndReviewRail";`
+- Import: `import { CommentsAndReviewRail } from "@nyc-tron/ui/components/forge/document/CommentsAndReviewRail";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/pdf/CommentsThreadPanel
 

@@ -1,14 +1,14 @@
 ---
 name: "BatchExportPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/BatchExportPanel"
+subpath: "@nyc-tron/ui/components/forge/photo/BatchExportPanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.text", "color.textMuted", "radius.control", "space.2"]
+tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BatchExportPanel
@@ -23,8 +23,8 @@ Configures a host's real batch encoder and reports only provider-supplied progre
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/BatchExportPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { BatchExportPanel } from "@nyc-tron/ui/forge/photo/BatchExportPanel";`
-- Peers: react, react-native
+- Import: `import { BatchExportPanel } from "@nyc-tron/ui/components/forge/photo/BatchExportPanel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh

@@ -1,7 +1,7 @@
 ---
 name: "LevelMeterModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/level-meter"
+subpath: "@nyc-tron/ui/components/forge/audio/level-meter"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Display math for an input level meter.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/level-meter.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { METER_BANDS, METER_BAND_LABELS, METER_FLOOR_DB, createMeterAnnouncer, levelToDb, meterBand, meterFill } from "@nyc-tron/ui/forge/audio/level-meter";`
+- Import: `import { METER_BANDS, METER_BAND_LABELS, METER_FLOOR_DB, createMeterAnnouncer, levelToDb, meterBand, meterFill } from "@nyc-tron/ui/components/forge/audio/level-meter";`
 - Peers: react, react-native
 - Requires: none
 

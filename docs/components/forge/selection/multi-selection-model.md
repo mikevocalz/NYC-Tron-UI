@@ -1,7 +1,7 @@
 ---
 name: "MultiSelectionModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/selection/multi-selection-model"
+subpath: "@nyc-tron/ui/components/forge/selection/multi-selection-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/multi-selection-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { combineObjectSelection, pickSelectionObject, selectionGroupState, sharedSelectionProperty, validateSelectableObjects } from "@nyc-tron/ui/forge/selection/multi-selection-model";`
+- Import: `import { combineObjectSelection, pickSelectionObject, selectionGroupState, sharedSelectionProperty, validateSelectableObjects } from "@nyc-tron/ui/components/forge/selection/multi-selection-model";`
 - Peers: react, react-native
 - Requires: none
 

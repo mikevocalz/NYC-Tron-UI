@@ -1,7 +1,7 @@
 ---
 name: "ColorPickerDialogModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/color-picker-dialog-model"
+subpath: "@nyc-tron/ui/components/forge/color/color-picker-dialog-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Pure state rules for `ColorPickerDialog` (C-01): title and labels, the original/
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/color-picker-dialog-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { colorChanged, colorDialogTitle, comparisonContrast, comparisonLabel, describeColor, dialogKeyIntent, draftFromRgba, draftWithAlpha } from "@nyc-tron/ui/forge/color/color-picker-dialog-model";`
+- Import: `import { colorChanged, colorDialogTitle, comparisonContrast, comparisonLabel, describeColor, dialogKeyIntent, draftFromRgba, draftWithAlpha } from "@nyc-tron/ui/components/forge/color/color-picker-dialog-model";`
 - Peers: react, react-native
 - Requires: none
 

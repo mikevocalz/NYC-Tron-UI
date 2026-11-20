@@ -1,7 +1,7 @@
 ---
 name: "PresenterInkModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/presenter-ink-model"
+subpath: "@nyc-tron/ui/components/forge/slides/presenter-ink-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Pure rules for `PresenterInkOverlay` and `PresenterInkStrip` (J-14): tools, keyb
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/presenter-ink-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { ERASER_RADIUS, HIGHLIGHTER_OPACITY, HIGHLIGHTER_WIDTH_FACTOR, LASER_TRAIL_MAX, LASER_TRAIL_MS, MIN_POINT_SPACING, PRESENTER_INK_SHORTCUTS, PRESENTER_INK_TOOLS } from "@nyc-tron/ui/forge/slides/presenter-ink-model";`
+- Import: `import { ERASER_RADIUS, HIGHLIGHTER_OPACITY, HIGHLIGHTER_WIDTH_FACTOR, LASER_TRAIL_MAX, LASER_TRAIL_MS, MIN_POINT_SPACING, PRESENTER_INK_SHORTCUTS, PRESENTER_INK_TOOLS } from "@nyc-tron/ui/components/forge/slides/presenter-ink-model";`
 - Peers: react, react-native
 - Requires: none
 

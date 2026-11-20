@@ -1,7 +1,7 @@
 ---
 name: "PDFReadAloudTransport"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/PDFReadAloudTransport"
+subpath: "@nyc-tron/ui/components/forge/pdf/PDFReadAloudTransport"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Read Aloud for a PDF (K-18): the shared transport plus the page being read and p
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFReadAloudTransport.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PDFReadAloudTransport } from "@nyc-tron/ui/forge/pdf/PDFReadAloudTransport";`
+- Import: `import { PDFReadAloudTransport } from "@nyc-tron/ui/components/forge/pdf/PDFReadAloudTransport";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/office/ReadAloudTransport, @nyc-tron/forge/office/office-controls
 

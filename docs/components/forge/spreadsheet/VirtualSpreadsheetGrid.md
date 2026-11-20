@@ -1,7 +1,7 @@
 ---
 name: "VirtualSpreadsheetGrid"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/VirtualSpreadsheetGrid"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/VirtualSpreadsheetGrid"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Canonical entry for the existing two-axis, frozen-pane, window-request grid owne
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/VirtualSpreadsheetGrid.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { VirtualSpreadsheetGrid } from "@nyc-tron/ui/forge/spreadsheet/VirtualSpreadsheetGrid";`
+- Import: `import { VirtualSpreadsheetGrid } from "@nyc-tron/ui/components/forge/spreadsheet/VirtualSpreadsheetGrid";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/SpreadsheetGrid
 

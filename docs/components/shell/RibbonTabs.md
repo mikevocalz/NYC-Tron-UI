@@ -1,12 +1,12 @@
 ---
 name: "RibbonTabs"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/RibbonTabs"
+subpath: "@nyc-tron/ui/components/shell/RibbonTabs"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "navigation"
-tokens: ["border.1", "border.1_5", "color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.0.5", "space.1", "space.1.5", "space.3"]
+tokens: ["color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/shell/MenuButton", "@nyc-tron/shell/SplitButton"]
 a11yStatus: "unverified"
 ---
@@ -20,8 +20,8 @@ Office-style ribbon of tabs and a command panel of buttons, split buttons and ga
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { RibbonTabs } from "@nyc-tron/ui/shell/RibbonTabs";`
-- Peers: react, react-native
+- Import: `import { RibbonTabs } from "@nyc-tron/ui/components/shell/RibbonTabs";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/shell/MenuButton, @nyc-tron/shell/SplitButton
 
 ```sh

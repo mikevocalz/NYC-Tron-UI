@@ -1,14 +1,14 @@
 ---
 name: "GestureCustomizationPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas-tools/GestureCustomizationPanel"
+subpath: "@nyc-tron/ui/components/forge/canvas-tools/GestureCustomizationPanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.danger", "color.surfaceRaised", "color.text", "color.textMuted", "radius.card", "space.1", "space.1.5", "space.2"]
+tokens: ["color.border", "color.danger", "color.surfaceRaised", "color.text", "color.textMuted", "radius.card"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # GestureCustomizationPanel
@@ -23,8 +23,8 @@ Gesture customisation (B-34): one row per quick action with a gesture menu, a ho
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas-tools/GestureCustomizationPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { GestureCustomizationPanel } from "@nyc-tron/ui/forge/canvas-tools/GestureCustomizationPanel";`
-- Peers: react, react-native, zustand
+- Import: `import { GestureCustomizationPanel } from "@nyc-tron/ui/components/forge/canvas-tools/GestureCustomizationPanel";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

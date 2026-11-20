@@ -1,7 +1,7 @@
 ---
 name: "PenPairingDialog"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/devices/PenPairingDialog"
+subpath: "@nyc-tron/ui/components/forge/devices/PenPairingDialog"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Shared pairing owner preserves linked-versus-verified input and close/cancel sem
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/devices/PenPairingDialog.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PenPairingDialog } from "@nyc-tron/ui/forge/devices/PenPairingDialog";`
+- Import: `import { PenPairingDialog } from "@nyc-tron/ui/components/forge/devices/PenPairingDialog";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/devices/DevicePairingDialog
 

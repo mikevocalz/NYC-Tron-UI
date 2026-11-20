@@ -1,7 +1,7 @@
 ---
 name: "SafeAreaModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/safe-area"
+subpath: "@nyc-tron/ui/components/forge/timeline/safe-area"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ A rectangle in the overlay's layout coordinates.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/safe-area.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { FRAME_GUIDES, SAFE_AREA_PRESETS, fitAspect, guideRect, insetRect, safeAreas } from "@nyc-tron/ui/forge/timeline/safe-area";`
+- Import: `import { FRAME_GUIDES, SAFE_AREA_PRESETS, fitAspect, guideRect, insetRect, safeAreas } from "@nyc-tron/ui/components/forge/timeline/safe-area";`
 - Peers: react, react-native
 - Requires: none
 

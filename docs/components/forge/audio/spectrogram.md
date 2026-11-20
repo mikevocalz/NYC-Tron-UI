@@ -1,7 +1,7 @@
 ---
 name: "SpectrogramModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/spectrogram"
+subpath: "@nyc-tron/ui/components/forge/audio/spectrogram"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Display math for {@linkcode SpectrogramView}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/spectrogram.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { SPECTROGRAM_FLOOR_DB, SPECTROGRAM_MAX_COLUMNS, SPECTROGRAM_MAX_ROWS, SPECTROGRAM_THRESHOLDS_DB, columnsForWidth, describeSpectrogram, formatHz, frequencyTicks } from "@nyc-tron/ui/forge/audio/spectrogram";`
+- Import: `import { SPECTROGRAM_FLOOR_DB, SPECTROGRAM_MAX_COLUMNS, SPECTROGRAM_MAX_ROWS, SPECTROGRAM_THRESHOLDS_DB, columnsForWidth, describeSpectrogram, formatHz, frequencyTicks } from "@nyc-tron/ui/components/forge/audio/spectrogram";`
 - Peers: react, react-native
 - Requires: none
 

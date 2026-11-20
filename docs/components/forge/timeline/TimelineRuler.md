@@ -1,12 +1,12 @@
 ---
 name: "TimelineRuler"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/TimelineRuler"
+subpath: "@nyc-tron/ui/components/forge/timeline/TimelineRuler"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.accent", "color.border", "color.surfaceSunken", "color.text", "color.textMuted", "space.0.75"]
+tokens: ["color.accent", "color.border", "color.surfaceSunken", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Time ruler (D-10): labeled ticks that switch between frames, seconds and minutes
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimelineRuler.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TimelineRuler } from "@nyc-tron/ui/forge/timeline/TimelineRuler";`
-- Peers: react, react-native
+- Import: `import { TimelineRuler } from "@nyc-tron/ui/components/forge/timeline/TimelineRuler";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

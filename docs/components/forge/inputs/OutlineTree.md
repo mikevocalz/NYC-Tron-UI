@@ -1,14 +1,14 @@
 ---
 name: "OutlineTree"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/inputs/OutlineTree"
+subpath: "@nyc-tron/ui/components/forge/inputs/OutlineTree"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.text", "space.1", "space.1.5"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # OutlineTree
@@ -23,8 +23,8 @@ Shared virtual tree owner for bookmarks, component/frame trees and hierarchical 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/OutlineTree.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { OutlineTree } from "@nyc-tron/ui/forge/inputs/OutlineTree";`
-- Peers: react, react-native, zustand
+- Import: `import { OutlineTree } from "@nyc-tron/ui/components/forge/inputs/OutlineTree";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

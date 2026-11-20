@@ -1,14 +1,14 @@
 ---
 name: "LayerStack"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/LayerStack"
+subpath: "@nyc-tron/ui/components/forge/layers/LayerStack"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["LayerStack.radius.2_5", "border.1_5", "color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "font.12", "opacity.0_45", "radius.1", "radius.2", "radius.6", "radius.control", "space.0.75", "space.1", "space.2", "space.3"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/forge/layers/ClippingMaskControls", "@nyc-tron/overlays/AnchoredPopover", "@nyc-tron/shell/MenuButton"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LayerStack
@@ -23,8 +23,8 @@ Controlled layer list for editors.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/LayerStack.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LayerStack } from "@nyc-tron/ui/forge/layers/LayerStack";`
-- Peers: react, react-native, zustand
+- Import: `import { LayerStack } from "@nyc-tron/ui/components/forge/layers/LayerStack";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/layers/ClippingMaskControls, @nyc-tron/overlays/AnchoredPopover, @nyc-tron/shell/MenuButton
 
 ```sh

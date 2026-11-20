@@ -1,14 +1,14 @@
 ---
 name: "RenderQueuePanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/RenderQueuePanel"
+subpath: "@nyc-tron/ui/components/forge/motion/RenderQueuePanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.danger", "color.text", "color.textMuted", "space.1.5", "space.2"]
+tokens: ["color.danger", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/Select", "@nyc-tron/TextField", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RenderQueuePanel
@@ -23,8 +23,8 @@ Encoder-neutral queue controls; no UI timer invents render progress or completio
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/RenderQueuePanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { RenderQueuePanel } from "@nyc-tron/ui/forge/motion/RenderQueuePanel";`
-- Peers: react, react-native
+- Import: `import { RenderQueuePanel } from "@nyc-tron/ui/components/forge/motion/RenderQueuePanel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/Select, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh

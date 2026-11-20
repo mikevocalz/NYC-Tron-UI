@@ -1,7 +1,7 @@
 ---
 name: "AlignDistributeModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/align-distribute-model"
+subpath: "@nyc-tron/ui/components/forge/canvas/align-distribute-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Align, distribute and arrange rules for {@linkcode AlignDistributePanel} (B-25).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/align-distribute-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { ALIGN_EDGES, ARRANGE_ACTIONS, DISTRIBUTE_MAX_SPACING, alignAvailability, alignReference, arrangeAvailability, arrangeTarget, distributeAvailability } from "@nyc-tron/ui/forge/canvas/align-distribute-model";`
+- Import: `import { ALIGN_EDGES, ARRANGE_ACTIONS, DISTRIBUTE_MAX_SPACING, alignAvailability, alignReference, arrangeAvailability, arrangeTarget, distributeAvailability } from "@nyc-tron/ui/components/forge/canvas/align-distribute-model";`
 - Peers: react, react-native
 - Requires: none
 

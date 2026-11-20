@@ -1,14 +1,14 @@
 ---
 name: "WaveformLane"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/WaveformLane"
+subpath: "@nyc-tron/ui/components/forge/WaveformLane"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.surfaceSunken"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # WaveformLane
@@ -23,7 +23,7 @@ Per-component import: no audio API, Forge engines, Skia or Nitro.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/WaveformLane.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { WaveformLane } from "@nyc-tron/ui/forge/WaveformLane";`
+- Import: `import { WaveformLane } from "@nyc-tron/ui/components/forge/WaveformLane";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 

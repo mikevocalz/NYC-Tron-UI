@@ -1,7 +1,7 @@
 ---
 name: "AudioRecoveryModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/audio-recovery-model"
+subpath: "@nyc-tron/ui/components/forge/audio/audio-recovery-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Why the host paused or recovered audio.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/audio-recovery-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { recoveryMessage, recoveryTitle } from "@nyc-tron/ui/forge/audio/audio-recovery-model";`
+- Import: `import { recoveryMessage, recoveryTitle } from "@nyc-tron/ui/components/forge/audio/audio-recovery-model";`
 - Peers: react, react-native
 - Requires: none
 

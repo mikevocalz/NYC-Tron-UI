@@ -1,7 +1,7 @@
 ---
 name: "SelectionBoundsModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/selection/selection-bounds-model"
+subpath: "@nyc-tron/ui/components/forge/selection/selection-bounds-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/selection-bounds-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { RESIZE_HANDLES, editSelectionFrame, hitTestSelection, selectionFrameCorners, selectionHandlePoint, selectionResizeDirection, stepSelectionFrame, validateSelectionFrame } from "@nyc-tron/ui/forge/selection/selection-bounds-model";`
+- Import: `import { RESIZE_HANDLES, editSelectionFrame, hitTestSelection, selectionFrameCorners, selectionHandlePoint, selectionResizeDirection, stepSelectionFrame, validateSelectionFrame } from "@nyc-tron/ui/components/forge/selection/selection-bounds-model";`
 - Peers: react, react-native
 - Requires: none
 

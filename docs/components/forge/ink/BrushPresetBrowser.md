@@ -1,14 +1,14 @@
 ---
 name: "BrushPresetBrowser"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/ink/BrushPresetBrowser"
+subpath: "@nyc-tron/ui/components/forge/ink/BrushPresetBrowser"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.text", "radius.control", "space.1", "space.2"]
+tokens: ["color.border", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BrushPresetBrowser
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/BrushPresetBrowser.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { BrushPresetBrowser } from "@nyc-tron/ui/forge/ink/BrushPresetBrowser";`
-- Peers: react, react-native, react-native-gesture-handler, zustand
+- Import: `import { BrushPresetBrowser } from "@nyc-tron/ui/components/forge/ink/BrushPresetBrowser";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -1,12 +1,12 @@
 ---
 name: "CommandPopover"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/overlays/CommandPopover"
+subpath: "@nyc-tron/ui/components/overlays/CommandPopover"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "overlay"
-tokens: ["CommandPopover.space.1_75", "color.border", "color.danger", "color.primary", "color.surfaceRaised", "color.text", "color.textMuted", "font.12", "opacity.0_4", "radius.control", "space.3"]
+tokens: ["color.border", "color.danger", "color.primary", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
 a11yStatus: "unverified"
 ---
@@ -20,7 +20,7 @@ Anchored popover menu of command items, with disabled and danger items, for Reac
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { CommandPopover } from "@nyc-tron/ui/overlays/CommandPopover";`
+- Import: `import { CommandPopover } from "@nyc-tron/ui/components/overlays/CommandPopover";`
 - Peers: @nyc-tron/core, react, react-native
 - Requires: none
 

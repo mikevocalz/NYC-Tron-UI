@@ -1,7 +1,7 @@
 ---
 name: "InkAndLaserPointer"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/InkAndLaserPointer"
+subpath: "@nyc-tron/ui/components/forge/slides/InkAndLaserPointer"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Native RNGH input with the shared Graphite renderer.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/InkAndLaserPointer.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { InkAndLaserPointer } from "@nyc-tron/ui/forge/slides/InkAndLaserPointer";`
+- Import: `import { InkAndLaserPointer } from "@nyc-tron/ui/components/forge/slides/InkAndLaserPointer";`
 - Peers: react, react-native, react-native-skia
 - Requires: @nyc-tron/forge/canvas/GPUCanvasViewport, @nyc-tron/forge/slides/PresenterInkOverlay
 

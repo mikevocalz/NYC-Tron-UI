@@ -1,14 +1,14 @@
 ---
 name: "EffectStackAndInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/EffectStackAndInspector"
+subpath: "@nyc-tron/ui/components/forge/motion/EffectStackAndInspector"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "color.textMuted", "space.1.5", "space.2"]
+tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/Select", "@nyc-tron/TextField", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EffectStackAndInspector
@@ -23,8 +23,8 @@ Host-controlled effect order and schema-driven settings.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/EffectStackAndInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { EffectStackAndInspector } from "@nyc-tron/ui/forge/motion/EffectStackAndInspector";`
-- Peers: react, react-native
+- Import: `import { EffectStackAndInspector } from "@nyc-tron/ui/components/forge/motion/EffectStackAndInspector";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/Select, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh

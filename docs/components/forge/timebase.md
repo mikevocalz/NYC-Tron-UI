@@ -1,7 +1,7 @@
 ---
 name: "TimebaseModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timebase"
+subpath: "@nyc-tron/ui/components/forge/timebase"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Controlled frame math from Nitro Forge media-ui PR #25.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timebase.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { FRAME_RATES, assertFrameRate, clampFrame, formatTimecode, frameToPosition, framesToSeconds, positionToFrame, secondsToFrame } from "@nyc-tron/ui/forge/timebase";`
+- Import: `import { FRAME_RATES, assertFrameRate, clampFrame, formatTimecode, frameToPosition, framesToSeconds, positionToFrame, secondsToFrame } from "@nyc-tron/ui/components/forge/timebase";`
 - Peers: react, react-native
 - Requires: none
 

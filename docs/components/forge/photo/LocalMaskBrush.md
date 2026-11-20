@@ -1,7 +1,7 @@
 ---
 name: "LocalMaskBrush"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/LocalMaskBrush"
+subpath: "@nyc-tron/ui/components/forge/photo/LocalMaskBrush"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Native responder-backed add/subtract marks with bounded radius, feather and forc
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/LocalMaskBrush.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LocalMaskBrush } from "@nyc-tron/ui/forge/photo/LocalMaskBrush";`
+- Import: `import { LocalMaskBrush } from "@nyc-tron/ui/components/forge/photo/LocalMaskBrush";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,14 +1,14 @@
 ---
 name: "A11yAuditModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/a11y-audit"
+subpath: "@nyc-tron/ui/components/shell/a11y-audit"
 tier: 2
 docs: "generated"
 platforms: []
 category: "shell"
 tokens: []
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # A11yAuditModule
@@ -23,7 +23,7 @@ A static screen-reader audit over a rendered element tree: the plain `{type, pro
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/a11y-audit.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { auditAccessibility } from "@nyc-tron/ui/shell/a11y-audit";`
+- Import: `import { auditAccessibility } from "@nyc-tron/ui/components/shell/a11y-audit";`
 - Peers: react, react-native
 - Requires: none
 

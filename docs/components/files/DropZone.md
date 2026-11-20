@@ -1,14 +1,14 @@
 ---
 name: "DropZone"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/files/DropZone"
+subpath: "@nyc-tron/ui/components/files/DropZone"
 tier: 2
 docs: "generated"
 platforms: ["ios", "android", "web"]
 category: "primitive"
-tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "space.3"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card"]
 registryDependencies: ["@nyc-tron/files/FilePicker"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DropZone
@@ -23,8 +23,8 @@ iOS and Android drop target over expo-drag-drop-content-view (optional peer, nee
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/files/DropZone.native.tsx,packages/ui/src/components/files/DropZone.shared.tsx,packages/ui/src/components/files/DropZone.types.ts,packages/ui/src/components/files/DropZone.web.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { DropZone } from "@nyc-tron/ui/files/DropZone";`
-- Peers: expo-drag-drop-content-view, react, react-native, zustand
+- Import: `import { DropZone } from "@nyc-tron/ui/components/files/DropZone";`
+- Peers: @nyc-tron/core, expo-drag-drop-content-view, react, react-native, zustand
 - Requires: @nyc-tron/files/FilePicker
 
 ```sh
@@ -83,7 +83,7 @@ none
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=DropZone
-import { DropZone } from "@nyc-tron/ui/files/DropZone";
+import { DropZone } from "@nyc-tron/ui/components/files/DropZone";
 
 export function Example() {
   return <DropZone />;

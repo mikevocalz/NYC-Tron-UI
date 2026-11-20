@@ -1,14 +1,14 @@
 ---
 name: "TextSelectionAndCaret"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/TextSelectionAndCaret"
+subpath: "@nyc-tron/ui/components/forge/document/TextSelectionAndCaret"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "color.textMuted", "space.2"]
+tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TextSelectionAndCaret
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/TextSelectionAndCaret.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TextSelectionAndCaret } from "@nyc-tron/ui/forge/document/TextSelectionAndCaret";`
-- Peers: react, react-native, zustand
+- Import: `import { TextSelectionAndCaret } from "@nyc-tron/ui/components/forge/document/TextSelectionAndCaret";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

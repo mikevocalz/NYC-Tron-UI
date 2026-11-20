@@ -1,14 +1,14 @@
 ---
 name: "PaginatedTextCanvas"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/PaginatedTextCanvas"
+subpath: "@nyc-tron/ui/components/forge/document/PaginatedTextCanvas"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.surfaceRaised", "color.text", "color.textMuted", "space.0", "space.2", "space.4"]
+tokens: ["color.border", "color.surfaceRaised", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/document/TextSelectionAndCaret"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PaginatedTextCanvas
@@ -23,8 +23,8 @@ Host-layout pages with actual native plain text inputs or an explicit native ric
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/PaginatedTextCanvas.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PaginatedTextCanvas } from "@nyc-tron/ui/forge/document/PaginatedTextCanvas";`
-- Peers: react, react-native
+- Import: `import { PaginatedTextCanvas } from "@nyc-tron/ui/components/forge/document/PaginatedTextCanvas";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/document/TextSelectionAndCaret
 
 ```sh

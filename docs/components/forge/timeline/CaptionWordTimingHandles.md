@@ -1,14 +1,14 @@
 ---
 name: "CaptionWordTimingHandles"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/CaptionWordTimingHandles"
+subpath: "@nyc-tron/ui/components/forge/timeline/CaptionWordTimingHandles"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/InOutRangeHandles"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CaptionWordTimingHandles
@@ -23,8 +23,8 @@ Frame-snapped word boundaries with neighboring-word collision checks.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/CaptionWordTimingHandles.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { CaptionWordTimingHandles } from "@nyc-tron/ui/forge/timeline/CaptionWordTimingHandles";`
-- Peers: react, react-native, react-native-gesture-handler, zustand
+- Import: `import { CaptionWordTimingHandles } from "@nyc-tron/ui/components/forge/timeline/CaptionWordTimingHandles";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/InOutRangeHandles
 
 ```sh

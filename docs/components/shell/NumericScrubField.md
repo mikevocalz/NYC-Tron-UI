@@ -1,7 +1,7 @@
 ---
 name: "NumericScrubFieldModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/NumericScrubField"
+subpath: "@nyc-tron/ui/components/shell/NumericScrubField"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Canonical shell name for the shared precision scrubber.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/NumericScrubField.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { NumericScrubField } from "@nyc-tron/ui/shell/NumericScrubField";`
+- Import: `import { NumericScrubField } from "@nyc-tron/ui/components/shell/NumericScrubField";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PrecisionScrubber
 

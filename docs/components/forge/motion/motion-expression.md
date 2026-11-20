@@ -1,7 +1,7 @@
 ---
 name: "MotionExpressionModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/motion-expression"
+subpath: "@nyc-tron/ui/components/forge/motion/motion-expression"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/motion-expression.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { EXPRESSION_MAX_LENGTH, isExpressionBoundary, replaceExpressionRange, validateExpressionCompletions, validateExpressionDiagnostics, validateExpressionRange, validateExpressionReferences, validateExpressionText } from "@nyc-tron/ui/forge/motion/motion-expression";`
+- Import: `import { EXPRESSION_MAX_LENGTH, isExpressionBoundary, replaceExpressionRange, validateExpressionCompletions, validateExpressionDiagnostics, validateExpressionRange, validateExpressionReferences, validateExpressionText } from "@nyc-tron/ui/components/forge/motion/motion-expression";`
 - Peers: react, react-native
 - Requires: none
 

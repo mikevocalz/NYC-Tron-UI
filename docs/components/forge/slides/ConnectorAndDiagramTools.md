@@ -1,14 +1,14 @@
 ---
 name: "ConnectorAndDiagramTools"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/ConnectorAndDiagramTools"
+subpath: "@nyc-tron/ui/components/forge/slides/ConnectorAndDiagramTools"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.accent", "color.surfaceRaised", "color.text", "space.1.5", "space.2"]
+tokens: ["color.accent", "color.surfaceRaised", "color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ConnectorAndDiagramTools
@@ -23,8 +23,8 @@ Sticky ends follow actual named object anchors; visual routing is presentation g
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ConnectorAndDiagramTools.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ConnectorAndDiagramTools } from "@nyc-tron/ui/forge/slides/ConnectorAndDiagramTools";`
-- Peers: react, react-native, zustand
+- Import: `import { ConnectorAndDiagramTools } from "@nyc-tron/ui/components/forge/slides/ConnectorAndDiagramTools";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

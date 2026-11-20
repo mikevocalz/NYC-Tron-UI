@@ -1,12 +1,12 @@
 ---
 name: "TreeGrid"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/data/TreeGrid"
+subpath: "@nyc-tron/ui/components/data/TreeGrid"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "data"
-tokens: ["TreeGrid.space.11", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.1", "space.2", "space.3"]
+tokens: ["color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Tree table with expandable rows, row selection, column reorder and pinned column
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { TreeGrid } from "@nyc-tron/ui/data/TreeGrid";`
-- Peers: react, react-native, zustand
+- Import: `import { TreeGrid } from "@nyc-tron/ui/components/data/TreeGrid";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: none
 
 ```sh

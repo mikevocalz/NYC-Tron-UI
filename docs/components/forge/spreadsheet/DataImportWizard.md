@@ -1,14 +1,14 @@
 ---
 name: "DataImportWizard"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/DataImportWizard"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/DataImportWizard"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.danger", "color.text", "space.1", "space.1.5", "space.2"]
+tokens: ["color.danger", "color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DataImportWizard
@@ -23,8 +23,8 @@ Host file picker/parser/conversion transactions; preview rows and failures are a
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/DataImportWizard.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { DataImportWizard } from "@nyc-tron/ui/forge/spreadsheet/DataImportWizard";`
-- Peers: react, react-native
+- Import: `import { DataImportWizard } from "@nyc-tron/ui/components/forge/spreadsheet/DataImportWizard";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

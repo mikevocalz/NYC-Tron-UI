@@ -1,7 +1,7 @@
 ---
 name: "ListModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/list-model"
+subpath: "@nyc-tron/ui/components/forge/document/list-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ How one list level numbers its items.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/list-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { BULLETS_NUMBERING_CAPABILITIES, LIST_FORMATS, LIST_MAX_LEVEL, LIST_PREVIEW_MARKER_MAX, canIndent, canOutdent, defaultLevelFormats, formatLabel } from "@nyc-tron/ui/forge/document/list-model";`
+- Import: `import { BULLETS_NUMBERING_CAPABILITIES, LIST_FORMATS, LIST_MAX_LEVEL, LIST_PREVIEW_MARKER_MAX, canIndent, canOutdent, defaultLevelFormats, formatLabel } from "@nyc-tron/ui/components/forge/document/list-model";`
 - Peers: react, react-native
 - Requires: none
 

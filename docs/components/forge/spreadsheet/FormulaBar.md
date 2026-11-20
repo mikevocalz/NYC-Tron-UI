@@ -1,14 +1,14 @@
 ---
 name: "FormulaBar"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/FormulaBar"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/FormulaBar"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.surfaceSunken", "color.text", "radius.control", "space.1.5", "space.2.5"]
+tokens: ["color.border", "color.surfaceSunken", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FormulaBar
@@ -23,8 +23,8 @@ Controlled formula text; the workbook owns the draft and evaluates only committe
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/FormulaBar.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FormulaBar } from "@nyc-tron/ui/forge/spreadsheet/FormulaBar";`
-- Peers: react, react-native
+- Import: `import { FormulaBar } from "@nyc-tron/ui/components/forge/spreadsheet/FormulaBar";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -75,7 +75,7 @@ none
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=FormulaBar
-import { FormulaBar } from "@nyc-tron/ui/forge/spreadsheet/FormulaBar";
+import { FormulaBar } from "@nyc-tron/ui/components/forge/spreadsheet/FormulaBar";
 
 export function Example() {
   return <FormulaBar address="" value="" originalValue="" onChange={() => {}} onCommit={() => {}} onCancel={() => {}} />;

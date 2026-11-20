@@ -1,14 +1,14 @@
 ---
 name: "TimelineZoomAndScroll"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/TimelineZoomAndScroll"
+subpath: "@nyc-tron/ui/components/forge/timeline/TimelineZoomAndScroll"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.accent", "color.border", "color.focus", "color.surfaceSunken", "opacity.0_45", "radius.control", "space.2"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceSunken", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TimelineZoomAndScroll
@@ -23,8 +23,8 @@ Zoom and scroll controls (D-14): zoom out/in around the playhead (or the view's 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimelineZoomAndScroll.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TimelineZoomAndScroll } from "@nyc-tron/ui/forge/timeline/TimelineZoomAndScroll";`
-- Peers: react, react-native
+- Import: `import { TimelineZoomAndScroll } from "@nyc-tron/ui/components/forge/timeline/TimelineZoomAndScroll";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

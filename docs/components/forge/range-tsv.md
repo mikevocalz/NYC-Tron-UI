@@ -1,7 +1,7 @@
 ---
 name: "RangeTsvModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/range-tsv"
+subpath: "@nyc-tron/ui/components/forge/range-tsv"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/range-tsv.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { rangeToTsv, tsvField } from "@nyc-tron/ui/forge/range-tsv";`
+- Import: `import { rangeToTsv, tsvField } from "@nyc-tron/ui/components/forge/range-tsv";`
 - Peers: react, react-native
 - Requires: none
 

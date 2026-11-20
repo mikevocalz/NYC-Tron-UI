@@ -1,7 +1,7 @@
 ---
 name: "UseTriggerAnchorModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/overlays/useTriggerAnchor"
+subpath: "@nyc-tron/ui/components/overlays/useTriggerAnchor"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/overlays/useTriggerAnchor.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { useTriggerAnchor } from "@nyc-tron/ui/overlays/useTriggerAnchor";`
+- Import: `import { useTriggerAnchor } from "@nyc-tron/ui/components/overlays/useTriggerAnchor";`
 - Peers: react, react-native, zustand
 - Requires: none
 

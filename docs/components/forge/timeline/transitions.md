@@ -1,7 +1,7 @@
 ---
 name: "TransitionsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/transitions"
+subpath: "@nyc-tron/ui/components/forge/timeline/transitions"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/transitions.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { AUDIO_CROSSFADE, clampTransitionFrames, clipsOfCut, cutsOf, maxTransitionFrames, transitionAt, transitionRequest, transitionTarget } from "@nyc-tron/ui/forge/timeline/transitions";`
+- Import: `import { AUDIO_CROSSFADE, clampTransitionFrames, clipsOfCut, cutsOf, maxTransitionFrames, transitionAt, transitionRequest, transitionTarget } from "@nyc-tron/ui/components/forge/timeline/transitions";`
 - Peers: react, react-native
 - Requires: none
 

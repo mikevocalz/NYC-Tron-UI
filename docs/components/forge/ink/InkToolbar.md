@@ -1,14 +1,14 @@
 ---
 name: "InkToolbar"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/ink/InkToolbar"
+subpath: "@nyc-tron/ui/components/forge/ink/InkToolbar"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["InkToolbar.font.18", "InkToolbar.radius.15", "InkToolbar.radius.17", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "font.12", "font.13", "opacity.0_45", "radius.14", "radius.2", "radius.4", "radius.control", "space.0.5", "space.1", "space.1.5", "space.2"]
+tokens: ["color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InkToolbar
@@ -23,8 +23,8 @@ Controlled tool, size, color, opacity, pressure and history controls for a drawi
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/InkToolbar.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { InkToolbar } from "@nyc-tron/ui/forge/ink/InkToolbar";`
-- Peers: react, react-native, zustand
+- Import: `import { InkToolbar } from "@nyc-tron/ui/components/forge/ink/InkToolbar";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: none
 
 ```sh

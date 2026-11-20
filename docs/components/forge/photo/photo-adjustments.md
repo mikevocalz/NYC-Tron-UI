@@ -1,7 +1,7 @@
 ---
 name: "PhotoAdjustmentsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/photo-adjustments"
+subpath: "@nyc-tron/ui/components/forge/photo/photo-adjustments"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Non-destructive, versioned settings.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/photo-adjustments.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { EXPOSURE_FIELDS, PHOTO_BANDS, TONE_FIELDS, defaultPhotoDevelop, parsePhotoDevelop, serializePhotoDevelop, validateEightBand, validateExposure } from "@nyc-tron/ui/forge/photo/photo-adjustments";`
+- Import: `import { EXPOSURE_FIELDS, PHOTO_BANDS, TONE_FIELDS, defaultPhotoDevelop, parsePhotoDevelop, serializePhotoDevelop, validateEightBand, validateExposure } from "@nyc-tron/ui/components/forge/photo/photo-adjustments";`
 - Peers: react, react-native
 - Requires: none
 

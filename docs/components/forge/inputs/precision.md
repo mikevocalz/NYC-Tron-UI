@@ -1,7 +1,7 @@
 ---
 name: "PrecisionModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/inputs/precision"
+subpath: "@nyc-tron/ui/components/forge/inputs/precision"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Pure input math.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/precision.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { SCRUB_DETENT_PIXELS, SCRUB_MODE_THRESHOLD_PX, advancePrecisionGesture, assertRange, beginPrecisionGesture, clamp, formatStepValue, gestureToAngle } from "@nyc-tron/ui/forge/inputs/precision";`
+- Import: `import { SCRUB_DETENT_PIXELS, SCRUB_MODE_THRESHOLD_PX, advancePrecisionGesture, assertRange, beginPrecisionGesture, clamp, formatStepValue, gestureToAngle } from "@nyc-tron/ui/components/forge/inputs/precision";`
 - Peers: react, react-native
 - Requires: none
 

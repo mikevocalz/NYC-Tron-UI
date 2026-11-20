@@ -1,12 +1,12 @@
 ---
 name: "MasterLayoutEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/MasterLayoutEditor"
+subpath: "@nyc-tron/ui/components/forge/slides/MasterLayoutEditor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.3"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/forge/inputs/PropertyInspector"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/MasterLayoutEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MasterLayoutEditor } from "@nyc-tron/ui/forge/slides/MasterLayoutEditor";`
-- Peers: react, react-native
+- Import: `import { MasterLayoutEditor } from "@nyc-tron/ui/components/forge/slides/MasterLayoutEditor";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

@@ -1,14 +1,14 @@
 ---
 name: "SpectrogramView"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/SpectrogramView"
+subpath: "@nyc-tron/ui/components/forge/audio/SpectrogramView"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "font.11", "font.13", "font.14", "font.15", "radius.card", "radius.control", "space.1.5", "space.2", "space.3", "space.4"]
+tokens: ["color.border", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SpectrogramView
@@ -23,8 +23,8 @@ Spectrogram drawn with plain Views: time runs left to right (also in RTL), low f
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SpectrogramView.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SpectrogramView } from "@nyc-tron/ui/forge/audio/SpectrogramView";`
-- Peers: react, react-native, zustand
+- Import: `import { SpectrogramView } from "@nyc-tron/ui/components/forge/audio/SpectrogramView";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

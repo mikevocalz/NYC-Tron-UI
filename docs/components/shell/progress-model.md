@@ -1,7 +1,7 @@
 ---
 name: "ProgressModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/progress-model"
+subpath: "@nyc-tron/ui/components/shell/progress-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/progress-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { jobActionLabel, validateFeedback } from "@nyc-tron/ui/shell/progress-model";`
+- Import: `import { jobActionLabel, validateFeedback } from "@nyc-tron/ui/components/shell/progress-model";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,7 +1,7 @@
 ---
 name: "SwatchesModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/swatches"
+subpath: "@nyc-tron/ui/components/forge/color/swatches"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/swatches.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { filterSwatchGroups, pushRecentSwatch, swatchColumns, swatchGridMove, swatchKey } from "@nyc-tron/ui/forge/color/swatches";`
+- Import: `import { filterSwatchGroups, pushRecentSwatch, swatchColumns, swatchGridMove, swatchKey } from "@nyc-tron/ui/components/forge/color/swatches";`
 - Peers: react, react-native
 - Requires: none
 

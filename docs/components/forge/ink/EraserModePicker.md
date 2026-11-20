@@ -1,14 +1,14 @@
 ---
 name: "EraserModePicker"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/ink/EraserModePicker"
+subpath: "@nyc-tron/ui/components/forge/ink/EraserModePicker"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EraserModePicker
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/EraserModePicker.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { EraserModePicker } from "@nyc-tron/ui/forge/ink/EraserModePicker";`
-- Peers: react, react-native
+- Import: `import { EraserModePicker } from "@nyc-tron/ui/components/forge/ink/EraserModePicker";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh

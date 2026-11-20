@@ -1,14 +1,14 @@
 ---
 name: "GPUCanvasViewport"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/GPUCanvasViewport"
+subpath: "@nyc-tron/ui/components/forge/canvas/GPUCanvasViewport"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
 tokens: ["color.surfaceSunken", "color.text"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # GPUCanvasViewport
@@ -23,7 +23,7 @@ Actual Skia 3 Graphite surface.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/GPUCanvasViewport.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { GPUCanvasViewport } from "@nyc-tron/ui/forge/canvas/GPUCanvasViewport";`
+- Import: `import { GPUCanvasViewport } from "@nyc-tron/ui/components/forge/canvas/GPUCanvasViewport";`
 - Peers: react, react-native, react-native-skia, zustand
 - Requires: none
 

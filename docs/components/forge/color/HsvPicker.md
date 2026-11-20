@@ -1,14 +1,14 @@
 ---
 name: "HsvPicker"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/HsvPicker"
+subpath: "@nyc-tron/ui/components/forge/color/HsvPicker"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["border.2", "color.border", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_45", "radius.12", "radius.14", "radius.6", "radius.control", "space.1.5", "space.2"]
+tokens: ["color.border", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/ColorChannels"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # HsvPicker
@@ -23,8 +23,8 @@ Controlled HSV display-color picker: a saturation/value field, a native `@expo/u
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/HsvPicker.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { HsvPicker } from "@nyc-tron/ui/forge/color/HsvPicker";`
-- Peers: @expo/ui, expo-linear-gradient, react, react-native
+- Import: `import { HsvPicker } from "@nyc-tron/ui/components/forge/color/HsvPicker";`
+- Peers: @expo/ui, @nyc-tron/core, expo-linear-gradient, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/ColorChannels
 
 ```sh

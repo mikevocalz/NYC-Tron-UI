@@ -1,7 +1,7 @@
 ---
 name: "BookmarkOutline"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/BookmarkOutline"
+subpath: "@nyc-tron/ui/components/forge/pdf/BookmarkOutline"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/BookmarkOutline.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { BookmarkOutline } from "@nyc-tron/ui/forge/pdf/BookmarkOutline";`
+- Import: `import { BookmarkOutline } from "@nyc-tron/ui/components/forge/pdf/BookmarkOutline";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/OutlineTree
 

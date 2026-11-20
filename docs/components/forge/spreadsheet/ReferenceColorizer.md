@@ -1,14 +1,14 @@
 ---
 name: "ReferenceColorizer"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/ReferenceColorizer"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.1.5"]
+tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/spreadsheet/FormulaReferenceText"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ReferenceColorizer
@@ -23,8 +23,8 @@ Shared licensed tokenizer/tone owner; the host places on-sheet range outlines in
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/ReferenceColorizer.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ReferenceColorizer } from "@nyc-tron/ui/forge/spreadsheet/ReferenceColorizer";`
-- Peers: react, react-native
+- Import: `import { ReferenceColorizer } from "@nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/spreadsheet/FormulaReferenceText
 
 ```sh
@@ -68,7 +68,7 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=ReferenceColorizer
-import { ReferenceColorizer } from "@nyc-tron/ui/forge/spreadsheet/ReferenceColorizer";
+import { ReferenceColorizer } from "@nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer";
 
 export function Example() {
   return <ReferenceColorizer formula="" onHighlight={() => {}} renderRangeHighlight={() => {}} />;

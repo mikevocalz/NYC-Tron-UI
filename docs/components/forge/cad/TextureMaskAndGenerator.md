@@ -1,12 +1,12 @@
 ---
 name: "TextureMaskAndGenerator"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/cad/TextureMaskAndGenerator"
+subpath: "@nyc-tron/ui/components/forge/cad/TextureMaskAndGenerator"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/TextureMaskAndGenerator.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TextureMaskAndGenerator } from "@nyc-tron/ui/forge/cad/TextureMaskAndGenerator";`
-- Peers: react, react-native
+- Import: `import { TextureMaskAndGenerator } from "@nyc-tron/ui/components/forge/cad/TextureMaskAndGenerator";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

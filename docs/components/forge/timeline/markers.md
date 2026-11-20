@@ -1,7 +1,7 @@
 ---
 name: "MarkersModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/markers"
+subpath: "@nyc-tron/ui/components/forge/timeline/markers"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/markers.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { adjacentMarker, moveMarker, nextMarkerName, resizeMarker, sortMarkers } from "@nyc-tron/ui/forge/timeline/markers";`
+- Import: `import { adjacentMarker, moveMarker, nextMarkerName, resizeMarker, sortMarkers } from "@nyc-tron/ui/components/forge/timeline/markers";`
 - Peers: react, react-native
 - Requires: none
 

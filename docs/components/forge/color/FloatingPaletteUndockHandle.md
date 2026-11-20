@@ -1,14 +1,14 @@
 ---
 name: "FloatingPaletteUndockHandle"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/FloatingPaletteUndockHandle"
+subpath: "@nyc-tron/ui/components/forge/color/FloatingPaletteUndockHandle"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
 tokens: ["color.focus", "radius.control"]
 registryDependencies: ["@nyc-tron/DragGrabHandle", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/gestures/PanResponderDrag"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FloatingPaletteUndockHandle
@@ -23,7 +23,7 @@ Grip that undocks, moves and re-docks a palette (B-28), built on `DragGrabHandle
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/FloatingPaletteUndockHandle.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FloatingPaletteUndockHandle } from "@nyc-tron/ui/forge/color/FloatingPaletteUndockHandle";`
+- Import: `import { FloatingPaletteUndockHandle } from "@nyc-tron/ui/components/forge/color/FloatingPaletteUndockHandle";`
 - Peers: react, react-native
 - Requires: @nyc-tron/DragGrabHandle, @nyc-tron/feedback/ErrorMessage, @nyc-tron/gestures/PanResponderDrag
 

@@ -1,14 +1,14 @@
 ---
 name: "TransitionHandles"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/TransitionHandles"
+subpath: "@nyc-tron/ui/components/forge/timeline/TransitionHandles"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["-space.0.5", "color.accent", "color.focus", "color.surfaceRaised", "opacity.0_4", "radius.2", "radius.control"]
+tokens: ["color.accent", "color.focus", "color.surfaceRaised", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TransitionHandles
@@ -23,8 +23,8 @@ Transitions on the timeline (D-23), placed over the lanes like `TimelinePlayhead
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TransitionHandles.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TransitionHandles } from "@nyc-tron/ui/forge/timeline/TransitionHandles";`
-- Peers: react, react-native
+- Import: `import { TransitionHandles } from "@nyc-tron/ui/components/forge/timeline/TransitionHandles";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -1,7 +1,7 @@
 ---
 name: "DocumentTabsModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/document-tabs-model"
+subpath: "@nyc-tron/ui/components/shell/document-tabs-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ One open document in a {@linkcode DocumentTabBar}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/document-tabs-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { activeAfterClose, documentTabLabel, moveDocument, validateDocumentTabs } from "@nyc-tron/ui/shell/document-tabs-model";`
+- Import: `import { activeAfterClose, documentTabLabel, moveDocument, validateDocumentTabs } from "@nyc-tron/ui/components/shell/document-tabs-model";`
 - Peers: react, react-native
 - Requires: none
 

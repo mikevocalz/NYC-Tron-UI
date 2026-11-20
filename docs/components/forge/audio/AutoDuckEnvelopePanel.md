@@ -1,7 +1,7 @@
 ---
 name: "AutoDuckEnvelopePanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/AutoDuckEnvelopePanel"
+subpath: "@nyc-tron/ui/components/forge/audio/AutoDuckEnvelopePanel"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Host-generated ducking against dialogue, with an editable sample-local gain enve
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AutoDuckEnvelopePanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AutoDuckEnvelopePanel } from "@nyc-tron/ui/forge/audio/AutoDuckEnvelopePanel";`
+- Import: `import { AutoDuckEnvelopePanel } from "@nyc-tron/ui/components/forge/audio/AutoDuckEnvelopePanel";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/audio/AudioProcessingPanel, @nyc-tron/forge/audio/ClipGainEnvelope
 

@@ -1,12 +1,12 @@
 ---
 name: "InspectorSearch"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/InspectorSearch"
+subpath: "@nyc-tron/ui/components/shell/InspectorSearch"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "input"
-tokens: ["border.1_5", "color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.5", "radius.control", "space.2", "space.2.5"]
+tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Search field with clear button and live-region match summary for inspector panel
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { InspectorSearch } from "@nyc-tron/ui/shell/InspectorSearch";`
-- Peers: react, react-native
+- Import: `import { InspectorSearch } from "@nyc-tron/ui/components/shell/InspectorSearch";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

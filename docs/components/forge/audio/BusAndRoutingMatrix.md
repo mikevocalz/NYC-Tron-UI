@@ -1,14 +1,14 @@
 ---
 name: "BusAndRoutingMatrix"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/BusAndRoutingMatrix"
+subpath: "@nyc-tron/ui/components/forge/audio/BusAndRoutingMatrix"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.accent", "color.border", "color.danger", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_45", "radius.1", "radius.4", "radius.card", "radius.control", "space.1.5", "space.2", "space.2.5", "space.3"]
+tokens: ["color.accent", "color.border", "color.danger", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/EmptyState", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BusAndRoutingMatrix
@@ -23,8 +23,8 @@ Controlled routing matrix for track outputs and post-fader sends.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/BusAndRoutingMatrix.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { BusAndRoutingMatrix } from "@nyc-tron/ui/forge/audio/BusAndRoutingMatrix";`
-- Peers: react, react-native, zustand
+- Import: `import { BusAndRoutingMatrix } from "@nyc-tron/ui/components/forge/audio/BusAndRoutingMatrix";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/EmptyState, @nyc-tron/feedback/ErrorMessage
 
 ```sh

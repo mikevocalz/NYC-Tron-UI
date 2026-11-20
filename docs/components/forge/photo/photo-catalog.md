@@ -1,7 +1,7 @@
 ---
 name: "PhotoCatalogModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/photo-catalog"
+subpath: "@nyc-tron/ui/components/forge/photo/photo-catalog"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/photo-catalog.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { emptyPhotoCatalogFilter, togglePhotoSelection, validPhotoDate, validateCatalogChoices, validateCatalogFilter, validatePhotoCatalog } from "@nyc-tron/ui/forge/photo/photo-catalog";`
+- Import: `import { emptyPhotoCatalogFilter, togglePhotoSelection, validPhotoDate, validateCatalogChoices, validateCatalogFilter, validatePhotoCatalog } from "@nyc-tron/ui/components/forge/photo/photo-catalog";`
 - Peers: react, react-native
 - Requires: none
 

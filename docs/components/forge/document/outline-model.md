@@ -1,7 +1,7 @@
 ---
 name: "OutlineModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/outline-model"
+subpath: "@nyc-tron/ui/components/forge/document/outline-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ A heading in a document outline.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/outline-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { headingAtBlock, headingsByPage, rowForHeading, validateOutline, visibleOutline } from "@nyc-tron/ui/forge/document/outline-model";`
+- Import: `import { headingAtBlock, headingsByPage, rowForHeading, validateOutline, visibleOutline } from "@nyc-tron/ui/components/forge/document/outline-model";`
 - Peers: react, react-native
 - Requires: none
 

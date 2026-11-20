@@ -1,14 +1,14 @@
 ---
 name: "TakePlaylistAndComping"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/TakePlaylistAndComping"
+subpath: "@nyc-tron/ui/components/forge/audio/TakePlaylistAndComping"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1.5", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/WaveformLane", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TakePlaylistAndComping
@@ -23,8 +23,8 @@ Swipe a take lane to request a comp range; host performs edits and crossfades tr
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/TakePlaylistAndComping.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TakePlaylistAndComping } from "@nyc-tron/ui/forge/audio/TakePlaylistAndComping";`
-- Peers: react, react-native, react-native-gesture-handler
+- Import: `import { TakePlaylistAndComping } from "@nyc-tron/ui/components/forge/audio/TakePlaylistAndComping";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/WaveformLane, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

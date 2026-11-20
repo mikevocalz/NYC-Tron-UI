@@ -1,14 +1,14 @@
 ---
 name: "AutomationLane"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/AutomationLane"
+subpath: "@nyc-tron/ui/components/forge/audio/AutomationLane"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "leading.16", "opacity.0_45", "opacity.0_5", "radius.1", "radius.card", "radius.control", "space.0.5", "space.2", "space.2.5", "space.3", "space.3.5"]
+tokens: ["color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/audio/AutomationModePicker"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AutomationLane
@@ -23,8 +23,8 @@ Controlled automation lane for one track parameter.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AutomationLane.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AutomationLane } from "@nyc-tron/ui/forge/audio/AutomationLane";`
-- Peers: react, react-native, zustand
+- Import: `import { AutomationLane } from "@nyc-tron/ui/components/forge/audio/AutomationLane";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/audio/AutomationModePicker
 
 ```sh

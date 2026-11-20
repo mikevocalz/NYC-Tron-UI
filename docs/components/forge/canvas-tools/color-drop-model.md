@@ -1,7 +1,7 @@
 ---
 name: "ColorDropModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas-tools/color-drop-model"
+subpath: "@nyc-tron/ui/components/forge/canvas-tools/color-drop-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas-tools/color-drop-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { DROP_DOT_SIZE, DROP_KEY_STEP, DROP_SLOP, MAX_FILL_TOLERANCE, buildFill, clampToTarget, classifyPress, describeDropTarget } from "@nyc-tron/ui/forge/canvas-tools/color-drop-model";`
+- Import: `import { DROP_DOT_SIZE, DROP_KEY_STEP, DROP_SLOP, MAX_FILL_TOLERANCE, buildFill, clampToTarget, classifyPress, describeDropTarget } from "@nyc-tron/ui/components/forge/canvas-tools/color-drop-model";`
 - Peers: react, react-native
 - Requires: none
 

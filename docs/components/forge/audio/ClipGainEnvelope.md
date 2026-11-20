@@ -1,7 +1,7 @@
 ---
 name: "ClipGainEnvelope"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/ClipGainEnvelope"
+subpath: "@nyc-tron/ui/components/forge/audio/ClipGainEnvelope"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/ClipGainEnvelope.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ClipGainEnvelope } from "@nyc-tron/ui/forge/audio/ClipGainEnvelope";`
+- Import: `import { ClipGainEnvelope } from "@nyc-tron/ui/components/forge/audio/ClipGainEnvelope";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/audio/AutomationLane
 

@@ -1,7 +1,7 @@
 ---
 name: "WaveformModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/waveform"
+subpath: "@nyc-tron/ui/components/forge/waveform"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Display-only min/max extrema math adapted from the user's Nitro Forge draft medi
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/waveform.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { FULL_RANGE, assertWaveformRange, normalizePeak, peaksToBars, rangePosition, resamplePeaks, scrollRange, slicePeaks } from "@nyc-tron/ui/forge/waveform";`
+- Import: `import { FULL_RANGE, assertWaveformRange, normalizePeak, peaksToBars, rangePosition, resamplePeaks, scrollRange, slicePeaks } from "@nyc-tron/ui/components/forge/waveform";`
 - Peers: react, react-native
 - Requires: none
 

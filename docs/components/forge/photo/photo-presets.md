@@ -1,7 +1,7 @@
 ---
 name: "PhotoPresetsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/photo-presets"
+subpath: "@nyc-tron/ui/components/forge/photo/photo-presets"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/photo-presets.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { parsePhotoPreset, serializePhotoPreset, validatePhotoPreset, validatePhotoPresets, validatePhotoTargets } from "@nyc-tron/ui/forge/photo/photo-presets";`
+- Import: `import { parsePhotoPreset, serializePhotoPreset, validatePhotoPreset, validatePhotoPresets, validatePhotoTargets } from "@nyc-tron/ui/components/forge/photo/photo-presets";`
 - Peers: react, react-native
 - Requires: none
 

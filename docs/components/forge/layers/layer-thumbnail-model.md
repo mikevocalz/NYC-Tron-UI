@@ -1,7 +1,7 @@
 ---
 name: "LayerThumbnailModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/layer-thumbnail-model"
+subpath: "@nyc-tron/ui/components/forge/layers/layer-thumbnail-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/layer-thumbnail-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { CHECKER_CELL, CHECKER_MAX_CELLS, THUMBNAIL_MAX_EDGE, checkerCells, createThumbnailCache, decodeBase64, encodeBase64, encodePng } from "@nyc-tron/ui/forge/layers/layer-thumbnail-model";`
+- Import: `import { CHECKER_CELL, CHECKER_MAX_CELLS, THUMBNAIL_MAX_EDGE, checkerCells, createThumbnailCache, decodeBase64, encodeBase64, encodePng } from "@nyc-tron/ui/components/forge/layers/layer-thumbnail-model";`
 - Peers: react, react-native
 - Requires: none
 

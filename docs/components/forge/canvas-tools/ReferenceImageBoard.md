@@ -1,14 +1,14 @@
 ---
 name: "ReferenceImageBoard"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas-tools/ReferenceImageBoard"
+subpath: "@nyc-tron/ui/components/forge/canvas-tools/ReferenceImageBoard"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["ReferenceImageBoard.font.18", "border.2", "color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_35", "opacity.0_45", "radius.card", "radius.control", "space.0.5", "space.1", "space.1.5", "space.2", "space.3"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ReferenceImageBoard
@@ -23,8 +23,8 @@ Reference images (B-31) pinned beside or floating over the canvas, or laid over 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas-tools/ReferenceImageBoard.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ReferenceImageBoard } from "@nyc-tron/ui/forge/canvas-tools/ReferenceImageBoard";`
-- Peers: react, react-native, zustand
+- Import: `import { ReferenceImageBoard } from "@nyc-tron/ui/components/forge/canvas-tools/ReferenceImageBoard";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh

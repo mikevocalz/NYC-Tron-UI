@@ -1,14 +1,14 @@
 ---
 name: "EightBandColorMixer"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/EightBandColorMixer"
+subpath: "@nyc-tron/ui/components/forge/photo/EightBandColorMixer"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1.5", "space.3"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EightBandColorMixer
@@ -23,8 +23,8 @@ Eight explicit color ranges; edits retain every other band's exact values.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/EightBandColorMixer.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { EightBandColorMixer } from "@nyc-tron/ui/forge/photo/EightBandColorMixer";`
-- Peers: react, react-native
+- Import: `import { EightBandColorMixer } from "@nyc-tron/ui/components/forge/photo/EightBandColorMixer";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh

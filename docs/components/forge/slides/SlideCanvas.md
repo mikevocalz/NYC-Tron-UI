@@ -1,14 +1,14 @@
 ---
 name: "SlideCanvas"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/SlideCanvas"
+subpath: "@nyc-tron/ui/components/forge/slides/SlideCanvas"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.2", "space.1"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls", "@nyc-tron/forge/slides/SlideThumbnail"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SlideCanvas
@@ -23,8 +23,8 @@ Editable slide (J-05): objects drawn to scale, press to select, drag to move wit
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideCanvas.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SlideCanvas } from "@nyc-tron/ui/forge/slides/SlideCanvas";`
-- Peers: react, react-native
+- Import: `import { SlideCanvas } from "@nyc-tron/ui/components/forge/slides/SlideCanvas";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls, @nyc-tron/forge/slides/SlideThumbnail
 
 ```sh

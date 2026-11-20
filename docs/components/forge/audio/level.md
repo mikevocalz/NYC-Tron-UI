@@ -1,7 +1,7 @@
 ---
 name: "LevelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/level"
+subpath: "@nyc-tron/ui/components/forge/audio/level"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Level math for `LevelFader`.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/level.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { FADER_RANGES, assertFaderRange, clampGain, dbToGain, dragToGain, formatDb, gainToDb, gainToPosition } from "@nyc-tron/ui/forge/audio/level";`
+- Import: `import { FADER_RANGES, assertFaderRange, clampGain, dbToGain, dragToGain, formatDb, gainToDb, gainToPosition } from "@nyc-tron/ui/components/forge/audio/level";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,14 +1,14 @@
 ---
 name: "EncryptPermissionsPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/EncryptPermissionsPanel"
+subpath: "@nyc-tron/ui/components/forge/pdf/EncryptPermissionsPanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.danger", "color.text", "color.textMuted", "radius.control", "space.1", "space.2"]
+tokens: ["color.border", "color.danger", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EncryptPermissionsPanel
@@ -23,8 +23,8 @@ Passwords live only in this ephemeral, nonpersisted store and the host operation
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/EncryptPermissionsPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { EncryptPermissionsPanel } from "@nyc-tron/ui/forge/pdf/EncryptPermissionsPanel";`
-- Peers: react, react-native, zustand
+- Import: `import { EncryptPermissionsPanel } from "@nyc-tron/ui/components/forge/pdf/EncryptPermissionsPanel";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select
 
 ```sh

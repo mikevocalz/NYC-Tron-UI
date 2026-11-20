@@ -1,7 +1,7 @@
 ---
 name: "CanvasPanZoomModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/canvas-pan-zoom-model"
+subpath: "@nyc-tron/ui/components/forge/canvas/canvas-pan-zoom-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/canvas-pan-zoom-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { DEFAULT_CANVAS_ZOOM_LIMITS, canvasFromTouches, canvasFromWheel, fitCanvas, panCanvasBy, sameCanvasView, validateZoomLimits, zoomCanvasAt } from "@nyc-tron/ui/forge/canvas/canvas-pan-zoom-model";`
+- Import: `import { DEFAULT_CANVAS_ZOOM_LIMITS, canvasFromTouches, canvasFromWheel, fitCanvas, panCanvasBy, sameCanvasView, validateZoomLimits, zoomCanvasAt } from "@nyc-tron/ui/components/forge/canvas/canvas-pan-zoom-model";`
 - Peers: react, react-native
 - Requires: none
 

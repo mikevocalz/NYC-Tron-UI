@@ -1,7 +1,7 @@
 ---
 name: "MotionTimelineModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/motion-timeline"
+subpath: "@nyc-tron/ui/components/forge/motion/motion-timeline"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/motion-timeline.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { motionSelectionBounds, motionSelectionKey, moveMotionSelection, validateMotionTimeline } from "@nyc-tron/ui/forge/motion/motion-timeline";`
+- Import: `import { motionSelectionBounds, motionSelectionKey, moveMotionSelection, validateMotionTimeline } from "@nyc-tron/ui/components/forge/motion/motion-timeline";`
 - Peers: react, react-native
 - Requires: none
 

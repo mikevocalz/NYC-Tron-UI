@@ -1,14 +1,14 @@
 ---
 name: "RichTextRibbon"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/RichTextRibbon"
+subpath: "@nyc-tron/ui/components/forge/document/RichTextRibbon"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["border.1_5", "color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "font.13", "font.17", "opacity.0_45", "radius.10", "radius.12", "radius.control", "space.0.5", "space.1", "space.3.5"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RichTextRibbon
@@ -23,8 +23,8 @@ Home-tab formatting ribbon for text documents (H-03): paragraph style, font fami
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/RichTextRibbon.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { RichTextRibbon } from "@nyc-tron/ui/forge/document/RichTextRibbon";`
-- Peers: react, react-native
+- Import: `import { RichTextRibbon } from "@nyc-tron/ui/components/forge/document/RichTextRibbon";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh

@@ -1,7 +1,7 @@
 ---
 name: "CompositionTreeModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/composition-tree"
+subpath: "@nyc-tron/ui/components/forge/motion/composition-tree"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/composition-tree.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { compositionAncestors, flattenCompositionLayers, validateCompositionLayers } from "@nyc-tron/ui/forge/motion/composition-tree";`
+- Import: `import { compositionAncestors, flattenCompositionLayers, validateCompositionLayers } from "@nyc-tron/ui/components/forge/motion/composition-tree";`
 - Peers: react, react-native
 - Requires: none
 

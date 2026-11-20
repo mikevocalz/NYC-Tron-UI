@@ -1,14 +1,14 @@
 ---
 name: "VideoQualityInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/VideoQualityInspector"
+subpath: "@nyc-tron/ui/components/forge/timeline/VideoQualityInspector"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VideoQualityInspector
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/VideoQualityInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { VideoQualityInspector } from "@nyc-tron/ui/forge/timeline/VideoQualityInspector";`
-- Peers: react, react-native
+- Import: `import { VideoQualityInspector } from "@nyc-tron/ui/components/forge/timeline/VideoQualityInspector";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh

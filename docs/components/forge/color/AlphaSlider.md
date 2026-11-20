@@ -1,14 +1,14 @@
 ---
 name: "AlphaSlider"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/AlphaSlider"
+subpath: "@nyc-tron/ui/components/forge/color/AlphaSlider"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.danger", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.0.5", "space.1.5", "space.2", "space.2.5"]
+tokens: ["color.border", "color.danger", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AlphaSlider
@@ -23,8 +23,8 @@ Controlled opacity slider (C-05): a checkerboard under a transparent-to-opaque g
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/AlphaSlider.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AlphaSlider } from "@nyc-tron/ui/forge/color/AlphaSlider";`
-- Peers: react, react-native
+- Import: `import { AlphaSlider } from "@nyc-tron/ui/components/forge/color/AlphaSlider";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

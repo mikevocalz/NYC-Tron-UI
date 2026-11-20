@@ -1,7 +1,7 @@
 ---
 name: "FindReplacePopover"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/FindReplacePopover"
+subpath: "@nyc-tron/ui/components/shell/FindReplacePopover"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,7 +20,7 @@ FindReplaceContent inside an AnchoredPopover, placed by anchor rectangle or trig
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { FindReplacePopover } from "@nyc-tron/ui/shell/FindReplacePopover";`
+- Import: `import { FindReplacePopover } from "@nyc-tron/ui/components/shell/FindReplacePopover";`
 - Peers: react, react-native
 - Requires: @nyc-tron/overlays/AnchoredPopover, @nyc-tron/shell/FindReplaceContent
 

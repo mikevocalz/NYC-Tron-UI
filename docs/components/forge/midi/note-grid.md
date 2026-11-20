@@ -1,7 +1,7 @@
 ---
 name: "NoteGridModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/midi/note-grid"
+subpath: "@nyc-tron/ui/components/forge/midi/note-grid"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Note geometry for {@linkcode MIDIPianoRoll}, {@linkcode MIDIVelocityLane} and {@
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/note-grid.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { MAX_MIDI_CHANNEL, assertGrid, assertMidiNotes, cellAt, channelLabel, clampVelocity, describeNote, dragNote } from "@nyc-tron/ui/forge/midi/note-grid";`
+- Import: `import { MAX_MIDI_CHANNEL, assertGrid, assertMidiNotes, cellAt, channelLabel, clampVelocity, describeNote, dragNote } from "@nyc-tron/ui/components/forge/midi/note-grid";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,14 +1,14 @@
 ---
 name: "PresenterInkStrip"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/PresenterInkStrip"
+subpath: "@nyc-tron/ui/components/forge/slides/PresenterInkStrip"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.focus", "color.onPrimary", "color.primary", "color.surfaceSunken", "color.text", "radius.control", "space.1", "space.3"]
+tokens: ["color.focus", "color.onPrimary", "color.primary", "color.surfaceSunken", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PresenterInkStrip
@@ -23,8 +23,8 @@ Wraps on narrow panes; clear stays disabled until there are committed strokes.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/PresenterInkStrip.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PresenterInkStrip } from "@nyc-tron/ui/forge/slides/PresenterInkStrip";`
-- Peers: react, react-native
+- Import: `import { PresenterInkStrip } from "@nyc-tron/ui/components/forge/slides/PresenterInkStrip";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

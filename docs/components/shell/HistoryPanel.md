@@ -1,12 +1,12 @@
 ---
 name: "HistoryPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/HistoryPanel"
+subpath: "@nyc-tron/ui/components/shell/HistoryPanel"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "data"
-tokens: ["color.border", "color.focus", "color.text", "color.textMuted", "space.1", "space.2", "space.2.5"]
+tokens: ["color.border", "color.focus", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
 a11yStatus: "reviewed-pass"
 ---
@@ -20,8 +20,8 @@ Undo and redo list with a cursor and jump to any entry; async jump with cancel, 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { HistoryPanel } from "@nyc-tron/ui/shell/HistoryPanel";`
-- Peers: react, react-native
+- Import: `import { HistoryPanel } from "@nyc-tron/ui/components/shell/HistoryPanel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

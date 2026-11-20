@@ -1,7 +1,7 @@
 ---
 name: "FillHandleAndAutoFill"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/FillHandleAndAutoFill"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/FillHandleAndAutoFill"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Shares the range recognizer and fill planner.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/FillHandleAndAutoFill.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FillHandleAndAutoFill, AutoFillModePicker } from "@nyc-tron/ui/forge/spreadsheet/FillHandleAndAutoFill";`
+- Import: `import { FillHandleAndAutoFill, AutoFillModePicker } from "@nyc-tron/ui/components/forge/spreadsheet/FillHandleAndAutoFill";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/forge/spreadsheet/CellSelectionOverlay
 

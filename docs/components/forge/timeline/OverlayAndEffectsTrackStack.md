@@ -1,14 +1,14 @@
 ---
 name: "OverlayAndEffectsTrackStack"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/OverlayAndEffectsTrackStack"
+subpath: "@nyc-tron/ui/components/forge/timeline/OverlayAndEffectsTrackStack"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_4", "radius.control", "space.2", "space.3"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/TimelineClipLane", "@nyc-tron/forge/timeline/TrackHeaders"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # OverlayAndEffectsTrackStack
@@ -23,8 +23,8 @@ The track stack (D-31): `TrackHeaders` beside `TimelineClipLane`, with overlay t
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/OverlayAndEffectsTrackStack.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { OverlayAndEffectsTrackStack } from "@nyc-tron/ui/forge/timeline/OverlayAndEffectsTrackStack";`
-- Peers: react, react-native
+- Import: `import { OverlayAndEffectsTrackStack } from "@nyc-tron/ui/components/forge/timeline/OverlayAndEffectsTrackStack";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/TimelineClipLane, @nyc-tron/forge/timeline/TrackHeaders
 
 ```sh

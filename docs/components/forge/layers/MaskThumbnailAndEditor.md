@@ -1,14 +1,14 @@
 ---
 name: "MaskThumbnailAndEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/MaskThumbnailAndEditor"
+subpath: "@nyc-tron/ui/components/forge/layers/MaskThumbnailAndEditor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.danger", "color.surfaceRaised", "color.text", "color.textMuted", "opacity.0_45", "radius.card", "space.0.5", "space.1", "space.2", "space.3"]
+tokens: ["color.border", "color.danger", "color.surfaceRaised", "color.text", "color.textMuted", "radius.card"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/forge/layers/LayerThumbnail"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MaskThumbnailAndEditor
@@ -23,8 +23,8 @@ Mask panel for one layer (B-12).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/MaskThumbnailAndEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MaskThumbnailAndEditor } from "@nyc-tron/ui/forge/layers/MaskThumbnailAndEditor";`
-- Peers: react, react-native
+- Import: `import { MaskThumbnailAndEditor } from "@nyc-tron/ui/components/forge/layers/MaskThumbnailAndEditor";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/layers/LayerThumbnail
 
 ```sh

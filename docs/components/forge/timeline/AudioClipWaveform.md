@@ -1,14 +1,14 @@
 ---
 name: "AudioClipWaveform"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/AudioClipWaveform"
+subpath: "@nyc-tron/ui/components/forge/timeline/AudioClipWaveform"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/WaveformLane"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioClipWaveform
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/AudioClipWaveform.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AudioClipWaveform } from "@nyc-tron/ui/forge/timeline/AudioClipWaveform";`
-- Peers: react, react-native, zustand
+- Import: `import { AudioClipWaveform } from "@nyc-tron/ui/components/forge/timeline/AudioClipWaveform";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/WaveformLane
 
 ```sh

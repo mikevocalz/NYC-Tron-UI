@@ -1,14 +1,14 @@
 ---
 name: "AudioClipTrimAndFade"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/AudioClipTrimAndFade"
+subpath: "@nyc-tron/ui/components/forge/audio/AudioClipTrimAndFade"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1.5", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/WaveformLane", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioClipTrimAndFade
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AudioClipTrimAndFade.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AudioClipTrimAndFade } from "@nyc-tron/ui/forge/audio/AudioClipTrimAndFade";`
-- Peers: react, react-native
+- Import: `import { AudioClipTrimAndFade } from "@nyc-tron/ui/components/forge/audio/AudioClipTrimAndFade";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/WaveformLane, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

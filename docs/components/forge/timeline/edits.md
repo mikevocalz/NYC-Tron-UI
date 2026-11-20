@@ -1,7 +1,7 @@
 ---
 name: "EditsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/edits"
+subpath: "@nyc-tron/ui/components/forge/timeline/edits"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/edits.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { assertClip, clipEnd, clipLength, clipsAt, compatibleKinds, deltaSeconds, fitsOnTrack, markedRange } from "@nyc-tron/ui/forge/timeline/edits";`
+- Import: `import { assertClip, clipEnd, clipLength, clipsAt, compatibleKinds, deltaSeconds, fitsOnTrack, markedRange } from "@nyc-tron/ui/components/forge/timeline/edits";`
 - Peers: react, react-native
 - Requires: none
 

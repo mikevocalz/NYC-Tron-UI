@@ -1,14 +1,14 @@
 ---
 name: "ColorChannels"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/ColorChannels"
+subpath: "@nyc-tron/ui/components/forge/ColorChannels"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.surfaceRaised", "color.textMuted", "radius.control", "space.1"]
+tokens: ["color.surfaceRaised", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorChannels
@@ -23,8 +23,8 @@ Controlled native RGBA sliders, SDK 58-only optional `@expo/ui` backend.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ColorChannels.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ColorChannels } from "@nyc-tron/ui/forge/ColorChannels";`
-- Peers: @expo/ui, react, react-native
+- Import: `import { ColorChannels } from "@nyc-tron/ui/components/forge/ColorChannels";`
+- Peers: @expo/ui, @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

@@ -1,14 +1,14 @@
 ---
 name: "PointEditor2D"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/inputs/PointEditor2D"
+subpath: "@nyc-tron/ui/components/forge/inputs/PointEditor2D"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.focus", "color.surfaceRaised", "radius.9", "space.2"]
+tokens: ["color.focus", "color.surfaceRaised"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PointEditor2D
@@ -23,8 +23,8 @@ Normalized point editor with one active 44pt native grip and equivalent numeric 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/PointEditor2D.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PointEditor2D } from "@nyc-tron/ui/forge/inputs/PointEditor2D";`
-- Peers: react, react-native, react-native-gesture-handler, zustand
+- Import: `import { PointEditor2D } from "@nyc-tron/ui/components/forge/inputs/PointEditor2D";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

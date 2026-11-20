@@ -1,14 +1,14 @@
 ---
 name: "ForegroundBackgroundChips"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/ForegroundBackgroundChips"
+subpath: "@nyc-tron/ui/components/forge/color/ForegroundBackgroundChips"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.focus", "color.text", "color.textMuted", "radius.control", "space.1", "space.1.5", "space.2"]
+tokens: ["color.border", "color.focus", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ForegroundBackgroundChips
@@ -23,8 +23,8 @@ Foreground and background chips with Swap and Reset (C-12).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ForegroundBackgroundChips.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ForegroundBackgroundChips } from "@nyc-tron/ui/forge/color/ForegroundBackgroundChips";`
-- Peers: react, react-native
+- Import: `import { ForegroundBackgroundChips } from "@nyc-tron/ui/components/forge/color/ForegroundBackgroundChips";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button
 
 ```sh

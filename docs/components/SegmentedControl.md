@@ -1,7 +1,7 @@
 ---
 name: "SegmentedControl"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/SegmentedControl"
+subpath: "@nyc-tron/ui/components/SegmentedControl"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
@@ -20,8 +20,8 @@ Single-choice segmented control exposed as a radio group, for React Native; arro
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { SegmentedControl } from "@nyc-tron/ui/SegmentedControl";`
-- Peers: react, react-native
+- Import: `import { SegmentedControl } from "@nyc-tron/ui/components/SegmentedControl";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

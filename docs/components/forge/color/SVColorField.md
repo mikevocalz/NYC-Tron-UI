@@ -1,14 +1,14 @@
 ---
 name: "SVColorField"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/SVColorField"
+subpath: "@nyc-tron/ui/components/forge/color/SVColorField"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["-space.3", "border.2", "color.focus", "color.text", "color.textMuted", "opacity.0_5", "radius.12", "space.2"]
+tokens: ["color.focus", "color.text", "color.textMuted", "opacity.0_5"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SVColorField
@@ -23,8 +23,8 @@ Two-dimensional saturation/value field with one commit on release and cancellati
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/SVColorField.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SVColorField } from "@nyc-tron/ui/forge/color/SVColorField";`
-- Peers: react, react-native, zustand
+- Import: `import { SVColorField } from "@nyc-tron/ui/components/forge/color/SVColorField";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: none
 
 ```sh

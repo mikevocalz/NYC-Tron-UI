@@ -1,14 +1,14 @@
 ---
 name: "RedactionReviewTool"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/RedactionReviewTool"
+subpath: "@nyc-tron/ui/components/forge/pdf/RedactionReviewTool"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1.5", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RedactionReviewTool
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/RedactionReviewTool.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { RedactionReviewTool } from "@nyc-tron/ui/forge/pdf/RedactionReviewTool";`
-- Peers: react, react-native, zustand
+- Import: `import { RedactionReviewTool } from "@nyc-tron/ui/components/forge/pdf/RedactionReviewTool";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

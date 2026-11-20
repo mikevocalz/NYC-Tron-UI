@@ -1,12 +1,12 @@
 ---
 name: "ToastAndProgress"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/ToastAndProgress"
+subpath: "@nyc-tron/ui/components/shell/ToastAndProgress"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "feedback"
-tokens: ["color.border", "color.primary", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.2", "space.2.5"]
+tokens: ["color.border", "color.primary", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
 a11yStatus: "reviewed-pass"
 ---
@@ -20,8 +20,8 @@ List of toast notifications and progress jobs with dismiss and action buttons; s
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { ToastAndProgress } from "@nyc-tron/ui/shell/ToastAndProgress";`
-- Peers: react, react-native, zustand
+- Import: `import { ToastAndProgress } from "@nyc-tron/ui/components/shell/ToastAndProgress";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

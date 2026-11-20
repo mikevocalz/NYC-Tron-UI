@@ -1,14 +1,14 @@
 ---
 name: "PhotoMetadataInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/PhotoMetadataInspector"
+subpath: "@nyc-tron/ui/components/forge/photo/PhotoMetadataInspector"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.text", "color.textMuted", "radius.control", "space.0.5", "space.2"]
+tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PhotoMetadataInspector
@@ -23,8 +23,8 @@ Read-only original EXIF/provenance, with a separate host-owned editing annotatio
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PhotoMetadataInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PhotoMetadataInspector } from "@nyc-tron/ui/forge/photo/PhotoMetadataInspector";`
-- Peers: react, react-native, zustand
+- Import: `import { PhotoMetadataInspector } from "@nyc-tron/ui/components/forge/photo/PhotoMetadataInspector";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button
 
 ```sh

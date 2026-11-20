@@ -1,14 +1,14 @@
 ---
 name: "LiveHistogram"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/LiveHistogram"
+subpath: "@nyc-tron/ui/components/forge/color/LiveHistogram"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.danger", "color.primary", "color.text", "color.textMuted", "space.0", "space.1", "space.2"]
+tokens: ["color.danger", "color.primary", "color.text", "color.textMuted"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LiveHistogram
@@ -23,8 +23,8 @@ Renders bounded, count-preserving histograms; no fake signal or recurring UI tim
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/LiveHistogram.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LiveHistogram } from "@nyc-tron/ui/forge/color/LiveHistogram";`
-- Peers: react, react-native
+- Import: `import { LiveHistogram } from "@nyc-tron/ui/components/forge/color/LiveHistogram";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

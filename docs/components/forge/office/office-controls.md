@@ -1,12 +1,12 @@
 ---
 name: "ToolButton"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/office/office-controls"
+subpath: "@nyc-tron/ui/components/forge/office/office-controls"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "forge"
-tokens: ["border.1_5", "color.accent", "color.border", "color.focus", "color.text", "color.textMuted", "opacity.0_45", "radius.1", "radius.control", "space.0.25", "space.1.5"]
+tokens: ["color.accent", "color.border", "color.focus", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
 a11yStatus: "reviewed-pass"
 ---
@@ -20,8 +20,8 @@ ToolButton with checked and mixed toggle state, plus play, pause, skip, plus and
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { ToolButton, PlayGlyph, PauseGlyph, SkipGlyph, PlusGlyph, ChevronGlyph, CloseMark } from "@nyc-tron/ui/forge/office/office-controls";`
-- Peers: react, react-native
+- Import: `import { ToolButton, PlayGlyph, PauseGlyph, SkipGlyph, PlusGlyph, ChevronGlyph, CloseMark } from "@nyc-tron/ui/components/forge/office/office-controls";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

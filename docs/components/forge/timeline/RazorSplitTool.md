@@ -1,14 +1,14 @@
 ---
 name: "RazorSplitTool"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/RazorSplitTool"
+subpath: "@nyc-tron/ui/components/forge/timeline/RazorSplitTool"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_4", "radius.control", "space.2"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/TimelineClipLane"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RazorSplitTool
@@ -23,8 +23,8 @@ Razor controls (D-20): a toggle that turns clip presses in `TimelineClipLane` in
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/RazorSplitTool.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { RazorSplitTool } from "@nyc-tron/ui/forge/timeline/RazorSplitTool";`
-- Peers: react, react-native
+- Import: `import { RazorSplitTool } from "@nyc-tron/ui/components/forge/timeline/RazorSplitTool";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/TimelineClipLane
 
 ```sh

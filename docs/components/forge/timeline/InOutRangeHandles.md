@@ -1,14 +1,14 @@
 ---
 name: "InOutRangeHandles"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/InOutRangeHandles"
+subpath: "@nyc-tron/ui/components/forge/timeline/InOutRangeHandles"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.accent", "color.border", "color.focus", "color.surfaceSunken", "color.textMuted", "radius.2", "radius.control", "space.2"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceSunken", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InOutRangeHandles
@@ -23,8 +23,8 @@ In and out marks (D-12): Set in / Set out / Clear buttons that act at the playhe
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/InOutRangeHandles.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { InOutRangeHandles } from "@nyc-tron/ui/forge/timeline/InOutRangeHandles";`
-- Peers: react, react-native
+- Import: `import { InOutRangeHandles } from "@nyc-tron/ui/components/forge/timeline/InOutRangeHandles";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -1,7 +1,7 @@
 ---
 name: "MixGroupsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/mix-groups"
+subpath: "@nyc-tron/ui/components/forge/audio/mix-groups"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Mix group summary for {@linkcode MixGroupBar}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/mix-groups.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { mixGroups } from "@nyc-tron/ui/forge/audio/mix-groups";`
+- Import: `import { mixGroups } from "@nyc-tron/ui/components/forge/audio/mix-groups";`
 - Peers: react, react-native
 - Requires: none
 

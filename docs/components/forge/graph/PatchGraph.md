@@ -1,14 +1,14 @@
 ---
 name: "PatchGraph"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/graph/PatchGraph"
+subpath: "@nyc-tron/ui/components/forge/graph/PatchGraph"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["border.2", "color.accent", "color.border", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "font.11", "radius.6", "radius.control", "space.0.5", "space.1.5", "space.3"]
+tokens: ["color.accent", "color.border", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PatchGraph
@@ -23,8 +23,8 @@ Native RN graph interaction surface.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/graph/PatchGraph.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PatchGraph } from "@nyc-tron/ui/forge/graph/PatchGraph";`
-- Peers: react, react-native, zustand
+- Import: `import { PatchGraph } from "@nyc-tron/ui/components/forge/graph/PatchGraph";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

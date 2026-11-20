@@ -1,7 +1,7 @@
 ---
 name: "DrawerModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/navigation/drawer-model"
+subpath: "@nyc-tron/ui/components/navigation/drawer-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ A strictly controlled React Native Windows-compatible navigation fallback.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/navigation/drawer-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { drawerGeometry } from "@nyc-tron/ui/navigation/drawer-model";`
+- Import: `import { drawerGeometry } from "@nyc-tron/ui/components/navigation/drawer-model";`
 - Peers: react, react-native
 - Requires: none
 

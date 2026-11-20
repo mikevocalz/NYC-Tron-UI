@@ -1,12 +1,12 @@
 ---
 name: "SliderField"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/SliderField"
+subpath: "@nyc-tron/ui/components/shell/SliderField"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "input"
-tokens: ["SliderField.radius.11", "border.2", "border.4", "color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_5", "radius.control", "space.2", "space.3.5"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/gestures/PanResponderDrag", "@nyc-tron/shell/UnitInput"]
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Single-thumb slider with number field, step, detents, units and reset to default
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { SliderField } from "@nyc-tron/ui/shell/SliderField";`
-- Peers: react, react-native, zustand
+- Import: `import { SliderField } from "@nyc-tron/ui/components/shell/SliderField";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
 
 ```sh

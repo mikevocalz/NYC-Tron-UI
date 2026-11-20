@@ -364,8 +364,10 @@ export function buildModel() {
   });
 }
 
+// Tier 2 pages are not reviewed, so they are `unverified` whether or not the source sets accessibility props
+// (decision 34; the props found are listed in the A11y section instead).
 export function a11yScanStatus(item) {
-  return item.a11yScan.size ? "declared" : "unverified";
+  return "unverified";
 }
 
 // Required member check for example generation. Returns the JSX or null.

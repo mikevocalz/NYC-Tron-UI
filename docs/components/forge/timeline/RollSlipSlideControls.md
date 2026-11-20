@@ -1,14 +1,14 @@
 ---
 name: "RollSlipSlideControls"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/RollSlipSlideControls"
+subpath: "@nyc-tron/ui/components/forge/timeline/RollSlipSlideControls"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.textMuted", "space.2"]
+tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/TimelineClipLane"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RollSlipSlideControls
@@ -23,8 +23,8 @@ Trim tools (D-21): a picker for select, slip, slide, roll and ripple, which sets
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/RollSlipSlideControls.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { RollSlipSlideControls } from "@nyc-tron/ui/forge/timeline/RollSlipSlideControls";`
-- Peers: react, react-native
+- Import: `import { RollSlipSlideControls } from "@nyc-tron/ui/components/forge/timeline/RollSlipSlideControls";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/TimelineClipLane
 
 ```sh

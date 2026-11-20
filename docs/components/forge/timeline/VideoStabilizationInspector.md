@@ -1,14 +1,14 @@
 ---
 name: "VideoStabilizationInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/VideoStabilizationInspector"
+subpath: "@nyc-tron/ui/components/forge/timeline/VideoStabilizationInspector"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VideoStabilizationInspector
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/VideoStabilizationInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { VideoStabilizationInspector } from "@nyc-tron/ui/forge/timeline/VideoStabilizationInspector";`
-- Peers: react, react-native
+- Import: `import { VideoStabilizationInspector } from "@nyc-tron/ui/components/forge/timeline/VideoStabilizationInspector";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

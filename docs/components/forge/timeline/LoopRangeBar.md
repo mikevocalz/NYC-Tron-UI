@@ -1,14 +1,14 @@
 ---
 name: "LoopRangeBar"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/LoopRangeBar"
+subpath: "@nyc-tron/ui/components/forge/timeline/LoopRangeBar"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["border.3", "color.border", "color.focus", "color.info", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_4", "radius.control", "space.2", "space.2.5"]
+tokens: ["color.border", "color.focus", "color.info", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LoopRangeBar
@@ -23,8 +23,8 @@ The playback loop (D-13): a Loop switch for the player, "Loop marked range" to t
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/LoopRangeBar.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LoopRangeBar } from "@nyc-tron/ui/forge/timeline/LoopRangeBar";`
-- Peers: react, react-native
+- Import: `import { LoopRangeBar } from "@nyc-tron/ui/components/forge/timeline/LoopRangeBar";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

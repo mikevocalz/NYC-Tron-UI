@@ -1,7 +1,7 @@
 ---
 name: "CompareModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/compare-model"
+subpath: "@nyc-tron/ui/components/forge/layers/compare-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Engine-neutral before/after comparison for `CanvasCompareView` (B-27).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/compare-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { COMPARE_MODES, REFERENCE_SCALE, SIDE_BY_SIDE_MIN_WIDTH, SPLIT_STEP, SPLIT_STEP_LARGE, compareFrame, compareReason, normalizeFraction } from "@nyc-tron/ui/forge/layers/compare-model";`
+- Import: `import { COMPARE_MODES, REFERENCE_SCALE, SIDE_BY_SIDE_MIN_WIDTH, SPLIT_STEP, SPLIT_STEP_LARGE, compareFrame, compareReason, normalizeFraction } from "@nyc-tron/ui/components/forge/layers/compare-model";`
 - Peers: react, react-native
 - Requires: none
 

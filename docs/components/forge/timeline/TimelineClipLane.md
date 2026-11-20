@@ -1,14 +1,14 @@
 ---
 name: "TimelineClipLane"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/TimelineClipLane"
+subpath: "@nyc-tron/ui/components/forge/timeline/TimelineClipLane"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.0.5", "space.1", "space.1.5"]
+tokens: ["color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/ClipTrimHandles", "@nyc-tron/forge/timeline/ModeEdgeHandles"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TimelineClipLane
@@ -23,8 +23,8 @@ Clip lanes (D-15): one lane per track, clips positioned by frame, only the visib
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimelineClipLane.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TimelineClipLane } from "@nyc-tron/ui/forge/timeline/TimelineClipLane";`
-- Peers: react, react-native
+- Import: `import { TimelineClipLane } from "@nyc-tron/ui/components/forge/timeline/TimelineClipLane";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/ClipTrimHandles, @nyc-tron/forge/timeline/ModeEdgeHandles
 
 ```sh

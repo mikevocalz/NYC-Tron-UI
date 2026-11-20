@@ -1,14 +1,14 @@
 ---
 name: "VideoSpeedRampCurve"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/VideoSpeedRampCurve"
+subpath: "@nyc-tron/ui/components/forge/timeline/VideoSpeedRampCurve"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VideoSpeedRampCurve
@@ -23,8 +23,8 @@ Edit speed itself, not its derivative.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/VideoSpeedRampCurve.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { VideoSpeedRampCurve } from "@nyc-tron/ui/forge/timeline/VideoSpeedRampCurve";`
-- Peers: react, react-native
+- Import: `import { VideoSpeedRampCurve } from "@nyc-tron/ui/components/forge/timeline/VideoSpeedRampCurve";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

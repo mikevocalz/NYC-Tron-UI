@@ -1,7 +1,7 @@
 ---
 name: "FillHandleModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/fill-handle"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/fill-handle"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/fill-handle.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { fillFromEdge, fillTarget } from "@nyc-tron/ui/forge/spreadsheet/fill-handle";`
+- Import: `import { fillFromEdge, fillTarget } from "@nyc-tron/ui/components/forge/spreadsheet/fill-handle";`
 - Peers: react, react-native
 - Requires: none
 

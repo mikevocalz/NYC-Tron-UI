@@ -1,12 +1,12 @@
 ---
 name: "LensCorrectionPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/LensCorrectionPanel"
+subpath: "@nyc-tron/ui/components/forge/photo/LensCorrectionPanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/shell/UnitInput"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Host-supplied calibrated profile identity and manual distortion/CA intent.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/LensCorrectionPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LensCorrectionPanel } from "@nyc-tron/ui/forge/photo/LensCorrectionPanel";`
-- Peers: react, react-native
+- Import: `import { LensCorrectionPanel } from "@nyc-tron/ui/components/forge/photo/LensCorrectionPanel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/shell/UnitInput
 
 ```sh

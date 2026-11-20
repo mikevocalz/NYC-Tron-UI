@@ -1,12 +1,12 @@
 ---
 name: "DevHandoffInspector"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/design/DevHandoffInspector"
+subpath: "@nyc-tron/ui/components/forge/design/DevHandoffInspector"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/DevHandoffInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { DevHandoffInspector } from "@nyc-tron/ui/forge/design/DevHandoffInspector";`
-- Peers: react, react-native
+- Import: `import { DevHandoffInspector } from "@nyc-tron/ui/components/forge/design/DevHandoffInspector";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -1,14 +1,14 @@
 ---
 name: "RealtimePeakMeter"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/RealtimePeakMeter"
+subpath: "@nyc-tron/ui/components/forge/audio/RealtimePeakMeter"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/audio/LevelMeter"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RealtimePeakMeter
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/RealtimePeakMeter.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { RealtimePeakMeter } from "@nyc-tron/ui/forge/audio/RealtimePeakMeter";`
-- Peers: react, react-native, zustand
+- Import: `import { RealtimePeakMeter } from "@nyc-tron/ui/components/forge/audio/RealtimePeakMeter";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/forge/audio/LevelMeter
 
 ```sh

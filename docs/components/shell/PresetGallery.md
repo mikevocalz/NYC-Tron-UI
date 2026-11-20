@@ -1,12 +1,12 @@
 ---
 name: "PresetGallery"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/PresetGallery"
+subpath: "@nyc-tron/ui/components/shell/PresetGallery"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "input"
-tokens: ["PresetGallery.border.13", "border.0", "border.1_5", "color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.2", "radius.card", "radius.control", "space.0.5", "space.1", "space.4"]
+tokens: ["color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: []
 a11yStatus: "unverified"
 ---
@@ -20,8 +20,8 @@ Grid of selectable preset tiles with hover preview, favorites toggle and All or 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { PresetGallery } from "@nyc-tron/ui/shell/PresetGallery";`
-- Peers: react, react-native, zustand
+- Import: `import { PresetGallery } from "@nyc-tron/ui/components/shell/PresetGallery";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: none
 
 ```sh

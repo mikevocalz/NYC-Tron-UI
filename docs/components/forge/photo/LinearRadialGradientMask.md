@@ -1,12 +1,12 @@
 ---
 name: "LinearRadialGradientMask"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/LinearRadialGradientMask"
+subpath: "@nyc-tron/ui/components/forge/photo/LinearRadialGradientMask"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/forge/vector/GradientOnCanvasHandles", "@nyc-tron/shell/UnitInput"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Actual bounded mask-coverage preview plus the shared native geometry handles.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/LinearRadialGradientMask.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LinearRadialGradientMask } from "@nyc-tron/ui/forge/photo/LinearRadialGradientMask";`
-- Peers: react, react-native
+- Import: `import { LinearRadialGradientMask } from "@nyc-tron/ui/components/forge/photo/LinearRadialGradientMask";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/forge/vector/GradientOnCanvasHandles, @nyc-tron/shell/UnitInput
 
 ```sh

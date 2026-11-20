@@ -1,14 +1,14 @@
 ---
 name: "LoudnessMeter"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/LoudnessMeter"
+subpath: "@nyc-tron/ui/components/forge/audio/LoudnessMeter"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["LoudnessMeter.font.30", "LoudnessMeter.leading.34", "color.accent", "color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "font.11", "font.12", "font.13", "font.14", "font.15", "font.16", "radius.1", "radius.card", "radius.control", "space.0.5", "space.1", "space.1.5", "space.2", "space.2.5", "space.3", "space.3.5", "space.4"]
+tokens: ["color.accent", "color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LoudnessMeter
@@ -23,8 +23,8 @@ Loudness readout for a rendered range: gated integrated loudness against a targe
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LoudnessMeter.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LoudnessMeter } from "@nyc-tron/ui/forge/audio/LoudnessMeter";`
-- Peers: react, react-native, zustand
+- Import: `import { LoudnessMeter } from "@nyc-tron/ui/components/forge/audio/LoudnessMeter";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

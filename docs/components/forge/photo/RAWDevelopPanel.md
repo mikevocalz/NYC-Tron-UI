@@ -1,12 +1,12 @@
 ---
 name: "RAWDevelopPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/RAWDevelopPanel"
+subpath: "@nyc-tron/ui/components/forge/photo/RAWDevelopPanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2", "space.4"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/photo/EightBandColorMixer", "@nyc-tron/forge/photo/ExposureAndWhiteBalance", "@nyc-tron/forge/photo/LensCorrectionPanel", "@nyc-tron/forge/photo/ToneAndPresence"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Composes non-destructive RAW settings; does not decode RAW or simulate an image 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/RAWDevelopPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { RAWDevelopPanel } from "@nyc-tron/ui/forge/photo/RAWDevelopPanel";`
-- Peers: react, react-native
+- Import: `import { RAWDevelopPanel } from "@nyc-tron/ui/components/forge/photo/RAWDevelopPanel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/photo/EightBandColorMixer, @nyc-tron/forge/photo/ExposureAndWhiteBalance, @nyc-tron/forge/photo/LensCorrectionPanel, @nyc-tron/forge/photo/ToneAndPresence
 
 ```sh

@@ -1,7 +1,7 @@
 ---
 name: "KeyboardMapModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/keyboard-map"
+subpath: "@nyc-tron/ui/components/shell/keyboard-map"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/keyboard-map.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { createKeyboardMap, isTextEditingBinding, reservedBindingReason, toNativeKeyBinding } from "@nyc-tron/ui/shell/keyboard-map";`
+- Import: `import { createKeyboardMap, isTextEditingBinding, reservedBindingReason, toNativeKeyBinding } from "@nyc-tron/ui/components/shell/keyboard-map";`
 - Peers: react, react-native
 - Requires: none
 

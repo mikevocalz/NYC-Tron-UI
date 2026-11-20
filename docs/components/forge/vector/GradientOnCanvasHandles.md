@@ -1,14 +1,14 @@
 ---
 name: "GradientOnCanvasHandles"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/vector/GradientOnCanvasHandles"
+subpath: "@nyc-tron/ui/components/forge/vector/GradientOnCanvasHandles"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["border.2", "color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.textMuted", "radius.4", "radius.6", "radius.control", "space.1.5"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # GradientOnCanvasHandles
@@ -23,8 +23,8 @@ On-canvas gradient editor (B-24).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/GradientOnCanvasHandles.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { GradientOnCanvasHandles } from "@nyc-tron/ui/forge/vector/GradientOnCanvasHandles";`
-- Peers: react, react-native, zustand
+- Import: `import { GradientOnCanvasHandles } from "@nyc-tron/ui/components/forge/vector/GradientOnCanvasHandles";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

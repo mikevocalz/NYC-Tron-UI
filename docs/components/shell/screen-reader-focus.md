@@ -1,7 +1,7 @@
 ---
 name: "ScreenReaderFocusModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/screen-reader-focus"
+subpath: "@nyc-tron/ui/components/shell/screen-reader-focus"
 tier: 2
 docs: "generated"
 platforms: ["web"]
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/screen-reader-focus.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { focusForScreenReader } from "@nyc-tron/ui/shell/screen-reader-focus";`
+- Import: `import { focusForScreenReader } from "@nyc-tron/ui/components/shell/screen-reader-focus";`
 - Peers: react, react-native
 - Requires: none
 

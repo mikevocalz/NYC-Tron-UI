@@ -1,7 +1,7 @@
 ---
 name: "CanvasViewportModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/canvas-viewport"
+subpath: "@nyc-tron/ui/components/forge/canvas/canvas-viewport"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Document-to-screen mapping shared by the canvas guide controls ({@linkcode Canva
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/canvas-viewport.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { docPointToScreen, docToScreen, screenPointToDoc, screenToDoc, tidy, validateDocRect, validateViewport, visibleDocRect } from "@nyc-tron/ui/forge/canvas/canvas-viewport";`
+- Import: `import { docPointToScreen, docToScreen, screenPointToDoc, screenToDoc, tidy, validateDocRect, validateViewport, visibleDocRect } from "@nyc-tron/ui/components/forge/canvas/canvas-viewport";`
 - Peers: react, react-native
 - Requires: none
 

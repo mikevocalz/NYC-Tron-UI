@@ -1,14 +1,14 @@
 ---
 name: "LevelMeter"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/LevelMeter"
+subpath: "@nyc-tron/ui/components/forge/audio/LevelMeter"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
 tokens: ["color.accent", "color.danger", "color.surfaceSunken", "color.text"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LevelMeter
@@ -23,7 +23,7 @@ Display-only input meter.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LevelMeter.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LevelMeter } from "@nyc-tron/ui/forge/audio/LevelMeter";`
+- Import: `import { LevelMeter } from "@nyc-tron/ui/components/forge/audio/LevelMeter";`
 - Peers: react, react-native
 - Requires: none
 
@@ -75,7 +75,7 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=LevelMeter
-import { LevelMeter } from "@nyc-tron/ui/forge/audio/LevelMeter";
+import { LevelMeter } from "@nyc-tron/ui/components/forge/audio/LevelMeter";
 
 export function Example() {
   return <LevelMeter level={0} />;

@@ -1,7 +1,7 @@
 ---
 name: "ArtboardModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/artboard-model"
+subpath: "@nyc-tron/ui/components/forge/layers/artboard-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Engine-neutral artboard list contract for `ArtboardNavigator` (B-14).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/artboard-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { ARTBOARD_GAP, ARTBOARD_MAX, ARTBOARD_TILE_MIN, DEFAULT_ARTBOARD_SIZE, artboardAccessibilityLabel, artboardColumns, artboardDropIndex, artboardKeyAction } from "@nyc-tron/ui/forge/layers/artboard-model";`
+- Import: `import { ARTBOARD_GAP, ARTBOARD_MAX, ARTBOARD_TILE_MIN, DEFAULT_ARTBOARD_SIZE, artboardAccessibilityLabel, artboardColumns, artboardDropIndex, artboardKeyAction } from "@nyc-tron/ui/components/forge/layers/artboard-model";`
 - Peers: react, react-native
 - Requires: none
 

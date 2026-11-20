@@ -1,7 +1,7 @@
 ---
 name: "CanvasModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/canvas-model"
+subpath: "@nyc-tron/ui/components/forge/slides/canvas-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/canvas-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { SLIDE_MIN_OBJECT, SLIDE_SNAP_POINTS, fitScale, hitTest, nudge, objectLabel, resizeFromCorner, snapRect } from "@nyc-tron/ui/forge/slides/canvas-model";`
+- Import: `import { SLIDE_MIN_OBJECT, SLIDE_SNAP_POINTS, fitScale, hitTest, nudge, objectLabel, resizeFromCorner, snapRect } from "@nyc-tron/ui/components/forge/slides/canvas-model";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,14 +1,14 @@
 ---
 name: "TransportControls"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/TransportControls"
+subpath: "@nyc-tron/ui/components/forge/timeline/TransportControls"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.textMuted", "opacity.0_4", "radius.control", "space.1.5"]
+tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TransportControls
@@ -23,8 +23,8 @@ Play/pause, stop, jump to start/end and previous/next frame (D-06), each a 44pt 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TransportControls.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TransportControls } from "@nyc-tron/ui/forge/timeline/TransportControls";`
-- Peers: react, react-native
+- Import: `import { TransportControls } from "@nyc-tron/ui/components/forge/timeline/TransportControls";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -74,7 +74,7 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=TransportControls
-import { TransportControls } from "@nyc-tron/ui/forge/timeline/TransportControls";
+import { TransportControls } from "@nyc-tron/ui/components/forge/timeline/TransportControls";
 
 export function Example() {
   return <TransportControls playing={false} frame={0} durationFrames={0} onPlayPause={() => {}} onStop={() => {}} onSeek={() => {}} />;

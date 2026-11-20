@@ -1,7 +1,7 @@
 ---
 name: "MotionSettingsModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/motion-settings"
+subpath: "@nyc-tron/ui/components/forge/motion/motion-settings"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/motion-settings.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { defaultMotionTransform, validateMotionCamera, validateMotionLight, validateMotionMatte, validateMotionParticles, validateMotionTransform, validateMotionVector } from "@nyc-tron/ui/forge/motion/motion-settings";`
+- Import: `import { defaultMotionTransform, validateMotionCamera, validateMotionLight, validateMotionMatte, validateMotionParticles, validateMotionTransform, validateMotionVector } from "@nyc-tron/ui/components/forge/motion/motion-settings";`
 - Peers: react, react-native
 - Requires: none
 

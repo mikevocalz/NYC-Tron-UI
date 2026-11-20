@@ -1,14 +1,14 @@
 ---
 name: "ColorHarmonyAssistant"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/ColorHarmonyAssistant"
+subpath: "@nyc-tron/ui/components/forge/color/ColorHarmonyAssistant"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["ColorHarmonyAssistant.font.24", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "font.15", "radius.control", "space.1", "space.1.5", "space.2", "space.3"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorHarmonyAssistant
@@ -23,8 +23,8 @@ Harmony and contrast helper (C-18): pick a rule, see the base color and its comp
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorHarmonyAssistant.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ColorHarmonyAssistant } from "@nyc-tron/ui/forge/color/ColorHarmonyAssistant";`
-- Peers: react, react-native
+- Import: `import { ColorHarmonyAssistant } from "@nyc-tron/ui/components/forge/color/ColorHarmonyAssistant";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

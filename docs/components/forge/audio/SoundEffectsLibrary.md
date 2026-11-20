@@ -1,14 +1,14 @@
 ---
 name: "SoundEffectsLibrary"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/SoundEffectsLibrary"
+subpath: "@nyc-tron/ui/components/forge/audio/SoundEffectsLibrary"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.text", "color.textMuted", "radius.control", "space.1.5", "space.2"]
+tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SoundEffectsLibrary
@@ -23,8 +23,8 @@ Searches admitted sound metadata.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SoundEffectsLibrary.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SoundEffectsLibrary } from "@nyc-tron/ui/forge/audio/SoundEffectsLibrary";`
-- Peers: react, react-native, zustand
+- Import: `import { SoundEffectsLibrary } from "@nyc-tron/ui/components/forge/audio/SoundEffectsLibrary";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

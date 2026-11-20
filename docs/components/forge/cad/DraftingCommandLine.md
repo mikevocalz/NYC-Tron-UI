@@ -1,14 +1,14 @@
 ---
 name: "DraftingCommandLine"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/cad/DraftingCommandLine"
+subpath: "@nyc-tron/ui/components/forge/cad/DraftingCommandLine"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.danger", "color.text", "color.textMuted", "radius.control", "space.2"]
+tokens: ["color.border", "color.danger", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DraftingCommandLine
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/DraftingCommandLine.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { DraftingCommandLine } from "@nyc-tron/ui/forge/cad/DraftingCommandLine";`
-- Peers: react, react-native, zustand
+- Import: `import { DraftingCommandLine } from "@nyc-tron/ui/components/forge/cad/DraftingCommandLine";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

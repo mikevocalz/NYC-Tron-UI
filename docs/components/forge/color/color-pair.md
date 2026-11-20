@@ -1,7 +1,7 @@
 ---
 name: "ColorPairModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/color-pair"
+subpath: "@nyc-tron/ui/components/forge/color/color-pair"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/color-pair.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { DEFAULT_COLOR_PAIR, sameColorPair, swapColorPair } from "@nyc-tron/ui/forge/color/color-pair";`
+- Import: `import { DEFAULT_COLOR_PAIR, sameColorPair, swapColorPair } from "@nyc-tron/ui/components/forge/color/color-pair";`
 - Peers: react, react-native
 - Requires: none
 

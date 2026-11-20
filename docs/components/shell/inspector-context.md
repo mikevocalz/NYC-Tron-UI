@@ -1,7 +1,7 @@
 ---
 name: "InspectorContextModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/inspector-context"
+subpath: "@nyc-tron/ui/components/shell/inspector-context"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/inspector-context.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { InspectorPanelContext, InspectorSectionContext } from "@nyc-tron/ui/shell/inspector-context";`
+- Import: `import { InspectorPanelContext, InspectorSectionContext } from "@nyc-tron/ui/components/shell/inspector-context";`
 - Peers: react, react-native, zustand
 - Requires: none
 

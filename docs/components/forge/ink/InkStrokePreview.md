@@ -1,14 +1,14 @@
 ---
 name: "InkStrokePreview"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/ink/InkStrokePreview"
+subpath: "@nyc-tron/ui/components/forge/ink/InkStrokePreview"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/canvas/GPUCanvasViewport"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InkStrokePreview
@@ -23,8 +23,8 @@ A bounded pressure-sensitive Graphite test stroke, independent of the production
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/InkStrokePreview.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { InkStrokePreview } from "@nyc-tron/ui/forge/ink/InkStrokePreview";`
-- Peers: react, react-native, react-native-gesture-handler, react-native-skia, zustand
+- Import: `import { InkStrokePreview } from "@nyc-tron/ui/components/forge/ink/InkStrokePreview";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, react-native-skia, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/canvas/GPUCanvasViewport
 
 ```sh
@@ -74,7 +74,7 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=InkStrokePreview
-import { InkStrokePreview } from "@nyc-tron/ui/forge/ink/InkStrokePreview";
+import { InkStrokePreview } from "@nyc-tron/ui/components/forge/ink/InkStrokePreview";
 
 export function Example() {
   return <InkStrokePreview width={0} height={0} strokeWidth={0} inkColor="" />;

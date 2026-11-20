@@ -1,7 +1,7 @@
 ---
 name: "DynamicsGraphModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/dynamics-graph"
+subpath: "@nyc-tron/ui/components/forge/audio/dynamics-graph"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Plot math for {@linkcode DynamicsTransferGraph}: a square input/output plot over
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/dynamics-graph.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { DYN_GRID_DB, DYN_MAX_DB, DYN_MAX_RATIO, DYN_MIN_DB, DYN_MIN_RATIO, RATIO_STEPS, clampThreshold, curveOutputAt } from "@nyc-tron/ui/forge/audio/dynamics-graph";`
+- Import: `import { DYN_GRID_DB, DYN_MAX_DB, DYN_MAX_RATIO, DYN_MIN_DB, DYN_MIN_RATIO, RATIO_STEPS, clampThreshold, curveOutputAt } from "@nyc-tron/ui/components/forge/audio/dynamics-graph";`
 - Peers: react, react-native
 - Requires: none
 

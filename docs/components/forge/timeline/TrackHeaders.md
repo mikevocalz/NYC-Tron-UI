@@ -1,14 +1,14 @@
 ---
 name: "TrackHeaders"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/TrackHeaders"
+subpath: "@nyc-tron/ui/components/forge/timeline/TrackHeaders"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["TrackHeaders.border.7", "TrackHeaders.border.9", "border.0", "border.2", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.2", "radius.3", "radius.5", "radius.9", "radius.control", "space.0.25", "space.0.5", "space.1", "space.2"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/IconButton", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TrackHeaders
@@ -23,8 +23,8 @@ Track headers (D-18): one row per track, the height of its lane.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TrackHeaders.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TrackHeaders } from "@nyc-tron/ui/forge/timeline/TrackHeaders";`
-- Peers: react, react-native
+- Import: `import { TrackHeaders } from "@nyc-tron/ui/components/forge/timeline/TrackHeaders";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/IconButton, @nyc-tron/feedback/ErrorMessage
 
 ```sh

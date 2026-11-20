@@ -1,14 +1,14 @@
 ---
 name: "PresenterView"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/PresenterView"
+subpath: "@nyc-tron/ui/components/forge/slides/PresenterView"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1.5", "space.2.5", "space.3"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PresenterView
@@ -23,8 +23,8 @@ Presenter clock/elapsed values follow the host session.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/PresenterView.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PresenterView } from "@nyc-tron/ui/forge/slides/PresenterView";`
-- Peers: react, react-native
+- Import: `import { PresenterView } from "@nyc-tron/ui/components/forge/slides/PresenterView";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

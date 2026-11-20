@@ -1,7 +1,7 @@
 ---
 name: "DragTransportModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/gestures/drag-transport"
+subpath: "@nyc-tron/ui/components/gestures/drag-transport"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/gestures/drag-transport.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { keyboardKey } from "@nyc-tron/ui/gestures/drag-transport";`
+- Import: `import { keyboardKey } from "@nyc-tron/ui/components/gestures/drag-transport";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,14 +1,14 @@
 ---
 name: "InstrumentKnob"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/inputs/InstrumentKnob"
+subpath: "@nyc-tron/ui/components/forge/inputs/InstrumentKnob"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["border.8", "color.accent", "color.border", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_45", "radius.3", "radius.control", "space.1.5"]
+tokens: ["color.accent", "color.border", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InstrumentKnob
@@ -23,8 +23,8 @@ Native responder-based parametric control.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/InstrumentKnob.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { InstrumentKnob } from "@nyc-tron/ui/forge/inputs/InstrumentKnob";`
-- Peers: react, react-native, zustand
+- Import: `import { InstrumentKnob } from "@nyc-tron/ui/components/forge/inputs/InstrumentKnob";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: none
 
 ```sh

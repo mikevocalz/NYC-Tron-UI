@@ -1,14 +1,14 @@
 ---
 name: "SlideNotesEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/SlideNotesEditor"
+subpath: "@nyc-tron/ui/components/forge/slides/SlideNotesEditor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/forge/document/RichTextRibbon", "@nyc-tron/forge/document/TextSelectionAndCaret"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SlideNotesEditor
@@ -23,8 +23,8 @@ Native notes buffer or an explicit rich-text native editor, sharing the formatti
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideNotesEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SlideNotesEditor } from "@nyc-tron/ui/forge/slides/SlideNotesEditor";`
-- Peers: react, react-native
+- Import: `import { SlideNotesEditor } from "@nyc-tron/ui/components/forge/slides/SlideNotesEditor";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/forge/document/RichTextRibbon, @nyc-tron/forge/document/TextSelectionAndCaret
 
 ```sh

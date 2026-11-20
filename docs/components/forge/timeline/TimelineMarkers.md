@@ -1,14 +1,14 @@
 ---
 name: "TimelineMarkers"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/TimelineMarkers"
+subpath: "@nyc-tron/ui/components/forge/timeline/TimelineMarkers"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.border", "color.focus", "color.info", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.3", "radius.card", "radius.control", "space.2", "space.2.5", "space.3"]
+tokens: ["color.border", "color.focus", "color.info", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/TextField", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TimelineMarkers
@@ -23,8 +23,8 @@ Sequence markers (D-24): a 44pt row (place it above the ruler) with a flag per m
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimelineMarkers.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TimelineMarkers } from "@nyc-tron/ui/forge/timeline/TimelineMarkers";`
-- Peers: react, react-native
+- Import: `import { TimelineMarkers } from "@nyc-tron/ui/components/forge/timeline/TimelineMarkers";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -1,14 +1,14 @@
 ---
 name: "BakingMapPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/cad/BakingMapPanel"
+subpath: "@nyc-tron/ui/components/forge/cad/BakingMapPanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BakingMapPanel
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/BakingMapPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { BakingMapPanel } from "@nyc-tron/ui/forge/cad/BakingMapPanel";`
-- Peers: react, react-native
+- Import: `import { BakingMapPanel } from "@nyc-tron/ui/components/forge/cad/BakingMapPanel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

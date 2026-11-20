@@ -1,14 +1,14 @@
 ---
 name: "ConditionalFormatRules"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/ConditionalFormatRules"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/ConditionalFormatRules"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.1.5", "space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ConditionalFormatRules
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/ConditionalFormatRules.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ConditionalFormatRules } from "@nyc-tron/ui/forge/spreadsheet/ConditionalFormatRules";`
-- Peers: react, react-native
+- Import: `import { ConditionalFormatRules } from "@nyc-tron/ui/components/forge/spreadsheet/ConditionalFormatRules";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

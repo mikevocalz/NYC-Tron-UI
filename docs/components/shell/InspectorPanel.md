@@ -1,12 +1,12 @@
 ---
 name: "InspectorPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/InspectorPanel"
+subpath: "@nyc-tron/ui/components/shell/InspectorPanel"
 tier: 1
 docs: "handwritten"
 platforms: []
 category: "shell"
-tokens: ["color.border", "color.surfaceRaised", "color.text", "color.textMuted", "space.1", "space.2", "space.4"]
+tokens: ["color.border", "color.surfaceRaised", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/shell/InspectorSearch"]
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Inspector panel for the current selection: header, search filter and InspectorSe
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { InspectorPanel } from "@nyc-tron/ui/shell/InspectorPanel";`
-- Peers: react, react-native, zustand
+- Import: `import { InspectorPanel } from "@nyc-tron/ui/components/shell/InspectorPanel";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/shell/InspectorSearch
 
 ```sh

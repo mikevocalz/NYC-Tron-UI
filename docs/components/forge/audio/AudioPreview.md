@@ -1,14 +1,14 @@
 ---
 name: "AudioPreview"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/AudioPreview"
+subpath: "@nyc-tron/ui/components/forge/audio/AudioPreview"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/WaveformLane"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioPreview
@@ -23,7 +23,7 @@ Controlled clip preview: status, position, play/stop and an optional waveform.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AudioPreview.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AudioPreview } from "@nyc-tron/ui/forge/audio/AudioPreview";`
+- Import: `import { AudioPreview } from "@nyc-tron/ui/components/forge/audio/AudioPreview";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/WaveformLane
 

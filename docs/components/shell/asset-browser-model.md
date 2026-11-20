@@ -1,7 +1,7 @@
 ---
 name: "AssetBrowserModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/asset-browser-model"
+subpath: "@nyc-tron/ui/components/shell/asset-browser-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/asset-browser-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { assetDisplayName, filterAssets, formatAssetBytes, selectAsset } from "@nyc-tron/ui/shell/asset-browser-model";`
+- Import: `import { assetDisplayName, filterAssets, formatAssetBytes, selectAsset } from "@nyc-tron/ui/components/shell/asset-browser-model";`
 - Peers: react, react-native
 - Requires: none
 

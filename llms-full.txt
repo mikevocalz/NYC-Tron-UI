@@ -8880,7 +8880,7 @@ platforms: ["ios", "android", "web"]
 category: "primitive"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card"]
 registryDependencies: ["@nyc-tron/files/FilePicker"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DropZone
@@ -8980,7 +8980,7 @@ platforms: ["ios", "android", "web"]
 category: "primitive"
 tokens: ["color.border", "color.danger", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/TextField", "@nyc-tron/files/FilePicker"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FileImportExportSheet
@@ -9075,7 +9075,7 @@ platforms: ["ios", "android", "web"]
 category: "primitive"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FilePicker
@@ -9355,7 +9355,7 @@ platforms: []
 category: "forge"
 tokens: ["color.surfaceRaised", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorChannels
@@ -9511,7 +9511,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/spreadsheet/FormulaBar", "@nyc-tron/gestures/PanResponderDrag"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SpreadsheetGrid
@@ -9624,7 +9624,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.surfaceSunken"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # WaveformLane
@@ -9713,7 +9713,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/WaveformLane", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioClipTrimAndFade
@@ -9796,7 +9796,7 @@ platforms: []
 category: "forge"
 tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/motion/EffectStackAndInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioEffectsPresetPanel
@@ -9879,7 +9879,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.surfaceRaised", "color.text", "color.textMuted", "radius.card"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioInterruptionRecoveryDialog
@@ -9959,7 +9959,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/WaveformLane"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioPreview
@@ -10046,7 +10046,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioProcessingPanel
@@ -10139,7 +10139,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioVideoSync
@@ -10307,7 +10307,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/audio/AutomationModePicker"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AutomationLane
@@ -10408,7 +10408,7 @@ platforms: []
 category: "forge"
 tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AutomationModePicker
@@ -10491,7 +10491,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/forge/timeline/TimelineMarkers"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BeatDetectionMarkerLane
@@ -10580,7 +10580,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.danger", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/EmptyState", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BusAndRoutingMatrix
@@ -10674,7 +10674,7 @@ platforms: []
 category: "forge"
 tokens: ["color.danger", "color.surfaceSunken", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/forge/audio/LevelFader", "@nyc-tron/forge/audio/LevelMeter", "@nyc-tron/forge/audio/PanControl", "@nyc-tron/forge/audio/SoloMuteButtons"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ChannelStrip
@@ -10846,7 +10846,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DeviceAndChannelPicker
@@ -10927,7 +10927,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.primary", "color.success", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DynamicsTransferGraph
@@ -11020,7 +11020,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EQFrequencyGraph
@@ -11115,7 +11115,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InputMonitorToggle
@@ -11198,7 +11198,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InsertEffectRack
@@ -11290,7 +11290,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LatencyCalibrationPanel
@@ -11383,7 +11383,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LevelFader
@@ -11474,7 +11474,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.danger", "color.surfaceSunken", "color.text"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LevelMeter
@@ -11566,7 +11566,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.text"]
 registryDependencies: ["@nyc-tron/forge/audio/LevelMeter"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LiveRecordingWaveform
@@ -11652,7 +11652,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LoopPunchRecording
@@ -11735,7 +11735,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LoudnessMeter
@@ -11839,7 +11839,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MixGroupBar
@@ -11928,7 +11928,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.surfaceRaised", "radius.card"]
 registryDependencies: ["@nyc-tron/feedback/EmptyState", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/audio/BusAndRoutingMatrix", "@nyc-tron/forge/audio/ChannelStrip", "@nyc-tron/forge/audio/InsertEffectRack", "@nyc-tron/forge/audio/MixGroupBar"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MixingConsole
@@ -12029,7 +12029,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # NativeAudioTransport
@@ -12269,7 +12269,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PanControl
@@ -12361,7 +12361,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PluginPresetBrowser
@@ -12452,7 +12452,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/audio/LevelMeter"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RealtimePeakMeter
@@ -12534,7 +12534,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RecordingArmButton
@@ -12617,7 +12617,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/WaveformLane", "@nyc-tron/forge/audio/LevelMeter"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RecordingTrack
@@ -12712,7 +12712,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/audio/AudioClipTrimAndFade", "@nyc-tron/forge/audio/LoopPunchRecording", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SampleEditor
@@ -12794,7 +12794,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SoloMuteButtons
@@ -12887,7 +12887,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SoundEffectsLibrary
@@ -12975,7 +12975,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SpectrogramView
@@ -13068,7 +13068,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/AutoCaptionTranscriptTimeline", "@nyc-tron/forge/timeline/CaptionWordTimingHandles"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SpeechTranscriptTakeReview
@@ -13148,7 +13148,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/forge/WaveformLane"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # StereoMultichannelWaveform
@@ -13230,7 +13230,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.surfaceSunken", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SurroundPanView
@@ -13316,7 +13316,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/WaveformLane", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TakePlaylistAndComping
@@ -13403,7 +13403,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TempoAndMetronome
@@ -13647,7 +13647,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/audio/LiveRecordingWaveform"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VoiceoverCountdownAndTakeBin
@@ -15273,7 +15273,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BakingMapPanel
@@ -15361,7 +15361,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DimensionsAndHatching
@@ -15446,7 +15446,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DraftingCommandLine
@@ -15530,7 +15530,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LiveNodeThumbnail
@@ -15617,7 +15617,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # Native3DViewport
@@ -15789,7 +15789,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/AssetPresetGallery"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # NodeLibrarySearch
@@ -15868,7 +15868,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ObjectSnapsAndOrtho
@@ -16025,7 +16025,7 @@ platforms: []
 category: "forge"
 tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/document/PageSetupPanel", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PaperSpaceLayout
@@ -16111,7 +16111,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ParametricConstraintEditor
@@ -16369,7 +16369,7 @@ platforms: []
 category: "forge"
 tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TextureSetPanel
@@ -16537,7 +16537,7 @@ platforms: []
 category: "forge"
 tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PointEditor2D"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # UVEditor
@@ -16624,7 +16624,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ViewCubeAndAxisGizmo
@@ -16706,7 +16706,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorDropCanvasTarget
@@ -16801,7 +16801,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.surfaceRaised", "color.text", "color.textMuted", "radius.card"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # GestureCustomizationPanel
@@ -16889,7 +16889,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ReferenceImageBoard
@@ -17282,7 +17282,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AlignDistributePanel
@@ -17379,7 +17379,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.focus"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CanvasPanZoom
@@ -17475,7 +17475,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.info", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CanvasRuler
@@ -17574,7 +17574,7 @@ platforms: []
 category: "forge"
 tokens: ["color.surfaceSunken", "color.text"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # GPUCanvasViewport
@@ -17662,7 +17662,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/graphics/ImageCropOverlay", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # GuidedCropAndStraighten
@@ -17749,7 +17749,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.surfaceRaised", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SmartGuides
@@ -17909,7 +17909,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SnapGridSettings
@@ -17996,7 +17996,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.text", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TransformOriginHandle
@@ -18928,7 +18928,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AlphaSlider
@@ -19013,7 +19013,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorChannelFields
@@ -19102,7 +19102,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorDiscPicker
@@ -19195,7 +19195,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/forge/color/ColorDiscPicker", "@nyc-tron/shell/SliderField"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorGradingWheels
@@ -19277,7 +19277,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorHarmonyAssistant
@@ -19365,7 +19365,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/color/AlphaSlider", "@nyc-tron/forge/color/ColorChannelFields", "@nyc-tron/forge/color/HsvPicker", "@nyc-tron/forge/color/SwatchGrid"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorPickerDialog
@@ -19539,7 +19539,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorWheel
@@ -19630,7 +19630,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/gestures/PanResponderDrag", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CurvesEditor
@@ -19725,7 +19725,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EyedropperTool
@@ -19810,7 +19810,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/color/FloatingPaletteUndockHandle"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FloatingColorPalette
@@ -19903,7 +19903,7 @@ platforms: []
 category: "forge"
 tokens: ["color.focus", "radius.control"]
 registryDependencies: ["@nyc-tron/DragGrabHandle", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/gestures/PanResponderDrag"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FloatingPaletteUndockHandle
@@ -19991,7 +19991,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ForegroundBackgroundChips
@@ -20080,7 +20080,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # GamutWarning
@@ -20158,7 +20158,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.primary", "color.text"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/color/ColorChannelFields", "@nyc-tron/gestures/PanResponderDrag", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # GradientMeshEditor
@@ -20408,7 +20408,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/ColorChannels"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # HsvPicker
@@ -20663,7 +20663,7 @@ platforms: []
 category: "forge"
 tokens: ["color.danger", "color.primary", "color.text", "color.textMuted"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LiveHistogram
@@ -20826,7 +20826,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.focus", "color.text", "color.textMuted", "opacity.0_5"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SVColorField
@@ -20995,7 +20995,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/color/ColorChannelFields", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SpotAndGlobalColorEditor
@@ -21077,7 +21077,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SwatchGrid
@@ -21166,7 +21166,7 @@ platforms: []
 category: "forge"
 tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ThemeColorReferences
@@ -21248,7 +21248,7 @@ platforms: []
 category: "forge"
 tokens: ["color.primary", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/forge/color/LiveHistogram"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VideoScopesPanel
@@ -22755,7 +22755,7 @@ platforms: []
 category: "forge"
 tokens: ["color.surfaceRaised", "color.text"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CollaborationPresence
@@ -22836,7 +22836,7 @@ platforms: []
 category: "forge"
 tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/pdf/CommentsThreadPanel"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CommentPins
@@ -23156,7 +23156,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FlowOverview
@@ -23469,7 +23469,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MultiExportSlices
@@ -23560,7 +23560,7 @@ platforms: []
 category: "forge"
 tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PointEditor2D"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PrototypeConnectionTool
@@ -23642,7 +23642,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PrototypePreviewPlayer
@@ -23804,7 +23804,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VariablesAndModes
@@ -23887,7 +23887,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DevicePairingDialog
@@ -24133,7 +24133,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BulletsNumberingEditor
@@ -24295,7 +24295,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DictationSessionPanel
@@ -24463,7 +24463,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FootnoteCitationEditor
@@ -24624,7 +24624,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.surfaceRaised", "color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InsertTableGrid
@@ -24709,7 +24709,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LayoutSpreadNavigator
@@ -24794,7 +24794,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MailMergeFieldPicker
@@ -24880,7 +24880,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # NavigationOutline
@@ -25048,7 +25048,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.surfaceRaised", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/document/TextSelectionAndCaret"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PaginatedTextCanvas
@@ -25134,7 +25134,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ParagraphRuler
@@ -25216,7 +25216,7 @@ platforms: []
 category: "forge"
 tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ParagraphStylesGallery
@@ -25298,7 +25298,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RichTextRibbon
@@ -25398,7 +25398,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/overlays/AnchoredPopover"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SpellGrammarPopover
@@ -25631,7 +25631,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TextSelectionAndCaret
@@ -25801,7 +25801,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TrackChangesView
@@ -26393,7 +26393,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PatchGraph
@@ -26577,7 +26577,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.surfaceRaised", "color.text"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ImageCropOverlay
@@ -26756,7 +26756,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BrushDynamicsInspector
@@ -26834,7 +26834,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BrushPresetBrowser
@@ -26918,7 +26918,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/ink/InkStrokePreview", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BrushStabilizationPreview
@@ -26997,7 +26997,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BrushTaperControl
@@ -27080,7 +27080,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EraserModePicker
@@ -27160,7 +27160,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/canvas/GPUCanvasViewport"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InkStrokePreview
@@ -27251,7 +27251,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InkToolbar
@@ -27358,7 +27358,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TimelapsePlaybackExporter
@@ -27639,7 +27639,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AssetPresetGallery
@@ -27722,7 +27722,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InstrumentKnob
@@ -27811,7 +27811,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.surfaceRaised", "color.surfaceSunken", "color.text", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InstrumentXYPad
@@ -27902,7 +27902,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # OutlineTree
@@ -27987,7 +27987,7 @@ platforms: []
 category: "forge"
 tokens: ["color.focus", "color.surfaceRaised"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PointEditor2D
@@ -28251,7 +28251,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/DragGrabHandle", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/layers/LayerThumbnail", "@nyc-tron/gestures/PanResponderDrag"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ArtboardNavigator
@@ -28348,7 +28348,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/gestures/PanResponderDrag"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CanvasCompareView
@@ -28444,7 +28444,7 @@ platforms: []
 category: "forge"
 tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ClipToggle
@@ -28536,7 +28536,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/shell/MenuButton"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LayerBlendAndOpacity
@@ -28626,7 +28626,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/forge/layers/ClippingMaskControls", "@nyc-tron/overlays/AnchoredPopover", "@nyc-tron/shell/MenuButton"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LayerStack
@@ -28731,7 +28731,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LayerThumbnail
@@ -28817,7 +28817,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.surfaceRaised", "color.text", "color.textMuted", "radius.card"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/forge/layers/LayerThumbnail"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MaskThumbnailAndEditor
@@ -29010,7 +29010,7 @@ platforms: []
 category: "forge"
 tokens: []
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ClippingModelModule
@@ -29655,7 +29655,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/midi/MidiChannelPicker"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MIDIPianoRoll
@@ -29759,7 +29759,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/midi/MIDIPianoRoll", "@nyc-tron/forge/midi/MidiChannelPicker"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MIDIVelocityLane
@@ -29857,7 +29857,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/forge/midi/MIDIPianoRoll"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MidiChannelPicker
@@ -29961,7 +29961,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # StepSequencer
@@ -30329,7 +30329,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CompositionLayerTree
@@ -30419,7 +30419,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EasingPresetGallery
@@ -30507,7 +30507,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/Select", "@nyc-tron/TextField", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EffectStackAndInspector
@@ -30594,7 +30594,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ExpressionEditor
@@ -30915,7 +30915,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.danger", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MotionKeyframeTimeline
@@ -31095,7 +31095,7 @@ platforms: []
 category: "forge"
 tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/graph/PatchGraph", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # NodeGraphEditor
@@ -31266,7 +31266,7 @@ platforms: []
 category: "forge"
 tokens: ["color.danger", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/Select", "@nyc-tron/TextField", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RenderQueuePanel
@@ -32357,7 +32357,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ReadAloudTransport
@@ -32549,7 +32549,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AnnotationToolbar
@@ -32713,7 +32713,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CommentsThreadPanel
@@ -32812,7 +32812,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EncryptPermissionsPanel
@@ -32900,7 +32900,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.surfaceRaised", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ExtractMergeSplitDialog
@@ -33065,7 +33065,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PDFCompareOverlay
@@ -33157,7 +33157,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PDFFormFieldEditor
@@ -33242,7 +33242,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PDFInlineTextEdit
@@ -33335,7 +33335,7 @@ platforms: []
 category: "forge"
 tokens: []
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PDFPageLayoutSelector
@@ -33489,7 +33489,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PointEditor2D"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PDFScanSession
@@ -33584,7 +33584,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PDFTextSelection
@@ -33669,7 +33669,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/MenuButton"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PDFThumbnailSidebar
@@ -33755,7 +33755,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/audio/LiveRecordingWaveform", "@nyc-tron/forge/audio/NativeAudioTransport"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PDFVoiceNoteAttachment
@@ -33916,7 +33916,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PrintAndExportPreview
@@ -34009,7 +34009,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RedactionReviewTool
@@ -34103,7 +34103,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PointEditor2D", "@nyc-tron/forge/inputs/PropertyInspector", "@nyc-tron/forge/slides/InkAndLaserPointer"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SignatureStampTool
@@ -34191,7 +34191,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TextSearchResults
@@ -34285,7 +34285,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VirtualPDFPageViewer
@@ -34628,7 +34628,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BatchExportPanel
@@ -34795,7 +34795,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CatalogFilterBar
@@ -34968,7 +34968,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # EightBandColorMixer
@@ -35465,7 +35465,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PhotoLibraryGrid
@@ -35556,7 +35556,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PhotoMetadataInspector
@@ -35639,7 +35639,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PhotoVersionHistoryBrowser
@@ -35730,7 +35730,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PresetFilmstrip
@@ -35819,7 +35819,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PresetManager
@@ -35994,7 +35994,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/Select"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RatingAndFlagControl
@@ -36911,7 +36911,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MagicSelectionControls
@@ -37023,7 +37023,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/Select", "@nyc-tron/shell/PropertyRow", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MultiSelectionControls
@@ -37119,7 +37119,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.focus", "color.primary", "color.surfaceRaised", "color.text", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SelectionBounds
@@ -37213,7 +37213,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.focus", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SelectionMarquee
@@ -37810,7 +37810,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/forge/document/TableLayoutInspector", "@nyc-tron/forge/spreadsheet/ChartBuilder", "@nyc-tron/forge/spreadsheet/VirtualSpreadsheetGrid"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ChartAndTableEditor
@@ -37893,7 +37893,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.surfaceRaised", "color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ConnectorAndDiagramTools
@@ -38138,7 +38138,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector", "@nyc-tron/forge/timeline/InOutRangeHandles"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MediaInsertInspector
@@ -38232,7 +38232,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MorphPreview
@@ -38319,7 +38319,7 @@ platforms: []
 category: "forge"
 tokens: ["color.danger", "color.surfaceRaised", "color.text"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PresenterInkOverlay
@@ -38407,7 +38407,7 @@ platforms: []
 category: "forge"
 tokens: ["color.focus", "color.onPrimary", "color.primary", "color.surfaceSunken", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PresenterInkStrip
@@ -38495,7 +38495,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PresenterView
@@ -38586,7 +38586,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RehearsalTimers
@@ -38668,7 +38668,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/AssetPresetGallery", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ShapePresetGallery
@@ -38751,7 +38751,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector", "@nyc-tron/forge/office/office-controls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SlideAnimationPane
@@ -38844,7 +38844,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls", "@nyc-tron/forge/slides/SlideThumbnail"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SlideCanvas
@@ -38938,7 +38938,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls", "@nyc-tron/forge/slides/SlideThumbnail"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SlideFilmstrip
@@ -39031,7 +39031,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/forge/document/RichTextRibbon", "@nyc-tron/forge/document/TextSelectionAndCaret"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SlideNotesEditor
@@ -39108,7 +39108,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls", "@nyc-tron/forge/slides/SlideThumbnail"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SlideSorter
@@ -39887,7 +39887,7 @@ platforms: []
 category: "forge"
 tokens: ["color.primary", "color.surfaceRaised"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CellSelectionOverlay
@@ -39974,7 +39974,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ChartBuilder
@@ -40065,7 +40065,7 @@ platforms: []
 category: "forge"
 tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ConditionalFormatRules
@@ -40149,7 +40149,7 @@ platforms: []
 category: "forge"
 tokens: ["color.danger", "color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DataImportWizard
@@ -40331,7 +40331,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FormulaAutocomplete
@@ -40413,7 +40413,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.surfaceSunken", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FormulaBar
@@ -40589,7 +40589,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.surfaceRaised", "color.textMuted", "radius.card"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FreezeSplitControls
@@ -40675,7 +40675,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # NameBox
@@ -40755,7 +40755,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PivotFieldList
@@ -40913,7 +40913,7 @@ platforms: []
 category: "forge"
 tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/spreadsheet/FormulaReferenceText"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ReferenceColorizer
@@ -40998,7 +40998,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/spreadsheet/SortFilterHeader"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SavedSheetViewManager
@@ -41082,7 +41082,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.info", "color.primary", "color.success", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SheetTabs
@@ -41179,7 +41179,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector", "@nyc-tron/shell/MenuButton"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SortFilterHeader
@@ -41264,7 +41264,7 @@ platforms: []
 category: "forge"
 tokens: ["color.accent", "color.border", "color.primary", "color.success", "color.textMuted"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # Sparkline
@@ -41349,7 +41349,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.surfaceRaised", "color.surfaceSunken", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/spreadsheet/Sparkline"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SparklineEditor
@@ -41434,7 +41434,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.textMuted"]
 registryDependencies: ["@nyc-tron/gestures/PanResponderDrag"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SplitSpreadsheetView
@@ -41524,7 +41524,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SpreadsheetCardsView
@@ -41614,7 +41614,7 @@ platforms: []
 category: "forge"
 tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TableStyleGallery
@@ -41692,7 +41692,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ValidationDropdown
@@ -42522,7 +42522,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/WaveformLane"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioClipWaveform
@@ -42607,7 +42607,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/MenuButton"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AutoCaptionTranscriptTimeline
@@ -42700,7 +42700,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/canvas/GuidedCropAndStraighten"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AutoReframeGuides
@@ -42783,7 +42783,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/TextField", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BatchEditPanel
@@ -42869,7 +42869,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/InOutRangeHandles"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CaptionWordTimingHandles
@@ -42955,7 +42955,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.focus", "color.surfaceRaised", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ClipTrimHandles
@@ -43049,7 +43049,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/layers/LayerThumbnail", "@nyc-tron/forge/timeline/VideoFilmstrip"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CoverFramePicker
@@ -43132,7 +43132,7 @@ platforms: []
 category: "forge"
 tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DragReorderAndRipple
@@ -43219,7 +43219,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/forge/motion/RenderQueuePanel"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ExportMonitor
@@ -43376,7 +43376,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceSunken", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # InOutRangeHandles
@@ -43471,7 +43471,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # JKLShuttleController
@@ -43563,7 +43563,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.focus", "color.info", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LoopRangeBar
@@ -43661,7 +43661,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/SafeAreaOverlay", "@nyc-tron/forge/timeline/SeekBar", "@nyc-tron/forge/timeline/TimecodeDisplay", "@nyc-tron/forge/timeline/TransportControls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MediaMonitor
@@ -43759,7 +43759,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.focus", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ModeEdgeHandles
@@ -43848,7 +43848,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/selection/SelectionBounds"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MotionTrackingOverlay
@@ -43936,7 +43936,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MulticamAngleViewer
@@ -44018,7 +44018,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/TimelineClipLane", "@nyc-tron/forge/timeline/TrackHeaders"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # OverlayAndEffectsTrackStack
@@ -44103,7 +44103,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PictureInPictureControls
@@ -44187,7 +44187,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PlaybackRateMenu
@@ -44353,7 +44353,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/TimelineClipLane"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RazorSplitTool
@@ -44443,7 +44443,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RenderCacheIndicator
@@ -44524,7 +44524,7 @@ platforms: []
 category: "forge"
 tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/TimelineClipLane"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RollSlipSlideControls
@@ -44700,7 +44700,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/forge/color/VideoScopesPanel"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ScopesDock
@@ -44782,7 +44782,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SeekBar
@@ -44947,7 +44947,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/forge/motion/MotionKeyframeTimeline", "@nyc-tron/forge/timeline/InOutRangeHandles", "@nyc-tron/shell/MenuButton"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # StickerMotionLane
@@ -45037,7 +45037,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TimecodeDisplay
@@ -45126,7 +45126,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.danger", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/ClipTrimHandles", "@nyc-tron/forge/timeline/ModeEdgeHandles"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TimelineClipLane
@@ -45226,7 +45226,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.border", "color.focus", "color.info", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/TextField", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TimelineMarkers
@@ -45329,7 +45329,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.focus", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TimelinePlayhead
@@ -45509,7 +45509,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceSunken", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TimelineZoomAndScroll
@@ -45601,7 +45601,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/IconButton", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TrackHeaders
@@ -45696,7 +45696,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.focus", "color.surfaceRaised", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TransitionHandles
@@ -45798,7 +45798,7 @@ platforms: []
 category: "forge"
 tokens: ["-space.3", "TransitionPresetBrowser.opacity.0_85", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/TextField", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TransitionPresetBrowser
@@ -45889,7 +45889,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.surfaceSunken", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # TransportControls
@@ -45980,7 +45980,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/forge/motion/EffectStackAndInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VideoEffectsBrowser
@@ -46059,7 +46059,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/layers/LayerThumbnail"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VideoFilmstrip
@@ -46143,7 +46143,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VideoQualityInspector
@@ -46224,7 +46224,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VideoSpeedRampCurve
@@ -46305,7 +46305,7 @@ platforms: []
 category: "forge"
 tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VideoStabilizationInspector
@@ -47674,7 +47674,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # FillStrokeInspector
@@ -47768,7 +47768,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # GradientOnCanvasHandles
@@ -47860,7 +47860,7 @@ platforms: ["web"]
 category: "forge"
 tokens: ["color.accent", "color.border", "color.surfaceRaised", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # PenNodeEditor
@@ -47960,7 +47960,7 @@ platforms: []
 category: "forge"
 tokens: ["color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ShapeBuilder
@@ -49040,7 +49040,7 @@ platforms: ["ios", "android", "web"]
 category: "primitive"
 tokens: []
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # HtmlModule
@@ -49217,7 +49217,7 @@ platforms: []
 category: "overlay"
 tokens: []
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AnchoredPopoverTypesModule
@@ -49855,7 +49855,7 @@ platforms: []
 category: "shell"
 tokens: []
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # A11yAuditModule

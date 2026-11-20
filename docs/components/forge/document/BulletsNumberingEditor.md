@@ -1,14 +1,14 @@
 ---
 name: "BulletsNumberingEditor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/BulletsNumberingEditor"
+subpath: "@nyc-tron/ui/components/forge/document/BulletsNumberingEditor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.accent", "color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.1", "space.1.5", "space.2", "space.2.5", "space.3"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/office/office-controls"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # BulletsNumberingEditor
@@ -23,8 +23,8 @@ Bullets and numbering (H-07): pick the list kind, indent or outdent under the ne
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/BulletsNumberingEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { BulletsNumberingEditor } from "@nyc-tron/ui/forge/document/BulletsNumberingEditor";`
-- Peers: react, react-native
+- Import: `import { BulletsNumberingEditor } from "@nyc-tron/ui/components/forge/document/BulletsNumberingEditor";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh

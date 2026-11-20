@@ -1,12 +1,12 @@
 ---
 name: "ToneAndPresence"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/ToneAndPresence"
+subpath: "@nyc-tron/ui/components/forge/photo/ToneAndPresence"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/shell/UnitInput"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Controlled non-destructive tone settings.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/ToneAndPresence.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ToneAndPresence } from "@nyc-tron/ui/forge/photo/ToneAndPresence";`
-- Peers: react, react-native
+- Import: `import { ToneAndPresence } from "@nyc-tron/ui/components/forge/photo/ToneAndPresence";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh

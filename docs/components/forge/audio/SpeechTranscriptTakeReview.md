@@ -1,14 +1,14 @@
 ---
 name: "SpeechTranscriptTakeReview"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/SpeechTranscriptTakeReview"
+subpath: "@nyc-tron/ui/components/forge/audio/SpeechTranscriptTakeReview"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.3"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/timeline/AutoCaptionTranscriptTimeline", "@nyc-tron/forge/timeline/CaptionWordTimingHandles"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SpeechTranscriptTakeReview
@@ -23,8 +23,8 @@ Take selection plus shared ASR speaker/text correction and real word-boundary ed
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SpeechTranscriptTakeReview.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SpeechTranscriptTakeReview } from "@nyc-tron/ui/forge/audio/SpeechTranscriptTakeReview";`
-- Peers: react, react-native
+- Import: `import { SpeechTranscriptTakeReview } from "@nyc-tron/ui/components/forge/audio/SpeechTranscriptTakeReview";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/AutoCaptionTranscriptTimeline, @nyc-tron/forge/timeline/CaptionWordTimingHandles
 
 ```sh

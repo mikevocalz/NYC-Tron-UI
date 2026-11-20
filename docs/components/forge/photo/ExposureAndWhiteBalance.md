@@ -1,12 +1,12 @@
 ---
 name: "ExposureAndWhiteBalance"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/ExposureAndWhiteBalance"
+subpath: "@nyc-tron/ui/components/forge/photo/ExposureAndWhiteBalance"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/shell/UnitInput"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Controlled non-destructive exposure settings.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/ExposureAndWhiteBalance.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ExposureAndWhiteBalance } from "@nyc-tron/ui/forge/photo/ExposureAndWhiteBalance";`
-- Peers: react, react-native
+- Import: `import { ExposureAndWhiteBalance } from "@nyc-tron/ui/components/forge/photo/ExposureAndWhiteBalance";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh

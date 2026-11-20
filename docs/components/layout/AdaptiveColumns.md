@@ -1,7 +1,7 @@
 ---
 name: "AdaptiveColumns"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/layout/AdaptiveColumns"
+subpath: "@nyc-tron/ui/components/layout/AdaptiveColumns"
 tier: 1
 docs: "handwritten"
 platforms: []
@@ -20,7 +20,7 @@ Wrapping column row; each AdaptiveColumns.Item sets a minimum width and grow fac
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { AdaptiveColumns, AdaptiveColumn } from "@nyc-tron/ui/layout/AdaptiveColumns";`
+- Import: `import { AdaptiveColumns, AdaptiveColumn } from "@nyc-tron/ui/components/layout/AdaptiveColumns";`
 - Peers: react, react-native
 - Requires: none
 

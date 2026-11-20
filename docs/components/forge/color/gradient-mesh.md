@@ -1,7 +1,7 @@
 ---
 name: "GradientMeshModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/gradient-mesh"
+subpath: "@nyc-tron/ui/components/forge/color/gradient-mesh"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/gradient-mesh.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { editMeshPoint, rasterizeMesh, validateMesh } from "@nyc-tron/ui/forge/color/gradient-mesh";`
+- Import: `import { editMeshPoint, rasterizeMesh, validateMesh } from "@nyc-tron/ui/components/forge/color/gradient-mesh";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,12 +1,12 @@
 ---
 name: "PanAndBalanceControl"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/PanAndBalanceControl"
+subpath: "@nyc-tron/ui/components/forge/audio/PanAndBalanceControl"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.1"]
+tokens: []
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/audio/PanControl", "@nyc-tron/forge/audio/SurroundPanView"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/PanAndBalanceControl.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PanAndBalanceControl } from "@nyc-tron/ui/forge/audio/PanAndBalanceControl";`
-- Peers: react, react-native
+- Import: `import { PanAndBalanceControl } from "@nyc-tron/ui/components/forge/audio/PanAndBalanceControl";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/audio/PanControl, @nyc-tron/forge/audio/SurroundPanView
 
 ```sh

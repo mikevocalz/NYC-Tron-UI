@@ -1,12 +1,12 @@
 ---
 name: "NativeSeekBar"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/NativeSeekBar"
+subpath: "@nyc-tron/ui/components/forge/NativeSeekBar"
 tier: 2
 docs: "generated"
 platforms: ["ios", "android", "web"]
 category: "forge"
-tokens: ["color.surfaceRaised", "color.text", "radius.control", "space.2"]
+tokens: ["color.surfaceRaised", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Frame-accurate seek bar on the OS slider: SwiftUI `Slider` on iOS, Material 3 `S
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/NativeSeekBar.native.tsx,packages/ui/src/components/forge/NativeSeekBar.shared.tsx,packages/ui/src/components/forge/NativeSeekBar.types.ts,packages/ui/src/components/forge/NativeSeekBar.web.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { NativeSeekBar } from "@nyc-tron/ui/forge/NativeSeekBar";`
-- Peers: @expo/ui, react, react-native, zustand
+- Import: `import { NativeSeekBar } from "@nyc-tron/ui/components/forge/NativeSeekBar";`
+- Peers: @expo/ui, @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button
 
 ```sh

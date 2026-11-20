@@ -1,7 +1,7 @@
 ---
 name: "InspectorModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/inspector-model"
+subpath: "@nyc-tron/ui/components/shell/inspector-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/inspector-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { matchSummary, matchesQuery, matchingRowCount, registerRow, selectionHeading } from "@nyc-tron/ui/shell/inspector-model";`
+- Import: `import { matchSummary, matchesQuery, matchingRowCount, registerRow, selectionHeading } from "@nyc-tron/ui/components/shell/inspector-model";`
 - Peers: react, react-native
 - Requires: none
 

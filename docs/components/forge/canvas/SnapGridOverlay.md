@@ -1,12 +1,12 @@
 ---
 name: "SnapGridOverlay"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/SnapGridOverlay"
+subpath: "@nyc-tron/ui/components/forge/canvas/SnapGridOverlay"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.accent", "color.border", "color.surfaceRaised", "opacity.0_4", "opacity.0_9", "radius.5"]
+tokens: ["color.accent", "color.border", "color.surfaceRaised"]
 registryDependencies: []
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Grid and snap feedback layer (B-04).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/SnapGridOverlay.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SnapGridOverlay } from "@nyc-tron/ui/forge/canvas/SnapGridOverlay";`
-- Peers: react, react-native
+- Import: `import { SnapGridOverlay } from "@nyc-tron/ui/components/forge/canvas/SnapGridOverlay";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

@@ -1,7 +1,7 @@
 ---
 name: "BeforeAfterCompareModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/photo/BeforeAfterCompare"
+subpath: "@nyc-tron/ui/components/forge/photo/BeforeAfterCompare"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Canonical photo name for the existing shared comparison owner: side-by-side, dra
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/BeforeAfterCompare.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { BeforeAfterCompare } from "@nyc-tron/ui/forge/photo/BeforeAfterCompare";`
+- Import: `import { BeforeAfterCompare } from "@nyc-tron/ui/components/forge/photo/BeforeAfterCompare";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/layers/CanvasCompareView
 

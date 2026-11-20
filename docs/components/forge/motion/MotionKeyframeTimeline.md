@@ -1,14 +1,14 @@
 ---
 name: "MotionKeyframeTimeline"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/MotionKeyframeTimeline"
+subpath: "@nyc-tron/ui/components/forge/motion/MotionKeyframeTimeline"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["border.1", "color.accent", "color.border", "color.danger", "color.text", "color.textMuted", "space.1", "space.1.5", "space.2"]
+tokens: ["color.accent", "color.border", "color.danger", "color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/shell/UnitInput"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MotionKeyframeTimeline
@@ -23,8 +23,8 @@ Virtualized property lanes and full key list share one controlled selection.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/MotionKeyframeTimeline.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MotionKeyframeTimeline } from "@nyc-tron/ui/forge/motion/MotionKeyframeTimeline";`
-- Peers: react, react-native, zustand
+- Import: `import { MotionKeyframeTimeline } from "@nyc-tron/ui/components/forge/motion/MotionKeyframeTimeline";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/shell/UnitInput
 
 ```sh

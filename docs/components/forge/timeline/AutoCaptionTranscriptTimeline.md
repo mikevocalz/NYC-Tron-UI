@@ -1,14 +1,14 @@
 ---
 name: "AutoCaptionTranscriptTimeline"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/AutoCaptionTranscriptTimeline"
+subpath: "@nyc-tron/ui/components/forge/timeline/AutoCaptionTranscriptTimeline"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.text", "radius.control", "space.1.5", "space.2"]
+tokens: ["color.border", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/shell/MenuButton"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AutoCaptionTranscriptTimeline
@@ -23,8 +23,8 @@ Edits actual ASR caption blocks; the host owns recognition and playback clocks.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/AutoCaptionTranscriptTimeline.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AutoCaptionTranscriptTimeline } from "@nyc-tron/ui/forge/timeline/AutoCaptionTranscriptTimeline";`
-- Peers: react, react-native, react-native-gesture-handler, zustand
+- Import: `import { AutoCaptionTranscriptTimeline } from "@nyc-tron/ui/components/forge/timeline/AutoCaptionTranscriptTimeline";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/MenuButton
 
 ```sh

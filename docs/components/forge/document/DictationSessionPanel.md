@@ -1,14 +1,14 @@
 ---
 name: "DictationSessionPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/DictationSessionPanel"
+subpath: "@nyc-tron/ui/components/forge/document/DictationSessionPanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.text", "color.textMuted", "radius.control", "space.2"]
+tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # DictationSessionPanel
@@ -23,8 +23,8 @@ Actual recognition events drive interim/final text; insertion is one host undo t
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/DictationSessionPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { DictationSessionPanel } from "@nyc-tron/ui/forge/document/DictationSessionPanel";`
-- Peers: react, react-native, zustand
+- Import: `import { DictationSessionPanel } from "@nyc-tron/ui/components/forge/document/DictationSessionPanel";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

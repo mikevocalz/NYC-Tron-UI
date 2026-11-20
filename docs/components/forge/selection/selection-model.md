@@ -1,7 +1,7 @@
 ---
 name: "SelectionModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/selection/selection-model"
+subpath: "@nyc-tron/ui/components/forge/selection/selection-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Engine-neutral pixel-selection contract for {@linkcode SelectionMarquee} and {@l
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/selection-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { KEYBOARD_STEP, LASSO_MAX_POINTS, LASSO_MIN_SPACING, MAX_DRAWN_SEGMENTS, MAX_SELECTION_RADIUS, POLYGON_CLOSE_RADIUS, SELECTION_MODES, SELECTION_TOOLS } from "@nyc-tron/ui/forge/selection/selection-model";`
+- Import: `import { KEYBOARD_STEP, LASSO_MAX_POINTS, LASSO_MIN_SPACING, MAX_DRAWN_SEGMENTS, MAX_SELECTION_RADIUS, POLYGON_CLOSE_RADIUS, SELECTION_MODES, SELECTION_TOOLS } from "@nyc-tron/ui/components/forge/selection/selection-model";`
 - Peers: react, react-native
 - Requires: none
 

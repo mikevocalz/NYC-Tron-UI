@@ -1,7 +1,7 @@
 ---
 name: "MotionCurvesModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/motion-curves"
+subpath: "@nyc-tron/ui/components/forge/motion/motion-curves"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Original bounded scalar animation math.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/motion-curves.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { MOTION_MAX_TIME, MOTION_TIME_EPSILON, evaluateMotionCurve, evaluateMotionVelocity, insertMotionKey, motionSegmentControls, moveMotionKeys, removeMotionKeys } from "@nyc-tron/ui/forge/motion/motion-curves";`
+- Import: `import { MOTION_MAX_TIME, MOTION_TIME_EPSILON, evaluateMotionCurve, evaluateMotionVelocity, insertMotionKey, motionSegmentControls, moveMotionKeys, removeMotionKeys } from "@nyc-tron/ui/components/forge/motion/motion-curves";`
 - Peers: react, react-native
 - Requires: none
 

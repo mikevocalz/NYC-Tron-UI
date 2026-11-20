@@ -1,7 +1,7 @@
 ---
 name: "FillStrokeModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/vector/fill-stroke-model"
+subpath: "@nyc-tron/ui/components/forge/vector/fill-stroke-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Paint and stroke editing rules for {@linkcode FillStrokeInspector} (B-23).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/fill-stroke-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { DASH_OFFSET_RANGE, DASH_PRESETS, FILL_TYPES, MITER_RANGE, STROKE_WIDTH_RANGE, convertPaint, dashForPreset, defaultStroke } from "@nyc-tron/ui/forge/vector/fill-stroke-model";`
+- Import: `import { DASH_OFFSET_RANGE, DASH_PRESETS, FILL_TYPES, MITER_RANGE, STROKE_WIDTH_RANGE, convertPaint, dashForPreset, defaultStroke } from "@nyc-tron/ui/components/forge/vector/fill-stroke-model";`
 - Peers: react, react-native
 - Requires: none
 

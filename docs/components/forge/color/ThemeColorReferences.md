@@ -1,14 +1,14 @@
 ---
 name: "ThemeColorReferences"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/ThemeColorReferences"
+subpath: "@nyc-tron/ui/components/forge/color/ThemeColorReferences"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.textMuted", "space.2"]
+tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ThemeColorReferences
@@ -23,8 +23,8 @@ Binds theme tokens by identity; previews never replace references with literal c
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ThemeColorReferences.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ThemeColorReferences } from "@nyc-tron/ui/forge/color/ThemeColorReferences";`
-- Peers: react, react-native
+- Import: `import { ThemeColorReferences } from "@nyc-tron/ui/components/forge/color/ThemeColorReferences";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select
 
 ```sh

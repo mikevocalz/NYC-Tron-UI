@@ -1,7 +1,7 @@
 ---
 name: "ToolRailModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/tool-rail-model"
+subpath: "@nyc-tron/ui/components/shell/tool-rail-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/tool-rail-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { shownVariantId, toolIsActive, validateRailTools } from "@nyc-tron/ui/shell/tool-rail-model";`
+- Import: `import { shownVariantId, toolIsActive, validateRailTools } from "@nyc-tron/ui/components/shell/tool-rail-model";`
 - Peers: react, react-native
 - Requires: none
 

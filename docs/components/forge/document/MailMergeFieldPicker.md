@@ -1,14 +1,14 @@
 ---
 name: "MailMergeFieldPicker"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/document/MailMergeFieldPicker"
+subpath: "@nyc-tron/ui/components/forge/document/MailMergeFieldPicker"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "color.textMuted", "space.1.5", "space.2"]
+tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MailMergeFieldPicker
@@ -23,8 +23,8 @@ Preview values are supplied by the selected recipient's admitted data source.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/MailMergeFieldPicker.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MailMergeFieldPicker } from "@nyc-tron/ui/forge/document/MailMergeFieldPicker";`
-- Peers: react, react-native
+- Import: `import { MailMergeFieldPicker } from "@nyc-tron/ui/components/forge/document/MailMergeFieldPicker";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

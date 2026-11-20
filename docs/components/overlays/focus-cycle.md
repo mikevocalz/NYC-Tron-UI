@@ -1,7 +1,7 @@
 ---
 name: "FocusCycleModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/overlays/focus-cycle"
+subpath: "@nyc-tron/ui/components/overlays/focus-cycle"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Tab and Shift+Tab inside an open overlay.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/overlays/focus-cycle.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { cycleFocusIndex, cycleFocusTarget } from "@nyc-tron/ui/overlays/focus-cycle";`
+- Import: `import { cycleFocusIndex, cycleFocusTarget } from "@nyc-tron/ui/components/overlays/focus-cycle";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,12 +1,12 @@
 ---
 name: "RotaryKnob"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/RotaryKnob"
+subpath: "@nyc-tron/ui/components/shell/RotaryKnob"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "input"
-tokens: ["border.3", "color.accent", "color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_5", "radius.control", "space.1", "space.1.5"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/gestures/PanResponderDrag", "@nyc-tron/shell/UnitInput"]
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Dial control with relative or circular drag, fine adjustment, detents and reset 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { RotaryKnob } from "@nyc-tron/ui/shell/RotaryKnob";`
-- Peers: react, react-native, zustand
+- Import: `import { RotaryKnob } from "@nyc-tron/ui/components/shell/RotaryKnob";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
 
 ```sh

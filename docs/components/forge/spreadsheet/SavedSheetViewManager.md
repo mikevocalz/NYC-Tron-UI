@@ -1,14 +1,14 @@
 ---
 name: "SavedSheetViewManager"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/spreadsheet/SavedSheetViewManager"
+subpath: "@nyc-tron/ui/components/forge/spreadsheet/SavedSheetViewManager"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.text", "color.textMuted", "radius.control", "space.1.5", "space.2"]
+tokens: ["color.border", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/spreadsheet/SortFilterHeader"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SavedSheetViewManager
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SavedSheetViewManager.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SavedSheetViewManager } from "@nyc-tron/ui/forge/spreadsheet/SavedSheetViewManager";`
-- Peers: react, react-native, zustand
+- Import: `import { SavedSheetViewManager } from "@nyc-tron/ui/components/forge/spreadsheet/SavedSheetViewManager";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/spreadsheet/SortFilterHeader
 
 ```sh

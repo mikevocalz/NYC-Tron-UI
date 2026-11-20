@@ -1,14 +1,14 @@
 ---
 name: "VoiceoverCountdownAndTakeBin"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/VoiceoverCountdownAndTakeBin"
+subpath: "@nyc-tron/ui/components/forge/audio/VoiceoverCountdownAndTakeBin"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1.5", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/audio/LiveRecordingWaveform"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VoiceoverCountdownAndTakeBin
@@ -23,8 +23,8 @@ Countdown follows native capture telemetry.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/VoiceoverCountdownAndTakeBin.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { VoiceoverCountdownAndTakeBin } from "@nyc-tron/ui/forge/audio/VoiceoverCountdownAndTakeBin";`
-- Peers: react, react-native, zustand
+- Import: `import { VoiceoverCountdownAndTakeBin } from "@nyc-tron/ui/components/forge/audio/VoiceoverCountdownAndTakeBin";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/audio/LiveRecordingWaveform
 
 ```sh

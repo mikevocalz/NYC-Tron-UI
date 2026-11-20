@@ -1,12 +1,12 @@
 ---
 name: "FrameAccurateScrubber"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/FrameAccurateScrubber"
+subpath: "@nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber"
 tier: 2
 docs: "generated"
 platforms: ["ios", "android"]
 category: "forge"
-tokens: ["color.textMuted", "space.2"]
+tokens: ["color.textMuted"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/NativeSeekBar"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/FrameAccurateScrubber.native.tsx,packages/ui/src/components/forge/timeline/FrameAccurateScrubber.shared.tsx,packages/ui/src/components/forge/timeline/FrameAccurateScrubber.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FrameAccurateScrubber } from "@nyc-tron/ui/forge/timeline/FrameAccurateScrubber";`
-- Peers: react, react-native
+- Import: `import { FrameAccurateScrubber } from "@nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/NativeSeekBar
 
 ```sh

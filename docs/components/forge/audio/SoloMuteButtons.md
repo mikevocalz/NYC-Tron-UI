@@ -1,14 +1,14 @@
 ---
 name: "SoloMuteButtons"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/SoloMuteButtons"
+subpath: "@nyc-tron/ui/components/forge/audio/SoloMuteButtons"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["border.2", "color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_45", "radius.control", "space.1", "space.2"]
+tokens: ["color.accent", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SoloMuteButtons
@@ -23,8 +23,8 @@ Controlled mute and solo toggles for one channel.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SoloMuteButtons.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SoloMuteButtons } from "@nyc-tron/ui/forge/audio/SoloMuteButtons";`
-- Peers: react, react-native
+- Import: `import { SoloMuteButtons } from "@nyc-tron/ui/components/forge/audio/SoloMuteButtons";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

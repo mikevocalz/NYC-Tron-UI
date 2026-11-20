@@ -1,14 +1,14 @@
 ---
 name: "LevelFader"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/LevelFader"
+subpath: "@nyc-tron/ui/components/forge/audio/LevelFader"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["border.2", "color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_45", "radius.3", "radius.4", "radius.control", "space.1.5"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LevelFader
@@ -23,8 +23,8 @@ Controlled audio level fader.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LevelFader.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LevelFader } from "@nyc-tron/ui/forge/audio/LevelFader";`
-- Peers: react, react-native, zustand
+- Import: `import { LevelFader } from "@nyc-tron/ui/components/forge/audio/LevelFader";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

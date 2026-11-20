@@ -1,14 +1,14 @@
 ---
 name: "ExtractMergeSplitDialog"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/ExtractMergeSplitDialog"
+subpath: "@nyc-tron/ui/components/forge/pdf/ExtractMergeSplitDialog"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.surfaceRaised", "color.text", "radius.control", "space.1.5", "space.2", "space.4"]
+tokens: ["color.border", "color.surfaceRaised", "color.text", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ExtractMergeSplitDialog
@@ -23,8 +23,8 @@ Native modal review of source order and page selection; host retains file/securi
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/ExtractMergeSplitDialog.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ExtractMergeSplitDialog } from "@nyc-tron/ui/forge/pdf/ExtractMergeSplitDialog";`
-- Peers: react, react-native, zustand
+- Import: `import { ExtractMergeSplitDialog } from "@nyc-tron/ui/components/forge/pdf/ExtractMergeSplitDialog";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

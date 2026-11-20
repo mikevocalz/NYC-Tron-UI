@@ -1,14 +1,14 @@
 ---
 name: "ExportMonitor"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/ExportMonitor"
+subpath: "@nyc-tron/ui/components/forge/timeline/ExportMonitor"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/forge/motion/RenderQueuePanel"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ExportMonitor
@@ -23,8 +23,8 @@ Encoder-specific geometry wraps the shared preset/frame-rate/progress queue owne
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/ExportMonitor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ExportMonitor } from "@nyc-tron/ui/forge/timeline/ExportMonitor";`
-- Peers: react, react-native
+- Import: `import { ExportMonitor } from "@nyc-tron/ui/components/forge/timeline/ExportMonitor";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/motion/RenderQueuePanel
 
 ```sh

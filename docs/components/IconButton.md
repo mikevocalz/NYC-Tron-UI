@@ -1,7 +1,7 @@
 ---
 name: "IconButton"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/IconButton"
+subpath: "@nyc-tron/ui/components/IconButton"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
@@ -20,7 +20,7 @@ Icon-only pressable button with five variants and an optional selected toggle st
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { IconButton } from "@nyc-tron/ui/IconButton";`
+- Import: `import { IconButton } from "@nyc-tron/ui/components/IconButton";`
 - Peers: react, react-native
 - Requires: none
 

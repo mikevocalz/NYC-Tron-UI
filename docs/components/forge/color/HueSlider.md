@@ -1,12 +1,12 @@
 ---
 name: "HueSlider"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/HueSlider"
+subpath: "@nyc-tron/ui/components/forge/color/HueSlider"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/shell/UnitInput"]
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Hue gradient, keyboard/screen-reader adjustment and exact degree entry.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/HueSlider.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { HueSlider } from "@nyc-tron/ui/forge/color/HueSlider";`
-- Peers: react, react-native
+- Import: `import { HueSlider } from "@nyc-tron/ui/components/forge/color/HueSlider";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh

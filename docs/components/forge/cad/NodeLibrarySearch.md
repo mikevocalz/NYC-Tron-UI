@@ -1,14 +1,14 @@
 ---
 name: "NodeLibrarySearch"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/cad/NodeLibrarySearch"
+subpath: "@nyc-tron/ui/components/forge/cad/NodeLibrarySearch"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/AssetPresetGallery"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # NodeLibrarySearch
@@ -23,8 +23,8 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/NodeLibrarySearch.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { NodeLibrarySearch } from "@nyc-tron/ui/forge/cad/NodeLibrarySearch";`
-- Peers: react, react-native, react-native-gesture-handler
+- Import: `import { NodeLibrarySearch } from "@nyc-tron/ui/components/forge/cad/NodeLibrarySearch";`
+- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/AssetPresetGallery
 
 ```sh

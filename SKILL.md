@@ -26,7 +26,7 @@ Read this file first. Read one component page second, never the whole corpus.
 Read the page front matter before the body:
 
 - `tier` and `docs`: `1` and `handwritten` were reviewed by a person. `2` and `generated` came from the `.d.ts` and the source. Generated sections say `_Not documented._` when the source gave nothing. That is a gap, not a statement that nothing exists.
-- `a11yStatus`: `reviewed-pass`, `reviewed-fail` and `unverified` (tier 1) come from reading source, not from rendering. `declared` (tier 2) means the source sets an accessibility prop. `verified` is reserved for a rendered check and no page has it.
+- `a11yStatus`: `reviewed-pass`, `reviewed-fail` or `unverified`. The tier 1 values come from reading source, not from rendering. Every tier 2 page is `unverified`: nobody reviewed it. Its `A11y` section lists the accessibility props the source sets. `verified` is reserved for a rendered check and no page has it.
 - `platforms`: only what the source states. `[]` means the source names no platform, not that every platform works.
 - `tokens`: the theme tokens the source uses today.
 - `registryDependencies`: other NYC-Tron items this one imports. `shadcn add` installs them too.
@@ -125,4 +125,4 @@ node tooling/docs/build-docs.mjs --check  # pages match source
 node tooling/docs/build-llms.mjs --check  # llms.txt and llms-full.txt match the pages
 ```
 
-The page format and its 12 CI checks are in `docs/agent-native/doc-template.md`.
+The page format and its 12 CI checks are in `docs/agent-native/doc-template.md`. Platform targets for installed files (`@components/nyc-tron/ui`, `@lib/nyc-tron/core`) are in `docs/agent-native/components-contract.md`, because `components.json` rejects unknown keys.

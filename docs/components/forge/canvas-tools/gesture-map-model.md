@@ -1,7 +1,7 @@
 ---
 name: "GestureMapModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas-tools/gesture-map-model"
+subpath: "@nyc-tron/ui/components/forge/canvas-tools/gesture-map-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas-tools/gesture-map-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { CANVAS_QUICK_ACTIONS, DEFAULT_GESTURE_MAP, DEFAULT_HOLD_DELAY_S, MAX_HOLD_DELAY_S, MIN_HOLD_DELAY_S, TABLET_GESTURES, assignGesture, clampHoldDelay } from "@nyc-tron/ui/forge/canvas-tools/gesture-map-model";`
+- Import: `import { CANVAS_QUICK_ACTIONS, DEFAULT_GESTURE_MAP, DEFAULT_HOLD_DELAY_S, MAX_HOLD_DELAY_S, MIN_HOLD_DELAY_S, TABLET_GESTURES, assignGesture, clampHoldDelay } from "@nyc-tron/ui/components/forge/canvas-tools/gesture-map-model";`
 - Peers: react, react-native
 - Requires: none
 

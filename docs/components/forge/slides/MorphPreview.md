@@ -1,14 +1,14 @@
 ---
 name: "MorphPreview"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/slides/MorphPreview"
+subpath: "@nyc-tron/ui/components/forge/slides/MorphPreview"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PropertyInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # MorphPreview
@@ -23,8 +23,8 @@ Correspondence editing and source-rendered morph frames; no second animation clo
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/MorphPreview.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MorphPreview } from "@nyc-tron/ui/forge/slides/MorphPreview";`
-- Peers: react, react-native
+- Import: `import { MorphPreview } from "@nyc-tron/ui/components/forge/slides/MorphPreview";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

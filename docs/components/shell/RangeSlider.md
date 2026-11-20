@@ -1,12 +1,12 @@
 ---
 name: "RangeSlider"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/RangeSlider"
+subpath: "@nyc-tron/ui/components/shell/RangeSlider"
 tier: 1
 docs: "handwritten"
 platforms: ["web"]
 category: "input"
-tokens: ["RangeSlider.radius.11", "RangeSlider.space.5_5", "RangeSlider.space.n5_5", "border.2", "border.4", "color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "opacity.0_5", "radius.control", "space.2", "space.3"]
+tokens: ["color.accent", "color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/gestures/PanResponderDrag", "@nyc-tron/shell/UnitInput"]
 a11yStatus: "reviewed-fail"
 ---
@@ -20,8 +20,8 @@ Two-thumb slider that selects a min and max value, with step, detents, minimum g
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { RangeSlider } from "@nyc-tron/ui/shell/RangeSlider";`
-- Peers: react, react-native, zustand
+- Import: `import { RangeSlider } from "@nyc-tron/ui/components/shell/RangeSlider";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
 
 ```sh

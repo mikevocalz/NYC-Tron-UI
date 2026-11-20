@@ -1,7 +1,7 @@
 ---
 name: "RangePasteModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/range-paste"
+subpath: "@nyc-tron/ui/components/forge/range-paste"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/range-paste.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { MAX_SHEET_COLUMNS, MAX_SHEET_ROWS, parseTsv, tsvToRange } from "@nyc-tron/ui/forge/range-paste";`
+- Import: `import { MAX_SHEET_COLUMNS, MAX_SHEET_ROWS, parseTsv, tsvToRange } from "@nyc-tron/ui/components/forge/range-paste";`
 - Peers: react, react-native
 - Requires: none
 

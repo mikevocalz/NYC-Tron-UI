@@ -1,7 +1,7 @@
 ---
 name: "ContextualToolbarModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/contextual-toolbar-model"
+subpath: "@nyc-tron/ui/components/shell/contextual-toolbar-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ One control a {@linkcode ContextualToolbar} may show.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/contextual-toolbar-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { itemsForSelection, overflowDescription, splitOverflow, validateToolbarItems } from "@nyc-tron/ui/shell/contextual-toolbar-model";`
+- Import: `import { itemsForSelection, overflowDescription, splitOverflow, validateToolbarItems } from "@nyc-tron/ui/components/shell/contextual-toolbar-model";`
 - Peers: react, react-native
 - Requires: none
 

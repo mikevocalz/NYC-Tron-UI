@@ -1,7 +1,7 @@
 ---
 name: "HslModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/hsl"
+subpath: "@nyc-tron/ui/components/forge/color/hsl"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/hsl.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { assertHsl, hslToHsv, hslToRgb, hsvToHsl, rgbToHsl } from "@nyc-tron/ui/forge/color/hsl";`
+- Import: `import { assertHsl, hslToHsv, hslToRgb, hsvToHsl, rgbToHsl } from "@nyc-tron/ui/components/forge/color/hsl";`
 - Peers: react, react-native
 - Requires: none
 

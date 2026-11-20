@@ -1,14 +1,14 @@
 ---
 name: "LayerBlendAndOpacity"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/LayerBlendAndOpacity"
+subpath: "@nyc-tron/ui/components/forge/layers/LayerBlendAndOpacity"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "color.textMuted", "space.2"]
+tokens: ["color.text", "color.textMuted"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/shell/MenuButton"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # LayerBlendAndOpacity
@@ -23,8 +23,8 @@ Compositing policy requests, not document-profile assignment or pixel conversion
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/LayerBlendAndOpacity.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LayerBlendAndOpacity } from "@nyc-tron/ui/forge/layers/LayerBlendAndOpacity";`
-- Peers: react, react-native
+- Import: `import { LayerBlendAndOpacity } from "@nyc-tron/ui/components/forge/layers/LayerBlendAndOpacity";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/shell/MenuButton
 
 ```sh

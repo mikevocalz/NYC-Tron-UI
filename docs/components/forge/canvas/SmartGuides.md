@@ -1,14 +1,14 @@
 ---
 name: "SmartGuides"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/SmartGuides"
+subpath: "@nyc-tron/ui/components/forge/canvas/SmartGuides"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.accent", "color.surfaceRaised", "font.10", "leading.14", "radius.control", "space.1"]
+tokens: ["color.accent", "color.surfaceRaised", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # SmartGuides
@@ -23,8 +23,8 @@ Live smart-guide layer (B-05): alignment lines through the edges and centres the
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/SmartGuides.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SmartGuides } from "@nyc-tron/ui/forge/canvas/SmartGuides";`
-- Peers: react, react-native
+- Import: `import { SmartGuides } from "@nyc-tron/ui/components/forge/canvas/SmartGuides";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

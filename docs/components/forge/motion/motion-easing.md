@@ -1,7 +1,7 @@
 ---
 name: "MotionEasingModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/motion-easing"
+subpath: "@nyc-tron/ui/components/forge/motion/motion-easing"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/motion-easing.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { MOTION_EASING_PRESETS, validateMotionEasing, validateMotionEasingPresets } from "@nyc-tron/ui/forge/motion/motion-easing";`
+- Import: `import { MOTION_EASING_PRESETS, validateMotionEasing, validateMotionEasingPresets } from "@nyc-tron/ui/components/forge/motion/motion-easing";`
 - Peers: react, react-native
 - Requires: none
 

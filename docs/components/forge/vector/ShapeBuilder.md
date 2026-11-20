@@ -1,14 +1,14 @@
 ---
 name: "ShapeBuilder"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/vector/ShapeBuilder"
+subpath: "@nyc-tron/ui/components/forge/vector/ShapeBuilder"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["border.1_5", "color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control", "space.1", "space.1.5", "space.3"]
+tokens: ["color.border", "color.focus", "color.onPrimary", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/feedback/ErrorMessage"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ShapeBuilder
@@ -23,8 +23,8 @@ Boolean shape builder (B-22).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/ShapeBuilder.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ShapeBuilder } from "@nyc-tron/ui/forge/vector/ShapeBuilder";`
-- Peers: react, react-native, zustand
+- Import: `import { ShapeBuilder } from "@nyc-tron/ui/components/forge/vector/ShapeBuilder";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

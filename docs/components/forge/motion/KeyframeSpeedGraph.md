@@ -1,7 +1,7 @@
 ---
 name: "KeyframeSpeedGraph"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/KeyframeSpeedGraph"
+subpath: "@nyc-tron/ui/components/forge/motion/KeyframeSpeedGraph"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Analytic velocity samples plus editable temporal influence and in/out slopes.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/KeyframeSpeedGraph.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { KeyframeSpeedGraph } from "@nyc-tron/ui/forge/motion/KeyframeSpeedGraph";`
+- Import: `import { KeyframeSpeedGraph } from "@nyc-tron/ui/components/forge/motion/KeyframeSpeedGraph";`
 - Peers: react, react-native
 - Requires: none
 

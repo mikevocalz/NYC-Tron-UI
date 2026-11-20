@@ -1,14 +1,14 @@
 ---
 name: "CanvasCompareView"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/layers/CanvasCompareView"
+subpath: "@nyc-tron/ui/components/forge/layers/CanvasCompareView"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.1", "radius.14", "radius.card", "radius.control", "space.0.75", "space.1", "space.2", "space.4"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.card", "radius.control"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/gestures/PanResponderDrag"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # CanvasCompareView
@@ -23,8 +23,8 @@ Before/after comparison of two canvas images (B-27): side by side (stacked on na
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/CanvasCompareView.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { CanvasCompareView } from "@nyc-tron/ui/forge/layers/CanvasCompareView";`
-- Peers: react, react-native, zustand
+- Import: `import { CanvasCompareView } from "@nyc-tron/ui/components/forge/layers/CanvasCompareView";`
+- Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/gestures/PanResponderDrag
 
 ```sh

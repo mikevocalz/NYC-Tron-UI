@@ -1,14 +1,14 @@
 ---
 name: "AudioProcessingPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/AudioProcessingPanel"
+subpath: "@nyc-tron/ui/components/forge/audio/AudioProcessingPanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.1.5", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioProcessingPanel
@@ -23,8 +23,8 @@ Shared controlled processing lifecycle.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AudioProcessingPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AudioProcessingPanel } from "@nyc-tron/ui/forge/audio/AudioProcessingPanel";`
-- Peers: react, react-native
+- Import: `import { AudioProcessingPanel } from "@nyc-tron/ui/components/forge/audio/AudioProcessingPanel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

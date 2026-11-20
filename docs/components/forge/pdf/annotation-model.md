@@ -1,7 +1,7 @@
 ---
 name: "AnnotationModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/pdf/annotation-model"
+subpath: "@nyc-tron/ui/components/forge/pdf/annotation-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ Markup tools a PDF annotation toolbar can offer.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/annotation-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { ANNOTATION_TOOL_INFO, ANNOTATION_TOOL_ORDER, orderTools, toolForKey, toolForSubtype } from "@nyc-tron/ui/forge/pdf/annotation-model";`
+- Import: `import { ANNOTATION_TOOL_INFO, ANNOTATION_TOOL_ORDER, orderTools, toolForKey, toolForSubtype } from "@nyc-tron/ui/components/forge/pdf/annotation-model";`
 - Peers: react, react-native
 - Requires: none
 

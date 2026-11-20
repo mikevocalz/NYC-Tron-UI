@@ -1,7 +1,7 @@
 ---
 name: "DockModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/dock-model"
+subpath: "@nyc-tron/ui/components/shell/dock-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/dock-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { activatePanel, clampFloatingRect, closePanel, dockTargetAt, dockedPanelIds, movePanel, panelLocation, resizeStack } from "@nyc-tron/ui/shell/dock-model";`
+- Import: `import { activatePanel, clampFloatingRect, closePanel, dockTargetAt, dockedPanelIds, movePanel, panelLocation, resizeStack } from "@nyc-tron/ui/components/shell/dock-model";`
 - Peers: react, react-native
 - Requires: none
 

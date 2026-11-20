@@ -1,14 +1,14 @@
 ---
 name: "ModeEdgeHandles"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/ModeEdgeHandles"
+subpath: "@nyc-tron/ui/components/forge/timeline/ModeEdgeHandles"
 tier: 2
 docs: "generated"
 platforms: ["web"]
 category: "forge"
-tokens: ["color.accent", "color.focus", "radius.2", "radius.control", "space.0.5"]
+tokens: ["color.accent", "color.focus", "radius.control"]
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ModeEdgeHandles
@@ -23,8 +23,8 @@ Edge handles for the roll and ripple tools (D-21) on the selected clip.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/ModeEdgeHandles.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ModeEdgeHandles } from "@nyc-tron/ui/forge/timeline/ModeEdgeHandles";`
-- Peers: react, react-native
+- Import: `import { ModeEdgeHandles } from "@nyc-tron/ui/components/forge/timeline/ModeEdgeHandles";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

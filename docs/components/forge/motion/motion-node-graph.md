@@ -1,7 +1,7 @@
 ---
 name: "MotionNodeGraphModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/motion/motion-node-graph"
+subpath: "@nyc-tron/ui/components/forge/motion/motion-node-graph"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/motion-node-graph.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { motionGraphCanvasSize, validateMotionConnection, validateMotionNodeGraph } from "@nyc-tron/ui/forge/motion/motion-node-graph";`
+- Import: `import { motionGraphCanvasSize, validateMotionConnection, validateMotionNodeGraph } from "@nyc-tron/ui/components/forge/motion/motion-node-graph";`
 - Peers: react, react-native
 - Requires: none
 

@@ -1,14 +1,14 @@
 ---
 name: "ColorGradingWheels"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/color/ColorGradingWheels"
+subpath: "@nyc-tron/ui/components/forge/color/ColorGradingWheels"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2", "space.3"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/forge/color/ColorDiscPicker", "@nyc-tron/shell/SliderField"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # ColorGradingWheels
@@ -23,8 +23,8 @@ Tonal hue/saturation wheels and explicit exposure, balance and blending controls
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorGradingWheels.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ColorGradingWheels } from "@nyc-tron/ui/forge/color/ColorGradingWheels";`
-- Peers: react, react-native
+- Import: `import { ColorGradingWheels } from "@nyc-tron/ui/components/forge/color/ColorGradingWheels";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/forge/color/ColorDiscPicker, @nyc-tron/shell/SliderField
 
 ```sh

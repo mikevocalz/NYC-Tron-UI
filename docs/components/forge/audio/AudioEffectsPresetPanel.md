@@ -1,14 +1,14 @@
 ---
 name: "AudioEffectsPresetPanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/AudioEffectsPresetPanel"
+subpath: "@nyc-tron/ui/components/forge/audio/AudioEffectsPresetPanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["space.2"]
+tokens: []
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/motion/EffectStackAndInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AudioEffectsPresetPanel
@@ -23,8 +23,8 @@ Audio-specific lifecycle around the shared parameter/preset/effect-stack owner.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AudioEffectsPresetPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AudioEffectsPresetPanel } from "@nyc-tron/ui/forge/audio/AudioEffectsPresetPanel";`
-- Peers: react, react-native
+- Import: `import { AudioEffectsPresetPanel } from "@nyc-tron/ui/components/forge/audio/AudioEffectsPresetPanel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/motion/EffectStackAndInspector
 
 ```sh

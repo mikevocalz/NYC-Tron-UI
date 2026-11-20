@@ -1,14 +1,14 @@
 ---
 name: "VideoEffectsBrowser"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/VideoEffectsBrowser"
+subpath: "@nyc-tron/ui/components/forge/timeline/VideoEffectsBrowser"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.text", "space.2"]
+tokens: ["color.text"]
 registryDependencies: ["@nyc-tron/Select", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber", "@nyc-tron/forge/motion/EffectStackAndInspector"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # VideoEffectsBrowser
@@ -23,8 +23,8 @@ Reuses the schema-driven effect owner; actual video/body-effect rendering stays 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/VideoEffectsBrowser.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { VideoEffectsBrowser } from "@nyc-tron/ui/forge/timeline/VideoEffectsBrowser";`
-- Peers: react, react-native
+- Import: `import { VideoEffectsBrowser } from "@nyc-tron/ui/components/forge/timeline/VideoEffectsBrowser";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/motion/EffectStackAndInspector
 
 ```sh

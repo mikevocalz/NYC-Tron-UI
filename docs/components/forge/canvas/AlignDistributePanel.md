@@ -1,14 +1,14 @@
 ---
 name: "AlignDistributePanel"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/canvas/AlignDistributePanel"
+subpath: "@nyc-tron/ui/components/forge/canvas/AlignDistributePanel"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "opacity.0_45", "radius.control", "space.1.5", "space.2"]
+tokens: ["color.border", "color.focus", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/SegmentedControl", "@nyc-tron/feedback/ErrorMessage", "@nyc-tron/forge/inputs/PrecisionScrubber"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AlignDistributePanel
@@ -23,8 +23,8 @@ Align, distribute and arrange panel (B-25).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/AlignDistributePanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AlignDistributePanel } from "@nyc-tron/ui/forge/canvas/AlignDistributePanel";`
-- Peers: react, react-native
+- Import: `import { AlignDistributePanel } from "@nyc-tron/ui/components/forge/canvas/AlignDistributePanel";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

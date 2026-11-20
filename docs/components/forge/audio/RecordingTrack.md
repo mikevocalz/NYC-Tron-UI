@@ -1,14 +1,14 @@
 ---
 name: "RecordingTrack"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/audio/RecordingTrack"
+subpath: "@nyc-tron/ui/components/forge/audio/RecordingTrack"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
 tokens: ["color.border", "color.danger", "color.surfaceRaised", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/forge/WaveformLane", "@nyc-tron/forge/audio/LevelMeter"]
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # RecordingTrack
@@ -23,7 +23,7 @@ Controlled recording lane: status, elapsed time, one primary action, an input me
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/RecordingTrack.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { RecordingTrack } from "@nyc-tron/ui/forge/audio/RecordingTrack";`
+- Import: `import { RecordingTrack } from "@nyc-tron/ui/components/forge/audio/RecordingTrack";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/WaveformLane, @nyc-tron/forge/audio/LevelMeter
 

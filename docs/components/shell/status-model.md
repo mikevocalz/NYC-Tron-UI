@@ -1,7 +1,7 @@
 ---
 name: "StatusModelModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/shell/status-model"
+subpath: "@nyc-tron/ui/components/shell/status-model"
 tier: 2
 docs: "generated"
 platforms: []
@@ -23,7 +23,7 @@ What the document is doing right now, as shown by {@linkcode StatusBar}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/status-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { activityAnnouncement, formatElapsed, formatZoom, progressPercent, selectionSummary, stepZoom } from "@nyc-tron/ui/shell/status-model";`
+- Import: `import { activityAnnouncement, formatElapsed, formatZoom, progressPercent, selectionSummary, stepZoom } from "@nyc-tron/ui/components/shell/status-model";`
 - Peers: react, react-native
 - Requires: none
 

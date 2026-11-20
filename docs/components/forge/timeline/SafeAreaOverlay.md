@@ -1,12 +1,12 @@
 ---
 name: "SafeAreaOverlay"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/forge/timeline/SafeAreaOverlay"
+subpath: "@nyc-tron/ui/components/forge/timeline/SafeAreaOverlay"
 tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["border.1", "color.textMuted", "opacity.0_6"]
+tokens: ["color.textMuted"]
 registryDependencies: []
 a11yStatus: "unverified"
 ---
@@ -23,8 +23,8 @@ Guides over a video monitor (D-25): action- and title-safe boxes, an aspect-rati
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/SafeAreaOverlay.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SafeAreaOverlay } from "@nyc-tron/ui/forge/timeline/SafeAreaOverlay";`
-- Peers: react, react-native
+- Import: `import { SafeAreaOverlay } from "@nyc-tron/ui/components/forge/timeline/SafeAreaOverlay";`
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh
@@ -71,7 +71,7 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=SafeAreaOverlay
-import { SafeAreaOverlay } from "@nyc-tron/ui/forge/timeline/SafeAreaOverlay";
+import { SafeAreaOverlay } from "@nyc-tron/ui/components/forge/timeline/SafeAreaOverlay";
 
 export function Example() {
   return <SafeAreaOverlay aspect={0} />;

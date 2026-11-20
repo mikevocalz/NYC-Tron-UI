@@ -1,14 +1,14 @@
 ---
 name: "AnchoredPopoverTypesModule"
 namespace: "@nyc-tron"
-subpath: "@nyc-tron/ui/overlays/anchored-popover-types"
+subpath: "@nyc-tron/ui/components/overlays/anchored-popover-types"
 tier: 2
 docs: "generated"
 platforms: []
 category: "overlay"
 tokens: []
 registryDependencies: []
-a11yStatus: "declared"
+a11yStatus: "unverified"
 ---
 
 # AnchoredPopoverTypesModule
@@ -23,7 +23,7 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/overlays/anchored-popover-types.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { isTriggerPopover, popoverTriggerState, renderPopoverTrigger } from "@nyc-tron/ui/overlays/anchored-popover-types";`
+- Import: `import { isTriggerPopover, popoverTriggerState, renderPopoverTrigger } from "@nyc-tron/ui/components/overlays/anchored-popover-types";`
 - Peers: react, react-native
 - Requires: none
 
