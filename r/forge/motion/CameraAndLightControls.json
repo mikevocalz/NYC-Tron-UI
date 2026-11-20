@@ -1,0 +1,78 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/motion/CameraAndLightControls",
+  "title": "Camera And Light Controls",
+  "description": "Camera And Light Controls, a motion graphics component. Props: camera, light, onCameraCommit.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Select",
+    "@nyc-tron/feedback/ErrorMessage",
+    "@nyc-tron/forge/motion/motion-settings",
+    "@nyc-tron/shell/UnitInput"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/canvas/SettingSwitch.tsx",
+      "content": "import {Pressable,Text,View} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\n\n/**\n * Labeled on/off row shared by the canvas settings panels: a 44pt switch with\n * the label on the start side and the track on the end side (mirrored in RTL).\n */\nexport function SettingSwitch({label,on,onChange,disabled,styled,hint}:{\n  label:string;on:boolean;onChange:(on:boolean)=>void;disabled:boolean;styled:boolean;hint?:string|undefined;\n}){\n  return <Pressable role=\"switch\" aria-checked={on} accessibilityRole=\"switch\" accessibilityState={{checked:on,disabled}}\n    aria-label={label} accessibilityHint={hint} disabled={disabled} onPress={()=>onChange(!on)}\n    {...{className:joinClasses(styled&&\"rounded-control focus-visible:ring-2 focus-visible:ring-focus\")}}\n    style={{minHeight:44,flexDirection:\"row\",alignItems:\"center\",justifyContent:\"space-between\",gap:12,paddingHorizontal:4,opacity:disabled?0.5:1}}>\n    <Text {...{className:joinClasses(styled&&\"text-text text-sm\")}} style={{flexShrink:1}}>{label}</Text>\n    <View pointerEvents=\"none\" {...{className:joinClasses(styled&&\"border\",styled&&(on?\"bg-primary border-primary\":\"bg-surface-sunken border-border\"))}}\n      style={{width:40,height:24,borderRadius:12,padding:2,justifyContent:\"center\",alignItems:on?\"flex-end\":\"flex-start\"}}>\n      <View {...{className:joinClasses(styled&&(on?\"bg-on-primary\":\"bg-text-muted\"))}} style={{width:18,height:18,borderRadius:9}}/>\n    </View>\n  </Pressable>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/canvas/SettingSwitch.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/motion/CameraAndLightControls.tsx",
+      "content": "import {Text,View,type ViewProps} from 'react-native';\nimport {Select} from '@/components/nyc-tron/ui/components/Select';\nimport {UnitInput} from '@/components/nyc-tron/ui/components/shell/UnitInput';\nimport {useLocalStore} from '@/components/nyc-tron/ui/components/useLocalStore';\nimport {ErrorMessage} from '@/components/nyc-tron/ui/components/feedback/ErrorMessage';\nimport {joinClasses} from '@/components/nyc-tron/ui/components/styles';\nimport {SettingSwitch} from '@/components/nyc-tron/ui/components/forge/canvas/SettingSwitch';\nimport {MotionVectorFields} from '@/components/nyc-tron/ui/components/forge/motion/MotionVectorFields';\nimport {validateMotionCamera,validateMotionLight,type MotionCamera,type MotionLight} from '@/components/nyc-tron/ui/components/forge/motion/motion-settings';\nexport type {MotionCamera,MotionLight} from '@/components/nyc-tron/ui/components/forge/motion/motion-settings';\nexport interface CameraAndLightControlsProps extends Omit<ViewProps,'children'> {readonly camera:MotionCamera;readonly light:MotionLight;readonly onCameraCommit:(value:MotionCamera)=>void;readonly onLightCommit:(value:MotionLight)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}\n/** Lens/view/depth and lighting values, independent from native app window dimensions. */\nexport function CameraAndLightControls({camera,light,onCameraCommit,onLightCommit,disabled=false,unstyled=false,...props}:CameraAndLightControlsProps){\n validateMotionCamera(camera);validateMotionLight(light);\n const [local,store]=useLocalStore(()=>({error:null as string|null}));\n const setCamera=(change:Partial<MotionCamera>)=>{if(disabled)return;const next={...camera,...change};try{validateMotionCamera(next);}catch(error){store.set({error:error instanceof Error?error.message:'Invalid camera target'});return;}store.set({error:null});onCameraCommit(next);};\n const setLight=(change:Partial<MotionLight>)=>{if(disabled)return;const next={...light,...change};validateMotionLight(next);onLightCommit(next);};\n return <View {...props} style={[{gap:10},props.style]}>\n  <ErrorMessage {...(local.error?{message:local.error}:{})} unstyled={unstyled}/>\n  <Select label=\"Camera projection\" value={camera.projection} options={[{value:'perspective',label:'Perspective'},{value:'orthographic',label:'Orthographic'}]} disabled={disabled} unstyled={unstyled} onValueChange={projection=>setCamera({projection:projection as MotionCamera['projection']})}/>\n  <MotionVectorFields label=\"Camera position\" value={camera.position} disabled={disabled} unstyled={unstyled} onCommit={position=>setCamera({position})}/>\n  <MotionVectorFields label=\"Camera target\" value={camera.target} disabled={disabled} unstyled={unstyled} onCommit={target=>setCamera({target})}/>\n  {([['focalLengthMm','Camera focal length mm',.1,100000],['sensorWidthMm','Camera sensor width mm',.1,100000],['near','Camera near clip',.000001,camera.far-.000001],['far','Camera far clip',camera.near+.000001,1e12],['orthographicSize','Orthographic view size',.000001,1e9],['focusDistance','Camera focus distance',.000001,1e12],['aperture','Camera aperture',.1,128]] as const).map(([key,label,min,max])=><UnitInput key={key} label={label} value={camera[key]} min={min} max={max} step={.1} precision={6} disabled={disabled||(key==='orthographicSize'?camera.projection!=='orthographic':key==='focalLengthMm'||key==='sensorWidthMm'?camera.projection!=='perspective':key==='focusDistance'||key==='aperture'?!camera.depthOfField:false)} unstyled={unstyled} onCommit={number=>setCamera({[key]:number})}/>)}\n  <SettingSwitch label=\"Camera depth of field\" on={camera.depthOfField} onChange={depthOfField=>setCamera({depthOfField})} disabled={disabled} styled={!unstyled}/>\n  <Select label=\"Motion light type\" value={light.type} options={['point','spot','directional','ambient'].map(value=>({value,label:value}))} disabled={disabled} unstyled={unstyled} onValueChange={type=>setLight({type:type as MotionLight['type']})}/>\n  <MotionVectorFields label=\"Light position\" value={light.position} disabled={disabled||light.type==='ambient'} unstyled={unstyled} onCommit={position=>setLight({position})}/>\n  <MotionVectorFields label=\"Light rotation\" value={light.rotation} min={-360000} max={360000} disabled={disabled||light.type==='ambient'||light.type==='point'} unstyled={unstyled} onCommit={rotation=>setLight({rotation})}/>\n  <UnitInput label=\"Light intensity\" value={light.intensity} min={0} max={1e6} disabled={disabled} unstyled={unstyled} onCommit={intensity=>setLight({intensity})}/>\n  <Text {...{className:joinClasses(!unstyled&&'text-text-muted')}}>{`Light working profile: ${light.colorProfileId}`}</Text>\n  {(['red','green','blue'] as const).map((channel,index)=><UnitInput key={channel} label={`Linear light ${channel}`} value={light.color[index]!} min={0} max={16} step={.01} disabled={disabled} unstyled={unstyled} onCommit={number=>{const color=[...light.color] as [number,number,number];color[index]=number;setLight({color});}}/>)}\n  <UnitInput label=\"Spot light cone degrees\" value={light.coneDegrees} min={.1} max={179.9} disabled={disabled||light.type!=='spot'} unstyled={unstyled} onCommit={coneDegrees=>setLight({coneDegrees})}/>\n  <SettingSwitch label=\"Light casts shadows\" on={light.castsShadows} onChange={castsShadows=>setLight({castsShadows})} disabled={disabled||light.type==='ambient'} styled={!unstyled}/>\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/motion/CameraAndLightControls.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/motion/MotionVectorFields.tsx",
+      "content": "import {View} from 'react-native';\nimport {UnitInput} from '@/components/nyc-tron/ui/components/shell/UnitInput';\nimport {validateMotionVector,type MotionVector3} from '@/components/nyc-tron/ui/components/forge/motion/motion-settings';\nexport interface MotionVectorFieldsProps {readonly label:string;readonly value:MotionVector3;readonly onCommit:(value:MotionVector3)=>void;readonly min?:number;readonly max?:number;readonly step?:number;readonly disabled?:boolean;readonly unstyled?:boolean}\n/** Common axis entry preserves the two untouched floating coordinates. */\nexport function MotionVectorFields({label,value,onCommit,min=-1e9,max=1e9,step=1,disabled=false,unstyled=false}:MotionVectorFieldsProps){\n validateMotionVector(value,min,max);return <View style={{gap:6}}>{(['x','y','z'] as const).map(axis=><UnitInput key={axis} label={`${label} ${axis.toUpperCase()}`} value={value[axis]} min={min} max={max} step={step} precision={6} disabled={disabled} unstyled={unstyled} onCommit={number=>{if(disabled||number===value[axis])return;const next={...value,[axis]:number};validateMotionVector(next,min,max);onCommit(next);}}/>)}</View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/motion/MotionVectorFields.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/local-store.ts",
+      "content": "import {createStore} from \"zustand/vanilla\";\n\n/**\n * A per-instance store for transient gesture and draft state (a drag preview, a\n * text draft, a measured width). Components use it instead of `useState` so a\n * gesture's bookkeeping lives outside React's render cycle and can be read\n * synchronously from responder callbacks. Created by {@linkcode createLocalStore};\n * components use it through `useLocalStore`. Zustand owns the state; this value-replacement\n * adapter remains independent of React.\n */\nexport interface LocalStore<T> {\n  get():T;\n  /** Replaces the state, or derives it from the previous state. Listeners run only when it changes. */\n  set(next:T|((previous:T)=>T)):void;\n  /** Returns the unsubscribe function. */\n  subscribe(listener:()=>void):()=>void;\n}\n\n/** Creates a {@linkcode LocalStore}. Equal states (by `Object.is`) do not notify. */\nexport function createLocalStore<T>(initial:T):LocalStore<T>{\n  const store=createStore<{value:T}>(()=>({value:initial}));\n  return {\n    get:()=>store.getState().value,\n    set(next){\n      store.setState(current=>{\n        const value=typeof next===\"function\"?(next as (p:T)=>T)(current.value):next;\n        return Object.is(value,current.value)?current:{value};\n      });\n    },\n    subscribe(listener){return store.subscribe(()=>listener());},\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/local-store.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    },
+    {
+      "path": "packages/ui/src/components/useLocalStore.ts",
+      "content": "import {useRef,useSyncExternalStore} from \"react\";\nimport {createLocalStore,type LocalStore} from \"@/components/nyc-tron/ui/components/local-store\";\n\n/**\n * Creates one {@linkcode LocalStore} for the calling component on first render and\n * subscribes to it. Returns the current state and the store.\n */\nexport function useLocalStore<T>(initial:()=>T):readonly [T,LocalStore<T>]{\n  const ref=useRef<LocalStore<T>|null>(null);\n  if(!ref.current)ref.current=createLocalStore(initial());\n  const store=ref.current;\n  const state=useSyncExternalStore(store.subscribe,store.get,store.get);\n  return [state,store] as const;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/motion/CameraAndLightControls",
+    "exports": [
+      "CameraAndLightControls",
+      "CameraAndLightControlsProps",
+      "MotionCamera",
+      "MotionLight"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "Card",
+  "title": "Card",
+  "description": "Static container View with raised, sunken or transparent surface and optional padding, for React Native.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/Card.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { View, type ViewProps } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nexport type CardSurface=\"raised\"|\"sunken\"|\"transparent\";\nexport interface CardProps extends Omit<ViewProps,\"children\"> {\n children?:ReactNode;\n surface?:CardSurface;\n padded?:boolean;\n className?:string;\n /** No default visual classes: app provides full Tailwind styling. */\n unstyled?:boolean;\n}\nconst surfaces:Record<CardSurface,string>={\n raised:\"bg-surface-raised border-border\",\n sunken:\"bg-surface-sunken border-border\",\n transparent:\"bg-transparent border-transparent\"\n};\n/** Presentation only. Never imports an app theme or Forge document runtime. */\nexport function Card({\n children,surface=\"raised\",padded=true,unstyled=false,className,style,...rest\n}:CardProps) {\n return (\n   <View {...rest} {...{className:joinClasses(\n     !unstyled&&\"rounded-card border\",!unstyled&&surfaces[surface],!unstyled&&padded&&\"p-4\",className\n   )}} style={style}>{children}</View>\n );\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/Card.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/Card",
+    "exports": [
+      "Card",
+      "CardProps",
+      "CardSurface"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "layout"
+  ],
+  "type": "registry:ui"
+}

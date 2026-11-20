@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forms/option-groups",
+  "title": "option groups",
+  "description": "option groups, a form helper module. Exports flattenOptionGroups, validateOptionGroups.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forms/option-groups.ts",
+      "content": "/**\n * Options under a visible heading, as a select or dropdown shows them. Used by\n * `Select` (`@nyc-tron/ui/components/Select`) and `NativeDropdown`\n * (`@nyc-tron/expo-controls/NativeDropdown`) through their `groups` prop.\n */\nexport interface OptionGroup<T>{\n  /** Section header text; read by screen readers as the group's name. Must not be blank. */\n  readonly heading:string;\n  /** The group's options, in order. A group needs at least one. */\n  readonly options:readonly T[];\n}\n\n/** The options of every group in display order, for keyboard order, lookup and validation. */\nexport function flattenOptionGroups<T>(groups:readonly OptionGroup<T>[]):T[]{\n  return groups.flatMap(group=>group.options);\n}\n\n/**\n * Throws a TypeError for a group that cannot be shown honestly: a blank\n * heading or no options. Option-level rules (unique values, labels) stay with\n * each component's own validation over {@linkcode flattenOptionGroups}.\n */\nexport function validateOptionGroups<T>(groups:readonly OptionGroup<T>[]):void{\n  for(const group of groups){\n    if(typeof group.heading!==\"string\"||!group.heading.trim())throw new TypeError(\"Option group headings must not be blank\");\n    if(!Array.isArray(group.options)||group.options.length===0)\n      throw new TypeError(\"Option group \\\"\"+group.heading+\"\\\" has no options\");\n  }\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forms/option-groups.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forms/option-groups",
+    "exports": [
+      "OptionGroup",
+      "flattenOptionGroups",
+      "validateOptionGroups"
+    ]
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:lib"
+}

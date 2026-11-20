@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/progress-model",
+  "title": "progress model",
+  "description": "progress model, an app shell state model. Exports jobActionLabel, validateFeedback.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/progress-model.ts",
+      "content": "export interface ToastMessage { readonly id: string; readonly title: string; readonly detail?: string; readonly tone: \"info\" | \"success\" | \"error\"; readonly action?: { readonly id: string; readonly label: string } }\nexport type JobAction = \"cancel\" | \"pause\" | \"resume\" | \"retry\";\ninterface JobBase { readonly id: string; readonly title: string; readonly detail?: string; readonly progress: number | null; readonly actions: readonly JobAction[] }\nexport type ProgressJob = JobBase & ({ readonly status: \"queued\" | \"running\" | \"paused\" | \"cancelling\" | \"completed\" | \"cancelled\"; readonly error?: never } | { readonly status: \"failed\"; readonly error: string });\nconst allowed: Record<ProgressJob[\"status\"], readonly JobAction[]> = { queued: [\"cancel\"], running: [\"pause\", \"cancel\"], paused: [\"resume\", \"cancel\"], failed: [\"retry\"], cancelling: [], completed: [], cancelled: [\"retry\"] };\nexport const jobActionLabel: Record<JobAction, string> = { cancel: \"Cancel\", pause: \"Pause\", resume: \"Resume\", retry: \"Retry\" };\nexport function validateFeedback(toasts: readonly ToastMessage[], jobs: readonly ProgressJob[]): void {\n  if (toasts.length > 100 || jobs.length > 1000) throw new RangeError(\"Page feedback beyond 100 notifications or 1000 jobs\");\n  for (const rows of [toasts, jobs]) {\n    const ids = new Set<string>();\n    for (const row of rows) { if (!row.id || ids.has(row.id) || !row.title.trim()) throw new TypeError(\"Feedback items need distinct IDs and titles\"); ids.add(row.id); }\n  }\n  for (const toast of toasts) if (toast.action && (!toast.action.id || !toast.action.label.trim())) throw new TypeError(\"Toast actions need an ID and label\");\n  for (const job of jobs) {\n    if (job.progress !== null && (!Number.isFinite(job.progress) || job.progress < 0 || job.progress > 1)) throw new RangeError(\"Job progress must be in 0...1 or unknown\");\n    if (new Set(job.actions).size !== job.actions.length || job.actions.some(action => !allowed[job.status].includes(action))) throw new TypeError(\"Job actions do not match the reported status\");\n    if (job.status === \"failed\" && !job.error.trim()) throw new TypeError(\"A failed job needs its actual error\");\n    if (job.status === \"completed\" && job.progress !== 1) throw new RangeError(\"A completed job must report full progress\");\n  }\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/progress-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/progress-model",
+    "exports": [
+      "JobAction",
+      "ProgressJob",
+      "ToastMessage",
+      "jobActionLabel",
+      "validateFeedback"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

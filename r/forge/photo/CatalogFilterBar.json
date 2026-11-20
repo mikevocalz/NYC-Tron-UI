@@ -1,0 +1,60 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/CatalogFilterBar",
+  "title": "Catalog Filter Bar",
+  "description": "Catalog Filter Bar, a photo editing component. Props: catalogId, value, cameras, onChange.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/Select",
+    "@nyc-tron/forge/photo/photo-catalog",
+    "@nyc-tron/shell/UnitInput"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/canvas/SettingSwitch.tsx",
+      "content": "import {Pressable,Text,View} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\n\n/**\n * Labeled on/off row shared by the canvas settings panels: a 44pt switch with\n * the label on the start side and the track on the end side (mirrored in RTL).\n */\nexport function SettingSwitch({label,on,onChange,disabled,styled,hint}:{\n  label:string;on:boolean;onChange:(on:boolean)=>void;disabled:boolean;styled:boolean;hint?:string|undefined;\n}){\n  return <Pressable role=\"switch\" aria-checked={on} accessibilityRole=\"switch\" accessibilityState={{checked:on,disabled}}\n    aria-label={label} accessibilityHint={hint} disabled={disabled} onPress={()=>onChange(!on)}\n    {...{className:joinClasses(styled&&\"rounded-control focus-visible:ring-2 focus-visible:ring-focus\")}}\n    style={{minHeight:44,flexDirection:\"row\",alignItems:\"center\",justifyContent:\"space-between\",gap:12,paddingHorizontal:4,opacity:disabled?0.5:1}}>\n    <Text {...{className:joinClasses(styled&&\"text-text text-sm\")}} style={{flexShrink:1}}>{label}</Text>\n    <View pointerEvents=\"none\" {...{className:joinClasses(styled&&\"border\",styled&&(on?\"bg-primary border-primary\":\"bg-surface-sunken border-border\"))}}\n      style={{width:40,height:24,borderRadius:12,padding:2,justifyContent:\"center\",alignItems:on?\"flex-end\":\"flex-start\"}}>\n      <View {...{className:joinClasses(styled&&(on?\"bg-on-primary\":\"bg-text-muted\"))}} style={{width:18,height:18,borderRadius:9}}/>\n    </View>\n  </Pressable>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/canvas/SettingSwitch.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/photo/CatalogFilterBar.tsx",
+      "content": "import {useRef} from 'react';\nimport {Text,TextInput,View,type ViewProps} from 'react-native';\nimport {createStore} from 'zustand/vanilla';\nimport {useStore} from 'zustand';\nimport {Button} from '@/components/nyc-tron/ui/components/Button';\nimport {Select} from '@/components/nyc-tron/ui/components/Select';\nimport {UnitInput} from '@/components/nyc-tron/ui/components/shell/UnitInput';\nimport {SettingSwitch} from '@/components/nyc-tron/ui/components/forge/canvas/SettingSwitch';\nimport {joinClasses} from '@/components/nyc-tron/ui/components/styles';\nimport {emptyPhotoCatalogFilter,validateCatalogChoices,validateCatalogFilter,type CatalogChoice,type PhotoCatalogFilter} from '@/components/nyc-tron/ui/components/forge/photo/photo-catalog';\nexport type {PhotoCatalogFilter,CatalogChoice} from '@/components/nyc-tron/ui/components/forge/photo/photo-catalog';\nexport interface CatalogFilterBarProps extends Omit<ViewProps,'children'> {\n readonly catalogId:string;readonly value:PhotoCatalogFilter;readonly cameras:readonly CatalogChoice[];readonly lenses:readonly CatalogChoice[];readonly albums:readonly CatalogChoice[];\n readonly onChange:(filter:PhotoCatalogFilter)=>void;readonly disabled?:boolean;readonly unstyled?:boolean;\n}\n/** Explicit host-indexed catalog filters. Unknown EXIF values are not synthesized. */\nexport function CatalogFilterBar({catalogId,value,cameras,lenses,albums,onChange,disabled=false,unstyled=false,...props}:CatalogFilterBarProps){\n validateCatalogFilter(value);for(const choices of [cameras,lenses,albums])validateCatalogChoices(choices);\n if(!catalogId.trim())throw new TypeError('Catalog filter requires an identity');\n const set=(change:Partial<PhotoCatalogFilter>)=>{if(disabled)return;const next={...value,...change};validateCatalogFilter(next);onChange(next);};\n return <View {...props} style={[{gap:8},props.style]}>\n  <TextInput accessibilityLabel=\"Search photo metadata\" value={value.query} maxLength={256} editable={!disabled} aria-disabled={disabled} onChangeText={query=>set({query})} style={{minHeight:44,padding:8}} {...{className:joinClasses(!unstyled&&'text-text border border-border rounded-control')}}/>\n  {([['cameraId','Camera',cameras],['lensId','Lens',lenses],['albumId','Album',albums]] as const).map(([key,label,choices])=>{\n   const options=[{value:'',label:`All ${label.toLowerCase()}s`},...choices.map(choice=>({value:choice.id,label:choice.label}))];\n   if(value[key]!==null&&!choices.some(choice=>choice.id===value[key]))options.push({value:value[key]!,label:`Unavailable ${label.toLowerCase()}: ${value[key]}`});\n   return <Select key={key} label={label} value={value[key]??''} options={options} disabled={disabled} unstyled={unstyled} onValueChange={id=>set({[key]:id||null})}/>;\n  })}\n  <Select label=\"Minimum photo stars\" value={String(value.minimumStars)} options={Array.from({length:6},(_,stars)=>({value:String(stars),label:stars===0?'Any rating':`${stars} stars or more`}))} disabled={disabled} unstyled={unstyled} onValueChange={stars=>set({minimumStars:Number(stars) as PhotoCatalogFilter['minimumStars']})}/>\n  <Select label=\"Catalog flag\" value={value.flag} options={['all','none','pick','reject'].map(value=>({value,label:value}))} disabled={disabled} unstyled={unstyled} onValueChange={flag=>set({flag:flag as PhotoCatalogFilter['flag']})}/>\n  {(['dateFrom','dateTo'] as const).map(key=><CatalogDateField key={`${catalogId}:${key}:${value[key]??''}`} label={key==='dateFrom'?'Capture date from':'Capture date through'} value={value[key]} disabled={disabled} unstyled={unstyled} onCommit={date=>set({[key]:date})}/>)}\n  {([['iso','ISO',1,409600,1],['aperture','Aperture f-number',.1,128,.1],['shutterSeconds','Shutter seconds',.000001,86400,.001]] as const).map(([key,label,min,max,step])=><View key={key} style={{gap:6}}>\n   <SettingSwitch label={`Filter by ${label}`} on={value[key]!==null} onChange={on=>set({[key]:on?[min,max]:null})} disabled={disabled} styled={!unstyled}/>\n   {value[key]!==null?<View style={{gap:6}}>{([0,1] as const).map(index=><UnitInput key={index} label={`${label} ${index===0?'minimum':'maximum'}`} value={value[key]![index]} min={index===0?min:value[key]![0]} max={index===0?value[key]![1]:max} step={step} precision={6} disabled={disabled} unstyled={unstyled} onCommit={number=>{const range=[...value[key]!] as [number,number];range[index]=number;set({[key]:range});}}/>)}</View>:null}\n  </View>)}\n  <Button title=\"Clear photo filters\" disabled={disabled} unstyled={unstyled} onPress={()=>{if(!disabled)onChange(emptyPhotoCatalogFilter());}}/>\n </View>;\n}\nconst makeDateStore=()=>createStore(()=>({draft:null as string|null,error:null as string|null}));\nfunction CatalogDateField({label,value,onCommit,disabled,unstyled}:{label:string;value:string|null;onCommit:(value:string|null)=>void;disabled:boolean;unstyled:boolean}){\n const local=useRef<ReturnType<typeof makeDateStore>|null>(null);local.current??=makeDateStore();const store=local.current,s=useStore(store,s=>s);\n const apply=()=>{if(disabled||store.getState().draft===null)return;const text=store.getState().draft!.trim();try{onCommit(text||null);store.setState({draft:null,error:null});}catch(error){store.setState({error:error instanceof Error?error.message:'Invalid capture date'});}};\n return <View style={{gap:4}}>\n  <Text {...{className:joinClasses(!unstyled&&'text-text')}}>{label} (YYYY-MM-DD)</Text>\n  <TextInput accessibilityLabel={label} value={s.draft??value??''} maxLength={10} editable={!disabled} aria-disabled={disabled} aria-invalid={s.error!==null} onChangeText={draft=>store.setState({draft,error:null})} onSubmitEditing={apply} returnKeyType=\"done\" style={{minHeight:44,padding:8}} {...{className:joinClasses(!unstyled&&'text-text border border-border rounded-control')}}/>\n  <Button title={`Apply ${label.toLowerCase()}`} disabled={disabled||s.draft===null} unstyled={unstyled} onPress={apply}/>\n  {s.error?<Text accessibilityLiveRegion=\"polite\" {...{className:joinClasses(!unstyled&&'text-danger')}}>{s.error}</Text>:null}\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/photo/CatalogFilterBar.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/CatalogFilterBar",
+    "exports": [
+      "CatalogChoice",
+      "CatalogFilterBar",
+      "CatalogFilterBarProps",
+      "PhotoCatalogFilter"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

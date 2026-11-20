@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/midi/velocity-line",
+  "title": "velocity line",
+  "description": "velocity line, a MIDI helper module. Exports describeVelocityBatch, noteLaneX, notesInTimeOrder.",
+  "registryDependencies": [
+    "@nyc-tron/forge/midi/note-grid"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/midi/velocity-line.ts",
+      "content": "/**\n * Batch velocity edits for {@linkcode MIDIVelocityLane}: the line tool (drag\n * a straight line across the bars) and the keyboard ramp. Pure: no React,\n * platform or engine imports.\n *\n * Both return the batch the Cadence engine's `setVelocities` op takes:\n * sorted by note index, no duplicate index, only notes whose velocity\n * changes. An empty batch means \"commit nothing\".\n */\nimport { clampVelocity, type MidiNote } from \"@/components/nyc-tron/ui/components/forge/midi/note-grid\";\n\n/** One entry of a batch velocity edit. */\nexport interface VelocityChange {\n  /** Index of the note in the clip's `notes` array (its engine identity). */\n  readonly index: number;\n  /** New velocity, integer 0..127. */\n  readonly velocity: number;\n}\n\n/**\n * How a {@linkcode MIDIVelocityLane} maps ticks and velocity to points. All\n * values in points except `pixelsPerTick`.\n */\nexport interface VelocityLaneGeometry {\n  /** Horizontal scale, points per tick. Same as the piano roll. */\n  readonly pixelsPerTick: number;\n  /** Leading space before tick 0 (the roll's key column). */\n  readonly inset: number;\n  /** Horizontal scroll of the lane content. */\n  readonly scrollX: number;\n  /** Lane height; the top edge is velocity 127, the bottom edge 0. */\n  readonly height: number;\n}\n\n/** A point in the lane, measured from its top-left corner. `x` is physical (left to right) in every locale. */\nexport interface LanePoint {\n  readonly x: number;\n  readonly y: number;\n}\n\nfunction assertGeometry(g: VelocityLaneGeometry): void {\n  if (!Number.isFinite(g.pixelsPerTick) || g.pixelsPerTick <= 0) throw new RangeError(\"pixelsPerTick must be positive\");\n  if (!Number.isFinite(g.height) || g.height <= 0) throw new RangeError(\"height must be positive\");\n  if (!Number.isFinite(g.inset) || !Number.isFinite(g.scrollX)) throw new RangeError(\"inset and scrollX must be finite\");\n}\n\n/** The velocity a point at height `y` in the lane stands for, clamped to 0..127. */\nexport function velocityAtY(y: number, height: number): number {\n  if (!Number.isFinite(height) || height <= 0) throw new RangeError(\"height must be positive\");\n  if (!Number.isFinite(y)) throw new RangeError(\"y must be finite\");\n  return clampVelocity((1 - y / height) * 127);\n}\n\n/** Where a note's bar sits horizontally in the lane, points from the lane's left edge. */\nexport function noteLaneX(note: MidiNote, g: VelocityLaneGeometry): number {\n  return g.inset + note.startTicks * g.pixelsPerTick - g.scrollX;\n}\n\n/**\n * The batch for a straight line drawn from `start` to `end` across the lane.\n *\n * A note is hit when its start x lies within the segment's x span, widened\n * by `reach` points on each side (so a tap can land on a bar's visible\n * width). Its new velocity is the line's height at that x, interpolated\n * linearly and clamped to the segment's ends. Drag direction does not matter\n * and nothing depends on layout direction: x is physical, so earlier notes\n * always read the left end of the line. A zero-width segment (a tap, or a\n * straight-down drag) sets every hit note to the height of `end`.\n *\n * @param reach Extra horizontal reach on both sides, points. @default 0\n * @returns Changes sorted by index, only notes whose velocity changes.\n */\nexport function velocityLineChanges(\n  notes: readonly MidiNote[],\n  geometry: VelocityLaneGeometry,\n  start: LanePoint,\n  end: LanePoint,\n  reach = 0,\n): VelocityChange[] {\n  assertGeometry(geometry);\n  for (const p of [start, end]) {\n    if (!Number.isFinite(p.x) || !Number.isFinite(p.y)) throw new RangeError(\"Line points must be finite\");\n  }\n  if (!Number.isFinite(reach) || reach < 0) throw new RangeError(\"reach must be >= 0\");\n  const [left, right] = start.x <= end.x ? [start, end] : [end, start];\n  const changes: VelocityChange[] = [];\n  notes.forEach((note, index) => {\n    const x = noteLaneX(note, geometry);\n    if (x < left.x - reach || x > right.x + reach) return;\n    const span = right.x - left.x;\n    const t = span === 0 ? 1 : Math.min(1, Math.max(0, (x - left.x) / span));\n    const velocity = velocityAtY(left.y + (right.y - left.y) * t, geometry.height);\n    if (velocity !== note.velocity) changes.push({ index, velocity });\n  });\n  return changes;\n}\n\n/**\n * Note indices in time order: by start, then pitch, then index, so notes in\n * a chord keep a stable order.\n */\nexport function notesInTimeOrder(notes: readonly MidiNote[]): number[] {\n  return notes.map((_, i) => i).sort((a, b) =>\n    notes[a]!.startTicks - notes[b]!.startTicks || notes[a]!.pitch - notes[b]!.pitch || a - b);\n}\n\n/**\n * The batch for the keyboard ramp: starting at note `fromIndex` and taking\n * the next `count - 1` notes in {@linkcode notesInTimeOrder}, velocities run\n * in equal steps from the first note's current velocity to `endVelocity`.\n * When fewer notes follow, the ramp covers the ones there are.\n *\n * @throws {RangeError} When `fromIndex` is not a note, `count` is under 2, or\n *   `endVelocity` is not a number.\n * @returns Changes sorted by index, only notes whose velocity changes.\n */\nexport function rampVelocities(\n  notes: readonly MidiNote[],\n  fromIndex: number,\n  count: number,\n  endVelocity: number,\n): VelocityChange[] {\n  if (!Number.isInteger(fromIndex) || fromIndex < 0 || fromIndex >= notes.length) throw new RangeError(\"fromIndex must be a note index\");\n  if (!Number.isInteger(count) || count < 2) throw new RangeError(\"count must be an integer >= 2\");\n  const order = notesInTimeOrder(notes);\n  const span = order.slice(order.indexOf(fromIndex), order.indexOf(fromIndex) + count);\n  const first = notes[fromIndex]!.velocity;\n  const last = clampVelocity(endVelocity);\n  const changes: VelocityChange[] = [];\n  span.forEach((index, k) => {\n    const velocity = span.length === 1 ? first : clampVelocity(first + ((last - first) * k) / (span.length - 1));\n    if (velocity !== notes[index]!.velocity) changes.push({ index, velocity });\n  });\n  return changes.sort((a, b) => a.index - b.index);\n}\n\n/** How many notes a ramp from `fromIndex` can cover: that note plus every later one. */\nexport function rampRoom(notes: readonly MidiNote[], fromIndex: number): number {\n  const order = notesInTimeOrder(notes);\n  const at = order.indexOf(fromIndex);\n  return at < 0 ? 0 : order.length - at;\n}\n\n/** Spoken summary of a batch, e.g. `\"3 velocities changed\"`. */\nexport function describeVelocityBatch(changes: readonly VelocityChange[]): string {\n  return changes.length === 0 ? \"No velocities changed\"\n    : changes.length === 1 ? \"1 velocity changed\" : `${changes.length} velocities changed`;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/midi/velocity-line.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/midi/velocity-line",
+    "exports": [
+      "LanePoint",
+      "VelocityChange",
+      "VelocityLaneGeometry",
+      "describeVelocityBatch",
+      "noteLaneX",
+      "notesInTimeOrder",
+      "rampRoom",
+      "rampVelocities",
+      "velocityAtY",
+      "velocityLineChanges"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

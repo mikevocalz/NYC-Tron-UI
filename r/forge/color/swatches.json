@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/swatches",
+  "title": "swatches",
+  "description": "swatches, a color helper module. Exports filterSwatchGroups, pushRecentSwatch, swatchColumns.",
+  "registryDependencies": [
+    "@nyc-tron/forge/color"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/swatches.ts",
+      "content": "import {rgbaToHex,type RgbaColor} from \"@/components/nyc-tron/ui/components/forge/color\";\n\n/** One color in a {@linkcode SwatchGroup}. */\nexport interface Swatch {\n  /** Stable key, unique within its group. */\n  readonly id:string;\n  readonly color:RgbaColor;\n  /** Shown to screen readers and matched by search. Hex is used when absent. */\n  readonly name?:string;\n}\n/** Where a {@linkcode SwatchGroup}'s colors come from; it picks the group's empty-state text. */\nexport type SwatchGroupKind=\"recent\"|\"document\"|\"saved\"|\"named\";\n/** A titled section of `SwatchGrid`. The host owns and persists every group. */\nexport interface SwatchGroup {\n  readonly id:string;\n  readonly label:string;\n  readonly kind:SwatchGroupKind;\n  readonly swatches:readonly Swatch[];\n}\n\n/** Hex key used for search and duplicate checks: `#RRGGBBAA`. */\nexport const swatchKey=(s:Swatch)=>rgbaToHex(s.color);\n\n/**\n * Groups filtered by `query`: a case-insensitive substring of the swatch name,\n * or a hex prefix with or without `#` (`1f5` matches the hex key 1F5FD1FF). An empty\n * query returns every group unchanged, empty groups included; a non-empty query\n * drops groups with no match.\n */\nexport function filterSwatchGroups(groups:readonly SwatchGroup[],query:string):SwatchGroup[]{\n  const q=query.trim().toLowerCase();\n  if(!q)return [...groups];\n  const hex=q.replace(/^#/,\"\");\n  const isHex=/^[0-9a-f]+$/.test(hex);\n  return groups.map(g=>({...g,swatches:g.swatches.filter(s=>\n    (s.name?.toLowerCase().includes(q)??false)||(isHex&&swatchKey(s).slice(1).toLowerCase().startsWith(hex)))}))\n    .filter(g=>g.swatches.length>0);\n}\n\n/**\n * A recent-colors list with `color` moved or added to the front, duplicates\n * (same `#RRGGBBAA`) removed and the list cut to `limit`. Ids are the hex key.\n */\nexport function pushRecentSwatch(recent:readonly Swatch[],color:RgbaColor,limit=12):Swatch[]{\n  if(!Number.isSafeInteger(limit)||limit<1)throw new RangeError(\"Recent swatch limit must be a positive integer\");\n  const next:Swatch={id:rgbaToHex(color),color};\n  return [next,...recent.filter(s=>swatchKey(s)!==next.id)].slice(0,limit);\n}\n\n/** Columns that fit `width` with square `cell` swatches separated by `gap`; at least 1. */\nexport function swatchColumns(width:number,cell=44,gap=6):number{\n  if(!Number.isFinite(width)||width<=0)return 1;\n  return Math.max(1,Math.floor((width+gap)/(cell+gap)));\n}\n\n/**\n * Next focused index in a row-major grid of `count` swatches, `columns` wide, or\n * `undefined` for keys the grid does not handle. Left/Right flip under `rtl`\n * because the rows are laid out right to left.\n */\nexport function swatchGridMove(index:number,key:string|undefined,columns:number,count:number,rtl=false):number|undefined{\n  if(count<=0)return undefined;\n  const clamp=(n:number)=>Math.max(0,Math.min(count-1,n));\n  switch(key){\n    case \"ArrowRight\":return clamp(index+(rtl?-1:1));\n    case \"ArrowLeft\":return clamp(index+(rtl?1:-1));\n    case \"ArrowDown\":return index+columns<count?index+columns:index;\n    case \"ArrowUp\":return index-columns>=0?index-columns:index;\n    case \"Home\":return 0;\n    case \"End\":return count-1;\n    default:return undefined;\n  }\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/color/swatches.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/swatches",
+    "exports": [
+      "Swatch",
+      "SwatchGroup",
+      "SwatchGroupKind",
+      "filterSwatchGroups",
+      "pushRecentSwatch",
+      "swatchColumns",
+      "swatchGridMove",
+      "swatchKey"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

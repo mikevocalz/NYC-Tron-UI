@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/motion/Transform3DInspector",
+  "title": "Transform 3D Inspector",
+  "description": "Transform 3D Inspector, a motion graphics component. Props: value, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/forge/motion/motion-settings",
+    "@nyc-tron/shell/UnitInput"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/motion/MotionVectorFields.tsx",
+      "content": "import {View} from 'react-native';\nimport {UnitInput} from '@/components/nyc-tron/ui/components/shell/UnitInput';\nimport {validateMotionVector,type MotionVector3} from '@/components/nyc-tron/ui/components/forge/motion/motion-settings';\nexport interface MotionVectorFieldsProps {readonly label:string;readonly value:MotionVector3;readonly onCommit:(value:MotionVector3)=>void;readonly min?:number;readonly max?:number;readonly step?:number;readonly disabled?:boolean;readonly unstyled?:boolean}\n/** Common axis entry preserves the two untouched floating coordinates. */\nexport function MotionVectorFields({label,value,onCommit,min=-1e9,max=1e9,step=1,disabled=false,unstyled=false}:MotionVectorFieldsProps){\n validateMotionVector(value,min,max);return <View style={{gap:6}}>{(['x','y','z'] as const).map(axis=><UnitInput key={axis} label={`${label} ${axis.toUpperCase()}`} value={value[axis]} min={min} max={max} step={step} precision={6} disabled={disabled} unstyled={unstyled} onCommit={number=>{if(disabled||number===value[axis])return;const next={...value,[axis]:number};validateMotionVector(next,min,max);onCommit(next);}}/>)}</View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/motion/MotionVectorFields.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/motion/Transform3DInspector.tsx",
+      "content": "import {View,type ViewProps} from 'react-native';\nimport {UnitInput} from '@/components/nyc-tron/ui/components/shell/UnitInput';\nimport {Button} from '@/components/nyc-tron/ui/components/Button';\nimport {MotionVectorFields} from '@/components/nyc-tron/ui/components/forge/motion/MotionVectorFields';\nimport {defaultMotionTransform,validateMotionTransform,type MotionTransform3D} from '@/components/nyc-tron/ui/components/forge/motion/motion-settings';\nexport type {MotionTransform3D,MotionVector3} from '@/components/nyc-tron/ui/components/forge/motion/motion-settings';\nexport interface Transform3DInspectorProps extends Omit<ViewProps,'children'> {readonly value:MotionTransform3D;readonly onCommit:(value:MotionTransform3D)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}\n/** Controlled scene/document transform; rotations retain complete turns. */\nexport function Transform3DInspector({value,onCommit,disabled=false,unstyled=false,...props}:Transform3DInspectorProps){\n validateMotionTransform(value);const set=(change:Partial<MotionTransform3D>)=>{if(disabled)return;const next={...value,...change};validateMotionTransform(next);onCommit(next);};\n return <View {...props} style={[{gap:10},props.style]}>\n  {(['anchor','position','scale','rotation'] as const).map(key=><MotionVectorFields key={key} label={`3D ${key}`} value={value[key]} min={key==='scale'?-10000:key==='rotation'?-360000:-1e9} max={key==='scale'?10000:key==='rotation'?360000:1e9} step={key==='scale'?.01:1} disabled={disabled} unstyled={unstyled} onCommit={vector=>set({[key]:vector})}/>)}\n  <UnitInput label=\"3D opacity\" value={value.opacity} min={0} max={1} step={.01} disabled={disabled} unstyled={unstyled} onCommit={opacity=>set({opacity})}/>\n  <Button title=\"Reset 3D transform\" disabled={disabled} unstyled={unstyled} onPress={()=>{if(!disabled)onCommit(defaultMotionTransform());}}/>\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/motion/Transform3DInspector.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/motion/Transform3DInspector",
+    "exports": [
+      "MotionTransform3D",
+      "MotionVector3",
+      "Transform3DInspector",
+      "Transform3DInspectorProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

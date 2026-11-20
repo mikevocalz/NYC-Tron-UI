@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/range-tsv",
+  "title": "range tsv",
+  "description": "range tsv, a creative app helper module. Exports rangeToTsv, tsvField.",
+  "registryDependencies": [
+    "@nyc-tron/forge/sheet-window"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/range-tsv.ts",
+      "content": "import type { SheetRange } from \"@/components/nyc-tron/ui/components/forge/sheet-window\";\nimport { rangeCellCount } from \"@/components/nyc-tron/ui/components/forge/sheet-window\";\n\n/** A value {@linkcode rangeToTsv} can serialize. `null`/`undefined` become an empty field. */\nexport type TsvValue = string | number | boolean | null | undefined;\n\n/** Options for {@linkcode rangeToTsv}. */\nexport interface RangeTsvOptions {\n  /**\n   * Largest range serialized in one call. A whole-sheet selection is 17\n   * billion cells; the cap keeps a stray Ctrl+A, Ctrl+C from building a\n   * string the JS heap cannot hold.\n   * @default 1_000_000\n   */\n  readonly maxCells?: number;\n  /** @default \"\\n\" */\n  readonly lineEnding?: \"\\n\" | \"\\r\\n\";\n}\n\n/** Thrown by {@linkcode rangeToTsv} when the range exceeds `maxCells`. */\nexport class RangeTooLargeError extends RangeError {\n  readonly cellCount: number;\n  readonly maxCells: number;\n  constructor(cellCount: number, maxCells: number) {\n    super(`Range has ${cellCount} cells; copy is limited to ${maxCells}`);\n    this.name = \"RangeTooLargeError\";\n    this.cellCount = cellCount;\n    this.maxCells = maxCells;\n  }\n}\n\n/**\n * Quotes a field the way spreadsheet clipboards do: a field containing a tab,\n * line break or double quote is wrapped in quotes with inner quotes doubled.\n */\nexport function tsvField(value: TsvValue): string {\n  if (value === null || value === undefined) return \"\";\n  const text = String(value);\n  return /[\\t\\n\\r\"]/.test(text) ? `\"${text.replaceAll('\"', '\"\"')}\"` : text;\n}\n\n/**\n * Serializes a rectangular range as tab-separated values for the clipboard.\n * `read` receives absolute zero-based coordinates; the kit never writes the\n * clipboard itself, the app does.\n * @throws {RangeTooLargeError} when the range has more than `maxCells` cells.\n */\nexport function rangeToTsv(\n  range: SheetRange,\n  read: (row: number, column: number) => TsvValue,\n  options: RangeTsvOptions = {},\n): string {\n  const { maxCells = 1_000_000, lineEnding = \"\\n\" } = options;\n  if (![range.startRow, range.endRow, range.startColumn, range.endColumn].every(Number.isSafeInteger) ||\n      range.startRow < 0 || range.startColumn < 0 ||\n      range.endRow < range.startRow || range.endColumn < range.startColumn) {\n    throw new RangeError(\"Invalid copy range\");\n  }\n  const count = rangeCellCount(range);\n  if (count > maxCells) throw new RangeTooLargeError(count, maxCells);\n  const lines: string[] = [];\n  for (let row = range.startRow; row <= range.endRow; row++) {\n    const fields: string[] = [];\n    for (let column = range.startColumn; column <= range.endColumn; column++) {\n      fields.push(tsvField(read(row, column)));\n    }\n    lines.push(fields.join(\"\\t\"));\n  }\n  return lines.join(lineEnding);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/range-tsv.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/range-tsv",
+    "exports": [
+      "RangeTooLargeError",
+      "RangeTsvOptions",
+      "TsvValue",
+      "rangeToTsv",
+      "tsvField"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

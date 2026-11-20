@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "Button",
+  "title": "Button",
+  "description": "Pressable text button with primary, secondary, ghost and danger variants, loading spinner and icon slot, for React Native.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/Button.tsx",
+      "content": "import type { ReactNode,Ref,ComponentRef } from \"react\";\nimport { ActivityIndicator, Pressable, Text, View, type PressableProps } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\n\n/**\n * Brand-neutral accessible press control. Native Chrome/Fluent/SwiftUI\n * wrappers are separate future adapters; this base is an RN presentational\n * component and does not pretend to be AppKit/WinUI.\n *\n * The consumer owns its --color-* / --radius-* / --shadow-* Tailwind values.\n */\nexport type ButtonVariant=\"primary\"|\"secondary\"|\"ghost\"|\"danger\";\nexport type ButtonSize=\"sm\"|\"md\"|\"lg\";\nexport interface ButtonProps extends Omit<PressableProps,\"children\"|\"disabled\"> {\n  ref?:Ref<ComponentRef<typeof Pressable>>;\n  title:string;\n  /** Optional app-owned minimum layout target, at least 44 points. */\n  targetSize?:number;\n  numberOfLines?:number;\n  icon?:ReactNode;\n  variant?:ButtonVariant;\n  size?:ButtonSize;\n  disabled?:boolean;\n  loading?:boolean;\n  className?:string;\n  /** Complete visual override: app supplies its own Tailwind recipe. */\n  unstyled?:boolean;\n  labelClassName?:string;\n  iconClassName?:string;\n}\nconst variants:Record<ButtonVariant,{root:string;label:string}>={\n primary:{root:\"bg-primary border-border text-on-primary\",label:\"text-on-primary\"},\n secondary:{root:\"bg-surface-raised border-border\",label:\"text-text\"},\n ghost:{root:\"bg-transparent border-transparent\",label:\"text-text\"},\n danger:{root:\"bg-danger border-danger\",label:\"text-on-danger\"}\n};\nconst sizes:Record<ButtonSize,string>={\n sm:\"min-h-10 gap-2 px-3 py-2\",\n md:\"min-h-11 gap-2 px-4 py-2.5\",\n lg:\"min-h-12 gap-3 px-5 py-3\"\n};\nexport function Button({\n  title,targetSize,numberOfLines,icon,variant=\"primary\",size=\"md\",disabled=false,loading=false,\n  className,unstyled=false,labelClassName,iconClassName,onPress,style,...rest\n}:ButtonProps) {\n  if(numberOfLines!==undefined&&(!Number.isInteger(numberOfLines)||numberOfLines<1||numberOfLines>64))throw new RangeError('Invalid button label line limit');\n  if(targetSize!==undefined&&(!Number.isFinite(targetSize)||targetSize<44))throw new RangeError('Button target must be at least 44 points');\n  const off=disabled||loading;\n  const selected=variants[variant];\n  return (\n    <Pressable\n      {...rest}\n      {...{className:joinClasses(\n        \"flex-row items-center justify-center\",\n        !unstyled&&\"rounded-control border active:opacity-80 focus-visible:ring-2 focus-visible:ring-focus motion-reduce:transition-none\",\n        !unstyled&&(targetSize===undefined?sizes[size]:sizes[size].replace(/min-h-\\d+/,\"\")),!unstyled&&selected.root,\n        off&&\"opacity-50\",className\n      )}}\n      style={state=>[{minWidth:targetSize??44,minHeight:targetSize??(size==='sm'?40:size==='lg'?48:44)},typeof style==='function'?style(state):style,targetSize===undefined?undefined:{minWidth:targetSize,minHeight:targetSize}]}\n      // sm draws at 40pt; slop brings the touch target to the 44pt minimum.\n      hitSlop={rest.hitSlop??(size===\"sm\"?2:undefined)}\n      disabled={off}\n      accessibilityRole=\"button\"\n      accessibilityLabel={rest.accessibilityLabel??title}\n      accessibilityState={{...rest.accessibilityState,disabled:off,busy:loading}}\n      onPress={onPress}\n    >\n      {loading ? <ActivityIndicator accessibilityLabel=\"Loading\" /> : null}\n      {icon ? <View {...{className:joinClasses(\"items-center justify-center\",iconClassName)}}>{icon}</View> : null}\n      <Text numberOfLines={numberOfLines} style={{flexShrink:1}} {...{className:joinClasses(!unstyled&&\"font-semibold\",!unstyled&&selected.label,labelClassName)}}>{title}</Text>\n    </Pressable>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/Button.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/Button",
+    "exports": [
+      "Button",
+      "ButtonProps",
+      "ButtonSize",
+      "ButtonVariant"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:ui"
+}

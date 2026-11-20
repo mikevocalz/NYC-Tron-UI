@@ -1,0 +1,75 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/BatchExportPanel",
+  "title": "Batch Export Panel",
+  "description": "Batch Export Panel, a photo editing component. Props: photoIds, value, formats, onChange.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/Select",
+    "@nyc-tron/feedback/ErrorMessage",
+    "@nyc-tron/forge/photo/photo-export",
+    "@nyc-tron/forge/photo/photo-presets",
+    "@nyc-tron/shell/UnitInput"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/canvas/SettingSwitch.tsx",
+      "content": "import {Pressable,Text,View} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\n\n/**\n * Labeled on/off row shared by the canvas settings panels: a 44pt switch with\n * the label on the start side and the track on the end side (mirrored in RTL).\n */\nexport function SettingSwitch({label,on,onChange,disabled,styled,hint}:{\n  label:string;on:boolean;onChange:(on:boolean)=>void;disabled:boolean;styled:boolean;hint?:string|undefined;\n}){\n  return <Pressable role=\"switch\" aria-checked={on} accessibilityRole=\"switch\" accessibilityState={{checked:on,disabled}}\n    aria-label={label} accessibilityHint={hint} disabled={disabled} onPress={()=>onChange(!on)}\n    {...{className:joinClasses(styled&&\"rounded-control focus-visible:ring-2 focus-visible:ring-focus\")}}\n    style={{minHeight:44,flexDirection:\"row\",alignItems:\"center\",justifyContent:\"space-between\",gap:12,paddingHorizontal:4,opacity:disabled?0.5:1}}>\n    <Text {...{className:joinClasses(styled&&\"text-text text-sm\")}} style={{flexShrink:1}}>{label}</Text>\n    <View pointerEvents=\"none\" {...{className:joinClasses(styled&&\"border\",styled&&(on?\"bg-primary border-primary\":\"bg-surface-sunken border-border\"))}}\n      style={{width:40,height:24,borderRadius:12,padding:2,justifyContent:\"center\",alignItems:on?\"flex-end\":\"flex-start\"}}>\n      <View {...{className:joinClasses(styled&&(on?\"bg-on-primary\":\"bg-text-muted\"))}} style={{width:18,height:18,borderRadius:9}}/>\n    </View>\n  </Pressable>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/canvas/SettingSwitch.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/photo/BatchExportPanel.tsx",
+      "content": "import {Text,TextInput,View,type ViewProps} from 'react-native';\nimport {Select} from '@/components/nyc-tron/ui/components/Select';\nimport {UnitInput} from '@/components/nyc-tron/ui/components/shell/UnitInput';\nimport {Button} from '@/components/nyc-tron/ui/components/Button';\nimport {ErrorMessage} from '@/components/nyc-tron/ui/components/feedback/ErrorMessage';\nimport {useOwnedAction} from '@/components/nyc-tron/ui/components/shell/useOwnedAction';\nimport {SettingSwitch} from '@/components/nyc-tron/ui/components/forge/canvas/SettingSwitch';\nimport {joinClasses} from '@/components/nyc-tron/ui/components/styles';\nimport {validatePhotoTargets} from '@/components/nyc-tron/ui/components/forge/photo/photo-presets';\nimport {validatePhotoExport,validatePhotoExportProgress,type PhotoBatchExportSettings,type PhotoExportFormat,type PhotoExportProgress} from '@/components/nyc-tron/ui/components/forge/photo/photo-export';\nexport type {PhotoBatchExportSettings,PhotoExportFormat,PhotoExportProgress} from '@/components/nyc-tron/ui/components/forge/photo/photo-export';\nexport interface BatchExportPanelProps extends Omit<ViewProps,'children'> {\n readonly scope:string;readonly photoIds:readonly string[];readonly value:PhotoBatchExportSettings;readonly formats:readonly PhotoExportFormat[];\n readonly onChange:(settings:PhotoBatchExportSettings)=>void;readonly onExport:(photoIds:readonly string[],settings:PhotoBatchExportSettings,signal:AbortSignal)=>void|Promise<void>;\n readonly progress?:PhotoExportProgress|null;readonly disabled?:boolean;readonly unstyled?:boolean;\n}\n/** Configures a host's real batch encoder and reports only provider-supplied progress. */\nexport function BatchExportPanel({scope,photoIds,value,formats,onChange,onExport,progress=null,disabled=false,unstyled=false,...props}:BatchExportPanelProps){\n validatePhotoTargets(photoIds);validatePhotoExport(value,formats);if(progress!==null)validatePhotoExportProgress(progress);if(!scope.trim())throw new TypeError('Batch export requires a scope');\n const action=useOwnedAction(scope),locked=disabled||action.pending!==null,format=formats.find(format=>format.id===value.formatId)!;\n const set=(change:Partial<PhotoBatchExportSettings>)=>{if(locked)return;const next={...value,...change};validatePhotoExport(next,formats);onChange(next);};\n const watermark=(change:Partial<PhotoBatchExportSettings['watermark']>)=>set({watermark:{...value.watermark,...change}});\n return <View {...props} style={[{gap:8},props.style]}>\n  <Select label=\"Photo export format\" value={value.formatId} options={formats.map(format=>({value:format.id,label:format.label}))} disabled={locked} unstyled={unstyled} onValueChange={formatId=>set({formatId})}/>\n  <Select label=\"Photo export sizing\" value={value.sizing} options={[{value:'original',label:'Original size'},{value:'fit-long-edge',label:'Fit long edge'}]} disabled={locked} unstyled={unstyled} onValueChange={sizing=>set({sizing:sizing as PhotoBatchExportSettings['sizing']})}/>\n  <UnitInput label=\"Export long edge pixels\" value={value.longEdge} min={1} max={65536} precision={0} step={1} disabled={locked||value.sizing==='original'} unstyled={unstyled} onCommit={longEdge=>set({longEdge:Math.round(longEdge)})}/>\n  <UnitInput label=\"Photo export quality\" value={value.quality} min={1} max={100} step={1} disabled={locked||!format.supportsQuality} unstyled={unstyled} onCommit={quality=>set({quality})}/>\n  <Select label=\"Photo metadata privacy\" value={value.metadata} options={[{value:'strip-all',label:'Remove all metadata'},{value:'copyright-only',label:'Keep copyright only'},{value:'preserve-without-location',label:'Keep metadata, remove location'},{value:'preserve-all',label:'Keep all metadata, including location'}]} disabled={locked} unstyled={unstyled} onValueChange={metadata=>set({metadata:metadata as PhotoBatchExportSettings['metadata']})}/>\n  <SettingSwitch label=\"Add text watermark\" on={value.watermark.enabled} onChange={enabled=>watermark({enabled})} disabled={locked} styled={!unstyled}/>\n  <TextInput accessibilityLabel=\"Photo watermark text\" value={value.watermark.text} maxLength={256} editable={!locked&&value.watermark.enabled} aria-disabled={locked||!value.watermark.enabled} onChangeText={text=>watermark({text})} style={{minHeight:44,padding:8}} {...{className:joinClasses(!unstyled&&'text-text border border-border rounded-control')}}/>\n  <UnitInput label=\"Watermark opacity\" value={value.watermark.opacity} min={0} max={1} step={.05} disabled={locked||!value.watermark.enabled} unstyled={unstyled} onCommit={opacity=>watermark({opacity})}/>\n  <UnitInput label=\"Watermark font pixels\" value={value.watermark.fontSize} min={1} max={1024} step={1} disabled={locked||!value.watermark.enabled} unstyled={unstyled} onCommit={fontSize=>watermark({fontSize})}/>\n  <Select label=\"Watermark position\" value={value.watermark.position} options={['top-left','top-right','center','bottom-left','bottom-right'].map(value=>({value,label:value.replaceAll('-',' ')}))} disabled={locked||!value.watermark.enabled} unstyled={unstyled} onValueChange={position=>watermark({position:position as PhotoBatchExportSettings['watermark']['position']})}/>\n  {progress?<Text accessibilityLiveRegion=\"polite\" {...{className:joinClasses(!unstyled&&'text-text')}}>{`${progress.completed} exported; ${progress.failed} failed; ${progress.total} total`}</Text>:action.pending!==null?<Text {...{className:joinClasses(!unstyled&&'text-text-muted')}}>Export in progress; progress not reported</Text>:null}\n  <Button title={`Export ${photoIds.length} photos`} disabled={locked||photoIds.length===0||value.watermark.enabled&&!value.watermark.text.trim()} unstyled={unstyled} onPress={()=>{if(!locked&&photoIds.length&&(!value.watermark.enabled||value.watermark.text.trim()))void action.run('export',signal=>onExport([...photoIds],{...value,watermark:{...value.watermark}},signal));}}/>\n  {action.pending!==null?<Button title=\"Cancel photo export\" unstyled={unstyled} onPress={action.cancel}/>:null}\n  <ErrorMessage {...(action.error?{message:action.error}:{})} unstyled={unstyled}/>\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/photo/BatchExportPanel.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/shell/action-owner.ts",
+      "content": "import { createStore } from \"zustand/vanilla\";\n\n/** UI request state. Abort controllers stay in the owner's closure. */\nexport interface ActionState { readonly pending: string | null; readonly error: string | null }\nexport function createActionOwner(currentScope: () => string) {\n  const store = createStore<ActionState>(() => ({ pending: null, error: null }));\n  let active = false;\n  let current: { readonly scope: string; readonly abort: AbortController } | null = null;\n  function cancel() {\n    const previous = current; current = null;\n    previous?.abort.abort();\n  }\n  return {\n    store,\n    activate() { cancel(); active = true; store.setState({ pending: null, error: null }); },\n    deactivate() { active = false; cancel(); },\n    cancel() { cancel(); store.setState({ pending: null }); },\n    async run<T>(id: string, operation: (signal: AbortSignal) => T | Promise<T>, consume?: (value: T) => void, options?: { pendingForAsyncOnly?: boolean }): Promise<boolean> {\n      if (!active) return false;\n      cancel();\n      const request = { scope: currentScope(), abort: new AbortController() };\n      current = request;\n      const valid = () => active && current === request && request.scope === currentScope();\n      if (options?.pendingForAsyncOnly) store.setState({ error: null });\n      else store.setState({ pending: id, error: null });\n      try {\n        if (!valid()) return false;\n        const result = operation(request.abort.signal);\n        let value: T;\n        if (options?.pendingForAsyncOnly) {\n          if (result && typeof (result as Promise<T>).then === 'function') {\n            // A synchronous acknowledgement or already-resolved promise must not\n            // disable (and blur) the focused control between keyboard commands.\n            let settled = false;\n            const completion = Promise.resolve(result).then(value => { settled = true; return value; }, error => { settled = true; throw error; });\n            void Promise.resolve().then(() => { if (!settled && valid()) store.setState({ pending: id, error: null }); });\n            value = await completion;\n          } else value = result as T;\n        } else value = await result;\n        if (!valid()) return false;\n        consume?.(value);\n        if (!valid()) return false;\n        store.setState({ pending: null });\n        return true;\n      } catch (error) {\n        if (!valid()) return false;\n        store.setState({ pending: null, error: error instanceof Error ? error.message : String(error) });\n        return false;\n      } finally { if (current === request) current = null; }\n    },\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/action-owner.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/useOwnedAction.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport { useStore } from \"zustand\";\nimport { createActionOwner } from \"@/components/nyc-tron/ui/components/shell/action-owner\";\n\n/** Cancel stale requests at the committed document boundary, before new controls accept input. */\nexport function useOwnedAction(scope: string) {\n  const committed = useRef(scope);\n  const ref = useRef<ReturnType<typeof createActionOwner> | null>(null);\n  ref.current ??= createActionOwner(() => committed.current);\n  const owner = ref.current;\n  useLayoutEffect(() => {\n    committed.current = scope;\n    owner.activate();\n    return () => owner.deactivate();\n  }, [owner, scope]);\n  const state = useStore(owner.store, value => value);\n  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);\n  return { ...state, run, cancel: owner.cancel };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/BatchExportPanel",
+    "exports": [
+      "BatchExportPanel",
+      "BatchExportPanelProps",
+      "PhotoBatchExportSettings",
+      "PhotoExportFormat",
+      "PhotoExportProgress"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

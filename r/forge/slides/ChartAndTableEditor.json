@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/slides/ChartAndTableEditor",
+  "title": "Chart And Table Editor",
+  "description": "Chart And Table Editor, a presentation slide component. Props: chart, table.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Select",
+    "@nyc-tron/forge/document/TableLayoutInspector",
+    "@nyc-tron/forge/spreadsheet/ChartBuilder",
+    "@nyc-tron/forge/spreadsheet/VirtualSpreadsheetGrid"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/slides/ChartAndTableEditor.tsx",
+      "content": "import {useRef} from 'react';\nimport {View,Text,type ViewProps} from 'react-native';\nimport {createStore} from 'zustand/vanilla';\nimport {useStore} from 'zustand';\nimport {Select} from '@/components/nyc-tron/ui/components/Select';\nimport {ChartBuilder,type ChartBuilderProps} from '@/components/nyc-tron/ui/components/forge/spreadsheet/ChartBuilder';\nimport {VirtualSpreadsheetGrid,type VirtualSpreadsheetGridProps} from '@/components/nyc-tron/ui/components/forge/spreadsheet/VirtualSpreadsheetGrid';\nimport {TableLayoutInspector,type TableLayoutInspectorProps} from '@/components/nyc-tron/ui/components/forge/document/TableLayoutInspector';\nexport interface ChartAndTableEditorProps extends Omit<ViewProps,'children'> {\n chart?:ChartBuilderProps;table?:{grid:VirtualSpreadsheetGridProps;layout:TableLayoutInspectorProps};unstyled?:boolean;\n}\n/** One owner for data, chart series/formatting and table cell layout across office documents. */\nexport function ChartAndTableEditor({chart,table,unstyled=false,style,...props}:ChartAndTableEditorProps){\n const local=useRef<ReturnType<typeof makeStore>|null>(null);local.current??=makeStore();const store=local.current,choice=useStore(store,s=>s.mode),mode=choice==='chart'&&!chart?'table':choice==='table'&&!table?'chart':choice;\n return <View {...props} style={[{gap:12,minWidth:0},style]} accessibilityLabel=\"Slide chart and table editor\">{chart&&table?<Select label=\"Chart or table\" value={mode} options={[{value:'chart',label:'Chart'},{value:'table',label:'Table'}]} unstyled={unstyled} onValueChange={mode=>store.setState({mode:mode as 'chart'|'table'})}/>:null}{mode==='chart'&&chart?<ChartBuilder {...chart} unstyled={unstyled}/>:mode==='table'&&table?<><VirtualSpreadsheetGrid {...table.grid} height={table.grid.height??360} unstyled={unstyled}/><TableLayoutInspector {...table.layout} unstyled={unstyled}/></>:<Text {...{className:unstyled?undefined:'text-text'}}>Select a data-bound chart or table</Text>}</View>;\n}\nfunction makeStore(){return createStore(()=>({mode:'chart' as 'chart'|'table'}));}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/slides/ChartAndTableEditor.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/slides/ChartAndTableEditor",
+    "exports": [
+      "ChartAndTableEditor",
+      "ChartAndTableEditorProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/contrast",
+  "title": "contrast",
+  "description": "contrast, a color helper module. Exports compositeOver, contrastRating, contrastRatio.",
+  "registryDependencies": [
+    "@nyc-tron/forge/color"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/contrast.ts",
+      "content": "import {assertRgba,type RgbaColor} from \"@/components/nyc-tron/ui/components/forge/color\";\n\nconst linear=(channel:number)=>{\n  const c=channel/255;\n  return c<=0.04045?c/12.92:((c+0.055)/1.055)**2.4;\n};\n\n/**\n * WCAG 2.2 relative luminance of an opaque sRGB color, 0 (black) to 1 (white).\n * Alpha is ignored; composite translucent colors first with {@linkcode compositeOver}.\n */\nexport function relativeLuminance(c:RgbaColor):number{\n  assertRgba(c);\n  return 0.2126*linear(c.r)+0.7152*linear(c.g)+0.0722*linear(c.b);\n}\n\n/** `top` drawn over an opaque `bottom`, as the display shows it. The result is opaque. */\nexport function compositeOver(top:RgbaColor,bottom:RgbaColor):RgbaColor{\n  assertRgba(top);\n  assertRgba(bottom);\n  const mix=(a:number,b:number)=>Math.round(a*top.alpha+b*(1-top.alpha));\n  return {r:mix(top.r,bottom.r),g:mix(top.g,bottom.g),b:mix(top.b,bottom.b),alpha:1};\n}\n\n/**\n * WCAG contrast ratio between a foreground and an opaque background, 1 to 21.\n * A translucent foreground is composited over the background first.\n */\nexport function contrastRatio(foreground:RgbaColor,background:RgbaColor):number{\n  const fg=relativeLuminance(compositeOver(foreground,{...background,alpha:1}));\n  const bg=relativeLuminance({...background,alpha:1});\n  const [hi,lo]=fg>bg?[fg,bg]:[bg,fg];\n  return (hi+0.05)/(lo+0.05);\n}\n\n/** Which WCAG 2.2 text contrast levels a ratio meets; see {@linkcode contrastRating}. */\nexport interface ContrastRating {\n  /** The ratio rounded down to two decimals, so 4.499 never displays as passing 4.5. */\n  readonly ratio:number;\n  /** 4.5:1, normal text, SC 1.4.3. */\n  readonly aa:boolean;\n  /** 7:1, normal text, SC 1.4.6. */\n  readonly aaa:boolean;\n  /** 3:1, large text (24px, or 18.66px bold). */\n  readonly aaLarge:boolean;\n  /** 4.5:1, large text. */\n  readonly aaaLarge:boolean;\n}\n\n/** Rates `foreground` on `background` against the WCAG 2.2 text thresholds. */\nexport function contrastRating(foreground:RgbaColor,background:RgbaColor):ContrastRating{\n  const exact=contrastRatio(foreground,background);\n  return {\n    ratio:Math.floor(exact*100)/100,\n    aa:exact>=4.5,aaa:exact>=7,aaLarge:exact>=3,aaaLarge:exact>=4.5,\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/color/contrast.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/contrast",
+    "exports": [
+      "ContrastRating",
+      "compositeOver",
+      "contrastRating",
+      "contrastRatio",
+      "relativeLuminance"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

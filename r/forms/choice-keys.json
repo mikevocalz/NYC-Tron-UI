@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forms/choice-keys",
+  "title": "choice keys",
+  "description": "choice keys, a form helper module. Exports arrowStep, domIsRTL, isModified.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forms/choice-keys.ts",
+      "content": "/**\n * Keyboard models shared by SegmentedControl, TabBar, Toolbar and Select.\n * Pure functions, so the rules are unit tested without a renderer.\n *\n * Horizontal arrows follow reading direction: in RTL, ArrowLeft moves to the\n * next item. Vertical arrows never flip.\n */\nexport type ChoiceAxis=\"horizontal\"|\"vertical\"|\"both\";\n\n/** Step for an arrow key, or null when the key does not move along `axis`. */\nexport function arrowStep(key:string,axis:ChoiceAxis,rtl:boolean):1|-1|null{\n  const horizontal=axis!==\"vertical\",vertical=axis!==\"horizontal\";\n  if(horizontal&&key===\"ArrowRight\")return rtl?-1:1;\n  if(horizontal&&key===\"ArrowLeft\")return rtl?1:-1;\n  if(vertical&&key===\"ArrowDown\")return 1;\n  if(vertical&&key===\"ArrowUp\")return -1;\n  return null;\n}\n\n/**\n * Next enabled index for a key in a single-select group (WAI-ARIA APG radio\n * group and tabs). Arrows wrap; Home/End jump to the first/last enabled item.\n * `current` -1 means nothing is selected. Returns null for any other key, or\n * when every item is disabled.\n */\nexport function nextChoiceIndex(\n  current:number,key:string,disabled:readonly boolean[],\n  {axis=\"horizontal\",rtl=false,wrap=true}:{axis?:ChoiceAxis;rtl?:boolean;wrap?:boolean}={}\n):number|null{\n  const enabled=disabled.map((off,i)=>off?-1:i).filter(i=>i>=0);\n  if(!enabled.length)return null;\n  if(key===\"Home\")return enabled[0]!;\n  if(key===\"End\")return enabled[enabled.length-1]!;\n  const step=arrowStep(key,axis,rtl);\n  if(step===null)return null;\n  const pos=enabled.indexOf(current);\n  if(pos<0)return step===1?enabled[0]!:enabled[enabled.length-1]!;\n  const next=pos+step;\n  if(wrap)return enabled[(next+enabled.length)%enabled.length]!;\n  return enabled[Math.max(0,Math.min(enabled.length-1,next))]!;\n}\n\n/**\n * Roving tabindex: only the selected item is a Tab stop. With no selection\n * (or a disabled one) the first enabled item takes the stop.\n */\nexport function rovingStop(selected:number,disabled:readonly boolean[]):number{\n  if(selected>=0&&selected<disabled.length&&!disabled[selected])return selected;\n  return disabled.findIndex(off=>!off);\n}\n\n/** Typeahead: next enabled label after `from` that starts with `char`, wrapping. */\nexport function typeaheadIndex(\n  labels:readonly string[],disabled:readonly boolean[],from:number,char:string\n):number{\n  if(char.length!==1||!/\\S/.test(char))return -1;\n  const ch=char.toLocaleLowerCase();\n  for(let n=1;n<=labels.length;n++){\n    const i=((from<0?-1:from)+n)%labels.length;\n    if(!disabled[i]&&labels[i]!.toLocaleLowerCase().startsWith(ch))return i;\n  }\n  return -1;\n}\n\n/** Reading direction of a DOM node on RN web; native callers pass I18nManager.isRTL. */\nexport function domIsRTL(node:unknown):boolean{\n  const view=globalThis as {getComputedStyle?:(n:unknown)=>{direction?:string}};\n  if(!node||typeof view.getComputedStyle!==\"function\")return false;\n  try{return view.getComputedStyle(node).direction===\"rtl\";}catch{return false;}\n}\n\n/** Key data delivered by RN web or a desktop host's keydown event. */\nexport type WebKey={key:string;altKey?:boolean;ctrlKey?:boolean;metaKey?:boolean;shiftKey?:boolean;\n  preventDefault:()=>void;currentTarget:unknown};\nexport function webKey(event:unknown):WebKey{\n  const e=event as Partial<WebKey>&{nativeEvent?:Partial<WebKey>};\n  const n=e.nativeEvent??e;\n  return {key:String(n.key??\"\"),altKey:n.altKey,ctrlKey:n.ctrlKey,metaKey:n.metaKey,shiftKey:n.shiftKey,\n    preventDefault:()=>e.preventDefault?.(),currentTarget:e.currentTarget};\n}\n/** Modified arrows are browser/OS navigation, not selection. */\nexport const isModified=(k:WebKey)=>!!(k.altKey||k.ctrlKey||k.metaKey);\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forms/choice-keys.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forms/choice-keys",
+    "exports": [
+      "ChoiceAxis",
+      "WebKey",
+      "arrowStep",
+      "domIsRTL",
+      "isModified",
+      "nextChoiceIndex",
+      "rovingStop",
+      "typeaheadIndex",
+      "webKey"
+    ]
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:lib"
+}

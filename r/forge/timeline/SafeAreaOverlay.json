@@ -1,0 +1,62 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/SafeAreaOverlay",
+  "title": "Safe Area Overlay",
+  "description": "Safe Area Overlay, a video timeline component. Props: aspect, safeArea, showSafeAreas.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/forge/color",
+    "@nyc-tron/forge/timeline/safe-area"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timeline/SafeAreaOverlay.tsx",
+      "content": "import {Text,View,type ViewProps} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {useLocalStore} from \"@/components/nyc-tron/ui/components/useLocalStore\";\nimport {rgbaToHex} from \"@/components/nyc-tron/ui/components/forge/color\";\nimport {guideRect,safeAreas,type OverlayRect,type SafeAreaSpec} from \"@/components/nyc-tron/ui/components/forge/timeline/safe-area\";\n\n// A letterbox matte is black by definition, in any theme; it is a picture value, not a UI color.\nconst MATTE=rgbaToHex({r:0,g:0,b:0,alpha:1},false);\n\n/** Props for {@linkcode SafeAreaOverlay}. */\nexport interface SafeAreaOverlayProps extends Omit<ViewProps,\"children\"> {\n  /** The picture's aspect ratio (width / height), e.g. 16 / 9. */\n  readonly aspect:number;\n  /** @default \"smpte\" (action 93%, title 90%) */\n  readonly safeArea?:SafeAreaSpec;\n  /** Draws action- and title-safe boxes. @default true */\n  readonly showSafeAreas?:boolean;\n  /** Framing guides to mask to, as width / height (e.g. FRAME_GUIDES.scope). The area outside is dimmed. */\n  readonly guide?:number;\n  /** Center cross. @default false */\n  readonly showCenter?:boolean;\n  /** Rule-of-thirds lines. @default false */\n  readonly showThirds?:boolean;\n  className?:string;\n  unstyled?:boolean;\n}\n\nconst box=(r:OverlayRect)=>({position:\"absolute\" as const,left:r.x,top:r.y,width:r.width,height:r.height});\n\n/**\n * Guides over a video monitor (D-25): action- and title-safe boxes, an\n * aspect-ratio framing mask, a center cross and thirds. Lay it over the\n * monitor at the same size; it fits the picture by `aspect` (letterbox or\n * pillarbox) and never takes touches. Purely visual, so it is hidden from\n * screen readers; describe active guides in the monitor's own label.\n */\nexport function SafeAreaOverlay({\n  aspect,safeArea=\"smpte\",showSafeAreas=true,guide,showCenter=false,showThirds=false,className,unstyled=false,testID,style,...rest\n}:SafeAreaOverlayProps){\n  const initial=safeAreas({width:0,height:0},aspect,safeArea);if(guide!==undefined)guideRect(initial.picture,guide);\n  const [size,store]=useLocalStore(()=>({width:0,height:0}));\n  const styled=!unstyled;\n  const areas=size.width>0?safeAreas(size,aspect,safeArea):undefined;\n  const framed=areas&&guide!==undefined?guideRect(areas.picture,guide):undefined;\n  const line=joinClasses(styled&&\"border-text-muted\");\n  const label=joinClasses(styled&&\"text-text-muted text-xs\");\n  const pct=(n:number)=>Math.round(n*100)+\"%\";\n  const masks=areas&&framed?[\n    {x:areas.picture.x,y:areas.picture.y,width:areas.picture.width,height:framed.y-areas.picture.y},\n    {x:areas.picture.x,y:framed.y+framed.height,width:areas.picture.width,height:areas.picture.y+areas.picture.height-framed.y-framed.height},\n    {x:areas.picture.x,y:framed.y,width:framed.x-areas.picture.x,height:framed.height},\n    {x:framed.x+framed.width,y:framed.y,width:areas.picture.x+areas.picture.width-framed.x-framed.width,height:framed.height},\n  ].filter(r=>r.width>0.5&&r.height>0.5):[];\n  return <View {...rest} {...(testID?{testID}:{})} pointerEvents=\"none\"\n    accessibilityElementsHidden importantForAccessibility=\"no-hide-descendants\" aria-hidden\n    onLayout={e=>{const {width,height}=e.nativeEvent.layout;if([width,height].every(Number.isFinite)&&width>=0&&height>=0)store.set({width,height});}}\n    {...{className:joinClasses(className)}} style={[{position:\"absolute\",left:0,top:0,right:0,bottom:0,direction:\"ltr\"},style]}>\n    {masks.map((r,i)=><View key={\"m\"+i} style={{...box(r),backgroundColor:MATTE,opacity:0.6}}/>)}\n    {framed?<View {...{className:line}} style={{...box(framed),borderWidth:1}}/>:null}\n    {areas&&showSafeAreas?<>\n      <View {...{className:line}} style={{...box(areas.action),borderWidth:1,borderStyle:\"dashed\"}}>\n        <Text {...{className:label}} style={{position:\"absolute\",left:4,top:2}}>{`Action safe ${pct(areas.fractions.action)}`}</Text>\n      </View>\n      <View {...{className:line}} style={{...box(areas.title),borderWidth:1}}>\n        <Text {...{className:label}} style={{position:\"absolute\",right:4,bottom:2}}>{`Title safe ${pct(areas.fractions.title)}`}</Text>\n      </View>\n    </>:null}\n    {areas&&showThirds?[1,2].flatMap(k=>[\n      <View key={\"v\"+k} {...{className:line}} style={{position:\"absolute\",left:areas.picture.x+areas.picture.width*k/3,top:areas.picture.y,height:areas.picture.height,borderLeftWidth:1,opacity:0.6}}/>,\n      <View key={\"h\"+k} {...{className:line}} style={{position:\"absolute\",top:areas.picture.y+areas.picture.height*k/3,left:areas.picture.x,width:areas.picture.width,borderTopWidth:1,opacity:0.6}}/>,\n    ]):null}\n    {areas&&showCenter?<>\n      <View {...{className:line}} style={{position:\"absolute\",left:areas.picture.x+areas.picture.width/2-10,top:areas.picture.y+areas.picture.height/2,width:20,borderTopWidth:1}}/>\n      <View {...{className:line}} style={{position:\"absolute\",top:areas.picture.y+areas.picture.height/2-10,left:areas.picture.x+areas.picture.width/2,height:20,borderLeftWidth:1}}/>\n    </>:null}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/SafeAreaOverlay.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/local-store.ts",
+      "content": "import {createStore} from \"zustand/vanilla\";\n\n/**\n * A per-instance store for transient gesture and draft state (a drag preview, a\n * text draft, a measured width). Components use it instead of `useState` so a\n * gesture's bookkeeping lives outside React's render cycle and can be read\n * synchronously from responder callbacks. Created by {@linkcode createLocalStore};\n * components use it through `useLocalStore`. Zustand owns the state; this value-replacement\n * adapter remains independent of React.\n */\nexport interface LocalStore<T> {\n  get():T;\n  /** Replaces the state, or derives it from the previous state. Listeners run only when it changes. */\n  set(next:T|((previous:T)=>T)):void;\n  /** Returns the unsubscribe function. */\n  subscribe(listener:()=>void):()=>void;\n}\n\n/** Creates a {@linkcode LocalStore}. Equal states (by `Object.is`) do not notify. */\nexport function createLocalStore<T>(initial:T):LocalStore<T>{\n  const store=createStore<{value:T}>(()=>({value:initial}));\n  return {\n    get:()=>store.getState().value,\n    set(next){\n      store.setState(current=>{\n        const value=typeof next===\"function\"?(next as (p:T)=>T)(current.value):next;\n        return Object.is(value,current.value)?current:{value};\n      });\n    },\n    subscribe(listener){return store.subscribe(()=>listener());},\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/local-store.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    },
+    {
+      "path": "packages/ui/src/components/useLocalStore.ts",
+      "content": "import {useRef,useSyncExternalStore} from \"react\";\nimport {createLocalStore,type LocalStore} from \"@/components/nyc-tron/ui/components/local-store\";\n\n/**\n * Creates one {@linkcode LocalStore} for the calling component on first render and\n * subscribes to it. Returns the current state and the store.\n */\nexport function useLocalStore<T>(initial:()=>T):readonly [T,LocalStore<T>]{\n  const ref=useRef<LocalStore<T>|null>(null);\n  if(!ref.current)ref.current=createLocalStore(initial());\n  const store=ref.current;\n  const state=useSyncExternalStore(store.subscribe,store.get,store.get);\n  return [state,store] as const;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/SafeAreaOverlay",
+    "exports": [
+      "SafeAreaOverlay",
+      "SafeAreaOverlayProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

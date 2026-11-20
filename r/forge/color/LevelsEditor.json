@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/LevelsEditor",
+  "title": "Levels Editor",
+  "description": "Levels Editor, a color component. Props: value, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/forge/color/color-adjustments",
+    "@nyc-tron/shell/UnitInput"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/LevelsEditor.tsx",
+      "content": "import { View, type ViewProps } from \"react-native\";\nimport { UnitInput } from \"@/components/nyc-tron/ui/components/shell/UnitInput\";\nimport { validateLevels, type ColorLevels } from \"@/components/nyc-tron/ui/components/forge/color/color-adjustments\";\nexport type { ColorLevels } from \"@/components/nyc-tron/ui/components/forge/color/color-adjustments\";\n/** Controlled per-channel levels; select the channel in the consuming app. */\nexport interface LevelsEditorProps extends Omit<ViewProps,\"children\"> {\n  readonly value: ColorLevels;\n  readonly onCommit: (value: ColorLevels) => void;\n  readonly label?: string;\n  readonly disabled?: boolean;\n  readonly unstyled?: boolean;\n}\n/** Edits input/output bounds and gamma with noncrossing constraints. */\nexport function LevelsEditor({value,onCommit,label=\"Levels\",disabled=false,unstyled=false,...props}:LevelsEditorProps){\n  validateLevels(value);\n  const fields=[['inputBlack','Input black',0,value.inputWhite-1e-6],['inputWhite','Input white',value.inputBlack+1e-6,1],['gamma','Gamma',.1,10],['outputBlack','Output black',0,value.outputWhite],['outputWhite','Output white',value.outputBlack,1]] as const;\n  return <View {...props} style={[{gap:8},props.style]}>{fields.map(([key,name,min,max])=><UnitInput key={key} label={`${label} ${name}`} value={value[key]} min={min} max={max} step={.01} precision={6} disabled={disabled} unstyled={unstyled} onCommit={number=>{if(disabled||number===value[key])return;const next={...value,[key]:number};validateLevels(next);onCommit(next);}}/>)}</View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/color/LevelsEditor.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/LevelsEditor",
+    "exports": [
+      "ColorLevels",
+      "LevelsEditor",
+      "LevelsEditorProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

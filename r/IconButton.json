@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "IconButton",
+  "title": "Icon Button",
+  "description": "Icon-only pressable button with five variants and an optional selected toggle state, for React Native; web aria-pressed.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/IconButton.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { Platform, Pressable, View, type PressableProps } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\n\nexport type IconButtonVariant=\"primary\"|\"secondary\"|\"outline\"|\"ghost\"|\"danger\";\nexport interface IconButtonProps extends Omit<PressableProps,\"children\"|\"disabled\"|\"style\"> {\n  /** The glyph, supplied by the app's icon system. It keeps its own color. */\n  icon:ReactNode;\n  /** Required: an icon-only control has no visible name. */\n  \"aria-label\":string;\n  accessibilityHint?:string;\n  variant?:IconButtonVariant;\n  /** Both sizes meet the 44pt minimum; `sm` suits dense pane chrome. */\n  size?:\"sm\"|\"md\";\n  disabled?:boolean;\n  /** App-owned minimum target in points, at least 44. */\n  targetSize?:number;\n  /** Toggle state. Omit for ordinary actions; pass false for an untoggled toggle. */\n  selected?:boolean;\n  /** Explicit corner radius in points, for chrome that pins a radius. */\n  cornerRadius?:number;\n  className?:string;\n  style?:PressableProps[\"style\"];\n  unstyled?:boolean;\n}\nconst variants:Record<IconButtonVariant,string>={\n  primary:\"bg-primary border-border\",\n  secondary:\"bg-surface-raised border-border\",\n  outline:\"bg-transparent border-border\",\n  ghost:\"bg-transparent border-transparent hover:bg-surface-sunken\",\n  danger:\"bg-danger border-danger\",\n};\n\n/**\n * Icon-only press control. The icon is a child node, so this works with any\n * glyph source. `selected` exposes toggle state (`aria-pressed` on web,\n * selected on native) and draws the primary tint on non-primary variants.\n */\nexport function IconButton({\n  icon,\"aria-label\":ariaLabel,accessibilityHint,variant=\"ghost\",size=\"md\",disabled=false,\n  selected,cornerRadius,className,style,unstyled=false,onPress,targetSize,...rest\n}:IconButtonProps){\n  if(targetSize!==undefined&&(!Number.isFinite(targetSize)||targetSize<44))throw new RangeError('Icon button target must be at least 44 points');\n  const styled=!unstyled;\n  const radius=cornerRadius===undefined?undefined:{borderRadius:cornerRadius};\n  const target={minWidth:targetSize??(size==='sm'?44:48),minHeight:targetSize??(size==='sm'?44:48)};\n  const merged:PressableProps[\"style\"]=typeof style==='function'?state=>[target,radius,style(state),targetSize===undefined?undefined:target]:[target,radius,style,targetSize===undefined?undefined:target];\n  return <Pressable {...rest} style={merged}\n    accessibilityRole=\"button\" aria-label={ariaLabel} accessibilityLabel={ariaLabel} accessibilityHint={accessibilityHint}\n    accessibilityState={{...rest.accessibilityState,disabled,...(selected===undefined?{}:{selected})}}\n    {...(Platform.OS===\"web\"&&selected!==undefined?{\"aria-pressed\":selected}:{})}\n    disabled={disabled} onPress={onPress}\n    {...{className:joinClasses(\"shrink-0 items-center justify-center\",\n      size===\"sm\"?\"h-11 w-11\":\"h-12 w-12\",\n      styled&&\"rounded-control border focus-visible:ring-2 focus-visible:ring-focus active:opacity-80 motion-reduce:transition-none\",\n      styled&&(selected&&variant!==\"primary\"&&variant!==\"danger\"?\"bg-primary/10 border-border forced-colors:border-[Highlight]\":variants[variant]),\n      disabled&&\"opacity-50\",className)}}>\n    <View aria-hidden {...{className:\"items-center justify-center\"}}>{icon}</View>\n  </Pressable>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/IconButton.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [
+      "web"
+    ],
+    "a11yStatus": "reviewed-fail",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/IconButton",
+    "exports": [
+      "IconButton",
+      "IconButtonProps",
+      "IconButtonVariant"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:ui"
+}

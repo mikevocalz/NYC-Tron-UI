@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/document/ribbon-model",
+  "title": "ribbon model",
+  "description": "ribbon model, a word processor state model. Exports applyTextCase, nextToggle, ribbonShortcut.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/document/ribbon-model.ts",
+      "content": "/** Character toggles on the ribbon's font group. */\nexport type InlineToggle=\"bold\"|\"italic\"|\"underline\"|\"strike\";\n\n/** Every {@linkcode InlineToggle} in display order. */\nexport const INLINE_TOGGLES:readonly InlineToggle[]=[\"bold\",\"italic\",\"underline\",\"strike\"];\n\n/** A toggle's state over the selection: on everywhere, off everywhere, or mixed. */\nexport type ToggleState=boolean|\"mixed\";\n\n/** A value shared by the whole selection, `\"mixed\"` when it differs, `undefined` when unset everywhere. */\nexport type SharedValue<T>=T|\"mixed\"|undefined;\n\n/** Character style of one run, as a rich-text engine reports it. */\nexport interface RunStyle {\n  readonly bold?:boolean;\n  readonly italic?:boolean;\n  readonly underline?:boolean;\n  readonly strike?:boolean;\n  readonly color?:string;\n}\n\n/** What the ribbon shows for a selection. Built by {@linkcode ribbonStateFor}. */\nexport interface RibbonState {\n  readonly bold:ToggleState;\n  readonly italic:ToggleState;\n  readonly underline:ToggleState;\n  readonly strike:ToggleState;\n  readonly color:SharedValue<string>;\n}\n\n/** Ribbon state for the runs a selection covers. No runs (an empty caret) reads as all off. */\nexport function ribbonStateFor(runs:readonly RunStyle[]):RibbonState{\n  const tri=(k:InlineToggle):ToggleState=>{\n    if(runs.length===0)return false;\n    const on=runs.filter(r=>r[k]===true).length;\n    return on===0?false:on===runs.length?true:\"mixed\";\n  };\n  return {bold:tri(\"bold\"),italic:tri(\"italic\"),underline:tri(\"underline\"),strike:tri(\"strike\"),color:sharedValue(runs.map(r=>r.color))};\n}\n\n/** The common value of `values`, `\"mixed\"` when they differ. */\nexport function sharedValue<T>(values:readonly (T|undefined)[]):SharedValue<T>{\n  if(values.length===0)return undefined;\n  const first=values[0];\n  return values.every(v=>v===first)?first:\"mixed\";\n}\n\n/** A toggle press turns a mixed or off selection on, and an on selection off (as document editors do). */\nexport function nextToggle(state:ToggleState):boolean{\n  return state!==true;\n}\n\n/** Text case changes offered by the case control. */\nexport type TextCase=\"sentence\"|\"lower\"|\"upper\"|\"capitalize\";\n\n/** Labels for {@linkcode TextCase}, each written in its own case. */\nexport const TEXT_CASE_LABELS:Record<TextCase,string>={sentence:\"Sentence case\",lower:\"lowercase\",upper:\"UPPERCASE\",capitalize:\"Capitalize Each Word\"};\n\n/** Applies a {@linkcode TextCase} to plain text. */\nexport function applyTextCase(text:string,mode:TextCase):string{\n  if(mode===\"lower\")return text.toLocaleLowerCase();\n  if(mode===\"upper\")return text.toLocaleUpperCase();\n  if(mode===\"capitalize\")return text.toLocaleLowerCase().replace(/(^|[^\\p{L}\\p{N}'’])(\\p{L})/gu,(_m,a:string,b:string)=>a+b.toLocaleUpperCase());\n  return text.toLocaleLowerCase().replace(/(^\\s*|[.!?]\\s+)(\\p{L})/gu,(_m,a:string,b:string)=>a+b.toLocaleUpperCase());\n}\n\n/** Smallest and largest font size the size stepper allows, in points. */\nexport const FONT_SIZE_MIN=1;\nexport const FONT_SIZE_MAX=1638;\n/** The standard size ladder the stepper walks. */\nexport const FONT_SIZE_STEPS=[8,9,10,10.5,11,12,14,16,18,20,24,28,32,36,40,44,48,54,60,66,72,80,88,96] as const;\n\n/** Next size up or down the ladder from `size`, clamped to the allowed range. */\nexport function stepFontSize(size:number,direction:1|-1):number{\n  if(!Number.isFinite(size))return 12;\n  if(direction>0)return FONT_SIZE_STEPS.find(s=>s>size)??Math.min(FONT_SIZE_MAX,Math.floor(size/10)*10+10);\n  return [...FONT_SIZE_STEPS].reverse().find(s=>s<size)??Math.max(FONT_SIZE_MIN,size-1);\n}\n\n/** What a keyboard shortcut on the editor asks the ribbon to do. */\nexport type RibbonShortcut={toggle:InlineToggle};\n\n/**\n * Maps Mod+B / Mod+I / Mod+U / Mod+Shift+X to a toggle. The editor calls this\n * from its own key handler, where the caret lives.\n */\nexport function ribbonShortcut(key:string,mod:boolean,shift:boolean):RibbonShortcut|undefined{\n  if(!mod)return undefined;\n  const k=key.toLowerCase();\n  if(!shift&&k===\"b\")return {toggle:\"bold\"};\n  if(!shift&&k===\"i\")return {toggle:\"italic\"};\n  if(!shift&&k===\"u\")return {toggle:\"underline\"};\n  if(shift&&k===\"x\")return {toggle:\"strike\"};\n  return undefined;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/document/ribbon-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/document/ribbon-model",
+    "exports": [
+      "FONT_SIZE_MAX",
+      "FONT_SIZE_MIN",
+      "FONT_SIZE_STEPS",
+      "INLINE_TOGGLES",
+      "InlineToggle",
+      "RibbonShortcut",
+      "RibbonState",
+      "RunStyle",
+      "SharedValue",
+      "TEXT_CASE_LABELS",
+      "TextCase",
+      "ToggleState",
+      "applyTextCase",
+      "nextToggle",
+      "ribbonShortcut",
+      "ribbonStateFor",
+      "sharedValue",
+      "stepFontSize"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

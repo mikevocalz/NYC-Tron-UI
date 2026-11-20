@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/photo-metadata",
+  "title": "photo metadata",
+  "description": "photo metadata, a photo editing helper module. Exports validatePhotoMetadata.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/photo/photo-metadata.ts",
+      "content": "export interface PhotoProvenanceEntry {readonly id:string;readonly label:string;readonly value:string}\n/** Values are supplied by the metadata/provenance provider; null means unrecorded. */\nexport interface PhotoMetadata {\n readonly photoId:string;readonly revision:string|number;readonly fileName:string;readonly mimeType:string|null;\n readonly dimensions:{readonly width:number;readonly height:number}|null;\n readonly cameraMaker:string|null;readonly cameraModel:string|null;readonly lens:string|null;readonly capturedAt:string|null;\n readonly exposureSeconds:number|null;readonly aperture:number|null;readonly iso:number|null;readonly focalLengthMm:number|null;\n readonly provenance:readonly PhotoProvenanceEntry[];\n}\nexport function validatePhotoMetadata(value:PhotoMetadata):void {\n if(!value.photoId.trim()||value.photoId.length>256||!value.fileName.trim()||value.fileName.length>1024||!(typeof value.revision==='string'||Number.isSafeInteger(value.revision)))throw new TypeError('Invalid photo metadata identity');\n for(const key of ['mimeType','cameraMaker','cameraModel','lens','capturedAt'] as const)if(value[key]!==null&&(typeof value[key]!=='string'||value[key]!.length>4096))throw new RangeError(`Invalid metadata ${key}`);\n for(const key of ['exposureSeconds','aperture','iso','focalLengthMm'] as const)if(value[key]!==null&&(!Number.isFinite(value[key])||value[key]!<=0))throw new RangeError(`Invalid metadata ${key}`);\n if(value.dimensions!==null&&(!Number.isSafeInteger(value.dimensions.width)||!Number.isSafeInteger(value.dimensions.height)||value.dimensions.width<1||value.dimensions.height<1))throw new RangeError('Invalid photo dimensions');\n if(value.provenance.length>1000)throw new RangeError('Too many provenance entries');const ids=new Set<string>();for(const entry of value.provenance){if(!entry.id.trim()||ids.has(entry.id)||!entry.label.trim()||entry.label.length>256||typeof entry.value!=='string'||entry.value.length>4096)throw new TypeError('Invalid provenance entry');ids.add(entry.id);}\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/photo/photo-metadata.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/photo-metadata",
+    "exports": [
+      "PhotoMetadata",
+      "PhotoProvenanceEntry",
+      "validatePhotoMetadata"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

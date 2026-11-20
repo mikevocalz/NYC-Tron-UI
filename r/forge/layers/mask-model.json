@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/layers/mask-model",
+  "title": "mask model",
+  "description": "mask model, an image layer state model. Exports maskBlockedReason, maskFillReason, maskStateLabel.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/layers/mask-model.ts",
+      "content": "/**\n * Engine-neutral layer-mask contract for `MaskThumbnailAndEditor` (B-12).\n * Every payload is the argument object of one engine op, so the host adapter\n * forwards it unchanged: `addMask`, `removeMask`, `setMaskEnabled`,\n * `invertMask` and `refineMask`. `maskThumbnail` feeds the preview loader.\n */\n\n/** The layer's mask as the engine describes it, or `null` when it has none. */\nexport interface MaskInfo {\n  readonly enabled:boolean;\n  readonly inverted:boolean;\n  /** Bumps whenever the mask pixels change, so the preview reloads. */\n  readonly revision:number;\n}\n/** Thumbnail revisions are safe integer cache versions, including zero. */\nexport function validateMaskInfo(mask:MaskInfo|null):void {\n if(mask===null)return;\n if(!mask||typeof mask.enabled!=='boolean'||typeof mask.inverted!=='boolean'||!Number.isSafeInteger(mask.revision)||mask.revision<0)throw new RangeError('Invalid mask state or thumbnail revision');\n}\n\n/** How a new mask starts: everything shown, everything hidden, or the pixel selection. */\nexport type MaskFill=\"reveal\"|\"hide\"|\"selection\";\n\n/** `addMask` argument. */\nexport interface AddMaskOp {readonly id:string;readonly fill:MaskFill}\n/** `removeMask` argument. `apply: true` bakes the mask into the layer's pixels first. */\nexport interface RemoveMaskOp {readonly id:string;readonly apply:boolean}\n/** `setMaskEnabled` argument. */\nexport interface SetMaskEnabledOp {readonly id:string;readonly enabled:boolean}\n/** `invertMask` argument. */\nexport interface InvertMaskOp {readonly id:string}\n/** `refineMask` argument. Both amounts are in document pixels. */\nexport interface RefineMaskOp {readonly id:string;readonly feather:number;readonly grow:number}\n\n/** A refine amount the host keeps while the person dials it in. */\nexport interface RefineDraft {readonly feather:number;readonly grow:number}\n\n/** Engine bounds for `refineMask`. */\nexport const FEATHER_RANGE={min:0,max:250,step:1} as const;\n/** Negative grow shrinks the mask. */\nexport const GROW_RANGE={min:-250,max:250,step:1} as const;\n/** The draft a fresh editor starts from. */\nexport const NO_REFINE:RefineDraft={feather:0,grow:0};\n\n/** The three ways to create a mask, in button order. */\nexport const MASK_FILLS=[\n  {fill:\"reveal\",label:\"Reveal all\"},\n  {fill:\"hide\",label:\"Hide all\"},\n  {fill:\"selection\",label:\"From selection\"},\n] as const satisfies readonly {fill:MaskFill;label:string}[];\n\n/** Why a layer's mask controls cannot run, or `undefined` when they can. Locked layers reject mask edits. */\nexport function maskBlockedReason(locked:boolean):string|undefined{\n  return locked?\"Unlock the layer to edit its mask\":undefined;\n}\n\n/** Why a create option cannot run, or `undefined` when it can. */\nexport function maskFillReason(fill:MaskFill,{locked,hasSelection}:{locked:boolean;hasSelection:boolean}):string|undefined{\n  const blocked=maskBlockedReason(locked);\n  if(blocked)return blocked;\n  if(fill===\"selection\"&&!hasSelection)return \"Make a selection first\";\n  return undefined;\n}\n\n/** Clamps a draft to the engine bounds, rounding to whole pixels. @throws RangeError on non-finite values. */\nexport function normalizeRefine(draft:RefineDraft):RefineDraft{\n  if(!Number.isFinite(draft.feather)||!Number.isFinite(draft.grow))throw new RangeError(\"Refine amounts must be finite\");\n  const clamp=(v:number,r:{min:number;max:number})=>Math.round(Math.min(r.max,Math.max(r.min,v)));\n  return {feather:clamp(draft.feather,FEATHER_RANGE),grow:clamp(draft.grow,GROW_RANGE)};\n}\n\n/** Why \"Refine\" cannot run, or `undefined` when it can. A zero draft would be an undo step that changes nothing. */\nexport function refineReason(draft:RefineDraft,locked:boolean):string|undefined{\n  const blocked=maskBlockedReason(locked);\n  if(blocked)return blocked;\n  const d=normalizeRefine(draft);\n  return d.feather===0&&d.grow===0?\"Set a feather or grow amount first\":undefined;\n}\n\n/** The `refineMask` argument for a draft. */\nexport function refineOp(id:string,draft:RefineDraft):RefineMaskOp{\n  return {id,...normalizeRefine(draft)};\n}\n\n/** Spoken state of the mask, e.g. \"Mask, on, inverted\". */\nexport function maskStateLabel(mask:MaskInfo|null):string{\n  if(!mask)return \"No mask\";\n  return [\"Mask\",mask.enabled?\"on\":\"off\",mask.inverted?\"inverted\":undefined].filter(Boolean).join(\", \");\n}\n\n/** Short visible status next to the preview, e.g. \"On, inverted\". */\nexport function maskStatusText(mask:MaskInfo):string{\n  return [mask.enabled?\"On\":\"Off\",mask.inverted?\"inverted\":undefined].filter(Boolean).join(\", \");\n}\n\n/** Thumbnail cache id for a layer's mask preview; kept apart from the layer's own preview. */\nexport function maskThumbnailId(layerId:string):string{\n  return \"mask:\"+layerId;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/layers/mask-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/layers/mask-model",
+    "exports": [
+      "AddMaskOp",
+      "FEATHER_RANGE",
+      "GROW_RANGE",
+      "InvertMaskOp",
+      "MASK_FILLS",
+      "MaskFill",
+      "MaskInfo",
+      "NO_REFINE",
+      "RefineDraft",
+      "RefineMaskOp",
+      "RemoveMaskOp",
+      "SetMaskEnabledOp",
+      "maskBlockedReason",
+      "maskFillReason",
+      "maskStateLabel",
+      "maskStatusText",
+      "maskThumbnailId",
+      "normalizeRefine",
+      "refineOp",
+      "refineReason",
+      "validateMaskInfo"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

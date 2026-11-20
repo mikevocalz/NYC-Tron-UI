@@ -1,0 +1,63 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/MulticamAngleViewer",
+  "title": "Multicam Angle Viewer",
+  "description": "Multicam Angle Viewer, a video timeline component. Props: angles, selectedId, frame, onSelect.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/feedback/ErrorMessage"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/inputs/useScopedControl.ts",
+      "content": "import {useLayoutEffect,useRef} from 'react';\nimport {useOwnedAction} from '@/components/nyc-tron/ui/components/shell/useOwnedAction';\n\n/** Document identity for controlled editor tools. Native handles remain outside UI state. */\nexport interface ScopedControlProps {scope?:string;revision?:string|number;disabledReason?:string}\nexport function controlIdentity(scope:string,revision:string|number){\n if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError('Invalid control identity');\n return [scope,revision] as const;\n}\n\n/** Admit one host operation and invalidate handlers at the committed boundary. */\nexport function useScopedControl<P>(boundary:string,props:P,disabled=false){\n const action=useOwnedAction(boundary),pending=action.pending!==null;\n const committed=useRef<{boundary:string;props:P;disabled:boolean}|null>(null);\n const admitted=useRef<symbol|null>(null);\n useLayoutEffect(()=>{committed.current={boundary,props,disabled};});\n useLayoutEffect(()=>{admitted.current=null;},[boundary]);\n useLayoutEffect(()=>()=>{committed.current=null;},[]);\n const current=()=>{const p=committed.current;return p&&p.boundary===boundary&&!p.disabled&&!pending&&!admitted.current?p.props:null;};\n const run=(id:string,operation:(props:P,signal:AbortSignal)=>unknown|Promise<unknown>)=>{\n  const p=current();if(!p)return;\n  const token=Symbol(id);admitted.current=token;\n  return action.run(id,signal=>operation(p,signal),undefined,{pendingForAsyncOnly:true}).finally(()=>{if(admitted.current===token)admitted.current=null;});\n };\n const cancel=()=>{if(committed.current?.boundary!==boundary)return false;admitted.current=null;action.cancel();return true;};\n return {current,run,cancel,pending,pendingId:action.pending,error:action.error};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
+    },
+    {
+      "path": "packages/ui/src/components/forge/timeline/MulticamAngleViewer.tsx",
+      "content": "import type {ReactNode} from 'react';\nimport {Text,View,type ViewProps} from 'react-native';\nimport {Button} from '@/components/nyc-tron/ui/components/Button';\nimport {ErrorMessage} from '@/components/nyc-tron/ui/components/feedback/ErrorMessage';\nimport {controlIdentity,useScopedControl,type ScopedControlProps} from '@/components/nyc-tron/ui/components/forge/inputs/useScopedControl';\nexport interface MulticamAngle {id:string;label:string;offsetFrames:number;presentedFrame?:number;status:'loading'|'ready'|'error';error?:string;surface:ReactNode}\nexport interface MulticamAngleViewerProps extends Omit<ViewProps,'children'>,ScopedControlProps {\n angles:readonly MulticamAngle[];selectedId?:string;frame:number;maxDriftFrames?:number;\n onSelect:(cut:{angleId:string;frame:number;offsetFrames:number},signal?:AbortSignal)=>void|Promise<unknown>;unstyled?:boolean;\n}\nexport function MulticamAngleViewer({scope='multicam',revision=0,...props}:MulticamAngleViewerProps){\n const {angles,selectedId,frame,maxDriftFrames=1,onSelect:_select,unstyled=false,disabledReason,style,...rest}=props;\n if(angles.length>64||new Set(angles.map(a=>a.id)).size!==angles.length||angles.some(a=>!a.id.trim()||a.id.length>512||!a.label.trim()||a.label.length>1024||!Number.isSafeInteger(a.offsetFrames)||a.presentedFrame!==undefined&&(!Number.isSafeInteger(a.presentedFrame)||a.presentedFrame<0)||!['loading','ready','error'].includes(a.status))||!Number.isSafeInteger(frame)||frame<0||!Number.isSafeInteger(maxDriftFrames)||maxDriftFrames<0)throw new RangeError('Invalid multicam state');\n const guard=useScopedControl(JSON.stringify([...controlIdentity(scope,revision),disabledReason,angles.map(a=>[a.id,a.offsetFrames])]),props,disabledReason!==undefined);\n const problem=(a:MulticamAngle,reference=frame,tolerance=maxDriftFrames)=>a.status==='error'?(a.error??'Angle could not be decoded'):a.status==='loading'?'Loading angle':a.presentedFrame===undefined?'Presented frame not reported':Math.abs(a.presentedFrame+a.offsetFrames-reference)>tolerance?'Angle is out of sync':undefined;\n return <View {...rest} style={[{gap:8,minWidth:0},style]} accessibilityLabel=\"Multicam angles\">\n  <View style={{flexDirection:'row',flexWrap:'wrap',gap:8}}>{angles.map(angle=>{const reason=problem(angle);return <View key={angle.id} style={{minWidth:160,flexBasis:240,flexGrow:1,gap:4}}>\n   <View style={{aspectRatio:16/9,overflow:'hidden'}}>{angle.surface}</View>\n   <Text {...{className:unstyled?undefined:'text-text'}}>{angle.label}; presented {angle.presentedFrame??'not reported'}; offset {angle.offsetFrames}</Text>\n   {reason?<Text {...{className:unstyled?undefined:'text-text'}}>{reason}</Text>:null}\n   <Button title={'Cut to '+angle.label} accessibilityState={{selected:angle.id===selectedId}} disabled={disabledReason!==undefined||guard.pending||reason!==undefined} accessibilityHint={reason} unstyled={unstyled}\n    onPress={()=>guard.run('cut',(host,signal)=>{const live=host.angles.find(a=>a.id===angle.id);return live&&!problem(live,host.frame,host.maxDriftFrames??1)?host.onSelect({angleId:live.id,frame:host.frame,offsetFrames:live.offsetFrames},signal):undefined;})}/>\n  </View>;})}</View>\n  {angles.length===0?<Text {...{className:unstyled?undefined:'text-text'}}>No camera angles loaded</Text>:null}<ErrorMessage message={guard.error??undefined} unstyled={unstyled}/>\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/MulticamAngleViewer.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/shell/action-owner.ts",
+      "content": "import { createStore } from \"zustand/vanilla\";\n\n/** UI request state. Abort controllers stay in the owner's closure. */\nexport interface ActionState { readonly pending: string | null; readonly error: string | null }\nexport function createActionOwner(currentScope: () => string) {\n  const store = createStore<ActionState>(() => ({ pending: null, error: null }));\n  let active = false;\n  let current: { readonly scope: string; readonly abort: AbortController } | null = null;\n  function cancel() {\n    const previous = current; current = null;\n    previous?.abort.abort();\n  }\n  return {\n    store,\n    activate() { cancel(); active = true; store.setState({ pending: null, error: null }); },\n    deactivate() { active = false; cancel(); },\n    cancel() { cancel(); store.setState({ pending: null }); },\n    async run<T>(id: string, operation: (signal: AbortSignal) => T | Promise<T>, consume?: (value: T) => void, options?: { pendingForAsyncOnly?: boolean }): Promise<boolean> {\n      if (!active) return false;\n      cancel();\n      const request = { scope: currentScope(), abort: new AbortController() };\n      current = request;\n      const valid = () => active && current === request && request.scope === currentScope();\n      if (options?.pendingForAsyncOnly) store.setState({ error: null });\n      else store.setState({ pending: id, error: null });\n      try {\n        if (!valid()) return false;\n        const result = operation(request.abort.signal);\n        let value: T;\n        if (options?.pendingForAsyncOnly) {\n          if (result && typeof (result as Promise<T>).then === 'function') {\n            // A synchronous acknowledgement or already-resolved promise must not\n            // disable (and blur) the focused control between keyboard commands.\n            let settled = false;\n            const completion = Promise.resolve(result).then(value => { settled = true; return value; }, error => { settled = true; throw error; });\n            void Promise.resolve().then(() => { if (!settled && valid()) store.setState({ pending: id, error: null }); });\n            value = await completion;\n          } else value = result as T;\n        } else value = await result;\n        if (!valid()) return false;\n        consume?.(value);\n        if (!valid()) return false;\n        store.setState({ pending: null });\n        return true;\n      } catch (error) {\n        if (!valid()) return false;\n        store.setState({ pending: null, error: error instanceof Error ? error.message : String(error) });\n        return false;\n      } finally { if (current === request) current = null; }\n    },\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/action-owner.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/useOwnedAction.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport { useStore } from \"zustand\";\nimport { createActionOwner } from \"@/components/nyc-tron/ui/components/shell/action-owner\";\n\n/** Cancel stale requests at the committed document boundary, before new controls accept input. */\nexport function useOwnedAction(scope: string) {\n  const committed = useRef(scope);\n  const ref = useRef<ReturnType<typeof createActionOwner> | null>(null);\n  ref.current ??= createActionOwner(() => committed.current);\n  const owner = ref.current;\n  useLayoutEffect(() => {\n    committed.current = scope;\n    owner.activate();\n    return () => owner.deactivate();\n  }, [owner, scope]);\n  const state = useStore(owner.store, value => value);\n  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);\n  return { ...state, run, cancel: owner.cancel };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/MulticamAngleViewer",
+    "exports": [
+      "MulticamAngle",
+      "MulticamAngleViewer",
+      "MulticamAngleViewerProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

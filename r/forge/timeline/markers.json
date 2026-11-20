@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/markers",
+  "title": "markers",
+  "description": "markers, a video timeline helper module. Exports adjacentMarker, moveMarker, nextMarkerName.",
+  "registryDependencies": [
+    "@nyc-tron/forge/timebase",
+    "@nyc-tron/forge/timeline/time"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timeline/markers.ts",
+      "content": "import type {FrameRate} from \"@/components/nyc-tron/ui/components/forge/timebase\";\nimport {framesToSeconds} from \"@/components/nyc-tron/ui/components/forge/timeline/time\";\n\n/**\n * A sequence marker (D-24). A point marker has no duration; a range marker\n * covers `[frame, frame + durationFrames)`. Splice stores markers in seconds\n * (`addMarker`, `updateMarker`, `removeMarker`) and keeps them where they are\n * when clips ripple. Markers carry no color: the engine stores none, and the\n * app's tokens draw them.\n */\nexport interface TimelineMarker {\n  readonly id:string;\n  readonly frame:number;\n  readonly durationFrames?:number;\n  readonly name:string;\n  /** App-owned marker metadata, mapped to a supplied palette. */\n  readonly colorId?:string;\n  readonly note?:string;\n}\n/** A marker change, in frames for the UI and seconds for the engine. */\nexport interface MarkerUpdate {\n  readonly frame:number;\n  readonly seconds:number;\n  readonly durationFrames?:number;\n  readonly durationSeconds?:number;\n  readonly name?:string;\n  readonly note?:string;\n}\n\n/** Markers by start frame, then by id, so the list order is stable. */\nexport const sortMarkers=(markers:readonly TimelineMarker[])=>\n  [...markers].sort((a,b)=>a.frame-b.frame||(a.id<b.id?-1:a.id>b.id?1:0));\n\n/** The nearest marker strictly after (`1`) or before (`-1`) `frame`. */\nexport function adjacentMarker(markers:readonly TimelineMarker[],frame:number,direction:1|-1):TimelineMarker|undefined{\n  const sorted=sortMarkers(markers);\n  return direction===1?sorted.find(m=>m.frame>frame):sorted.reverse().find(m=>m.frame<frame);\n}\n\n/**\n * The update that moves `marker` to `frame`, keeping its duration and its\n * end inside `[0, durationFrames]`. `undefined` when it would not move.\n */\nexport function moveMarker(marker:TimelineMarker,frame:number,durationFrames:number,rate:FrameRate):MarkerUpdate|undefined{\n  const len=marker.durationFrames??0;\n  const f=Math.min(Math.max(0,durationFrames-len),Math.max(0,Math.round(frame)));\n  if(f===marker.frame)return undefined;\n  return {frame:f,seconds:framesToSeconds(f,rate)};\n}\n\n/** The update that sets the marker's duration; 0 makes it a point marker. */\nexport function resizeMarker(marker:TimelineMarker,durationFrames:number,timelineFrames:number,rate:FrameRate):MarkerUpdate|undefined{\n  const d=Math.min(Math.max(0,timelineFrames-marker.frame),Math.max(0,Math.round(durationFrames)));\n  if(d===(marker.durationFrames??0))return undefined;\n  return {frame:marker.frame,seconds:framesToSeconds(marker.frame,rate),durationFrames:d,durationSeconds:framesToSeconds(d,rate)};\n}\n\n/** A default name that does not repeat one already used (\"Marker 3\"). */\nexport function nextMarkerName(markers:readonly TimelineMarker[]):string{\n  const used=new Set(markers.map(m=>m.name));\n  for(let n=markers.length+1;;n++)if(!used.has(\"Marker \"+n))return \"Marker \"+n;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/markers.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/markers",
+    "exports": [
+      "MarkerUpdate",
+      "TimelineMarker",
+      "adjacentMarker",
+      "moveMarker",
+      "nextMarkerName",
+      "resizeMarker",
+      "sortMarkers"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

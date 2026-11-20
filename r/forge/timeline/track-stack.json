@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/track-stack",
+  "title": "track stack",
+  "description": "track stack, a video timeline helper module. Exports stackMoveTarget, stackOrder.",
+  "registryDependencies": [
+    "@nyc-tron/forge/timeline/edits"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timeline/track-stack.ts",
+      "content": "import type {TimelineTrack,TrackKind} from \"@/components/nyc-tron/ui/components/forge/timeline/edits\";\n\n/**\n * Track order for `OverlayAndEffectsTrackStack` (D-31): overlay tracks on top,\n * then video, then audio, each group in the host's order. The host's list\n * (Splice's track order, changed with `moveTrack`) stays the source of truth;\n * this only groups it for display.\n */\nconst GROUP:Readonly<Record<TrackKind,number>>={overlay:0,video:1,audio:2};\n\nexport function stackOrder(tracks:readonly TimelineTrack[]):TimelineTrack[]{\n  return tracks.map((t,i)=>({t,i})).sort((a,b)=>GROUP[a.t.kind]-GROUP[b.t.kind]||a.i-b.i).map(x=>x.t);\n}\n\n/**\n * The index in the host's list that `trackId` moves to when it moves one place\n * up (`-1`) or down (`1`) within its group, or `undefined` at a group's end.\n */\nexport function stackMoveTarget(tracks:readonly TimelineTrack[],trackId:string,direction:-1|1):number|undefined{\n  const shown=stackOrder(tracks);\n  const i=shown.findIndex(t=>t.id===trackId);\n  const me=shown[i],other=shown[i+direction];\n  if(!me||!other||other.kind!==me.kind)return undefined;\n  return tracks.findIndex(t=>t.id===other.id);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/track-stack.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/track-stack",
+    "exports": [
+      "stackMoveTarget",
+      "stackOrder"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

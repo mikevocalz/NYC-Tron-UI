@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gestures/GestureHandlerDrag",
+  "title": "Gesture Handler Drag",
+  "description": "Gesture Handler Drag, a gesture component.",
+  "dependencies": [
+    "react-native-gesture-handler@>=3.3.0 <4"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/gestures/drag-transport"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/gestures/GestureHandlerDrag.tsx",
+      "content": "import {useLayoutEffect,useRef} from 'react';\nimport {GestureDetector,useCompetingGestures,usePanGesture,useTapGesture} from 'react-native-gesture-handler';\nimport type {DragTransportProps} from '@/components/nyc-tron/ui/components/gestures/drag-transport';\n/** RNGH 3 native recognizers; value ownership remains in the caller. Requires GestureHandlerRootView. */\nexport function GestureHandlerDrag(props:DragTransportProps){\n const active=useRef(false),latest=useRef(props);useLayoutEffect(()=>{latest.current=props;});\n const cancel=()=>{if(active.current){active.current=false;latest.current.onCancel();}};\n useLayoutEffect(()=>{if(props.disabled)cancel();},[props.disabled]);useLayoutEffect(()=>cancel,[]);\n const pan=usePanGesture({enabled:!props.disabled,runOnJS:true,minDistance:0,maxPointers:1,\n onActivate:e=>{if(latest.current.disabled)return;active.current=true;latest.current.onBegin({x:e.absoluteX,y:e.absoluteY});},\n onUpdate:e=>{if(active.current)latest.current.onMove({x:e.absoluteX,y:e.absoluteY},e.numberOfPointers);},onTouchesDown:e=>{if(e.numberOfTouches!==1)cancel();},\n onDeactivate:e=>{if(e.canceled){cancel();return;}if(!active.current)return;active.current=false;latest.current.onRelease({x:e.absoluteX,y:e.absoluteY});},onFinalize:e=>{if(e.canceled)cancel();}});\n const tap=useTapGesture({enabled:!props.disabled,runOnJS:true,maxDistance:4,onActivate:e=>{if(latest.current.disabled)return;const point={x:e.absoluteX,y:e.absoluteY};latest.current.onBegin(point);latest.current.onRelease(point);}}),gesture=useCompetingGestures(pan,tap);\n return <GestureDetector gesture={gesture}>{props.children}</GestureDetector>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/gestures/GestureHandlerDrag.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/gestures/GestureHandlerDrag",
+    "exports": [
+      "GestureHandlerDrag"
+    ],
+    "peers": {
+      "react": ">=19.0.0"
+    },
+    "optionalPeers": [
+      "react-native-gesture-handler"
+    ],
+    "requiresNativeRebuild": true
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:ui"
+}

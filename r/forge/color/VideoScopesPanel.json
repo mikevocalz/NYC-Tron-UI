@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/VideoScopesPanel",
+  "title": "Video Scopes Panel",
+  "description": "Video Scopes Panel, a color component. Props: frameTimeUs, mode, histogram, onModeChange.",
+  "registryDependencies": [
+    "@nyc-tron/SegmentedControl",
+    "@nyc-tron/forge/color/LiveHistogram",
+    "@nyc-tron/forge/color/color-adjustments"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/VideoScopesPanel.tsx",
+      "content": "import {Text,View,type ViewProps} from \"react-native\";\nimport {SegmentedControl} from \"@/components/nyc-tron/ui/components/SegmentedControl\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {LiveHistogram,type LiveHistogramProps} from \"@/components/nyc-tron/ui/components/forge/color/LiveHistogram\";\nimport {poolScope,bounded,type ScopeSample} from \"@/components/nyc-tron/ui/components/forge/color/color-adjustments\";\nexport type {ScopeSample} from \"@/components/nyc-tron/ui/components/forge/color/color-adjustments\";\n/** Frame-tagged engine measurements; a missing frame is different from a measured empty scope. */\nexport interface VideoScopesPanelProps extends Omit<ViewProps,'children'> {\n readonly frameTimeUs:number|null;\n readonly mode:'histogram'|'waveform'|'vectorscope'|'rgb-parade';\n readonly onModeChange:(mode:VideoScopesPanelProps['mode'])=>void;\n readonly histogram:LiveHistogramProps['channels'];\n readonly domain:readonly [number,number];\n readonly waveform:readonly ScopeSample[];\n readonly vectorscope:readonly ScopeSample[];\n /** Three engine-provided RGB channel scopes on the same decoded frame. */\n readonly parade?:readonly {readonly id:'red'|'green'|'blue';readonly samples:readonly ScopeSample[]}[];\n readonly height?:number;readonly unstyled?:boolean;\n}\n/** Renders actual decoded measurements with bounded density pooling; no synthetic scope signal. */\nexport function VideoScopesPanel({frameTimeUs,mode,onModeChange,histogram,domain,waveform,vectorscope,parade=[],height=180,unstyled=false,...props}:VideoScopesPanelProps){\n if(frameTimeUs!==null&&(!Number.isSafeInteger(frameTimeUs)||frameTimeUs<0))throw new RangeError('Scope frame time must be nonnegative integer microseconds');bounded(height,88,600,'Scope height');\n if(!['histogram','waveform','vectorscope','rgb-parade'].includes(mode))throw new TypeError('Unknown video scope mode');\n if(mode==='rgb-parade'&&(parade.length!==3||new Set(parade.map(p=>p.id)).size!==3||parade.some(p=>!['red','green','blue'].includes(p.id))))throw new TypeError('RGB parade needs all three measured channels');\n const samples=mode==='waveform'?waveform:vectorscope,grid=mode==='histogram'?[]:poolScope(samples),peak=Math.max(0,...grid);\n return <View {...props} style={[{gap:8},props.style]}>\n  <SegmentedControl aria-label=\"Video scope\" value={mode} onChange={onModeChange} options={[{value:'histogram',label:'Histogram'},{value:'waveform',label:'Waveform'},{value:'vectorscope',label:'Vectorscope'},{value:'rgb-parade',label:'RGB parade'}]} unstyled={unstyled}/>\n  <Text accessibilityLiveRegion=\"polite\" {...{className:joinClasses(!unstyled&&'text-text-muted')}}>{frameTimeUs===null?'No decoded scope frame':`Decoded frame ${frameTimeUs} microseconds`}</Text>\n  {frameTimeUs===null?null:mode==='rgb-parade'?<View style={{flexDirection:'row',gap:4}}>{parade.map(channel=>{const counts=poolScope(channel.samples,16),maximum=Math.max(0,...counts);return <View key={channel.id} accessible accessibilityLabel={`${channel.id} parade, ${channel.samples.length} decoded samples`} style={{flex:1,gap:4}}><Text {...{className:joinClasses(!unstyled&&'text-text')}}>{channel.id}</Text><View style={{height,flexDirection:'row',flexWrap:'wrap'}}>{counts.map((density,index)=><View key={index} pointerEvents=\"none\" {...{className:joinClasses(!unstyled&&'bg-primary')}} style={{width:'6.25%',height:height/16,opacity:maximum?Math.log1p(density)/Math.log1p(maximum):0}}/>)}</View></View>;})}</View>:mode==='histogram'?<LiveHistogram channels={histogram} domain={domain} height={height} unstyled={unstyled}/>:<View accessible accessibilityLabel={`${mode}, ${samples.length} decoded samples`} style={{height,flexDirection:'row',flexWrap:'wrap'}}>\n   {grid.map((density,index)=><View key={index} pointerEvents=\"none\" {...{className:joinClasses(!unstyled&&'bg-primary')}} style={{width:'3.125%',height:height/32,opacity:peak?Math.log1p(density)/Math.log1p(peak):0}}/>)}\n  </View>}\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/color/VideoScopesPanel.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/VideoScopesPanel",
+    "exports": [
+      "ScopeSample",
+      "VideoScopesPanel",
+      "VideoScopesPanelProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

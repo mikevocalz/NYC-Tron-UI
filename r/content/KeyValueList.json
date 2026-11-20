@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "content/KeyValueList",
+  "title": "Key Value List",
+  "description": "Label and value list that goes from one to two columns at a measured width, with empty-value text, for React Native.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/content/KeyValueList.tsx",
+      "content": "import { useRef, type ReactNode } from \"react\";\nimport { Text, View, type LayoutChangeEvent, type ViewProps } from \"react-native\";\nimport { createStore, type StoreApi } from \"zustand/vanilla\";\nimport { useStore } from \"zustand\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\n\nexport interface KeyValueItem {\n  key:string;\n  label:string;\n  /** The rendered value. `null`/`undefined` draws `emptyLabel` in muted text. */\n  value:ReactNode;\n  /** A control beside the value (copy, reveal). */\n  action?:ReactNode;\n}\n\n/** Props for {@linkcode KeyValueList}. Drop-in for Nitro Forge's `StudioKeyValueListProps`. */\nexport interface KeyValueListProps extends Omit<ViewProps,\"children\"> {\n  items:readonly KeyValueItem[];\n  /**\n   * Upper bound. Two columns only when the list's own measured width is at\n   * least `twoColumnMinWidth`; a narrow pane or fold segment always gets one.\n   * @default 2\n   */\n  columns?:1|2;\n  /** @default 600 */\n  twoColumnMinWidth?:number;\n  /** Shown for a missing value. @default \"Not set\" */\n  emptyLabel?:string;\n  /**\n   * Accepted so Forge's `surface=\"night\"` call sites compile unchanged. Colors\n   * follow the nearest scheme scope (`NightScope`), not this prop.\n   */\n  surface?:\"page\"|\"night\";\n  className?:string;\n  labelClassName?:string;\n  valueClassName?:string;\n  unstyled?:boolean;\n}\n\ntype Measured={width:number|null};\n\n/**\n * Read-only record fields: label above value, in reading order. Measures its\n * own pane (onLayout), never the window, so a split view or a foldable\n * segment decides the column count.\n */\nexport function KeyValueList({\n  items,columns=2,twoColumnMinWidth=600,emptyLabel=\"Not set\",surface:_surface,\n  className,labelClassName,valueClassName,unstyled=false,onLayout,...rest\n}:KeyValueListProps) {\n  const storeRef=useRef<StoreApi<Measured>|null>(null);\n  if(!storeRef.current)storeRef.current=createStore<Measured>(()=>({width:null}));\n  const store=storeRef.current;\n  const width=useStore(store,s=>s.width);\n  const twoUp=columns===2&&width!==null&&width>=twoColumnMinWidth;\n  const styled=!unstyled;\n  return (\n    <View {...rest} role=\"list\"\n      onLayout={(event:LayoutChangeEvent)=>{store.setState({width:event.nativeEvent.layout.width});onLayout?.(event);}}\n      {...{className:joinClasses(\"w-full flex-row flex-wrap\",styled&&\"gap-y-4\",className)}}>\n      {items.map(item=>{\n        const missing=item.value===null||item.value===undefined;\n        return (\n          <View key={item.key} role=\"listitem\"\n            style={{width:twoUp?\"50%\":\"100%\",paddingEnd:twoUp?16:0}}\n            {...{className:joinClasses(styled&&\"gap-0.5\")}}>\n            <Text {...{className:joinClasses(styled&&\"text-xs leading-4 text-text-muted\",labelClassName)}}>{item.label}</Text>\n            <View {...{className:\"flex-row items-center gap-2\"}}>\n              <View {...{className:\"min-w-0 shrink\"}}>\n                {missing\n                  ? <Text {...{className:joinClasses(styled&&\"text-sm leading-5 text-text-muted italic\")}}>{emptyLabel}</Text>\n                  : typeof item.value===\"string\"||typeof item.value===\"number\"\n                    ? <Text selectable {...{className:joinClasses(styled&&\"text-sm leading-5 text-text\",valueClassName)}}>{item.value}</Text>\n                    : item.value}\n              </View>\n              {item.action ? <View {...{className:\"shrink-0\"}}>{item.action}</View> : null}\n            </View>\n          </View>\n        );\n      })}\n    </View>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/content/KeyValueList.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/content/KeyValueList",
+    "exports": [
+      "KeyValueItem",
+      "KeyValueList",
+      "KeyValueListProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "display"
+  ],
+  "type": "registry:ui"
+}

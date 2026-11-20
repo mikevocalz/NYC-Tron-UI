@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/ExposureAndWhiteBalance",
+  "title": "Exposure And White Balance",
+  "description": "Exposure And White Balance, a photo editing component. Props: value, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/forge/photo/photo-adjustments",
+    "@nyc-tron/shell/UnitInput"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/photo/ExposureAndWhiteBalance.tsx",
+      "content": "import {View,type ViewProps} from 'react-native';\nimport {UnitInput} from '@/components/nyc-tron/ui/components/shell/UnitInput';\nimport {EXPOSURE_FIELDS,validateExposure,type ExposureSettings} from '@/components/nyc-tron/ui/components/forge/photo/photo-adjustments';\nexport type {ExposureSettings} from '@/components/nyc-tron/ui/components/forge/photo/photo-adjustments';\nexport interface ExposureAndWhiteBalanceProps extends Omit<ViewProps,'children'> {readonly value:ExposureSettings;readonly onCommit:(value:ExposureSettings)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}\n/** Controlled non-destructive exposure settings. The host owns the image transform. */\nexport function ExposureAndWhiteBalance({value,onCommit,disabled=false,unstyled=false,...props}:ExposureAndWhiteBalanceProps){\n validateExposure(value);\n return <View {...props} style={[{gap:8},props.style]}>{EXPOSURE_FIELDS.map(([key,label,min,max,step])=><UnitInput key={key} label={label} value={value[key]} min={min} max={max} step={step} precision={2} disabled={disabled} unstyled={unstyled} onCommit={number=>{if(disabled||number===value[key])return;const next={...value,[key]:number};validateExposure(next);onCommit(next);}}/>)}</View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/photo/ExposureAndWhiteBalance.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/ExposureAndWhiteBalance",
+    "exports": [
+      "ExposureAndWhiteBalance",
+      "ExposureAndWhiteBalanceProps",
+      "ExposureSettings"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

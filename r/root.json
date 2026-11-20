@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "root",
+  "title": "NYC-Tron UI root",
+  "description": "Root barrel of @nyc-tron/ui, re-exports Button, ButtonProps, ButtonSize, ButtonVariant, Card, CardProps, NavigationItem, NavigationRail.",
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/Card",
+    "@nyc-tron/NavigationRail",
+    "@nyc-tron/TextField"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/index.ts",
+      "content": "// Deliberately small. Professional editor controls are NEVER imported into\n// this root barrel; use direct /components/forge/<Component> subpaths.\nexport { Button } from \"@/components/nyc-tron/ui/components/Button\";\nexport type { ButtonProps, ButtonVariant, ButtonSize } from \"@/components/nyc-tron/ui/components/Button\";\nexport { Card } from \"@/components/nyc-tron/ui/components/Card\";\nexport type { CardProps } from \"@/components/nyc-tron/ui/components/Card\";\nexport { NavigationRail, NavigationShell } from \"@/components/nyc-tron/ui/components/NavigationRail\";\nexport type { NavigationRailProps, NavigationShellProps, NavigationItem } from \"@/components/nyc-tron/ui/components/NavigationRail\";\n\nexport { TextField } from \"@/components/nyc-tron/ui/components/TextField\";\nexport type { TextFieldProps } from \"@/components/nyc-tron/ui/components/TextField\";\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/index.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui",
+    "exports": [
+      "Button",
+      "ButtonProps",
+      "ButtonSize",
+      "ButtonVariant",
+      "Card",
+      "CardProps",
+      "NavigationItem",
+      "NavigationRail",
+      "NavigationRailProps",
+      "NavigationShell",
+      "NavigationShellProps",
+      "TextField",
+      "TextFieldProps"
+    ]
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:lib"
+}

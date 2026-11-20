@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "layout/AdaptiveColumns",
+  "title": "Adaptive Columns",
+  "description": "Wrapping column row; each AdaptiveColumns.Item sets a minimum width and grow factor, for React Native layout.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/layout/AdaptiveColumns.tsx",
+      "content": "import { View, type ViewProps } from \"react-native\";\n\nexport interface AdaptiveColumnsProps extends ViewProps {\n  /** App-owned space between columns and wrapped rows, in logical units. */\n  gap: number;\n  className?: string;\n}\n\nexport interface AdaptiveColumnProps extends ViewProps {\n  /**\n   * Preferred minimum before the item wraps. A container narrower than this\n   * still fits one column. Multiply by fontScale for text-heavy columns.\n   */\n  minWidth: number;\n  /** Share of spare row space. Zero keeps the preferred width. Default 1. */\n  grow?: number;\n  className?: string;\n}\n\n/**\n * Intrinsic wrapping within one usable pane. The same child tree stays\n * mounted while CSS/Yoga reflows it, including before hydration/measurement.\n * Hardware separation remains the job of AdaptivePaneHost.\n */\nfunction AdaptiveColumnsRoot({ gap, children, style, ...rest }: AdaptiveColumnsProps) {\n  if (!Number.isFinite(gap) || gap < 0) {\n    throw new RangeError(\"AdaptiveColumns gap must be a nonnegative finite number\");\n  }\n  return <View {...rest} style={[{\n    minWidth: 0, flexDirection: \"row\", flexWrap: \"wrap\", alignItems: \"flex-start\", gap,\n  }, style]}>{children}</View>;\n}\n\nexport function AdaptiveColumn({ minWidth, grow = 1, children, style, ...rest }: AdaptiveColumnProps) {\n  if (!Number.isFinite(minWidth) || minWidth <= 0 || !Number.isFinite(grow) || grow < 0) {\n    throw new RangeError(\"AdaptiveColumn requires a positive minWidth and nonnegative grow\");\n  }\n  return <View {...rest} style={[{\n    flexBasis: minWidth, flexGrow: grow, flexShrink: 1, minWidth: 0, maxWidth: \"100%\",\n  }, style]}>{children}</View>;\n}\n\nexport const AdaptiveColumns = Object.assign(AdaptiveColumnsRoot, { Item: AdaptiveColumn });\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/layout/AdaptiveColumns.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/layout/AdaptiveColumns",
+    "exports": [
+      "AdaptiveColumn",
+      "AdaptiveColumnProps",
+      "AdaptiveColumns",
+      "AdaptiveColumnsProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "layout"
+  ],
+  "type": "registry:ui"
+}

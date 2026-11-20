@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "data/tree-row-heights",
+  "title": "tree row heights",
+  "description": "tree row heights, a data table helper module. Exports createRowHeightIndex.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/data/tree-row-heights.ts",
+      "content": "/** Rows overlapping a viewport; `end` is exclusive. */\nexport interface RowHeightWindow {\n  readonly start: number;\n  readonly end: number;\n}\n\n/**\n * Offsets for rows whose height is only known after layout. Unmeasured rows\n * count as `estimate`; each `setHeight` costs O(log n), so a list can report\n * measurements as rows mount without rebuilding every offset below them.\n */\nexport interface RowHeightIndex {\n  readonly count: number;\n  /** Returns true when the stored height or measured state changed. */\n  setHeight(index: number, height: number): boolean;\n  heightOf(index: number): number;\n  isMeasured(index: number): boolean;\n  /** Top edge of a row; `offsetOf(count)` is the total height. */\n  offsetOf(index: number): number;\n  totalHeight(): number;\n  /** Row containing `offset`, clamped to the first and last row; -1 when empty. */\n  indexAtOffset(offset: number): number;\n  visibleRange(offset: number, viewportHeight: number): RowHeightWindow;\n  /** Keeps measurements of surviving rows by position. */\n  resize(count: number): void;\n  /** Forgets every measurement. */\n  reset(estimate?: number): void;\n}\n\nconst checkCount = (count: number) => {\n  if (!Number.isSafeInteger(count) || count < 0) throw new RangeError(\"Invalid row count\");\n};\nconst checkHeight = (height: number) => {\n  if (!Number.isFinite(height) || height <= 0) throw new RangeError(\"Invalid row height\");\n};\n\nexport function createRowHeightIndex(count: number, estimate: number): RowHeightIndex {\n  checkCount(count);\n  checkHeight(estimate);\n  let n = count;\n  let guess = estimate;\n  let heights = new Float64Array(n);\n  let measured = new Uint8Array(n);\n  let tree = new Float64Array(n + 1);\n\n  const rebuild = () => {\n    tree = new Float64Array(n + 1);\n    for (let i = 1; i <= n; i++) {\n      tree[i]! += heights[i - 1]!;\n      const parent = i + (i & -i);\n      if (parent <= n) tree[parent]! += tree[i]!;\n    }\n  };\n  const fill = () => {\n    heights = new Float64Array(n).fill(guess);\n    measured = new Uint8Array(n);\n    rebuild();\n  };\n  const row = (index: number) => {\n    if (!Number.isSafeInteger(index) || index < 0 || index >= n) throw new RangeError(\"Row out of range\");\n  };\n  const prefix = (end: number) => {\n    let sum = 0;\n    for (let i = end; i > 0; i -= i & -i) sum += tree[i]!;\n    return sum;\n  };\n  fill();\n\n  const self: RowHeightIndex = {\n    get count() { return n; },\n    setHeight(index, height) {\n      row(index);\n      checkHeight(height);\n      const delta = height - heights[index]!;\n      const changed = delta !== 0 || measured[index] === 0;\n      measured[index] = 1;\n      if (delta !== 0) {\n        heights[index] = height;\n        for (let i = index + 1; i <= n; i += i & -i) tree[i]! += delta;\n      }\n      return changed;\n    },\n    heightOf(index) { row(index); return heights[index]!; },\n    isMeasured(index) { row(index); return measured[index] === 1; },\n    offsetOf(index) {\n      if (!Number.isSafeInteger(index) || index < 0 || index > n) throw new RangeError(\"Row out of range\");\n      return prefix(index);\n    },\n    totalHeight() { return prefix(n); },\n    indexAtOffset(offset) {\n      if (n === 0) return -1;\n      if (!(offset > 0)) return 0;\n      let pos = 0;\n      let remaining = offset;\n      for (let step = 2 ** Math.floor(Math.log2(n)); step > 0; step >>= 1) {\n        const next = pos + step;\n        if (next <= n && tree[next]! <= remaining) { pos = next; remaining -= tree[next]!; }\n      }\n      return Math.min(pos, n - 1);\n    },\n    visibleRange(offset, viewportHeight) {\n      if (n === 0) return { start: 0, end: 0 };\n      const bottom = Math.max(0, offset) + Math.max(0, viewportHeight);\n      const start = self.indexAtOffset(offset);\n      if (bottom >= self.totalHeight()) return { start, end: n };\n      const at = self.indexAtOffset(bottom);\n      return { start, end: Math.max(start + 1, self.offsetOf(at) === bottom ? at : at + 1) };\n    },\n    resize(next) {\n      checkCount(next);\n      const keep = Math.min(n, next);\n      const oldHeights = heights;\n      const oldMeasured = measured;\n      n = next;\n      heights = new Float64Array(n).fill(guess);\n      measured = new Uint8Array(n);\n      heights.set(oldHeights.subarray(0, keep));\n      measured.set(oldMeasured.subarray(0, keep));\n      rebuild();\n    },\n    reset(next) {\n      if (next !== undefined) { checkHeight(next); guess = next; }\n      fill();\n    },\n  };\n  return self;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/data/tree-row-heights.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/data/tree-row-heights",
+    "exports": [
+      "RowHeightIndex",
+      "RowHeightWindow",
+      "createRowHeightIndex"
+    ]
+  },
+  "categories": [
+    "data"
+  ],
+  "type": "registry:lib"
+}

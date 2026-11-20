@@ -1,0 +1,86 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/FrameAccurateScrubber",
+  "title": "Frame Accurate Scrubber",
+  "description": "Frame Accurate Scrubber, a video timeline component. Props: durationFrames, onSeekFrame.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/feedback/ErrorMessage",
+    "@nyc-tron/forge/NativeSeekBar",
+    "@nyc-tron/forge/timebase"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/NativeSeekBar.types.ts",
+      "content": "import type { ViewProps } from \"react-native\";\nimport type { FrameRate } from \"@/components/nyc-tron/ui/components/forge/timebase\";\n\n/** Props shared by every {@linkcode NativeSeekBarProps} variant. */\nexport interface NativeSeekBarBaseProps extends Omit<ViewProps,\"children\"> {\n  /** Stable media/document identity; change revision when replacing the source. */\n  readonly scope?:string;readonly revision?:string|number;\n  /** The player's reported frame. The thumb and timecode show it except mid-drag. */\n  readonly frame:number;\n  readonly durationFrames:number;\n  readonly frameRate:FrameRate;\n  /**\n   * Called with each new frame while the thumb is dragged, for a fast or\n   * approximate seek. A repeated frame is not reported twice. Step buttons\n   * and screen-reader steps do not call it; they commit directly.\n   */\n  readonly onPreview?:(frame:number)=>void;\n  /**\n   * Frames moved by one press of a step button.\n   * @default 1\n   */\n  readonly stepFrames?:number;\n  /** @default false */\n  readonly dropFrameTimecode?:boolean;\n  /** @default false */\n  readonly disabled?:boolean;\n  className?:string;\n  /** Drops the library recipe from the wrapper and timecode; the native Expo Slider keeps OS behavior. */\n  unstyled?:boolean;\n}\n\n/** Commit callbacks for `NativeSeekBar`: `onCommit`, or the deprecated `onSeek`. */\nexport type NativeSeekBarCommitProps =\n  | {\n    /**\n     * Called once per completed drag when the finger or pointer is released,\n     * once per step button press, and once per screen-reader or keyboard step.\n     * Not called when the frame is unchanged.\n     *\n     * When both `onCommit` and `onSeek` are passed, only `onCommit` is called.\n     */\n    readonly onCommit:(frame:number)=>void;\n    /** @deprecated Use `onCommit`. Ignored when `onCommit` is passed. */\n    readonly onSeek?:(frame:number)=>void;\n  }\n  | {\n    readonly onCommit?:undefined;\n    /**\n     * @deprecated Use `onCommit`. Kept as an alias with the same timing: once\n     * per release or step, never on drag ticks. Before this change it fired on\n     * every slider tick.\n     */\n    readonly onSeek:(frame:number)=>void;\n  };\n\n/** Props for `NativeSeekBar`. Pass `onCommit` (or the deprecated `onSeek`). */\nexport type NativeSeekBarProps=NativeSeekBarBaseProps&NativeSeekBarCommitProps;\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/NativeSeekBar.types.ts"
+    },
+    {
+      "path": "packages/ui/src/components/forge/inputs/useScopedControl.ts",
+      "content": "import {useLayoutEffect,useRef} from 'react';\nimport {useOwnedAction} from '@/components/nyc-tron/ui/components/shell/useOwnedAction';\n\n/** Document identity for controlled editor tools. Native handles remain outside UI state. */\nexport interface ScopedControlProps {scope?:string;revision?:string|number;disabledReason?:string}\nexport function controlIdentity(scope:string,revision:string|number){\n if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError('Invalid control identity');\n return [scope,revision] as const;\n}\n\n/** Admit one host operation and invalidate handlers at the committed boundary. */\nexport function useScopedControl<P>(boundary:string,props:P,disabled=false){\n const action=useOwnedAction(boundary),pending=action.pending!==null;\n const committed=useRef<{boundary:string;props:P;disabled:boolean}|null>(null);\n const admitted=useRef<symbol|null>(null);\n useLayoutEffect(()=>{committed.current={boundary,props,disabled};});\n useLayoutEffect(()=>{admitted.current=null;},[boundary]);\n useLayoutEffect(()=>()=>{committed.current=null;},[]);\n const current=()=>{const p=committed.current;return p&&p.boundary===boundary&&!p.disabled&&!pending&&!admitted.current?p.props:null;};\n const run=(id:string,operation:(props:P,signal:AbortSignal)=>unknown|Promise<unknown>)=>{\n  const p=current();if(!p)return;\n  const token=Symbol(id);admitted.current=token;\n  return action.run(id,signal=>operation(p,signal),undefined,{pendingForAsyncOnly:true}).finally(()=>{if(admitted.current===token)admitted.current=null;});\n };\n const cancel=()=>{if(committed.current?.boundary!==boundary)return false;admitted.current=null;action.cancel();return true;};\n return {current,run,cancel,pending,pendingId:action.pending,error:action.error};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
+    },
+    {
+      "path": "packages/ui/src/components/forge/timeline/FrameAccurateScrubber.native.tsx",
+      "content": "import {NativeSeekBar} from '@/components/nyc-tron/ui/components/forge/NativeSeekBar.native';\nimport {FrameAccurateScrubberBody,type FrameAccurateScrubberProps} from '@/components/nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber.shared';\nexport type {FrameAccurateScrubberProps,FrameSeekRequest,FrameSeekResult} from '@/components/nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber.shared';\nexport function FrameAccurateScrubber(props:FrameAccurateScrubberProps){return <FrameAccurateScrubberBody {...props} SeekBar={NativeSeekBar}/>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber.native.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/timeline/FrameAccurateScrubber.shared.tsx",
+      "content": "import {useLayoutEffect,useRef,type ComponentType} from 'react';\nimport {View,Text} from 'react-native';\nimport type {NativeSeekBarProps} from '@/components/nyc-tron/ui/components/forge/NativeSeekBar.types';\nimport {ErrorMessage} from '@/components/nyc-tron/ui/components/feedback/ErrorMessage';\nimport {assertFrameRate,clampFrame,type FrameRate} from '@/components/nyc-tron/ui/components/forge/timebase';\nimport {controlIdentity,useScopedControl} from '@/components/nyc-tron/ui/components/forge/inputs/useScopedControl';\nexport interface FrameSeekRequest {frame:number;timeUs:number;exact:boolean;frameRate:FrameRate}\nexport interface FrameSeekResult {requestedFrame:number;presentedFrame:number;presentationTimeUs:number;timing:'presentation'|'seek-target'}\nexport interface FrameAccurateScrubberProps extends Omit<NativeSeekBarProps,'onCommit'|'onSeek'|'onPreview'> {\n /** Number of source frames; the last seekable frame is durationFrames - 1. */\n readonly durationFrames:number;\n onSeekFrame:(request:FrameSeekRequest,signal:AbortSignal)=>Promise<FrameSeekResult>;\n onPresented:(result:FrameSeekResult)=>void;disabledReason?:string;\n}\n/** Coalesces preview seeks to one in flight and one newest queued target. Final commit waits for an exact presentation acknowledgement. */\nexport function FrameAccurateScrubberBody({SeekBar,onSeekFrame,onPresented,disabledReason,...props}:FrameAccurateScrubberProps&{SeekBar:ComponentType<NativeSeekBarProps>}){\n if(!Number.isSafeInteger(props.durationFrames)||props.durationFrames<0)throw new RangeError('Invalid source frame count');\n assertFrameRate(props.frameRate);const {scope='frame-scrubber',revision=0,durationFrames,frameRate}=props,owner=JSON.stringify([...controlIdentity(scope,revision),durationFrames,frameRate,props.disabled,disabledReason]),guard=useScopedControl(owner,{onSeekFrame,onPresented,...props},!!props.disabled||disabledReason!==undefined||durationFrames===0),pipeline=useRef<{controller:AbortController|null;queued:number|null;epoch:number;host:typeof onSeekFrame|null}>({controller:null,queued:null,epoch:0,host:null});\n const cancel=()=>{const p=pipeline.current;p.epoch++;p.controller?.abort();p.controller=null;p.queued=null;p.host=null;};useLayoutEffect(()=>{cancel();return cancel;},[owner]);\n const request=(frame:number,exact:boolean):FrameSeekRequest=>{const f=clampFrame(frame,Math.max(0,durationFrames-1)),timeUs=Math.round(f*1000000*frameRate.denominator/frameRate.numerator);if(!Number.isSafeInteger(timeUs))throw new RangeError('Frame time exceeds supported integer precision');return {frame:f,timeUs,exact,frameRate};};\n const preview=(frame:number)=>{const h=guard.current();if(!h)return;const p=pipeline.current;p.queued=clampFrame(frame,Math.max(0,h.durationFrames-1));p.host=h.onSeekFrame;drain();};\n const drain=()=>{const p=pipeline.current;if(p.controller||p.queued===null||!p.host)return;const frame=p.queued;p.queued=null;const controller=new AbortController(),epoch=p.epoch,host=p.host;p.controller=controller;void Promise.resolve().then(()=>controller.signal.aborted?undefined:host(request(frame,false),controller.signal)).catch(()=>undefined).finally(()=>{if(p.epoch!==epoch)return;p.controller=null;drain();});};\n const commit=(frame:number)=>{cancel();return guard.run('exact-frame',async(h,signal)=>{const target=request(frame,true),result=await h.onSeekFrame(target,signal);if(signal.aborted)return;if(result.requestedFrame!==target.frame||result.presentedFrame!==target.frame||result.timing!=='presentation'||!Number.isSafeInteger(result.presentationTimeUs)||result.presentationTimeUs<0)throw new Error('The decoder did not acknowledge the exact requested frame');h.onPresented(result);});};\n return <View style={{gap:8}}><SeekBar {...props} durationFrames={Math.max(0,durationFrames-1)} frame={clampFrame(props.frame,Math.max(0,durationFrames-1))} scope={scope} revision={revision} disabled={!!props.disabled||disabledReason!==undefined||guard.pending||durationFrames===0} onPreview={preview} onCommit={commit}/><Text {...{className:props.unstyled?undefined:'text-text-muted'}}>Final position requires the decoder’s actual presentation timestamp; seek-target estimates are rejected.</Text><ErrorMessage message={guard.error??disabledReason} unstyled={props.unstyled}/></View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber.shared.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/timeline/FrameAccurateScrubber.tsx",
+      "content": "import {NativeSeekBar} from '@/components/nyc-tron/ui/components/forge/NativeSeekBar.web';\nimport {FrameAccurateScrubberBody,type FrameAccurateScrubberProps} from '@/components/nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber.shared';\nexport type {FrameAccurateScrubberProps,FrameSeekRequest,FrameSeekResult} from '@/components/nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber.shared';\nexport function FrameAccurateScrubber(props:FrameAccurateScrubberProps){return <FrameAccurateScrubberBody {...props} SeekBar={NativeSeekBar}/>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/shell/action-owner.ts",
+      "content": "import { createStore } from \"zustand/vanilla\";\n\n/** UI request state. Abort controllers stay in the owner's closure. */\nexport interface ActionState { readonly pending: string | null; readonly error: string | null }\nexport function createActionOwner(currentScope: () => string) {\n  const store = createStore<ActionState>(() => ({ pending: null, error: null }));\n  let active = false;\n  let current: { readonly scope: string; readonly abort: AbortController } | null = null;\n  function cancel() {\n    const previous = current; current = null;\n    previous?.abort.abort();\n  }\n  return {\n    store,\n    activate() { cancel(); active = true; store.setState({ pending: null, error: null }); },\n    deactivate() { active = false; cancel(); },\n    cancel() { cancel(); store.setState({ pending: null }); },\n    async run<T>(id: string, operation: (signal: AbortSignal) => T | Promise<T>, consume?: (value: T) => void, options?: { pendingForAsyncOnly?: boolean }): Promise<boolean> {\n      if (!active) return false;\n      cancel();\n      const request = { scope: currentScope(), abort: new AbortController() };\n      current = request;\n      const valid = () => active && current === request && request.scope === currentScope();\n      if (options?.pendingForAsyncOnly) store.setState({ error: null });\n      else store.setState({ pending: id, error: null });\n      try {\n        if (!valid()) return false;\n        const result = operation(request.abort.signal);\n        let value: T;\n        if (options?.pendingForAsyncOnly) {\n          if (result && typeof (result as Promise<T>).then === 'function') {\n            // A synchronous acknowledgement or already-resolved promise must not\n            // disable (and blur) the focused control between keyboard commands.\n            let settled = false;\n            const completion = Promise.resolve(result).then(value => { settled = true; return value; }, error => { settled = true; throw error; });\n            void Promise.resolve().then(() => { if (!settled && valid()) store.setState({ pending: id, error: null }); });\n            value = await completion;\n          } else value = result as T;\n        } else value = await result;\n        if (!valid()) return false;\n        consume?.(value);\n        if (!valid()) return false;\n        store.setState({ pending: null });\n        return true;\n      } catch (error) {\n        if (!valid()) return false;\n        store.setState({ pending: null, error: error instanceof Error ? error.message : String(error) });\n        return false;\n      } finally { if (current === request) current = null; }\n    },\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/action-owner.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/useOwnedAction.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport { useStore } from \"zustand\";\nimport { createActionOwner } from \"@/components/nyc-tron/ui/components/shell/action-owner\";\n\n/** Cancel stale requests at the committed document boundary, before new controls accept input. */\nexport function useOwnedAction(scope: string) {\n  const committed = useRef(scope);\n  const ref = useRef<ReturnType<typeof createActionOwner> | null>(null);\n  ref.current ??= createActionOwner(() => committed.current);\n  const owner = ref.current;\n  useLayoutEffect(() => {\n    committed.current = scope;\n    owner.activate();\n    return () => owner.deactivate();\n  }, [owner, scope]);\n  const state = useStore(owner.store, value => value);\n  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);\n  return { ...state, run, cancel: owner.cancel };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber",
+    "exports": [
+      "FrameAccurateScrubber",
+      "FrameAccurateScrubberProps",
+      "FrameSeekRequest",
+      "FrameSeekResult"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

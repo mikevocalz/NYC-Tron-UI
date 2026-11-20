@@ -1,0 +1,59 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/ToolRail",
+  "title": "Tool Rail",
+  "description": "Toolbar rail of tool buttons, vertical on the left or right edge or a row at the bottom, with group flyouts, for React Native.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/overlays/CommandPopover",
+    "@nyc-tron/overlays/popover-position",
+    "@nyc-tron/shell/shell-keys",
+    "@nyc-tron/shell/tool-rail-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/ToolRail.tsx",
+      "content": "import {useRef,useLayoutEffect,type ComponentRef,type ReactNode} from \"react\";\nimport {I18nManager,Platform,Pressable,Text,useWindowDimensions,View,type ViewProps} from \"react-native\";\nimport {createStore,type StoreApi} from \"zustand/vanilla\";\nimport {useStore} from \"zustand\";\nimport {CommandPopover} from \"@/components/nyc-tron/ui/components/overlays/CommandPopover\";\nimport type {Rect2D} from \"@/components/nyc-tron/ui/components/overlays/popover-position\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {nodeIsRTL,rovingTarget,shellKey,type ShellAxis} from \"@/components/nyc-tron/ui/components/shell/shell-keys\";\nimport {shownVariantId,toolIsActive,validateRailTools,type RailTool} from \"@/components/nyc-tron/ui/components/shell/tool-rail-model\";\n\nexport type {RailTool,RailToolVariant,ToolIcon} from \"@/components/nyc-tron/ui/components/shell/tool-rail-model\";\nexport {shownVariantId,toolIsActive} from \"@/components/nyc-tron/ui/components/shell/tool-rail-model\";\n\n\n/** Props for {@linkcode ToolRail}. */\nexport interface ToolRailProps extends Omit<ViewProps,\"children\"> {\n  /** Document/selection ownership; changing it abandons queued flyouts. */\n  scope?:string;revision?:string|number;disabled?:boolean;\n  tools:readonly RailTool[];\n  /** The active tool or variant id. */\n  activeToolId:string|undefined;\n  onSelectTool:(id:string)=>void;\n  /** Which variant each group button shows and selects on press. @default the first variant */\n  groupSelection?:Readonly<Record<string,string>>;\n  /** Accessible name of the toolbar. @default \"Tools\" */\n  label?:string;\n  /** Physical screen edge the rail sits on. Flyouts open away from it. @default \"left\" */\n  edge?:\"left\"|\"right\"|\"bottom\";\n  /** Shows labels beside the icons. Hit targets do not change. @default false */\n  expanded?:boolean;\n  /** Window-space regions flyouts may use, from the foldable layout owner. @default the whole window */\n  usableRegions?:readonly Rect2D[];\n  className?:string;\n  unstyled?:boolean;\n}\n\ntype Flyout={toolId:string;anchor:Rect2D;boundary:string;request:number};\n\n/**\n * Compact professional tool palette. Each tool is a 44pt toggle button that\n * shows its active state; grouped tools carry a corner mark and open a flyout\n * of variants on long press, on the arrow pointing away from the rail's edge,\n * or through a screen-reader action. On web the rail is one Tab stop with\n * arrow-key focus. The app owns the active tool and every shortcut binding.\n */\nexport function ToolRail({\n  scope=\"tools\",revision=0,disabled=false,tools,activeToolId,onSelectTool,groupSelection,label=\"Tools\",edge=\"left\",expanded=false,usableRegions,\n  className,unstyled=false,style,...rest\n}:ToolRailProps){\n  validateRailTools(tools);\n  const styled=!unstyled;\n  const window=useWindowDimensions();\n  const local=useRef<StoreApi<{flyout:Flyout|undefined;focus:number}>|null>(null);\n  if(!local.current)local.current=createStore<{flyout:Flyout|undefined;focus:number}>(()=>({flyout:undefined,focus:-1}));\n  const store=local.current;\n  const flyout=useStore(store,s=>s.flyout);\n  const focus=useStore(store,s=>s.focus);\n  const refs=useRef<(ComponentRef<typeof Pressable>|null)[]>([]);\n  const axis:ShellAxis=edge===\"bottom\"?\"horizontal\":\"vertical\";\n  const activeIndex=tools.findIndex(t=>toolIsActive(t,activeToolId)&&!t.disabled);\n  const stop=focus>=0&&tools[focus]&&!tools[focus]?.disabled?focus:activeIndex>=0?activeIndex:tools.findIndex(t=>!t.disabled);\n  const regions=usableRegions??[{x:0,y:0,width:window.width,height:window.height}];\n\n  const boundary=JSON.stringify([scope,revision,disabled,edge,regions,tools.map(t=>[t.id,t.disabled,t.variants?.map(v=>v.id)])]);\n  const request=useRef(0);\n  const committed=useRef<{boundary:string;tools:readonly RailTool[];onSelectTool:typeof onSelectTool}|null>(null);\n  useLayoutEffect(()=>{committed.current={boundary,tools,onSelectTool};});\n  useLayoutEffect(()=>{request.current++;store.setState({flyout:undefined,focus:-1});},[boundary,store]);\n  useLayoutEffect(()=>()=>{committed.current=null;request.current++;},[]);\n  const current=()=>!disabled&&committed.current?.boundary===boundary?committed.current:null;\n  const select=(toolId:string,id:string)=>{const p=current(),tool=p?.tools.find(t=>t.id===toolId);if(tool&&!tool.disabled&&(tool.id===id||tool.variants?.some(v=>v.id===id)))p?.onSelectTool(id);};\n  const openFlyout=(i:number)=>{\n    const p=current(),tool=p?.tools.find(t=>t.id===tools[i]?.id);\n    if(!tool?.variants?.length||tool.disabled||!regions.some(r=>r.width>0&&r.height>0))return;\n    const node=refs.current[i] as unknown as {measureInWindow?:(cb:(x:number,y:number,w:number,h:number)=>void)=>void}|null;\n    const ticket=++request.current;\n    node?.measureInWindow?.((x,y,width,height)=>{\n      if(current()&&request.current===ticket&&[x,y,width,height].every(Number.isFinite)&&width>0&&height>0)store.setState({flyout:{toolId:tool.id,anchor:{x,y,width,height},boundary,request:ticket}});\n    });\n  };\n  const onKeyDown=(i:number)=>(event:unknown)=>{\n    if(!current())return;\n    const k=shellKey(event);\n    if(k.altKey||k.ctrlKey||k.metaKey)return;\n    const rtl=nodeIsRTL(k.target)||I18nManager.isRTL;\n    const outward=edge===\"left\"?\"ArrowRight\":edge===\"right\"?\"ArrowLeft\":\"ArrowUp\";\n    if(k.key===outward&&tools[i]?.variants?.length){k.preventDefault();openFlyout(i);return;}\n    const next=rovingTarget(i,k.key,tools.map(t=>!!t.disabled),axis,rtl);\n    if(next===null)return;\n    k.preventDefault();\n    store.setState({focus:next});\n    (refs.current[next] as unknown as {focus?:()=>void}|null)?.focus?.();\n  };\n  const flyoutTool=flyout?.boundary===boundary&&!disabled?tools.find(t=>t.id===flyout.toolId&&!t.disabled):undefined;\n  const horizontal=axis===\"horizontal\";\n\n  return <View {...rest} accessibilityRole=\"toolbar\" accessibilityLabel={label}\n    aria-orientation={horizontal?\"horizontal\":\"vertical\"}\n    {...{className:joinClasses(\"gap-1\",styled&&\"bg-surface-raised p-1\",\n      styled&&(edge===\"left\"?\"border-r border-border\":edge===\"right\"?\"border-l border-border\":\"border-t border-border\"),className)}}\n    style={[{flexDirection:horizontal?\"row\":\"column\",alignItems:horizontal?\"center\":\"stretch\",\n      flexWrap:horizontal?\"wrap\":\"nowrap\"},style]}>\n    {tools.map((tool,i)=>{\n      const shown=tool.variants?.length?tool.variants.find(v=>v.id===(toolIsActive(tool,activeToolId)?activeToolId:shownVariantId(tool,groupSelection))):undefined;\n      const current=shown??tool;\n      const active=toolIsActive(tool,activeToolId);\n      const grouped=!!tool.variants?.length;\n      const name=grouped?`${tool.label}: ${current.label}`:tool.label;\n      const shortcut=current.shortcut??tool.shortcut;\n      const icon=typeof current.icon===\"function\"?current.icon({active}):current.icon;\n      return <Pressable key={tool.id} ref={node=>{refs.current[i]=node;}}\n        accessibilityRole=\"button\" accessibilityLabel={name}\n        accessibilityHint={[shortcut?\"Shortcut \"+shortcut:\"\",grouped?\"Long press for more tools.\":\"\"].filter(Boolean).join(\". \")||undefined}\n        accessibilityState={{selected:active,disabled:disabled||!!tool.disabled}} aria-pressed={active}\n        {...(grouped?{\"aria-haspopup\":\"menu\" as const}:{})}\n        accessibilityActions={grouped?[{name:\"activate\"},{name:\"showVariants\",label:\"More \"+tool.label+\" tools\"}]:undefined}\n        onAccessibilityAction={grouped?event=>{\n          if(event.nativeEvent.actionName===\"activate\")select(tool.id,current.id);\n          if(event.nativeEvent.actionName===\"showVariants\")openFlyout(i);\n        }:undefined}\n        disabled={disabled||tool.disabled}\n        onPress={()=>select(tool.id,grouped?current.id:tool.id)}\n        onLongPress={grouped?()=>openFlyout(i):undefined}\n        onFocus={()=>store.setState({focus:i})}\n        {...(Platform.OS===\"web\"?{onKeyDown:onKeyDown(i),tabIndex:!disabled&&i===stop?0:-1}:{})}\n        {...{className:joinClasses(\"min-h-11 min-w-11 flex-row items-center gap-2\",\n          styled&&\"rounded-control focus-visible:ring-2 focus-visible:ring-focus\",\n          styled&&(active?\"bg-primary forced-colors:border-2 forced-colors:border-[Highlight]\":\"bg-transparent hover:bg-surface-sunken\"),\n          expanded?\"px-2\":\"justify-center\",tool.disabled&&\"opacity-40\")}}>\n        <View pointerEvents=\"none\" style={{width:28,height:28,alignItems:\"center\",justifyContent:\"center\"}}>{icon}</View>\n        {expanded?<Text numberOfLines={1} {...{className:joinClasses(styled&&\"text-sm\",styled&&(active?\"text-on-primary\":\"text-text\"))}}\n          style={{flex:1}}>{current.label}</Text>:null}\n        {grouped?<View pointerEvents=\"none\" {...{className:joinClasses(styled&&(active?\"border-b-on-primary\":\"border-b-text-muted\"))}}\n          style={{position:\"absolute\",right:3,bottom:3,width:0,height:0,borderLeftWidth:5,borderBottomWidth:5,\n            borderLeftColor:\"transparent\"}}/>:null}\n      </Pressable>;\n    })}\n    {flyout&&flyoutTool?.variants?<CommandPopover visible accessibilityLabel={flyoutTool.label+\" tools\"}\n      anchor={edge===\"bottom\"?flyout.anchor:{...flyout.anchor,\n        // Open beside the rail instead of over the next tool.\n        x:edge===\"left\"?flyout.anchor.x+flyout.anchor.width+4:flyout.anchor.x-236,y:flyout.anchor.y-flyout.anchor.height-8}}\n      usableRegions={regions} width={232}\n      items={flyoutTool.variants.map(v=>({id:v.id,label:v.label,\n        description:[v.id===activeToolId?\"Current tool\":\"\",v.shortcut?\"Shortcut \"+v.shortcut:\"\"].filter(Boolean).join(\", \")||undefined}))}\n      onSelect={id=>{if(flyout.request===request.current)select(flyout.toolId,id);}}\n      onDismiss={()=>store.setState({flyout:undefined})}/>:null}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/shell/ToolRail.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [
+      "web"
+    ],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/ToolRail",
+    "exports": [
+      "RailTool",
+      "RailToolVariant",
+      "ToolIcon",
+      "ToolRail",
+      "ToolRailProps",
+      "shownVariantId",
+      "toolIsActive"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:ui"
+}

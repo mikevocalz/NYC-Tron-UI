@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/ColorHarmonyAssistant",
+  "title": "Color Harmony Assistant",
+  "description": "Color Harmony Assistant, a color component. Props: value, kind, contrastBackground, onKindChange.",
+  "registryDependencies": [
+    "@nyc-tron/forge/color",
+    "@nyc-tron/forge/color/contrast",
+    "@nyc-tron/forge/color/harmony"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/ColorHarmonyAssistant.tsx",
+      "content": "import {Pressable,Text,View,type ViewProps} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {assertHsv,assertRgba,hsvToRgb,rgbaToHex,type HsvColor,type RgbaColor} from \"@/components/nyc-tron/ui/components/forge/color\";\nimport {compositeOver,contrastRating} from \"@/components/nyc-tron/ui/components/forge/color/contrast\";\nimport {HARMONY_KINDS,harmonyColors,type HarmonyKind} from \"@/components/nyc-tron/ui/components/forge/color/harmony\";\n\n/** Props for {@linkcode ColorHarmonyAssistant}. */\nexport interface ColorHarmonyAssistantProps extends Omit<ViewProps,\"children\"> {\n  /** The base color. */\n  readonly value:HsvColor;\n  readonly kind:HarmonyKind;\n  readonly onKindChange:(kind:HarmonyKind)=>void;\n  /** Applies a harmony color. One commit per press. */\n  readonly onPick:(color:HsvColor)=>void;\n  /** Opaque surface the colors will sit on, for the contrast check (e.g. the canvas background). */\n  readonly contrastBackground:RgbaColor;\n  readonly disabled?:boolean;\n  className?:string;\n  unstyled?:boolean;\n}\n\nconst level=(r:ReturnType<typeof contrastRating>)=>\n  r.aaa?\"AAA\":r.aa?\"AA\":r.aaLarge?\"AA large text only\":\"Fails AA\";\n\n/**\n * Harmony and contrast helper (C-18): pick a rule, see the base color and its\n * companions, and read each one's WCAG 2.2 contrast against\n * `contrastBackground`. The rating is spelled out in text (\"AA\", \"Fails AA\"),\n * never shown by color alone. Pressing a swatch applies it.\n */\nexport function ColorHarmonyAssistant({\n  value,kind,onKindChange,onPick,contrastBackground,disabled=false,className,unstyled=false,testID,style,...rest\n}:ColorHarmonyAssistantProps){\n  assertHsv(value);\n  assertRgba(contrastBackground);\n  const styled=!unstyled;\n  const colors=harmonyColors(value,kind);\n  const background=rgbaToHex({...contrastBackground,alpha:1},false);\n  const base=hsvToRgb(value);\n  const baseRating=contrastRating(base,contrastBackground);\n  return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses(\"gap-3\",styled&&\"rounded-control bg-surface-raised p-3\",className)}} style={style}>\n    <View accessibilityRole=\"radiogroup\" accessibilityLabel=\"Harmony rule\" style={{flexDirection:\"row\",flexWrap:\"wrap\",gap:6}}>\n      {HARMONY_KINDS.map(k=>{\n        const on=k.kind===kind;\n        return <Pressable key={k.kind} accessibilityRole=\"radio\" aria-checked={on} accessibilityState={{checked:on,disabled}}\n          disabled={disabled} onPress={()=>onKindChange(k.kind)}\n          {...{className:joinClasses(styled&&\"rounded-control border px-3 focus-visible:ring-2 focus-visible:ring-focus\",\n            styled&&(on?\"border-focus bg-surface-sunken\":\"border-border\"))}}\n          style={{minHeight:44,justifyContent:\"center\"}}>\n          <Text {...{className:joinClasses(styled&&\"text-sm\",styled&&(on?\"text-text font-semibold\":\"text-text-muted\"))}}>{k.label}</Text>\n        </Pressable>;\n      })}\n    </View>\n    <View style={{flexDirection:\"row\",flexWrap:\"wrap\",gap:8}}>\n      {colors.map((c,i)=>{\n        const rgb=hsvToRgb(c);\n        const hex=rgbaToHex(rgb,false);\n        const rating=contrastRating(rgb,contrastBackground);\n        return <Pressable key={i} accessibilityRole=\"button\" disabled={disabled} onPress={()=>onPick(c)}\n          accessibilityLabel={`${i===0?\"Base color\":\"Use\"} ${hex}, contrast ${rating.ratio} to 1, ${level(rating)}`}\n          {...{className:joinClasses(styled&&\"rounded-control border border-border p-1 focus-visible:ring-2 focus-visible:ring-focus\")}}\n          style={{width:76,gap:4,alignItems:\"stretch\"}}>\n          <View pointerEvents=\"none\" {...{className:joinClasses(styled&&\"rounded-control\")}} style={{height:44,backgroundColor:rgbaToHex(compositeOver(rgb,contrastBackground),false)}}/>\n          <Text {...{className:joinClasses(styled&&\"text-text text-xs\")}} style={{fontVariant:[\"tabular-nums\"]}}>{hex}</Text>\n          <Text {...{className:joinClasses(styled&&\"text-text-muted text-xs\")}} style={{fontVariant:[\"tabular-nums\"]}}>\n            {`${rating.ratio}:1 ${rating.aa?\"AA\":\"fails\"}`}\n          </Text>\n        </Pressable>;\n      })}\n    </View>\n    <View {...{className:joinClasses(styled&&\"rounded-control border border-border\")}}\n      style={{backgroundColor:background,padding:12,gap:4}}>\n      <Text style={{color:rgbaToHex(base),fontSize:24,fontWeight:\"700\"}}>Aa Sample heading</Text>\n      <Text style={{color:rgbaToHex(base),fontSize:15}}>Body text in the base color on this background.</Text>\n    </View>\n    <Text accessibilityLiveRegion=\"polite\" {...{className:joinClasses(styled&&\"text-text text-sm\")}} style={{fontVariant:[\"tabular-nums\"]}}>\n      {`Base on background: ${baseRating.ratio}:1, ${level(baseRating)}.`}\n    </Text>\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/color/ColorHarmonyAssistant.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/ColorHarmonyAssistant",
+    "exports": [
+      "ColorHarmonyAssistant",
+      "ColorHarmonyAssistantProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

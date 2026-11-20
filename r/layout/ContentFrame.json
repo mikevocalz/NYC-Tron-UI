@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "layout/ContentFrame",
+  "title": "Content Frame",
+  "description": "Width-capped container that aligns its content to the start, center or end of the parent, for React Native layout.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/layout/ContentFrame.tsx",
+      "content": "import { View, type ViewProps } from \"react-native\";\n\nexport interface ContentFrameProps extends ViewProps {\n  /** App-chosen reading/form/media width in logical layout units. */\n  maxWidth: number;\n  /** Logical alignment follows the containing layout's reading direction. */\n  align?: \"start\" | \"center\" | \"end\";\n  className?: string;\n}\n\n/**\n * Bounds content within its actual parent without reading the app window.\n * Use inside an already usable pane; this is not a fold or safe-area resolver.\n * The app owns spacing, surfaces and type. Explicit style remains last.\n */\nexport function ContentFrame({\n  maxWidth, align = \"center\", children, style, ...rest\n}: ContentFrameProps) {\n  if (!Number.isFinite(maxWidth) || maxWidth <= 0) {\n    throw new RangeError(\"ContentFrame maxWidth must be a positive finite number\");\n  }\n  return <View {...rest} style={[{\n    width: \"100%\", minWidth: 0, maxWidth, flexShrink: 1,\n    marginStart: align === \"start\" ? 0 : \"auto\",\n    marginEnd: align === \"end\" ? 0 : \"auto\",\n  }, style]}>{children}</View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/layout/ContentFrame.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/layout/ContentFrame",
+    "exports": [
+      "ContentFrame",
+      "ContentFrameProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "layout"
+  ],
+  "type": "registry:ui"
+}

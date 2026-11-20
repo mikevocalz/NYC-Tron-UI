@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/spreadsheet/sparkline-model",
+  "title": "sparkline model",
+  "description": "sparkline model, a spreadsheet state model. Exports sparklineGeometry, sparklineSpecProblem.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/spreadsheet/sparkline-model.ts",
+      "content": "/** In-cell chart family. `winloss` draws equal bars up for positive, down for negative. */\nexport type SparklineKind = \"line\" | \"column\" | \"winloss\";\nexport const SPARKLINE_KINDS: readonly SparklineKind[] = [\"line\", \"column\", \"winloss\"];\n\n/** Where the value axis starts: the data minimum, or zero. */\nexport type SparklineAxisMin = \"auto\" | \"zero\";\n\n/** What {@linkcode SparklineEditor} edits. The app stores it with its own view state. */\nexport interface SparklineSpec {\n  readonly kind: SparklineKind;\n  /** One row or one column, such as `B2:M2`. */\n  readonly dataRange: string;\n  /** The cell the sparkline draws in, such as `N2`. */\n  readonly location: string;\n  readonly showHigh: boolean;\n  readonly showLow: boolean;\n  /** Mark negative bars (column and win/loss) with the negative tone. */\n  readonly showNegative: boolean;\n  readonly axisMin: SparklineAxisMin;\n}\n\n/** Visual role of one mark, mapped to theme tokens by {@linkcode Sparkline}. */\nexport type SparklineMarkTone = \"normal\" | \"negative\" | \"high\" | \"low\";\n\n/** A bar in local coordinates (origin top-left, y down). */\nexport interface SparklineBar {\n  readonly index: number;\n  readonly left: number;\n  readonly top: number;\n  readonly width: number;\n  readonly height: number;\n  readonly tone: SparklineMarkTone;\n}\n/**\n * A straight line piece, ready for an absolutely positioned view rotated\n * about its center: place it at `centerX`/`centerY`, `length` wide, rotated\n * by `angleDeg`.\n */\nexport interface SparklineSegment {\n  readonly centerX: number;\n  readonly centerY: number;\n  readonly length: number;\n  readonly angleDeg: number;\n}\n/** A marker dot on a line sparkline. */\nexport interface SparklineMarker {\n  readonly index: number;\n  readonly x: number;\n  readonly y: number;\n  readonly tone: SparklineMarkTone;\n}\nexport interface SparklineGeometry {\n  readonly bars: readonly SparklineBar[];\n  readonly segments: readonly SparklineSegment[];\n  readonly markers: readonly SparklineMarker[];\n  /** Index of the highest and lowest value, `undefined` without data. */\n  readonly highIndex?: number;\n  readonly lowIndex?: number;\n  /** Count of numeric values drawn. */\n  readonly valueCount: number;\n}\n\nexport interface SparklineGeometryOptions {\n  readonly kind: SparklineKind;\n  readonly width: number;\n  readonly height: number;\n  readonly axisMin?: SparklineAxisMin;\n  readonly showHigh?: boolean;\n  readonly showLow?: boolean;\n  readonly showNegative?: boolean;\n  /** Space between column bars. @default 1 */\n  readonly gap?: number;\n}\n\n/**\n * Layout for an in-cell sparkline. `undefined` entries are gaps: a line breaks\n * there and a column slot stays empty. Values are never coerced to zero.\n */\nexport function sparklineGeometry(\n  values: readonly (number | undefined)[], options: SparklineGeometryOptions,\n): SparklineGeometry {\n  const { kind, width, height, axisMin = \"auto\", showHigh = false, showLow = false, showNegative = true, gap = 1 } = options;\n  if (![width, height, gap].every(Number.isFinite) || width <= 0 || height <= 0 || gap < 0) {\n    throw new RangeError(\"Sparkline size must be positive\");\n  }\n  const present = values.flatMap((v, i) => (typeof v === \"number\" && Number.isFinite(v) ? [{ v, i }] : []));\n  if (present.length === 0 || values.length === 0) return { bars: [], segments: [], markers: [], valueCount: 0 };\n  let high = present[0]!, low = present[0]!;\n  for (const p of present) { if (p.v > high.v) high = p; if (p.v < low.v) low = p; }\n  const toneOf = (i: number, v: number): SparklineMarkTone =>\n    showHigh && i === high.i ? \"high\" : showLow && i === low.i ? \"low\" : showNegative && v < 0 ? \"negative\" : \"normal\";\n  const slot = width / values.length;\n  const barWidth = Math.max(1, slot - gap);\n  const base = { highIndex: high.i, lowIndex: low.i, valueCount: present.length };\n\n  if (kind === \"winloss\") {\n    const mid = height / 2;\n    const bars = present.filter(p => p.v !== 0).map(p => ({\n      index: p.i, left: p.i * slot + gap / 2, width: barWidth,\n      top: p.v > 0 ? 0 : mid, height: mid, tone: toneOf(p.i, p.v),\n    }));\n    return { ...base, bars, segments: [], markers: [] };\n  }\n  const min = axisMin === \"zero\" ? Math.min(0, low.v) : low.v;\n  const max = Math.max(axisMin === \"zero\" ? 0 : high.v, high.v);\n  const span = max - min;\n  // A flat series sits mid-height instead of dividing by zero.\n  const y = (v: number) => (span === 0 ? height / 2 : height - ((v - min) / span) * height);\n\n  if (kind === \"column\") {\n    const zero = y(Math.max(min, Math.min(max, 0)));\n    const bars = present.map(p => {\n      const top = Math.min(y(p.v), zero);\n      return { index: p.i, left: p.i * slot + gap / 2, width: barWidth, top,\n        height: Math.max(1, Math.abs(zero - y(p.v))), tone: toneOf(p.i, p.v) };\n    });\n    return { ...base, bars, segments: [], markers: [] };\n  }\n  const x = (i: number) => values.length === 1 ? width / 2 : (i / (values.length - 1)) * width;\n  const segments: SparklineSegment[] = [];\n  for (let k = 1; k < present.length; k++) {\n    const a = present[k - 1]!, b = present[k]!;\n    if (b.i !== a.i + 1) continue; // gap\n    const x1 = x(a.i), y1 = y(a.v), x2 = x(b.i), y2 = y(b.v);\n    segments.push({\n      centerX: (x1 + x2) / 2, centerY: (y1 + y2) / 2,\n      length: Math.hypot(x2 - x1, y2 - y1), angleDeg: (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI,\n    });\n  }\n  const markers = present\n    .filter(p => (showHigh && p.i === high.i) || (showLow && p.i === low.i))\n    .map(p => ({ index: p.i, x: x(p.i), y: y(p.v), tone: toneOf(p.i, p.v) }));\n  return { ...base, bars: [], segments, markers };\n}\n\n/** A field of {@linkcode SparklineSpec} that failed validation, with the message to show under it. */\nexport interface SparklineSpecProblem {\n  readonly field: \"dataRange\" | \"location\";\n  readonly message: string;\n}\n\n/** `undefined` when the spec is usable, otherwise the first problem and the field it belongs to. */\nexport function sparklineSpecProblem(\n  spec: SparklineSpec,\n  parse: (range: string) => { startRow: number; endRow: number; startColumn: number; endColumn: number } | undefined,\n): SparklineSpecProblem | undefined {\n  const data = parse(spec.dataRange);\n  if (!data) return { field: \"dataRange\", message: \"Enter a data range such as B2:M2.\" };\n  if (data.startRow !== data.endRow && data.startColumn !== data.endColumn) {\n    return { field: \"dataRange\", message: \"Use one row or one column of data.\" };\n  }\n  const at = parse(spec.location);\n  if (!at || at.startRow !== at.endRow || at.startColumn !== at.endColumn) {\n    return { field: \"location\", message: \"Enter one cell for the sparkline, such as N2.\" };\n  }\n  return undefined;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/spreadsheet/sparkline-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/spreadsheet/sparkline-model",
+    "exports": [
+      "SPARKLINE_KINDS",
+      "SparklineAxisMin",
+      "SparklineBar",
+      "SparklineGeometry",
+      "SparklineGeometryOptions",
+      "SparklineKind",
+      "SparklineMarkTone",
+      "SparklineMarker",
+      "SparklineSegment",
+      "SparklineSpec",
+      "SparklineSpecProblem",
+      "sparklineGeometry",
+      "sparklineSpecProblem"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

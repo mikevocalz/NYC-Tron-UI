@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "FieldGroup",
+  "title": "Field Group",
+  "description": "Form layout wrapper with titled sections and footer text, exposed as FieldGroup.Section, for React Native.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/FieldGroup.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { Platform, Text, View, type ViewProps } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\n\nexport interface FieldGroupProps extends Omit<ViewProps,\"children\"> {\n  children?:ReactNode;\n  className?:string;\n}\nexport interface FieldSectionProps extends Omit<ViewProps,\"children\"|\"role\"> {\n  /** Section heading; also names the group for assistive tech. */\n  title?:string;\n  /** Optional line under the fields: a constraint or consequence. */\n  footer?:string;\n  children?:ReactNode;\n  /** Uppercase the title. Default false. */\n  titleUppercase?:boolean;\n  className?:string;\n  titleClassName?:string;\n  bodyClassName?:string;\n  unstyled?:boolean;\n}\n\nfunction FieldGroupRoot({children,className,...rest}:FieldGroupProps){\n  return <View {...rest} {...{className:joinClasses(\"w-full min-w-0 gap-4\",className)}}>{children}</View>;\n}\n\n/**\n * A titled block of related fields on a raised surface. The title is a level\n * 3 heading and names the group, so a screen reader announces \"Document\n * details, group\" when focus enters a field inside it.\n */\nfunction FieldSection({\n  title,footer,children,titleUppercase=false,className,titleClassName,bodyClassName,unstyled=false,...rest\n}:FieldSectionProps){\n  const styled=!unstyled;\n  return <View {...rest} role=\"group\" aria-label={title}\n    {...{className:joinClasses(\"w-full min-w-0\",\n      styled&&\"overflow-hidden rounded-control border border-border bg-surface-raised\",className)}}>\n    {title?<View {...{className:joinClasses(styled&&\"border-b border-border px-3 py-2.5\")}}>\n      <Text accessibilityRole=\"header\" {...(Platform.OS===\"web\"?{\"aria-level\":3}:{})}\n        {...{className:joinClasses(styled&&\"text-sm font-semibold text-text\",\n          titleUppercase&&\"uppercase tracking-wide\",titleClassName)}}>{title}</Text>\n    </View>:null}\n    <View {...{className:joinClasses(\"gap-3\",styled&&\"p-3\",bodyClassName)}}>{children}</View>\n    {footer?<Text {...{className:joinClasses(styled&&\"px-3 pb-3 text-sm text-text-muted\")}}>{footer}</Text>:null}\n  </View>;\n}\n\n/** `FieldGroup` stacks sections; `FieldGroup.Section` is one titled block. */\nexport const FieldGroup=Object.assign(FieldGroupRoot,{Section:FieldSection});\nexport { FieldSection };\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/FieldGroup.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [
+      "web"
+    ],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/FieldGroup",
+    "exports": [
+      "FieldGroup",
+      "FieldGroupProps",
+      "FieldSection",
+      "FieldSectionProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "layout"
+  ],
+  "type": "registry:ui"
+}

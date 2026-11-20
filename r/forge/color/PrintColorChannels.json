@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/PrintColorChannels",
+  "title": "Print Color Channels",
+  "description": "Print Color Channels, a color component. Props: value, conversionPolicy, labRange, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/Select",
+    "@nyc-tron/forge/color/color-management",
+    "@nyc-tron/shell/UnitInput"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/PrintColorChannels.tsx",
+      "content": "import { View, type ViewProps } from \"react-native\";\nimport { Select } from \"@/components/nyc-tron/ui/components/Select\";\nimport { UnitInput } from \"@/components/nyc-tron/ui/components/shell/UnitInput\";\nimport { validatePrintColor, type PrintColor, type ColorConversionPolicy } from \"@/components/nyc-tron/ui/components/forge/color/color-management\";\nexport type { PrintColor } from \"@/components/nyc-tron/ui/components/forge/color/color-management\";\n/** Controlled, profile-preserving CMYK/Lab editor; every field acceptance commits one change. */\nexport interface PrintColorChannelsProps extends Omit<ViewProps, \"children\"> {\n  readonly value: PrintColor;\n  readonly onCommit: (value: PrintColor) => void;\n  /** Profile policy is requested, never approximated by this UI. @default preserve-numbers */\n  readonly conversionPolicy?: ColorConversionPolicy;\n  readonly onConversionPolicyChange?: (policy: ColorConversionPolicy) => void;\n  /** Editable a-star/b-star bounds selected by the host profile. @default [-128,127] */\n  readonly labRange?: readonly [number,number];\n  readonly disabled?: boolean;\n  readonly unstyled?: boolean;\n}\n/** Edits actual CMYK percentages or signed Lab channels without approximating ICC conversion from RGB. */\nexport function PrintColorChannels({ value, onCommit, conversionPolicy = \"preserve-numbers\", onConversionPolicyChange, labRange = [-128,127], disabled = false, unstyled = false, ...props }: PrintColorChannelsProps) {\n  validatePrintColor(value,labRange);\n  if(![\"preserve-numbers\",\"preserve-appearance\"].includes(conversionPolicy))throw new TypeError(\"Unknown color conversion policy\");\n  const labels=value.model==='lab'?[\"Lightness L*\",\"Lab a*\",\"Lab b*\"]:[\"Cyan percent\",\"Magenta percent\",\"Yellow percent\",\"Black percent\"];\n  return <View {...props} style={[{ gap: 8 }, props.style]}>\n    <Select label=\"Print conversion policy\" value={conversionPolicy} options={[{value:\"preserve-numbers\",label:\"Preserve channel numbers\"},{value:\"preserve-appearance\",label:\"Preserve color appearance\"}]} disabled={disabled||!onConversionPolicyChange} unstyled={unstyled} onValueChange={policy=>onConversionPolicyChange?.(policy as ColorConversionPolicy)}/>\n    {labels.map((label, index) => <UnitInput key={label} label={label} value={value.channels[index]!} min={value.model==='lab'&&index>0?labRange[0]:0} max={value.model==='lab'&&index>0?labRange[1]:100} step={1} precision={2} disabled={disabled} unstyled={unstyled}\n      onCommit={number => { if (disabled || number === value.channels[index]) return; const channels = [...value.channels] as PrintColor[\"channels\"] & number[]; channels[index] = number; onCommit({ ...value, channels }); }}/>) }\n    <UnitInput label=\"Print opacity percent\" value={value.alpha * 100} min={0} max={100} step={1} disabled={disabled} unstyled={unstyled} onCommit={alpha => { if (!disabled && alpha / 100 !== value.alpha) onCommit({ ...value, alpha: alpha / 100 }); }}/>\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/color/PrintColorChannels.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/PrintColorChannels",
+    "exports": [
+      "PrintColor",
+      "PrintColorChannels",
+      "PrintColorChannelsProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

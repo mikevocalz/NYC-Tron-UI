@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/ToneAndPresence",
+  "title": "Tone And Presence",
+  "description": "Tone And Presence, a photo editing component. Props: value, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/forge/photo/photo-adjustments",
+    "@nyc-tron/shell/UnitInput"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/photo/ToneAndPresence.tsx",
+      "content": "import {View,type ViewProps} from 'react-native';\nimport {UnitInput} from '@/components/nyc-tron/ui/components/shell/UnitInput';\nimport {TONE_FIELDS,validateTone,type ToneSettings} from '@/components/nyc-tron/ui/components/forge/photo/photo-adjustments';\nexport type {ToneSettings} from '@/components/nyc-tron/ui/components/forge/photo/photo-adjustments';\nexport interface ToneAndPresenceProps extends Omit<ViewProps,'children'> {readonly value:ToneSettings;readonly onCommit:(value:ToneSettings)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}\n/** Controlled non-destructive tone settings. The host owns the image transform. */\nexport function ToneAndPresence({value,onCommit,disabled=false,unstyled=false,...props}:ToneAndPresenceProps){\n validateTone(value);\n return <View {...props} style={[{gap:8},props.style]}>{TONE_FIELDS.map(([key,label,min,max,step])=><UnitInput key={key} label={label} value={value[key]} min={min} max={max} step={step} precision={2} disabled={disabled} unstyled={unstyled} onCommit={number=>{if(disabled||number===value[key])return;const next={...value,[key]:number};validateTone(next);onCommit(next);}}/>)}</View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/photo/ToneAndPresence.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/ToneAndPresence",
+    "exports": [
+      "ToneAndPresence",
+      "ToneAndPresenceProps",
+      "ToneSettings"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

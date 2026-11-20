@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feedback/ErrorMessage",
+  "title": "Error Message",
+  "description": "Inline error text with a danger glyph, announced as an alert; renders nothing when the message is empty, for React Native.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/feedback/ErrorMessage.tsx",
+      "content": "import { Text, View, type ViewProps } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { StatusGlyph } from \"@/components/nyc-tron/ui/components/feedback/glyphs\";\n\n/** Props for {@linkcode ErrorMessage}. Drop-in for Nitro Forge's `StudioErrorMessageProps`. */\nexport interface ErrorMessageProps extends Omit<ViewProps,\"children\"> {\n  /** Nothing renders without a message, so the row collapses. */\n  message?:string;\n  /**\n   * Accepted so Forge's `surface=\"night\"` call sites compile unchanged. It does\n   * not pick colors: the danger token resolves from the nearest scheme scope,\n   * so a message inside `NightScope` already takes the dark value.\n   */\n  surface?:\"page\"|\"night\";\n  className?:string;\n  messageClassName?:string;\n  unstyled?:boolean;\n}\n\n/**\n * Inline error for a form or pane: what went wrong and how to recover, in one\n * or two sentences. Announced as an alert when it appears. The drawn \"!\" mark\n * keeps the state readable without color.\n */\nexport function ErrorMessage({\n  message,surface:_surface,className,messageClassName,unstyled=false,...rest\n}:ErrorMessageProps) {\n  if(!message)return null;\n  const styled=!unstyled;\n  return (\n    <View {...rest} {...{className:joinClasses(\"flex-row items-start\",styled&&\"gap-2\",className)}}>\n      <View {...{className:\"pt-px\"}}><StatusGlyph tone=\"danger\"/></View>\n      <Text role=\"alert\" accessibilityLiveRegion=\"polite\"\n        {...{className:joinClasses(\"min-w-0 flex-1\",styled&&\"text-sm leading-5 text-danger\",messageClassName)}}>\n        {message}\n      </Text>\n    </View>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/feedback/ErrorMessage.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/feedback/glyphs.tsx",
+      "content": "import { View } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\n\n/**\n * Status and close marks drawn with views, so they need no icon font, survive\n * forced colors (borders and backgrounds of a solid view stay visible) and\n * take the theme's tone tokens. Pass an `icon` to the owning component to use\n * the app's own icon set instead.\n */\nexport type StatusTone=\"info\"|\"success\"|\"danger\"|\"neutral\";\n\n// Fill and border in the same tone: forced colors drops backgrounds but\n// keeps borders, so every part of a mark is drawn with a border too.\nconst FACE:Record<StatusTone,string>={\n  info:\"bg-info border-info\",success:\"bg-success border-success\",\n  danger:\"bg-danger border-danger\",neutral:\"bg-text-muted border-text-muted\",\n};\n\n/** 18pt disc with an \"i\", \"!\" or check cut out of it in the raised surface color. */\nexport function StatusGlyph({tone}:{tone:StatusTone}) {\n  return (\n    <View aria-hidden importantForAccessibility=\"no-hide-descendants\"\n      {...{className:joinClasses(\"h-[18px] w-[18px] items-center justify-center rounded-full border\",FACE[tone])}}>\n      {tone===\"success\" ? (\n        // Two bars at right angles: the short stroke leads the long one.\n        <View style={{width:9,height:6,marginTop:-2,transform:[{rotate:\"-45deg\"}]}}\n          {...{className:\"border-b-2 border-l-2 border-surface-raised\"}}/>\n      ) : (\n        <View style={{alignItems:\"center\",gap:2,flexDirection:tone===\"danger\"?\"column\":\"column-reverse\"}}>\n          <View style={{width:0,height:7,borderLeftWidth:2,borderRadius:1}} {...{className:\"border-surface-raised\"}}/>\n          <View style={{width:2,height:2,borderWidth:1,borderRadius:1}} {...{className:\"border-surface-raised\"}}/>\n        </View>\n      )}\n    </View>\n  );\n}\n\n/** A 12pt cross made of two bars, colored by the caller's border token. */\nexport function CloseGlyph({className}:{className?:string}) {\n  // Bars are top borders so forced colors keeps them.\n  const bar=joinClasses(\"absolute h-0 w-3 border-t-2\",className??\"border-text-muted\");\n  return (\n    <View aria-hidden importantForAccessibility=\"no-hide-descendants\"\n      style={{width:12,height:12,alignItems:\"center\",justifyContent:\"center\"}}>\n      <View style={{transform:[{rotate:\"45deg\"}]}} {...{className:bar}}/>\n      <View style={{transform:[{rotate:\"-45deg\"}]}} {...{className:bar}}/>\n    </View>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/feedback/glyphs.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/feedback/ErrorMessage",
+    "exports": [
+      "ErrorMessage",
+      "ErrorMessageProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "feedback"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/motion/EasingPresetGallery",
+  "title": "Easing Preset Gallery",
+  "description": "Easing Preset Gallery, a motion graphics component. Props: selectedId, supported, presets, onSelect.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/forge/motion/motion-easing",
+    "@nyc-tron/shell/shell-keys"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/motion/EasingPresetGallery.tsx",
+      "content": "import {useLayoutEffect,useRef,type ComponentRef} from 'react';\nimport {Platform,Pressable,Text,View,type ViewProps} from 'react-native';\nimport {useLocalStore} from '@/components/nyc-tron/ui/components/useLocalStore';\nimport {joinClasses} from '@/components/nyc-tron/ui/components/styles';\nimport {nodeIsRTL,shellKey} from '@/components/nyc-tron/ui/components/shell/shell-keys';\nimport {MOTION_EASING_PRESETS,validateMotionEasingPresets,type MotionEasingKind,type MotionEasingPreset} from '@/components/nyc-tron/ui/components/forge/motion/motion-easing';\nexport type {MotionEasing,MotionEasingKind,MotionEasingPreset} from '@/components/nyc-tron/ui/components/forge/motion/motion-easing';\nexport interface EasingPresetGalleryProps extends Omit<ViewProps,'children'> {\n readonly scope:string;readonly selectedId:string|null;readonly supported:readonly MotionEasingKind[];\n readonly onSelect:(preset:MotionEasingPreset)=>void;readonly onPreview?:(preset:MotionEasingPreset|undefined)=>void;\n readonly presets?:readonly MotionEasingPreset[];readonly disabled?:boolean;readonly unstyled?:boolean;\n}\n/** Complete typed easing intents. Spring is actionable only when the host evaluator supports it. */\nexport function EasingPresetGallery({scope,selectedId,supported,onSelect,onPreview,presets=MOTION_EASING_PRESETS,disabled=false,unstyled=false,...props}:EasingPresetGalleryProps){\n validateMotionEasingPresets(presets);if(!scope.trim()||supported.some(kind=>!['hold','linear','bezier','spring'].includes(kind))||new Set(supported).size!==supported.length)throw new TypeError('Invalid easing scope or evaluator capabilities');\n const [local,store]=useLocalStore(()=>({focusId:null as string|null}));\n const refs=useRef(new Map<string,ComponentRef<typeof Pressable>|null>());\n useLayoutEffect(()=>()=>onPreview?.(undefined),[scope,supported.join(',')]);\n useLayoutEffect(()=>{if(disabled)onPreview?.(undefined);},[disabled]);\n const available=presets.filter(preset=>supported.includes(preset.value.kind));\n const chosen=available.some(p=>p.id===local.focusId)?local.focusId:available.some(p=>p.id===selectedId)?selectedId:available[0]?.id;\n const key=(id:string,event:unknown)=>{if(disabled)return;const k=shellKey(event);if(k.altKey||k.ctrlKey||k.metaKey)return;const index=available.findIndex(p=>p.id===id),rtl=nodeIsRTL(k.target);const next=k.key==='Home'?0:k.key==='End'?available.length-1:k.key==='ArrowRight'||k.key==='ArrowDown'?index+(rtl&&k.key==='ArrowRight'?-1:1):k.key==='ArrowLeft'||k.key==='ArrowUp'?index+(rtl&&k.key==='ArrowLeft'?1:-1):null;if(next===null)return;k.preventDefault();const target=available[Math.max(0,Math.min(available.length-1,next))];if(target)refs.current.get(target.id)?.focus();};\n return <View {...props} accessibilityRole=\"radiogroup\" accessibilityLabel=\"Motion easing presets\" style={[{flexDirection:'row',flexWrap:'wrap',gap:8},props.style]}>\n  {presets.map(preset=>{const supportedPreset=supported.includes(preset.value.kind),off=disabled||!supportedPreset,selected=preset.id===selectedId;return <Pressable key={preset.id} ref={ref=>{if(ref)refs.current.set(preset.id,ref);else refs.current.delete(preset.id);}} accessibilityRole=\"radio\" accessibilityLabel={preset.label} accessibilityState={{checked:selected,disabled:off}} accessibilityHint={!supportedPreset?\"This composition evaluator does not support this easing kind\":undefined} aria-checked={selected} disabled={off}\n   onPress={()=>{if(!off)onSelect(preset);}} onHoverIn={()=>{if(!off)onPreview?.(preset);}} onHoverOut={()=>onPreview?.(undefined)} onFocus={()=>{if(!off){store.set({focusId:preset.id});onPreview?.(preset);}}} onBlur={()=>onPreview?.(undefined)} {...(Platform.OS==='web'?{tabIndex:off?-1:preset.id===chosen?0:-1,onKeyDown:(event:unknown)=>key(preset.id,event)}:{})}\n   style={{minHeight:56,minWidth:120,flexBasis:144,flexGrow:1,padding:10,gap:4,opacity:off?.5:1}} {...{className:joinClasses(!unstyled&&'border border-border rounded-control focus-visible:ring-2 focus-visible:ring-focus',!unstyled&&selected&&'bg-surface-raised')}}>\n    <Text {...{className:joinClasses(!unstyled&&'text-text')}}>{preset.label}</Text>\n    {!supportedPreset?<Text {...{className:joinClasses(!unstyled&&'text-text-muted')}}>Unsupported by this evaluator</Text>:null}\n  </Pressable>;})}\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/motion/EasingPresetGallery.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/local-store.ts",
+      "content": "import {createStore} from \"zustand/vanilla\";\n\n/**\n * A per-instance store for transient gesture and draft state (a drag preview, a\n * text draft, a measured width). Components use it instead of `useState` so a\n * gesture's bookkeeping lives outside React's render cycle and can be read\n * synchronously from responder callbacks. Created by {@linkcode createLocalStore};\n * components use it through `useLocalStore`. Zustand owns the state; this value-replacement\n * adapter remains independent of React.\n */\nexport interface LocalStore<T> {\n  get():T;\n  /** Replaces the state, or derives it from the previous state. Listeners run only when it changes. */\n  set(next:T|((previous:T)=>T)):void;\n  /** Returns the unsubscribe function. */\n  subscribe(listener:()=>void):()=>void;\n}\n\n/** Creates a {@linkcode LocalStore}. Equal states (by `Object.is`) do not notify. */\nexport function createLocalStore<T>(initial:T):LocalStore<T>{\n  const store=createStore<{value:T}>(()=>({value:initial}));\n  return {\n    get:()=>store.getState().value,\n    set(next){\n      store.setState(current=>{\n        const value=typeof next===\"function\"?(next as (p:T)=>T)(current.value):next;\n        return Object.is(value,current.value)?current:{value};\n      });\n    },\n    subscribe(listener){return store.subscribe(()=>listener());},\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/local-store.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    },
+    {
+      "path": "packages/ui/src/components/useLocalStore.ts",
+      "content": "import {useRef,useSyncExternalStore} from \"react\";\nimport {createLocalStore,type LocalStore} from \"@/components/nyc-tron/ui/components/local-store\";\n\n/**\n * Creates one {@linkcode LocalStore} for the calling component on first render and\n * subscribes to it. Returns the current state and the store.\n */\nexport function useLocalStore<T>(initial:()=>T):readonly [T,LocalStore<T>]{\n  const ref=useRef<LocalStore<T>|null>(null);\n  if(!ref.current)ref.current=createLocalStore(initial());\n  const store=ref.current;\n  const state=useSyncExternalStore(store.subscribe,store.get,store.get);\n  return [state,store] as const;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [
+      "web"
+    ],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/motion/EasingPresetGallery",
+    "exports": [
+      "EasingPresetGallery",
+      "EasingPresetGalleryProps",
+      "MotionEasing",
+      "MotionEasingKind",
+      "MotionEasingPreset"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

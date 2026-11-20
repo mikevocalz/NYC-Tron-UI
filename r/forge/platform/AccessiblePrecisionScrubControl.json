@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/platform/AccessiblePrecisionScrubControl",
+  "title": "Accessible Precision Scrub Control",
+  "description": "Accessible Precision Scrub Control, a platform component.",
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/PrecisionScrubber",
+    "@nyc-tron/gestures/GestureHandlerDrag"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/platform/AccessiblePrecisionScrubControl.tsx",
+      "content": "import {PrecisionScrubber,type PrecisionScrubberProps} from '@/components/nyc-tron/ui/components/forge/inputs/PrecisionScrubber';\nimport {GestureHandlerDrag} from '@/components/nyc-tron/ui/components/gestures/GestureHandlerDrag';\nexport type AccessiblePrecisionScrubControlProps=Omit<PrecisionScrubberProps,'transport'>;\n/** One precision model for native RNGH pointer, keyboard, switch, adjustable actions and explicit numeric entry. */\nexport function AccessiblePrecisionScrubControl(props:AccessiblePrecisionScrubControlProps){return <PrecisionScrubber {...props} transport={GestureHandlerDrag}/>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/platform/AccessiblePrecisionScrubControl.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/platform/AccessiblePrecisionScrubControl",
+    "exports": [
+      "AccessiblePrecisionScrubControl",
+      "AccessiblePrecisionScrubControlProps"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

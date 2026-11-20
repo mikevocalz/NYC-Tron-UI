@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/canvas/canvas-pan-zoom-model",
+  "title": "canvas pan zoom model",
+  "description": "canvas pan zoom model, a canvas state model. Exports canvasFromTouches, canvasFromWheel, fitCanvas.",
+  "registryDependencies": [
+    "@nyc-tron/forge/canvas/canvas-viewport"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/canvas/canvas-pan-zoom-model.ts",
+      "content": "import {screenPointToDoc,validateViewport,validateDocRect,type CanvasViewport,type DocPoint,type DocRect} from '@/components/nyc-tron/ui/components/forge/canvas/canvas-viewport';\nexport interface CanvasZoomLimits {readonly minZoom:number;readonly maxZoom:number}\nexport const DEFAULT_CANVAS_ZOOM_LIMITS:CanvasZoomLimits={minZoom:0.01,maxZoom:128};\nexport function validateZoomLimits(limits:CanvasZoomLimits):void {\n if(![limits.minZoom,limits.maxZoom].every(Number.isFinite)||limits.minZoom<=0||limits.maxZoom<limits.minZoom)throw new RangeError('Invalid canvas zoom limits');\n}\nconst point=(p:DocPoint)=>{if(![p.x,p.y].every(Number.isFinite))throw new RangeError('Invalid canvas point');};\nconst checked=(viewport:CanvasViewport)=>{validateViewport(viewport);return viewport;};\n/** Change zoom around a screen point, preserving the document coordinate beneath it. */\nexport function zoomCanvasAt(viewport:CanvasViewport,zoom:number,anchor:DocPoint,limits:CanvasZoomLimits=DEFAULT_CANVAS_ZOOM_LIMITS):CanvasViewport {\n validateViewport(viewport);validateZoomLimits(limits);point(anchor);if(!Number.isFinite(zoom)||zoom<=0)throw new RangeError('Invalid requested zoom');\n const z=Math.max(limits.minZoom,Math.min(limits.maxZoom,zoom)),doc=screenPointToDoc(viewport,anchor);\n return checked({...viewport,zoom:z,panX:anchor.x-doc.x*z,panY:anchor.y-doc.y*z});\n}\n/** Translate content by screen units; canvas geometry never mirrors in RTL. */\nexport function panCanvasBy(viewport:CanvasViewport,dx:number,dy:number):CanvasViewport {\n validateViewport(viewport);if(![dx,dy].every(Number.isFinite))throw new RangeError('Invalid canvas translation');\n return checked({...viewport,panX:viewport.panX+dx,panY:viewport.panY+dy});\n}\nconst center=(points:readonly DocPoint[]):DocPoint=>({x:points.reduce((n,p)=>n+p.x,0)/points.length,y:points.reduce((n,p)=>n+p.y,0)/points.length});\n/** One- or two-pointer mapping from a captured grant; combines pinch and centroid translation. */\nexport function canvasFromTouches(viewport:CanvasViewport,before:readonly DocPoint[],after:readonly DocPoint[],limits:CanvasZoomLimits=DEFAULT_CANVAS_ZOOM_LIMITS):CanvasViewport {\n validateViewport(viewport);validateZoomLimits(limits);\n if((before.length!==1&&before.length!==2)||after.length!==before.length)throw new RangeError('Canvas gestures require the same one or two pointers');\n before.forEach(point);after.forEach(point);\n const from=center(before),to=center(after);\n let zoom=viewport.zoom;\n if(before.length===2){const distance=Math.hypot(before[1]!.x-before[0]!.x,before[1]!.y-before[0]!.y);if(distance>=1)zoom*=Math.hypot(after[1]!.x-after[0]!.x,after[1]!.y-after[0]!.y)/distance;}\n // A coincident pair can shrink to zero: stop at the minimum rather than divide or reject.\n const z=Math.max(limits.minZoom,Math.min(limits.maxZoom,zoom)),doc=screenPointToDoc(viewport,from);\n return checked({...viewport,zoom:z,panX:to.x-doc.x*z,panY:to.y-doc.y*z});\n}\n/** Fit a positive-area document rectangle inside the measured viewport and padding. */\nexport function fitCanvas(viewport:CanvasViewport,bounds:DocRect,padding=16,limits:CanvasZoomLimits=DEFAULT_CANVAS_ZOOM_LIMITS):CanvasViewport {\n validateViewport(viewport);validateDocRect(bounds);validateZoomLimits(limits);\n if(!Number.isFinite(padding)||padding<0||bounds.w<=0||bounds.h<=0||viewport.width<=2*padding||viewport.height<=2*padding)throw new RangeError('Canvas fit needs positive usable area');\n const zoom=Math.max(limits.minZoom,Math.min(limits.maxZoom,(viewport.width-2*padding)/bounds.w,(viewport.height-2*padding)/bounds.h));\n return checked({...viewport,zoom,panX:viewport.width/2-(bounds.x+bounds.w/2)*zoom,panY:viewport.height/2-(bounds.y+bounds.h/2)*zoom});\n}\nexport interface CanvasWheelDelta {readonly deltaX:number;readonly deltaY:number;readonly deltaMode:0|1|2;readonly zoom:boolean;readonly anchor:DocPoint}\n/** Pixel/line/page wheel deltas. Pinch-wheel keeps its anchor; ordinary wheel pans. */\nexport function canvasFromWheel(viewport:CanvasViewport,input:CanvasWheelDelta,limits:CanvasZoomLimits=DEFAULT_CANVAS_ZOOM_LIMITS):CanvasViewport {\n validateViewport(viewport);point(input.anchor);\n if(![input.deltaX,input.deltaY].every(Number.isFinite)||![0,1,2].includes(input.deltaMode))throw new RangeError('Invalid canvas wheel delta');\n const dx=input.deltaX*(input.deltaMode===1?16:input.deltaMode===2?viewport.width:1),dy=input.deltaY*(input.deltaMode===1?16:input.deltaMode===2?viewport.height:1);\n if(input.zoom){const exponent=Math.max(-20,Math.min(20,-dy*0.002));return zoomCanvasAt(viewport,viewport.zoom*Math.exp(exponent),input.anchor,limits);}\n return panCanvasBy(viewport,-dx,-dy);\n}\nexport function sameCanvasView(a:CanvasViewport,b:CanvasViewport):boolean {return a.zoom===b.zoom&&a.panX===b.panX&&a.panY===b.panY&&a.width===b.width&&a.height===b.height;}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/canvas/canvas-pan-zoom-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/canvas/canvas-pan-zoom-model",
+    "exports": [
+      "CanvasWheelDelta",
+      "CanvasZoomLimits",
+      "DEFAULT_CANVAS_ZOOM_LIMITS",
+      "canvasFromTouches",
+      "canvasFromWheel",
+      "fitCanvas",
+      "panCanvasBy",
+      "sameCanvasView",
+      "validateZoomLimits",
+      "zoomCanvasAt"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

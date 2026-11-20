@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/canvas-tools/color-drop-model",
+  "title": "color drop model",
+  "description": "color drop model, a canvas tool state model. Exports buildFill, clampToTarget, classifyPress.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/canvas-tools/color-drop-model.ts",
+      "content": "/*\n * Portions ported from ProCraft for Android,\n * https://github.com/artcraft-android/procraft-android\n * android/app/src/main/java/io/github/artcraftandroid/procraft/ui/ColorDropUi.kt\n * at commit c2f7518d03141c746a365f90d8df05a44ddef002 (`dropSource`, `DropDot` and\n * `DropBandUi`: a touch that stays inside the touch slop is a tap and one that\n * leaves it is a drag; the dragged colour follows the finger as a 55.5 dp dot;\n * a release outside the canvas puts the colour back instead of filling; the\n * band reads the threshold as a whole percentage).\n *\n * Copyright (c) 2026 ArtCraft Team and the ProCraft contributors.\n * Licensed under the MIT License or the Apache License, Version 2.0, at your option.\n * See licenses/ProCraft-LICENSE-MIT.txt, licenses/ProCraft-LICENSE-APACHE.txt and\n * licenses/ProCraft-NOTICE.txt.\n *\n * Modified for NYC-Tron UI on 2026-11-05: rewritten from Kotlin/Compose to\n * TypeScript as pure functions; the view-model state moved to the host; the\n * hold-still threshold slide and \"Continue filling\" band were left out; the\n * release point is mapped to document pixels for the engine's `floodFill`; a\n * keyboard and screen-reader path (focus the chip, Enter, arrows, Enter) added.\n */\n\n/** Movement, in layout units, after which a press on the chip is a drag. Android's touch slop is 8 dp. */\nexport const DROP_SLOP=8;\n/** Diameter of the colour dot that follows the pointer. ProCraft draws 55.5 dp. */\nexport const DROP_DOT_SIZE=56;\n/** Largest fill tolerance; the engine compares channel differences 0..255. */\nexport const MAX_FILL_TOLERANCE=255;\n/** Keyboard crosshair step in layout units; Alt moves ten times as far. */\nexport const DROP_KEY_STEP=8;\n\n/** A point or rectangle origin in window/page coordinates. */\nexport interface DropPoint {\n  readonly x:number;\n  readonly y:number;\n}\n/** A measured rectangle in the same coordinates as {@linkcode DropPoint}. */\nexport interface DropRect extends DropPoint {\n  readonly width:number;\n  readonly height:number;\n}\n\n/** One committed drop. Same fields as the engine's `floodFill` minus the layer id the host adds. */\nexport interface FillRequest {\n  /** Document pixel, whole numbers. */\n  readonly x:number;\n  readonly y:number;\n  /** The chip's colour as the host passed it. */\n  readonly color:string;\n  readonly tolerance:number;\n  readonly contiguous:boolean;\n}\n\n/** What a press on the chip turned out to be. */\nexport type DropPress=\"tap\"|\"drag\";\n/** A press that has moved `dx`, `dy` from where it began. */\nexport function classifyPress(dx:number,dy:number,slop=DROP_SLOP):DropPress{\n  return Math.hypot(dx,dy)>slop?\"drag\":\"tap\";\n}\n\n/** Whether `p` is inside `r` (edges included). */\nexport function isInside(p:DropPoint,r:DropRect):boolean{\n  return p.x>=r.x&&p.y>=r.y&&p.x<=r.x+r.width&&p.y<=r.y+r.height;\n}\n\n/**\n * Document pixel under window point `p` over the target `r` showing a\n * `docWidth` x `docHeight` document, or `undefined` outside the target.\n */\nexport function dropToDocument(p:DropPoint,r:DropRect,docWidth:number,docHeight:number):DropPoint|undefined{\n  if(![p.x,p.y,r.x,r.y,r.width,r.height,r.x+r.width,r.y+r.height,docWidth,docHeight].every(Number.isFinite)||docWidth<1||docHeight<1||!isInside(p,r)||r.width<=0||r.height<=0)return undefined;\n  const x=Math.min(docWidth-1,Math.max(0,Math.floor(((p.x-r.x)/r.width)*docWidth)));\n  const y=Math.min(docHeight-1,Math.max(0,Math.floor(((p.y-r.y)/r.height)*docHeight)));\n  return {x,y};\n}\n\n/** Throws for settings the engine would reject. */\nexport function validateDrop(p:{color:string;tolerance:number;width:number;height:number;documentWidth:number;documentHeight:number}):void{\n  if(p.color.trim()===\"\"||p.color.length>4096)throw new RangeError(\"Drop colour must not be blank\");\n  if(!Number.isInteger(p.tolerance)||p.tolerance<0||p.tolerance>MAX_FILL_TOLERANCE)\n    throw new RangeError(`Fill tolerance must be a whole number 0..${MAX_FILL_TOLERANCE}`);\n  if(![p.width,p.height,p.documentWidth,p.documentHeight].every(n=>Number.isFinite(n)&&n>0)||p.documentWidth<1||p.documentHeight<1)\n    throw new RangeError(\"Drop target and document sizes must be positive numbers\");\n}\n\n/** The request for a drop on document pixel `at`. */\nexport function buildFill(at:DropPoint,color:string,tolerance:number,contiguous:boolean):FillRequest{\n  return {x:Math.round(at.x),y:Math.round(at.y),color,tolerance,contiguous};\n}\n\n/** ProCraft's band text: \"Threshold 13%\" for tolerance 32. */\nexport function thresholdLabel(tolerance:number):string{\n  return `Threshold ${Math.round(tolerance/MAX_FILL_TOLERANCE*100)}%`;\n}\n\n/** Keyboard crosshair move for a key, in layout units, or `undefined` for other keys. */\nexport function dropKeyMove(key:string|undefined,alt=false):DropPoint|undefined{\n  const s=DROP_KEY_STEP*(alt?10:1);\n  switch(key){\n    case \"ArrowLeft\":return {x:-s,y:0};\n    case \"ArrowRight\":return {x:s,y:0};\n    case \"ArrowUp\":return {x:0,y:-s};\n    case \"ArrowDown\":return {x:0,y:s};\n    default:return undefined;\n  }\n}\n/** Keeps a crosshair (target-local layout units) inside a `width` x `height` target. */\nexport function clampToTarget(p:DropPoint,width:number,height:number):DropPoint{\n  return {x:Math.min(Math.max(p.x,0),width),y:Math.min(Math.max(p.y,0),height)};\n}\n\n/** Spoken target readout, e.g. \"Fill at 120, 48 with Coral, Threshold 13%\". */\nexport function describeDropTarget(at:DropPoint|undefined,colorLabel:string,tolerance:number):string{\n  return at?`Fill at ${at.x}, ${at.y} with ${colorLabel}, ${thresholdLabel(tolerance)}`\n    :`Release over the canvas to fill with ${colorLabel}`;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/canvas-tools/color-drop-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/canvas-tools/color-drop-model",
+    "exports": [
+      "DROP_DOT_SIZE",
+      "DROP_KEY_STEP",
+      "DROP_SLOP",
+      "DropPoint",
+      "DropPress",
+      "DropRect",
+      "FillRequest",
+      "MAX_FILL_TOLERANCE",
+      "buildFill",
+      "clampToTarget",
+      "classifyPress",
+      "describeDropTarget",
+      "dropKeyMove",
+      "dropToDocument",
+      "isInside",
+      "thresholdLabel",
+      "validateDrop"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

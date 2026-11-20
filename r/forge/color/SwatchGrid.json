@@ -1,0 +1,64 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/SwatchGrid",
+  "title": "Swatch Grid",
+  "description": "Swatch Grid, a color component. Props: groups, selectedKey, query, onSelect.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/forge/color",
+    "@nyc-tron/forge/color/swatches",
+    "@nyc-tron/gestures/drag-transport"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/SwatchGrid.tsx",
+      "content": "import {useRef} from \"react\";\nimport {I18nManager,Pressable,Text,TextInput,View,type ViewProps} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {Button} from \"@/components/nyc-tron/ui/components/Button\";\nimport {useLocalStore} from \"@/components/nyc-tron/ui/components/useLocalStore\";\nimport {keyboardKey,type KeyEventLike} from \"@/components/nyc-tron/ui/components/gestures/drag-transport\";\nimport {rgbaToHex} from \"@/components/nyc-tron/ui/components/forge/color\";\nimport {filterSwatchGroups,swatchColumns,swatchGridMove,swatchKey,type Swatch,type SwatchGroup,type SwatchGroupKind} from \"@/components/nyc-tron/ui/components/forge/color/swatches\";\n\n/** Props for {@linkcode SwatchGrid}. */\nexport interface SwatchGridProps extends Omit<ViewProps,\"children\"> {\n  /** Recent, document, saved and named groups, in display order. The host persists them. */\n  readonly groups:readonly SwatchGroup[];\n  /** Applies a swatch. One commit per press. */\n  readonly onSelect:(swatch:Swatch,group:SwatchGroup)=>void;\n  /** `swatchKey` of the color in use, to mark matching swatches. */\n  readonly selectedKey?:string;\n  /** The search text. Keep it in the host if it should survive a remount. */\n  readonly query:string;\n  readonly onQueryChange:(query:string)=>void;\n  readonly disabled?:boolean;\n  /** Layout is right to left, which flips Left/Right arrow keys. Rows follow the platform's own RTL mirroring. @default I18nManager.isRTL */\n  readonly rtl?:boolean;\n  className?:string;\n  unstyled?:boolean;\n}\n\nconst CELL=44;\nconst GAP=6;\nconst EMPTY:Record<SwatchGroupKind,string>={\n  recent:\"Colors you apply appear here.\",\n  document:\"This document has no colors yet.\",\n  saved:\"No saved colors. Save one from the picker to keep it here.\",\n  named:\"No named colors in this set.\",\n};\n\n/**\n * Searchable swatch groups (C-13). Search matches names and hex prefixes; a\n * search with no match says so and offers to clear it. Each swatch is a 44pt\n * button named for screen readers by its color name or hex. On web, arrow keys\n * move focus within a group, Home/End jump to its ends.\n */\nexport function SwatchGrid({\n  groups,onSelect,selectedKey,query,onQueryChange,disabled=false,rtl=I18nManager.isRTL,\n  className,unstyled=false,testID,style,...rest\n}:SwatchGridProps){\n  const [layout,store]=useLocalStore(()=>({width:0}));\n  const refs=useRef(new Map<string,{focus?:()=>void}|null>());\n  const styled=!unstyled;\n  const shown=filterSwatchGroups(groups,query);\n  const columns=swatchColumns(layout.width,CELL,GAP);\n  const trimmed=query.trim();\n  return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses(\"gap-3\",className)}} style={style}\n    onLayout={e=>store.set({width:e.nativeEvent.layout.width})}>\n    <TextInput value={query} onChangeText={onQueryChange} editable={!disabled}\n      placeholder=\"Search by name or hex\" accessibilityLabel=\"Search swatches\"\n      autoCorrect={false} autoCapitalize=\"none\" returnKeyType=\"search\"\n      {...{className:joinClasses(styled&&\"rounded-control border border-border bg-surface-sunken text-text px-3 focus:border-focus\")}}\n      style={{minHeight:44}}/>\n    {trimmed&&shown.length===0?<View style={{gap:8,alignItems:\"flex-start\"}}>\n      <Text accessibilityLiveRegion=\"polite\" {...{className:joinClasses(styled&&\"text-text-muted text-sm\")}}>\n        {`No swatches match “${trimmed}”.`}\n      </Text>\n      <Button title=\"Clear search\" variant=\"secondary\" size=\"sm\" disabled={disabled} onPress={()=>onQueryChange(\"\")}/>\n    </View>:null}\n    {shown.map(group=><View key={group.id} style={{gap:6}}>\n      <Text accessibilityRole=\"header\" {...{className:joinClasses(styled&&\"text-text text-sm font-semibold\")}}>{group.label}</Text>\n      {group.swatches.length===0?<Text {...{className:joinClasses(styled&&\"text-text-muted text-sm\")}}>{EMPTY[group.kind]}</Text>:\n      <View style={{flexDirection:\"row\",flexWrap:\"wrap\",gap:GAP}}>\n        {group.swatches.map((swatch,index)=>{\n          const key=swatchKey(swatch);\n          const on=key===selectedKey;\n          const name=swatch.name??rgbaToHex(swatch.color,swatch.color.alpha<1);\n          const refKey=group.id+\"/\"+index;\n          const onKeyDown=(event:KeyEventLike)=>{\n            const next=swatchGridMove(index,keyboardKey(event),columns,group.swatches.length,rtl);\n            if(next===undefined||next===index)return;\n            (event as {preventDefault?:()=>void}).preventDefault?.();\n            refs.current.get(group.id+\"/\"+next)?.focus?.();\n          };\n          return <Pressable key={group.id+swatch.id} ref={r=>{refs.current.set(refKey,r as {focus?:()=>void}|null);}}\n            accessibilityRole=\"button\" accessibilityLabel={swatch.name?`${swatch.name}, ${rgbaToHex(swatch.color,false)}`:name}\n            accessibilityState={{selected:on,disabled}} aria-selected={on}\n            disabled={disabled} onPress={()=>onSelect(swatch,group)}\n            {...{onKeyDown,className:joinClasses(styled&&\"rounded-control border-2 focus-visible:ring-2 focus-visible:ring-focus\",\n              styled&&(on?\"border-focus\":\"border-border\"))}}\n            style={{width:CELL,height:CELL,padding:2}}>\n            <View pointerEvents=\"none\" {...{className:joinClasses(styled&&\"rounded-control\")}}\n              style={{flex:1,backgroundColor:rgbaToHex(swatch.color)}}/>\n          </Pressable>;\n        })}\n      </View>}\n    </View>)}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/color/SwatchGrid.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/local-store.ts",
+      "content": "import {createStore} from \"zustand/vanilla\";\n\n/**\n * A per-instance store for transient gesture and draft state (a drag preview, a\n * text draft, a measured width). Components use it instead of `useState` so a\n * gesture's bookkeeping lives outside React's render cycle and can be read\n * synchronously from responder callbacks. Created by {@linkcode createLocalStore};\n * components use it through `useLocalStore`. Zustand owns the state; this value-replacement\n * adapter remains independent of React.\n */\nexport interface LocalStore<T> {\n  get():T;\n  /** Replaces the state, or derives it from the previous state. Listeners run only when it changes. */\n  set(next:T|((previous:T)=>T)):void;\n  /** Returns the unsubscribe function. */\n  subscribe(listener:()=>void):()=>void;\n}\n\n/** Creates a {@linkcode LocalStore}. Equal states (by `Object.is`) do not notify. */\nexport function createLocalStore<T>(initial:T):LocalStore<T>{\n  const store=createStore<{value:T}>(()=>({value:initial}));\n  return {\n    get:()=>store.getState().value,\n    set(next){\n      store.setState(current=>{\n        const value=typeof next===\"function\"?(next as (p:T)=>T)(current.value):next;\n        return Object.is(value,current.value)?current:{value};\n      });\n    },\n    subscribe(listener){return store.subscribe(()=>listener());},\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/local-store.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    },
+    {
+      "path": "packages/ui/src/components/useLocalStore.ts",
+      "content": "import {useRef,useSyncExternalStore} from \"react\";\nimport {createLocalStore,type LocalStore} from \"@/components/nyc-tron/ui/components/local-store\";\n\n/**\n * Creates one {@linkcode LocalStore} for the calling component on first render and\n * subscribes to it. Returns the current state and the store.\n */\nexport function useLocalStore<T>(initial:()=>T):readonly [T,LocalStore<T>]{\n  const ref=useRef<LocalStore<T>|null>(null);\n  if(!ref.current)ref.current=createLocalStore(initial());\n  const store=ref.current;\n  const state=useSyncExternalStore(store.subscribe,store.get,store.get);\n  return [state,store] as const;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/SwatchGrid",
+    "exports": [
+      "SwatchGrid",
+      "SwatchGridProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

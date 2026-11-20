@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/ScopesDock",
+  "title": "Scopes Dock",
+  "description": "Scopes Dock, a video timeline component. Props: target, source, program, onTargetChange.",
+  "registryDependencies": [
+    "@nyc-tron/SegmentedControl",
+    "@nyc-tron/forge/color/VideoScopesPanel"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timeline/ScopesDock.tsx",
+      "content": "import {Text,View,type ViewProps} from 'react-native';\nimport {SegmentedControl} from '@/components/nyc-tron/ui/components/SegmentedControl';\nimport {VideoScopesPanel,type VideoScopesPanelProps} from '@/components/nyc-tron/ui/components/forge/color/VideoScopesPanel';\nexport interface ScopesDockProps extends Omit<ViewProps,'children'> {\n target:'source'|'program';onTargetChange:(target:'source'|'program')=>void;\n source:VideoScopesPanelProps;program:VideoScopesPanelProps;\n expectedFrameTimeUs?:number;unstyled?:boolean;\n}\n/** Actual decoder/compositor measurements, with source/program assignment and stale-frame disclosure. */\nexport function ScopesDock({target,onTargetChange,source,program,expectedFrameTimeUs,unstyled=false,style,...props}:ScopesDockProps){\n if(!['source','program'].includes(target)||expectedFrameTimeUs!==undefined&&(!Number.isSafeInteger(expectedFrameTimeUs)||expectedFrameTimeUs<0))throw new RangeError('Invalid scope assignment');\n const data=target==='source'?source:program,stale=expectedFrameTimeUs!==undefined&&data.frameTimeUs!==expectedFrameTimeUs;\n return <View {...props} style={[{gap:8,minWidth:0},style]} accessibilityLabel=\"Video scopes dock\">\n  <SegmentedControl aria-label=\"Scope source\" value={target} onChange={onTargetChange} options={[{value:'source',label:'Source'},{value:'program',label:'Program'}]} unstyled={unstyled}/>\n  {stale?<Text {...{className:unstyled?undefined:'text-text'}} accessibilityLiveRegion=\"polite\">Scopes are not from the current presented frame</Text>:null}\n  <VideoScopesPanel {...data} unstyled={unstyled}/>\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/ScopesDock.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/ScopesDock",
+    "exports": [
+      "ScopesDock",
+      "ScopesDockProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

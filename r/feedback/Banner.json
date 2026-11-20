@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feedback/Banner",
+  "title": "Banner",
+  "description": "Inline status banner with info, success, danger or neutral tone, title, description, action slot and dismiss button, for React Native.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/feedback/Banner.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { Pressable, Text, View, type ViewProps } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { CloseGlyph, StatusGlyph, type StatusTone } from \"@/components/nyc-tron/ui/components/feedback/glyphs\";\n\nexport type BannerTone=StatusTone;\n\n/** Props for {@linkcode Banner}. Drop-in for Nitro Forge's `StudioBannerProps`. */\nexport interface BannerProps extends Omit<ViewProps,\"children\"|\"role\"> {\n  tone:BannerTone;\n  /** One sentence naming what happened. Never the only place an error's recovery is described. */\n  title:string;\n  description?:string;\n  /** A control that resolves the notice (Try again, Open settings). Rendered under the copy. */\n  action?:ReactNode;\n  /**\n   * `status` (default) is a polite live region. `alert` is assertive: use it\n   * only for a banner that appears because of something the person just did.\n   */\n  live?:\"status\"|\"alert\";\n  /** Shows a 44pt close control. The app owns whether the banner stays mounted. */\n  onDismiss?:()=>void;\n  /** Screen-reader name of the close control. @default \"Dismiss\" */\n  dismissLabel?:string;\n  /** Replaces the drawn status mark. */\n  icon?:ReactNode;\n  className?:string;\n  titleClassName?:string;\n  descriptionClassName?:string;\n  /** No default visual classes; the app supplies the full recipe. */\n  unstyled?:boolean;\n}\n\nconst tones:Record<BannerTone,string>={\n  info:\"border-info bg-surface-raised\",\n  success:\"border-success bg-surface-raised\",\n  danger:\"border-danger bg-surface-raised\",\n  neutral:\"border-border bg-surface-sunken\",\n};\n\n/**\n * Page- or pane-level notice: saved, couldn't save, offline, read-only.\n * Tone shows in the border and the drawn mark, and the title carries the\n * meaning in words, so color is never the only signal. Not dismissible unless\n * `onDismiss` is passed.\n */\nexport function Banner({\n  tone,title,description,action,live=\"status\",onDismiss,dismissLabel=\"Dismiss\",icon,\n  className,titleClassName,descriptionClassName,unstyled=false,...rest\n}:BannerProps) {\n  const styled=!unstyled;\n  return (\n    <View {...rest} role={live}\n      accessibilityLiveRegion={live===\"alert\"?\"assertive\":\"polite\"}\n      {...{className:joinClasses(\"w-full flex-row items-start\",\n        styled&&\"gap-3 rounded-card border ps-4 py-3\",styled&&tones[tone],\n        styled&&(onDismiss?\"pe-1\":\"pe-4\"),className)}}>\n      <View {...{className:\"pt-0.5\"}}>{icon??<StatusGlyph tone={tone}/>}</View>\n      <View {...{className:joinClasses(\"min-w-0 flex-1\",styled&&\"gap-1 py-px\")}}>\n        <Text {...{className:joinClasses(styled&&\"text-sm font-semibold leading-5 text-text\",titleClassName)}}>{title}</Text>\n        {description ? <Text {...{className:joinClasses(styled&&\"text-sm leading-5 text-text-muted\",descriptionClassName)}}>{description}</Text> : null}\n        {action ? <View {...{className:joinClasses(\"self-start\",styled&&\"mt-2\")}}>{action}</View> : null}\n      </View>\n      {onDismiss ? (\n        <Pressable onPress={onDismiss} accessibilityRole=\"button\" accessibilityLabel={dismissLabel}\n          // Negative margins keep the 44pt target from growing the banner; the\n          // cross lands centered on the title's first line.\n          style={{marginVertical:-10}}\n          {...{className:joinClasses(\"min-h-11 min-w-11 items-center justify-center\",\n            styled&&\"rounded-control hover:bg-surface-sunken active:opacity-70 focus-visible:ring-2 focus-visible:ring-focus\")}}>\n          <CloseGlyph/>\n        </Pressable>\n      ) : null}\n    </View>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/feedback/Banner.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/feedback/glyphs.tsx",
+      "content": "import { View } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\n\n/**\n * Status and close marks drawn with views, so they need no icon font, survive\n * forced colors (borders and backgrounds of a solid view stay visible) and\n * take the theme's tone tokens. Pass an `icon` to the owning component to use\n * the app's own icon set instead.\n */\nexport type StatusTone=\"info\"|\"success\"|\"danger\"|\"neutral\";\n\n// Fill and border in the same tone: forced colors drops backgrounds but\n// keeps borders, so every part of a mark is drawn with a border too.\nconst FACE:Record<StatusTone,string>={\n  info:\"bg-info border-info\",success:\"bg-success border-success\",\n  danger:\"bg-danger border-danger\",neutral:\"bg-text-muted border-text-muted\",\n};\n\n/** 18pt disc with an \"i\", \"!\" or check cut out of it in the raised surface color. */\nexport function StatusGlyph({tone}:{tone:StatusTone}) {\n  return (\n    <View aria-hidden importantForAccessibility=\"no-hide-descendants\"\n      {...{className:joinClasses(\"h-[18px] w-[18px] items-center justify-center rounded-full border\",FACE[tone])}}>\n      {tone===\"success\" ? (\n        // Two bars at right angles: the short stroke leads the long one.\n        <View style={{width:9,height:6,marginTop:-2,transform:[{rotate:\"-45deg\"}]}}\n          {...{className:\"border-b-2 border-l-2 border-surface-raised\"}}/>\n      ) : (\n        <View style={{alignItems:\"center\",gap:2,flexDirection:tone===\"danger\"?\"column\":\"column-reverse\"}}>\n          <View style={{width:0,height:7,borderLeftWidth:2,borderRadius:1}} {...{className:\"border-surface-raised\"}}/>\n          <View style={{width:2,height:2,borderWidth:1,borderRadius:1}} {...{className:\"border-surface-raised\"}}/>\n        </View>\n      )}\n    </View>\n  );\n}\n\n/** A 12pt cross made of two bars, colored by the caller's border token. */\nexport function CloseGlyph({className}:{className?:string}) {\n  // Bars are top borders so forced colors keeps them.\n  const bar=joinClasses(\"absolute h-0 w-3 border-t-2\",className??\"border-text-muted\");\n  return (\n    <View aria-hidden importantForAccessibility=\"no-hide-descendants\"\n      style={{width:12,height:12,alignItems:\"center\",justifyContent:\"center\"}}>\n      <View style={{transform:[{rotate:\"45deg\"}]}} {...{className:bar}}/>\n      <View style={{transform:[{rotate:\"-45deg\"}]}} {...{className:bar}}/>\n    </View>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/feedback/glyphs.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/feedback/Banner",
+    "exports": [
+      "Banner",
+      "BannerProps",
+      "BannerTone"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "feedback"
+  ],
+  "type": "registry:ui"
+}

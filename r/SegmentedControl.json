@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "SegmentedControl",
+  "title": "Segmented Control",
+  "description": "Single-choice segmented control exposed as a radio group, for React Native; arrow-key navigation on web only.",
+  "registryDependencies": [
+    "@nyc-tron/forms/choice-keys"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/SegmentedControl.tsx",
+      "content": "import { useRef, type ComponentRef } from \"react\";\nimport { I18nManager, Platform, Pressable, Text, View, type ViewProps, type StyleProp, type ViewStyle, type TextStyle } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { domIsRTL, isModified, nextChoiceIndex, rovingStop, webKey } from \"@/components/nyc-tron/ui/components/forms/choice-keys\";\n\nexport interface SegmentedOption<T extends string=string> {\n  readonly value:T;\n  readonly label:string;\n  readonly disabled?:boolean;\n}\nexport interface SegmentedControlProps<T extends string=string> extends Omit<ViewProps,\"children\"|\"role\"> {\n  options:readonly SegmentedOption<T>[];\n  /** A value matching no option leaves every segment unchecked. */\n  value:T|\"\";\n  onChange:(value:T)=>void;\n  /** Name of the radio group. Give this or `aria-labelledby`. */\n  \"aria-label\"?:string;\n  \"aria-labelledby\"?:string;\n  disabled?:boolean;\n  className?:string;\n  /** Classes for every segment, e.g. a flex-basis that wraps four into a 2x2 grid. */\n  segmentClassName?:string;\n  labelClassName?:string;\n  /** App-authored segment geometry/colors, including hosts without CSS interop. */\n  segmentStyle?:StyleProp<ViewStyle>|((state:{selected:boolean;disabled:boolean;pressed:boolean})=>StyleProp<ViewStyle>);\n  /** App-authored native label styling. */\n  labelStyle?:StyleProp<TextStyle>;\n  /** No default visual classes: the app supplies the full recipe. */\n  unstyled?:boolean;\n}\n\n/**\n * Exclusive choice among a few options, as a WAI-ARIA radio group. On web the\n * checked segment is the only Tab stop; arrows (flipped in RTL) move and\n * select with wrapping, Home/End jump, disabled segments are skipped. Native\n * screen readers reach every segment. Segments are at least 44pt tall and the\n * well wraps onto extra rows instead of overflowing a narrow pane.\n */\nexport function SegmentedControl<T extends string=string>({\n  options,value,onChange,disabled=false,className,segmentClassName,labelClassName,segmentStyle,labelStyle,unstyled=false,style,\n  \"aria-label\":ariaLabel,\"aria-labelledby\":ariaLabelledBy,...rest\n}:SegmentedControlProps<T>){\n  const styled=!unstyled;\n  const refs=useRef<(ComponentRef<typeof Pressable>|null)[]>([]);\n  const off=options.map(o=>disabled||!!o.disabled);\n  const checked=options.findIndex(o=>o.value===value);\n  const stop=rovingStop(checked,off);\n  const select=(i:number)=>{\n    const option=options[i];\n    if(!option||off[i]||option.value===value)return;\n    onChange(option.value);\n  };\n  const onKeyDown=(i:number)=>(event:unknown)=>{\n    const k=webKey(event);\n    if(isModified(k))return;\n    const rtl=domIsRTL(k.currentTarget)||I18nManager.isRTL;\n    const next=nextChoiceIndex(i,k.key,off,{axis:\"both\",rtl});\n    if(next===null)return;\n    k.preventDefault();\n    (refs.current[next] as unknown as {focus?:()=>void}|null)?.focus?.();\n    select(next);\n  };\n  return <View {...rest} role=\"radiogroup\" aria-label={ariaLabel} aria-labelledby={ariaLabelledBy}\n    style={[{flexDirection:\"row\",flexWrap:\"wrap\"},style]}\n    aria-disabled={disabled||undefined}\n    {...{className:joinClasses(\"max-w-full flex-row flex-wrap\",\n      styled&&\"gap-0.5 self-start rounded-control border border-border bg-surface-sunken p-0.5\",className)}}>\n    {options.map((option,i)=>{\n      const active=i===checked;\n      return <Pressable key={option.value} ref={node=>{refs.current[i]=node;}}\n        role=\"radio\" aria-checked={active} disabled={off[i]}\n        accessibilityState={{checked:active,disabled:off[i]}}\n        style={({pressed})=>[\n          {minHeight:44,minWidth:44,alignItems:\"center\",justifyContent:\"center\"},\n          typeof segmentStyle===\"function\"?segmentStyle({selected:active,disabled:!!off[i],pressed}):segmentStyle,\n        ]}\n        onPress={()=>select(i)}\n        {...(Platform.OS===\"web\"?{onKeyDown:onKeyDown(i),tabIndex:i===stop?0:-1}:{})}\n        {...{className:joinClasses(\"min-h-11 min-w-11 shrink-0 grow items-center justify-center\",\n          styled&&\"rounded-control px-3 py-1.5 focus-visible:ring-2 focus-visible:ring-focus motion-reduce:transition-none\",\n          styled&&(active?\"bg-primary forced-colors:border-2 forced-colors:border-[Highlight]\":\"bg-transparent hover:bg-surface-raised\"),\n          off[i]&&\"opacity-50\",segmentClassName)}}>\n        <Text numberOfLines={1} style={labelStyle} {...{className:joinClasses(styled&&\"text-sm font-medium\",\n          styled&&(active?\"text-on-primary\":\"text-text\"),labelClassName)}}>{option.label}</Text>\n      </Pressable>;\n    })}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/SegmentedControl.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [
+      "web"
+    ],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/SegmentedControl",
+    "exports": [
+      "SegmentedControl",
+      "SegmentedControlProps",
+      "SegmentedOption"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "input"
+  ],
+  "type": "registry:ui"
+}

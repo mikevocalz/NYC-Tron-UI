@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/cad/PBRMaterialInspector",
+  "title": "PBR Material Inspector",
+  "description": "PBR Material Inspector, a CAD and 3D component. Props: value, renderMaterial, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/PropertyInspector"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/cad/PBRMaterialInspector.tsx",
+      "content": "import type {ReactNode} from 'react';\nimport {View} from 'react-native';\nimport {PropertyInspector,type PropertyInspectorProps} from '@/components/nyc-tron/ui/components/forge/inputs/PropertyInspector';\nexport interface PBRMaterial {baseColor:string;roughness:number;metallic:number;normalScale:number;emissiveColor:string;emissiveIntensity:number;opacity:number;doubleSided:boolean}\nexport interface PBRMaterialInspectorProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {value:PBRMaterial;renderMaterial:()=>ReactNode;onCommit:(value:PBRMaterial,signal?:AbortSignal)=>unknown}\nexport function PBRMaterialInspector({value,renderMaterial,onCommit,...props}:PBRMaterialInspectorProps){return <View style={{gap:8}}><View style={{height:220}}>{renderMaterial()}</View><PropertyInspector {...props} label=\"PBR material\" fields={[\n {kind:'text',id:'baseColor',label:'Base color expression',value:value.baseColor,maxLength:256},{kind:'text',id:'emissiveColor',label:'Emissive color expression',value:value.emissiveColor,maxLength:256},\n ...(['roughness','metallic','opacity'] as const).map(id=>({kind:'number' as const,id,label:id,value:value[id],min:0,max:1,step:.01})),{kind:'number',id:'normalScale',label:'Normal intensity',value:value.normalScale,min:0,max:10,step:.01},{kind:'number',id:'emissiveIntensity',label:'Emissive intensity',value:value.emissiveIntensity,min:0,max:100000,step:.1},{kind:'boolean',id:'doubleSided',label:'Double sided',value:value.doubleSided}\n ]} onCommit={(id,v,s)=>onCommit({...value,[id]:v},s)}/></View>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/cad/PBRMaterialInspector.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/cad/PBRMaterialInspector",
+    "exports": [
+      "PBRMaterial",
+      "PBRMaterialInspector",
+      "PBRMaterialInspectorProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

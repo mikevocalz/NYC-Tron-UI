@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/document/DocumentReadAloudTransport",
+  "title": "Document Read Aloud Transport",
+  "description": "Document Read Aloud Transport, a word processor component. Props: describeBlock.",
+  "registryDependencies": [
+    "@nyc-tron/forge/office/ReadAloudTransport"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/document/DocumentReadAloudTransport.tsx",
+      "content": "import {ReadAloudTransport,type ReadAloudTransportProps} from \"@/components/nyc-tron/ui/components/forge/office/ReadAloudTransport\";\n\n/** Props for {@linkcode DocumentReadAloudTransport}. */\nexport interface DocumentReadAloudTransportProps extends Omit<ReadAloudTransportProps,\"context\"|\"label\"> {\n  /**\n   * Names the part of the document a block belongs to, usually the nearest\n   * heading above it (\"Budget › Travel\"). Shown above the sentence.\n   */\n  readonly describeBlock?:(block:number)=>string|undefined;\n  /** @default \"Read document aloud\" */\n  readonly label?:string;\n}\n\n/**\n * Read Aloud for a text document (H-21). Sentences come from the document's\n * blocks (`readAloudSentences` with each block's index); the app highlights\n * `sentences[index]` (block, start, end) in the editor and moves the caret\n * there when reading stops.\n */\nexport function DocumentReadAloudTransport({describeBlock,label=\"Read document aloud\",...rest}:DocumentReadAloudTransportProps){\n  const current=rest.sentences[Math.min(Math.max(rest.index,0),Math.max(rest.sentences.length-1,0))];\n  const context=current&&describeBlock?describeBlock(current.block):undefined;\n  return <ReadAloudTransport {...rest} label={label} {...(context?{context}:{})}/>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/document/DocumentReadAloudTransport.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/document/DocumentReadAloudTransport",
+    "exports": [
+      "DocumentReadAloudTransport",
+      "DocumentReadAloudTransportProps"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

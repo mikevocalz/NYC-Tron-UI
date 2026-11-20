@@ -1,0 +1,55 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/LevelMeter",
+  "title": "Level Meter",
+  "description": "Level Meter, an audio mixing and editing component. Props: level, peakHold, orientation.",
+  "registryDependencies": [
+    "@nyc-tron/forge/audio/level-meter"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/announce.ts",
+      "content": "import { useEffect, useRef } from \"react\";\nimport { AccessibilityInfo, Platform } from \"react-native\";\n\n/**\n * Speak `text` at low priority after current speech. react-native-web has no\n * `announceForAccessibilityWithOptions`; calling it there threw inside an\n * effect and unmounted the whole screen, so fall back to the plain call.\n * Qt supports priority but no native announcement queue; request low priority\n * there without claiming that speech is queued behind another announcement.\n */\nexport function announce(text: string): void {\n  const info: Partial<typeof AccessibilityInfo> = AccessibilityInfo;\n  if (typeof info.announceForAccessibilityWithOptions === \"function\") {\n    const qt=String(Platform.OS)===\"qnx\"||String(Platform.OS)===\"marathon\";\n    info.announceForAccessibilityWithOptions(text, qt?{priority:\"low\"}:{queue:true,priority:\"low\"});\n  } else {\n    info.announceForAccessibility?.(text);\n  }\n}\n\n/**\n * Announce `status` on iOS each time it changes after mount. Android and web\n * already speak it through the `accessibilityLiveRegion` on the status text;\n * VoiceOver ignores live regions, so without this it heard no phase change.\n */\nexport function useStatusAnnouncement(status: string): void {\n  const previous = useRef(status);\n  useEffect(() => {\n    if (previous.current === status) return;\n    previous.current = status;\n    if (Platform.OS === \"ios\") announce(status);\n  }, [status]);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/announce.ts"
+    },
+    {
+      "path": "packages/ui/src/components/forge/audio/LevelMeter.tsx",
+      "content": "import {valueAccessibility} from \"@/components/nyc-tron/ui/components/forge/value-a11y\";\nimport { useEffect, useRef } from \"react\";\nimport { View, type ViewProps } from \"react-native\";\nimport { announce as speak } from \"@/components/nyc-tron/ui/components/forge/announce\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport {\n  createMeterAnnouncer, METER_BAND_LABELS, meterBand, meterFill, type MeterBand,\n} from \"@/components/nyc-tron/ui/components/forge/audio/level-meter\";\n\n/** Props for {@linkcode LevelMeter}. */\nexport interface LevelMeterProps extends Omit<ViewProps, \"children\"> {\n  /** Current linear input peak in [0, 1] from the app's audio engine. */\n  readonly level: number;\n  /** Held peak in [0, 1], drawn as a thin marker. */\n  readonly peakHold?: number;\n  /** @default \"horizontal\" */\n  readonly orientation?: \"horizontal\" | \"vertical\";\n  /** Thickness across the bar, in pt. @default 8 */\n  readonly thickness?: number;\n  /**\n   * Speak band changes (\"Input clipping\") through the screen reader, at most\n   * once per `announceIntervalMs`. Turn on only while a take is live.\n   * @default false\n   */\n  readonly announce?: boolean;\n  /** @default 2000 */\n  readonly announceIntervalMs?: number;\n  /** Spoken band text, for localization. @default METER_BAND_LABELS */\n  readonly bandLabels?: Readonly<Record<MeterBand, string>>;\n  className?: string;\n  fillClassName?: string;\n  /** Applied to the fill instead of `fillClassName` while clipping. */\n  clipClassName?: string;\n  unstyled?: boolean;\n}\n\n/**\n * Display-only input meter. The bar is a `progressbar` whose value text is a\n * coarse band, so a screen reader that focuses it hears \"Input level good\",\n * not a number that changes 30 times a second. With `announce`, band changes\n * are spoken at low priority and throttled; the bar itself is not a live\n * region, which would speak on every frame.\n */\nexport function LevelMeter({\n  level, peakHold, orientation = \"horizontal\", thickness = 8, announce = false,\n  announceIntervalMs = 2000, bandLabels = METER_BAND_LABELS,\n  className, fillClassName, clipClassName, unstyled = false, style, ...props\n}: LevelMeterProps) {\n  const fill = meterFill(level);\n  const band = meterBand(level);\n  const hold = peakHold === undefined ? undefined : meterFill(peakHold);\n  const announcer = useRef<ReturnType<typeof createMeterAnnouncer> | null>(null);\n  const announcerKey = useRef(\"\");\n  const key = announceIntervalMs + \"|\" + JSON.stringify(bandLabels);\n  if (announcer.current === null || announcerKey.current !== key) {\n    announcer.current = createMeterAnnouncer({ minIntervalMs: announceIntervalMs, labels: bandLabels });\n    announcerKey.current = key;\n  }\n  useEffect(() => {\n    if (!announce) return;\n    const text = announcer.current?.(level, Date.now());\n    if (text) speak(text);\n  }, [announce, level]);\n\n  const vertical = orientation === \"vertical\";\n  const extent = (fraction: number) => (fraction * 100).toFixed(1) + \"%\";\n  const clipping = band === \"clipping\";\n  return <View\n    {...props}\n    {...{ className: joinClasses(\"overflow-hidden\", !unstyled && \"rounded-full bg-surface-sunken\", className) }}\n    style={[vertical ? { width: thickness, height: \"100%\" } : { height: thickness, width: \"100%\" }, style]}\n    accessible\n    accessibilityRole=\"progressbar\"\n    accessibilityLabel={props.accessibilityLabel ?? \"Input level\"}\n    {...valueAccessibility({ min: 0, max: 100, now: Math.round(fill * 100), text: bandLabels[band] })}\n  >\n    <View\n      {...{ className: joinClasses(!unstyled && (clipping ? \"bg-danger\" : \"bg-accent\"),\n        clipping ? clipClassName ?? fillClassName : fillClassName) }}\n      style={vertical\n        ? { position: \"absolute\", left: 0, right: 0, bottom: 0, height: extent(fill) }\n        : { position: \"absolute\", top: 0, bottom: 0, left: 0, width: extent(fill) }}\n    />\n    {hold !== undefined && hold > 0 ? <View\n      {...{ className: joinClasses(!unstyled && \"bg-text\") }}\n      style={vertical\n        // Pull the 2 pt marker back by up to its own width so a held peak at\n        // full scale (clipping, the case that matters most) stays inside the\n        // clipped track instead of being drawn past its end.\n        ? { position: \"absolute\", left: 0, right: 0, height: 2, bottom: extent(hold), marginBottom: -2 * hold }\n        : { position: \"absolute\", top: 0, bottom: 0, width: 2, left: extent(hold), marginLeft: -2 * hold }}\n    /> : null}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/audio/LevelMeter.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/value-a11y.ts",
+      "content": "import {Platform} from \"react-native\";\n\n/** Native value semantics plus explicit ARIA for React Native Web. */\nexport function valueAccessibility(value:{min?:number;max?:number;now?:number;text?:string}){\n  return {accessibilityValue:value,...(Platform.OS===\"web\"?{\n    \"aria-valuemin\":value.min,\"aria-valuemax\":value.max,\"aria-valuenow\":value.now,\"aria-valuetext\":value.text,\n  }:{})};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/value-a11y.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/LevelMeter",
+    "exports": [
+      "LevelMeter",
+      "LevelMeterProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

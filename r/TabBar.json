@@ -1,0 +1,47 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "TabBar",
+  "title": "Tab Bar",
+  "description": "Tab strip with tablist or link-navigation semantics, icons and compact density, for React Native; web roving focus.",
+  "registryDependencies": [
+    "@nyc-tron/forms/choice-keys"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/TabBar.tsx",
+      "content": "import { useRef, type ComponentRef, type ReactNode } from \"react\";\nimport { I18nManager, Platform, Pressable, Text, View, type ViewProps } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { domIsRTL, isModified, nextChoiceIndex, rovingStop, webKey } from \"@/components/nyc-tron/ui/components/forms/choice-keys\";\n\n/** Handed to an icon render function so the glyph can follow the active state. */\nexport interface TabIconState { readonly active:boolean }\nexport interface TabBarTab {\n  key:string;\n  label:string;\n  /** A node, or a function of the active state. */\n  icon?:ReactNode|((state:TabIconState)=>ReactNode);\n  active?:boolean;\n  disabled?:boolean;\n  onPress?:()=>void;\n  /** Link destination in `semantics=\"navigation\"`; rendered as an anchor on web. */\n  href?:string;\n}\nexport interface TabBarProps extends Omit<ViewProps,\"children\"|\"role\"> {\n  tabs:readonly TabBarTab[];\n  /**\n   * `tabs` (default): a tablist that switches a panel, `aria-selected` on the\n   * active tab. `navigation`: route links with `aria-current=\"page\"` and no\n   * tab roles, because going to a section is not switching a tab panel.\n   */\n  semantics?:\"tabs\"|\"navigation\";\n  /**\n   * `navigation`: phone bottom bar, icon over label, tabs share the full width.\n   * `compact`: pane tabs, icon beside label. A compact bar is as wide as its\n   * tabs, so it can sit in a header row beside actions or a title; it shrinks\n   * only when the row runs out of room, and labels truncate only then.\n   */\n  density?:\"navigation\"|\"compact\";\n  \"aria-label\"?:string;\n  className?:string;\n  tabClassName?:string;\n  labelClassName?:string;\n  unstyled?:boolean;\n}\nconst renderIcon=(icon:TabBarTab[\"icon\"],state:TabIconState)=>typeof icon===\"function\"?icon(state):icon;\n\n/**\n * Presentational tab bar: the router or pane owner holds the active tab and\n * passes it in. In `tabs` mode on web the active tab is the only Tab stop and\n * arrows (flipped in RTL) move and activate, Home/End jump. Every tab is at\n * least 44pt in both dimensions.\n */\nexport function TabBar({\n  tabs,semantics=\"tabs\",density=\"navigation\",\"aria-label\":ariaLabel=\"Navigation\",\n  className,tabClassName,labelClassName,unstyled=false,...rest\n}:TabBarProps){\n  const styled=!unstyled,nav=semantics===\"navigation\",compact=density===\"compact\";\n  const refs=useRef<(ComponentRef<typeof Pressable>|null)[]>([]);\n  const off=tabs.map(t=>!!t.disabled);\n  const activeIndex=tabs.findIndex(t=>t.active);\n  const stop=rovingStop(activeIndex,off);\n  const onKeyDown=(i:number)=>(event:unknown)=>{\n    const k=webKey(event);\n    if(isModified(k))return;\n    const next=nextChoiceIndex(i,k.key,off,{axis:\"horizontal\",rtl:domIsRTL(k.currentTarget)||I18nManager.isRTL});\n    if(next===null)return;\n    k.preventDefault();\n    (refs.current[next] as unknown as {focus?:()=>void}|null)?.focus?.();\n    tabs[next]?.onPress?.();\n  };\n  // Compact bars size to their tabs instead of claiming the whole row: a\n  // full-width bar beside a header action pushed the action out of the pane\n  // and left the tab no room to keep its label (Forge Design Studio, 2026-11-05).\n  return <View {...rest} role={nav?\"navigation\":\"tablist\"} aria-label={ariaLabel}\n    {...{className:joinClasses(compact?\"min-w-0 shrink flex-row items-stretch\":\"w-full min-w-0 flex-row items-stretch\",\n      styled&&(compact?\"gap-0.5\":\"border-t border-border bg-surface-raised px-1 py-1\"),className)}}>\n    {tabs.map((tab,i)=>{\n      const active=!!tab.active;\n      const web=Platform.OS===\"web\";\n      const linkProps=nav&&tab.href&&web?{href:tab.href}:{};\n      return <Pressable key={tab.key} ref={node=>{refs.current[i]=node;}}\n        role={nav?\"link\":\"tab\"}\n        aria-label={tab.label}\n        aria-selected={nav?undefined:active}\n        aria-disabled={tab.disabled||undefined}\n        disabled={tab.disabled}\n        accessibilityState={nav?{disabled:!!tab.disabled}:{selected:active,disabled:!!tab.disabled}}\n        onPress={tab.onPress}\n        {...linkProps}\n        {...(web?{\n          \"aria-current\":nav&&active?\"page\":undefined,\n          ...(nav?{}:{onKeyDown:onKeyDown(i),tabIndex:i===stop?0:-1}),\n        }:{})}\n        {...{className:joinClasses(\"min-h-11 min-w-11 items-center justify-center\",\n          // A compact tab keeps its content width (grow 0, basis auto) and shrinks only once the bar is full; the icon never shrinks.\n          compact?\"min-w-0 shrink grow-0 basis-auto flex-row gap-1.5 px-2\":\"flex-1 gap-1 px-1 py-1.5 min-h-14\",\n          styled&&\"rounded-control focus-visible:ring-2 focus-visible:ring-focus motion-reduce:transition-none\",\n          styled&&(active?\"bg-primary forced-colors:border-2 forced-colors:border-[Highlight]\":\"bg-transparent hover:bg-surface-sunken\"),\n          tab.disabled&&\"opacity-50\",tabClassName)}}>\n        {tab.icon?<View aria-hidden {...{className:\"shrink-0 items-center justify-center\"}}>{renderIcon(tab.icon,{active})}</View>:null}\n        <Text numberOfLines={1} {...{className:joinClasses(styled&&\"text-sm font-medium\",\n          compact&&\"min-w-0 shrink\",\n          styled&&(active?\"text-on-primary\":\"text-text-muted\"),labelClassName)}}>{tab.label}</Text>\n      </Pressable>;\n    })}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/TabBar.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [
+      "web"
+    ],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/TabBar",
+    "exports": [
+      "TabBar",
+      "TabBarProps",
+      "TabBarTab",
+      "TabIconState"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "navigation"
+  ],
+  "type": "registry:ui"
+}

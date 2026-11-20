@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/spreadsheet/RangeComments",
+  "title": "Range Comments",
+  "description": "Range Comments, a spreadsheet component. Props: anchors.",
+  "registryDependencies": [
+    "@nyc-tron/forge/pdf/CommentsThreadPanel"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/spreadsheet/RangeComments.tsx",
+      "content": "import {CommentsThreadPanel,type CommentsThreadPanelProps} from '@/components/nyc-tron/ui/components/forge/pdf/CommentsThreadPanel';\nexport interface RangeCommentsProps extends Omit<CommentsThreadPanelProps,'groupBy'|'describeLocation'> {\n /** Actual workbook/sheet/range label per thread, e.g. Budget!B4:E9. */\n anchors:Readonly<Record<string,string>>;\n}\nexport function RangeComments({anchors,...props}:RangeCommentsProps){\n if(props.threads.some(t=>!anchors[t.id]?.trim()||anchors[t.id]!.length>2048))throw new RangeError('Range comments require actual range anchors');\n return <CommentsThreadPanel {...props} label={props.label??'Range comments'} groupBy=\"none\" describeLocation={thread=>anchors[thread.id]!}/>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/spreadsheet/RangeComments.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/spreadsheet/RangeComments",
+    "exports": [
+      "RangeComments",
+      "RangeCommentsProps"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/inputs/PointEditor2D",
+  "title": "Point Editor 2D",
+  "description": "Point Editor 2D, a precision input component. Props: points, selectedId, renderPreview, onSelect.",
+  "dependencies": [
+    "react-native-gesture-handler@>=3.3.0 <4",
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Select",
+    "@nyc-tron/feedback/ErrorMessage",
+    "@nyc-tron/forge/inputs/PropertyInspector"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/inputs/PointEditor2D.tsx",
+      "content": "import {useLayoutEffect,useRef,type ReactNode} from 'react';\nimport {View,type ViewProps} from 'react-native';\nimport {GestureDetector,usePanGesture} from 'react-native-gesture-handler';\nimport {createStore} from 'zustand/vanilla';\nimport {useStore} from 'zustand';\nimport {PropertyInspector} from '@/components/nyc-tron/ui/components/forge/inputs/PropertyInspector';\nimport {Select} from '@/components/nyc-tron/ui/components/Select';\nimport {ErrorMessage} from '@/components/nyc-tron/ui/components/feedback/ErrorMessage';\nimport {useEditorBoundary} from '@/components/nyc-tron/ui/components/gestures/editor-interaction-scope';\nimport {controlIdentity,useScopedControl,type ScopedControlProps} from '@/components/nyc-tron/ui/components/forge/inputs/useScopedControl';\nexport interface EditorPoint2D {id:string;label:string;x:number;y:number}\nexport interface PointEditor2DProps extends Omit<ViewProps,'children'>,ScopedControlProps {\n points:readonly EditorPoint2D[];selectedId:string|null;onSelect:(id:string)=>void;\n onCommit:(point:EditorPoint2D,signal?:AbortSignal)=>unknown;renderPreview:(points:readonly EditorPoint2D[])=>ReactNode;unstyled?:boolean;\n}\n/** Normalized point editor with one active 44pt native grip and equivalent numeric controls. */\nexport function PointEditor2D({scope='point-editor',revision=0,...props}:PointEditor2DProps){\n const {points,selectedId,onSelect:_select,onCommit:_commit,renderPreview,unstyled=false,disabledReason,style,...rest}=props;\n if(points.length>64||new Set(points.map(p=>p.id)).size!==points.length||points.some(p=>!p.id.trim()||p.id.length>256||!p.label.trim()||p.label.length>1024||![p.x,p.y].every(n=>Number.isFinite(n)&&n>=0&&n<=1)))throw new RangeError('Invalid normalized editor points');\n const local=useRef<ReturnType<typeof makeStore>|null>(null);local.current??=makeStore();const store=local.current,v=useStore(store,s=>s),active=useRef<{point:EditorPoint2D;width:number;height:number}|null>(null);\n const owner=useEditorBoundary([JSON.stringify([...controlIdentity(scope,revision),points,selectedId,disabledReason]),v.width,v.height]),guard=useScopedControl(owner,props,disabledReason!==undefined),off=guard.pending||disabledReason!==undefined,point=points.find(p=>p.id===selectedId),shown=v.draft??point;\n const cancel=()=>{active.current=null;store.setState({draft:null});};useLayoutEffect(()=>{cancel();},[owner,off]);\n const translated=(x:number,y:number)=>{const a=active.current;return a?{...a.point,x:Math.max(0,Math.min(1,a.point.x+x/a.width)),y:Math.max(0,Math.min(1,a.point.y+y/a.height))}:null;};\n const gesture=usePanGesture({enabled:!off&&!!point&&v.width>44&&v.height>44,runOnJS:true,maxPointers:1,minDistance:2,\n onActivate:()=>{const h=guard.current(),p=h?.points.find(p=>p.id===h.selectedId),s=store.getState();if(p)active.current={point:p,width:s.width-44,height:s.height-44};},\n onUpdate:e=>{const p=translated(e.translationX,e.translationY);if(p)store.setState({draft:p});},\n onTouchesDown:e=>{if(e.numberOfTouches>1)cancel();},onDeactivate:e=>{if(e.canceled){cancel();return;}const p=translated(e.translationX,e.translationY);cancel();if(p)void guard.run('point',(h,s)=>h.points.some(q=>q.id===p.id)?h.onCommit(p,s):undefined);},onFinalize:e=>{if(e.canceled)cancel();}});\n return <View {...rest} style={[{gap:8},style]}><Select label=\"Active point\" value={selectedId??''} options={points.map(p=>({value:p.id,label:p.label}))} disabled={off||points.length===0} unstyled={unstyled} onValueChange={id=>{const h=guard.current();if(h?.points.some(p=>p.id===id))h.onSelect(id);}}/>\n <View style={{height:280,minWidth:44,overflow:'hidden'}} onLayout={e=>{const {width,height}=e.nativeEvent.layout;if(width!==v.width||height!==v.height)store.setState({width,height});}}><View pointerEvents=\"none\" style={{position:'absolute',left:22,top:22,right:22,bottom:22}}>{renderPreview(points.map(p=>v.draft?.id===p.id?v.draft:p))}</View>\n {shown?<GestureDetector gesture={gesture}><View collapsable={false} accessibilityLabel={'Drag '+shown.label} style={{position:'absolute',left:shown.x*Math.max(0,v.width-44),top:shown.y*Math.max(0,v.height-44),width:44,height:44,alignItems:'center',justifyContent:'center'}}><View {...{className:unstyled?undefined:'border-2 border-focus bg-surface-raised'}} style={{width:18,height:18,borderRadius:9}}/></View></GestureDetector>:null}</View>\n {point?<PropertyInspector scope={scope} revision={revision} label={point.label} disabledReason={off?'Point editing unavailable':undefined} unstyled={unstyled} fields={(['x','y'] as const).map(axis=>({kind:'number',id:axis,label:axis.toUpperCase(),value:point[axis],min:0,max:1,step:.001}))} onCommit={(axis,value)=>guard.run('point',(h,s)=>{const p=h.points.find(p=>p.id===h.selectedId);if(p&&(axis==='x'||axis==='y')&&typeof value==='number'&&value>=0&&value<=1)return h.onCommit({...p,[axis]:value},s);})}/>:null}<ErrorMessage message={guard.error??disabledReason} unstyled={unstyled}/></View>;\n}\nfunction makeStore(){return createStore(()=>({width:0,height:0,draft:null as EditorPoint2D|null}));}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/inputs/PointEditor2D.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/inputs/useScopedControl.ts",
+      "content": "import {useLayoutEffect,useRef} from 'react';\nimport {useOwnedAction} from '@/components/nyc-tron/ui/components/shell/useOwnedAction';\n\n/** Document identity for controlled editor tools. Native handles remain outside UI state. */\nexport interface ScopedControlProps {scope?:string;revision?:string|number;disabledReason?:string}\nexport function controlIdentity(scope:string,revision:string|number){\n if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError('Invalid control identity');\n return [scope,revision] as const;\n}\n\n/** Admit one host operation and invalidate handlers at the committed boundary. */\nexport function useScopedControl<P>(boundary:string,props:P,disabled=false){\n const action=useOwnedAction(boundary),pending=action.pending!==null;\n const committed=useRef<{boundary:string;props:P;disabled:boolean}|null>(null);\n const admitted=useRef<symbol|null>(null);\n useLayoutEffect(()=>{committed.current={boundary,props,disabled};});\n useLayoutEffect(()=>{admitted.current=null;},[boundary]);\n useLayoutEffect(()=>()=>{committed.current=null;},[]);\n const current=()=>{const p=committed.current;return p&&p.boundary===boundary&&!p.disabled&&!pending&&!admitted.current?p.props:null;};\n const run=(id:string,operation:(props:P,signal:AbortSignal)=>unknown|Promise<unknown>)=>{\n  const p=current();if(!p)return;\n  const token=Symbol(id);admitted.current=token;\n  return action.run(id,signal=>operation(p,signal),undefined,{pendingForAsyncOnly:true}).finally(()=>{if(admitted.current===token)admitted.current=null;});\n };\n const cancel=()=>{if(committed.current?.boundary!==boundary)return false;admitted.current=null;action.cancel();return true;};\n return {current,run,cancel,pending,pendingId:action.pending,error:action.error};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
+    },
+    {
+      "path": "packages/ui/src/components/gestures/editor-interaction-scope.ts",
+      "content": "import {createContext,useRef} from 'react';\n/** Invalidate ephemeral gestures without remounting focused controls or product state. */\nexport const EditorInteractionScope=createContext<string|null>(null);\nlet nextInstance=0;\n/** Compare cached document signatures by identity without reserializing a whole\n * timeline on every playback tick or nesting its data in child scope strings. */\nexport function useEditorBoundary(parts:readonly unknown[]):string{\n const ref=useRef<{id:number;version:number;parts:readonly unknown[]}|null>(null);\n ref.current??={id:++nextInstance,version:0,parts:[]};\n const current=ref.current;\n if(parts.length!==current.parts.length||parts.some((part,index)=>!Object.is(part,current.parts[index]))){current.parts=[...parts];current.version++;}\n return current.id+':'+current.version;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/gestures/editor-interaction-scope.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/action-owner.ts",
+      "content": "import { createStore } from \"zustand/vanilla\";\n\n/** UI request state. Abort controllers stay in the owner's closure. */\nexport interface ActionState { readonly pending: string | null; readonly error: string | null }\nexport function createActionOwner(currentScope: () => string) {\n  const store = createStore<ActionState>(() => ({ pending: null, error: null }));\n  let active = false;\n  let current: { readonly scope: string; readonly abort: AbortController } | null = null;\n  function cancel() {\n    const previous = current; current = null;\n    previous?.abort.abort();\n  }\n  return {\n    store,\n    activate() { cancel(); active = true; store.setState({ pending: null, error: null }); },\n    deactivate() { active = false; cancel(); },\n    cancel() { cancel(); store.setState({ pending: null }); },\n    async run<T>(id: string, operation: (signal: AbortSignal) => T | Promise<T>, consume?: (value: T) => void, options?: { pendingForAsyncOnly?: boolean }): Promise<boolean> {\n      if (!active) return false;\n      cancel();\n      const request = { scope: currentScope(), abort: new AbortController() };\n      current = request;\n      const valid = () => active && current === request && request.scope === currentScope();\n      if (options?.pendingForAsyncOnly) store.setState({ error: null });\n      else store.setState({ pending: id, error: null });\n      try {\n        if (!valid()) return false;\n        const result = operation(request.abort.signal);\n        let value: T;\n        if (options?.pendingForAsyncOnly) {\n          if (result && typeof (result as Promise<T>).then === 'function') {\n            // A synchronous acknowledgement or already-resolved promise must not\n            // disable (and blur) the focused control between keyboard commands.\n            let settled = false;\n            const completion = Promise.resolve(result).then(value => { settled = true; return value; }, error => { settled = true; throw error; });\n            void Promise.resolve().then(() => { if (!settled && valid()) store.setState({ pending: id, error: null }); });\n            value = await completion;\n          } else value = result as T;\n        } else value = await result;\n        if (!valid()) return false;\n        consume?.(value);\n        if (!valid()) return false;\n        store.setState({ pending: null });\n        return true;\n      } catch (error) {\n        if (!valid()) return false;\n        store.setState({ pending: null, error: error instanceof Error ? error.message : String(error) });\n        return false;\n      } finally { if (current === request) current = null; }\n    },\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/action-owner.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/useOwnedAction.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport { useStore } from \"zustand\";\nimport { createActionOwner } from \"@/components/nyc-tron/ui/components/shell/action-owner\";\n\n/** Cancel stale requests at the committed document boundary, before new controls accept input. */\nexport function useOwnedAction(scope: string) {\n  const committed = useRef(scope);\n  const ref = useRef<ReturnType<typeof createActionOwner> | null>(null);\n  ref.current ??= createActionOwner(() => committed.current);\n  const owner = ref.current;\n  useLayoutEffect(() => {\n    committed.current = scope;\n    owner.activate();\n    return () => owner.deactivate();\n  }, [owner, scope]);\n  const state = useStore(owner.store, value => value);\n  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);\n  return { ...state, run, cancel: owner.cancel };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/inputs/PointEditor2D",
+    "exports": [
+      "EditorPoint2D",
+      "PointEditor2D",
+      "PointEditor2DProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "react-native-gesture-handler",
+      "zustand"
+    ],
+    "requiresNativeRebuild": true
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

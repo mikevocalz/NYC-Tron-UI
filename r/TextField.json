@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "TextField",
+  "title": "Text Field",
+  "description": "Labeled TextInput with helper text, error text, start adornment and error border state, for React Native.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/TextField.tsx",
+      "content": "import type { ComponentRef, ReactNode, Ref } from 'react';\nimport { TextInput, Text, View, type TextInputProps } from 'react-native';\nimport { joinClasses } from '@/components/nyc-tron/ui/components/styles';\n/** NYC-Tron semantic native text input. App colors/radii are theme-owned. */\nexport interface TextFieldProps extends TextInputProps {\n  id: string;\n  label: string;\n  helperText?: string;\n  errorText?: string;\n  startAdornment?: ReactNode;\n  className?: string;\n  inputClassName?: string;\n  labelClassName?: string;\n  /** No default visual classes: the app supplies the full recipe. */\n  unstyled?: boolean;\n  /** Forwarded to the TextInput (React 19 ref-as-prop), for focus management. */\n  ref?: Ref<ComponentRef<typeof TextInput>>;\n}\nexport function TextField({\n id,label,helperText,errorText,startAdornment,className,inputClassName,\n labelClassName,editable=true,unstyled=false,...props\n}:TextFieldProps) {\n const styled=!unstyled;\n return (\n  <View {...{className:joinClasses('gap-2',className)}}>\n   <Text nativeID={id+'-label'} {...{className:joinClasses(styled&&'text-sm font-semibold text-text',labelClassName)}}>\n    {label}\n   </Text>\n   {/* One border color at a time: border-border and border-danger together\n       resolve by stylesheet order, not by intent. */}\n   <View {...{className:joinClasses('min-h-12 flex-row items-center gap-2',\n     styled&&'rounded-control border bg-surface-sunken px-3',\n     styled&&(errorText?'border-danger':'border-border'),\n     styled&&!editable&&'opacity-50')}}>\n    {startAdornment ?? null}\n    <TextInput\n     {...props}\n     editable={editable}\n     accessibilityLabel={label}\n     accessibilityLabelledBy={id+'-label'}\n     accessibilityHint={errorText??helperText}\n     accessibilityState={{...props.accessibilityState,disabled:!editable}}\n     {...{className:joinClasses('flex-1 min-h-11',styled&&'text-base text-text',inputClassName)}}\n    />\n   </View>\n   {errorText ? <Text accessibilityRole=\"alert\" accessibilityLiveRegion=\"polite\" {...{className:joinClasses(styled&&'text-sm text-danger')}}>{errorText}</Text>\n   : helperText ? <Text {...{className:joinClasses(styled&&'text-sm text-text-muted')}}>{helperText}</Text> : null}\n  </View>\n );\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/TextField.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-fail",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/TextField",
+    "exports": [
+      "TextField",
+      "TextFieldProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "input"
+  ],
+  "type": "registry:ui"
+}

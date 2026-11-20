@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "navigation/drawer-model",
+  "title": "drawer model",
+  "description": "drawer model, a navigation state model. Exports drawerGeometry.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/navigation/drawer-model.ts",
+      "content": "/**\n * A strictly controlled React Native Windows-compatible navigation fallback.\n * This is NOT WinUI NavigationView; native hosts map the same semantic modes\n * to WinUI 3 PaneDisplayMode (Left, LeftCompact, LeftMinimal).\n */\nexport type DrawerMode = \"expanded\" | \"compact\" | \"minimal\";\nexport interface DrawerGeometryInput {\n  readonly mode: DrawerMode;\n  readonly open: boolean;\n  readonly expandedWidth?: number;\n  readonly compactWidth?: number;\n}\nexport interface DrawerGeometry {\n  readonly contentInsetLeft: number;\n  readonly paneWidth: number;\n  readonly showPane: boolean;\n  readonly showLabels: boolean;\n  readonly overlay: boolean;\n  readonly scrim: boolean;\n}\nexport function drawerGeometry({\n  mode, open, expandedWidth = 280, compactWidth = 64,\n}: DrawerGeometryInput): DrawerGeometry {\n  if (!Number.isFinite(expandedWidth) || expandedWidth < 180 ||\n      !Number.isFinite(compactWidth) || compactWidth < 44 ||\n      compactWidth >= expandedWidth) {\n    throw new RangeError(\"Invalid navigation drawer widths\");\n  }\n  switch (mode) {\n    case \"expanded\":\n      return { contentInsetLeft: expandedWidth, paneWidth: expandedWidth,\n        showPane: true, showLabels: true, overlay: false, scrim: false };\n    case \"compact\":\n      return { contentInsetLeft: compactWidth,\n        paneWidth: open ? expandedWidth : compactWidth,\n        showPane: true, showLabels: open, overlay: open, scrim: open };\n    case \"minimal\":\n      return { contentInsetLeft: 0,\n        paneWidth: open ? expandedWidth : 0,\n        showPane: open, showLabels: open, overlay: open, scrim: open };\n    default:\n      throw new RangeError(\"Unknown navigation drawer mode\");\n  }\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/navigation/drawer-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/navigation/drawer-model",
+    "exports": [
+      "DrawerGeometry",
+      "DrawerGeometryInput",
+      "DrawerMode",
+      "drawerGeometry"
+    ]
+  },
+  "categories": [
+    "navigation"
+  ],
+  "type": "registry:lib"
+}

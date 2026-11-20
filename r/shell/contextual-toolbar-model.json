@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/contextual-toolbar-model",
+  "title": "contextual toolbar model",
+  "description": "contextual toolbar model, an app shell state model. Exports itemsForSelection, overflowDescription, splitOverflow.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/contextual-toolbar-model.ts",
+      "content": "/**\n * One control a {@linkcode ContextualToolbar} may show. The host declares\n * every item once; the toolbar shows the ones that apply to the current\n * selection kind and moves the lowest-priority ones into \"More\" when the\n * row runs out of width.\n */\nexport interface ToolbarItemSpec {\n  readonly id:string;\n  /** Accessible name, menu text, and the visible text when there is no icon. */\n  readonly label:string;\n  /**\n   * Higher stays visible longer. Ties give way in reverse declared order, so\n   * the last declared item overflows first.\n   * @default 0\n   */\n  readonly priority?:number;\n  /**\n   * Selection kinds this item applies to, e.g. `[\"text\",\"mixed\"]`. Kinds are\n   * the host's own strings. Omit to show the item for every kind.\n   */\n  readonly appliesTo?:readonly string[];\n  /** Present on toggles: the current pressed state. Omit for plain actions. */\n  readonly pressed?:boolean;\n  /**\n   * Disables the item and says why, e.g. \"Select one image to crop\". Shown\n   * when the item is focused, spoken as its hint and shown in the menu.\n   */\n  readonly disabledReason?:string;\n}\n\n/** Items that apply to `kind`, in declared order. */\nexport function itemsForSelection<T extends ToolbarItemSpec>(items:readonly T[],kind:string):T[]{\n  return items.filter(i=>!i.appliesTo||i.appliesTo.includes(kind));\n}\n\n/** Throws on duplicate or empty ids and blank labels. */\nexport function validateToolbarItems(items:readonly ToolbarItemSpec[]):void{\n  if(items.length>1000)throw new RangeError(\"Too many toolbar items\");\n  const seen=new Set<string>();\n  for(const i of items){\n    if(typeof i.id!==\"string\"||!i.id.trim()||i.id.length>256||seen.has(i.id))throw new TypeError(\"Duplicate or missing toolbar item id\");\n    if(typeof i.label!==\"string\"||!i.label.trim()||i.label.length>512)throw new TypeError(`Toolbar item ${i.id} needs a label`);\n    if(i.priority!==undefined&&!Number.isFinite(i.priority))throw new RangeError(`Toolbar item ${i.id} has an invalid priority`);\n    if(i.appliesTo&&(i.appliesTo.length>256||i.appliesTo.some(k=>typeof k!==\"string\"||!k.trim()||k.length>256)))throw new TypeError(\"Invalid toolbar selection kinds\");\n    if(i.pressed!==undefined&&typeof i.pressed!==\"boolean\"||i.disabledReason!==undefined&&(typeof i.disabledReason!==\"string\"||!i.disabledReason.trim()||i.disabledReason.length>2048))throw new TypeError(\"Invalid toolbar availability\");\n    seen.add(i.id);\n  }\n}\n\n/** Geometry for {@linkcode splitOverflow}. All values in points. */\nexport interface OverflowInput {\n  /** Measured width of each item. Unmeasured items count as `fallbackWidth`. */\n  readonly widths:Readonly<Record<string,number>>;\n  /** Width of the row the items must fit in. */\n  readonly available:number;\n  /** Space between neighbouring controls. */\n  readonly gap:number;\n  /** Width of the \"More\" trigger, reserved whenever anything overflows. */\n  readonly overflowWidth:number;\n  /** @default 44 */\n  readonly fallbackWidth?:number;\n}\n/** Item ids kept in the row and moved into \"More\", each in declared order. */\nexport interface OverflowSplit {\n  readonly visible:string[];\n  readonly overflow:string[];\n}\n\n/**\n * Splits items between the row and the \"More\" menu. If everything fits, no\n * trigger is reserved. Otherwise the trigger's width is reserved first and\n * items leave lowest priority first until the rest fit, so the trigger\n * always has room. Both lists keep declared order.\n */\nexport function splitOverflow(items:readonly ToolbarItemSpec[],input:OverflowInput):OverflowSplit{\n  const {widths,available,gap,overflowWidth,fallbackWidth=44}=input;\n  if(![available,gap,overflowWidth,fallbackWidth].every(Number.isFinite)||available<0||gap<0||overflowWidth<0||fallbackWidth<=0)\n    throw new RangeError(\"Invalid overflow geometry\");\n  const width=(id:string)=>{const w=Object.hasOwn(widths,id)?widths[id]:undefined;return w!==undefined&&Number.isFinite(w)&&w>=0?w:fallbackWidth;};\n  const rowWidth=(ids:readonly string[])=>ids.reduce((sum,id,i)=>sum+width(id)+(i?gap:0),0);\n  const all=items.map(i=>i.id);\n  if(rowWidth(all)<=available)return {visible:all,overflow:[]};\n  // Leaving order: lowest priority first, later declared first among equals.\n  const leaving=items.map((item,index)=>({id:item.id,priority:item.priority??0,index}))\n    .sort((a,b)=>a.priority-b.priority||b.index-a.index).map(e=>e.id);\n  const gone=new Set<string>();\n  const room=available-overflowWidth;\n  for(const id of leaving){\n    const kept=all.filter(x=>!gone.has(x));\n    if(kept.length&&rowWidth(kept)+gap<=room)break;\n    gone.add(id);\n  }\n  return {visible:all.filter(id=>!gone.has(id)),overflow:all.filter(id=>gone.has(id))};\n}\n\n/** Menu row description for an item moved into \"More\". */\nexport function overflowDescription(item:ToolbarItemSpec):string|undefined{\n  if(item.disabledReason)return item.disabledReason;\n  if(item.pressed!==undefined)return item.pressed?\"On\":\"Off\";\n  return undefined;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/contextual-toolbar-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/contextual-toolbar-model",
+    "exports": [
+      "OverflowInput",
+      "OverflowSplit",
+      "ToolbarItemSpec",
+      "itemsForSelection",
+      "overflowDescription",
+      "splitOverflow",
+      "validateToolbarItems"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

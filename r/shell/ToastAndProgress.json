@@ -1,0 +1,66 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/ToastAndProgress",
+  "title": "Toast and Progress",
+  "description": "List of toast notifications and progress jobs with dismiss and action buttons; shows three toasts until expanded, for React Native.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/feedback/ErrorMessage",
+    "@nyc-tron/shell/progress-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/ToastAndProgress.tsx",
+      "content": "import { useRef } from \"react\";\nimport { ActivityIndicator, FlatList, Text, View, type ViewProps } from \"react-native\";\nimport { createStore, type StoreApi } from \"zustand/vanilla\";\nimport { useStore } from \"zustand\";\nimport { Button } from \"@/components/nyc-tron/ui/components/Button\";\nimport { ErrorMessage } from \"@/components/nyc-tron/ui/components/feedback/ErrorMessage\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { useOwnedAction } from \"@/components/nyc-tron/ui/components/shell/useOwnedAction\";\nimport { validateFeedback, jobActionLabel, type ProgressJob, type JobAction, type ToastMessage } from \"@/components/nyc-tron/ui/components/shell/progress-model\";\nexport type { ProgressJob, JobAction, ToastMessage } from \"@/components/nyc-tron/ui/components/shell/progress-model\";\n\nexport interface ToastAndProgressProps extends Omit<ViewProps, \"children\"> {\n  readonly scope: string;\n  readonly toasts: readonly ToastMessage[];\n  readonly jobs: readonly ProgressJob[];\n  readonly onDismissToast: (id: string) => void;\n  readonly onToastAction?: (toastId: string, actionId: string, signal: AbortSignal) => void | Promise<void>;\n  readonly onJobAction?: (jobId: string, action: JobAction, signal: AbortSignal) => void | Promise<void>;\n  readonly height?: number;\n  readonly className?: string;\n  readonly unstyled?: boolean;\n}\n\n/** Controlled notifications and real job reports. Progress never advances on a UI timer. */\nexport function ToastAndProgress({ scope, toasts, jobs, onDismissToast, onToastAction, onJobAction, height = 360, className, unstyled = false, style, ...rest }: ToastAndProgressProps) {\n  validateFeedback(toasts, jobs);\n  if (toasts.some(toast => toast.action) && !onToastAction) throw new TypeError(\"Notification actions require onToastAction\");\n  if (jobs.some(job => job.actions.length) && !onJobAction) throw new TypeError(\"Job actions require onJobAction\");\n  if (!Number.isFinite(height) || height < 44) throw new RangeError(\"Feedback height must be at least 44\");\n  const local = useRef<StoreApi<{ expanded: boolean }> | null>(null);\n  local.current ??= createStore(() => ({ expanded: false }));\n  const expanded = useStore(local.current, state => state.expanded);\n  const action = useOwnedAction(scope), busy = action.pending !== null, styled = !unstyled;\n  const shown = expanded ? toasts : toasts.slice(0, 3);\n  const rows: ({ kind: \"toast\"; item: ToastMessage } | { kind: \"job\"; item: ProgressJob })[] = [\n    ...shown.map(item => ({ kind: \"toast\" as const, item })), ...jobs.map(item => ({ kind: \"job\" as const, item })),\n  ];\n  return <View {...rest} style={[{ gap: 8 }, style]} {...{ className: joinClasses(className) }}>\n    <Text accessibilityRole=\"header\" {...{ className: joinClasses(styled && \"text-text font-semibold\") }}>Notifications and jobs</Text>\n    {toasts.length > 3 ? <Button title={expanded ? \"Show recent notifications\" : `Show all ${toasts.length} notifications`} onPress={() => local.current!.setState({ expanded: !expanded })} unstyled={unstyled}/> : null}\n    <FlatList data={rows} keyExtractor={row => `${row.kind}:${row.item.id}`} style={{ height }} initialNumToRender={8} windowSize={5}\n      ListEmptyComponent={<Text {...{ className: joinClasses(styled && \"text-text-muted\") }}>No notifications or jobs</Text>}\n      renderItem={({ item: row }) => row.kind === \"toast\" ? <View style={{ padding: 10, gap: 8 }} {...{ className: joinClasses(styled && \"border-b border-border\") }}>\n        <Text role={row.item.tone === \"error\" ? \"alert\" : \"status\"} accessibilityLiveRegion=\"polite\" {...{ className: joinClasses(styled && \"text-text font-semibold\") }}>{row.item.title}</Text>\n        {row.item.detail ? <Text {...{ className: joinClasses(styled && \"text-text-muted\") }}>{row.item.detail}</Text> : null}\n        <View style={{ flexDirection: \"row\", flexWrap: \"wrap\", gap: 8 }}>\n          {row.item.action ? <Button title={row.item.action.label} disabled={busy} unstyled={unstyled}\n            onPress={() => { const choice = row.item.action!; void action.run(`toast:${row.item.id}`, signal => onToastAction!(row.item.id, choice.id, signal)); }}/> : null}\n          <Button title={`Dismiss ${row.item.title}`} disabled={busy} onPress={() => onDismissToast(row.item.id)} unstyled={unstyled}/>\n        </View>\n      </View> : <View style={{ padding: 10, gap: 8 }} {...{ className: joinClasses(styled && \"border-b border-border\") }}>\n        <Text accessibilityLiveRegion=\"polite\" {...{ className: joinClasses(styled && \"text-text font-semibold\") }}>{row.item.title}: {row.item.status}</Text>\n        {row.item.detail ? <Text {...{ className: joinClasses(styled && \"text-text-muted\") }}>{row.item.detail}</Text> : null}\n        <View accessibilityRole=\"progressbar\" accessibilityLabel={row.item.title} aria-valuemin={0} aria-valuemax={100}\n          {...(row.item.progress === null ? {} : { \"aria-valuenow\": Math.round(row.item.progress * 100) })}\n          aria-valuetext={row.item.progress === null ? \"Progress not reported\" : `${Math.round(row.item.progress * 100)} percent`}\n          accessibilityValue={{ min: 0, max: 100, ...(row.item.progress === null ? {} : { now: Math.round(row.item.progress * 100) }), text: row.item.progress === null ? \"Progress not reported\" : `${Math.round(row.item.progress * 100)} percent` }}>\n          {row.item.progress === null ? ([\"queued\", \"running\", \"cancelling\"].includes(row.item.status) ? <ActivityIndicator/> : <Text {...{ className: joinClasses(styled && \"text-text-muted\") }}>Progress not reported</Text>) : <View style={{ height: 6, overflow: \"hidden\" }} {...{ className: joinClasses(styled && \"rounded-control bg-surface-sunken\") }}>\n            <View style={{ height: \"100%\", width: `${row.item.progress * 100}%` }} {...{ className: joinClasses(styled && \"bg-primary\") }}/>\n          </View>}\n        </View>\n        {row.item.status === \"failed\" ? <ErrorMessage message={row.item.error} unstyled={unstyled}/> : null}\n        <View style={{ flexDirection: \"row\", flexWrap: \"wrap\", gap: 8 }}>{row.item.actions.map(choice => <Button key={choice} title={`${jobActionLabel[choice]} ${row.item.title}`} disabled={busy} unstyled={unstyled}\n          onPress={() => { void action.run(`job:${row.item.id}`, signal => onJobAction!(row.item.id, choice, signal)); }}/>)}</View>\n      </View>}/>\n    {busy ? <Button title=\"Cancel pending notification or job request\" onPress={action.cancel} unstyled={unstyled}/> : null}\n    <ErrorMessage {...(action.error ? { message: action.error } : {})} unstyled={unstyled}/>\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/shell/ToastAndProgress.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/shell/action-owner.ts",
+      "content": "import { createStore } from \"zustand/vanilla\";\n\n/** UI request state. Abort controllers stay in the owner's closure. */\nexport interface ActionState { readonly pending: string | null; readonly error: string | null }\nexport function createActionOwner(currentScope: () => string) {\n  const store = createStore<ActionState>(() => ({ pending: null, error: null }));\n  let active = false;\n  let current: { readonly scope: string; readonly abort: AbortController } | null = null;\n  function cancel() {\n    const previous = current; current = null;\n    previous?.abort.abort();\n  }\n  return {\n    store,\n    activate() { cancel(); active = true; store.setState({ pending: null, error: null }); },\n    deactivate() { active = false; cancel(); },\n    cancel() { cancel(); store.setState({ pending: null }); },\n    async run<T>(id: string, operation: (signal: AbortSignal) => T | Promise<T>, consume?: (value: T) => void, options?: { pendingForAsyncOnly?: boolean }): Promise<boolean> {\n      if (!active) return false;\n      cancel();\n      const request = { scope: currentScope(), abort: new AbortController() };\n      current = request;\n      const valid = () => active && current === request && request.scope === currentScope();\n      if (options?.pendingForAsyncOnly) store.setState({ error: null });\n      else store.setState({ pending: id, error: null });\n      try {\n        if (!valid()) return false;\n        const result = operation(request.abort.signal);\n        let value: T;\n        if (options?.pendingForAsyncOnly) {\n          if (result && typeof (result as Promise<T>).then === 'function') {\n            // A synchronous acknowledgement or already-resolved promise must not\n            // disable (and blur) the focused control between keyboard commands.\n            let settled = false;\n            const completion = Promise.resolve(result).then(value => { settled = true; return value; }, error => { settled = true; throw error; });\n            void Promise.resolve().then(() => { if (!settled && valid()) store.setState({ pending: id, error: null }); });\n            value = await completion;\n          } else value = result as T;\n        } else value = await result;\n        if (!valid()) return false;\n        consume?.(value);\n        if (!valid()) return false;\n        store.setState({ pending: null });\n        return true;\n      } catch (error) {\n        if (!valid()) return false;\n        store.setState({ pending: null, error: error instanceof Error ? error.message : String(error) });\n        return false;\n      } finally { if (current === request) current = null; }\n    },\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/action-owner.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/useOwnedAction.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport { useStore } from \"zustand\";\nimport { createActionOwner } from \"@/components/nyc-tron/ui/components/shell/action-owner\";\n\n/** Cancel stale requests at the committed document boundary, before new controls accept input. */\nexport function useOwnedAction(scope: string) {\n  const committed = useRef(scope);\n  const ref = useRef<ReturnType<typeof createActionOwner> | null>(null);\n  ref.current ??= createActionOwner(() => committed.current);\n  const owner = ref.current;\n  useLayoutEffect(() => {\n    committed.current = scope;\n    owner.activate();\n    return () => owner.deactivate();\n  }, [owner, scope]);\n  const state = useStore(owner.store, value => value);\n  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);\n  return { ...state, run, cancel: owner.cancel };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/ToastAndProgress",
+    "exports": [
+      "JobAction",
+      "ProgressJob",
+      "ToastAndProgress",
+      "ToastAndProgressProps",
+      "ToastMessage"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "feedback"
+  ],
+  "type": "registry:ui"
+}

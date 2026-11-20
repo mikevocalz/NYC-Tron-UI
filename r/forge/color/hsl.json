@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/hsl",
+  "title": "hsl",
+  "description": "hsl, a color helper module. Exports assertHsl, hslToHsv, hslToRgb.",
+  "registryDependencies": [
+    "@nyc-tron/forge/color"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/hsl.ts",
+      "content": "import {assertHsv,hsvToRgb,rgbToHsv,wrapHue,type HsvColor,type RgbaColor} from \"@/components/nyc-tron/ui/components/forge/color\";\n\n/** Hue/saturation/lightness plus alpha, edited by `ColorChannelFields`. */\nexport interface HslColor {\n  /** Hue in degrees, wrapped to 0..360. */\n  readonly h:number;\n  /** Saturation 0..1. */\n  readonly s:number;\n  /** Lightness 0..1. */\n  readonly l:number;\n  /** Alpha 0..1. */\n  readonly alpha:number;\n}\n\nexport function assertHsl(c:HslColor):void{\n  if(![c.h,c.s,c.l,c.alpha].every(Number.isFinite)||\n    c.s<0||c.s>1||c.l<0||c.l>1||c.alpha<0||c.alpha>1)\n    throw new RangeError(\"Expected finite hue, saturation 0..1, lightness 0..1 and alpha 0..1\");\n}\n\n/**\n * HSV to HSL without passing through 8-bit RGB, so hue and the float channels\n * survive exactly. Saturation is 0 at black and white, where HSL has none.\n */\nexport function hsvToHsl(c:HsvColor):HslColor{\n  assertHsv(c);\n  const l=c.v*(1-c.s/2);\n  const s=l===0||l===1?0:(c.v-l)/Math.min(l,1-l);\n  return {h:wrapHue(c.h),s:Math.max(0,Math.min(1,s)),l,alpha:c.alpha};\n}\n\n/**\n * Inverse of {@linkcode hsvToHsl}. HSV saturation is 0 at black (`l` 0), and the\n * hue passes through unchanged.\n */\nexport function hslToHsv(c:HslColor):HsvColor{\n  assertHsl(c);\n  const v=c.l+c.s*Math.min(c.l,1-c.l);\n  const s=v===0?0:2*(1-c.l/v);\n  return {h:wrapHue(c.h),s:Math.max(0,Math.min(1,s)),v:Math.max(0,Math.min(1,v)),alpha:c.alpha};\n}\n\n/** 8-bit RGB to HSL. Gray returns `retainedHue`, as {@linkcode rgbToHsv} does. */\nexport function rgbToHsl(c:RgbaColor,retainedHue=0):HslColor{\n  return hsvToHsl(rgbToHsv(c,retainedHue));\n}\n\n/** HSL to 8-bit RGB, rounding each channel. */\nexport function hslToRgb(c:HslColor):RgbaColor{\n  return hsvToRgb(hslToHsv(c));\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/color/hsl.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/hsl",
+    "exports": [
+      "HslColor",
+      "assertHsl",
+      "hslToHsv",
+      "hslToRgb",
+      "hsvToHsl",
+      "rgbToHsl"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

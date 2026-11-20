@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/BeforeAfterCompare",
+  "title": "Before After Compare",
+  "description": "Before After Compare, a photo editing component. Props: before, after, beforeLabel, onModeChange.",
+  "registryDependencies": [
+    "@nyc-tron/forge/layers/CanvasCompareView",
+    "@nyc-tron/forge/layers/compare-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/photo/BeforeAfterCompare.tsx",
+      "content": "/** Canonical photo name for the existing shared comparison owner: side-by-side,\n * draggable wipe, overlay and pinned reference, from real host pixels or URIs. */\nexport {CanvasCompareView as BeforeAfterCompare} from '@/components/nyc-tron/ui/components/forge/layers/CanvasCompareView';\nexport type {CanvasCompareViewProps as BeforeAfterCompareProps} from '@/components/nyc-tron/ui/components/forge/layers/CanvasCompareView';\nexport type {CompareMode,CompareSource} from '@/components/nyc-tron/ui/components/forge/layers/compare-model';\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/photo/BeforeAfterCompare.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/BeforeAfterCompare",
+    "exports": [
+      "BeforeAfterCompare",
+      "BeforeAfterCompareProps",
+      "CompareMode",
+      "CompareSource"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

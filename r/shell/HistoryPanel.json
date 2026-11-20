@@ -1,0 +1,65 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/HistoryPanel",
+  "title": "History Panel",
+  "description": "Undo and redo list with a cursor and jump to any entry; async jump with cancel, for React Native.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/feedback/ErrorMessage",
+    "@nyc-tron/shell/history-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/HistoryPanel.tsx",
+      "content": "import { FlatList, Pressable, Text, View, type ViewProps } from \"react-native\";\nimport { Button } from \"@/components/nyc-tron/ui/components/Button\";\nimport { ErrorMessage } from \"@/components/nyc-tron/ui/components/feedback/ErrorMessage\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { validateHistory, type HistoryEntry, type HistoryJump } from \"@/components/nyc-tron/ui/components/shell/history-model\";\nimport { useOwnedAction } from \"@/components/nyc-tron/ui/components/shell/useOwnedAction\";\nexport type { HistoryEntry, HistoryJump } from \"@/components/nyc-tron/ui/components/shell/history-model\";\n\nexport interface HistoryPanelProps extends Omit<ViewProps, \"children\"> {\n  readonly documentId: string;\n  readonly revision: string;\n  readonly entries: readonly HistoryEntry[];\n  readonly cursor: number;\n  readonly onJump: (request: HistoryJump, signal: AbortSignal) => void | Promise<void>;\n  readonly label?: string;\n  readonly height?: number;\n  readonly className?: string;\n  readonly unstyled?: boolean;\n}\n\n/** Controlled history. The host applies the jump atomically and supplies the new cursor. */\nexport function HistoryPanel({ documentId, revision, entries, cursor, onJump, label = \"History\", height = 320, className, unstyled = false, style, ...rest }: HistoryPanelProps) {\n  validateHistory(entries, cursor);\n  if (!Number.isFinite(height) || height < 44) throw new RangeError(\"History height must be at least 44\");\n  const action = useOwnedAction(JSON.stringify([documentId, revision]));\n  const pending = action.pending !== null;\n  const jump = (target: number) => {\n    if (pending || target === cursor) return;\n    void action.run(String(target), signal => onJump({ documentId, expectedRevision: revision, cursor: target }, signal));\n  };\n  const styled = !unstyled;\n  return <View {...rest} style={[{ gap: 8 }, style]} {...{ className: joinClasses(className) }}>\n    <Text accessibilityRole=\"header\" {...{ className: joinClasses(styled && \"text-text font-semibold\") }}>{label}</Text>\n    <Text accessibilityLiveRegion=\"polite\" {...{ className: joinClasses(styled && \"text-text-muted\") }}>{pending ? \"Restoring history…\" : `State ${cursor} of ${entries.length}`}</Text>\n    <View style={{ flexDirection: \"row\", flexWrap: \"wrap\", gap: 8 }}>\n      <Button title=\"Undo\" disabled={pending || cursor === 0} onPress={() => jump(cursor - 1)} unstyled={unstyled}/>\n      <Button title=\"Redo\" disabled={pending || cursor === entries.length} onPress={() => jump(cursor + 1)} unstyled={unstyled}/>\n      {pending ? <Button title=\"Cancel history request\" onPress={action.cancel} unstyled={unstyled}/> : null}\n    </View>\n    <Button title=\"Initial state\" accessibilityLabel={cursor === 0 ? \"Current state: Initial state\" : \"Restore initial state\"} disabled={pending || cursor === 0} onPress={() => jump(0)} unstyled={unstyled}/>\n    <FlatList data={entries} keyExtractor={entry => entry.id} style={{ height }} initialNumToRender={12} windowSize={5}\n      accessibilityLabel={label} ListEmptyComponent={<Text {...{ className: joinClasses(styled && \"text-text-muted\") }}>No document edits</Text>}\n      renderItem={({ item, index }) => <Pressable accessibilityRole=\"button\" accessibilityLabel={`${cursor === index + 1 ? \"Current state\" : \"Restore state\"} ${index + 1}: ${item.label}`}\n        accessibilityState={{ disabled: pending }} {...(cursor === index + 1 ? { \"aria-current\": \"step\" as const } : {})}\n        disabled={pending} onPress={() => jump(index + 1)}\n        {...{ className: joinClasses(styled && \"border-b border-border focus-visible:ring-2 focus-visible:ring-focus\") }}\n        style={{ minHeight: 56, padding: 10, gap: 4 }}>\n        <Text {...{ className: joinClasses(styled && (index < cursor ? \"text-text\" : \"text-text-muted\")) }}>{item.label}</Text>\n        {item.detail ? <Text {...{ className: joinClasses(styled && \"text-text-muted text-sm\") }}>{item.detail}</Text> : null}\n        {item.timestampMs !== undefined ? <Text {...{ className: joinClasses(styled && \"text-text-muted text-sm\") }}>{new Date(item.timestampMs).toLocaleString()}</Text> : null}\n      </Pressable>}/>\n    <ErrorMessage {...(action.error ? { message: action.error } : {})} unstyled={unstyled}/>\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/shell/HistoryPanel.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/shell/action-owner.ts",
+      "content": "import { createStore } from \"zustand/vanilla\";\n\n/** UI request state. Abort controllers stay in the owner's closure. */\nexport interface ActionState { readonly pending: string | null; readonly error: string | null }\nexport function createActionOwner(currentScope: () => string) {\n  const store = createStore<ActionState>(() => ({ pending: null, error: null }));\n  let active = false;\n  let current: { readonly scope: string; readonly abort: AbortController } | null = null;\n  function cancel() {\n    const previous = current; current = null;\n    previous?.abort.abort();\n  }\n  return {\n    store,\n    activate() { cancel(); active = true; store.setState({ pending: null, error: null }); },\n    deactivate() { active = false; cancel(); },\n    cancel() { cancel(); store.setState({ pending: null }); },\n    async run<T>(id: string, operation: (signal: AbortSignal) => T | Promise<T>, consume?: (value: T) => void, options?: { pendingForAsyncOnly?: boolean }): Promise<boolean> {\n      if (!active) return false;\n      cancel();\n      const request = { scope: currentScope(), abort: new AbortController() };\n      current = request;\n      const valid = () => active && current === request && request.scope === currentScope();\n      if (options?.pendingForAsyncOnly) store.setState({ error: null });\n      else store.setState({ pending: id, error: null });\n      try {\n        if (!valid()) return false;\n        const result = operation(request.abort.signal);\n        let value: T;\n        if (options?.pendingForAsyncOnly) {\n          if (result && typeof (result as Promise<T>).then === 'function') {\n            // A synchronous acknowledgement or already-resolved promise must not\n            // disable (and blur) the focused control between keyboard commands.\n            let settled = false;\n            const completion = Promise.resolve(result).then(value => { settled = true; return value; }, error => { settled = true; throw error; });\n            void Promise.resolve().then(() => { if (!settled && valid()) store.setState({ pending: id, error: null }); });\n            value = await completion;\n          } else value = result as T;\n        } else value = await result;\n        if (!valid()) return false;\n        consume?.(value);\n        if (!valid()) return false;\n        store.setState({ pending: null });\n        return true;\n      } catch (error) {\n        if (!valid()) return false;\n        store.setState({ pending: null, error: error instanceof Error ? error.message : String(error) });\n        return false;\n      } finally { if (current === request) current = null; }\n    },\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/action-owner.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/useOwnedAction.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport { useStore } from \"zustand\";\nimport { createActionOwner } from \"@/components/nyc-tron/ui/components/shell/action-owner\";\n\n/** Cancel stale requests at the committed document boundary, before new controls accept input. */\nexport function useOwnedAction(scope: string) {\n  const committed = useRef(scope);\n  const ref = useRef<ReturnType<typeof createActionOwner> | null>(null);\n  ref.current ??= createActionOwner(() => committed.current);\n  const owner = ref.current;\n  useLayoutEffect(() => {\n    committed.current = scope;\n    owner.activate();\n    return () => owner.deactivate();\n  }, [owner, scope]);\n  const state = useStore(owner.store, value => value);\n  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);\n  return { ...state, run, cancel: owner.cancel };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/HistoryPanel",
+    "exports": [
+      "HistoryEntry",
+      "HistoryJump",
+      "HistoryPanel",
+      "HistoryPanelProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "data"
+  ],
+  "type": "registry:ui"
+}

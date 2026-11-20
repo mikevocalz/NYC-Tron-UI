@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timebase",
+  "title": "timebase",
+  "description": "timebase, a creative app helper module. Exports assertFrameRate, clampFrame, formatTimecode.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timebase.ts",
+      "content": "/**\n * Controlled frame math from Nitro Forge media-ui PR #25.\n * Playback/decoder seek side effects remain with each app's player service.\n */\nexport interface FrameRate {\n  readonly numerator:number;\n  readonly denominator:number;\n}\nexport const FRAME_RATES={\n FILM_24:{numerator:24,denominator:1},\n PAL_25:{numerator:25,denominator:1},\n NTSC_2997:{numerator:30000,denominator:1001},\n NTSC_5994:{numerator:60000,denominator:1001},\n VIDEO_30:{numerator:30,denominator:1},\n VIDEO_60:{numerator:60,denominator:1},\n} as const satisfies Record<string,FrameRate>;\nexport function assertFrameRate(r:FrameRate):void{\n if(!Number.isSafeInteger(r.numerator)||r.numerator<1||r.numerator>120000||\n    !Number.isSafeInteger(r.denominator)||r.denominator<1||r.denominator>100000)\n  throw new RangeError(\"Frame rate must be a positive bounded rational\");\n}\nexport function clampFrame(frame:number,durationFrames:number):number{\n if(!Number.isFinite(frame)||!Number.isSafeInteger(durationFrames)||durationFrames<0)\n  throw new RangeError(\"Invalid frame or duration\");\n return Math.min(durationFrames,Math.max(0,Math.round(frame)));\n}\nexport function frameToPosition(frame:number,durationFrames:number):number{\n const current=clampFrame(frame,durationFrames);\n return durationFrames===0?0:current/durationFrames;\n}\nexport function positionToFrame(position:number,durationFrames:number):number{\n if(!Number.isFinite(position)||position<0||position>1)\n   throw new RangeError(\"Seek position must be finite in [0, 1]\");\n return clampFrame(Math.round(position*durationFrames),durationFrames);\n}\n/**\n * Exact media time of a frame index: `frame * denominator / numerator`.\n * @throws {RangeError} When the rate is invalid or `frame` is not a\n * nonnegative safe integer.\n */\nexport function framesToSeconds(frame:number,rate:FrameRate):number{\n assertFrameRate(rate);\n if(!Number.isSafeInteger(frame)||frame<0)\n  throw new RangeError(\"Frame must be a nonnegative safe integer\");\n return frame*rate.denominator/rate.numerator;\n}\n/**\n * Nearest whole frame for a media time. Round-trips with\n * {@linkcode framesToSeconds} for every frame up to 2^48 (over 74,000 years\n * at 120 fps). Above about 2^51 frames, float rounding can land one frame\n * off on NTSC and PAL rates.\n * @throws {RangeError} When the rate is invalid, `seconds` is negative or\n * nonfinite, or the frame index exceeds `Number.MAX_SAFE_INTEGER`.\n */\nexport function secondsToFrame(seconds:number,rate:FrameRate):number{\n assertFrameRate(rate);\n if(!Number.isFinite(seconds)||seconds<0)\n  throw new RangeError(\"Seconds must be finite and nonnegative\");\n const rounded=Math.round(seconds*rate.numerator/rate.denominator);\n if(!Number.isSafeInteger(rounded))throw new RangeError(\"Frame exceeds safe integer\");\n return rounded;\n}\nexport function formatTimecode(\n frame:number,rate:FrameRate,opts:{dropFrame?:boolean}={}\n):string{\n assertFrameRate(rate);\n if(!Number.isSafeInteger(frame)||frame<0)\n  throw new RangeError(\"Frame must be a nonnegative safe integer\");\n const fps=Math.round(rate.numerator/rate.denominator);\n if(fps<1||fps>120)throw new RangeError(\"Timecode rate outside supported range\");\n let labeled=frame;\n if(opts.dropFrame){\n   const ntsc29=rate.numerator===30000&&rate.denominator===1001;\n   const ntsc59=rate.numerator===60000&&rate.denominator===1001;\n   if(!ntsc29&&!ntsc59)throw new RangeError(\"Drop-frame requires NTSC rate\");\n   const drop=ntsc59?4:2;\n   const per10=60*fps*10-drop*9;\n   const perMin=60*fps-drop;\n   const blocks=Math.floor(frame/per10);\n   const rem=frame%per10;\n   const extra=drop*Math.max(0,Math.floor((rem-drop)/perMin));\n   labeled+=blocks*drop*9+extra;\n }\n const sec=Math.floor(labeled/fps)%60;\n const min=Math.floor(labeled/(fps*60))%60;\n const hour=Math.floor(labeled/(fps*3600));\n const within=labeled%fps;\n const pad=(n:number)=>String(n).padStart(2,\"0\");\n return `${pad(hour)}:${pad(min)}:${pad(sec)}${opts.dropFrame?\";\":\":\"}${pad(within)}`;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/timebase.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timebase",
+    "exports": [
+      "FRAME_RATES",
+      "FrameRate",
+      "assertFrameRate",
+      "clampFrame",
+      "formatTimecode",
+      "frameToPosition",
+      "framesToSeconds",
+      "positionToFrame",
+      "secondsToFrame"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

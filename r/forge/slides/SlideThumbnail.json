@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/slides/SlideThumbnail",
+  "title": "Slide Thumbnail",
+  "description": "Slide Thumbnail, a presentation slide component. Props: slide, size, renderImage. Also exports SlideObjectView.",
+  "registryDependencies": [
+    "@nyc-tron/forge/slides/slide-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/slides/SlideThumbnail.tsx",
+      "content": "import type {ReactNode} from \"react\";\nimport {Text,View} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {SLIDE_DEFAULT_SIZE,rgbaCss,type SlideObject,type SlideSize,type SlideSummary} from \"@/components/nyc-tron/ui/components/forge/slides/slide-model\";\n\n/** Props for {@linkcode SlideThumbnail}. */\nexport interface SlideThumbnailProps {\n  readonly slide:SlideSummary;\n  /** Width in points; height follows the deck's aspect ratio. */\n  readonly width:number;\n  readonly size?:SlideSize;\n  /** Draws an image object's picture; without it images show as a labelled frame. */\n  readonly renderImage?:(src:string,object:SlideObject)=>ReactNode;\n  readonly styled?:boolean;\n}\n\n/**\n * Small, non-interactive drawing of a slide built from its objects: text in\n * place at scaled size, rectangles in their fill, images through\n * `renderImage`. Hidden from screen readers; the surrounding control speaks\n * the slide's label.\n */\nexport function SlideThumbnail({slide,width,size=SLIDE_DEFAULT_SIZE,renderImage,styled=true}:SlideThumbnailProps){\n  const scale=width/size.width;\n  const height=size.height*scale;\n  return <View pointerEvents=\"none\" importantForAccessibility=\"no-hide-descendants\" accessibilityElementsHidden\n    {...{\"aria-hidden\":true,className:joinClasses(styled&&!slide.background&&\"bg-surface-raised\")}}\n    style={{width,height,overflow:\"hidden\",...(slide.background?{backgroundColor:rgbaCss(slide.background)}:null)}}>\n    {slide.objects.map(o=><SlideObjectView key={o.id} object={o} scale={scale} renderImage={renderImage} styled={styled}/>)}\n  </View>;\n}\n\n/** One object drawn at `scale` points per slide unit. Shared by the thumbnail and the canvas. */\nexport function SlideObjectView({object:o,scale,renderImage,styled}:{\n  object:SlideObject;scale:number;renderImage:((src:string,object:SlideObject)=>ReactNode)|undefined;styled:boolean;\n}){\n  const box={position:\"absolute\" as const,left:o.x*scale,top:o.y*scale,width:o.w*scale,height:o.h*scale,\n    opacity:o.opacity??1,transform:o.rotation?[{rotate:o.rotation+\"deg\"}]:undefined};\n  if(o.kind===\"rect\")return <View {...{className:joinClasses(styled&&!o.fill&&\"bg-text-muted\")}}\n    style={{...box,...(o.fill?{backgroundColor:rgbaCss(o.fill)}:null)}}/>;\n  // The placeholder sits on the slide's own background (document color), so it is an outline with no theme fill.\n  if(o.kind===\"image\")return <View {...{className:joinClasses(styled&&\"border border-text-muted\")}}\n    style={{...box,borderStyle:\"dashed\",overflow:\"hidden\",alignItems:\"center\",justifyContent:\"center\"}}>\n    {o.src&&renderImage?renderImage(o.src,o):scale>=0.5?<Text {...{className:joinClasses(styled&&\"text-text-muted text-sm\")}}>Image</Text>:null}\n  </View>;\n  const fontSize=Math.max(1,(o.fontSize??18)*scale);\n  return <View style={{...box,overflow:\"hidden\"}}>\n    <Text {...{className:joinClasses(styled&&!o.color&&\"text-text\")}}\n      style={{fontSize,lineHeight:fontSize*1.2,fontWeight:o.bold?\"700\":\"400\",fontStyle:o.italic?\"italic\":\"normal\",\n        ...(o.color?{color:rgbaCss(o.color)}:null)}}>{o.text??\"\"}</Text>\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/slides/SlideThumbnail.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/slides/SlideThumbnail",
+    "exports": [
+      "SlideObjectView",
+      "SlideThumbnail",
+      "SlideThumbnailProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

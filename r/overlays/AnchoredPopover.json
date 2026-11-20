@@ -1,0 +1,53 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "overlays/AnchoredPopover",
+  "title": "Anchored Popover",
+  "description": "Modal popover placed against an anchor rectangle or trigger element and clamped to usable regions, for React Native; web Tab cycling.",
+  "registryDependencies": [
+    "@nyc-tron/overlays/anchored-popover-types",
+    "@nyc-tron/overlays/focus-cycle",
+    "@nyc-tron/overlays/focus-restore",
+    "@nyc-tron/overlays/measure-anchor",
+    "@nyc-tron/overlays/popover-position",
+    "@nyc-tron/overlays/useTriggerAnchor"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/overlays/AnchoredPopover.tsx",
+      "content": "import {useRef,useLayoutEffect,useMemo,type ComponentRef} from \"react\";\nimport {Modal,Platform,Pressable,View,useWindowDimensions,type ViewProps} from \"react-native\";\nimport {placePopover,hasUsableRegion,type Rect2D} from \"@/components/nyc-tron/ui/components/overlays/popover-position\";\nimport {cycleFocusIndex} from \"@/components/nyc-tron/ui/components/overlays/focus-cycle\";\nimport {useRestoreFocus} from \"@/components/nyc-tron/ui/components/overlays/focus-restore\";\nimport {useTriggerAnchor} from \"@/components/nyc-tron/ui/components/overlays/useTriggerAnchor\";\nimport {windowRegions} from \"@/components/nyc-tron/ui/components/overlays/measure-anchor\";\nimport {isTriggerPopover,popoverTriggerState,renderPopoverTrigger,type PopoverBaseProps,type PopoverProps,type PopoverTriggerProps} from \"@/components/nyc-tron/ui/components/overlays/anchored-popover-types\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nexport type {PopoverProps,PopoverAnchorProps,PopoverTriggerProps,PopoverTriggerState} from \"@/components/nyc-tron/ui/components/overlays/anchored-popover-types\";\n\ntype KeyEvent=Parameters<NonNullable<ViewProps[\"onKeyDown\"]>>[0];\ntype FocusNode={focus:()=>void;querySelectorAll:(selector:string)=>ArrayLike<FocusNode>;getAttribute:(name:string)=>string|null};\n// Elements the browser puts in the Tab order. RN web renders Pressable as tabindex=\"0\".\nconst TABBABLE='a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),'+\n  'textarea:not([disabled]),[tabindex]:not([tabindex=\"-1\"])';\n\n/**\n * Portable popover drawn with an RN `Modal`, placed by {@linkcode placePopover}.\n * Takes either an `anchor` rect (plus `usableRegions`) or a `trigger` it\n * renders, measures on open and anchors to.\n *\n * Web: Tab and Shift+Tab cycle through the popover's own focusable content,\n * Escape closes, the backdrop closes on pointer press, and focus returns to\n * the element that opened it. `@nyc-tron/expo-controls/NativePopover` is the\n * same contract with SwiftUI and Compose surfaces on iOS and Android.\n */\nexport function AnchoredPopover(props:PopoverProps){\n  if(!isTriggerPopover(props))return <PopoverSurface {...props} anchor={props.anchor} usableRegions={props.usableRegions}/>;\n  return <TriggeredPopover {...props}/>;\n}\n\nfunction TriggeredPopover(props:PopoverTriggerProps){\n  const {open,onOpenChange,trigger,usableRegions}=props;\n  const screen=useWindowDimensions();\n  const {ref,anchor,measured}=useTriggerAnchor(open,props.scope,JSON.stringify(usableRegions??null));\n  const regions=usableRegions??windowRegions(screen.width,screen.height);\n  return <>\n    <View ref={ref} collapsable={false}>{renderPopoverTrigger(trigger,popoverTriggerState(open,onOpenChange))}</View>\n    {/* Stays mounted after the first open so closing can hand focus back to the trigger. */}\n    {anchor?<PopoverSurface {...props} open={open&&measured} anchor={anchor} usableRegions={regions}/>:null}\n  </>;\n}\n\ntype SurfaceProps=PopoverBaseProps&{anchor:Rect2D;usableRegions:readonly Rect2D[]};\nfunction PopoverSurface({scope=\"popover\",open,onOpenChange,anchor,usableRegions,accessibilityLabel,children,\n  width=320,maxHeight=420,className,testID}:SurfaceProps){\n  const surface=useRef<ComponentRef<typeof View>>(null);\n  const available=hasUsableRegion(usableRegions);\n  useRestoreFocus(open&&available);\n  const position=available?placePopover(anchor,usableRegions,width,maxHeight):undefined;\n  const node=()=>surface.current as unknown as FocusNode|null;\n  const stops=()=>{\n    const root=node();\n    if(!root||typeof root.querySelectorAll!==\"function\")return [];\n    return Array.from(root.querySelectorAll(TABBABLE)).filter(element=>element.getAttribute(\"aria-disabled\")!==\"true\");\n  };\n  const focusFirst=()=>{if(open&&committed.current?.token===token&&committed.current.available)(stops()[0]??node())?.focus?.();};\n  const onKeyDown=(event:KeyEvent)=>{\n    if(!open||(committed.current?.token!==token||!committed.current?.available))return;\n    const data=(event.nativeEvent??event) as unknown as {key:string;shiftKey?:boolean};\n    if(data.key===\"Escape\"){event.preventDefault?.();event.stopPropagation?.();close();return;}\n    // Native hosts own their Tab chain. DOM traversal must never trap a Qt\n    // keyboard on this fallback surface when its children are native items.\n    if(data.key!==\"Tab\"||Platform.OS!==\"web\")return;\n    event.preventDefault?.();\n    const list=stops();\n    if(!list.length){node()?.focus?.();return;}\n    const active=(globalThis as {document?:{activeElement:unknown}}).document?.activeElement;\n    const next=cycleFocusIndex(list.length,list.findIndex(element=>element===active),!!data.shiftKey);\n    list[next]?.focus();\n  };\n  const token=useMemo(()=>({}),[scope,open]);\n  const committed=useRef<{token:object;available:boolean;onOpenChange:typeof onOpenChange}|null>(null);\n  useLayoutEffect(()=>{committed.current={token,available,onOpenChange};});\n  useLayoutEffect(()=>()=>{committed.current=null;},[]);\n  const close=()=>{if(open&&committed.current?.token===token&&committed.current.available)committed.current.onOpenChange(false);};\n  // A fading web Modal keeps its focus trap live while it fades; close instantly.\n  if(!position)return null;\n  return <Modal transparent visible={open} animationType=\"none\" onRequestClose={close}\n    onShow={focusFirst} accessibilityViewIsModal>\n    <View style={{flex:1}}>\n      <Pressable accessibilityRole=\"button\" accessibilityLabel=\"Close popover\" onPress={close}\n        focusable={false}\n        style={{position:\"absolute\",left:0,right:0,top:0,bottom:0}}/>\n      <View ref={surface} testID={testID} role=\"dialog\" aria-modal aria-label={accessibilityLabel}\n        // The surface itself is the fallback focus target when the content has no controls.\n        {...{tabIndex:-1}} focusable onKeyDown={onKeyDown}\n        {...{className:joinClasses(\"rounded-control bg-surface-raised border border-border\",className)}}\n        style={{position:\"absolute\",left:position.x,top:position.y,width:position.width,\n          maxHeight:position.height,overflow:\"hidden\"}}>\n        {children}\n      </View>\n    </View>\n  </Modal>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/overlays/AnchoredPopover.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [
+      "web"
+    ],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/overlays/AnchoredPopover",
+    "exports": [
+      "AnchoredPopover",
+      "PopoverAnchorProps",
+      "PopoverProps",
+      "PopoverTriggerProps",
+      "PopoverTriggerState"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "overlay"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/transitions",
+  "title": "transitions",
+  "description": "transitions, a video timeline helper module. Exports clampTransitionFrames, clipsOfCut, cutsOf.",
+  "registryDependencies": [
+    "@nyc-tron/forge/timebase",
+    "@nyc-tron/forge/timeline/edits",
+    "@nyc-tron/forge/timeline/time"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timeline/transitions.ts",
+      "content": "import type {FrameRate} from \"@/components/nyc-tron/ui/components/forge/timebase\";\nimport {framesToSeconds} from \"@/components/nyc-tron/ui/components/forge/timeline/time\";\nimport {clipEnd,clipLength,type TimelineClip,type TimelineTrack} from \"@/components/nyc-tron/ui/components/forge/timeline/edits\";\n\n/**\n * A transition centered on the cut between two touching clips (D-23). Half\n * the duration plays over the end of `leftClipId` and half over the start of\n * `rightClipId`, using media past each clip's edge. Splice stores it\n * (`addTransition`) and drops it when an edit separates the clips or eats\n * their handles.\n */\nexport interface TimelineTransition {\n  readonly id:string;\n  readonly trackId:string;\n  readonly leftClipId:string;\n  readonly rightClipId:string;\n  /** One of the host's transition kinds, e.g. `cross_dissolve`. */\n  readonly kind:string;\n  readonly durationFrames:number;\n}\n/** A cut: two clips on one track whose edges touch. */\nexport interface TimelineCut {\n  readonly trackId:string;\n  readonly leftClipId:string;\n  readonly rightClipId:string;\n  /** The frame the clips meet at. */\n  readonly frame:number;\n}\n/** What {@linkcode TransitionHandlesProps.onAdd} receives. */\nexport interface TransitionRequest {\n  readonly trackId:string;\n  readonly leftClipId:string;\n  readonly rightClipId:string;\n  readonly kind:string;\n  readonly durationFrames:number;\n  readonly durationSeconds:number;\n}\n\n/** Which kinds a cut accepts: audio tracks take a crossfade, video and overlay tracks the visual kinds. */\nexport type TransitionTarget=\"visual\"|\"audio\";\nexport const transitionTarget=(track:TimelineTrack):TransitionTarget=>track.kind===\"audio\"?\"audio\":\"visual\";\n/** The only kind an audio cut takes. */\nexport const AUDIO_CROSSFADE=\"cross_fade\";\n\nconst EPS=1e-9;\n\n/** Every cut on `track`, left to right. */\nexport function cutsOf(track:TimelineTrack):TimelineCut[]{\n  const sorted=[...track.clips].sort((a,b)=>a.startFrame-b.startFrame);\n  const out:TimelineCut[]=[];\n  for(let i=1;i<sorted.length;i++){\n    const l=sorted[i-1]!,r=sorted[i]!;\n    if(Math.abs(clipEnd(l)-r.startFrame)<EPS)out.push({trackId:track.id,leftClipId:l.id,rightClipId:r.id,frame:r.startFrame});\n  }\n  return out;\n}\n\n/**\n * Longest transition the cut allows, in whole frames: twice the smallest of\n * the left clip's media after its out-point, the right clip's media before its\n * in-point (both in timeline frames at the clip's speed) and the two clips'\n * lengths. A left clip with no known source length has no tail handle to\n * spend, so it allows 0.\n */\nexport function maxTransitionFrames(left:TimelineClip,right:TimelineClip):number{\n  const leftHandle=left.sourceDuration===undefined?0:(left.sourceDuration-left.sourceOut)/left.speed;\n  const rightHandle=right.sourceIn/right.speed;\n  const half=Math.min(leftHandle,rightHandle,clipLength(left),clipLength(right));\n  return Math.max(0,Math.floor(2*half+EPS));\n}\n\n/** The transition at `cut`, if any. */\nexport const transitionAt=(transitions:readonly TimelineTransition[],cut:TimelineCut)=>\n  transitions.find(t=>t.leftClipId===cut.leftClipId&&t.rightClipId===cut.rightClipId);\n\n/** `durationFrames` clamped to `[1, max]`, or `undefined` when the cut allows none. */\nexport function clampTransitionFrames(durationFrames:number,max:number):number|undefined{\n  if(max<1)return undefined;\n  return Math.min(max,Math.max(1,Math.round(durationFrames)));\n}\n\n/** The add request for `cut`, clamped to what it allows; `undefined` when it allows none. */\nexport function transitionRequest(cut:TimelineCut,tracks:readonly TimelineTrack[],kind:string,durationFrames:number,rate:FrameRate):TransitionRequest|undefined{\n  const pair=clipsOfCut(tracks,cut);\n  if(!pair)return undefined;\n  const frames=clampTransitionFrames(durationFrames,maxTransitionFrames(pair.left,pair.right));\n  if(frames===undefined)return undefined;\n  return {trackId:cut.trackId,leftClipId:cut.leftClipId,rightClipId:cut.rightClipId,kind,durationFrames:frames,durationSeconds:framesToSeconds(frames,rate)};\n}\n\n/** The two clips of `cut`, when both still exist on its track. */\nexport function clipsOfCut(tracks:readonly TimelineTrack[],cut:TimelineCut):{track:TimelineTrack;left:TimelineClip;right:TimelineClip}|undefined{\n  const track=tracks.find(t=>t.id===cut.trackId);\n  const left=track?.clips.find(c=>c.id===cut.leftClipId),right=track?.clips.find(c=>c.id===cut.rightClipId);\n  return track&&left&&right?{track,left,right}:undefined;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/transitions.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/transitions",
+    "exports": [
+      "AUDIO_CROSSFADE",
+      "TimelineCut",
+      "TimelineTransition",
+      "TransitionRequest",
+      "TransitionTarget",
+      "clampTransitionFrames",
+      "clipsOfCut",
+      "cutsOf",
+      "maxTransitionFrames",
+      "transitionAt",
+      "transitionRequest",
+      "transitionTarget"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

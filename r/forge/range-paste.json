@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/range-paste",
+  "title": "range paste",
+  "description": "range paste, a creative app helper module. Exports parseTsv, tsvToRange.",
+  "registryDependencies": [
+    "@nyc-tron/forge/sheet-window"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/range-paste.ts",
+      "content": "import type { CellPosition, SheetRange } from \"@/components/nyc-tron/ui/components/forge/sheet-window\";\n\n/** Sheet limits shared with SpreadsheetGrid: 1,048,576 rows by 16,384 columns. */\nexport const MAX_SHEET_ROWS = 1_048_576;\nexport const MAX_SHEET_COLUMNS = 16_384;\n\n/** One pasted cell at an absolute zero-based position. */\nexport interface PasteCell {\n  readonly row: number;\n  readonly column: number;\n  readonly value: string;\n}\n\nexport interface TsvToRangeOptions {\n  /** Cells the clamped paste rectangle may cover. @default 1_000_000 */\n  readonly maxCells?: number;\n  /** @default 1_048_576 */\n  readonly rowCount?: number;\n  /** @default 16_384 */\n  readonly columnCount?: number;\n}\n\nexport interface TsvPaste {\n  readonly cells: readonly PasteCell[];\n  /** Rectangle covered after clamping, or `null` when nothing lands on the sheet. */\n  readonly range: SheetRange | null;\n  /** True when rows or columns were dropped because they fall outside the sheet. */\n  readonly clamped: boolean;\n}\n\n/** Thrown by {@linkcode tsvToRange} when the paste rectangle exceeds `maxCells`. */\nexport class PasteTooLargeError extends RangeError {\n  readonly cellCount: number;\n  readonly maxCells: number;\n  constructor(cellCount: number, maxCells: number) {\n    super(`Paste has ${cellCount} cells; paste is limited to ${maxCells}`);\n    this.name = \"PasteTooLargeError\";\n    this.cellCount = cellCount;\n    this.maxCells = maxCells;\n  }\n}\n\n/**\n * Parses clipboard TSV, the inverse of {@linkcode rangeToTsv}. A field that\n * starts with a double quote runs to the closing quote (`\"\"` is a literal\n * quote) and may hold tabs and line breaks; a quote anywhere else is literal.\n * LF, CRLF and CR end a row, and one trailing line break does not add a row.\n * Rows keep their own length.\n */\nexport function parseTsv(text: string): string[][] {\n  if (typeof text !== \"string\") throw new TypeError(\"TSV text must be a string\");\n  const rows: string[][] = [];\n  let row: string[] = [];\n  let field = \"\";\n  let i = 0;\n  const n = text.length;\n  while (i < n) {\n    if (text[i] === '\"' && field === \"\") {\n      i++;\n      while (i < n) {\n        if (text[i] === '\"') {\n          if (text[i + 1] === '\"') { field += '\"'; i += 2; continue; }\n          i++;\n          break;\n        }\n        field += text[i++];\n      }\n      continue;\n    }\n    const ch = text[i]!;\n    if (ch === \"\\t\") {\n      row.push(field); field = \"\"; i++;\n    } else if (ch === \"\\n\" || ch === \"\\r\") {\n      row.push(field); rows.push(row); row = []; field = \"\";\n      i += ch === \"\\r\" && text[i + 1] === \"\\n\" ? 2 : 1;\n      if (i >= n) return rows;\n    } else {\n      field += ch; i++;\n    }\n  }\n  if (n > 0) { row.push(field); rows.push(row); }\n  return rows;\n}\n\n/**\n * Places parsed clipboard text at `anchor`. Cells outside the sheet are\n * dropped and reported through `clamped`; cells missing from ragged rows are\n * omitted rather than blanked. The grid never applies the result: the host\n * owns the write.\n * @throws {PasteTooLargeError} when the clamped rectangle exceeds `maxCells`.\n * @throws {RangeError} for an invalid anchor.\n */\nexport function tsvToRange(text: string, anchor: CellPosition, options: TsvToRangeOptions = {}): TsvPaste {\n  const { maxCells = 1_000_000, rowCount = MAX_SHEET_ROWS, columnCount = MAX_SHEET_COLUMNS } = options;\n  if (!anchor || !Number.isSafeInteger(anchor.row) || !Number.isSafeInteger(anchor.column) ||\n      anchor.row < 0 || anchor.column < 0) {\n    throw new RangeError(\"Invalid paste anchor\");\n  }\n  const rows = parseTsv(text);\n  const width = rows.reduce((max, r) => Math.max(max, r.length), 0);\n  if (rows.length === 0) return { cells: [], range: null, clamped: false };\n  const rowsFit = Math.max(0, Math.min(rows.length, rowCount - anchor.row));\n  const columnsFit = Math.max(0, Math.min(width, columnCount - anchor.column));\n  const clamped = rowsFit < rows.length || columnsFit < width;\n  if (rowsFit === 0 || columnsFit === 0) return { cells: [], range: null, clamped };\n  const cellCount = rowsFit * columnsFit;\n  if (cellCount > maxCells) throw new PasteTooLargeError(cellCount, maxCells);\n  const cells: PasteCell[] = [];\n  for (let r = 0; r < rowsFit; r++) {\n    const fields = rows[r]!;\n    const last = Math.min(fields.length, columnsFit);\n    for (let c = 0; c < last; c++) cells.push({ row: anchor.row + r, column: anchor.column + c, value: fields[c]! });\n  }\n  return {\n    cells,\n    range: {\n      startRow: anchor.row, endRow: anchor.row + rowsFit - 1,\n      startColumn: anchor.column, endColumn: anchor.column + columnsFit - 1,\n    },\n    clamped,\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/range-paste.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/range-paste",
+    "exports": [
+      "MAX_SHEET_COLUMNS",
+      "MAX_SHEET_ROWS",
+      "PasteCell",
+      "PasteTooLargeError",
+      "TsvPaste",
+      "TsvToRangeOptions",
+      "parseTsv",
+      "tsvToRange"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

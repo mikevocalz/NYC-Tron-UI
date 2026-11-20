@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/midi/MidiChannelPicker",
+  "title": "Midi Channel Picker",
+  "description": "Midi Channel Picker, a MIDI component. Props: channel, onChannelCommit. Also exports MidiValueStepper.",
+  "registryDependencies": [
+    "@nyc-tron/forge/midi/MIDIPianoRoll",
+    "@nyc-tron/forge/midi/note-grid"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/midi/MidiChannelPicker.tsx",
+      "content": "/**\n * MIDI channel stepper and the small integer stepper it is built on.\n *\n * Structural references (Mobbin, iOS; structure only):\n * - Cal AI, Edit Ingredient: a unit chooser beside a compact value field.\n * - Riveo, clip audio sheet: label, value and a 44 pt row per numeric setting.\n * - TikTok, Set countdown: a two-option segmented control inline with its label.\n * - Spotify, Edit transition: per-lane curve editing with preset buttons under it.\n *\n * Both controls are controlled: the value is the committed engine state, and\n * each press or key commits once.\n */\nimport { Pressable, Text, View, type KeyDownEvent, type ViewProps } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { MAX_MIDI_CHANNEL, channelLabel, isMidiChannel } from \"@/components/nyc-tron/ui/components/forge/midi/note-grid\";\nimport type { MIDIPianoRollProps } from \"@/components/nyc-tron/ui/components/forge/midi/MIDIPianoRoll\";\n\nconst HIT = 44;\n\n/** Props for {@linkcode MidiValueStepper}. */\nexport interface MidiValueStepperProps extends Omit<ViewProps, \"children\"> {\n  /** Committed value, an integer in `min..max`. */\n  readonly value: number;\n  readonly min: number;\n  readonly max: number;\n  /** Accessible name of the whole stepper, e.g. `\"Ramp end velocity\"`. */\n  readonly label: string;\n  /** Visible text for the value. @default String(value) */\n  readonly format?: (value: number) => string;\n  /** Spoken value, e.g. `\"Channel 3\"`. @default format(value) */\n  readonly valueText?: (value: number) => string;\n  /** Step for the buttons, arrows and screen-reader actions. @default 1 */\n  readonly step?: number;\n  /** Step for PageUp/PageDown. @default 10 * step */\n  readonly pageStep?: number;\n  /**\n   * Once per button press, key or screen-reader action, with the clamped\n   * new value. Never called with an unchanged value.\n   */\n  readonly onValueCommit: (value: number) => void | Promise<unknown>;\n  /** @default false */\n  readonly disabled?: boolean;\n  className?: string;\n  unstyled?: boolean;\n}\n\n/**\n * Controlled integer stepper: a value between − and + buttons (44 pt each).\n * It is one `slider` for assistive technology, with increment/decrement\n * actions, and takes Up/Right to raise, Down/Left to lower, PageUp/PageDown,\n * Home and End when focused.\n *\n * Right raises in every locale: the buttons mirror in right-to-left layouts\n * (− stays on the leading side) but the keys are physical.\n *\n * @see {@linkcode MidiChannelPicker} for the MIDI channel preset.\n */\nexport function MidiValueStepper({\n  value, min, max, label, format = String, valueText, step = 1, pageStep, onValueCommit, disabled = false,\n  className, unstyled = false, style, ...rest\n}: MidiValueStepperProps) {\n  if (!Number.isInteger(min) || !Number.isInteger(max) || min > max) throw new RangeError(\"Stepper needs integer min <= max\");\n  if (!Number.isInteger(value) || value < min || value > max) throw new RangeError(`Stepper value must be an integer ${min}..${max}`);\n  const styled = !unstyled;\n  const page = pageStep ?? step * 10;\n  const go = (next: number) => {\n    const clamped = Math.min(max, Math.max(min, next));\n    if (disabled || clamped === value) return;\n    void onValueCommit(clamped);\n  };\n  const onKeyDown = (e: KeyDownEvent) => {\n    const key = e.nativeEvent.key;\n    const next = key === \"ArrowUp\" || key === \"ArrowRight\" ? value + step\n      : key === \"ArrowDown\" || key === \"ArrowLeft\" ? value - step\n      : key === \"PageUp\" ? value + page : key === \"PageDown\" ? value - page\n      : key === \"Home\" ? min : key === \"End\" ? max : undefined;\n    if (next === undefined) return;\n    e.preventDefault();\n    go(next);\n  };\n  const button = (on: boolean) => joinClasses(styled && \"rounded-control items-center justify-center border border-border bg-surface-sunken active:opacity-80\",\n    styled && !on && \"opacity-40\");\n  const text = joinClasses(styled && \"text-text font-semibold\");\n  const spoken = (valueText ?? format)(value);\n  return <View {...rest} accessible focusable={!disabled} accessibilityRole=\"adjustable\" accessibilityLabel={label}\n    accessibilityValue={{ min, max, now: value, text: spoken }}\n    {...{ \"aria-valuemin\": min, \"aria-valuemax\": max, \"aria-valuenow\": value, \"aria-valuetext\": spoken }}\n    accessibilityState={{ disabled }}\n    accessibilityActions={[{ name: \"increment\" }, { name: \"decrement\" }]}\n    onAccessibilityAction={e => go(value + (e.nativeEvent.actionName === \"increment\" ? step : -step))}\n    onKeyDown={onKeyDown}\n    {...{ className: joinClasses(styled && \"rounded-control focus-visible:ring-2 focus-visible:ring-focus\", className) }}\n    style={[{ flexDirection: \"row\", alignItems: \"center\", gap: 4, opacity: disabled ? 0.45 : 1 }, style]}>\n    {/* The buttons are pointer targets; keyboard and screen readers use the slider itself. */}\n    <Pressable accessible={false} focusable={false} disabled={disabled || value <= min} onPress={() => go(value - step)}\n      {...{ className: button(value > min), \"aria-hidden\": true, tabIndex: -1 }} style={{ width: HIT, height: HIT }}>\n      <Text {...{ className: text }}>−</Text>\n    </Pressable>\n    <Text {...{ className: text }} style={{ minWidth: 32, textAlign: \"center\", fontVariant: [\"tabular-nums\"] }}>{format(value)}</Text>\n    <Pressable accessible={false} focusable={false} disabled={disabled || value >= max} onPress={() => go(value + step)}\n      {...{ className: button(value < max), \"aria-hidden\": true, tabIndex: -1 }} style={{ width: HIT, height: HIT }}>\n      <Text {...{ className: text }}>+</Text>\n    </Pressable>\n  </View>;\n}\n\n/** Props for {@linkcode MidiChannelPicker}. */\nexport interface MidiChannelPickerProps extends Omit<ViewProps, \"children\"> {\n  /** Committed channel, 0..15. Shown and spoken as 1..16. */\n  readonly channel: number;\n  /** Once per press or key, with the new zero-based channel. */\n  readonly onChannelCommit: (channel: number) => void | Promise<unknown>;\n  /** @default false */\n  readonly disabled?: boolean;\n  /** Accessible name. @default \"MIDI channel\" */\n  readonly label?: string;\n  className?: string;\n  unstyled?: boolean;\n}\n\n/**\n * Controlled MIDI channel stepper for one note or clip: a visible \"Ch\" label,\n * the one-based channel and −/+ buttons. Screen readers hear a slider named\n * \"MIDI channel\" with the value \"Channel 3\". The value stays zero-based in\n * props and commits, like the Cadence `setNoteChannel` op.\n *\n * @see {@linkcode MIDIPianoRollProps.onNoteChannel} which renders this for the selected note.\n */\nexport function MidiChannelPicker({\n  channel, onChannelCommit, disabled = false, label = \"MIDI channel\", className, unstyled = false, style, ...rest\n}: MidiChannelPickerProps) {\n  if (!isMidiChannel(channel)) throw new RangeError(\"MIDI channel must be 0..15\");\n  return <View {...rest} style={[{ flexDirection: \"row\", alignItems: \"center\", gap: 6 }, style]}\n    {...{ className: joinClasses(className) }}>\n    <Text aria-hidden {...{ className: joinClasses(!unstyled && \"text-text-muted\") }}>Ch</Text>\n    <MidiValueStepper value={channel} min={0} max={MAX_MIDI_CHANNEL} label={label} pageStep={4}\n      format={c => String(c + 1)} valueText={channelLabel} onValueCommit={onChannelCommit}\n      disabled={disabled} unstyled={unstyled} />\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/midi/MidiChannelPicker.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/midi/MidiChannelPicker",
+    "exports": [
+      "MidiChannelPicker",
+      "MidiChannelPickerProps",
+      "MidiValueStepper",
+      "MidiValueStepperProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

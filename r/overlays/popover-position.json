@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "overlays/popover-position",
+  "title": "popover position",
+  "description": "popover position, an overlay helper module. Exports hasUsableRegion, placePopover, placementSide.",
+  "registryDependencies": [
+    "@nyc-tron/core/overlays"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/overlays/popover-position.ts",
+      "content": "/** Compatibility entry; pure placement is shared with isolated native hosts. */\nexport { placePopover, placementSide, hasUsableRegion } from \"@/lib/nyc-tron/core/overlays\";\nexport type { Rect2D, PopupPosition } from \"@/lib/nyc-tron/core/overlays\";\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/overlays/popover-position.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/overlays/popover-position",
+    "exports": [
+      "PopupPosition",
+      "Rect2D",
+      "hasUsableRegion",
+      "placePopover",
+      "placementSide"
+    ]
+  },
+  "categories": [
+    "overlay"
+  ],
+  "type": "registry:lib"
+}

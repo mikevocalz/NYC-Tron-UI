@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gestures/drag-controller",
+  "title": "drag controller",
+  "description": "drag controller, a gesture helper module. Exports createDragController.",
+  "registryDependencies": [
+    "@nyc-tron/gestures/drag-transport"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/gestures/drag-controller.ts",
+      "content": "import type {DragPoint} from \"@/components/nyc-tron/ui/components/gestures/drag-transport\";\n\n/** Callbacks for {@linkcode createDragController}. */\nexport interface DragControllerCallbacks {\n  /** Read on every transition so a control that becomes disabled mid-drag cancels. */\n  disabled:()=>boolean;\n  start:()=>void;\n  move:(point:DragPoint)=>void;\n  commit:()=>void;\n  cancel:()=>void;\n}\n/** Handle returned by {@linkcode createDragController}. */\nexport interface DragController {\n  begin():void;\n  move(point:DragPoint):void;\n  /** Commits at most once per begin; a second release is ignored. */\n  release():void;\n  /** No-op when no drag is active. */\n  cancel():void;\n}\n/**\n * Gesture lifecycle shared by drag handles: moves are previews, a release commits\n * exactly once, and cancellation or becoming disabled never commits.\n */\nexport function createDragController(callbacks:DragControllerCallbacks):DragController {\n  let active=false;\n  const cancel=()=>{\n    if(!active)return;\n    active=false;\n    callbacks.cancel();\n  };\n  return {\n    begin(){\n      cancel();\n      if(callbacks.disabled())return;\n      active=true;\n      callbacks.start();\n    },\n    move(point){\n      if(!active)return;\n      if(callbacks.disabled())cancel();\n      else callbacks.move(point);\n    },\n    release(){\n      if(!active)return;\n      active=false;\n      if(callbacks.disabled())callbacks.cancel();\n      else callbacks.commit();\n    },\n    cancel,\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/gestures/drag-controller.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/gestures/drag-controller",
+    "exports": [
+      "DragController",
+      "DragControllerCallbacks",
+      "createDragController"
+    ]
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:lib"
+}

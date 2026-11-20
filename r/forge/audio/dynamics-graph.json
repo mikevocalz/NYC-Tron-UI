@@ -1,0 +1,54 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/dynamics-graph",
+  "title": "dynamics graph",
+  "description": "dynamics graph, an audio mixing and editing helper module. Exports clampThreshold, curveOutputAt, describeDynamics.",
+  "registryDependencies": [
+    "@nyc-tron/forge/audio/eq-graph"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/dynamics-graph.ts",
+      "content": "/**\n * Plot math for {@linkcode DynamicsTransferGraph}: a square input/output\n * plot over -60..0 dBFS, the engine's transfer curve as polyline pieces,\n * threshold drag and steps, ratio steps and readout text. No React,\n * platform or engine imports, and no compressor math: the curve is the\n * engine's `dynamicsCurve`, mapped as-is.\n *\n * Input level runs left to right in every locale, so nothing mirrors.\n */\nimport { polylineSegments, type PlotSegment } from \"@/components/nyc-tron/ui/components/forge/audio/eq-graph\";\n\n/** One point of the engine's static transfer curve. */\nexport interface DynamicsCurvePoint {\n  readonly inDb: number;\n  readonly outDb: number;\n}\n\n/** The compressor parameters the graph shows. Times are not drawn on a static curve. */\nexport interface DynamicsParams {\n  /** -60..0 dB. */\n  readonly thresholdDb: number;\n  /** 1..20, shown as `\"<ratio>:1\"`. */\n  readonly ratio: number;\n  /** 0..24 dB. */\n  readonly kneeDb: number;\n  /** 0..24 dB. */\n  readonly makeupDb: number;\n}\n\nexport const DYN_MIN_DB = -60;\nexport const DYN_MAX_DB = 0;\nexport const DYN_MIN_RATIO = 1;\nexport const DYN_MAX_RATIO = 20;\n/** Gridline spacing on both axes. */\nexport const DYN_GRID_DB = 12;\n/** The ratio stepper's stops. */\nexport const RATIO_STEPS: readonly number[] = [1, 1.5, 2, 3, 4, 6, 8, 10, 20];\n\nconst SPAN = DYN_MAX_DB - DYN_MIN_DB;\nconst clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));\n\nfunction assertSize(size: number): void {\n  if (!Number.isFinite(size) || size <= 0) throw new RangeError(\"Dynamics plot size must be positive\");\n}\n\n/** Distance in points from the left (input) or bottom (output) edge for a level. Out-of-range levels clamp. */\nexport function levelToOffset(db: number, size: number): number {\n  assertSize(size);\n  if (!Number.isFinite(db)) throw new RangeError(\"Level must be finite\");\n  return ((clamp(db, DYN_MIN_DB, DYN_MAX_DB) - DYN_MIN_DB) / SPAN) * size;\n}\n\n/** Plot coordinates (origin top-left, y down) for an input/output pair. */\nexport function dynamicsPoint(inDb: number, outDb: number, size: number): { x: number; y: number } {\n  return { x: levelToOffset(inDb, size), y: size - levelToOffset(outDb, size) };\n}\n\n/** Gridline offsets every 12 dB, inside the plot edges, with labels such as `\"-12\"`. */\nexport function dynamicsGridlines(size: number): { db: number; at: number; label: string }[] {\n  assertSize(size);\n  const out = [];\n  for (let db = DYN_MIN_DB + DYN_GRID_DB; db < DYN_MAX_DB; db += DYN_GRID_DB) {\n    out.push({ db, at: levelToOffset(db, size), label: String(db) });\n  }\n  return out;\n}\n\n/** The engine curve mapped onto a `size` square. Nonfinite points are skipped; levels past the plot ride its edge. */\nexport function dynamicsCurveSegments(curve: readonly DynamicsCurvePoint[], size: number): PlotSegment[] {\n  assertSize(size);\n  const pts = curve.filter(p => Number.isFinite(p.inDb) && Number.isFinite(p.outDb))\n    .map(p => dynamicsPoint(p.inDb, p.outDb, size));\n  return polylineSegments(pts);\n}\n\n/** The 1:1 reference line from the bottom-left to the top-right corner. */\nexport function unitySegment(size: number): PlotSegment {\n  return polylineSegments([{ x: 0, y: size }, { x: size, y: 0 }])[0]!;\n}\n\n/**\n * Output level at `inDb`, read off the engine curve by straight-line\n * interpolation between its points (the curve is sampled every 1 dB, so\n * this places a meter dot, it does not model the compressor). `undefined`\n * when the curve is empty.\n */\nexport function curveOutputAt(curve: readonly DynamicsCurvePoint[], inDb: number): number | undefined {\n  const pts = curve.filter(p => Number.isFinite(p.inDb) && Number.isFinite(p.outDb));\n  if (pts.length === 0 || !Number.isFinite(inDb)) return undefined;\n  const sorted = [...pts].sort((a, b) => a.inDb - b.inDb);\n  if (inDb <= sorted[0]!.inDb) return sorted[0]!.outDb;\n  for (let k = 1; k < sorted.length; k++) {\n    const a = sorted[k - 1]!, b = sorted[k]!;\n    if (inDb <= b.inDb) {\n      const t = b.inDb === a.inDb ? 0 : (inDb - a.inDb) / (b.inDb - a.inDb);\n      return a.outDb + t * (b.outDb - a.outDb);\n    }\n  }\n  return sorted[sorted.length - 1]!.outDb;\n}\n\n/** Round to 1 dB and clamp into -60..0. */\nexport function clampThreshold(db: number): number {\n  if (!Number.isFinite(db)) throw new RangeError(\"Threshold must be finite\");\n  const t = clamp(Math.round(db), DYN_MIN_DB, DYN_MAX_DB);\n  return t === 0 ? 0 : t;\n}\n\n/** Threshold after a horizontal handle drag of `dx` points across a `size` plot. Relative, so grabbing never jumps. */\nexport function dragThreshold(startDb: number, dx: number, size: number): number {\n  assertSize(size);\n  if (!Number.isFinite(dx)) throw new RangeError(\"Invalid threshold drag\");\n  return clampThreshold(startDb + (dx / size) * SPAN);\n}\n\n/** The next ratio stop above (`1`) or below (`-1`) `ratio`. Values between stops move to the neighbouring stop. Stays put at the ends. */\nexport function stepRatio(ratio: number, direction: -1 | 1): number {\n  if (!Number.isFinite(ratio)) throw new RangeError(\"Ratio must be finite\");\n  if (direction === 1) return RATIO_STEPS.find(s => s > ratio + 1e-9) ?? clamp(ratio, DYN_MIN_RATIO, DYN_MAX_RATIO);\n  for (let k = RATIO_STEPS.length - 1; k >= 0; k--) if (RATIO_STEPS[k]! < ratio - 1e-9) return RATIO_STEPS[k]!;\n  return clamp(ratio, DYN_MIN_RATIO, DYN_MAX_RATIO);\n}\n\nconst trim = (n: number) => String(Number(n.toFixed(1)));\n\n/** `\"3:1\"`, `\"1.5:1\"`. */\nexport function formatRatio(ratio: number): string {\n  return trim(clamp(ratio, DYN_MIN_RATIO, DYN_MAX_RATIO)) + \":1\";\n}\n\n/** `\"-18 dB\"`. */\nexport function formatThreshold(db: number): string {\n  return clampThreshold(db) + \" dB\";\n}\n\n/** `\"6 dB\"`, `\"2.5 dB\"`. */\nexport function formatKnee(db: number): string {\n  return trim(clamp(db, 0, 24)) + \" dB\";\n}\n\n/** `\"+0 dB\"`, `\"+2.5 dB\"`. Makeup is never negative. */\nexport function formatMakeup(db: number): string {\n  return \"+\" + trim(clamp(db, 0, 24)) + \" dB\";\n}\n\n/** Spoken level: `\"minus 18 dB\"`, `\"0 dB\"`. */\nexport function describeLevel(db: number): string {\n  const r = Number(db.toFixed(1));\n  if (r === 0) return \"0 dB\";\n  return (r < 0 ? \"minus \" : \"plus \") + trim(Math.abs(r)) + \" dB\";\n}\n\n/** Screen-reader summary of the plot, e.g. `\"Threshold minus 18 dB, ratio 3 to 1, knee 6 dB, makeup 0 dB\"`. */\nexport function describeDynamics(p: DynamicsParams, inputLevelDb?: number): string {\n  const ratio = trim(clamp(p.ratio, DYN_MIN_RATIO, DYN_MAX_RATIO)) + \" to 1\";\n  const base = `Threshold ${describeLevel(clampThreshold(p.thresholdDb))}, ratio ${ratio}, knee ${formatKnee(p.kneeDb)}, makeup ${trim(clamp(p.makeupDb, 0, 24))} dB`;\n  return inputLevelDb === undefined || !Number.isFinite(inputLevelDb) ? base : base + \", input \" + describeLevel(inputLevelDb);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/audio/dynamics-graph.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/dynamics-graph",
+    "exports": [
+      "DYN_GRID_DB",
+      "DYN_MAX_DB",
+      "DYN_MAX_RATIO",
+      "DYN_MIN_DB",
+      "DYN_MIN_RATIO",
+      "DynamicsCurvePoint",
+      "DynamicsParams",
+      "RATIO_STEPS",
+      "clampThreshold",
+      "curveOutputAt",
+      "describeDynamics",
+      "describeLevel",
+      "dragThreshold",
+      "dynamicsCurveSegments",
+      "dynamicsGridlines",
+      "dynamicsPoint",
+      "formatKnee",
+      "formatMakeup",
+      "formatRatio",
+      "formatThreshold",
+      "levelToOffset",
+      "stepRatio",
+      "unitySegment"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

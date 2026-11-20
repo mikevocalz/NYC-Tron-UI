@@ -1,0 +1,71 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/vector/vector-types",
+  "title": "vector types",
+  "description": "vector types, a vector drawing helper module. Exports availabilityReason, deltaToContent, describeRgba.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/vector/vector-types.ts",
+      "content": "/**\n * Engine-neutral vector contract shared by the vector-tools cluster\n * ({@linkcode PathNode}, {@linkcode Subpath}, {@linkcode Paint}, {@linkcode Stroke}).\n * Field names and limits mirror the Prism v2 vector ops so a host adapter\n * passes these values to the engine unchanged. Nothing here renders pixels.\n */\n\n/** An 8-bit RGBA color, each channel 0..255 (alpha 255 is opaque). */\nexport type Rgba=readonly [r:number,g:number,b:number,a:number];\n/** How a {@linkcode PathNode}'s handles relate: free, collinear, or collinear with equal length. */\nexport type NodeKind=\"corner\"|\"smooth\"|\"symmetric\";\n/** Handle offset from its node, `[dx, dy]` in content coordinates. */\nexport type HandleOffset=readonly [dx:number,dy:number];\n\n/**\n * One path node in content coordinates. `in` leads into the node from the\n * previous segment and `out` leaves toward the next one; a segment with\n * neither handle is a straight line, otherwise a cubic Bézier.\n * @see {@linkcode Subpath.nodes}\n */\nexport interface PathNode {\n  readonly x:number;\n  readonly y:number;\n  readonly in?:HandleOffset;\n  readonly out?:HandleOffset;\n  readonly kind:NodeKind;\n}\n/** A run of {@linkcode PathNode}s; `closed` adds a segment from the last node back to the first. */\nexport interface Subpath {\n  readonly closed:boolean;\n  /** At least one node. */\n  readonly nodes:readonly PathNode[];\n}\n/** Identifies one node: `subpath` and `index` are positions in the path's arrays. */\nexport interface NodeRef {\n  readonly subpath:number;\n  readonly index:number;\n}\n\n/** A gradient color stop. `offset` is 0..1 along the gradient. */\nexport interface GradientStop {\n  readonly offset:number;\n  readonly color:Rgba;\n}\n/** Flat color paint. */\nexport interface SolidPaint {\n  readonly type:\"solid\";\n  readonly color:Rgba;\n}\n/** Linear gradient from `(x0, y0)` to `(x1, y1)` in content coordinates. */\nexport interface LinearPaint {\n  readonly type:\"linear\";\n  readonly x0:number;\n  readonly y0:number;\n  readonly x1:number;\n  readonly y1:number;\n  readonly stops:readonly GradientStop[];\n}\n/** Radial gradient around `(cx, cy)` with radius `r`; `fx`/`fy` set a focal point strictly inside the circle. */\nexport interface RadialPaint {\n  readonly type:\"radial\";\n  readonly cx:number;\n  readonly cy:number;\n  readonly r:number;\n  readonly fx?:number;\n  readonly fy?:number;\n  readonly stops:readonly GradientStop[];\n}\n/** Fill or stroke paint. Gradient coordinates are in content space. */\nexport type Paint=SolidPaint|LinearPaint|RadialPaint;\n/** Gradient variants of {@linkcode Paint}, the ones with stops. */\nexport type GradientPaint=LinearPaint|RadialPaint;\n\nexport type LineJoin=\"miter\"|\"round\"|\"bevel\";\nexport type LineCap=\"butt\"|\"round\"|\"square\";\nexport type FillRule=\"nonzero\"|\"evenodd\";\n/** `fill-stroke` paints the fill first, so the stroke sits on top. */\nexport type PaintOrder=\"fill-stroke\"|\"stroke-fill\";\nexport type BooleanOp=\"union\"|\"subtract\"|\"intersect\"|\"exclude\";\n\n/** Stroke settings; `dash` lengths and `dash_offset` are in content units. */\nexport interface Stroke {\n  readonly paint:Paint;\n  readonly width:number;\n  readonly join:LineJoin;\n  readonly cap:LineCap;\n  readonly miter_limit:number;\n  readonly dash:readonly number[];\n  readonly dash_offset:number;\n}\n\n/** Most stops a gradient may carry. */\nexport const MAX_GRADIENT_STOPS=256;\n/** Fewest stops a gradient may carry. */\nexport const MIN_GRADIENT_STOPS=2;\n/** Miter limit range the engine accepts. */\nexport const MITER_LIMIT_RANGE={min:1,max:1000} as const;\n/** Most entries in a dash pattern. */\nexport const MAX_DASH_ENTRIES=64;\n\n/**\n * 2D affine map from content coordinates to overlay (view) coordinates,\n * `[a, b, c, d, e, f]`: `x' = a*x + c*y + e`, `y' = b*x + d*y + f`. The host\n * composes its zoom, pan and the layer transform into one matrix.\n */\nexport type ViewTransform=readonly [a:number,b:number,c:number,d:number,e:number,f:number];\n/** The identity {@linkcode ViewTransform}: content units are view points. */\nexport const IDENTITY_TRANSFORM:ViewTransform=[1,0,0,1,0,0];\n/** A 2D point. */\nexport interface Point {\n  readonly x:number;\n  readonly y:number;\n}\n\nconst finite=(...values:number[])=>values.every(Number.isFinite);\n\n/** Throws a RangeError unless `t` is an invertible matrix of finite numbers. */\nexport function validateTransform(t:ViewTransform):void{\n  if(t.length!==6||!finite(...t))throw new RangeError(\"View transform needs six finite numbers\");\n  const determinant=t[0]*t[3]-t[1]*t[2];\n  if(!Number.isFinite(determinant)||Math.abs(determinant)<1e-12)throw new RangeError(\"View transform is not invertible\");\n}\n/** Content point to view point. */\nexport function toView(t:ViewTransform,p:Point):Point{\n  return {x:t[0]*p.x+t[2]*p.y+t[4],y:t[1]*p.x+t[3]*p.y+t[5]};\n}\n/** View point to content point. */\nexport function toContent(t:ViewTransform,p:Point):Point{\n  const det=t[0]*t[3]-t[1]*t[2];\n  const x=p.x-t[4],y=p.y-t[5];\n  return {x:(t[3]*x-t[2]*y)/det,y:(-t[1]*x+t[0]*y)/det};\n}\n/** A view-space drag distance as a content-space distance (translation ignored). */\nexport function deltaToContent(t:ViewTransform,dx:number,dy:number):Point{\n  const det=t[0]*t[3]-t[1]*t[2];\n  return {x:(t[3]*dx-t[2]*dy)/det,y:(-t[1]*dx+t[0]*dy)/det};\n}\n/** Average view points per content unit, for converting a touch tolerance into content units. */\nexport function transformScale(t:ViewTransform):number{\n  return Math.sqrt(Math.abs(t[0]*t[3]-t[1]*t[2]));\n}\n\n/** Throws a RangeError unless `color` has four integer channels in 0..255. */\nexport function validateRgba(color:Rgba):void{\n  if(color.length!==4||!color.every(c=>Number.isInteger(c)&&c>=0&&c<=255))\n    throw new RangeError(\"Color needs four integer channels in 0..255\");\n}\n/** CSS `rgba()` text for a {@linkcode Rgba}, for drawing swatches. */\nexport function rgbaToCss(color:Rgba):string{\n  return `rgba(${color[0]},${color[1]},${color[2]},${Math.round(color[3]/255*1000)/1000})`;\n}\n/** Spoken description of a color: hex digits plus opacity when not opaque, e.g. \"#1F7A6D, 50% opacity\". */\nexport function describeRgba(color:Rgba):string{\n  const hex=\"#\"+color.slice(0,3).map(c=>c.toString(16).padStart(2,\"0\")).join(\"\").toUpperCase();\n  return color[3]===255?hex:`${hex}, ${Math.round(color[3]/255*100)}% opacity`;\n}\n\n/** Throws a RangeError naming the first rule `stops` breaks (count, range, order, color). */\nexport function validateStops(stops:readonly GradientStop[]):void{\n  if(stops.length<MIN_GRADIENT_STOPS)throw new RangeError(\"A gradient needs at least two stops\");\n  if(stops.length>MAX_GRADIENT_STOPS)throw new RangeError(\"A gradient has at most 256 stops\");\n  let last=0;\n  for(const stop of stops){\n    if(!Number.isFinite(stop.offset)||stop.offset<0||stop.offset>1)throw new RangeError(\"Stop offsets must be in 0..1\");\n    if(stop.offset<last)throw new RangeError(\"Stop offsets must not decrease\");\n    last=stop.offset;\n    validateRgba(stop.color);\n  }\n}\n/** Throws a RangeError when the engine would reject `paint`. */\nexport function validatePaint(paint:Paint):void{\n  switch(paint.type){\n    case \"solid\":validateRgba(paint.color);return;\n    case \"linear\":\n      if(!finite(paint.x0,paint.y0,paint.x1,paint.y1))throw new RangeError(\"Gradient points must be finite\");\n      validateStops(paint.stops);return;\n    case \"radial\":{\n      if(!finite(paint.cx,paint.cy,paint.r)||paint.r<=0)\n        throw new RangeError(\"A radial gradient needs a finite center and a positive radius\");\n      if((paint.fx===undefined)!==(paint.fy===undefined))throw new RangeError(\"A focal point needs both fx and fy\");\n      if(paint.fx!==undefined&&paint.fy!==undefined){\n        if(!finite(paint.fx,paint.fy))throw new RangeError(\"The focal point must be finite\");\n        if(Math.hypot(paint.fx-paint.cx,paint.fy-paint.cy)>=paint.r)\n          throw new RangeError(\"The focal point must lie strictly inside the gradient circle\");\n      }\n      validateStops(paint.stops);return;\n    }\n    default:throw new RangeError(\"Unknown paint type: \"+String((paint as {type:unknown}).type));\n  }\n}\n/** Throws a RangeError when the engine would reject `stroke`. */\nexport function validateStroke(stroke:Stroke):void{\n  validatePaint(stroke.paint);\n  if(!Number.isFinite(stroke.width)||stroke.width<=0)throw new RangeError(\"Stroke width must be positive\");\n  if(![\"miter\",\"round\",\"bevel\"].includes(stroke.join))throw new RangeError(\"Unknown line join: \"+stroke.join);\n  if(![\"butt\",\"round\",\"square\"].includes(stroke.cap))throw new RangeError(\"Unknown line cap: \"+stroke.cap);\n  if(!Number.isFinite(stroke.miter_limit)||stroke.miter_limit<MITER_LIMIT_RANGE.min||stroke.miter_limit>MITER_LIMIT_RANGE.max)\n    throw new RangeError(\"Miter limit must be in 1..1000\");\n  validateDash(stroke.dash);\n  if(!Number.isFinite(stroke.dash_offset))throw new RangeError(\"Dash offset must be finite\");\n}\n/** Throws a RangeError unless `dash` is empty or up to 64 non-negative lengths with a positive total. */\nexport function validateDash(dash:readonly number[]):void{\n  if(dash.length>MAX_DASH_ENTRIES)throw new RangeError(\"A dash pattern has at most 64 entries\");\n  if(dash.some(d=>!Number.isFinite(d)||d<0))throw new RangeError(\"Dash lengths must be finite and not negative\");\n  if(dash.length>0&&dash.reduce((a,b)=>a+b,0)<=0)throw new RangeError(\"A dash pattern needs a positive total length\");\n}\n\n/**\n * Availability of a command. Disabled commands carry the reason the UI shows,\n * so no control is silently dead.\n */\nexport type Availability=Readonly<{enabled:true}>|Readonly<{enabled:false;reason:string}>;\n/** The shared enabled {@linkcode Availability}. */\nexport const AVAILABLE:Availability=Object.freeze({enabled:true});\n/** A disabled {@linkcode Availability} with its reason. */\nexport function unavailable(reason:string):Availability{\n  return {enabled:false,reason};\n}\n/** The reason of a disabled {@linkcode Availability}, or `undefined` when enabled. */\nexport function availabilityReason(a:Availability):string|undefined{\n  return a.enabled?undefined:a.reason;\n}\n\n/** Keyboard nudge distance: 1 unit, or 10 with Shift. `undefined` for keys that do not nudge. */\nexport function nudgeDelta(key:string|undefined,shift:boolean):Point|undefined{\n  const n=shift?10:1;\n  switch(key){\n    case \"ArrowLeft\":return {x:-n,y:0};\n    case \"ArrowRight\":return {x:n,y:0};\n    case \"ArrowUp\":return {x:0,y:-n};\n    case \"ArrowDown\":return {x:0,y:n};\n    default:return undefined;\n  }\n}\n/** Rounds to 1/1000 so displayed and committed coordinates agree and float noise (and -0) stays out of the document. */\nexport function roundCoord(value:number):number{\n  const r=Math.round(value*1000)/1000;\n  return r===0?0:r;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/vector/vector-types.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/vector/vector-types",
+    "exports": [
+      "AVAILABLE",
+      "Availability",
+      "BooleanOp",
+      "FillRule",
+      "GradientPaint",
+      "GradientStop",
+      "HandleOffset",
+      "IDENTITY_TRANSFORM",
+      "LineCap",
+      "LineJoin",
+      "LinearPaint",
+      "MAX_DASH_ENTRIES",
+      "MAX_GRADIENT_STOPS",
+      "MIN_GRADIENT_STOPS",
+      "MITER_LIMIT_RANGE",
+      "NodeKind",
+      "NodeRef",
+      "Paint",
+      "PaintOrder",
+      "PathNode",
+      "Point",
+      "RadialPaint",
+      "Rgba",
+      "SolidPaint",
+      "Stroke",
+      "Subpath",
+      "ViewTransform",
+      "availabilityReason",
+      "deltaToContent",
+      "describeRgba",
+      "nudgeDelta",
+      "rgbaToCss",
+      "roundCoord",
+      "toContent",
+      "toView",
+      "transformScale",
+      "unavailable",
+      "validateDash",
+      "validatePaint",
+      "validateRgba",
+      "validateStops",
+      "validateStroke",
+      "validateTransform"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

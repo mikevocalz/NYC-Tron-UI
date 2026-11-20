@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/color-picker-dialog-model",
+  "title": "color picker dialog model",
+  "description": "color picker dialog model, a color state model. Exports colorChanged, colorDialogTitle, comparisonContrast.",
+  "registryDependencies": [
+    "@nyc-tron/forge/color",
+    "@nyc-tron/forge/color/contrast"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/color-picker-dialog-model.ts",
+      "content": "/**\n * Pure state rules for `ColorPickerDialog` (C-01): title and labels, the\n * original/new comparison, key handling and the contrast readout. The dialog\n * holds no color; the host keeps `original` and the draft.\n */\nimport {alphaPercent,assertHsv,hsvToRgb,rgbToHsv,rgbaToHex,type HsvColor,type RgbaColor} from \"@/components/nyc-tron/ui/components/forge/color\";\nimport {contrastRating,type ContrastRating} from \"@/components/nyc-tron/ui/components/forge/color/contrast\";\n\n/** Which half of the comparison swatch. `original` sits at the start edge, `new` at the end edge. */\nexport type ColorComparisonSide=\"original\"|\"new\";\n\n/** Whether two HSV colors are the same exact value. */\nexport function sameHsv(a:HsvColor,b:HsvColor):boolean{\n  return a.h===b.h&&a.s===b.s&&a.v===b.v&&a.alpha===b.alpha;\n}\n\n/**\n * Whether the draft would change the displayed color. Hue alone does not count\n * when saturation or brightness is zero, since the screen shows the same gray.\n */\nexport function colorChanged(original:HsvColor,draft:HsvColor):boolean{\n  assertHsv(original);\n  assertHsv(draft);\n  return rgbaToHex(hsvToRgb(original))!==rgbaToHex(hsvToRgb(draft));\n}\n\n/** Dialog heading: \"Foreground color\" for target \"Foreground\", else \"Color\". */\nexport function colorDialogTitle(target?:string):string{\n  const t=target?.trim();\n  return t?t+\" color\":\"Color\";\n}\n\n/** `#RRGGBB`, plus `, 40% opacity` when translucent. */\nexport function describeColor(color:HsvColor):string{\n  const rgb=hsvToRgb(color);\n  const hex=rgbaToHex(rgb,false);\n  return color.alpha<1?hex+\", \"+alphaPercent(color.alpha)+\"% opacity\":hex;\n}\n\n/** Screen-reader name for one half of the comparison swatch. */\nexport function comparisonLabel(side:ColorComparisonSide,color:HsvColor,changed:boolean):string{\n  if(side===\"new\")return \"New color, \"+describeColor(color);\n  return changed?\"Revert to original color, \"+describeColor(color):\"Original color, \"+describeColor(color)+\", unchanged\";\n}\n\n/** The draft reset to the original. Keeps the original's exact HSV, so hue survives gray. */\nexport function revertDraft(original:HsvColor):HsvColor{\n  assertHsv(original);\n  return {...original};\n}\n\n/** A swatch color as the next draft, keeping `draft`'s hue when the swatch is gray. */\nexport function draftFromRgba(color:RgbaColor,draft:HsvColor):HsvColor{\n  return rgbToHsv(color,draft.h);\n}\n\n/** A draft with a new alpha only; h, s and v keep their exact values. */\nexport function draftWithAlpha(draft:HsvColor,alpha:number):HsvColor{\n  if(!Number.isFinite(alpha)||alpha<0||alpha>1)throw new RangeError(\"Alpha must be 0..1\");\n  return {...draft,alpha};\n}\n\n/** Where a key press landed, as far as the dialog's keyboard rules care. */\nexport type DialogKeyTarget=\"text-field\"|\"control\"|\"surface\";\n\n/** What a key press asks the dialog to do. */\nexport type DialogKeyIntent=\"commit\"|\"cancel\"|\"none\";\n\n/**\n * Enter commits only from the dialog surface: in a text field it submits that\n * field, and on a button it presses the button. Escape cancels from anywhere.\n */\nexport function dialogKeyIntent(key:string|undefined,target:DialogKeyTarget):DialogKeyIntent{\n  if(key===\"Escape\")return \"cancel\";\n  if(key===\"Enter\"&&target===\"surface\")return \"commit\";\n  return \"none\";\n}\n\n/** Contrast of the draft against the original, both composited over an opaque `backdrop`. */\nexport interface ComparisonContrast extends ContrastRating {\n  /** \"4.52:1 against the original\" */\n  readonly text:string;\n}\n\n/**\n * WCAG contrast between the draft and the original. Each is first composited\n * over `backdrop` (white by default) so translucent colors rate as drawn.\n */\nexport function comparisonContrast(draft:HsvColor,original:HsvColor,backdrop:RgbaColor={r:255,g:255,b:255,alpha:1}):ComparisonContrast{\n  const over=(c:HsvColor)=>{\n    const rgb=hsvToRgb(c);\n    const a=rgb.alpha;\n    const mix=(x:number,y:number)=>Math.round(x*a+y*(1-a));\n    return {r:mix(rgb.r,backdrop.r),g:mix(rgb.g,backdrop.g),b:mix(rgb.b,backdrop.b),alpha:1};\n  };\n  const rating=contrastRating(over(draft),over(original));\n  return {...rating,text:rating.ratio.toFixed(2)+\":1 against the original\"};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/color/color-picker-dialog-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/color-picker-dialog-model",
+    "exports": [
+      "ColorComparisonSide",
+      "ComparisonContrast",
+      "DialogKeyIntent",
+      "DialogKeyTarget",
+      "colorChanged",
+      "colorDialogTitle",
+      "comparisonContrast",
+      "comparisonLabel",
+      "describeColor",
+      "dialogKeyIntent",
+      "draftFromRgba",
+      "draftWithAlpha",
+      "revertDraft",
+      "sameHsv"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

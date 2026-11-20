@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/design/HugFillFixedSizeControls",
+  "title": "Hug Fill Fixed Size Controls",
+  "description": "Hug Fill Fixed Size Controls, a UI design tool component. Props: x, y, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/PropertyInspector"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/design/HugFillFixedSizeControls.model.ts",
+      "content": "import type {InspectorProperty} from '@/components/nyc-tron/ui/components/forge/inputs/PropertyInspector';\n\nexport interface AxisSizing {\n mode:'hug'|'fill'|'fixed';value:number;canHug:boolean;canFill:boolean;unavailableReason?:string;\n /** Host-owned positive dimension range. Defaults preserve the original control contract. */\n min?:number;max?:number;step?:number;\n}\n\nfunction bounds(value:AxisSizing){\n const min=value.min??.001,max=value.max??1000000,step=value.step??1;\n if(!Number.isFinite(min)||!Number.isFinite(max)||!Number.isFinite(step)||min<=0||max<min||step<=0)\n  throw new RangeError('Sizing bounds must be finite, positive and ordered');\n return {min,max,step};\n}\n\nexport function sizingFields(x:AxisSizing,y:AxisSizing):InspectorProperty[]{\n const fields:InspectorProperty[]=[];\n for(const axis of ['x','y'] as const){\n  const value=axis==='x'?x:y,range=bounds(value),label=axis==='x'?'Width':'Height';\n  fields.push({kind:'choice',id:axis+':mode',label:label+' sizing',value:value.mode,disabledReason:value.unavailableReason,\n   choices:[{id:'hug',label:'Hug contents',disabled:!value.canHug},{id:'fill',label:'Fill parent',disabled:!value.canFill},{id:'fixed',label:'Fixed'}]});\n  if(value.mode==='fixed')fields.push({kind:'number',id:axis+':value',label,value:value.value,...range,disabledReason:value.unavailableReason});\n }\n return fields;\n}\n\n/** Validate a controlled write without changing caller state or replacing its capability metadata. */\nexport function sizingCommit(x:AxisSizing,y:AxisSizing,id:string,next:unknown):{axis:'x'|'y';value:AxisSizing}{\n const match=/^(x|y):(mode|value)$/.exec(id);\n if(!match||match[0]!==id)throw new Error('Unknown sizing field');\n const axis=match[1] as 'x'|'y',key=match[2],value=axis==='x'?x:y;\n if(value.unavailableReason!==undefined)throw new Error(value.unavailableReason||'Sizing is unavailable');\n const range=bounds(value);\n if(key==='mode'){\n  if(next!=='hug'&&next!=='fill'&&next!=='fixed')throw new Error('Unknown sizing mode');\n  if(next==='hug'&&!value.canHug||next==='fill'&&!value.canFill)throw new Error('Sizing mode unavailable');\n  if(next==='fixed'&&(!Number.isFinite(value.value)||value.value<range.min||value.value>range.max))\n   throw new RangeError('Fixed size is outside the configured range');\n  return {axis,value:{...value,mode:next}};\n }\n if(value.mode!=='fixed')throw new Error('Only fixed sizing accepts a numeric value');\n if(typeof next!=='number'||!Number.isFinite(next)||next<range.min||next>range.max)\n  throw new RangeError('Fixed size is outside the configured range');\n return {axis,value:{...value,value:next}};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/design/HugFillFixedSizeControls.model.ts"
+    },
+    {
+      "path": "packages/ui/src/components/forge/design/HugFillFixedSizeControls.tsx",
+      "content": "import {PropertyInspector,type PropertyInspectorProps} from '@/components/nyc-tron/ui/components/forge/inputs/PropertyInspector';\nimport {sizingFields,sizingCommit,type AxisSizing} from '@/components/nyc-tron/ui/components/forge/design/HugFillFixedSizeControls.model';\nexport type {AxisSizing} from '@/components/nyc-tron/ui/components/forge/design/HugFillFixedSizeControls.model';\nexport const HUG_FILL_FIXED_SIZE_CAPABILITIES=Object.freeze({version:1,configurableBounds:true} as const);\nexport interface HugFillFixedSizeControlsProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {x:AxisSizing;y:AxisSizing;onCommit:(axis:'x'|'y',value:AxisSizing,signal?:AbortSignal)=>unknown}\nexport function HugFillFixedSizeControls({x,y,onCommit,...props}:HugFillFixedSizeControlsProps){\n return <PropertyInspector {...props} label=\"Axis sizing\" fields={sizingFields(x,y)} onCommit={(id,value,s)=>{const result=sizingCommit(x,y,id,value);return onCommit(result.axis,result.value,s);}}/>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/design/HugFillFixedSizeControls.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/design/HugFillFixedSizeControls",
+    "exports": [
+      "AxisSizing",
+      "HUG_FILL_FIXED_SIZE_CAPABILITIES",
+      "HugFillFixedSizeControls",
+      "HugFillFixedSizeControlsProps"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

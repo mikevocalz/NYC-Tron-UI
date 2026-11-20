@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "Toolbar",
+  "title": "Toolbar",
+  "description": "Header bar with title, leading slot and actions group in default or compact density; arrow-key focus on web, for React Native.",
+  "registryDependencies": [
+    "@nyc-tron/forms/choice-keys"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/Toolbar.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { I18nManager, Platform, Text, View, type ViewProps } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { arrowStep, domIsRTL, isModified, webKey } from \"@/components/nyc-tron/ui/components/forms/choice-keys\";\n\nexport interface ToolbarProps extends Omit<ViewProps,\"children\"|\"role\"> {\n  title?:string;\n  /** Leading control slot (back, menu, drag handle). */\n  leading?:ReactNode;\n  /** Trailing action controls, usually IconButtons. */\n  actions?:ReactNode;\n  /** `compact` is pane chrome; `default` is a screen-top bar. */\n  density?:\"default\"|\"compact\";\n  /** Names the action group for assistive tech; defaults to \"<title> actions\". */\n  actionsLabel?:string;\n  className?:string;\n  titleClassName?:string;\n  unstyled?:boolean;\n}\n\nconst FOCUSABLE='button:not([disabled]),a[href],[role=\"button\"]:not([aria-disabled=\"true\"]),[tabindex=\"0\"]';\n/** Web arrow keys between the action controls; Tab still reaches every one. */\nfunction moveFocus(event:unknown){\n  const k=webKey(event);\n  if(isModified(k))return;\n  const root=k.currentTarget as {querySelectorAll?:(s:string)=>ArrayLike<{focus:()=>void}>;ownerDocument?:{activeElement:unknown}};\n  const items=Array.from(root.querySelectorAll?.(FOCUSABLE)??[]);\n  if(!items.length)return;\n  const at=items.indexOf(root.ownerDocument?.activeElement as {focus:()=>void});\n  let next:number|null=null;\n  if(k.key===\"Home\")next=0;\n  else if(k.key===\"End\")next=items.length-1;\n  else{\n    const step=arrowStep(k.key,\"horizontal\",domIsRTL(k.currentTarget)||I18nManager.isRTL);\n    if(step!==null)next=at<0?0:(at+step+items.length)%items.length;\n  }\n  if(next===null)return;\n  k.preventDefault();\n  items[next]!.focus();\n}\n\n/**\n * Contextual top bar: optional leading control, a title announced as a\n * heading, and a trailing action group with toolbar semantics. Layout uses\n * logical order, so leading sits at the start edge in RTL. Minimum height is\n * 52pt compact / 56pt default so 44pt controls fit with breathing room.\n */\nexport function Toolbar({\n  title,leading,actions,density=\"default\",actionsLabel,className,titleClassName,unstyled=false,...rest\n}:ToolbarProps){\n  const styled=!unstyled,compact=density===\"compact\";\n  return <View {...rest}\n    {...{className:joinClasses(\"w-full min-w-0 flex-row items-center gap-2\",\n      compact?\"min-h-13 px-2\":\"min-h-14 px-4\",\n      styled&&\"border-b border-border bg-surface-raised\",className)}}>\n    {leading?<View {...{className:\"shrink-0 flex-row items-center gap-1\"}}>{leading}</View>:null}\n    {title\n      ?<Text accessibilityRole=\"header\" numberOfLines={1}\n        {...(Platform.OS===\"web\"?{\"aria-level\":compact?3:2}:{})}\n        {...{className:joinClasses(\"min-w-0 flex-1\",\n          styled&&(compact?\"text-sm font-semibold text-text\":\"text-lg font-semibold text-text\"),titleClassName)}}>{title}</Text>\n      :<View style={{flex:1}}/>}\n    {actions\n      ?<View role=\"toolbar\" aria-label={actionsLabel??(title?title+\" actions\":\"Actions\")}\n        {...({className:\"shrink-0 flex-row items-center gap-1\",...(Platform.OS===\"web\"?{onKeyDown:moveFocus}:{})} as object)}>{actions}</View>\n      :null}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/Toolbar.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [
+      "web"
+    ],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/Toolbar",
+    "exports": [
+      "Toolbar",
+      "ToolbarProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "navigation"
+  ],
+  "type": "registry:ui"
+}

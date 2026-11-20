@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/transition-presets",
+  "title": "transition presets",
+  "description": "transition presets, a video timeline helper module. Exports filterTransitionKinds, transitionDiagram.",
+  "registryDependencies": [
+    "@nyc-tron/forge/timeline/transitions"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timeline/transition-presets.ts",
+      "content": "import type {TransitionTarget} from \"@/components/nyc-tron/ui/components/forge/timeline/transitions\";\n\n/**\n * Transition kinds for `TransitionPresetBrowser` (D-37). The default list is\n * the set Splice stores (`addTransition` `kind`); a host with a different\n * engine passes its own. Nothing here renders video: there is no compositor\n * yet, so each kind is shown as a drawn diagram, not a preview.\n */\nexport interface TransitionKindInfo {\n  readonly kind:string;\n  readonly label:string;\n  readonly description:string;\n  /** Which cuts take it: video and overlay tracks, or audio tracks. */\n  readonly tracks:TransitionTarget;\n}\n\nexport const TRANSITION_KINDS:readonly TransitionKindInfo[]=[\n  {kind:\"cross_dissolve\",label:\"Cross dissolve\",description:\"The first clip fades out while the second fades in.\",tracks:\"visual\"},\n  {kind:\"dip_to_black\",label:\"Dip to black\",description:\"Fades to black, then up into the second clip.\",tracks:\"visual\"},\n  {kind:\"dip_to_white\",label:\"Dip to white\",description:\"Fades to white, then down into the second clip.\",tracks:\"visual\"},\n  {kind:\"wipe_left\",label:\"Wipe left\",description:\"An edge sweeps right to left, revealing the second clip.\",tracks:\"visual\"},\n  {kind:\"wipe_right\",label:\"Wipe right\",description:\"An edge sweeps left to right, revealing the second clip.\",tracks:\"visual\"},\n  {kind:\"push_left\",label:\"Push left\",description:\"The second clip slides in from the right and pushes the first out.\",tracks:\"visual\"},\n  {kind:\"push_right\",label:\"Push right\",description:\"The second clip slides in from the left and pushes the first out.\",tracks:\"visual\"},\n  {kind:\"cross_fade\",label:\"Crossfade\",description:\"Audio: the first clip fades down as the second fades up.\",tracks:\"audio\"},\n];\n\n/** How the browser draws a kind: two tiles that overlap, dip through a fill, or meet at a moving edge. */\nexport type TransitionDiagram=\n  |{readonly shape:\"overlap\"}\n  |{readonly shape:\"dip\";readonly through:\"black\"|\"white\"}\n  |{readonly shape:\"wipe\"|\"push\";readonly direction:\"left\"|\"right\"};\n\n/** The diagram for `kind`; unknown kinds draw as an overlap. */\nexport function transitionDiagram(kind:string):TransitionDiagram{\n  if(kind===\"dip_to_black\")return {shape:\"dip\",through:\"black\"};\n  if(kind===\"dip_to_white\")return {shape:\"dip\",through:\"white\"};\n  const m=/^(wipe|push)_(left|right)$/.exec(kind);\n  if(m)return {shape:m[1] as \"wipe\"|\"push\",direction:m[2] as \"left\"|\"right\"};\n  return {shape:\"overlap\"};\n}\n\n/** Kinds whose label or description contains `query` (case-insensitive), for `target` cuts when given. */\nexport function filterTransitionKinds(kinds:readonly TransitionKindInfo[],query:string,target?:TransitionTarget):TransitionKindInfo[]{\n  const q=query.trim().toLowerCase();\n  return kinds.filter(k=>(!target||k.tracks===target)&&(!q||k.label.toLowerCase().includes(q)||k.description.toLowerCase().includes(q)));\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/transition-presets.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/transition-presets",
+    "exports": [
+      "TRANSITION_KINDS",
+      "TransitionDiagram",
+      "TransitionKindInfo",
+      "filterTransitionKinds",
+      "transitionDiagram"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

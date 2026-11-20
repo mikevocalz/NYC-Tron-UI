@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feedback/Badge",
+  "title": "Badge",
+  "description": "Small status badge with neutral, info, success, danger or accent tone, a status dot and size steps, for React Native.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/feedback/Badge.tsx",
+      "content": "import { Text, View, type ViewProps } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\n\nexport type BadgeTone=\"neutral\"|\"info\"|\"success\"|\"danger\"|\"accent\";\nexport type BadgeSize=\"xs\"|\"sm\";\n\n/** Props for {@linkcode Badge}. Drop-in for Nitro Forge's `StudioBadgeProps`. */\nexport interface BadgeProps extends Omit<ViewProps,\"children\"> {\n  /** The full text a screen reader announces; keep it a word or two. */\n  label:string;\n  /** @default \"neutral\" */\n  tone?:BadgeTone;\n  /** @default \"sm\" */\n  size?:BadgeSize;\n  className?:string;\n  labelClassName?:string;\n  unstyled?:boolean;\n}\n\nconst DOT:Record<Exclude<BadgeTone,\"neutral\">,string>={\n  info:\"border-info\",success:\"border-success\",danger:\"border-danger\",accent:\"border-accent\",\n};\nconst sizes:Record<BadgeSize,{root:string;label:string}>={\n  // 12pt is the floor for chip text; the sizes differ in padding.\n  xs:{root:\"gap-1 px-1.5 py-0.5\",label:\"text-xs leading-4\"},\n  sm:{root:\"gap-1.5 px-2 py-1\",label:\"text-xs leading-4 font-medium\"},\n};\n\n/**\n * Static status chip: a count, \"Open in this session\", \"Draft\". Not a button;\n * wrap it in one if it must act. Toned chips add a dot in the tone color (a border, so forced colors keeps it) and\n * keep body text, so the label stays at full contrast in both appearances.\n */\nexport function Badge({\n  label,tone=\"neutral\",size=\"sm\",className,labelClassName,unstyled=false,...rest\n}:BadgeProps) {\n  const styled=!unstyled;\n  const s=sizes[size];\n  return (\n    <View {...rest} accessible accessibilityLabel={rest.accessibilityLabel??label}\n      {...{className:joinClasses(\"flex-row items-center self-start\",\n        styled&&\"rounded-control border border-border\",\n        styled&&(tone===\"neutral\"?\"bg-surface-sunken\":\"bg-surface-raised\"),\n        styled&&s.root,className)}}>\n      {tone!==\"neutral\" ? <View aria-hidden style={{borderWidth:3}} {...{className:joinClasses(\"h-1.5 w-1.5 rounded-full\",DOT[tone])}}/> : null}\n      <Text numberOfLines={1} {...{className:joinClasses(styled&&s.label,\n        styled&&(tone===\"neutral\"?\"text-text-muted\":\"text-text\"),labelClassName)}}>{label}</Text>\n    </View>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/feedback/Badge.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/feedback/Badge",
+    "exports": [
+      "Badge",
+      "BadgeProps",
+      "BadgeSize",
+      "BadgeTone"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "feedback"
+  ],
+  "type": "registry:ui"
+}

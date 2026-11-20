@@ -1,0 +1,81 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "html",
+  "title": "Article",
+  "description": "Article, a UI component. Props: level. Also exports Aside, Footer.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/html/Input.tsx",
+      "content": "import { TextInput, type KeyboardTypeOptions, type TextInputProps } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport type { InputProps, InputType } from \"@/components/nyc-tron/ui/components/html/types\";\n\nconst KEYBOARD:Record<InputType,KeyboardTypeOptions>={\n  text:\"default\",search:\"web-search\",email:\"email-address\",url:\"url\",\n  tel:\"phone-pad\",number:\"decimal-pad\",password:\"default\",\n};\nconst INPUT_MODE:Record<InputType,TextInputProps[\"inputMode\"]>={\n  text:\"text\",search:\"search\",email:\"email\",url:\"url\",tel:\"tel\",number:\"decimal\",password:\"text\",\n};\n\n/**\n * Single-line text field on both platforms: a real `<input>` on web (React\n * Native Web's TextInput) and the platform field on native. For a labelled\n * field with helper and error text use TextField; this is the bare control\n * Forge's semantic set exposes. At least 44pt tall.\n */\nexport function Input({type=\"text\",id,className,...props}:InputProps) {\n  return (\n    <TextInput\n      {...props}\n      nativeID={id}\n      keyboardType={props.keyboardType??KEYBOARD[type]}\n      inputMode={props.inputMode??INPUT_MODE[type]}\n      secureTextEntry={props.secureTextEntry??type===\"password\"}\n      autoCapitalize={props.autoCapitalize??(type===\"text\"?\"sentences\":\"none\")}\n      {...{className:joinClasses(\"min-h-11\",className)}}\n    />\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/html/Input.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/html/semantic.native.tsx",
+      "content": "import { Linking, Text as RNText, View, type GestureResponderEvent, type Role } from \"react-native\";\nimport type {\n  HeadingProps, LinkProps, SemanticBaseProps, SemanticBlockProps, SemanticTextProps,\n} from \"@/components/nyc-tron/ui/components/html/types\";\n\nexport { Input } from \"@/components/nyc-tron/ui/components/html/Input\";\nexport type {\n  HeadingLevel, HeadingProps, InputProps, InputType, LinkProps,\n  SemanticBaseProps, SemanticBlockProps, SemanticTextProps,\n} from \"@/components/nyc-tron/ui/components/html/types\";\n\n/**\n * Native fork: View and Text with the matching ARIA `role`, which RN 0.88\n * maps to the platform's accessibility traits where one exists (heading,\n * link, list). Landmarks have no iOS or Android equivalent, so `main`,\n * `banner`, `navigation` and the like are carried for parity and are silent\n * to VoiceOver and TalkBack. Roles go through `role`, never\n * `accessibilityRole`: Android's enum throws on values outside its list.\n */\nfunction nativeProps({id,hidden,title:_title,dataSet:_dataSet,dir:_dir,lang:_lang,className,...rest}:SemanticBaseProps) {\n  const props:Record<string,unknown>={};\n  for(const [key,value] of Object.entries(rest)){\n    if(!key.startsWith(\"data-\"))props[key]=value;\n  }\n  return {\n    ...props,\n    nativeID:id,\n    className,\n    ...(hidden?{\"aria-hidden\":true,accessibilityElementsHidden:true,importantForAccessibility:\"no-hide-descendants\" as const}:{}),\n  };\n}\nfunction block(role:Role|undefined,displayName:string) {\n  const Block=({style,hidden,...props}:SemanticBlockProps)=>(\n    <View {...nativeProps({hidden,...props})} role={role}\n      style={hidden?[style,{display:\"none\"}]:style}/>\n  );\n  Block.displayName=displayName;\n  return Block;\n}\n\nexport const Page=block(undefined,\"Page\");\nexport const Main=block(\"main\",\"Main\");\nexport const Header=block(\"banner\",\"Header\");\nexport const Footer=block(\"contentinfo\",\"Footer\");\nexport const Section=block(\"region\",\"Section\");\nexport const Nav=block(\"navigation\",\"Nav\");\nexport const Article=block(\"article\",\"Article\");\nexport const Aside=block(\"complementary\",\"Aside\");\n\nexport function Text({style,hidden,...props}:SemanticTextProps) {\n  return <RNText {...nativeProps({hidden,...props})} style={hidden?[style,{display:\"none\"}]:style}/>;\n}\nexport function Paragraph(props:SemanticTextProps) {\n  return <Text {...props}/>;\n}\n// RN Text has no heading level on iOS or Android; `aria-level` is carried for\n// parity and only React Native Web announces it.\nexport function Heading({level=1,style,hidden,...props}:HeadingProps) {\n  return <RNText {...nativeProps({hidden,...props})} role=\"heading\"\n    {...{\"aria-level\":level}} style={hidden?[style,{display:\"none\"}]:style}/>;\n}\n\nconst EXTERNAL=/^(?:https?:|mailto:|tel:)/i;\nexport function Link({href,target:_target,rel:_rel,onPress,style,hidden,...props}:LinkProps) {\n  const external=href!==undefined&&EXTERNAL.test(href);\n  const press=onPress??(external?(_event:GestureResponderEvent)=>{Linking.openURL(href!).catch(()=>{});}:undefined);\n  // A link that cannot go anywhere is plain text, never a dead control.\n  return <RNText {...nativeProps({hidden,...props})} role={press?\"link\":undefined} onPress={press}\n    style={hidden?[style,{display:\"none\"}]:style}/>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/html/semantic.native.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/html/semantic.web.tsx",
+      "content": "import * as ReactNative from \"react-native\";\nimport { StyleSheet, type StyleProp } from \"react-native\";\nimport type { ReactElement } from \"react\";\nimport type {\n  HeadingProps, LinkProps, SemanticBaseProps, SemanticBlockProps, SemanticTextProps,\n} from \"@/components/nyc-tron/ui/components/html/types\";\n\nexport { Input } from \"@/components/nyc-tron/ui/components/html/Input\";\nexport type {\n  HeadingLevel, HeadingProps, InputProps, InputType, LinkProps,\n  SemanticBaseProps, SemanticBlockProps, SemanticTextProps,\n} from \"@/components/nyc-tron/ui/components/html/types\";\n\n/**\n * Web fork: real `<main>`, `<header>`, `<nav>`, `<h2>`, `<a>`… through React\n * Native Web's own element factory, the path RNW's View and Text use. Style\n * props, `dataSet`, aria props and RTL `dir` resolve exactly as on a View.\n *\n * View with a `role` would reach most of these elements too, but it always\n * writes the role attribute: a `<header role=\"banner\">` nested in a section\n * would announce a second page banner. The factory emits the element with its\n * implicit role only.\n */\ntype Factory=(tag:string,props:object)=>ReactElement;\nconst createElement=(ReactNative as unknown as {unstable_createElement?:Factory}).unstable_createElement;\nif(typeof createElement!==\"function\"){\n  throw new Error(\"@nyc-tron/ui/components/html web build needs react-native-web (unstable_createElement).\");\n}\n\n// RN View defaults, so block primitives lay out like the Views around them\n// (flex column, no shrink); app classes override them as they do on a View.\nconst base=StyleSheet.create({\n  block:{display:\"flex\",flexDirection:\"column\",alignItems:\"stretch\",flexBasis:\"auto\",flexShrink:0,\n    minHeight:0,minWidth:0,position:\"relative\"},\n  // UA margins, and link color/underline, are reset like RNW Text does; the\n  // app's classes restyle them.\n  text:{margin:0},\n  link:{margin:0,color:\"inherit\",textDecorationLine:\"none\"},\n});\n\nfunction render(tag:string,{className,style,hidden,dataSet,children,...rest}:SemanticBaseProps&{style?:StyleProp<object>},\n  baseStyle:object,extra?:object):ReactElement {\n  const classes=className?{$$css:true,tw:className}:undefined;\n  return createElement!(tag,{\n    ...rest,...extra,dataSet,hidden,\n    // `hidden` alone loses to a display utility; the inline style does not.\n    style:[baseStyle,classes,style,hidden?{display:\"none\"}:undefined],\n    children,\n  });\n}\n\nexport const Page=(props:SemanticBlockProps)=>render(\"div\",props,base.block);\nexport const Main=(props:SemanticBlockProps)=>render(\"main\",props,base.block);\nexport const Header=(props:SemanticBlockProps)=>render(\"header\",props,base.block);\nexport const Footer=(props:SemanticBlockProps)=>render(\"footer\",props,base.block);\nexport const Section=(props:SemanticBlockProps)=>render(\"section\",props,base.block);\nexport const Nav=(props:SemanticBlockProps)=>render(\"nav\",props,base.block);\nexport const Article=(props:SemanticBlockProps)=>render(\"article\",props,base.block);\nexport const Aside=(props:SemanticBlockProps)=>render(\"aside\",props,base.block);\n\n// Text primitives inherit the app's font from the page instead of RNW Text's\n// `14px System`, which a layered stylesheet cannot override. Like RNW Text\n// they default to dir=\"auto\", so punctuation in mixed-direction copy lands on\n// the right side of each run.\nconst auto=<P extends {dir?:SemanticBaseProps[\"dir\"]}>(props:P)=>({...props,dir:props.dir??\"auto\"});\nexport const Text=({numberOfLines:_n,selectable:_s,...props}:SemanticTextProps)=>render(\"span\",auto(props),base.text);\nexport const Paragraph=({numberOfLines:_n,selectable:_s,...props}:SemanticTextProps)=>render(\"p\",auto(props),base.text);\nexport function Heading({level=1,numberOfLines:_n,selectable:_s,...props}:HeadingProps) {\n  return render(\"h\"+level,auto(props),base.text);\n}\nexport function Link({href,target,rel,onPress,numberOfLines:_n,selectable:_s,...props}:LinkProps) {\n  return render(\"a\",auto(props),base.link,{\n    href,target,\n    rel:target===\"_blank\"?joinRel(rel,\"noopener noreferrer\"):rel,\n    onClick:onPress,\n  });\n}\nconst joinRel=(rel:string|undefined,add:string)=>[...new Set([...(rel??\"\").split(/\\s+/),...add.split(\" \")].filter(Boolean))].join(\" \");\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/html/semantic.web.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/html/types.ts",
+      "content": "import type { ReactNode } from \"react\";\nimport type { GestureResponderEvent, StyleProp, TextInputProps, TextStyle, ViewStyle } from \"react-native\";\n\ntype DataAttributes={[attribute:`data-${string}`]:string|number|boolean|undefined};\n\n/**\n * Props every semantic primitive takes on both platforms. The DOM-shaped\n * names (`id`, `hidden`, `title`, `data-*`) are what Nitro Forge's studio\n * preview passes; on native, `id` becomes `nativeID`, `hidden` removes the\n * subtree from layout and the accessibility tree, and `data-*` / `title` /\n * `dataSet` have no equivalent and are dropped.\n */\nexport type SemanticBaseProps=DataAttributes&{\n  children?:ReactNode;\n  className?:string;\n  id?:string;\n  hidden?:boolean;\n  title?:string;\n  dataSet?:Readonly<Record<string,string|number|boolean>>;\n  testID?:string;\n  dir?:\"ltr\"|\"rtl\"|\"auto\";\n  lang?:string;\n  \"aria-label\"?:string;\n  \"aria-labelledby\"?:string;\n  \"aria-describedby\"?:string;\n  \"aria-hidden\"?:boolean;\n};\nexport type SemanticBlockProps=SemanticBaseProps&{style?:StyleProp<ViewStyle>};\nexport type SemanticTextProps=SemanticBaseProps&{style?:StyleProp<TextStyle>;numberOfLines?:number;selectable?:boolean};\nexport type HeadingLevel=1|2|3|4|5|6;\nexport type HeadingProps=SemanticTextProps&{/** @default 1 */ level?:HeadingLevel};\nexport type LinkProps=SemanticTextProps&{\n  href?:string;\n  /** Web only. */\n  target?:\"_blank\"|\"_self\"|\"_parent\"|\"_top\";\n  /** Web only. `noopener noreferrer` is added for `_blank`. */\n  rel?:string;\n  /**\n   * Runs before navigation. On native it replaces navigation: an app-router\n   * path (`/editor/prism`, `#/apps/quill`) needs it, since only absolute\n   * `http(s):`, `mailto:` and `tel:` hrefs open through `Linking`.\n   */\n  onPress?:(event:GestureResponderEvent)=>void;\n};\nexport type InputType=\"text\"|\"search\"|\"email\"|\"url\"|\"tel\"|\"number\"|\"password\";\nexport type InputProps=Omit<TextInputProps,\"id\">&{\n  id?:string;\n  /** Maps to the platform keyboard and secure entry; never a file input (use FilePicker). @default \"text\" */\n  type?:InputType;\n  className?:string;\n  \"aria-label\"?:string;\n};\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/html/types.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/html",
+    "exports": [
+      "Article",
+      "Aside",
+      "Footer",
+      "Header",
+      "Heading",
+      "HeadingLevel",
+      "HeadingProps",
+      "Input",
+      "InputProps",
+      "InputType",
+      "Link",
+      "LinkProps",
+      "Main",
+      "Nav",
+      "Page",
+      "Paragraph",
+      "Section",
+      "SemanticBaseProps",
+      "SemanticBlockProps",
+      "SemanticTextProps",
+      "Text"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "DragGrabHandle",
+  "title": "Drag Grab Handle",
+  "description": "Three-bar drag handle, 44 by 44 minimum, reporting start, move, commit and cancel through a pluggable transport, for React Native.",
+  "registryDependencies": [
+    "@nyc-tron/gestures/PanResponderDrag",
+    "@nyc-tron/gestures/drag-controller",
+    "@nyc-tron/gestures/drag-transport"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/DragGrabHandle.tsx",
+      "content": "import {useEffect,useRef,type ReactNode} from \"react\";\nimport {Platform,View,type ViewProps} from \"react-native\";\nimport {createDragController,type DragController} from \"@/components/nyc-tron/ui/components/gestures/drag-controller\";\nimport {keyboardKey,type DragPoint,type DragTransport,type KeyEventLike} from \"@/components/nyc-tron/ui/components/gestures/drag-transport\";\nimport {PanResponderDrag} from \"@/components/nyc-tron/ui/components/gestures/PanResponderDrag\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\n\n// Web only: a drag otherwise selects nearby text. Not a ViewStyle key in RN.\nconst NO_SELECT=(Platform.OS===\"web\"?{userSelect:\"none\"}:{}) as object;\n\nexport type {DragPoint} from \"@/components/nyc-tron/ui/components/gestures/drag-transport\";\n\n/** Props for {@linkcode DragGrabHandle}. */\nexport interface DragGrabHandleProps extends Omit<ViewProps,\"children\"|\"accessibilityLabel\"> {\n  /** Screen-reader name, e.g. \"Reorder Layer 2\". */\n  label:string;\n  disabled?:boolean;\n  /** A drag began. The app records what is being dragged. */\n  onStart:()=>void;\n  /** Preview only. Called for each one-pointer move; never commit here. */\n  onMove:(point:DragPoint)=>void;\n  /** Exactly once per completed drag. */\n  onCommit:()=>void;\n  /** Escape, termination, a second pointer or becoming disabled. The app restores its preview. */\n  onCancel:()=>void;\n  /** Pointer recogniser. @default PanResponderDrag */\n  transport?:DragTransport;\n  /** Glyph color override; defaults to the theme's muted text token. */\n  color?:string;\n  /** Replaces the default three-bar grip glyph. */\n  children?:ReactNode;\n  className?:string;\n  unstyled?:boolean;\n}\n\n/**\n * Controlled 44x44 drag handle for docking, reordering and similar list moves. It\n * reports start, preview moves, one commit and cancellation; the app owns every\n * position and the resulting order.\n */\nexport function DragGrabHandle({\n  label,disabled=false,onStart,onMove,onCommit,onCancel,transport:Transport=PanResponderDrag,\n  color,children,className,unstyled=false,style,...rest\n}:DragGrabHandleProps){\n  const latest=useRef({disabled,onStart,onMove,onCommit,onCancel});\n  latest.current={disabled,onStart,onMove,onCommit,onCancel};\n  const controllerRef=useRef<DragController|null>(null);\n  if(!controllerRef.current)controllerRef.current=createDragController({\n    disabled:()=>latest.current.disabled,\n    start:()=>latest.current.onStart(),\n    move:point=>latest.current.onMove(point),\n    commit:()=>latest.current.onCommit(),\n    cancel:()=>latest.current.onCancel(),\n  });\n  const controller=controllerRef.current;\n  useEffect(()=>()=>controller.cancel(),[controller]);\n  const onKeyDown=(event:KeyEventLike)=>{if(keyboardKey(event)===\"Escape\")controller.cancel();};\n  // Bars are drawn as top borders: forced-colors mode repaints backgrounds to\n  // Canvas but keeps borders visible in CanvasText.\n  const bar=color?{borderColor:color}:null;\n  const grip=children ?? <View pointerEvents=\"none\" style={{gap:3}}>\n    {[0,1,2].map(i=><View key={i} {...{className:joinClasses(!unstyled&&!color&&\"border-text-muted\")}}\n      style={{width:16,height:0,borderTopWidth:2,...bar}}/>)}\n  </View>;\n  return <Transport disabled={disabled}\n    onBegin={()=>controller.begin()}\n    onMove={(point,touches)=>{if(touches===1)controller.move(point);else controller.cancel();}}\n    onRelease={()=>controller.release()}\n    onCancel={()=>controller.cancel()}>\n    <View {...rest} collapsable={false}\n      {...{onKeyDown,className:joinClasses(!unstyled&&\"rounded-control\",className)}}\n      accessible accessibilityLabel={label}\n      accessibilityHint=\"Drag to move. Press Escape to cancel.\"\n      aria-disabled={disabled}\n      // Not a tab stop (there is no keyboard move), but pressing it focuses it,\n      // so Escape reaches onKeyDown while the pointer is down on web.\n      focusable={false}\n      style={[{minWidth:44,minHeight:44,justifyContent:\"center\",alignItems:\"center\",opacity:disabled?0.4:1,...NO_SELECT},style]}>\n      {grip}\n    </View>\n  </Transport>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/DragGrabHandle.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [
+      "web"
+    ],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/DragGrabHandle",
+    "exports": [
+      "DragGrabHandle",
+      "DragGrabHandleProps",
+      "DragPoint"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/color-pair",
+  "title": "color pair",
+  "description": "color pair, a color helper module. Exports sameColorPair, swapColorPair.",
+  "registryDependencies": [
+    "@nyc-tron/forge/color"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/color-pair.ts",
+      "content": "import {assertRgba,type RgbaColor} from \"@/components/nyc-tron/ui/components/forge/color\";\n\n/** The painting foreground and background, edited by `ForegroundBackgroundChips`. */\nexport interface ColorPair {\n  readonly foreground:RgbaColor;\n  readonly background:RgbaColor;\n}\n/** Which chip of a {@linkcode ColorPair} the pickers edit. */\nexport type ColorPairSlot=\"foreground\"|\"background\";\n\n/** Black on white, the reset most editors use. Pass your own to `ForegroundBackgroundChips`. */\nexport const DEFAULT_COLOR_PAIR={\n  foreground:{r:0,g:0,b:0,alpha:1},\n  background:{r:255,g:255,b:255,alpha:1},\n} as const satisfies ColorPair;\n\n/** Foreground and background exchanged. */\nexport function swapColorPair(pair:ColorPair):ColorPair{\n  assertRgba(pair.foreground);\n  assertRgba(pair.background);\n  return {foreground:pair.background,background:pair.foreground};\n}\n\n/** Whether two pairs hold the same channels, so Reset can be disabled when it would do nothing. */\nexport function sameColorPair(a:ColorPair,b:ColorPair):boolean{\n  const eq=(x:RgbaColor,y:RgbaColor)=>x.r===y.r&&x.g===y.g&&x.b===y.b&&x.alpha===y.alpha;\n  return eq(a.foreground,b.foreground)&&eq(a.background,b.background);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/color/color-pair.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/color-pair",
+    "exports": [
+      "ColorPair",
+      "ColorPairSlot",
+      "DEFAULT_COLOR_PAIR",
+      "sameColorPair",
+      "swapColorPair"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

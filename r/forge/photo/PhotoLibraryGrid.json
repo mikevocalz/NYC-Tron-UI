@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/PhotoLibraryGrid",
+  "title": "Photo Library Grid",
+  "description": "Photo Library Grid, a photo editing component. Props: photos, selectedIds, minimumTileWidth, onSelectionChange.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/forge/photo/photo-catalog"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/photo/PhotoLibraryGrid.tsx",
+      "content": "import {useMemo,useRef} from 'react';\nimport {FlatList,Image,Pressable,Text,View,type ViewProps} from 'react-native';\nimport {createStore} from 'zustand/vanilla';\nimport {useStore} from 'zustand';\nimport {Button} from '@/components/nyc-tron/ui/components/Button';\nimport {joinClasses} from '@/components/nyc-tron/ui/components/styles';\nimport {togglePhotoSelection,validatePhotoCatalog,type PhotoCatalogItem} from '@/components/nyc-tron/ui/components/forge/photo/photo-catalog';\nexport type {PhotoCatalogItem} from '@/components/nyc-tron/ui/components/forge/photo/photo-catalog';\nexport interface PhotoLibraryGridProps extends Omit<ViewProps,'children'> {\n readonly photos:readonly PhotoCatalogItem[];readonly selectedIds:readonly string[];\n readonly onSelectionChange:(ids:readonly string[])=>void;readonly onOpen:(id:string)=>void;\n readonly height?:number;readonly minimumTileWidth?:number;readonly disabled?:boolean;readonly unstyled?:boolean;\n readonly loading?:boolean;readonly onLoadMore?:()=>void;\n}\n/** Virtualized catalog page with host-generated thumbnails; originals are never decoded by the grid. */\nexport function PhotoLibraryGrid({photos,selectedIds,onSelectionChange,onOpen,height=480,minimumTileWidth=144,disabled=false,unstyled=false,loading=false,onLoadMore,...props}:PhotoLibraryGridProps){\n useMemo(()=>validatePhotoCatalog(photos,selectedIds),[photos,selectedIds]);\n if(!Number.isFinite(height)||height<160||height>4000||!Number.isFinite(minimumTileWidth)||minimumTileWidth<100||minimumTileWidth>500)throw new RangeError('Invalid photo grid bounds');\n const local=useRef<ReturnType<typeof makeStore>|null>(null);local.current??=makeStore();const store=local.current,width=useStore(store,s=>s.width);\n const columns=Math.max(1,Math.min(12,Math.floor(width/minimumTileWidth)));\n const selected=useMemo(()=>new Set(selectedIds),[selectedIds]);\n return <View {...props} onLayout={event=>{const width=event.nativeEvent.layout.width;if(Number.isFinite(width))store.setState({width});props.onLayout?.(event);}} style={[{gap:8},props.style]}>\n  <Text accessibilityLiveRegion=\"polite\" {...{className:joinClasses(!unstyled&&'text-text')}}>{`${photos.length} photos on this page; ${selectedIds.length} selected${loading?'; loading':''}`}</Text>\n  <FlatList key={columns} data={photos} keyExtractor={photo=>photo.id} numColumns={columns} initialNumToRender={18} maxToRenderPerBatch={12} windowSize={5} style={{height}} accessibilityLabel=\"Photo library\" extraData={selectedIds}\n   onEndReached={()=>{if(!loading&&!disabled)onLoadMore?.();}} onEndReachedThreshold={.5}\n   ListEmptyComponent={<Text {...{className:joinClasses(!unstyled&&'text-text-muted')}}>{loading?'Loading photos…':'No photos match this catalog view.'}</Text>}\n   renderItem={({item})=><View style={{width:`${100/columns}%`,padding:4,gap:4}}>\n    <Pressable accessibilityRole=\"checkbox\" accessibilityLabel={`Select ${item.name}`} accessibilityState={{checked:selected.has(item.id),disabled}} aria-checked={selected.has(item.id)} disabled={disabled} onPress={()=>onSelectionChange(togglePhotoSelection(selectedIds,item.id))} style={{minHeight:100,borderWidth:selected.has(item.id)?2:1,padding:4,gap:4}} {...{className:joinClasses(!unstyled&&'border-border rounded-control')}}>\n     {item.thumbnailUri?<Image source={{uri:item.thumbnailUri}} resizeMode=\"cover\" accessible={false} style={{width:'100%',aspectRatio:1}}/>:<View style={{width:'100%',aspectRatio:1,justifyContent:'center'}}><Text {...{className:joinClasses(!unstyled&&'text-text-muted')}}>Thumbnail unavailable</Text></View>}\n     <Text numberOfLines={2} {...{className:joinClasses(!unstyled&&'text-text')}}>{item.name}</Text>\n     <Text {...{className:joinClasses(!unstyled&&'text-text-muted')}}>{`${item.rating.stars} stars · ${item.rating.label} · ${item.rating.flag}`}</Text>\n    </Pressable>\n    <Button title=\"Open photo\" accessibilityLabel={`Open ${item.name}`} disabled={disabled} unstyled={unstyled} onPress={()=>onOpen(item.id)}/>\n   </View>}/>\n </View>;\n}\nconst makeStore=()=>createStore(()=>({width:0}));\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/photo/PhotoLibraryGrid.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/PhotoLibraryGrid",
+    "exports": [
+      "PhotoCatalogItem",
+      "PhotoLibraryGrid",
+      "PhotoLibraryGridProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

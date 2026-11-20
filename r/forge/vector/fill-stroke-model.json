@@ -1,0 +1,53 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/vector/fill-stroke-model",
+  "title": "fill stroke model",
+  "description": "fill stroke model, a vector drawing state model. Exports convertPaint, dashForPreset, defaultStroke.",
+  "registryDependencies": [
+    "@nyc-tron/forge/vector/vector-types"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/vector/fill-stroke-model.ts",
+      "content": "/**\n * Paint and stroke editing rules for {@linkcode FillStrokeInspector} (B-23).\n * Conversions keep the user's colors where they can and place new gradient\n * geometry on the layer's content bounds.\n */\nimport {\n  AVAILABLE,MITER_LIMIT_RANGE,roundCoord,unavailable,validateDash,\n  type Availability,type GradientStop,type Paint,type Rgba,type Stroke,\n} from \"@/components/nyc-tron/ui/components/forge/vector/vector-types\";\n\n/** Fill choice in the inspector: no paint, or one of the {@linkcode Paint} types. */\nexport type FillType=\"none\"|Paint[\"type\"];\n/** The fill types, labelled, in control order. */\nexport const FILL_TYPES=[\n  {value:\"none\",label:\"None\"},{value:\"solid\",label:\"Solid\"},{value:\"linear\",label:\"Linear\"},{value:\"radial\",label:\"Radial\"},\n] as const satisfies readonly {value:FillType;label:string}[];\n/** The fill type a paint shows as. */\nexport function fillTypeOf(paint:Paint|null):FillType{\n  return paint===null?\"none\":paint.type;\n}\n\n/** Layer content kinds the inspector edits. */\nexport type PaintableKind=\"shape\"|\"path\"|\"boolean\";\n/** What a layer kind can take: shape layers carry a solid fill only, booleans a fill only. */\nexport interface PaintSupport {\n  readonly gradientFill:Availability;\n  readonly stroke:Availability;\n  readonly fillRule:Availability;\n  readonly paintOrder:Availability;\n}\n/** {@linkcode PaintSupport} for a layer kind, with the reasons the UI shows. */\nexport function paintSupport(kind:PaintableKind):PaintSupport{\n  switch(kind){\n    case \"path\":return {gradientFill:AVAILABLE,stroke:AVAILABLE,fillRule:AVAILABLE,paintOrder:AVAILABLE};\n    case \"shape\":{\n      const convert=unavailable(\"Shape layers take a solid fill only. Convert the shape to a path for gradients and fill rules\");\n      const stroke=unavailable(\"Convert the shape to a path to add a stroke\");\n      return {gradientFill:convert,stroke,fillRule:convert,paintOrder:stroke};\n    }\n    case \"boolean\":{\n      const fillOnly=unavailable(\"A boolean has a fill only. Expand it, or stroke its operands\");\n      return {gradientFill:AVAILABLE,stroke:fillOnly,fillRule:fillOnly,paintOrder:fillOnly};\n    }\n    default:throw new RangeError(\"Unknown layer kind: \"+String(kind));\n  }\n}\n\n/** Content-space rectangle of the layer, used to place new gradients. */\nexport interface ContentBounds {\n  readonly x:number;\n  readonly y:number;\n  readonly width:number;\n  readonly height:number;\n}\nconst transparent=(c:Rgba):Rgba=>[c[0],c[1],c[2],0];\n/** First color a paint carries: the solid color or the first stop. */\nexport function primaryColor(paint:Paint):Rgba{\n  return paint.type===\"solid\"?paint.color:paint.stops[0]!.color;\n}\n/**\n * `paint` converted to `type`. Solid to gradient fades the color to\n * transparent; gradient to solid keeps the first stop; linear and radial\n * swap geometry and keep their stops. New geometry spans `bounds`.\n */\nexport function convertPaint(paint:Paint|null,type:FillType,bounds:ContentBounds,fallback:Rgba):Paint|null{\n  if(type===\"none\")return null;\n  if(paint?.type===type)return paint;\n  const color=paint?primaryColor(paint):fallback;\n  const stops:readonly GradientStop[]=paint&&paint.type!==\"solid\"?paint.stops:[{offset:0,color},{offset:1,color:transparent(color)}];\n  const cx=roundCoord(bounds.x+bounds.width/2),cy=roundCoord(bounds.y+bounds.height/2);\n  switch(type){\n    case \"solid\":return {type:\"solid\",color};\n    case \"linear\":return {type:\"linear\",x0:roundCoord(bounds.x),y0:cy,x1:roundCoord(bounds.x+bounds.width),y1:cy,stops};\n    case \"radial\":return {type:\"radial\",cx,cy,r:roundCoord(Math.max(1,Math.max(bounds.width,bounds.height)/2)),stops};\n    default:throw new RangeError(\"Unknown fill type: \"+String(type));\n  }\n}\n/** `paint` with its solid color, or stop `stopIndex`, set to `color`. */\nexport function withPaintColor(paint:Paint,color:Rgba,stopIndex=0):Paint{\n  if(paint.type===\"solid\")return {type:\"solid\",color};\n  if(!Number.isInteger(stopIndex)||stopIndex<0||stopIndex>=paint.stops.length)throw new RangeError(\"No stop \"+stopIndex);\n  return {...paint,stops:paint.stops.map((s,i)=>i===stopIndex?{...s,color}:s)};\n}\n\n/** Stroke a path gets when its stroke is switched on. */\nexport function defaultStroke(color:Rgba):Stroke{\n  return {paint:{type:\"solid\",color},width:2,join:\"miter\",cap:\"butt\",miter_limit:4,dash:[],dash_offset:0};\n}\n\n/** Dash presets as multiples of the stroke width, so they scale with it. */\nexport type DashPreset=\"solid\"|\"dash\"|\"dot\"|\"dash-dot\"|\"custom\";\nconst PRESET_PATTERNS={solid:[],dash:[3,2],dot:[1,2],\"dash-dot\":[4,2,1,2]} as const satisfies Record<Exclude<DashPreset,\"custom\">,readonly number[]>;\n/** Dash presets, labelled, in control order. \"Custom\" means any other pattern. */\nexport const DASH_PRESETS=[\n  {value:\"solid\",label:\"Solid\"},{value:\"dash\",label:\"Dash\"},{value:\"dot\",label:\"Dot\"},\n  {value:\"dash-dot\",label:\"Dash dot\"},{value:\"custom\",label:\"Custom\"},\n] as const satisfies readonly {value:DashPreset;label:string}[];\n/** The dash pattern for a preset at stroke `width`. */\nexport function dashForPreset(preset:Exclude<DashPreset,\"custom\">,width:number):number[]{\n  if(!Number.isFinite(width)||width<=0)throw new RangeError(\"Stroke width must be positive\");\n  return PRESET_PATTERNS[preset].map(n=>roundCoord(n*width));\n}\n/** Which preset `dash` matches at stroke `width`, or \"custom\". */\nexport function presetForDash(dash:readonly number[],width:number):DashPreset{\n  for(const [preset,pattern] of Object.entries(PRESET_PATTERNS) as [Exclude<DashPreset,\"custom\">,readonly number[]][]){\n    const expect=dashForPreset(preset,width);\n    if(expect.length===dash.length&&expect.every((v,i)=>Math.abs(v-dash[i]!)<1e-6))return preset;\n    if(pattern.length===0&&dash.length===0)return preset;\n  }\n  return \"custom\";\n}\n/** Result of {@linkcode parseDash}. */\nexport type DashParse=Readonly<{ok:true;dash:number[]}>|Readonly<{ok:false;error:string}>;\n/** Parses a typed dash pattern such as \"6 3\" or \"6, 3, 1, 3\". Blank means solid. */\nexport function parseDash(text:string):DashParse{\n  const parts=text.split(/[\\s,]+/).filter(Boolean);\n  const dash=parts.map(Number);\n  if(dash.some(n=>!Number.isFinite(n)))return {ok:false,error:\"Use numbers separated by spaces or commas, for example 6 3\"};\n  try{validateDash(dash);}catch(e){return {ok:false,error:(e as Error).message};}\n  return {ok:true,dash:dash.map(roundCoord)};\n}\n/** Dash pattern as the text a user would type, e.g. \"6 3\". */\nexport function formatDash(dash:readonly number[]):string{\n  return dash.map(n=>String(roundCoord(n))).join(\" \");\n}\n\n/** Whether the miter limit matters: only for miter joins. */\nexport function miterAvailability(stroke:Stroke):Availability{\n  return stroke.join===\"miter\"?AVAILABLE:unavailable(\"The miter limit applies to miter joins only\");\n}\n/** Stroke width bounds for the width control. */\nexport const STROKE_WIDTH_RANGE={min:0.1,max:500,step:0.1} as const;\n/** Miter limit bounds for its control. */\nexport const MITER_RANGE={min:MITER_LIMIT_RANGE.min,max:MITER_LIMIT_RANGE.max,step:0.5} as const;\n/** Dash offset bounds for its control. */\nexport const DASH_OFFSET_RANGE={min:-1000,max:1000,step:0.5} as const;\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/vector/fill-stroke-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/vector/fill-stroke-model",
+    "exports": [
+      "ContentBounds",
+      "DASH_OFFSET_RANGE",
+      "DASH_PRESETS",
+      "DashParse",
+      "DashPreset",
+      "FILL_TYPES",
+      "FillType",
+      "MITER_RANGE",
+      "PaintSupport",
+      "PaintableKind",
+      "STROKE_WIDTH_RANGE",
+      "convertPaint",
+      "dashForPreset",
+      "defaultStroke",
+      "fillTypeOf",
+      "formatDash",
+      "miterAvailability",
+      "paintSupport",
+      "parseDash",
+      "presetForDash",
+      "primaryColor",
+      "withPaintColor"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

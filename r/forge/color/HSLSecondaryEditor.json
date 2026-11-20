@@ -1,0 +1,50 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/HSLSecondaryEditor",
+  "title": "HSL Secondary Editor",
+  "description": "HSL Secondary Editor, a color component. Props: value, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/forge/color/color-adjustments",
+    "@nyc-tron/shell/UnitInput"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/canvas/SettingSwitch.tsx",
+      "content": "import {Pressable,Text,View} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\n\n/**\n * Labeled on/off row shared by the canvas settings panels: a 44pt switch with\n * the label on the start side and the track on the end side (mirrored in RTL).\n */\nexport function SettingSwitch({label,on,onChange,disabled,styled,hint}:{\n  label:string;on:boolean;onChange:(on:boolean)=>void;disabled:boolean;styled:boolean;hint?:string|undefined;\n}){\n  return <Pressable role=\"switch\" aria-checked={on} accessibilityRole=\"switch\" accessibilityState={{checked:on,disabled}}\n    aria-label={label} accessibilityHint={hint} disabled={disabled} onPress={()=>onChange(!on)}\n    {...{className:joinClasses(styled&&\"rounded-control focus-visible:ring-2 focus-visible:ring-focus\")}}\n    style={{minHeight:44,flexDirection:\"row\",alignItems:\"center\",justifyContent:\"space-between\",gap:12,paddingHorizontal:4,opacity:disabled?0.5:1}}>\n    <Text {...{className:joinClasses(styled&&\"text-text text-sm\")}} style={{flexShrink:1}}>{label}</Text>\n    <View pointerEvents=\"none\" {...{className:joinClasses(styled&&\"border\",styled&&(on?\"bg-primary border-primary\":\"bg-surface-sunken border-border\"))}}\n      style={{width:40,height:24,borderRadius:12,padding:2,justifyContent:\"center\",alignItems:on?\"flex-end\":\"flex-start\"}}>\n      <View {...{className:joinClasses(styled&&(on?\"bg-on-primary\":\"bg-text-muted\"))}} style={{width:18,height:18,borderRadius:9}}/>\n    </View>\n  </Pressable>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/canvas/SettingSwitch.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/color/HSLSecondaryEditor.tsx",
+      "content": "import { Text, View, type ViewProps } from \"react-native\";\nimport { UnitInput } from \"@/components/nyc-tron/ui/components/shell/UnitInput\";\nimport { SettingSwitch } from \"@/components/nyc-tron/ui/components/forge/canvas/SettingSwitch\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { validateHSLSecondary,type HSLSecondary } from \"@/components/nyc-tron/ui/components/forge/color/color-adjustments\";\nexport type { HSLSecondary } from \"@/components/nyc-tron/ui/components/forge/color/color-adjustments\";\n/** Host-owned secondary selection and correction values. */\nexport interface HSLSecondaryEditorProps extends Omit<ViewProps,\"children\"> {readonly value:HSLSecondary;readonly onCommit:(value:HSLSecondary)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}\n/** Edits wrapping hue selection, saturation/luma bounds, mask refinement and corrections. */\nexport function HSLSecondaryEditor({value,onCommit,disabled=false,unstyled=false,...props}:HSLSecondaryEditorProps){\n validateHSLSecondary(value);\n const set=(change:Partial<HSLSecondary>)=>{if(disabled)return;const next={...value,...change};validateHSLSecondary(next);onCommit(next);};\n const fields=[['hueStart','Hue start degrees',0,360],['hueEnd','Hue end degrees',0,360],['hueFeather','Hue feather degrees',0,180],['saturationMin','Saturation minimum',0,value.saturationMax],['saturationMax','Saturation maximum',value.saturationMin,1],['luminanceMin','Luminance minimum',0,value.luminanceMax],['luminanceMax','Luminance maximum',value.luminanceMin,1],['softness','Mask softness',0,1],['denoise','Mask denoise',0,1],['hueShift','Hue shift degrees',-180,180],['saturationShift','Saturation correction',-1,1],['luminanceShift','Luminance correction',-1,1]] as const;\n return <View {...props} style={[{gap:8},props.style]}>\n  <SettingSwitch label=\"Enable HSL secondary\" on={value.enabled} onChange={enabled=>set({enabled})} disabled={disabled} styled={!unstyled}/>\n  <Text {...{className:joinClasses(!unstyled&&\"text-text-muted\")}}>Hue start above end selects across zero degrees.</Text>\n  {fields.map(([key,label,min,max])=><UnitInput key={key} label={label} value={value[key]} min={min} max={max} step={key.startsWith('hue')?1:.01} precision={4} disabled={disabled} unstyled={unstyled} onCommit={number=>set({[key]:number})}/>)}\n  <SettingSwitch label=\"Show secondary mask\" on={value.showMask} onChange={showMask=>set({showMask})} disabled={disabled} styled={!unstyled}/>\n  <SettingSwitch label=\"Invert secondary mask\" on={value.invert} onChange={invert=>set({invert})} disabled={disabled} styled={!unstyled}/>\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/color/HSLSecondaryEditor.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/HSLSecondaryEditor",
+    "exports": [
+      "HSLSecondary",
+      "HSLSecondaryEditor",
+      "HSLSecondaryEditorProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

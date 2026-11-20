@@ -1,0 +1,55 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/inputs/InstrumentXYPad",
+  "title": "Instrument XY Pad",
+  "description": "Instrument XY Pad, a precision input component. Props: x, y, size, onPreview.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/precision"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/cancel-preview.ts",
+      "content": "/** Restore app-owned transient previews without committing a cancelled gesture. */\nexport function cancelPreview<T>(\n  value: T,\n  restore: (value: T) => void,\n  onPreview?: (value: T) => void,\n): void {\n  restore(value);\n  onPreview?.(value);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/cancel-preview.ts"
+    },
+    {
+      "path": "packages/ui/src/components/forge/inputs/InstrumentXYPad.tsx",
+      "content": "import {cancelPreview} from \"@/components/nyc-tron/ui/components/forge/cancel-preview\";\nimport {useRef} from \"react\";\nimport {PanResponder,Pressable,Text,View,type ViewProps} from \"react-native\";\nimport {createStore,type StoreApi} from \"zustand/vanilla\";\nimport {useStore} from \"zustand\";\nimport {pointFromDrag,clamp,type Point2D} from \"@/components/nyc-tron/ui/components/forge/inputs/precision\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\n\ntype Local={width:number;height:number;active:boolean;preview:Point2D};\nexport interface InstrumentXYPadProps extends Omit<ViewProps,\"children\"> {\n  x:number;\n  y:number;\n  label:string;\n  disabled?:boolean;\n  size?:number;\n  step?:number;\n  onPreview?:(point:Point2D)=>void;\n  onCommit:(point:Point2D)=>void|Promise<unknown>;\n  /** Optional override; defaults to the theme's accent token. */\n  accentColor?:string;\n  unstyled?:boolean;\n  className?:string;\n}\n/** Multi-input pad with bounded normalized coordinates; no duplicate document state. */\nexport function InstrumentXYPad({\n  x,y,label,disabled=false,size=180,step=0.05,onPreview,onCommit,accentColor,\n  unstyled=false,className,onLayout,...rest\n}:InstrumentXYPadProps){\n  const latest=useRef({x,y,disabled,onPreview,onCommit});\n  latest.current={x,y,disabled,onPreview,onCommit};\n  const local=useRef<StoreApi<Local>|null>(null);\n  if(!local.current)local.current=createStore<Local>(()=>({width:size,height:size,active:false,preview:{x,y}}));\n  const store=local.current;\n  const {width,height,active,preview}=useStore(store,s=>s);\n  const position=active?preview:{x,y};\n  const start=useRef<Point2D>({x,y});\n  const cancel=()=>cancelPreview({x:latest.current.x,y:latest.current.y},preview=>store.setState({active:false,preview}),latest.current.onPreview);\n  const commit=(next:Point2D)=>{\n    const p=latest.current;\n    if(p.disabled){cancel();return;}\n    store.setState({preview:next,active:false});\n    if(!p.disabled&&(next.x!==p.x||next.y!==p.y))void p.onCommit(next);\n  };\n  const responder=useRef<ReturnType<typeof PanResponder.create>|null>(null);\n  if(!responder.current)responder.current=PanResponder.create({\n    onStartShouldSetPanResponder:()=>!latest.current.disabled,\n    onMoveShouldSetPanResponder:()=>!latest.current.disabled,\n    onPanResponderGrant:()=>{\n      start.current={x:latest.current.x,y:latest.current.y};\n      store.setState({active:true,preview:start.current});\n    },\n    onPanResponderMove:(_e,gesture)=>{\n      const p=latest.current;\n      if(p.disabled)return;\n      const {width:w,height:h}=store.getState();\n      const next=pointFromDrag(start.current,gesture.dx,gesture.dy,w,h);\n      store.setState({preview:next});\n      p.onPreview?.(next);\n    },\n    onPanResponderRelease:()=>{if(store.getState().active)commit(store.getState().preview);},\n    onPanResponderTerminate:cancel,\n  });\n  const nudge=(axis:\"x\"|\"y\",direction:-1|1)=>{\n    if(disabled)return;\n    const p={x,y};\n    p[axis]=clamp(p[axis]+direction*step,0,1);\n    commit(p);\n  };\n  const styled=!unstyled;\n  const text=joinClasses(styled&&\"text-text\");\n  const accentBorder=accentColor?{borderColor:accentColor}:null;\n  const accentFill=accentColor?{backgroundColor:accentColor}:null;\n  const accentBorderClass=styled&&!accentColor&&\"border-accent\";\n  const accentFillClass=styled&&!accentColor&&\"bg-accent\";\n  const arrow={minHeight:44,minWidth:44,justifyContent:\"center\" as const,alignItems:\"center\" as const,opacity:disabled?0.45:1};\n  return <View {...rest} {...{className:joinClasses(\"items-center gap-2\",!unstyled&&\"bg-surface-raised rounded-control p-3\",className)}}>\n    <Text {...{className:joinClasses(!unstyled&&\"text-text font-semibold\")}}>{label}</Text>\n    <View {...responder.current.panHandlers}\n      onLayout={e=>{\n        const l=e.nativeEvent.layout;\n        if(l.width>0&&l.height>0)store.setState({width:l.width,height:l.height});\n        onLayout?.(e);\n      }}\n      accessibilityRole=\"adjustable\"\n      accessible accessibilityLabel={label+\" X and Y controller\"}\n      accessibilityValue={{text:\"X \"+Math.round(position.x*100)+\"%, Y \"+Math.round(position.y*100)+\"%\"}}\n      accessibilityState={{disabled}}\n      accessibilityHint=\"Swipe up or down to change X; use the actions menu to change Y\"\n      accessibilityActions={[\n        {name:\"increment\",label:\"Increase X\"},{name:\"decrement\",label:\"Decrease X\"},\n        {name:\"increaseY\",label:\"Increase Y\"},{name:\"decreaseY\",label:\"Decrease Y\"},\n      ]}\n      onAccessibilityAction={e=>{\n        const a=e.nativeEvent.actionName;\n        if(a===\"increment\")nudge(\"x\",1);\n        else if(a===\"decrement\")nudge(\"x\",-1);\n        else if(a===\"increaseY\")nudge(\"y\",1);\n        else if(a===\"decreaseY\")nudge(\"y\",-1);\n      }}\n      {...{className:joinClasses(styled&&\"bg-surface-sunken\",accentBorderClass)}}\n      style={{width:size,height:size,borderWidth:1,...accentBorder,opacity:disabled?0.45:1,overflow:\"hidden\"}}>\n      <View pointerEvents=\"none\" {...{className:joinClasses(accentFillClass)}}\n        style={{position:\"absolute\",top:\"50%\",left:0,right:0,height:1,...accentFill,opacity:0.35}}/>\n      <View pointerEvents=\"none\" {...{className:joinClasses(accentFillClass)}}\n        style={{position:\"absolute\",left:\"50%\",top:0,bottom:0,width:1,...accentFill,opacity:0.35}}/>\n      <View pointerEvents=\"none\" {...{className:joinClasses(styled&&\"bg-surface-raised\",accentBorderClass)}}\n        style={{position:\"absolute\",left:position.x*width-9,top:(1-position.y)*height-9,\n        width:18,height:18,borderRadius:9,borderWidth:2,...accentBorder}}/>\n    </View>\n    <View style={{flexDirection:\"row\",gap:8,alignItems:\"center\"}}>\n      <Pressable accessibilityRole=\"button\" accessibilityLabel={\"Decrease \"+label+\" X\"} disabled={disabled} onPress={()=>nudge(\"x\",-1)}\n        style={arrow}><Text {...{className:text}}>←</Text></Pressable>\n      <Text {...{className:text}}>X {Math.round(position.x*100)}% · Y {Math.round(position.y*100)}%</Text>\n      <Pressable accessibilityRole=\"button\" accessibilityLabel={\"Increase \"+label+\" X\"} disabled={disabled} onPress={()=>nudge(\"x\",1)}\n        style={arrow}><Text {...{className:text}}>→</Text></Pressable>\n    </View>\n    <View style={{flexDirection:\"row\",gap:16}}>\n      <Pressable accessibilityRole=\"button\" accessibilityLabel={\"Decrease \"+label+\" Y\"} disabled={disabled} onPress={()=>nudge(\"y\",-1)}\n        style={arrow}><Text {...{className:text}}>↓</Text></Pressable>\n      <Pressable accessibilityRole=\"button\" accessibilityLabel={\"Increase \"+label+\" Y\"} disabled={disabled} onPress={()=>nudge(\"y\",1)}\n        style={arrow}><Text {...{className:text}}>↑</Text></Pressable>\n    </View>\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/inputs/InstrumentXYPad.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/inputs/InstrumentXYPad",
+    "exports": [
+      "InstrumentXYPad",
+      "InstrumentXYPadProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

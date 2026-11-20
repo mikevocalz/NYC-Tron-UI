@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/safe-area",
+  "title": "safe area",
+  "description": "safe area, a video timeline helper module. Exports fitAspect, guideRect, insetRect.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timeline/safe-area.ts",
+      "content": "/** A rectangle in the overlay's layout coordinates. */\nexport interface OverlayRect {\n  readonly x:number;\n  readonly y:number;\n  readonly width:number;\n  readonly height:number;\n}\n\n/**\n * Safe-area percentages of the picture: SMPTE ST 2046-1 (action 93%, title 90%)\n * for HD and UHD, or the older 4:3-era convention (action 90%, title 80%).\n */\nexport const SAFE_AREA_PRESETS={\n  smpte:{action:0.93,title:0.9},\n  legacy:{action:0.9,title:0.8},\n} as const satisfies Record<string,{action:number;title:number}>;\n/** A safe-area preset name or explicit fractions of the picture. */\nexport type SafeAreaSpec=keyof typeof SAFE_AREA_PRESETS|{readonly action:number;readonly title:number};\n\n/** Common framing guides (width over height). */\nexport const FRAME_GUIDES={\n  scope:2.39,flat:1.85,square:1,vertical:9/16,portrait:4/5,\n} as const satisfies Record<string,number>;\n\nconst assertRatio=(r:number,what:string)=>{\n  if(!Number.isFinite(r)||r<=0||r>10)throw new RangeError(what+\" must be a positive ratio up to 10\");\n};\n\n/** The largest `aspect` (width/height) rectangle centered in `container`: the picture's letterbox or pillarbox fit. */\nexport function fitAspect(container:{readonly width:number;readonly height:number},aspect:number):OverlayRect{\n  assertRatio(aspect,\"Aspect\");\n  if(![container.width,container.height].every(Number.isFinite)||container.width<0||container.height<0)throw new RangeError(\"Invalid safe-area container\");\n  if(!(container.width>0)||!(container.height>0))return {x:0,y:0,width:0,height:0};\n  const wide=container.width/container.height>aspect;\n  const width=wide?container.height*aspect:container.width;\n  const height=wide?container.height:container.width/aspect;\n  return {x:(container.width-width)/2,y:(container.height-height)/2,width,height};\n}\n\n/** `rect` scaled by `fraction` about its center. */\nexport function insetRect(rect:OverlayRect,fraction:number):OverlayRect{\n  if(!Number.isFinite(fraction)||fraction<=0||fraction>1)throw new RangeError(\"Safe-area fraction must be in (0, 1]\");\n  const width=rect.width*fraction,height=rect.height*fraction;\n  return {x:rect.x+(rect.width-width)/2,y:rect.y+(rect.height-height)/2,width,height};\n}\n\n/** Picture, action-safe and title-safe rectangles for a picture of `aspect` inside `container`. */\nexport function safeAreas(container:{readonly width:number;readonly height:number},aspect:number,spec:SafeAreaSpec=\"smpte\"){\n  const s=typeof spec===\"string\"?SAFE_AREA_PRESETS[spec]:spec;\n  if(!s||!(s.title<=s.action))throw new RangeError(\"Title safe must sit inside action safe\");\n  const picture=fitAspect(container,aspect);\n  return {picture,action:insetRect(picture,s.action),title:insetRect(picture,s.title),fractions:s};\n}\n\n/** A framing guide of `guide` aspect inside `picture`, as it would be cropped (letterboxed or pillarboxed). */\nexport function guideRect(picture:OverlayRect,guide:number):OverlayRect{\n  const r=fitAspect(picture,guide);\n  return {...r,x:r.x+picture.x,y:r.y+picture.y};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/safe-area.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/safe-area",
+    "exports": [
+      "FRAME_GUIDES",
+      "OverlayRect",
+      "SAFE_AREA_PRESETS",
+      "SafeAreaSpec",
+      "fitAspect",
+      "guideRect",
+      "insetRect",
+      "safeAreas"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

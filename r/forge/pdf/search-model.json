@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/pdf/search-model",
+  "title": "search model",
+  "description": "search model, a PDF state model. Exports findInPageText, groupHitsByPage, insertPageHits.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/pdf/search-model.ts",
+      "content": "// Portions ported from PdfCraft for Android,\n// apps/pdfcraft-android/android/app/src/main/java/io/github/artcraftandroid/pdfcraft/ui/viewer/Search.kt\n// at https://github.com/artcraft-android/pdfcraft-android/commit/c643244e0e00c1f0b746ceaff4661a91921e907e\n// Copyright (c) 2026 ArtCraft Team and the PdfCraft contributors.\n// Licensed under the MIT License or the Apache License, Version 2.0, at your option;\n// see licenses/PdfCraft-MIT.txt and licenses/PdfCraft-Apache-2.0.txt.\n// Modified by NYC-Tron UI contributors, 2026-11-05: rewritten in TypeScript as pure\n// functions over immutable arrays (no Compose state or coroutines); the engine's\n// findInPage replaced by matching over a page's extracted text; snippets, the hit cap\n// and page grouping added.\n\n/** Most hits one search keeps. Later pages stop adding once it is reached. */\nexport const PDF_SEARCH_MAX_HITS=1000;\n/** Characters of context on each side of a match in a snippet. */\nexport const PDF_SEARCH_SNIPPET_RADIUS=40;\n\n/** How a query matches page text. */\nexport interface PdfSearchOptions {\n  /** @default false */\n  readonly caseSensitive?:boolean;\n  /** Match only where the query is bounded by non-letters. @default false */\n  readonly wholeWords?:boolean;\n}\n\n/**\n * One match: page index (0-based) and char offsets `[start, end)` into that\n * page's extracted text, with the text around it.\n * @see {@linkcode findInPageText}\n */\nexport interface PdfSearchHit {\n  readonly page:number;\n  readonly start:number;\n  readonly end:number;\n  readonly before:string;\n  readonly match:string;\n  readonly after:string;\n}\n\nconst WORD=/[\\p{L}\\p{N}_]/u;\n\n/** Matches of `query` in one page's text, in order, without overlap. */\nexport function findInPageText(page:number,text:string,query:string,options:PdfSearchOptions={}):PdfSearchHit[]{\n  const q=query.trim();\n  if(!q)return [];\n  const chars=[...text];\n  const hay=options.caseSensitive?chars:chars.map(c=>c.toLocaleLowerCase());\n  const needle=[...(options.caseSensitive?q:q.toLocaleLowerCase())];\n  const out:PdfSearchHit[]=[];\n  for(let i=0;i+needle.length<=hay.length;){\n    let ok=true;\n    for(let k=0;k<needle.length;k++)if(hay[i+k]!==needle[k]){ok=false;break;}\n    const end=i+needle.length;\n    if(ok&&options.wholeWords&&((i>0&&WORD.test(chars[i-1]!))||(end<chars.length&&WORD.test(chars[end]!))))ok=false;\n    if(!ok){i++;continue;}\n    out.push(hitWithSnippet(page,chars,i,end));\n    i=end;\n  }\n  return out;\n}\n\nfunction hitWithSnippet(page:number,chars:readonly string[],start:number,end:number):PdfSearchHit{\n  const from=Math.max(0,start-PDF_SEARCH_SNIPPET_RADIUS);\n  const to=Math.min(chars.length,end+PDF_SEARCH_SNIPPET_RADIUS);\n  const flat=(s:string)=>s.replace(/\\s+/gu,\" \");\n  return {page,start,end,\n    before:(from>0?\"…\":\"\")+flat(chars.slice(from,start).join(\"\")).trimStart(),\n    match:chars.slice(start,end).join(\"\"),\n    after:flat(chars.slice(end,to).join(\"\")).trimEnd()+(to<chars.length?\"…\":\"\")};\n}\n\n/** Pages to search starting at `fromPage` and wrapping round, so the first hit near the reader shows quickly. */\nexport function searchPageOrder(pageCount:number,fromPage:number):number[]{\n  if(pageCount<=0)return [];\n  const start=((Math.trunc(fromPage)%pageCount)+pageCount)%pageCount;\n  return Array.from({length:pageCount},(_,k)=>(start+k)%pageCount);\n}\n\n/**\n * Adds one page's hits to `hits` keeping page order whatever order pages were\n * searched in. Returns the new list and the shifted current index; the first\n * hits ever found become current. Stops at {@linkcode PDF_SEARCH_MAX_HITS}.\n */\nexport function insertPageHits(hits:readonly PdfSearchHit[],found:readonly PdfSearchHit[],current:number):{hits:PdfSearchHit[];current:number;capped:boolean}{\n  if(found.length===0)return {hits:[...hits],current,capped:false};\n  const room=PDF_SEARCH_MAX_HITS-hits.length;\n  const add=found.slice(0,Math.max(0,room));\n  const page=found[0]!.page;\n  let at=hits.findIndex(h=>h.page>page);\n  if(at<0)at=hits.length;\n  const next=[...hits.slice(0,at),...add,...hits.slice(at)];\n  const shifted=current<0?(add.length?at:-1):current>=at?current+add.length:current;\n  return {hits:next,current:shifted,capped:add.length<found.length};\n}\n\n/** Next (or previous) hit index, wrapping round; -1 when there are none. */\nexport function stepHit(current:number,count:number,forward:boolean):number{\n  if(count<=0)return -1;\n  if(current<0)return 0;\n  return ((current+(forward?1:-1))%count+count)%count;\n}\n\n/** Hits grouped by page in page order, keeping each hit's index in the flat list. */\nexport function groupHitsByPage(hits:readonly PdfSearchHit[]):Array<{page:number;items:Array<{hit:PdfSearchHit;index:number}>}>{\n  const groups:Array<{page:number;items:Array<{hit:PdfSearchHit;index:number}>}>=[];\n  hits.forEach((hit,index)=>{\n    const last=groups.at(-1);\n    if(last&&last.page===hit.page)last.items.push({hit,index});\n    else groups.push({page:hit.page,items:[{hit,index}]});\n  });\n  return groups;\n}\n\n/** Search progress in plain speech. */\nexport function searchSummary(count:number,searched:number,pageCount:number,running:boolean,capped=false):string{\n  const matches=count===1?\"1 match\":count+\" matches\";\n  if(running)return matches+\" so far, \"+searched+\" of \"+pageCount+\" pages searched\";\n  return capped?\"First \"+count+\" matches shown\":matches;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/pdf/search-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/pdf/search-model",
+    "exports": [
+      "PDF_SEARCH_MAX_HITS",
+      "PDF_SEARCH_SNIPPET_RADIUS",
+      "PdfSearchHit",
+      "PdfSearchOptions",
+      "findInPageText",
+      "groupHitsByPage",
+      "insertPageHits",
+      "searchPageOrder",
+      "searchSummary",
+      "stepHit"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

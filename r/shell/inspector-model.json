@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/inspector-model",
+  "title": "inspector model",
+  "description": "inspector model, an app shell state model. Exports matchSummary, matchesQuery, matchingRowCount.",
+  "registryDependencies": [
+    "@nyc-tron/overlays/command-filter"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/inspector-model.ts",
+      "content": "import {normalizeSearchText} from \"@/components/nyc-tron/ui/components/overlays/command-filter\";\n\n/**\n * What the inspector is showing properties for. Each state carries only\n * its own facts.\n * @see {@linkcode selectionHeading}\n */\nexport type InspectorSelection=\n  | {readonly kind:\"none\"}\n  | {readonly kind:\"single\";readonly title:string;readonly detail?:string}\n  | {readonly kind:\"multiple\";readonly count:number;readonly noun:{readonly one:string;readonly other:string}};\n\n/** Panel heading for a selection: the object's title, or \"3 layers\". */\nexport function selectionHeading(selection:InspectorSelection):string{\n  switch(selection.kind){\n    case \"none\":return \"No selection\";\n    case \"single\":\n      if(typeof selection.title!==\"string\"||!selection.title.trim()||selection.title.length>512||selection.detail!==undefined&&(typeof selection.detail!==\"string\"||selection.detail.length>2048))throw new TypeError(\"Invalid inspector selection title/detail\");\n      return selection.title;\n    case \"multiple\":\n      if(!Number.isSafeInteger(selection.count)||selection.count<2||!selection.noun.one.trim()||!selection.noun.other.trim()||selection.noun.one.length>256||selection.noun.other.length>256)throw new RangeError(\"A multiple selection has at least two objects\");\n      return `${selection.count} ${selection.noun.other}`;\n  }\n}\n\n/**\n * True when every word of `query` starts a word of the label or a keyword, or\n * appears inside the label. Case and accents are ignored; an empty query\n * matches everything.\n */\nexport function matchesQuery(query:string,label:string,keywords:readonly string[]=[]):boolean{\n  const tokens=normalizeSearchText(query).split(/\\s+/).filter(Boolean);\n  if(!tokens.length)return true;\n  const text=normalizeSearchText(label);\n  const words=[...text.split(/[\\s\\-_/.:]+/),...keywords.map(normalizeSearchText)].filter(Boolean);\n  return tokens.every(t=>text.includes(t)||words.some(w=>w.startsWith(t)));\n}\n\n/** Live-region text for a filtered inspector. */\nexport function matchSummary(count:number,query:string):string{\n  if(!query.trim())return \"\";\n  if(count===0)return `No properties match \"${query.trim()}\"`;\n  return count===1?\"1 property matches\":`${count} properties match`;\n}\n\n/** One registered {@linkcode PropertyRow}: the sections it sits in and whether it matches the query. */\nexport interface InspectorRowEntry {\n  readonly sections:readonly string[];\n  readonly match:boolean;\n}\n/** State shared between an inspector panel and its rows. */\nexport interface InspectorRegistryState {\n  readonly rows:Readonly<Record<string,InspectorRowEntry>>;\n}\n/**\n * Store rows register into so sections can hide when nothing in them\n * matches. A zustand vanilla store satisfies it; this file stays free of\n * runtime imports so the contract tests run without an install.\n */\nexport interface InspectorRegistry {\n  getState():InspectorRegistryState;\n  setState(update:(state:InspectorRegistryState)=>InspectorRegistryState):void;\n}\n\n/** Add or update a row. Returns the cleanup that removes it. */\nexport function registerRow(registry:InspectorRegistry,id:string,entry:InspectorRowEntry):()=>void{\n  const current=registry.getState().rows[id];\n  if(!current||current.match!==entry.match||current.sections.join(\"\\u0000\")!==entry.sections.join(\"\\u0000\"))\n    registry.setState(s=>({rows:{...s.rows,[id]:entry}}));\n  return ()=>registry.setState(s=>{\n    const {[id]:_,...rows}=s.rows;\n    return {rows};\n  });\n}\n/** Matching rows, optionally only those inside `section`. */\nexport function matchingRowCount(state:InspectorRegistryState,section?:string):number{\n  return Object.values(state.rows).filter(r=>r.match&&(section===undefined||r.sections.includes(section))).length;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/inspector-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/inspector-model",
+    "exports": [
+      "InspectorRegistry",
+      "InspectorRegistryState",
+      "InspectorRowEntry",
+      "InspectorSelection",
+      "matchSummary",
+      "matchesQuery",
+      "matchingRowCount",
+      "registerRow",
+      "selectionHeading"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

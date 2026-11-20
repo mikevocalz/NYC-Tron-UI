@@ -1,0 +1,63 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/FloatingColorPalette",
+  "title": "Floating Color Palette",
+  "description": "Floating Color Palette, a color component. Props: docked, position, bounds, onModeChange.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/forge/color/FloatingPaletteUndockHandle",
+    "@nyc-tron/forge/color/floating-palette"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/FloatingColorPalette.tsx",
+      "content": "import type {ReactNode} from \"react\";\nimport {Pressable,Text,View,type ViewProps} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {Button} from \"@/components/nyc-tron/ui/components/Button\";\nimport {useLocalStore} from \"@/components/nyc-tron/ui/components/useLocalStore\";\nimport {FloatingPaletteUndockHandle} from \"@/components/nyc-tron/ui/components/forge/color/FloatingPaletteUndockHandle\";\nimport {\n  FLOATING_PALETTE_WIDTH,PALETTE_MODES,placeFloatingPalette,\n  type PaletteMode,type PalettePosition,type PaletteRect,\n} from \"@/components/nyc-tron/ui/components/forge/color/floating-palette\";\n\n/** Props for {@linkcode FloatingColorPalette}. */\nexport interface FloatingColorPaletteProps extends Omit<ViewProps,\"children\"> {\n  readonly docked:boolean;\n  /** Floating top-left in the parent's coordinates. Ignored while docked. */\n  readonly position:PalettePosition;\n  /** The parent's area the floating palette stays inside, in its own coordinates (usually 0,0,width,height). */\n  readonly bounds:PaletteRect;\n  /** Hinges, folds and cutouts in the same coordinates; the palette is never drawn across one. */\n  readonly obstacles?:readonly PaletteRect[];\n  readonly mode:PaletteMode;\n  readonly onModeChange:(mode:PaletteMode)=>void;\n  readonly onUndock:(position:PalettePosition)=>void;\n  readonly onMove:(position:PalettePosition)=>void;\n  readonly onDock:()=>void;\n  /** Shows Close on the floating palette. */\n  readonly onClose?:()=>void;\n  /** The picker for each mode. The host renders it against its one color store. */\n  readonly children:(mode:PaletteMode)=>ReactNode;\n  /** @default \"Colors\" */\n  readonly title?:string;\n  /** Floating width. @default 260 */\n  readonly floatingWidth?:number;\n  className?:string;\n  unstyled?:boolean;\n}\n\n/**\n * Dockable color palette (C-26). Docked, it sits in the host's layout; dragged\n * by its grip (B-28) past the undock distance, it floats over the parent at\n * `position` and moves until docked again. Compact, Classic and Palettes tabs\n * switch what `children(mode)` renders. The palette holds no color: every\n * picker inside edits the host's active document color, so docking or\n * switching modes never changes or forgets a color.\n *\n * The floating position is passed through `placeFloatingPalette` on every\n * render, so after a rotation or a fold the palette is drawn on screen and off\n * the hinge even before the host stores a new position.\n */\nexport function FloatingColorPalette({\n  docked,position,bounds,obstacles,mode,onModeChange,onUndock,onMove,onDock,onClose,children,\n  title=\"Colors\",floatingWidth=FLOATING_PALETTE_WIDTH,className,unstyled=false,testID,style,...rest\n}:FloatingColorPaletteProps){\n  const [state,store]=useLocalStore(()=>({x:0,y:0,width:0,height:0,preview:undefined as PalettePosition|undefined}));\n  const styled=!unstyled;\n  const size={width:docked?state.width||floatingWidth:floatingWidth,height:state.height||320};\n  const placed=placeFloatingPalette(state.preview??position,{width:floatingWidth,height:size.height},bounds,obstacles);\n  const origin=docked?{x:state.x,y:state.y}:placed.position;\n  const id=(s:string)=>testID?{testID:testID+\"-\"+s}:{};\n  const floatingStyle=docked?null:{position:\"absolute\" as const,left:placed.position.x,top:placed.position.y,width:floatingWidth,zIndex:10};\n  return <View {...rest} {...(testID?{testID}:{})}\n    role={docked?\"region\":\"dialog\"} accessibilityLabel={docked?title:`${title}, floating`}\n    onLayout={e=>{const l=e.nativeEvent.layout;store.set(s=>({...s,x:docked?l.x:s.x,y:docked?l.y:s.y,width:l.width,height:l.height}));}}\n    {...{className:joinClasses(styled&&\"rounded-card border border-border bg-surface-raised\",styled&&!docked&&\"shadow-lg\",className)}}\n    style={[{paddingBottom:12,gap:8},floatingStyle,style]}>\n    <View style={{paddingTop:2}}>\n      <FloatingPaletteUndockHandle docked={docked} origin={origin} size={{width:floatingWidth,height:size.height}}\n        bounds={bounds} obstacles={obstacles} unstyled={unstyled} label={title+\" palette\"}\n        onPreview={p=>store.set(s=>({...s,preview:p}))} onUndock={onUndock} onMove={onMove} onDock={onDock} {...id(\"handle\")}/>\n    </View>\n    <View style={{flexDirection:\"row\",alignItems:\"center\",paddingHorizontal:12,gap:8}}>\n      <Text accessibilityRole=\"header\" {...{className:joinClasses(styled&&\"text-text text-lg font-semibold\")}} style={{flex:1}}>{title}</Text>\n      {docked?null:<Button title=\"Dock\" variant=\"secondary\" size=\"sm\" onPress={onDock} {...id(\"dock\")}/>}\n      {!docked&&onClose?<Button title=\"Close\" variant=\"ghost\" size=\"sm\" onPress={onClose} {...id(\"close\")}/>:null}\n    </View>\n    {placed.overlapsObstacle&&!docked?<Text {...{className:joinClasses(styled&&\"text-text-muted text-xs\")}} style={{paddingHorizontal:12}}>\n      This screen is too small to keep the palette clear of the fold.\n    </Text>:null}\n    <View accessibilityRole=\"tablist\" style={{flexDirection:\"row\",paddingHorizontal:12,gap:6}}>\n      {PALETTE_MODES.map(m=>{\n        const on=m.mode===mode;\n        return <Pressable key={m.mode} accessibilityRole=\"tab\" aria-selected={on} accessibilityState={{selected:on}}\n          onPress={()=>onModeChange(m.mode)} {...id(\"mode-\"+m.mode)}\n          {...{className:joinClasses(styled&&\"rounded-control border focus-visible:ring-2 focus-visible:ring-focus\",\n            styled&&(on?\"border-focus bg-surface-sunken\":\"border-transparent\"))}}\n          style={{flex:1,minHeight:44,alignItems:\"center\",justifyContent:\"center\"}}>\n          <Text {...{className:joinClasses(styled&&\"text-sm\",styled&&(on?\"text-text font-semibold\":\"text-text-muted\"))}}>{m.label}</Text>\n        </Pressable>;\n      })}\n    </View>\n    <View style={{paddingHorizontal:12}}>{children(mode)}</View>\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/color/FloatingColorPalette.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/local-store.ts",
+      "content": "import {createStore} from \"zustand/vanilla\";\n\n/**\n * A per-instance store for transient gesture and draft state (a drag preview, a\n * text draft, a measured width). Components use it instead of `useState` so a\n * gesture's bookkeeping lives outside React's render cycle and can be read\n * synchronously from responder callbacks. Created by {@linkcode createLocalStore};\n * components use it through `useLocalStore`. Zustand owns the state; this value-replacement\n * adapter remains independent of React.\n */\nexport interface LocalStore<T> {\n  get():T;\n  /** Replaces the state, or derives it from the previous state. Listeners run only when it changes. */\n  set(next:T|((previous:T)=>T)):void;\n  /** Returns the unsubscribe function. */\n  subscribe(listener:()=>void):()=>void;\n}\n\n/** Creates a {@linkcode LocalStore}. Equal states (by `Object.is`) do not notify. */\nexport function createLocalStore<T>(initial:T):LocalStore<T>{\n  const store=createStore<{value:T}>(()=>({value:initial}));\n  return {\n    get:()=>store.getState().value,\n    set(next){\n      store.setState(current=>{\n        const value=typeof next===\"function\"?(next as (p:T)=>T)(current.value):next;\n        return Object.is(value,current.value)?current:{value};\n      });\n    },\n    subscribe(listener){return store.subscribe(()=>listener());},\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/local-store.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    },
+    {
+      "path": "packages/ui/src/components/useLocalStore.ts",
+      "content": "import {useRef,useSyncExternalStore} from \"react\";\nimport {createLocalStore,type LocalStore} from \"@/components/nyc-tron/ui/components/local-store\";\n\n/**\n * Creates one {@linkcode LocalStore} for the calling component on first render and\n * subscribes to it. Returns the current state and the store.\n */\nexport function useLocalStore<T>(initial:()=>T):readonly [T,LocalStore<T>]{\n  const ref=useRef<LocalStore<T>|null>(null);\n  if(!ref.current)ref.current=createLocalStore(initial());\n  const store=ref.current;\n  const state=useSyncExternalStore(store.subscribe,store.get,store.get);\n  return [state,store] as const;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/FloatingColorPalette",
+    "exports": [
+      "FloatingColorPalette",
+      "FloatingColorPaletteProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

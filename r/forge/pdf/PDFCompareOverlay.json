@@ -1,0 +1,69 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/pdf/PDFCompareOverlay",
+  "title": "PDF Compare Overlay",
+  "description": "PDF Compare Overlay, a PDF component. Props: leftDocumentId, rightDocumentId, beforeSurface, onModeChange.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/feedback/ErrorMessage",
+    "@nyc-tron/forge/inputs/PropertyInspector"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/inputs/useScopedControl.ts",
+      "content": "import {useLayoutEffect,useRef} from 'react';\nimport {useOwnedAction} from '@/components/nyc-tron/ui/components/shell/useOwnedAction';\n\n/** Document identity for controlled editor tools. Native handles remain outside UI state. */\nexport interface ScopedControlProps {scope?:string;revision?:string|number;disabledReason?:string}\nexport function controlIdentity(scope:string,revision:string|number){\n if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError('Invalid control identity');\n return [scope,revision] as const;\n}\n\n/** Admit one host operation and invalidate handlers at the committed boundary. */\nexport function useScopedControl<P>(boundary:string,props:P,disabled=false){\n const action=useOwnedAction(boundary),pending=action.pending!==null;\n const committed=useRef<{boundary:string;props:P;disabled:boolean}|null>(null);\n const admitted=useRef<symbol|null>(null);\n useLayoutEffect(()=>{committed.current={boundary,props,disabled};});\n useLayoutEffect(()=>{admitted.current=null;},[boundary]);\n useLayoutEffect(()=>()=>{committed.current=null;},[]);\n const current=()=>{const p=committed.current;return p&&p.boundary===boundary&&!p.disabled&&!pending&&!admitted.current?p.props:null;};\n const run=(id:string,operation:(props:P,signal:AbortSignal)=>unknown|Promise<unknown>)=>{\n  const p=current();if(!p)return;\n  const token=Symbol(id);admitted.current=token;\n  return action.run(id,signal=>operation(p,signal),undefined,{pendingForAsyncOnly:true}).finally(()=>{if(admitted.current===token)admitted.current=null;});\n };\n const cancel=()=>{if(committed.current?.boundary!==boundary)return false;admitted.current=null;action.cancel();return true;};\n return {current,run,cancel,pending,pendingId:action.pending,error:action.error};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
+    },
+    {
+      "path": "packages/ui/src/components/forge/pdf/PDFCompareOverlay.tsx",
+      "content": "import type {ReactNode} from 'react';\nimport {View,Text,FlatList,type ViewProps} from 'react-native';\nimport {PropertyInspector} from '@/components/nyc-tron/ui/components/forge/inputs/PropertyInspector';\nimport {Button} from '@/components/nyc-tron/ui/components/Button';\nimport {ErrorMessage} from '@/components/nyc-tron/ui/components/feedback/ErrorMessage';\nimport {controlIdentity,useScopedControl,type ScopedControlProps} from '@/components/nyc-tron/ui/components/forge/inputs/useScopedControl';\nimport {useEditorBoundary} from '@/components/nyc-tron/ui/components/gestures/editor-interaction-scope';\nexport interface PDFCompareOverlayProps extends Omit<ViewProps,'children'>,ScopedControlProps {\n leftDocumentId:string;rightDocumentId:string;beforeSurface:ReactNode;afterSurface:ReactNode;differenceSurface?:ReactNode;aspectRatio:number;\n mode:'overlay'|'side-by-side'|'difference';opacity:number;changes:readonly {id:string;pageLabel:string;kind:'insert'|'delete'|'change';before:string;after:string}[];\n status:'comparing'|'ready'|'error';error?:string;onModeChange:(mode:PDFCompareOverlayProps['mode'])=>void;onOpacityChange:(opacity:number)=>void;onJump:(changeId:string,signal?:AbortSignal)=>unknown;unstyled?:boolean;\n}\nexport function PDFCompareOverlay({scope='pdf-compare',revision=0,...props}:PDFCompareOverlayProps){\n const {leftDocumentId,rightDocumentId,beforeSurface,afterSurface,differenceSurface,aspectRatio,mode,opacity,changes,status,error,onModeChange:_mode,onOpacityChange:_opacity,onJump:_jump,unstyled=false,disabledReason,style,...rest}=props;\n if(!leftDocumentId.trim()||!rightDocumentId.trim()||leftDocumentId.length>256||rightDocumentId.length>256||!Number.isFinite(aspectRatio)||aspectRatio<=0||aspectRatio>10||!Number.isFinite(opacity)||opacity<0||opacity>1||changes.length>100000||new Set(changes.map(c=>c.id)).size!==changes.length||changes.some(c=>!c.id.trim()||c.id.length>256||c.before.length>65536||c.after.length>65536))throw new RangeError('Invalid PDF comparison');\n const owner=useEditorBoundary([JSON.stringify([...controlIdentity(scope,revision),leftDocumentId,rightDocumentId,disabledReason])]),guard=useScopedControl(owner,props,disabledReason!==undefined),off=guard.pending||disabledReason!==undefined;\n return <View {...rest} style={[{gap:8},style]} accessibilityLabel=\"PDF visual and text comparison\"><PropertyInspector scope={owner} label=\"Comparison display\" unstyled={unstyled} disabledReason={off?'Comparison controls unavailable':undefined} fields={[{kind:'choice',id:'mode',label:'Compare mode',value:mode,choices:[{id:'overlay',label:'Overlay'},{id:'side-by-side',label:'Side by side'},{id:'difference',label:'Actual difference surface',disabled:differenceSurface===undefined||differenceSurface===null}]},{kind:'number',id:'opacity',label:'After document opacity',value:opacity,min:0,max:1,step:.01}]} onCommit={(id,v)=>{const h=guard.current();if(!h)return;if(id==='mode')h.onModeChange(v as PDFCompareOverlayProps['mode']);else if(typeof v==='number')h.onOpacityChange(v);}}/>\n {mode==='side-by-side'?<View style={{flexDirection:'row',gap:8}}><View accessibilityLabel=\"Before PDF\" style={{flex:1,aspectRatio,overflow:'hidden'}}>{beforeSurface}</View><View accessibilityLabel=\"After PDF\" style={{flex:1,aspectRatio,overflow:'hidden'}}>{afterSurface}</View></View>:<View style={{aspectRatio,position:'relative',overflow:'hidden'}}>{mode==='difference'?(differenceSurface??<Text {...{className:unstyled?undefined:'text-text'}}>No computed difference surface supplied</Text>):<><View style={{position:'absolute',left:0,right:0,top:0,bottom:0}}>{beforeSurface}</View><View style={{position:'absolute',left:0,right:0,top:0,bottom:0,opacity}}>{afterSurface}</View></>}</View>}\n <Text accessibilityLiveRegion=\"polite\" {...{className:unstyled?undefined:'text-text'}}>Comparison {status} · {changes.length} supplied text changes</Text><FlatList data={changes} keyExtractor={c=>c.id} initialNumToRender={6} windowSize={5} style={{maxHeight:320}} extraData={off} renderItem={({item})=><View style={{gap:6,paddingVertical:8}}><Button title={item.pageLabel+' · '+item.kind} disabled={off||status!=='ready'} unstyled={unstyled} onPress={()=>guard.run('jump',(h,s)=>h.changes.some(c=>c.id===item.id)?h.onJump(item.id,s):undefined)}/><Text {...{className:unstyled?undefined:'text-text'}}>Before: {item.before}</Text><Text {...{className:unstyled?undefined:'text-text'}}>After: {item.after}</Text></View>}/><ErrorMessage message={guard.error??error??disabledReason} unstyled={unstyled}/></View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/pdf/PDFCompareOverlay.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/gestures/editor-interaction-scope.ts",
+      "content": "import {createContext,useRef} from 'react';\n/** Invalidate ephemeral gestures without remounting focused controls or product state. */\nexport const EditorInteractionScope=createContext<string|null>(null);\nlet nextInstance=0;\n/** Compare cached document signatures by identity without reserializing a whole\n * timeline on every playback tick or nesting its data in child scope strings. */\nexport function useEditorBoundary(parts:readonly unknown[]):string{\n const ref=useRef<{id:number;version:number;parts:readonly unknown[]}|null>(null);\n ref.current??={id:++nextInstance,version:0,parts:[]};\n const current=ref.current;\n if(parts.length!==current.parts.length||parts.some((part,index)=>!Object.is(part,current.parts[index]))){current.parts=[...parts];current.version++;}\n return current.id+':'+current.version;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/gestures/editor-interaction-scope.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/action-owner.ts",
+      "content": "import { createStore } from \"zustand/vanilla\";\n\n/** UI request state. Abort controllers stay in the owner's closure. */\nexport interface ActionState { readonly pending: string | null; readonly error: string | null }\nexport function createActionOwner(currentScope: () => string) {\n  const store = createStore<ActionState>(() => ({ pending: null, error: null }));\n  let active = false;\n  let current: { readonly scope: string; readonly abort: AbortController } | null = null;\n  function cancel() {\n    const previous = current; current = null;\n    previous?.abort.abort();\n  }\n  return {\n    store,\n    activate() { cancel(); active = true; store.setState({ pending: null, error: null }); },\n    deactivate() { active = false; cancel(); },\n    cancel() { cancel(); store.setState({ pending: null }); },\n    async run<T>(id: string, operation: (signal: AbortSignal) => T | Promise<T>, consume?: (value: T) => void, options?: { pendingForAsyncOnly?: boolean }): Promise<boolean> {\n      if (!active) return false;\n      cancel();\n      const request = { scope: currentScope(), abort: new AbortController() };\n      current = request;\n      const valid = () => active && current === request && request.scope === currentScope();\n      if (options?.pendingForAsyncOnly) store.setState({ error: null });\n      else store.setState({ pending: id, error: null });\n      try {\n        if (!valid()) return false;\n        const result = operation(request.abort.signal);\n        let value: T;\n        if (options?.pendingForAsyncOnly) {\n          if (result && typeof (result as Promise<T>).then === 'function') {\n            // A synchronous acknowledgement or already-resolved promise must not\n            // disable (and blur) the focused control between keyboard commands.\n            let settled = false;\n            const completion = Promise.resolve(result).then(value => { settled = true; return value; }, error => { settled = true; throw error; });\n            void Promise.resolve().then(() => { if (!settled && valid()) store.setState({ pending: id, error: null }); });\n            value = await completion;\n          } else value = result as T;\n        } else value = await result;\n        if (!valid()) return false;\n        consume?.(value);\n        if (!valid()) return false;\n        store.setState({ pending: null });\n        return true;\n      } catch (error) {\n        if (!valid()) return false;\n        store.setState({ pending: null, error: error instanceof Error ? error.message : String(error) });\n        return false;\n      } finally { if (current === request) current = null; }\n    },\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/action-owner.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/useOwnedAction.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport { useStore } from \"zustand\";\nimport { createActionOwner } from \"@/components/nyc-tron/ui/components/shell/action-owner\";\n\n/** Cancel stale requests at the committed document boundary, before new controls accept input. */\nexport function useOwnedAction(scope: string) {\n  const committed = useRef(scope);\n  const ref = useRef<ReturnType<typeof createActionOwner> | null>(null);\n  ref.current ??= createActionOwner(() => committed.current);\n  const owner = ref.current;\n  useLayoutEffect(() => {\n    committed.current = scope;\n    owner.activate();\n    return () => owner.deactivate();\n  }, [owner, scope]);\n  const state = useStore(owner.store, value => value);\n  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);\n  return { ...state, run, cancel: owner.cancel };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/pdf/PDFCompareOverlay",
+    "exports": [
+      "PDFCompareOverlay",
+      "PDFCompareOverlayProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

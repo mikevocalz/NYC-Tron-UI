@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "overlays/anchored-popover-types",
+  "title": "anchored popover types",
+  "description": "anchored popover types, an overlay helper module. Exports isTriggerPopover, popoverTriggerState, renderPopoverTrigger.",
+  "registryDependencies": [
+    "@nyc-tron/overlays/popover-position"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/overlays/anchored-popover-types.ts",
+      "content": "import type {ReactNode} from \"react\";\nimport type {Rect2D} from \"@/components/nyc-tron/ui/components/overlays/popover-position\";\n\n/**\n * Handed to a trigger render function. Spread `triggerProps` onto the\n * pressable so screen readers hear that it opens a dialog and whether it is\n * open, and call `toggle` from its press handler.\n * @see {@linkcode PopoverTriggerProps.trigger}\n */\nexport interface PopoverTriggerState{\n  readonly open:boolean;\n  /** Opens a closed popover and closes an open one, through `onOpenChange`. */\n  readonly toggle:()=>void;\n  readonly triggerProps:{\n    readonly accessibilityState:{readonly expanded:boolean};\n    readonly \"aria-expanded\":boolean;\n    readonly \"aria-haspopup\":\"dialog\";\n  };\n}\n\n/** Props every popover form shares. */\nexport interface PopoverBaseProps{\n  /** Document/target identity; replacement discards queued native events and anchor measurements. */\n  readonly scope?:string;\n  /** Controlled visibility. */\n  readonly open:boolean;\n  /** Called with `false` when the OS or the user dismisses the popover, and by `toggle` in the trigger form. */\n  readonly onOpenChange:(open:boolean)=>void;\n  /** Accessible name of the popover surface. */\n  readonly accessibilityLabel:string;\n  /** React Native content. */\n  readonly children:ReactNode;\n  /** Preferred width in points; clamped to the usable region. @default 320 */\n  readonly width?:number;\n  /** Preferred maximum height in points; clamped to the usable region. @default 420 */\n  readonly maxHeight?:number;\n  /** Web only: classes for the surface. Native surfaces are drawn by the OS. */\n  readonly className?:string;\n  readonly testID?:string;\n}\n\n/**\n * Rect form (the original contract): the app measured the anchor itself.\n * `anchor` and `usableRegions` are in the coordinate space of the view that\n * contains the popover (normally the screen root).\n */\nexport interface PopoverAnchorProps extends PopoverBaseProps{\n  readonly anchor:Rect2D;\n  /** Nonoccluded regions from the foldable layout owner; never infer a hinge from width. */\n  readonly usableRegions:readonly Rect2D[];\n  readonly trigger?:undefined;\n}\n\n/**\n * Trigger form: the popover renders `trigger`, measures it in window\n * coordinates each time it opens and anchors itself to it. Mount it where the\n * trigger belongs, not at the screen root.\n */\nexport interface PopoverTriggerProps extends PopoverBaseProps{\n  /** The element that opens the popover, or a function of {@linkcode PopoverTriggerState}. */\n  readonly trigger:ReactNode|((state:PopoverTriggerState)=>ReactNode);\n  /**\n   * Window-space nonoccluded regions from the foldable layout owner.\n   * @default the whole window, as one region\n   */\n  readonly usableRegions?:readonly Rect2D[];\n  readonly anchor?:undefined;\n}\n\n/** Either form; `anchor` and `trigger` are mutually exclusive. */\nexport type PopoverProps=PopoverAnchorProps|PopoverTriggerProps;\n\n/** Builds the {@linkcode PopoverTriggerState} a trigger render function receives. */\nexport function popoverTriggerState(open:boolean,onOpenChange:(open:boolean)=>void):PopoverTriggerState{\n  return {open,toggle:()=>onOpenChange(!open),\n    triggerProps:{accessibilityState:{expanded:open},\"aria-expanded\":open,\"aria-haspopup\":\"dialog\"}};\n}\n\n/** Renders a trigger node or calls a trigger render function. */\nexport function renderPopoverTrigger(trigger:PopoverTriggerProps[\"trigger\"],state:PopoverTriggerState):ReactNode{\n  return typeof trigger===\"function\"?trigger(state):trigger;\n}\n\n/** Narrows {@linkcode PopoverProps} to the trigger form. Throws when both or neither of `anchor` and `trigger` are set. */\nexport function isTriggerPopover(props:PopoverProps):props is PopoverTriggerProps{\n  const hasTrigger=props.trigger!==undefined,hasAnchor=props.anchor!==undefined;\n  if(hasTrigger===hasAnchor)throw new TypeError(\"A popover takes exactly one of `anchor` or `trigger`\");\n  return hasTrigger;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/overlays/anchored-popover-types.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/overlays/anchored-popover-types",
+    "exports": [
+      "PopoverAnchorProps",
+      "PopoverBaseProps",
+      "PopoverProps",
+      "PopoverTriggerProps",
+      "PopoverTriggerState",
+      "isTriggerPopover",
+      "popoverTriggerState",
+      "renderPopoverTrigger"
+    ],
+    "peers": {
+      "react": ">=19.0.0"
+    }
+  },
+  "categories": [
+    "overlay"
+  ],
+  "type": "registry:lib"
+}

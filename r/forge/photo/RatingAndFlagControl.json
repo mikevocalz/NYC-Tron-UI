@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/RatingAndFlagControl",
+  "title": "Rating And Flag Control",
+  "description": "Rating And Flag Control, a photo editing component. Props: value, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/SegmentedControl",
+    "@nyc-tron/Select",
+    "@nyc-tron/forge/photo/photo-adjustments"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/photo/RatingAndFlagControl.tsx",
+      "content": "import {View,Pressable,Text,type ViewProps} from 'react-native';\nimport {Select} from '@/components/nyc-tron/ui/components/Select';\nimport {SegmentedControl} from '@/components/nyc-tron/ui/components/SegmentedControl';\nimport {joinClasses} from '@/components/nyc-tron/ui/components/styles';\nimport {validatePhotoRating,type PhotoRating} from '@/components/nyc-tron/ui/components/forge/photo/photo-adjustments';\nexport type {PhotoRating} from '@/components/nyc-tron/ui/components/forge/photo/photo-adjustments';\nexport interface RatingAndFlagControlProps extends Omit<ViewProps,'children'> {readonly value:PhotoRating;readonly onCommit:(value:PhotoRating)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}\n/** Independent star, named color-label and mutually exclusive pick/reject fields. */\nexport function RatingAndFlagControl({value,onCommit,disabled=false,unstyled=false,...props}:RatingAndFlagControlProps){\n validatePhotoRating(value);const set=(change:Partial<PhotoRating>)=>{if(disabled)return;const next={...value,...change};validatePhotoRating(next);if(JSON.stringify(next)!==JSON.stringify(value))onCommit(next);};\n return <View {...props} style={[{gap:8},props.style]}>\n  <View accessibilityRole=\"radiogroup\" accessibilityLabel=\"Photo star rating\" style={{flexDirection:'row',flexWrap:'wrap',gap:4}}>{([0,1,2,3,4,5] as const).map(stars=><Pressable key={stars} accessibilityRole=\"radio\" accessibilityLabel={stars===0?'Unrated':`${stars} stars`} accessibilityState={{checked:value.stars===stars,disabled}} aria-checked={value.stars===stars} disabled={disabled} onPress={()=>set({stars})} style={{minWidth:44,minHeight:44,alignItems:'center',justifyContent:'center'}}><Text {...{className:joinClasses(!unstyled&&'text-text')}}>{stars===0?'None':String(stars)}</Text></Pressable>)}</View>\n  <Select label=\"Photo color label\" value={value.label} options={(['none','red','yellow','green','blue','purple'] as const).map(value=>({value,label:value}))} disabled={disabled} unstyled={unstyled} onValueChange={label=>set({label:label as PhotoRating['label']})}/>\n  <SegmentedControl aria-label=\"Photo flag\" value={value.flag} options={[{value:'none',label:'Unflagged'},{value:'pick',label:'Pick'},{value:'reject',label:'Reject'}]} disabled={disabled} unstyled={unstyled} onChange={flag=>set({flag})}/>\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/photo/RatingAndFlagControl.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/RatingAndFlagControl",
+    "exports": [
+      "PhotoRating",
+      "RatingAndFlagControl",
+      "RatingAndFlagControlProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

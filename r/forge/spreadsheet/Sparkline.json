@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/spreadsheet/Sparkline",
+  "title": "Sparkline",
+  "description": "Sparkline, a spreadsheet component. Props: values, kind, axisMin.",
+  "registryDependencies": [
+    "@nyc-tron/forge/spreadsheet/sparkline-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/spreadsheet/Sparkline.tsx",
+      "content": "import { View, type ViewProps } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { sparklineGeometry, type SparklineAxisMin, type SparklineKind, type SparklineMarkTone } from \"@/components/nyc-tron/ui/components/forge/spreadsheet/sparkline-model\";\n\n/**\n * An in-cell chart drawn with plain views, so it renders inside any grid cell\n * on every platform without a canvas. Fits `width` × `height` points.\n */\nexport interface SparklineProps extends Omit<ViewProps, \"children\"> {\n  readonly values: readonly (number | undefined)[];\n  readonly kind: SparklineKind;\n  readonly width: number;\n  readonly height: number;\n  readonly axisMin?: SparklineAxisMin;\n  readonly showHigh?: boolean;\n  readonly showLow?: boolean;\n  readonly showNegative?: boolean;\n  /** Screen-reader summary. Defaults to a count with the low and high values. */\n  readonly accessibilityLabel?: string;\n  readonly unstyled?: boolean;\n}\n\nconst fill: Record<SparklineMarkTone, string> = {\n  normal: \"bg-primary\", negative: \"bg-text-muted\", high: \"bg-success\", low: \"bg-accent\",\n};\n\nexport function Sparkline({\n  values, kind, width, height, axisMin, showHigh, showLow, showNegative, accessibilityLabel, unstyled = false, style, ...props\n}: SparklineProps) {\n  const g = sparklineGeometry(values, { kind, width, height, axisMin, showHigh, showLow, showNegative });\n  const label = accessibilityLabel ?? (g.valueCount === 0 ? \"Sparkline, no values\"\n    : `Sparkline, ${g.valueCount} values, low ${values[g.lowIndex!]}, high ${values[g.highIndex!]}`);\n  const cls = (tone: SparklineMarkTone) => (!unstyled ? fill[tone] : undefined);\n  return <View {...props} role=\"img\" accessibilityLabel={label} style={[{ width, height, overflow: \"hidden\" }, style]}>\n    {kind === \"winloss\" ? <View aria-hidden {...{ className: !unstyled ? \"bg-border\" : undefined }}\n      style={{ position: \"absolute\", left: 0, right: 0, top: height / 2, height: 1 }} /> : null}\n    {g.bars.map(bar => <View key={bar.index} aria-hidden {...{ className: cls(bar.tone) }}\n      style={{ position: \"absolute\", left: bar.left, top: bar.top, width: bar.width, height: bar.height, borderRadius: 1 }} />)}\n    {g.segments.map((s, i) => <View key={i} aria-hidden {...{ className: cls(\"normal\") }}\n      style={{ position: \"absolute\", left: s.centerX - s.length / 2, top: s.centerY - 1, width: s.length, height: 2,\n        borderRadius: 1, transform: [{ rotate: `${s.angleDeg}deg` }] }} />)}\n    {g.markers.map(m => <View key={\"m\" + m.index} aria-hidden {...{ className: joinClasses(cls(m.tone)) }}\n      style={{ position: \"absolute\", left: m.x - 3, top: m.y - 3, width: 6, height: 6, borderRadius: 3 }} />)}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/spreadsheet/Sparkline.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/spreadsheet/Sparkline",
+    "exports": [
+      "Sparkline",
+      "SparklineProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

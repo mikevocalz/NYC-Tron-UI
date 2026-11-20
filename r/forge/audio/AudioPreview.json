@@ -1,0 +1,53 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/AudioPreview",
+  "title": "Audio Preview",
+  "description": "Audio Preview, an audio mixing and editing component. Props: state, peaks, onPlay.",
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/forge/WaveformLane",
+    "@nyc-tron/forge/audio/preview-model",
+    "@nyc-tron/forge/audio/recording-model",
+    "@nyc-tron/forge/waveform"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/announce.ts",
+      "content": "import { useEffect, useRef } from \"react\";\nimport { AccessibilityInfo, Platform } from \"react-native\";\n\n/**\n * Speak `text` at low priority after current speech. react-native-web has no\n * `announceForAccessibilityWithOptions`; calling it there threw inside an\n * effect and unmounted the whole screen, so fall back to the plain call.\n * Qt supports priority but no native announcement queue; request low priority\n * there without claiming that speech is queued behind another announcement.\n */\nexport function announce(text: string): void {\n  const info: Partial<typeof AccessibilityInfo> = AccessibilityInfo;\n  if (typeof info.announceForAccessibilityWithOptions === \"function\") {\n    const qt=String(Platform.OS)===\"qnx\"||String(Platform.OS)===\"marathon\";\n    info.announceForAccessibilityWithOptions(text, qt?{priority:\"low\"}:{queue:true,priority:\"low\"});\n  } else {\n    info.announceForAccessibility?.(text);\n  }\n}\n\n/**\n * Announce `status` on iOS each time it changes after mount. Android and web\n * already speak it through the `accessibilityLiveRegion` on the status text;\n * VoiceOver ignores live regions, so without this it heard no phase change.\n */\nexport function useStatusAnnouncement(status: string): void {\n  const previous = useRef(status);\n  useEffect(() => {\n    if (previous.current === status) return;\n    previous.current = status;\n    if (Platform.OS === \"ios\") announce(status);\n  }, [status]);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/announce.ts"
+    },
+    {
+      "path": "packages/ui/src/components/forge/audio/AudioPreview.tsx",
+      "content": "import { ActivityIndicator, Text, View, type ViewProps } from \"react-native\";\nimport { Button } from \"@/components/nyc-tron/ui/components/Button\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { useStatusAnnouncement } from \"@/components/nyc-tron/ui/components/forge/announce\";\nimport { WaveformLane } from \"@/components/nyc-tron/ui/components/forge/WaveformLane\";\nimport type { WaveformPeak } from \"@/components/nyc-tron/ui/components/forge/waveform\";\nimport { formatElapsed, spokenElapsed } from \"@/components/nyc-tron/ui/components/forge/audio/recording-model\";\nimport { presentPreview, type PreviewAction, type PreviewViewState } from \"@/components/nyc-tron/ui/components/forge/audio/preview-model\";\n\n/** Props for {@linkcode AudioPreview}. */\nexport interface AudioPreviewProps extends Omit<ViewProps, \"children\"> {\n  /** Player phase, mapped by the app from its own playback controller. */\n  readonly state: PreviewViewState;\n  readonly onPlay: () => void;\n  readonly onStop: () => void;\n  /** Retry after an error. @default onPlay */\n  readonly onRetry?: () => void;\n  /** Measured peaks of the clip; omit to hide the lane. */\n  readonly peaks?: readonly WaveformPeak[];\n  /** Seek while playing; makes the lane adjustable. */\n  readonly onSeekNormalized?: (position: number) => void;\n  readonly disabled?: boolean;\n  /** @default 48 */\n  readonly height?: number;\n  className?: string;\n  unstyled?: boolean;\n}\n\n/**\n * Controlled clip preview: status, position, play/stop and an optional\n * waveform. The app's player decodes and plays; this view only reflects it.\n */\nexport function AudioPreview({\n  state, onPlay, onStop, onRetry, peaks, onSeekNormalized, disabled = false, height = 48,\n  className, unstyled = false, testID, ...props\n}: AudioPreviewProps) {\n  const view = presentPreview(state);\n  useStatusAnnouncement(view.status);\n  const handlers: Record<PreviewAction, () => void> = { play: onPlay, stop: onStop, retry: onRetry ?? onPlay };\n  const styled = !unstyled;\n  const total = state.kind === \"ready\" || state.kind === \"playing\" ? state.durationMs : undefined;\n  // Players can report a slightly negative position right after a seek.\n  const at = state.kind === \"playing\" ? Math.max(0, state.positionMs) : 0;\n  return <View\n    {...props}\n    {...(testID ? { testID } : {})}\n    {...{ className: joinClasses(\"w-full gap-2\", styled && \"rounded-control border border-border bg-surface-raised p-3\", className) }}\n  >\n    <View {...{ className: \"flex-row items-center gap-2\" }}>\n      {view.isBusy ? <ActivityIndicator accessibilityElementsHidden importantForAccessibility=\"no\" /> : null}\n      <Text\n        accessibilityLiveRegion=\"polite\"\n        {...{ className: joinClasses(\"flex-1\", styled && \"text-sm\", styled && (view.isProblem ? \"text-danger\" : \"text-text-muted\")) }}\n      >{view.status}</Text>\n      {total !== undefined ? <Text\n        accessibilityLabel={spokenElapsed(Math.min(at, total)) + \" of \" + spokenElapsed(total)}\n        {...{ className: joinClasses(styled && \"text-text\") }}\n        style={{ fontVariant: [\"tabular-nums\"] }}\n      >{formatElapsed(Math.min(at, total)) + \" / \" + formatElapsed(total)}</Text> : null}\n    </View>\n    {peaks ? <WaveformLane\n      peaks={peaks}\n      height={height}\n      accessibilityLabel=\"Clip waveform\"\n      {...(view.progress === undefined ? {} : { position: view.progress })}\n      {...(onSeekNormalized && state.kind === \"playing\" ? { onSeekNormalized } : {})}\n      {...(testID ? { testID: testID + \"-waveform\" } : {})}\n    /> : null}\n    {view.action ? <Button\n      title={view.action.label}\n      variant={view.isProblem || view.action.kind !== \"play\" ? \"secondary\" : \"primary\"}\n      disabled={disabled}\n      onPress={handlers[view.action.kind]}\n      {...(testID ? { testID: testID + \"-action\" } : {})}\n    /> : null}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/audio/AudioPreview.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/AudioPreview",
+    "exports": [
+      "AudioPreview",
+      "AudioPreviewProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

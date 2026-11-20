@@ -1,0 +1,74 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/LuminanceColorRangeMask",
+  "title": "Luminance Color Range Mask",
+  "description": "Luminance Color Range Mask, a photo editing component. Props: photoId, imageSize, value, onChange.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/Select",
+    "@nyc-tron/feedback/ErrorMessage",
+    "@nyc-tron/forge/color/color-management",
+    "@nyc-tron/forge/photo/photo-masks",
+    "@nyc-tron/shell/UnitInput"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/canvas/SettingSwitch.tsx",
+      "content": "import {Pressable,Text,View} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\n\n/**\n * Labeled on/off row shared by the canvas settings panels: a 44pt switch with\n * the label on the start side and the track on the end side (mirrored in RTL).\n */\nexport function SettingSwitch({label,on,onChange,disabled,styled,hint}:{\n  label:string;on:boolean;onChange:(on:boolean)=>void;disabled:boolean;styled:boolean;hint?:string|undefined;\n}){\n  return <Pressable role=\"switch\" aria-checked={on} accessibilityRole=\"switch\" accessibilityState={{checked:on,disabled}}\n    aria-label={label} accessibilityHint={hint} disabled={disabled} onPress={()=>onChange(!on)}\n    {...{className:joinClasses(styled&&\"rounded-control focus-visible:ring-2 focus-visible:ring-focus\")}}\n    style={{minHeight:44,flexDirection:\"row\",alignItems:\"center\",justifyContent:\"space-between\",gap:12,paddingHorizontal:4,opacity:disabled?0.5:1}}>\n    <Text {...{className:joinClasses(styled&&\"text-text text-sm\")}} style={{flexShrink:1}}>{label}</Text>\n    <View pointerEvents=\"none\" {...{className:joinClasses(styled&&\"border\",styled&&(on?\"bg-primary border-primary\":\"bg-surface-sunken border-border\"))}}\n      style={{width:40,height:24,borderRadius:12,padding:2,justifyContent:\"center\",alignItems:on?\"flex-end\":\"flex-start\"}}>\n      <View {...{className:joinClasses(styled&&(on?\"bg-on-primary\":\"bg-text-muted\"))}} style={{width:18,height:18,borderRadius:9}}/>\n    </View>\n  </Pressable>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/canvas/SettingSwitch.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/photo/LuminanceColorRangeMask.tsx",
+      "content": "import {useRef,type ReactNode} from 'react';\nimport {Text,View,type ViewProps} from 'react-native';\nimport {createStore} from 'zustand/vanilla';\nimport {useStore} from 'zustand';\nimport {Select} from '@/components/nyc-tron/ui/components/Select';\nimport {UnitInput} from '@/components/nyc-tron/ui/components/shell/UnitInput';\nimport {Button} from '@/components/nyc-tron/ui/components/Button';\nimport {ErrorMessage} from '@/components/nyc-tron/ui/components/feedback/ErrorMessage';\nimport {useOwnedAction} from '@/components/nyc-tron/ui/components/shell/useOwnedAction';\nimport {SettingSwitch} from '@/components/nyc-tron/ui/components/forge/canvas/SettingSwitch';\nimport {joinClasses} from '@/components/nyc-tron/ui/components/styles';\nimport type {ProfileColor} from '@/components/nyc-tron/ui/components/forge/color/color-management';\nimport {validatePhotoRange,validatePhotoImageSize,type PhotoRangeMask,type PhotoImageSize,type PhotoMaskCombine} from '@/components/nyc-tron/ui/components/forge/photo/photo-masks';\nexport type {PhotoRangeMask} from '@/components/nyc-tron/ui/components/forge/photo/photo-masks';\nexport interface PhotoRangeSampleRequest {readonly photoId:string;readonly expectedRevision:string;readonly x:number;readonly y:number}\nexport interface LuminanceColorRangeMaskProps extends Omit<ViewProps,'children'> {\n readonly photoId:string;readonly revision:string;readonly imageSize:PhotoImageSize;readonly value:PhotoRangeMask;\n readonly onChange:(mask:PhotoRangeMask)=>void;\n readonly onSample:(request:PhotoRangeSampleRequest,signal:AbortSignal)=>{readonly luminance:number;readonly color:ProfileColor}|Promise<{readonly luminance:number;readonly color:ProfileColor}>;\n readonly children?:ReactNode;readonly disabled?:boolean;readonly unstyled?:boolean;\n}\nconst makeStore=()=>createStore(()=>({x:0,y:0}));\n/** Document-only sampling: profile-bearing color is retained, never inferred from an OS screenshot. */\nexport function LuminanceColorRangeMask({photoId,revision,imageSize,value,onChange,onSample,children,disabled=false,unstyled=false,...props}:LuminanceColorRangeMaskProps){\n validatePhotoRange(value);validatePhotoImageSize(imageSize);if(!photoId.trim())throw new TypeError('Range sampling requires a photo identity');\n const action=useOwnedAction(JSON.stringify([photoId,revision])),locked=disabled||action.pending!==null;\n const local=useRef<ReturnType<typeof makeStore>|null>(null);local.current??=makeStore();const store=local.current,point=useStore(store,s=>s);\n const set=(change:Partial<PhotoRangeMask>)=>{if(locked)return;const next={...value,...change};validatePhotoRange(next);onChange(next);};\n return <View {...props} style={[{gap:8},props.style]}>\n  <Select label=\"Photo range mask kind\" value={value.mode} options={[{value:'luminance',label:'Luminance range'},{value:'color',label:'Color range'}]} disabled={locked} unstyled={unstyled} onValueChange={mode=>set({mode:mode as PhotoRangeMask['mode']})}/>\n  <UnitInput label=\"Normalized mask luminance minimum\" value={value.minimum} min={0} max={value.maximum} step={.01} disabled={locked||value.mode!=='luminance'} unstyled={unstyled} onCommit={minimum=>set({minimum})}/>\n  <UnitInput label=\"Normalized mask luminance maximum\" value={value.maximum} min={value.minimum} max={1} step={.01} disabled={locked||value.mode!=='luminance'} unstyled={unstyled} onCommit={maximum=>set({maximum})}/>\n  <UnitInput label=\"Color range tolerance\" value={value.tolerance} min={0} max={1} step={.01} disabled={locked||value.mode!=='color'} unstyled={unstyled} onCommit={tolerance=>set({tolerance})}/>\n  <UnitInput label=\"Photo range softness\" value={value.softness} min={0} max={1} step={.01} disabled={locked} unstyled={unstyled} onCommit={softness=>set({softness})}/>\n  <Select label=\"Photo range combination\" value={value.combine} options={['replace','add','subtract','intersect'].map(value=>({value,label:value}))} disabled={locked} unstyled={unstyled} onValueChange={combine=>set({combine:combine as PhotoMaskCombine})}/>\n  <SettingSwitch label=\"Invert photo range mask\" on={value.invert} onChange={invert=>set({invert})} disabled={locked} styled={!unstyled}/>\n  <UnitInput label=\"Range sample image x\" value={Math.min(point.x,imageSize.width-1)} min={0} max={imageSize.width-1} step={1} precision={0} disabled={locked} unstyled={unstyled} onCommit={x=>store.setState({x:Math.round(x)})}/>\n  <UnitInput label=\"Range sample image y\" value={Math.min(point.y,imageSize.height-1)} min={0} max={imageSize.height-1} step={1} precision={0} disabled={locked} unstyled={unstyled} onCommit={y=>store.setState({y:Math.round(y)})}/>\n  <Button title=\"Sample photo range\" disabled={locked} unstyled={unstyled} onPress={()=>{if(locked)return;const request={photoId,expectedRevision:revision,x:Math.min(point.x,imageSize.width-1),y:Math.min(point.y,imageSize.height-1)};void action.run('sample',async signal=>{const sample=await onSample(request,signal);if(!Number.isFinite(sample.luminance)||sample.luminance<0||sample.luminance>1)throw new RangeError('Sampler must report normalized luminance');const next={...value,color:sample.color,...(value.mode==='luminance'?{minimum:Math.max(0,sample.luminance-.05),maximum:Math.min(1,sample.luminance+.05)}:{})};validatePhotoRange(next);return next;},onChange);}}/>\n  <Text {...{className:joinClasses(!unstyled&&'text-text')}}>{value.color?`${value.color.profileId}: ${value.color.channels.join(', ')}; alpha ${value.color.alpha}`:'No document color sample'}</Text>\n  {children}\n  {action.pending!==null?<Button title=\"Cancel range sample\" unstyled={unstyled} onPress={action.cancel}/>:null}\n  <ErrorMessage {...(action.error?{message:action.error}:{})} unstyled={unstyled}/>\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/photo/LuminanceColorRangeMask.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/shell/action-owner.ts",
+      "content": "import { createStore } from \"zustand/vanilla\";\n\n/** UI request state. Abort controllers stay in the owner's closure. */\nexport interface ActionState { readonly pending: string | null; readonly error: string | null }\nexport function createActionOwner(currentScope: () => string) {\n  const store = createStore<ActionState>(() => ({ pending: null, error: null }));\n  let active = false;\n  let current: { readonly scope: string; readonly abort: AbortController } | null = null;\n  function cancel() {\n    const previous = current; current = null;\n    previous?.abort.abort();\n  }\n  return {\n    store,\n    activate() { cancel(); active = true; store.setState({ pending: null, error: null }); },\n    deactivate() { active = false; cancel(); },\n    cancel() { cancel(); store.setState({ pending: null }); },\n    async run<T>(id: string, operation: (signal: AbortSignal) => T | Promise<T>, consume?: (value: T) => void, options?: { pendingForAsyncOnly?: boolean }): Promise<boolean> {\n      if (!active) return false;\n      cancel();\n      const request = { scope: currentScope(), abort: new AbortController() };\n      current = request;\n      const valid = () => active && current === request && request.scope === currentScope();\n      if (options?.pendingForAsyncOnly) store.setState({ error: null });\n      else store.setState({ pending: id, error: null });\n      try {\n        if (!valid()) return false;\n        const result = operation(request.abort.signal);\n        let value: T;\n        if (options?.pendingForAsyncOnly) {\n          if (result && typeof (result as Promise<T>).then === 'function') {\n            // A synchronous acknowledgement or already-resolved promise must not\n            // disable (and blur) the focused control between keyboard commands.\n            let settled = false;\n            const completion = Promise.resolve(result).then(value => { settled = true; return value; }, error => { settled = true; throw error; });\n            void Promise.resolve().then(() => { if (!settled && valid()) store.setState({ pending: id, error: null }); });\n            value = await completion;\n          } else value = result as T;\n        } else value = await result;\n        if (!valid()) return false;\n        consume?.(value);\n        if (!valid()) return false;\n        store.setState({ pending: null });\n        return true;\n      } catch (error) {\n        if (!valid()) return false;\n        store.setState({ pending: null, error: error instanceof Error ? error.message : String(error) });\n        return false;\n      } finally { if (current === request) current = null; }\n    },\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/action-owner.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/useOwnedAction.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport { useStore } from \"zustand\";\nimport { createActionOwner } from \"@/components/nyc-tron/ui/components/shell/action-owner\";\n\n/** Cancel stale requests at the committed document boundary, before new controls accept input. */\nexport function useOwnedAction(scope: string) {\n  const committed = useRef(scope);\n  const ref = useRef<ReturnType<typeof createActionOwner> | null>(null);\n  ref.current ??= createActionOwner(() => committed.current);\n  const owner = ref.current;\n  useLayoutEffect(() => {\n    committed.current = scope;\n    owner.activate();\n    return () => owner.deactivate();\n  }, [owner, scope]);\n  const state = useStore(owner.store, value => value);\n  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);\n  return { ...state, run, cancel: owner.cancel };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/LuminanceColorRangeMask",
+    "exports": [
+      "LuminanceColorRangeMask",
+      "LuminanceColorRangeMaskProps",
+      "PhotoRangeMask",
+      "PhotoRangeSampleRequest"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

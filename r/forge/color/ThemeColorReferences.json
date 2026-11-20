@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/ThemeColorReferences",
+  "title": "Theme Color References",
+  "description": "Theme Color References, a color component. Props: references, referenceId, onBind.",
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/Select",
+    "@nyc-tron/forge/color",
+    "@nyc-tron/forge/color/color-management"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/ThemeColorReferences.tsx",
+      "content": "import { Text, View, type ViewProps } from \"react-native\";\nimport { Select } from \"@/components/nyc-tron/ui/components/Select\";\nimport { Button } from \"@/components/nyc-tron/ui/components/Button\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { assertRgba, rgbaToHex } from \"@/components/nyc-tron/ui/components/forge/color\";\nimport type { ThemeColorReference } from \"@/components/nyc-tron/ui/components/forge/color/color-management\";\nexport type { ThemeColorReference } from \"@/components/nyc-tron/ui/components/forge/color/color-management\";\n/** Identity-bearing color bindings for ThemeColorReferences. */\nexport interface ThemeColorReferencesProps extends Omit<ViewProps, \"children\"> {\n  readonly references: readonly ThemeColorReference[];\n  readonly referenceId: string | null;\n  readonly onBind: (id: string) => void;\n  /** Host materializes its current resolved color before removing the binding. */\n  readonly onDetach: () => void;\n  readonly disabled?: boolean;\n  readonly unstyled?: boolean;\n}\n/** Binds theme tokens by identity; previews never replace references with literal colors. */\nexport function ThemeColorReferences({ references, referenceId, onBind, onDetach, disabled = false, unstyled = false, ...props }: ThemeColorReferencesProps) {\n  const ids = new Set<string>();\n  if (references.length > 1000) throw new RangeError(\"Page theme references above 1000\");\n  references.forEach(reference => { if (!reference.id || !reference.label || ids.has(reference.id)) throw new TypeError(\"Theme references require distinct IDs and labels\"); ids.add(reference.id); assertRgba(reference.preview); });\n  const current = references.find(reference => reference.id === referenceId);\n  return <View {...props} style={[{ gap: 8 }, props.style]}>\n    <Select label=\"Theme color reference\" placeholder=\"Choose a reference\" value={referenceId ?? \"\"} disabled={disabled} unstyled={unstyled}\n      options={references.map(reference => ({ value: reference.id, label: `${reference.label} — ${reference.source}` }))} onValueChange={id => { if (!disabled && id !== referenceId) onBind(id); }}/>\n    <Text accessibilityLiveRegion=\"polite\" {...{ className: joinClasses(!unstyled && \"text-text-muted\") }}>{current ? `${current.label}: ${rgbaToHex(current.preview, true)}` : referenceId === null ? \"Literal color; no theme binding\" : `Unresolved reference: ${referenceId}`}</Text>\n    <Button title=\"Detach theme reference\" disabled={disabled || referenceId === null} onPress={onDetach} unstyled={unstyled}/>\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/color/ThemeColorReferences.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/ThemeColorReferences",
+    "exports": [
+      "ThemeColorReference",
+      "ThemeColorReferences",
+      "ThemeColorReferencesProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

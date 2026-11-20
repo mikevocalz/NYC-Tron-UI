@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/loop-range",
+  "title": "loop range",
+  "description": "loop range, a video timeline helper module. Exports loopCommit, loopFromMarks, loopNext.",
+  "registryDependencies": [
+    "@nyc-tron/forge/timebase",
+    "@nyc-tron/forge/timeline/edits",
+    "@nyc-tron/forge/timeline/time"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timeline/loop-range.ts",
+      "content": "import type {FrameRate} from \"@/components/nyc-tron/ui/components/forge/timebase\";\nimport {framesToSeconds} from \"@/components/nyc-tron/ui/components/forge/timeline/time\";\nimport type {InOutRange} from \"@/components/nyc-tron/ui/components/forge/timeline/edits\";\n\n/**\n * The playback loop (D-13): `[inFrame, outFrame)`, at least one frame long.\n * The range is document state (Splice `setLoopRange` / `clearLoopRange`);\n * whether the player is looping is player state the host owns.\n */\nexport interface LoopRange {\n  readonly inFrame:number;\n  readonly outFrame:number;\n}\n/** A loop range with the seconds Splice stores. */\nexport interface LoopCommit extends LoopRange {\n  readonly inSeconds:number;\n  readonly outSeconds:number;\n}\n\n/**\n * `range` with one end moved to `frame`, clamped to `[0, durationFrames]`. An\n * end pushed past the other stops one frame short of it, so the loop never\n * empties or flips.\n */\nexport function setLoopEdge(range:LoopRange,edge:\"in\"|\"out\",frame:number,durationFrames:number):LoopRange{\n  if(!Number.isSafeInteger(durationFrames)||durationFrames<1)throw new RangeError(\"A loop needs a timeline at least one frame long\");\n  const f=Math.min(durationFrames,Math.max(0,Math.round(frame)));\n  return edge===\"in\"?{inFrame:Math.min(f,range.outFrame-1),outFrame:range.outFrame}:{inFrame:range.inFrame,outFrame:Math.max(f,range.inFrame+1)};\n}\n\n/** The loop for an in/out selection, with unset marks at the timeline's ends; `undefined` if it would be empty. */\nexport function loopFromMarks(marks:InOutRange,durationFrames:number):LoopRange|undefined{\n  const inFrame=marks.inFrame??0,outFrame=marks.outFrame??durationFrames;\n  if(marks.inFrame===undefined&&marks.outFrame===undefined)return undefined;\n  return outFrame>inFrame?{inFrame,outFrame}:undefined;\n}\n\n/** `range` with seconds for the engine. */\nexport function loopCommit(range:LoopRange,rate:FrameRate):LoopCommit{\n  if(!(range.outFrame>range.inFrame))throw new RangeError(\"Loop out must be after loop in\");\n  return {...range,inSeconds:framesToSeconds(range.inFrame,rate),outSeconds:framesToSeconds(range.outFrame,rate)};\n}\n\n/** Where looped playback goes after `frame`: back to the in-point once it reaches the out-point. */\nexport function loopNext(frame:number,range:LoopRange|undefined,looping:boolean):number{\n  if(!looping||!range)return frame;\n  return frame>=range.outFrame||frame<range.inFrame?range.inFrame:frame;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/loop-range.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/loop-range",
+    "exports": [
+      "LoopCommit",
+      "LoopRange",
+      "loopCommit",
+      "loopFromMarks",
+      "loopNext",
+      "setLoopEdge"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

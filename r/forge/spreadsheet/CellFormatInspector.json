@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/spreadsheet/CellFormatInspector",
+  "title": "Cell Format Inspector",
+  "description": "Cell Format Inspector, a spreadsheet component. Props: value, colors, formattedPreview, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/PropertyInspector"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/spreadsheet/CellFormatInspector.tsx",
+      "content": "import {View,Text} from 'react-native';\nimport {PropertyInspector,type PropertyInspectorProps} from '@/components/nyc-tron/ui/components/forge/inputs/PropertyInspector';\nexport interface CellFormat {numberFormat:'general'|'number'|'currency'|'percentage'|'date'|'time'|'custom';decimals:number;currency:string;locale:string;customPattern:string;horizontal:'start'|'center'|'end'|'justify';vertical:'top'|'middle'|'bottom';wrap:boolean;borderStyle:'none'|'solid'|'dashed';borderWidth:number;borderColor:string;fill:string;textColor:string}\nexport interface CellFormatInspectorProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {value:CellFormat;colors:readonly {id:string;label:string}[];formattedPreview:string;onCommit:(value:CellFormat,signal?:AbortSignal)=>unknown}\nexport function CellFormatInspector({value,colors,formattedPreview,onCommit,...props}:CellFormatInspectorProps){return <View style={{gap:8}}><PropertyInspector {...props} label=\"Cell formatting\" fields={[\n {kind:'choice',id:'numberFormat',label:'Number format',value:value.numberFormat,choices:['general','number','currency','percentage','date','time','custom'].map(id=>({id,label:id}))},\n {kind:'number',id:'decimals',label:'Decimal places',value:value.decimals,min:0,max:30,step:1,integer:true},\n {kind:'text',id:'currency',label:'ISO currency code',value:value.currency,maxLength:3},\n {kind:'text',id:'locale',label:'Formatting locale',value:value.locale,maxLength:64},\n {kind:'text',id:'customPattern',label:'Custom number/date pattern',value:value.customPattern,maxLength:256},\n {kind:'choice',id:'horizontal',label:'Horizontal alignment',value:value.horizontal,choices:['start','center','end','justify'].map(id=>({id,label:id}))},\n {kind:'choice',id:'vertical',label:'Vertical alignment',value:value.vertical,choices:['top','middle','bottom'].map(id=>({id,label:id}))},\n {kind:'boolean',id:'wrap',label:'Wrap cell text',value:value.wrap},\n {kind:'choice',id:'borderStyle',label:'Border style',value:value.borderStyle,choices:['none','solid','dashed'].map(id=>({id,label:id}))},\n {kind:'number',id:'borderWidth',label:'Border width',value:value.borderWidth,min:0,max:20,step:.5},\n ...(['borderColor','fill','textColor'] as const).map(id=>({kind:'choice' as const,id,label:{borderColor:'Border color',fill:'Cell fill',textColor:'Text color'}[id],value:value[id],choices:colors}))\n ]} onCommit={(id,v,s)=>{const next={...value,[id]:v};if(!/^[A-Z]{3}$/.test(next.currency))throw new Error('Use a three-letter uppercase currency code');return onCommit(next,s);}}/><Text {...{className:props.unstyled?undefined:'text-text'}}>Host formatted preview: {formattedPreview}</Text></View>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/spreadsheet/CellFormatInspector.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/spreadsheet/CellFormatInspector",
+    "exports": [
+      "CellFormat",
+      "CellFormatInspector",
+      "CellFormatInspectorProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

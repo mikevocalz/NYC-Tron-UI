@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/audio-recovery-model",
+  "title": "audio recovery model",
+  "description": "audio recovery model, an audio mixing and editing state model. Exports recoveryMessage, recoveryTitle.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/audio-recovery-model.ts",
+      "content": "/** Why the host paused or recovered audio. No player/native resource is stored here. */\nexport type AudioRecoveryNotice=\n | {readonly kind:'paused';readonly reason:'interruption'|'output-lost';readonly ready:boolean}\n | {readonly kind:'reset'}\n | {readonly kind:'recording';readonly filename:string;readonly durationSeconds?:number};\n/** Visible title for the recovery dialog. */\nexport function recoveryTitle(notice:AudioRecoveryNotice):string{\n return notice.kind==='recording'?'Recording recovered':notice.kind==='reset'?'Audio needs to restart':notice.reason==='output-lost'?'Audio output disconnected':'Audio interrupted';\n}\n/** Explains the actual host state without promising a saved recording or automatic resume. */\nexport function recoveryMessage(notice:AudioRecoveryNotice):string{\n if(notice.kind==='recording')return `“${notice.filename}” is available. Keep it or discard it.`;\n if(notice.kind==='reset')return 'The operating system restarted its audio services. Rebuild the audio session before playing again.';\n if(notice.reason==='output-lost')return 'Playback is paused. Check the output before resuming so audio does not jump to the speaker.';\n return notice.ready?'The interruption ended. Resume when you are ready.':'Another app or call is using audio. Playback stays paused.';\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/audio/audio-recovery-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/audio-recovery-model",
+    "exports": [
+      "AudioRecoveryNotice",
+      "recoveryMessage",
+      "recoveryTitle"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

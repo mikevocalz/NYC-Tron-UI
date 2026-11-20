@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/meter-ballistics",
+  "title": "meter ballistics",
+  "description": "meter ballistics, an audio mixing and editing helper module. Exports createPeakHold.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/meter-ballistics.ts",
+      "content": "/**\n * Meter ballistics for the mixer's channel meters. The Cadence `meter` op\n * reports windowed linear sample peak and RMS per track, bus and master.\n * This file turns a stream of those peaks into what a meter draws: a bar\n * that rises at once and falls at a fixed dB rate, and a peak-hold marker\n * that stays put for a while and then falls at the same rate.\n *\n * The values are sample peak, not true (inter-sample) peak: the engine does\n * not oversample, so a reading below 1.0 can still clip after conversion.\n * No React, platform or engine imports.\n */\n\n/** Options for {@linkcode createPeakHold}. */\nexport interface PeakHoldOptions {\n  /** How long a new held peak stays before it starts to fall, in ms. @default 1500 */\n  readonly holdMs?: number;\n  /** Fall rate of the bar and of an expired hold, in dB per second. @default 20 */\n  readonly fallDbPerSecond?: number;\n}\n\n/**\n * One meter frame from {@linkcode createPeakHold}, linear like the input.\n * Pass `level` and `hold` to `LevelMeter` as `level` and `peakHold`.\n */\nexport interface MeterReading {\n  /** Bar level after the fall-off. */\n  readonly level: number;\n  /** Held peak marker; never below `level`. */\n  readonly hold: number;\n}\n\n/** Below this linear level (-60 dBFS) a falling bar or hold drops to 0. */\nexport const PEAK_HOLD_FLOOR = 0.001;\n\nfunction assertPeak(peak: number): void {\n  if (!Number.isFinite(peak) || peak < 0) {\n    throw new RangeError(\"Meter peak must be a finite linear value >= 0, got \" + String(peak));\n  }\n}\n\n/**\n * Returns a function fed with `(peak, nowMs)` on every meter update; it\n * returns the bar and hold to draw. Attack is instant. Without new peaks\n * the bar falls at `fallDbPerSecond`; the hold stays for `holdMs` after the\n * last time it was raised, then falls at the same rate. A clock that goes\n * backwards is treated as no time passing.\n *\n * @example\n * const ballistics = createPeakHold();\n * const { level, hold } = ballistics(engineMeter.tracks[0].max_peak, performance.now());\n * @throws {RangeError} When `holdMs` is negative or NaN, or `fallDbPerSecond` is not a positive finite number.\n */\nexport function createPeakHold(\n  { holdMs = 1500, fallDbPerSecond = 20 }: PeakHoldOptions = {},\n): (peak: number, nowMs: number) => MeterReading {\n  if (Number.isNaN(holdMs) || holdMs < 0) throw new RangeError(\"holdMs must be >= 0\");\n  if (!Number.isFinite(fallDbPerSecond) || fallDbPerSecond <= 0) {\n    throw new RangeError(\"fallDbPerSecond must be a positive finite number\");\n  }\n  const fall = (value: number, ms: number) => {\n    if (ms <= 0) return value;\n    const next = value * 10 ** (-(fallDbPerSecond * ms) / 1000 / 20);\n    return next < PEAK_HOLD_FLOOR ? 0 : next;\n  };\n  let level = 0;\n  let lastMs: number | undefined;\n  let heldPeak = 0;\n  let heldAt = 0;\n  return (peak, nowMs) => {\n    assertPeak(peak);\n    if (!Number.isFinite(nowMs)) throw new RangeError(\"nowMs must be finite\");\n    const now = lastMs === undefined ? nowMs : Math.max(nowMs, lastMs);\n    const dt = lastMs === undefined ? 0 : now - lastMs;\n    lastMs = now;\n    level = Math.max(peak, fall(level, dt));\n    const age = now - heldAt;\n    let hold = age <= holdMs ? heldPeak : fall(heldPeak, age - holdMs);\n    if (peak >= hold) {\n      heldPeak = peak;\n      heldAt = now;\n      hold = peak;\n    }\n    return { level, hold: Math.max(hold, level) };\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/audio/meter-ballistics.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/meter-ballistics",
+    "exports": [
+      "MeterReading",
+      "PEAK_HOLD_FLOOR",
+      "PeakHoldOptions",
+      "createPeakHold"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

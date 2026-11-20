@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/level",
+  "title": "level",
+  "description": "level, an audio mixing and editing helper module. Exports assertFaderRange, clampGain, dbToGain.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/level.ts",
+      "content": "/**\n * Level math for `LevelFader`. Values are linear amplitude gain\n * (0 = silence, 1 = unity / 0 dB), matching the Nitro Forge PR #25\n * NativeLevelSlider contract. No React, platform or audio engine imports.\n *\n * WaveformLane's math (`../waveform.ts`) works on signed sample extrema in\n * [-1, 1] and has no decibel conversion, so nothing is shared with it beyond\n * the linear-amplitude unit.\n */\n\n/** Decibel window a `LevelFader` travels across. */\nexport interface FaderRange {\n  /** Level at the lowest position above silence, in dB. Must be below `maxDb`. */\n  readonly minDb: number;\n  /** Level at the top of travel, in dB. At most +24 dB. */\n  readonly maxDb: number;\n}\n\n/** Common fader windows. Bottom of travel is always silence. */\nexport const FADER_RANGES = {\n  /** Unity at the top; same ceiling as the Forge PR #25 gain slider. */\n  UNITY: { minDb: -60, maxDb: 0 },\n  /** Console-style channel fader with +6 dB of headroom. */\n  CHANNEL: { minDb: -60, maxDb: 6 },\n  /** Mix bus trim with +12 dB of headroom. */\n  BUS: { minDb: -72, maxDb: 12 },\n} as const satisfies Record<string, FaderRange>;\n\n/**\n * @throws {RangeError} When either bound is nonfinite, `minDb >= maxDb`,\n * `minDb < -144` or `maxDb > 24`.\n */\nexport function assertFaderRange(range: FaderRange): void {\n  const { minDb, maxDb } = range;\n  if (!Number.isFinite(minDb) || !Number.isFinite(maxDb) || minDb >= maxDb ||\n      minDb < -144 || maxDb > 24) {\n    throw new RangeError(\"Fader range must satisfy -144 <= minDb < maxDb <= 24\");\n  }\n}\n\n/** Linear gain to dB. Silence (0) returns `-Infinity`. */\nexport function gainToDb(gain: number): number {\n  if (!Number.isFinite(gain) || gain < 0) {\n    throw new RangeError(\"Gain must be finite and nonnegative\");\n  }\n  return gain === 0 ? -Infinity : 20 * Math.log10(gain);\n}\n\n/** dB to linear gain. `-Infinity` returns silence (0). */\nexport function dbToGain(db: number): number {\n  if (db === -Infinity) return 0;\n  if (!Number.isFinite(db)) throw new RangeError(\"dB must be finite or -Infinity\");\n  return Math.pow(10, db / 20);\n}\n\n/** Largest gain a range allows: `dbToGain(range.maxDb)`. */\nexport function maxGain(range: FaderRange): number {\n  assertFaderRange(range);\n  return dbToGain(range.maxDb);\n}\n\n/**\n * Fader travel position in [0, 1] for a gain. Travel is linear in dB between\n * `minDb` (just above 0) and `maxDb` (1). Gains quieter than `minDb`,\n * including silence, sit at 0; gains above `maxDb` sit at 1.\n */\nexport function gainToPosition(gain: number, range: FaderRange): number {\n  assertFaderRange(range);\n  const db = gainToDb(gain);\n  if (db <= range.minDb) return 0;\n  return Math.min(1, (db - range.minDb) / (range.maxDb - range.minDb));\n}\n\n/**\n * Gain for a travel position. Position 0 is silence; any position above 0\n * maps linearly in dB onto `(minDb, maxDb]`, rounded to 0.1 dB so a drag\n * emits a bounded number of distinct values.\n * @throws {RangeError} When `position` is nonfinite or outside [0, 1].\n */\nexport function positionToGain(position: number, range: FaderRange): number {\n  assertFaderRange(range);\n  if (!Number.isFinite(position) || position < 0 || position > 1) {\n    throw new RangeError(\"Fader position must be finite in [0, 1]\");\n  }\n  if (position === 0) return 0;\n  const db = range.minDb + position * (range.maxDb - range.minDb);\n  return dbToGain(Math.round(db * 10) / 10);\n}\n\n/** Clamp a gain into `[0, maxGain(range)]`. */\nexport function clampGain(gain: number, range: FaderRange): number {\n  if (!Number.isFinite(gain)) throw new RangeError(\"Gain must be finite\");\n  return Math.min(maxGain(range), Math.max(0, gain));\n}\n\n/**\n * Gain after a drag that started at `startPosition` and moved `deltaPx`\n * along a track `trackPx` long. Positive `deltaPx` raises the level. The\n * drag is relative, so grabbing the thumb never jumps the value.\n */\nexport function dragToGain(\n  startPosition: number,\n  deltaPx: number,\n  trackPx: number,\n  range: FaderRange,\n): number {\n  if (!Number.isFinite(startPosition) || !Number.isFinite(deltaPx) ||\n      !Number.isFinite(trackPx) || trackPx <= 0) {\n    throw new RangeError(\"Invalid fader drag\");\n  }\n  const position = Math.min(1, Math.max(0, startPosition + deltaPx / trackPx));\n  return positionToGain(position, range);\n}\n\n/**\n * Gain one screen-reader or keyboard step away from `gain`, in `stepDb`\n * increments. Stepping up from silence lands on `minDb`; stepping down\n * from `minDb` or below lands on silence.\n */\nexport function stepGain(\n  gain: number,\n  direction: -1 | 1,\n  stepDb: number,\n  range: FaderRange,\n): number {\n  assertFaderRange(range);\n  if (!Number.isFinite(stepDb) || stepDb <= 0) {\n    throw new RangeError(\"stepDb must be finite and positive\");\n  }\n  // Round first: below about -100 dB the gain/dB round trip drifts under the\n  // 0.1 dB grid, and an unrounded start could step back onto itself.\n  const db = Math.round(gainToDb(clampGain(gain, range)) * 10) / 10;\n  if (direction === 1) {\n    const next = db < range.minDb ? range.minDb : Math.min(range.maxDb, db + stepDb);\n    return dbToGain(Math.round(next * 10) / 10);\n  }\n  if (db - stepDb < range.minDb) return 0;\n  return dbToGain(Math.round((db - stepDb) * 10) / 10);\n}\n\n/** Display text for a gain, e.g. `\"-6.0 dB\"`, `\"+3.5 dB\"` or `\"-∞ dB\"`. */\nexport function formatDb(gain: number): string {\n  const db = gainToDb(gain);\n  if (db === -Infinity) return \"-∞ dB\";\n  const rounded = Math.round(db * 10) / 10;\n  const sign = rounded > 0 ? \"+\" : rounded < 0 ? \"-\" : \"\";\n  return sign + Math.abs(rounded).toFixed(1) + \" dB\";\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/audio/level.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/level",
+    "exports": [
+      "FADER_RANGES",
+      "FaderRange",
+      "assertFaderRange",
+      "clampGain",
+      "dbToGain",
+      "dragToGain",
+      "formatDb",
+      "gainToDb",
+      "gainToPosition",
+      "maxGain",
+      "positionToGain",
+      "stepGain"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

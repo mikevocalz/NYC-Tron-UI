@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/spreadsheet/chart-model",
+  "title": "chart model",
+  "description": "chart model, a spreadsheet state model. Exports chartSeriesFromCells, parseA1Range.",
+  "registryDependencies": [
+    "@nyc-tron/forge/sheet-window"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/spreadsheet/chart-model.ts",
+      "content": "import { cellAddress, parseCellAddress, rangeCellCount, type SheetRange } from \"@/components/nyc-tron/ui/components/forge/sheet-window\";\n\n/**\n * Mark family a chart draws. These are exactly the kinds\n * `@nyc-tron/native-charts` renders (Vico on Android, Swift Charts on iOS),\n * so the gallery never offers a chart the renderer cannot draw.\n */\nexport type SheetChartKind = \"line\" | \"column\" | \"area\";\nexport const SHEET_CHART_KINDS: readonly SheetChartKind[] = [\"line\", \"column\", \"area\"];\n\n/** Whether each series runs down a column or across a row of the source range. */\nexport type SeriesOrientation = \"columns\" | \"rows\";\n\n/** What {@linkcode ChartBuilder} edits. The app stores it; nothing here persists it. */\nexport interface SheetChartSpec {\n  readonly kind: SheetChartKind;\n  /** A1 range such as `A1:C12`, on the sheet shown in the grid. */\n  readonly range: string;\n  readonly seriesIn: SeriesOrientation;\n  /** First row (`columns`) or first column (`rows`) holds the series names. */\n  readonly hasHeader: boolean;\n  /** First column (`columns`) or first row (`rows`) holds numeric x values. */\n  readonly hasXValues: boolean;\n  readonly title?: string;\n  readonly xAxisLabel?: string;\n  readonly yAxisLabel?: string;\n}\n\n/** A point list with the same shape as `@nyc-tron/native-charts` `NativeChartSeries`. */\nexport interface SheetChartSeries {\n  readonly id: string;\n  readonly label: string;\n  readonly points: readonly { readonly x: number; readonly y: number }[];\n}\n\n/** Series plus the count of cells that held no number and were left out. */\nexport interface SheetChartData {\n  readonly series: readonly SheetChartSeries[];\n  readonly skippedCells: number;\n}\n\n/** Cell values {@linkcode chartSeriesFromCells} reads, keyed by A1 address. */\nexport type ChartCellValues = Readonly<Record<string, { readonly computed: string | number | boolean | null } | undefined>>;\n\n/** Largest range a chart reads; matches the Tally adapter's default window budget. */\nexport const MAX_CHART_CELLS = 4096;\n\n/** `A1:C9` (either corner order) or a single `B4` as a normalized range; `undefined` when malformed. */\nexport function parseA1Range(text: string): SheetRange | undefined {\n  const parts = text.trim().replaceAll(\"$\", \"\").toUpperCase().split(\":\");\n  if (parts.length > 2) return undefined;\n  const a = parseCellAddress(parts[0] ?? \"\");\n  const b = parts.length === 2 ? parseCellAddress(parts[1]!) : a;\n  if (!a || !b) return undefined;\n  return {\n    startRow: Math.min(a.row, b.row), endRow: Math.max(a.row, b.row),\n    startColumn: Math.min(a.column, b.column), endColumn: Math.max(a.column, b.column),\n  };\n}\n\nconst numeric = (value: string | number | boolean | null | undefined): number | undefined =>\n  typeof value === \"number\" && Number.isFinite(value) ? value : undefined;\n\n/**\n * Turns the computed values of a chart's source range into series. Header\n * cells name series; otherwise they are `Series 1`, `Series 2`, ... A column\n * (or row) with no numbers at all, such as a text label column, is not a\n * series and is left out; its cells still count as skipped. Without\n * x values, points use their 1-based position. Cells without a number (text,\n * blanks, errors, booleans) are skipped and counted, never drawn as zero.\n * Throws `RangeError` for a malformed range or one over `maxCells`.\n */\nexport function chartSeriesFromCells(\n  spec: SheetChartSpec, cells: ChartCellValues, maxCells = MAX_CHART_CELLS,\n): SheetChartData {\n  const range = parseA1Range(spec.range);\n  if (!range) throw new RangeError(`\"${spec.range}\" is not a cell range.`);\n  if (rangeCellCount(range) > maxCells) throw new RangeError(`Charts read at most ${maxCells} cells.`);\n  const byColumns = spec.seriesIn === \"columns\";\n  // Along: the axis points run on. Across: the axis series sit side by side.\n  const alongStart = byColumns ? range.startRow : range.startColumn;\n  const alongEnd = byColumns ? range.endRow : range.endColumn;\n  const acrossStart = byColumns ? range.startColumn : range.startRow;\n  const acrossEnd = byColumns ? range.endColumn : range.endRow;\n  const at = (along: number, across: number) =>\n    cells[byColumns ? cellAddress(along, across) : cellAddress(across, along)]?.computed;\n  const firstPoint = alongStart + (spec.hasHeader ? 1 : 0);\n  const firstSeries = acrossStart + (spec.hasXValues ? 1 : 0);\n  let skipped = 0;\n  const series: SheetChartSeries[] = [];\n  for (let across = firstSeries; across <= acrossEnd; across++) {\n    const header = spec.hasHeader ? at(alongStart, across) : undefined;\n    const label = header !== undefined && header !== null && String(header).trim() !== \"\"\n      ? String(header) : `Series ${series.length + 1}`;\n    const points: { x: number; y: number }[] = [];\n    for (let along = firstPoint; along <= alongEnd; along++) {\n      const y = numeric(at(along, across));\n      const x = spec.hasXValues ? numeric(at(along, acrossStart)) : along - firstPoint + 1;\n      if (y === undefined || x === undefined) { skipped++; continue; }\n      points.push({ x, y });\n    }\n    if (points.length > 0) series.push({ id: `s${across - firstSeries}`, label, points });\n  }\n  // Two headers with the same text would collide in a legend; disambiguate.\n  const seen = new Map<string, number>();\n  const unique = series.map(s => {\n    const n = (seen.get(s.label) ?? 0) + 1;\n    seen.set(s.label, n);\n    return n === 1 ? s : { ...s, label: `${s.label} (${n})` };\n  });\n  return { series: unique, skippedCells: skipped };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/spreadsheet/chart-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/spreadsheet/chart-model",
+    "exports": [
+      "ChartCellValues",
+      "MAX_CHART_CELLS",
+      "SHEET_CHART_KINDS",
+      "SeriesOrientation",
+      "SheetChartData",
+      "SheetChartKind",
+      "SheetChartSeries",
+      "SheetChartSpec",
+      "chartSeriesFromCells",
+      "parseA1Range"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

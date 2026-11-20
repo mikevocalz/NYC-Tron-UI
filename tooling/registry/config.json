@@ -1,0 +1,43 @@
+{
+  "tag": "v1.0.0-rc.2",
+  "namespace": "@nyc-tron",
+  "registryName": "nyc-tron",
+  "repo": "mikevocalz/NYC-Tron-UI",
+  "homepage": "https://github.com/mikevocalz/NYC-Tron-UI",
+  "rawBase": "https://raw.githubusercontent.com",
+  "shadcnVersion": "4.23.0",
+  "stageDir": "tooling/registry/stage",
+  "targets": {
+    "ui": "@components/nyc-tron/ui",
+    "core": "@lib/nyc-tron/core"
+  },
+  "imports": {
+    "ui": "@/components/nyc-tron/ui",
+    "core": "@/lib/nyc-tron/core"
+  },
+  "components": {
+    "style": "new-york",
+    "tailwind": { "baseColor": "neutral", "css": "global.css" },
+    "aliases": {
+      "components": "@/components",
+      "ui": "@/components/ui",
+      "lib": "@/lib",
+      "utils": "@/lib/utils",
+      "hooks": "@/hooks"
+    }
+  },
+  "nativeNpmPackages": [
+    "@expo/ui",
+    "expo",
+    "expo-drag-drop-content-view",
+    "expo-file-system",
+    "expo-linear-gradient",
+    "react-native-gesture-handler",
+    "react-native-skia"
+  ],
+  "allowlist": ["react", "react-native"],
+  "tier1Categories": "docs/agent-native/03-design-handoff.md",
+  "supportDescriptions": {
+    "tokens": "Design token scales for spacing, radius, type, opacity and elevation as plain TypeScript constants, no React."
+  }
+}

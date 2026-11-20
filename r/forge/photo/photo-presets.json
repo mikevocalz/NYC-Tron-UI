@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/photo-presets",
+  "title": "photo presets",
+  "description": "photo presets, a photo editing helper module. Exports parsePhotoPreset, serializePhotoPreset, validatePhotoPreset.",
+  "registryDependencies": [
+    "@nyc-tron/forge/photo/photo-adjustments"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/photo/photo-presets.ts",
+      "content": "import {parsePhotoDevelop,serializePhotoDevelop,validatePhotoDevelop,type PhotoDevelopSettings} from '@/components/nyc-tron/ui/components/forge/photo/photo-adjustments';\nexport interface PhotoPreset {readonly version:1;readonly id:string;readonly name:string;readonly settings:PhotoDevelopSettings}\nexport function validatePhotoPreset(preset:PhotoPreset):void {if(preset.version!==1||typeof preset.id!=='string'||!preset.id.trim()||preset.id.length>256||typeof preset.name!=='string'||!preset.name.trim()||preset.name.length>256)throw new TypeError('Photo preset requires version 1, identity and name');validatePhotoDevelop(preset.settings);}\nexport function validatePhotoPresets(presets:readonly PhotoPreset[]):void {if(presets.length>2000)throw new RangeError('Preset library exceeds 2,000 entries');const ids=new Set<string>();for(const preset of presets){validatePhotoPreset(preset);if(ids.has(preset.id))throw new TypeError('Duplicate photo preset identity');ids.add(preset.id);}}\nexport function serializePhotoPreset(preset:PhotoPreset):string {validatePhotoPreset(preset);return JSON.stringify({version:1,id:preset.id,name:preset.name,settings:parsePhotoDevelop(serializePhotoDevelop(preset.settings))});}\nexport function parsePhotoPreset(text:string):PhotoPreset {if(typeof text!=='string'||text.length>131072)throw new RangeError('Photo preset payload exceeds 128 KiB');const value=JSON.parse(text) as PhotoPreset;validatePhotoPreset(value);return JSON.parse(serializePhotoPreset(value)) as PhotoPreset;}\nexport function validatePhotoTargets(ids:readonly string[]):void {if(ids.length>10000||new Set(ids).size!==ids.length||ids.some(id=>typeof id!=='string'||!id.trim()||id.length>256))throw new TypeError('Photo targets require at most 10,000 unique identities');}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/photo/photo-presets.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/photo-presets",
+    "exports": [
+      "PhotoPreset",
+      "parsePhotoPreset",
+      "serializePhotoPreset",
+      "validatePhotoPreset",
+      "validatePhotoPresets",
+      "validatePhotoTargets"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/SourceMonitor",
+  "title": "Source Monitor",
+  "description": "Source Monitor, a video timeline component.",
+  "registryDependencies": [
+    "@nyc-tron/forge/timeline/MediaMonitor"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timeline/SourceMonitor.tsx",
+      "content": "import {MediaMonitor,type MediaMonitorProps} from '@/components/nyc-tron/ui/components/forge/timeline/MediaMonitor';\nexport type SourceMonitorProps=Omit<MediaMonitorProps,'kind'>;\n/** Source asset preview and in/out marks over the host's actual media surface. */\nexport function SourceMonitor(props:SourceMonitorProps){return <MediaMonitor {...props} kind=\"source\"/>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/SourceMonitor.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/SourceMonitor",
+    "exports": [
+      "SourceMonitor",
+      "SourceMonitorProps"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

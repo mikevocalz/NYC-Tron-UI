@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gestures/PanResponderDrag",
+  "title": "Pan Responder Drag",
+  "description": "Single-touch drag transport on React Native PanResponder, no gesture-handler dependency, for React Native and web.",
+  "registryDependencies": [
+    "@nyc-tron/gestures/drag-transport"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/gestures/PanResponderDrag.tsx",
+      "content": "import {cloneElement,useMemo,useRef} from \"react\";\nimport {PanResponder} from \"react-native\";\nimport type {DragTransportProps} from \"@/components/nyc-tron/ui/components/gestures/drag-transport\";\nimport {panResponderDragConfig} from \"@/components/nyc-tron/ui/components/gestures/pan-responder-config\";\n\n/**\n * Default {@linkcode DragTransport}: React Native's responder system. Works on web\n * and native with no extra dependency. On native apps that already mount\n * `GestureHandlerRootView`, prefer {@linkcode GestureHandlerDrag}.\n */\nexport function PanResponderDrag(props:DragTransportProps){\n  const latest=useRef(props);\n  latest.current=props;\n  const responder=useMemo(()=>PanResponder.create(panResponderDragConfig(latest)),[]);\n  return cloneElement(props.children,responder.panHandlers);\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/gestures/PanResponderDrag.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/gestures/pan-responder-config.ts",
+      "content": "import type {GestureResponderEvent,PanResponderCallbacks,PanResponderGestureState} from \"react-native\";\nimport type {DragTransportProps} from \"@/components/nyc-tron/ui/components/gestures/drag-transport\";\n\ntype Latest={readonly current:DragTransportProps};\nconst point=(event:GestureResponderEvent)=>({x:event.nativeEvent.pageX,y:event.nativeEvent.pageY});\n\n/**\n * Responder callbacks for {@linkcode PanResponderDrag}. Reads `latest.current` on each\n * event so the responder survives re-renders with fresh callbacks.\n */\nexport function panResponderDragConfig(latest:Latest):PanResponderCallbacks {\n  return {\n    onStartShouldSetPanResponder:event=>!latest.current.disabled&&event.nativeEvent.touches.length===1,\n    onPanResponderGrant:event=>latest.current.onBegin(point(event)),\n    onPanResponderStart:event=>{if(event.nativeEvent.touches.length!==1)latest.current.onCancel();},\n    onPanResponderMove:(event,state:PanResponderGestureState)=>latest.current.onMove(point(event),state.numberActiveTouches),\n    onPanResponderRelease:event=>latest.current.onRelease(point(event)),\n    // Keep the drag once granted. Allowing it let a parent ScrollView take the\n    // responder on vertical travel, which is exactly the fine/coarse gesture.\n    // The OS can still terminate, which reaches onCancel below.\n    onPanResponderTerminationRequest:()=>false,\n    onPanResponderTerminate:()=>latest.current.onCancel(),\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/gestures/pan-responder-config.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/gestures/PanResponderDrag",
+    "exports": [
+      "PanResponderDrag"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:ui"
+}

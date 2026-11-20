@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/InspectorSection",
+  "title": "Inspector Section",
+  "description": "Collapsible inspector group with optional enable switch and reset button, indented by nesting depth, for React Native; web switch colors.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/shell/inspector-context",
+    "@nyc-tron/shell/inspector-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/InspectorSection.tsx",
+      "content": "import {use,useId,useMemo,useRef,useLayoutEffect,type ReactNode} from \"react\";\nimport {Platform,Pressable,Switch,Text,View,type ViewProps} from \"react-native\";\nimport {useStore} from \"zustand\";\nimport {createStore} from \"zustand/vanilla\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {InspectorPanelContext,InspectorSectionContext} from \"@/components/nyc-tron/ui/components/shell/inspector-context\";\nimport {matchingRowCount} from \"@/components/nyc-tron/ui/components/shell/inspector-model\";\n\n/** Props for {@linkcode InspectorSection}. */\nexport interface InspectorSectionProps extends Omit<ViewProps,\"children\"> {\n  title:string;\n  /** Controlled disclosure state. A search with matches inside shows the section open without changing it. */\n  expanded:boolean;\n  onExpandedChange:(expanded:boolean)=>void;\n  /** With `onEnabledChange`, a switch in the header turns the whole group on or off. */\n  enabled?:boolean;\n  onEnabledChange?:(enabled:boolean)=>void;\n  /** Restores the group's defaults. The Reset button shows only while `modified` is true. */\n  onReset?:()=>void;\n  /** @default true when `onReset` is given */\n  modified?:boolean;\n  children:ReactNode;\n  className?:string;\n  unstyled?:boolean;\n}\n\n// React Native Web passes var() through, so its switch takes the theme tokens.\n// Native switches keep the platform's own colors.\nconst WEB_SWITCH_COLORS=Platform.OS===\"web\"?{\n  trackColor:{true:\"var(--color-primary)\",false:\"var(--color-border)\"},\n  thumbColor:\"var(--color-surface-raised)\",activeThumbColor:\"var(--color-surface-raised)\",\n} as object:{};\n\n// Fallback for a section rendered outside an InspectorPanel: nothing registers, so nothing filters.\nconst EMPTY_REGISTRY=createStore(()=>({rows:{}}));\n\n/**\n * A collapsible group of properties. Sections nest, and nested ones indent.\n * The optional switch disables every row inside (rows and their editors get\n * `disabled` through {@linkcode PropertyRow}), and Reset restores the group's\n * defaults when something in it changed. While the inspector is filtered a\n * section with no matching row hides.\n */\nexport function InspectorSection({\n  title,expanded,onExpandedChange,enabled,onEnabledChange,onReset,modified,children,className,unstyled=false,style,...rest\n}:InspectorSectionProps){\n  if(!title.trim()||title.length>512)throw new RangeError(\"Invalid inspector section title\");\n  const styled=!unstyled;\n  const id=useId();\n  const panel=use(InspectorPanelContext);\n  const parent=use(InspectorSectionContext);\n  const disabled=parent.disabled||enabled===false;\n  const committed=useRef<{parentDisabled:boolean;expanded:boolean;enabled:typeof enabled;onExpandedChange:typeof onExpandedChange;onEnabledChange:typeof onEnabledChange;onReset:typeof onReset;modified:typeof modified}|null>(null);\n  useLayoutEffect(()=>{committed.current={parentDisabled:parent.disabled,expanded,enabled,onExpandedChange,onEnabledChange,onReset,modified};});\n  useLayoutEffect(()=>()=>{committed.current=null;},[]);\n  const toggle=()=>{const p=committed.current;p?.onExpandedChange(!p.expanded);};\n  const enable=(value:boolean)=>{const p=committed.current;if(p&&!p.parentDisabled)p.onEnabledChange?.(value);};\n  const reset=()=>{const p=committed.current;if(p&&!p.parentDisabled&&(p.modified??true))p.onReset?.();};\n  const path=useMemo(()=>[...parent.path,id],[parent.path,id]);\n  const context=useMemo(()=>({path,disabled,depth:parent.depth+1}),[path,disabled,parent.depth]);\n  const searching=!!panel?.query.trim();\n  const matches=useStore(panel?.registry??EMPTY_REGISTRY,s=>matchingRowCount(s,id));\n  const open=expanded||(searching&&matches>0);\n  const showReset=!!onReset&&(modified??true);\n  const indent=parent.depth*12;\n  // A filtered-out section stays mounted (hidden) so its rows keep reporting whether they match.\n  const hidden=searching&&matches===0;\n  return <View {...rest} {...{role:\"group\",className:joinClasses(styled&&parent.depth===0&&\"border-b border-border\",className)}}\n    accessibilityLabel={title} style={[hidden?{display:\"none\"}:null,style]}>\n    {/* Indents are leading spacers, not paddingStart: React Native Web resolves start/end\n        from I18nManager, not from the CSS direction a web app sets. */}\n    <View style={{flexDirection:\"row\",alignItems:\"center\",minHeight:44,paddingHorizontal:4,gap:4}}>\n      <View style={{width:4+indent}}/>\n      <Pressable accessibilityRole=\"button\" accessibilityLabel={title}\n        accessibilityState={{expanded:open}} aria-expanded={open}\n        onPress={toggle}\n        {...{className:joinClasses(\"min-h-11 flex-1 flex-row items-center gap-2\",styled&&\"rounded-control focus-visible:ring-2 focus-visible:ring-focus\")}}>\n        <View pointerEvents=\"none\" {...{className:joinClasses(styled&&\"border-text-muted\")}}\n          style={{width:7,height:7,borderRightWidth:1.5,borderBottomWidth:1.5,transform:[{rotate:open?\"45deg\":\"-45deg\"}],marginHorizontal:4}}/>\n        <Text numberOfLines={1} {...{className:joinClasses(styled&&\"text-sm font-semibold\",styled&&(disabled?\"text-text-muted\":\"text-text\"))}}\n          style={{flexShrink:1}}>{title}</Text>\n      </Pressable>\n      {showReset?<Pressable accessibilityRole=\"button\" accessibilityLabel={\"Reset \"+title} onPress={reset} disabled={parent.disabled}\n        {...{className:joinClasses(\"min-h-11 min-w-11 items-center justify-center\",styled&&\"rounded-control px-2 focus-visible:ring-2 focus-visible:ring-focus hover:bg-surface-sunken\")}}>\n        <Text {...{className:joinClasses(styled&&\"text-text-muted text-xs\")}}>Reset</Text>\n      </Pressable>:null}\n      {/* React Native Web draws its switch thumb with physical offsets; under a CSS rtl\n          direction the thumb leaves the track, so the web switch keeps ltr. */}\n      {/* The switch itself is smaller than 44pt; this pointer-only wrapper extends its target. */}\n      {onEnabledChange?<Pressable accessible={false} focusable={false} disabled={parent.disabled}\n        onPress={()=>enable(committed.current?.enabled===false)}\n        style={{minHeight:44,minWidth:44,alignItems:\"center\",justifyContent:\"center\",\n        ...(Platform.OS===\"web\"?{direction:\"ltr\" as const}:null)}}>\n        <Switch accessibilityLabel={\"Enable \"+title} value={enabled!==false} disabled={parent.disabled}\n          onValueChange={enable} {...(styled?WEB_SWITCH_COLORS:{})}/>\n      </Pressable>:null}\n    </View>\n    <InspectorSectionContext.Provider value={context}>\n      <View aria-disabled={disabled||undefined} style={{display:open?\"flex\":\"none\",opacity:disabled?0.55:1,paddingBottom:open?6:0}}>\n        {children}\n      </View>\n    </InspectorSectionContext.Provider>\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/shell/InspectorSection.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [
+      "web"
+    ],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/InspectorSection",
+    "exports": [
+      "InspectorSection",
+      "InspectorSectionProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:ui"
+}

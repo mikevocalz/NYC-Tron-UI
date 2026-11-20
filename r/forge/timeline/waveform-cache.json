@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/waveform-cache",
+  "title": "waveform cache",
+  "description": "waveform cache, a video timeline helper module. Exports createWaveformCache, mediaProviderId, sharedWaveformCache.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/forge/waveform"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timeline/waveform-cache.ts",
+      "content": "import {createStore} from 'zustand/vanilla';\nimport {normalizePeak,type WaveformPeak} from '@/components/nyc-tron/ui/components/forge/waveform';\nexport type WaveformResource={kind:'idle'}|{kind:'loading'}|{kind:'ready';peaks:readonly WaveformPeak[]}|{kind:'error';message:string};\nconst IDLE:WaveformResource=Object.freeze({kind:'idle'});\n/** Source peaks only. No native decoder handles or synthetic waveform data enter the cache. */\nexport function createWaveformCache(){\n const store=createStore(()=>({version:0})),entries=new Map<string,{state:WaveformResource;abort?:AbortController;bytes:number}>(),refs=new Map<string,number>();\n let pending=0,bytes=0;const changed=()=>store.setState(s=>({version:s.version+1}));\n const remove=(key:string)=>{const e=entries.get(key);if(!e)return;entries.delete(key);bytes-=e.bytes;if(e.abort){pending--;e.abort.abort();}};\n return {store,\n  get:(key:string):WaveformResource=>entries.get(key)?.state??IDLE,\n  retain(key:string){refs.set(key,(refs.get(key)??0)+1);return()=>{const count=(refs.get(key)??1)-1;if(count>0)refs.set(key,count);else{refs.delete(key);if(entries.get(key)?.abort)remove(key);changed();}};},\n  request(key:string,load:(signal:AbortSignal)=>Promise<readonly WaveformPeak[]>,retry=false){\n   if(!key||key.length>4096)throw new RangeError('Invalid waveform cache key');\n   const previous=entries.get(key);if(previous&&(!retry||previous.state.kind!=='error'))return;\n   if(pending>=4)return;\n   if(previous)remove(key);\n   while(entries.size>=64){const oldest=[...entries].find(([id,e])=>!e.abort&&!refs.has(id));if(!oldest)return;remove(oldest[0]);}\n   const abort=new AbortController(),entry:{state:WaveformResource;abort?:AbortController;bytes:number}={state:{kind:'loading'},abort,bytes:0};entries.set(key,entry);pending++;changed();\n   void Promise.resolve().then(()=>load(abort.signal)).then(peaks=>{\n    if(entries.get(key)!==entry||abort.signal.aborted)return;\n    if(peaks.length>8192)throw new RangeError('Waveform provider exceeded 8192 bins');\n    const normalized=peaks.map(normalizePeak),weight=normalized.length*16;\n    while(bytes+weight>4*1024*1024){const oldest=[...entries].find(([id,e])=>id!==key&&!e.abort&&!refs.has(id));if(!oldest)throw new Error('Waveform cache memory budget is in use');remove(oldest[0]);}\n    entry.state={kind:'ready',peaks:normalized};entry.bytes=weight;bytes+=weight;\n   }).catch(error=>{if(entries.get(key)===entry&&!abort.signal.aborted)entry.state={kind:'error',message:(error instanceof Error?error.message:String(error)).slice(0,1024)};}).finally(()=>{if(entries.get(key)===entry){entry.abort=undefined;pending--;changed();}});\n  },\n  clear(){for(const key of [...entries.keys()])remove(key);changed();},\n  get byteSize(){return bytes;},get pendingCount(){return pending;},\n };\n}\nexport const sharedWaveformCache=createWaveformCache();\nlet nextLoader=0;const loaderIds=new WeakMap<Function,number>();\nexport function mediaProviderId(loader:Function){let id=loaderIds.get(loader);if(id===undefined){id=++nextLoader;loaderIds.set(loader,id);}return id;}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/waveform-cache.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/waveform-cache",
+    "exports": [
+      "WaveformResource",
+      "createWaveformCache",
+      "mediaProviderId",
+      "sharedWaveformCache"
+    ],
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

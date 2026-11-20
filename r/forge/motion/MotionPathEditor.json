@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/motion/MotionPathEditor",
+  "title": "Motion Path Editor",
+  "description": "Motion Path Editor, a motion graphics component. Props: subpaths, selection, snapping, onSelectionChange.",
+  "registryDependencies": [
+    "@nyc-tron/forge/motion/motion-path",
+    "@nyc-tron/forge/vector/PenNodeEditor",
+    "@nyc-tron/forge/vector/pen-node-model",
+    "@nyc-tron/forge/vector/vector-types"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/motion/MotionPathEditor.tsx",
+      "content": "import {useLayoutEffect,useRef} from 'react';\nimport {PenNodeEditor,type PenNodeEditorProps} from '@/components/nyc-tron/ui/components/forge/vector/PenNodeEditor';\nimport {replaceNode,validateSubpaths} from '@/components/nyc-tron/ui/components/forge/vector/pen-node-model';\nimport type {NodeRef,Subpath} from '@/components/nyc-tron/ui/components/forge/vector/vector-types';\nimport {snapMotionPoint,snapMotionTangent,validateMotionPathSnapping,type MotionPathSnapping} from '@/components/nyc-tron/ui/components/forge/motion/motion-path';\nexport type {MotionPathSnapping} from '@/components/nyc-tron/ui/components/forge/motion/motion-path';\nexport type {NodeRef,Subpath,PathNode,ViewTransform} from '@/components/nyc-tron/ui/components/forge/vector/vector-types';\nexport interface MotionPathEditorProps extends Omit<PenNodeEditorProps,'subpaths'|'selection'|'onSelectionChange'|'onSetPathNode'|'onInsertNode'|'onRemoveNode'|'onSetNodeKind'|'onSetClosed'|'snapPoint'|'snapHandle'|'editScope'|'editRevision'> {\n readonly scope:string;readonly revision:string|number;readonly subpaths:readonly Subpath[];readonly selection:NodeRef|undefined;readonly onSelectionChange:(selection:NodeRef|undefined)=>void;\n readonly snapping:MotionPathSnapping;\n readonly onCommit:(subpaths:readonly Subpath[])=>void;\n}\n/** Spatial trajectory editing reuses the vector editor's native gesture, tangent and keyboard owner. */\nexport function MotionPathEditor({scope,revision,subpaths,selection,onSelectionChange,snapping,onCommit,onPreview,...props}:MotionPathEditorProps){\n if(!scope.trim()||typeof revision==='number'&&!Number.isFinite(revision))throw new RangeError('Invalid motion path identity');validateSubpaths(subpaths);validateMotionPathSnapping(snapping);\n const identity=JSON.stringify([scope,revision]),committed=useRef<string|null>(null);useLayoutEffect(()=>{committed.current=identity;return()=>{committed.current=null;};},[identity]);\n const commit=(next:readonly Subpath[])=>{if(committed.current!==identity)return;validateSubpaths(next);onCommit(next);};\n return <PenNodeEditor {...props} key={scope} editScope={scope} editRevision={revision} subpaths={subpaths} selection={selection} onSelectionChange={value=>{if(committed.current===identity)onSelectionChange(value);}} onPreview={value=>{if(value===undefined||committed.current===identity)onPreview?.(value);}}\n  snapPoint={point=>snapMotionPoint(point,snapping)} snapHandle={offset=>snapMotionTangent(offset,snapping.tangentAngleDegrees)}\n  onSetPathNode={intent=>commit(replaceNode(subpaths,intent,intent.node))} onInsertNode={intent=>commit(intent.subpaths)} onSetNodeKind={intent=>commit(replaceNode(subpaths,intent,intent.node))}\n  onRemoveNode={ref=>commit(subpaths.map((path,index)=>index!==ref.subpath?path:{...path,nodes:path.nodes.filter((_,i)=>i!==ref.index)}))}\n  onSetClosed={intent=>commit(subpaths.map((path,index)=>index!==intent.subpath?path:{...path,closed:intent.closed}))}/>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/motion/MotionPathEditor.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/motion/MotionPathEditor",
+    "exports": [
+      "MotionPathEditor",
+      "MotionPathEditorProps",
+      "MotionPathSnapping",
+      "NodeRef",
+      "PathNode",
+      "Subpath",
+      "ViewTransform"
+    ],
+    "peers": {
+      "react": ">=19.0.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

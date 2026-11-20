@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "gestures/drag-transport",
+  "title": "drag transport",
+  "description": "drag transport, a gesture helper module. Exports keyboardKey.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/gestures/drag-transport.ts",
+      "content": "import type {ComponentType,ReactElement} from \"react\";\n\n/** A point in page (web) or absolute window (native) coordinates. */\nexport interface DragPoint {\n  x:number;\n  y:number;\n}\n/**\n * Props every drag transport receives. A transport recognises one-pointer drags on\n * its single child and reports them; it owns no value and never commits anything.\n * @see {@linkcode PanResponderDrag}\n * @see {@linkcode GestureHandlerDrag}\n */\nexport interface DragTransportProps {\n  /** One host view. The transport attaches handlers without replacing it. */\n  children:ReactElement;\n  disabled?:boolean;\n  onBegin:(point:DragPoint)=>void;\n  /** `touches` is the active pointer count; callers cancel when it is not 1. */\n  onMove:(point:DragPoint,touches:number)=>void;\n  onRelease:(point:DragPoint)=>void;\n  /** Interruption, termination, a second pointer or a failed recognizer. */\n  onCancel:()=>void;\n}\n/** A component that turns pointer input into {@linkcode DragTransportProps} callbacks. */\nexport type DragTransport=ComponentType<DragTransportProps>;\n\n/** Keyboard event shape shared by React Native Web (`key`) and native (`nativeEvent.key`). */\nexport interface KeyEventLike {\n  readonly key?:string;\n  readonly nativeEvent?:{readonly key?:string};\n}\n/** Read the key name from a web or native keyboard event. */\nexport function keyboardKey(event:KeyEventLike):string|undefined {\n  return event.key ?? event.nativeEvent?.key;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/gestures/drag-transport.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/gestures/drag-transport",
+    "exports": [
+      "DragPoint",
+      "DragTransport",
+      "DragTransportProps",
+      "KeyEventLike",
+      "keyboardKey"
+    ],
+    "peers": {
+      "react": ">=19.0.0"
+    }
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:lib"
+}

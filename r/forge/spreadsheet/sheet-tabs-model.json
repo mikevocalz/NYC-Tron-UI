@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/spreadsheet/sheet-tabs-model",
+  "title": "sheet tabs model",
+  "description": "sheet tabs model, a spreadsheet state model. Exports duplicateSheetName, nextSheetName, sheetNameError.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/spreadsheet/sheet-tabs-model.ts",
+      "content": "/**\n * Tone of a sheet tab's color stripe. Tones map to theme tokens in\n * {@linkcode SheetTabs}; there are no free-form hex colors.\n */\nexport type SheetTabTone = \"primary\" | \"accent\" | \"success\" | \"info\" | \"muted\";\n\nexport const SHEET_TAB_TONES: readonly SheetTabTone[] = [\"primary\", \"accent\", \"success\", \"info\", \"muted\"];\n\n/** One worksheet as {@linkcode SheetTabs} shows it. */\nexport interface SheetTab {\n  /** Stable key the app chooses (the engine's sheet index or id). */\n  readonly id: string;\n  readonly name: string;\n  readonly tone?: SheetTabTone;\n  /** Shows a lock mark and hides rename/remove for this tab. */\n  readonly isProtected?: boolean;\n}\n\n/** Longest sheet name spreadsheets accept. */\nexport const MAX_SHEET_NAME_LENGTH = 31;\nconst FORBIDDEN = /[\\\\/?*[\\]:]/;\n\n/**\n * Why a sheet name is rejected, or `undefined` when it is valid. Uses the\n * Excel naming rules (1–31 characters, none of `\\ / ? * [ ] :`, no leading or\n * trailing apostrophe) and the case-insensitive uniqueness every engine\n * applies. `exceptId` skips the tab being renamed.\n */\nexport function sheetNameError(name: string, tabs: readonly SheetTab[], exceptId?: string): string | undefined {\n  const trimmed = name.trim();\n  if (trimmed.length === 0) return \"Enter a sheet name.\";\n  if (trimmed.length > MAX_SHEET_NAME_LENGTH) return `Use ${MAX_SHEET_NAME_LENGTH} characters or fewer.`;\n  if (FORBIDDEN.test(trimmed)) return \"Sheet names can't contain \\\\ / ? * [ ] or :\";\n  if (trimmed.startsWith(\"'\") || trimmed.endsWith(\"'\")) return \"Sheet names can't start or end with an apostrophe.\";\n  const lower = trimmed.toLowerCase();\n  if (tabs.some(tab => tab.id !== exceptId && tab.name.toLowerCase() === lower)) {\n    return `A sheet named \"${trimmed}\" already exists.`;\n  }\n  return undefined;\n}\n\n/** First free `Sheet<n>` name, matching the default engines give new sheets. */\nexport function nextSheetName(tabs: readonly SheetTab[], base = \"Sheet\"): string {\n  const taken = new Set(tabs.map(tab => tab.name.toLowerCase()));\n  for (let n = tabs.length + 1; ; n++) {\n    const name = base + n;\n    if (!taken.has(name.toLowerCase())) return name;\n  }\n}\n\n/** Name for a copy: `Budget (2)`, `Budget (3)`, ... trimmed to the length limit. */\nexport function duplicateSheetName(name: string, tabs: readonly SheetTab[]): string {\n  const taken = new Set(tabs.map(tab => tab.name.toLowerCase()));\n  for (let n = 2; ; n++) {\n    const suffix = ` (${n})`;\n    const candidate = name.slice(0, MAX_SHEET_NAME_LENGTH - suffix.length) + suffix;\n    if (!taken.has(candidate.toLowerCase())) return candidate;\n  }\n}\n\n/**\n * Tab id that keyboard navigation lands on, or `undefined` for an unhandled\n * key. Arrow keys follow reading direction, so in RTL ArrowLeft moves to the\n * next tab. Home and End jump to the ends.\n */\nexport function sheetTabKeyTarget(\n  tabs: readonly SheetTab[], currentId: string, key: string, rtl = false,\n): string | undefined {\n  if (tabs.length === 0) return undefined;\n  const at = Math.max(0, tabs.findIndex(tab => tab.id === currentId));\n  const forward = rtl ? \"ArrowLeft\" : \"ArrowRight\";\n  const back = rtl ? \"ArrowRight\" : \"ArrowLeft\";\n  let next: number;\n  if (key === forward) next = Math.min(tabs.length - 1, at + 1);\n  else if (key === back) next = Math.max(0, at - 1);\n  else if (key === \"Home\") next = 0;\n  else if (key === \"End\") next = tabs.length - 1;\n  else return undefined;\n  return tabs[next]!.id;\n}\n\n/** Target index for moving a tab one step, or `undefined` at an end. */\nexport function sheetTabMoveIndex(tabs: readonly SheetTab[], id: string, step: -1 | 1): number | undefined {\n  const at = tabs.findIndex(tab => tab.id === id);\n  if (at < 0) return undefined;\n  const to = at + step;\n  return to < 0 || to >= tabs.length ? undefined : to;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/spreadsheet/sheet-tabs-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/spreadsheet/sheet-tabs-model",
+    "exports": [
+      "MAX_SHEET_NAME_LENGTH",
+      "SHEET_TAB_TONES",
+      "SheetTab",
+      "SheetTabTone",
+      "duplicateSheetName",
+      "nextSheetName",
+      "sheetNameError",
+      "sheetTabKeyTarget",
+      "sheetTabMoveIndex"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

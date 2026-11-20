@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/formula-refs",
+  "title": "formula refs",
+  "description": "formula refs, a creative app helper module. Exports formulaReferences, referenceHighlights.",
+  "registryDependencies": [
+    "@nyc-tron/forge/sheet-window"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/formula-refs.ts",
+      "content": "import type { SheetRange } from \"@/components/nyc-tron/ui/components/forge/sheet-window\";\n\n/** One A1-style reference found by {@linkcode formulaReferences}. */\nexport interface FormulaReference {\n  /** The reference exactly as written, including any sheet prefix and `$` markers. */\n  readonly text: string;\n  /** Offset of the first character in the formula text. */\n  readonly start: number;\n  /** Offset one past the last character. */\n  readonly end: number;\n  /** Sheet name for `Sheet2!A1` or `'Q1 Plan'!A1`; `undefined` for the current sheet. */\n  readonly sheet?: string;\n  readonly range: SheetRange;\n}\n\n/** Excel's grid limits, used to reject tokens like `ABCD1` or `A0` that only look like references. */\nexport const MAX_SHEET_ROWS = 1_048_576;\nexport const MAX_SHEET_COLUMNS = 16_384;\n\nconst SHEET = String.raw`(?:'((?:[^']|'')+)'|([A-Za-z_][A-Za-z0-9_.]*))!`;\nconst CELL = String.raw`\\$?([A-Za-z]{1,3})\\$?([0-9]{1,7})`;\nconst REF = new RegExp(String.raw`(?:${SHEET})?${CELL}(?::${CELL})?`, \"y\");\nconst SINGLE = new RegExp(String.raw`(?:${SHEET})?${CELL}`, \"y\");\n\nfunction columnIndex(letters: string): number {\n  let n = 0;\n  for (const ch of letters.toUpperCase()) n = n * 26 + (ch.charCodeAt(0) - 64);\n  return n - 1;\n}\nconst NAME_CHAR = /[A-Za-z0-9_.$]/;\n\nfunction matchReference(text: string, at: number, pattern: RegExp): FormulaReference | undefined {\n  pattern.lastIndex = at;\n  const m = pattern.exec(text);\n  if (!m) return undefined;\n  const end = at + m[0].length;\n  const next = text[end];\n  if (next !== undefined && (NAME_CHAR.test(next) || next === \"(\" || next === \"!\")) return undefined;\n  const startColumn = columnIndex(m[3]!);\n  const startRow = Number(m[4]) - 1;\n  const endColumn = m[5] ? columnIndex(m[5]) : startColumn;\n  const endRow = m[6] ? Number(m[6]) - 1 : startRow;\n  const inGrid = [startRow, endRow].every(r => r >= 0 && r < MAX_SHEET_ROWS) &&\n    [startColumn, endColumn].every(c => c >= 0 && c < MAX_SHEET_COLUMNS);\n  if (!inGrid) return undefined;\n  const sheet = m[1] !== undefined ? m[1].replaceAll(\"''\", \"'\") : m[2];\n  const range: SheetRange = {\n    startRow: Math.min(startRow, endRow), endRow: Math.max(startRow, endRow),\n    startColumn: Math.min(startColumn, endColumn), endColumn: Math.max(startColumn, endColumn),\n  };\n  return sheet === undefined ? { text: m[0], start: at, end, range } : { text: m[0], start: at, end, sheet, range };\n}\n\n/**\n * Tokenizes the A1 references in a formula (text starting with `=`). Handles\n * `$` absolute markers, `A1:B9` ranges and sheet-qualified references. Text\n * inside string literals, function names such as `LOG10(`, and out-of-grid\n * tokens are skipped. Returns an empty list for non-formula input.\n */\nexport function formulaReferences(text: string): FormulaReference[] {\n  if (!text.startsWith(\"=\")) return [];\n  const out: FormulaReference[] = [];\n  let i = 1;\n  while (i < text.length) {\n    const ch = text[i]!;\n    if (ch === '\"') {\n      // String literal; \"\" is an escaped quote.\n      i++;\n      while (i < text.length) {\n        if (text[i] === '\"') {\n          if (text[i + 1] === '\"') { i += 2; continue; }\n          i++; break;\n        }\n        i++;\n      }\n      continue;\n    }\n    const startsToken = (ch === \"'\" || NAME_CHAR.test(ch)) && (i === 0 || !NAME_CHAR.test(text[i - 1]!));\n    if (startsToken) {\n      // Try the range form first, then a single cell, so \"A1:LOG10(B1)\" still yields A1.\n      const ref = matchReference(text, i, REF) ?? matchReference(text, i, SINGLE);\n      if (ref) {\n        out.push(ref);\n        i = ref.end;\n        continue;\n      }\n      // Skip the rest of this identifier so \"SUMA1\" never yields \"A1\".\n      if (ch === \"'\") {\n        i++;\n        while (i < text.length && text[i] !== \"'\") i++;\n        i++;\n      } else {\n        while (i < text.length && NAME_CHAR.test(text[i]!)) i++;\n      }\n      continue;\n    }\n    i++;\n  }\n  return out;\n}\n\n/** A highlighted rectangle derived from the formula bar; `index` is the reference's order in the formula. */\nexport interface ReferenceHighlight {\n  readonly index: number;\n  readonly text: string;\n  readonly range: SheetRange;\n}\n/**\n * References to highlight on the visible sheet. References qualified with\n * another sheet's name are dropped; a reference qualified with `sheetName`\n * (compared case-insensitively, as spreadsheets do) is kept.\n */\nexport function referenceHighlights(formula: string, sheetName?: string): ReferenceHighlight[] {\n  const current = sheetName?.toLowerCase();\n  return formulaReferences(formula)\n    .filter(ref => ref.sheet === undefined || (current !== undefined && ref.sheet.toLowerCase() === current))\n    .map((ref, index) => ({ index, text: ref.text, range: ref.range }));\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/formula-refs.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/formula-refs",
+    "exports": [
+      "FormulaReference",
+      "MAX_SHEET_COLUMNS",
+      "MAX_SHEET_ROWS",
+      "ReferenceHighlight",
+      "formulaReferences",
+      "referenceHighlights"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

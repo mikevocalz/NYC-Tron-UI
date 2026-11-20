@@ -1,0 +1,76 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/CaptionWordTimingHandles",
+  "title": "Caption Word Timing Handles",
+  "description": "Caption Word Timing Handles, a video timeline component. Props: words, selectedId, durationFrames, onSelect.",
+  "dependencies": [
+    "react-native-gesture-handler@>=3.3.0 <4",
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/feedback/ErrorMessage",
+    "@nyc-tron/forge/timebase",
+    "@nyc-tron/forge/timeline/InOutRangeHandles",
+    "@nyc-tron/forge/timeline/edits",
+    "@nyc-tron/forge/timeline/viewport"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/inputs/useScopedControl.ts",
+      "content": "import {useLayoutEffect,useRef} from 'react';\nimport {useOwnedAction} from '@/components/nyc-tron/ui/components/shell/useOwnedAction';\n\n/** Document identity for controlled editor tools. Native handles remain outside UI state. */\nexport interface ScopedControlProps {scope?:string;revision?:string|number;disabledReason?:string}\nexport function controlIdentity(scope:string,revision:string|number){\n if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError('Invalid control identity');\n return [scope,revision] as const;\n}\n\n/** Admit one host operation and invalidate handlers at the committed boundary. */\nexport function useScopedControl<P>(boundary:string,props:P,disabled=false){\n const action=useOwnedAction(boundary),pending=action.pending!==null;\n const committed=useRef<{boundary:string;props:P;disabled:boolean}|null>(null);\n const admitted=useRef<symbol|null>(null);\n useLayoutEffect(()=>{committed.current={boundary,props,disabled};});\n useLayoutEffect(()=>{admitted.current=null;},[boundary]);\n useLayoutEffect(()=>()=>{committed.current=null;},[]);\n const current=()=>{const p=committed.current;return p&&p.boundary===boundary&&!p.disabled&&!pending&&!admitted.current?p.props:null;};\n const run=(id:string,operation:(props:P,signal:AbortSignal)=>unknown|Promise<unknown>)=>{\n  const p=current();if(!p)return;\n  const token=Symbol(id);admitted.current=token;\n  return action.run(id,signal=>operation(p,signal),undefined,{pendingForAsyncOnly:true}).finally(()=>{if(admitted.current===token)admitted.current=null;});\n };\n const cancel=()=>{if(committed.current?.boundary!==boundary)return false;admitted.current=null;action.cancel();return true;};\n return {current,run,cancel,pending,pendingId:action.pending,error:action.error};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
+    },
+    {
+      "path": "packages/ui/src/components/forge/timeline/CaptionWordTimingHandles.tsx",
+      "content": "import {EditorInteractionScope,useEditorBoundary} from '@/components/nyc-tron/ui/components/gestures/editor-interaction-scope';\nimport {useLayoutEffect,useMemo,useRef} from 'react';\nimport {Text,View,type ViewProps} from 'react-native';\nimport {FlatList} from 'react-native-gesture-handler';\nimport {createStore} from 'zustand/vanilla';\nimport {useStore} from 'zustand';\nimport {Button} from '@/components/nyc-tron/ui/components/Button';\nimport {InOutRangeHandles} from '@/components/nyc-tron/ui/components/forge/timeline/InOutRangeHandles';\nimport type {InOutRange} from '@/components/nyc-tron/ui/components/forge/timeline/edits';\nimport type {TimelineViewport} from '@/components/nyc-tron/ui/components/forge/timeline/viewport';\nimport type {FrameRate} from '@/components/nyc-tron/ui/components/forge/timebase';\nimport {ErrorMessage} from '@/components/nyc-tron/ui/components/feedback/ErrorMessage';\nimport {controlIdentity,useScopedControl,type ScopedControlProps} from '@/components/nyc-tron/ui/components/forge/inputs/useScopedControl';\nexport interface CaptionWord {id:string;text:string;startFrame:number;endFrame:number}\nexport interface CaptionWordTimingHandlesProps extends Omit<ViewProps,'children'>,ScopedControlProps {\n words:readonly CaptionWord[];selectedId:string|null;onSelect:(id:string)=>void;durationFrames:number;frame:number;rate:FrameRate;viewport:TimelineViewport;\n onPreview?:(id:string,range:InOutRange|undefined)=>void;\n onCommit:(id:string,timing:{startFrame:number;endFrame:number},signal?:AbortSignal)=>void|Promise<unknown>;unstyled?:boolean;\n}\n/** Frame-snapped word boundaries with neighboring-word collision checks. */\nexport function CaptionWordTimingHandles({scope='caption-word-timing',revision=0,...props}:CaptionWordTimingHandlesProps){\n const {words,selectedId,onSelect:_select,durationFrames,frame,rate,viewport,onPreview:_preview,onCommit:_commit,unstyled=false,disabledReason,style,...rest}=props;\n if(!Number.isSafeInteger(frame)||frame<0||!Number.isSafeInteger(durationFrames)||durationFrames<0||words.length>10000||new Set(words.map(w=>w.id)).size!==words.length||words.some(w=>!w.id.trim()||w.id.length>512||w.text.length>512||!Number.isSafeInteger(w.startFrame)||!Number.isSafeInteger(w.endFrame)||w.startFrame<0||w.endFrame<=w.startFrame||w.endFrame>durationFrames))throw new RangeError('Invalid caption words');\n const sorted=[...words].sort((a,b)=>a.startFrame-b.startFrame),index=sorted.findIndex(w=>w.id===selectedId),word=sorted[index],low=sorted[index-1]?.endFrame??0,high=sorted[index+1]?.startFrame??durationFrames;\n const owner=JSON.stringify([...controlIdentity(scope,revision),selectedId,disabledReason]);\n const signature=useMemo(()=>JSON.stringify(words),[words]),boundary=useEditorBoundary([owner,signature,viewport.startFrame,viewport.pxPerFrame,viewport.widthPx]);\n const guard=useScopedControl(boundary,props,disabledReason!==undefined),off=guard.pending||disabledReason!==undefined;\n const local=useRef<ReturnType<typeof makeStore>|null>(null);local.current??=makeStore();const store=local.current,preview=useStore(store,s=>s.preview);\n useLayoutEffect(()=>{store.setState({preview:null});},[boundary]);\n const valid=(range:InOutRange)=>range.inFrame!==undefined&&range.outFrame!==undefined&&Number.isSafeInteger(range.inFrame)&&Number.isSafeInteger(range.outFrame)&&range.inFrame>=low&&range.outFrame<=high&&range.inFrame<range.outFrame;\n return <View {...rest} style={[{gap:8,minWidth:0},style]} accessibilityLabel=\"Caption word timing\">\n  <FlatList horizontal data={sorted} keyExtractor={w=>w.id} style={{maxHeight:80}} initialNumToRender={12} windowSize={5} renderItem={({item})=><Button title={item.text||'Empty word'} accessibilityLabel={`${item.text}, frames ${item.startFrame} to ${item.endFrame}`} accessibilityState={{selected:item.id===selectedId}} disabled={off} unstyled={unstyled} onPress={()=>guard.current()?.onSelect(item.id)}/>}/>\n  {word?<>\n   <Text {...{className:unstyled?undefined:'text-text'}}>{word.text}: {word.startFrame}–{word.endFrame}; available {low}–{high}</Text>\n   <EditorInteractionScope.Provider value={boundary}><InOutRangeHandles key={owner} scope={scope} revision={revision} showCommands={false} viewport={viewport} rate={rate} durationFrames={durationFrames} playheadFrame={frame} range={{inFrame:word.startFrame,outFrame:word.endFrame}} disabled={off||low>=high} unstyled={unstyled}\n    onPreview={range=>{const unchanged=range.inFrame===word.startFrame&&range.outFrame===word.endFrame;store.setState({preview:unchanged?null:range});guard.current()?.onPreview?.(word.id,unchanged?undefined:range);}}\n    onCommit={range=>{store.setState({preview:null});guard.current()?.onPreview?.(word.id,undefined);return guard.run('timing',(host,signal)=>{if(!valid(range))throw new Error('Word timing must stay between its neighbors and contain at least one frame');return host.onCommit(word.id,{startFrame:range.inFrame!,endFrame:range.outFrame!},signal);});}}/></EditorInteractionScope.Provider>\n   {preview&&!valid(preview)?<Text {...{className:unstyled?undefined:'text-text'}} accessibilityLiveRegion=\"polite\">Timing overlaps a neighboring word or has no duration</Text>:null}\n   {low>=high?<Text {...{className:unstyled?undefined:'text-text'}}>Adjacent words leave no timing space. Adjust a neighboring word first.</Text>:null}\n  </>:<Text {...{className:unstyled?undefined:'text-text'}}>Select a caption word to adjust its timing</Text>}\n  <ErrorMessage message={guard.error??undefined} unstyled={unstyled}/>\n </View>;\n}\nfunction makeStore(){return createStore(()=>({preview:null as InOutRange|null}));}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/CaptionWordTimingHandles.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/gestures/editor-interaction-scope.ts",
+      "content": "import {createContext,useRef} from 'react';\n/** Invalidate ephemeral gestures without remounting focused controls or product state. */\nexport const EditorInteractionScope=createContext<string|null>(null);\nlet nextInstance=0;\n/** Compare cached document signatures by identity without reserializing a whole\n * timeline on every playback tick or nesting its data in child scope strings. */\nexport function useEditorBoundary(parts:readonly unknown[]):string{\n const ref=useRef<{id:number;version:number;parts:readonly unknown[]}|null>(null);\n ref.current??={id:++nextInstance,version:0,parts:[]};\n const current=ref.current;\n if(parts.length!==current.parts.length||parts.some((part,index)=>!Object.is(part,current.parts[index]))){current.parts=[...parts];current.version++;}\n return current.id+':'+current.version;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/gestures/editor-interaction-scope.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/action-owner.ts",
+      "content": "import { createStore } from \"zustand/vanilla\";\n\n/** UI request state. Abort controllers stay in the owner's closure. */\nexport interface ActionState { readonly pending: string | null; readonly error: string | null }\nexport function createActionOwner(currentScope: () => string) {\n  const store = createStore<ActionState>(() => ({ pending: null, error: null }));\n  let active = false;\n  let current: { readonly scope: string; readonly abort: AbortController } | null = null;\n  function cancel() {\n    const previous = current; current = null;\n    previous?.abort.abort();\n  }\n  return {\n    store,\n    activate() { cancel(); active = true; store.setState({ pending: null, error: null }); },\n    deactivate() { active = false; cancel(); },\n    cancel() { cancel(); store.setState({ pending: null }); },\n    async run<T>(id: string, operation: (signal: AbortSignal) => T | Promise<T>, consume?: (value: T) => void, options?: { pendingForAsyncOnly?: boolean }): Promise<boolean> {\n      if (!active) return false;\n      cancel();\n      const request = { scope: currentScope(), abort: new AbortController() };\n      current = request;\n      const valid = () => active && current === request && request.scope === currentScope();\n      if (options?.pendingForAsyncOnly) store.setState({ error: null });\n      else store.setState({ pending: id, error: null });\n      try {\n        if (!valid()) return false;\n        const result = operation(request.abort.signal);\n        let value: T;\n        if (options?.pendingForAsyncOnly) {\n          if (result && typeof (result as Promise<T>).then === 'function') {\n            // A synchronous acknowledgement or already-resolved promise must not\n            // disable (and blur) the focused control between keyboard commands.\n            let settled = false;\n            const completion = Promise.resolve(result).then(value => { settled = true; return value; }, error => { settled = true; throw error; });\n            void Promise.resolve().then(() => { if (!settled && valid()) store.setState({ pending: id, error: null }); });\n            value = await completion;\n          } else value = result as T;\n        } else value = await result;\n        if (!valid()) return false;\n        consume?.(value);\n        if (!valid()) return false;\n        store.setState({ pending: null });\n        return true;\n      } catch (error) {\n        if (!valid()) return false;\n        store.setState({ pending: null, error: error instanceof Error ? error.message : String(error) });\n        return false;\n      } finally { if (current === request) current = null; }\n    },\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/action-owner.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/useOwnedAction.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport { useStore } from \"zustand\";\nimport { createActionOwner } from \"@/components/nyc-tron/ui/components/shell/action-owner\";\n\n/** Cancel stale requests at the committed document boundary, before new controls accept input. */\nexport function useOwnedAction(scope: string) {\n  const committed = useRef(scope);\n  const ref = useRef<ReturnType<typeof createActionOwner> | null>(null);\n  ref.current ??= createActionOwner(() => committed.current);\n  const owner = ref.current;\n  useLayoutEffect(() => {\n    committed.current = scope;\n    owner.activate();\n    return () => owner.deactivate();\n  }, [owner, scope]);\n  const state = useStore(owner.store, value => value);\n  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);\n  return { ...state, run, cancel: owner.cancel };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/CaptionWordTimingHandles",
+    "exports": [
+      "CaptionWord",
+      "CaptionWordTimingHandles",
+      "CaptionWordTimingHandlesProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "react-native-gesture-handler",
+      "zustand"
+    ],
+    "requiresNativeRebuild": true
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

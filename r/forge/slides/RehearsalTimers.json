@@ -1,0 +1,62 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/slides/RehearsalTimers",
+  "title": "Rehearsal Timers",
+  "description": "Rehearsal Timers, a presentation slide component. Props: status, elapsedMs, activeSlideElapsedMs, onAction.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/feedback/ErrorMessage"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/inputs/useScopedControl.ts",
+      "content": "import {useLayoutEffect,useRef} from 'react';\nimport {useOwnedAction} from '@/components/nyc-tron/ui/components/shell/useOwnedAction';\n\n/** Document identity for controlled editor tools. Native handles remain outside UI state. */\nexport interface ScopedControlProps {scope?:string;revision?:string|number;disabledReason?:string}\nexport function controlIdentity(scope:string,revision:string|number){\n if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError('Invalid control identity');\n return [scope,revision] as const;\n}\n\n/** Admit one host operation and invalidate handlers at the committed boundary. */\nexport function useScopedControl<P>(boundary:string,props:P,disabled=false){\n const action=useOwnedAction(boundary),pending=action.pending!==null;\n const committed=useRef<{boundary:string;props:P;disabled:boolean}|null>(null);\n const admitted=useRef<symbol|null>(null);\n useLayoutEffect(()=>{committed.current={boundary,props,disabled};});\n useLayoutEffect(()=>{admitted.current=null;},[boundary]);\n useLayoutEffect(()=>()=>{committed.current=null;},[]);\n const current=()=>{const p=committed.current;return p&&p.boundary===boundary&&!p.disabled&&!pending&&!admitted.current?p.props:null;};\n const run=(id:string,operation:(props:P,signal:AbortSignal)=>unknown|Promise<unknown>)=>{\n  const p=current();if(!p)return;\n  const token=Symbol(id);admitted.current=token;\n  return action.run(id,signal=>operation(p,signal),undefined,{pendingForAsyncOnly:true}).finally(()=>{if(admitted.current===token)admitted.current=null;});\n };\n const cancel=()=>{if(committed.current?.boundary!==boundary)return false;admitted.current=null;action.cancel();return true;};\n return {current,run,cancel,pending,pendingId:action.pending,error:action.error};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
+    },
+    {
+      "path": "packages/ui/src/components/forge/slides/RehearsalTimers.tsx",
+      "content": "import {useRef,useLayoutEffect} from 'react';\nimport {FlatList,Text,View,type ViewProps} from 'react-native';\nimport {createStore} from 'zustand/vanilla';\nimport {useStore} from 'zustand';\nimport {Button} from '@/components/nyc-tron/ui/components/Button';\nimport {ErrorMessage} from '@/components/nyc-tron/ui/components/feedback/ErrorMessage';\nimport {controlIdentity,useScopedControl,type ScopedControlProps} from '@/components/nyc-tron/ui/components/forge/inputs/useScopedControl';\nexport interface RehearsalTimersProps extends Omit<ViewProps,'children'>,ScopedControlProps {\n status:'idle'|'running'|'paused'|'finished';elapsedMs:number;activeSlideElapsedMs:number;activeSlideLabel:string;\n timings:readonly {slideId:string;label:string;durationMs:number}[];\n onAction:(action:'start'|'pause'|'resume'|'finish'|'reset'|'save',signal?:AbortSignal)=>unknown;unstyled?:boolean;\n}\nexport function RehearsalTimers({scope='rehearsal-timers',revision=0,...props}:RehearsalTimersProps){\n const {status,elapsedMs,activeSlideElapsedMs,activeSlideLabel,timings,onAction:_action,unstyled=false,disabledReason,style,...rest}=props;\n if(!['idle','running','paused','finished'].includes(status)||![elapsedMs,activeSlideElapsedMs].every(n=>Number.isFinite(n)&&n>=0&&n<=1e12)||timings.length>100000||timings.some(t=>!t.slideId.trim()||t.slideId.length>256||t.label.length>1024||!Number.isFinite(t.durationMs)||t.durationMs<0||t.durationMs>1e12))throw new RangeError('Invalid rehearsal timings');\n const owner=JSON.stringify([...controlIdentity(scope,revision),disabledReason]),guard=useScopedControl(owner,props,disabledReason!==undefined),off=guard.pending||disabledReason!==undefined;\n const local=useRef<ReturnType<typeof makeStore>|null>(null);local.current??=makeStore();const store=local.current,confirm=useStore(store,s=>s.confirm);useLayoutEffect(()=>{store.setState({confirm:false});},[owner]);\n const action=(value:Parameters<RehearsalTimersProps['onAction']>[0])=>guard.run(value,(h,s)=>{const allowed=value==='start'?h.status==='idle':value==='pause'?h.status==='running':value==='resume'?h.status==='paused':value==='finish'?h.status==='running'||h.status==='paused':value==='save'?h.status==='finished'&&h.timings.length>0:h.status!=='running';if(!allowed)throw new Error('Rehearsal command is unavailable in the current state');return h.onAction(value,s);}),total=timings.reduce((sum,t)=>sum+t.durationMs,0);\n return <View {...rest} accessibilityLabel=\"Rehearsal timings\" style={[{gap:8},style]}><Text accessibilityLiveRegion=\"polite\" {...{className:unstyled?undefined:'text-text'}}>Rehearsal {status} · elapsed {(elapsedMs/1000).toFixed(1)} s · {activeSlideLabel}: {(activeSlideElapsedMs/1000).toFixed(1)} s</Text><Text {...{className:unstyled?undefined:'text-text-muted'}}>Recorded {timings.length} slide timings · total {(total/1000).toFixed(1)} s</Text>\n <View style={{flexDirection:'row',gap:6,flexWrap:'wrap'}}><Button title={status==='paused'?'Resume rehearsal':status==='running'?'Pause rehearsal':'Start rehearsal'} disabled={off||status==='finished'} unstyled={unstyled} onPress={()=>action(status==='paused'?'resume':status==='running'?'pause':'start')}/><Button title=\"Finish rehearsal\" disabled={off||status==='idle'||status==='finished'} unstyled={unstyled} onPress={()=>action('finish')}/><Button title=\"Save recorded slide timings\" disabled={off||status!=='finished'||timings.length===0} unstyled={unstyled} onPress={()=>action('save')}/><Button title=\"Reset rehearsal timings\" variant=\"secondary\" disabled={off||status==='running'} unstyled={unstyled} onPress={()=>store.setState({confirm:true})}/></View>\n {confirm?<View style={{gap:6}}><Text {...{className:unstyled?undefined:'text-text'}}>Discard these recorded timings?</Text><Button title=\"Confirm reset rehearsal\" variant=\"danger\" disabled={off} unstyled={unstyled} onPress={async()=>{if(await action('reset'))store.setState({confirm:false});}}/><Button title=\"Keep timings\" variant=\"secondary\" unstyled={unstyled} onPress={()=>store.setState({confirm:false})}/></View>:null}\n <FlatList data={timings} keyExtractor={(t,index)=>t.slideId+':'+index} initialNumToRender={8} windowSize={5} style={{maxHeight:320}} renderItem={({item})=><Text {...{className:unstyled?undefined:'text-text'}} style={{paddingVertical:8}}>{item.label}: {(item.durationMs/1000).toFixed(2)} s</Text>}/><ErrorMessage message={guard.error??disabledReason} unstyled={unstyled}/></View>;\n}\nfunction makeStore(){return createStore(()=>({confirm:false}));}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/slides/RehearsalTimers.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/shell/action-owner.ts",
+      "content": "import { createStore } from \"zustand/vanilla\";\n\n/** UI request state. Abort controllers stay in the owner's closure. */\nexport interface ActionState { readonly pending: string | null; readonly error: string | null }\nexport function createActionOwner(currentScope: () => string) {\n  const store = createStore<ActionState>(() => ({ pending: null, error: null }));\n  let active = false;\n  let current: { readonly scope: string; readonly abort: AbortController } | null = null;\n  function cancel() {\n    const previous = current; current = null;\n    previous?.abort.abort();\n  }\n  return {\n    store,\n    activate() { cancel(); active = true; store.setState({ pending: null, error: null }); },\n    deactivate() { active = false; cancel(); },\n    cancel() { cancel(); store.setState({ pending: null }); },\n    async run<T>(id: string, operation: (signal: AbortSignal) => T | Promise<T>, consume?: (value: T) => void, options?: { pendingForAsyncOnly?: boolean }): Promise<boolean> {\n      if (!active) return false;\n      cancel();\n      const request = { scope: currentScope(), abort: new AbortController() };\n      current = request;\n      const valid = () => active && current === request && request.scope === currentScope();\n      if (options?.pendingForAsyncOnly) store.setState({ error: null });\n      else store.setState({ pending: id, error: null });\n      try {\n        if (!valid()) return false;\n        const result = operation(request.abort.signal);\n        let value: T;\n        if (options?.pendingForAsyncOnly) {\n          if (result && typeof (result as Promise<T>).then === 'function') {\n            // A synchronous acknowledgement or already-resolved promise must not\n            // disable (and blur) the focused control between keyboard commands.\n            let settled = false;\n            const completion = Promise.resolve(result).then(value => { settled = true; return value; }, error => { settled = true; throw error; });\n            void Promise.resolve().then(() => { if (!settled && valid()) store.setState({ pending: id, error: null }); });\n            value = await completion;\n          } else value = result as T;\n        } else value = await result;\n        if (!valid()) return false;\n        consume?.(value);\n        if (!valid()) return false;\n        store.setState({ pending: null });\n        return true;\n      } catch (error) {\n        if (!valid()) return false;\n        store.setState({ pending: null, error: error instanceof Error ? error.message : String(error) });\n        return false;\n      } finally { if (current === request) current = null; }\n    },\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/action-owner.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/useOwnedAction.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport { useStore } from \"zustand\";\nimport { createActionOwner } from \"@/components/nyc-tron/ui/components/shell/action-owner\";\n\n/** Cancel stale requests at the committed document boundary, before new controls accept input. */\nexport function useOwnedAction(scope: string) {\n  const committed = useRef(scope);\n  const ref = useRef<ReturnType<typeof createActionOwner> | null>(null);\n  ref.current ??= createActionOwner(() => committed.current);\n  const owner = ref.current;\n  useLayoutEffect(() => {\n    committed.current = scope;\n    owner.activate();\n    return () => owner.deactivate();\n  }, [owner, scope]);\n  const state = useStore(owner.store, value => value);\n  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);\n  return { ...state, run, cancel: owner.cancel };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/slides/RehearsalTimers",
+    "exports": [
+      "RehearsalTimers",
+      "RehearsalTimersProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

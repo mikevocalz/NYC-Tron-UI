@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/layers/artboard-model",
+  "title": "artboard model",
+  "description": "artboard model, an image layer state model. Exports artboardAccessibilityLabel, artboardColumns, artboardDropIndex.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/layers/artboard-model.ts",
+      "content": "/**\n * Engine-neutral artboard list contract for `ArtboardNavigator` (B-14). The\n * `on*` payloads are the argument objects of `addArtboard`, `updateArtboard`,\n * `removeArtboard` and `moveArtboard`; `artboardThumbnail` feeds the previews.\n * Geometry is document pixels.\n */\n\n/** One artboard as the engine describes it (`describe.artboards`), plus a preview revision. */\nexport interface ArtboardItem {\n  readonly id:string;\n  readonly name:string;\n  readonly x:number;\n  readonly y:number;\n  readonly w:number;\n  readonly h:number;\n  /** Bumps whenever the artboard's pixels change, so its preview reloads. @default 0 */\n  readonly revision?:number;\n}\n\n/** `addArtboard` argument. */\nexport interface AddArtboardOp {readonly name?:string;readonly x:number;readonly y:number;readonly w:number;readonly h:number}\n/** `updateArtboard` argument; the navigator only sends `name`. */\nexport interface UpdateArtboardOp {readonly id:string;readonly name?:string;readonly x?:number;readonly y?:number;readonly w?:number;readonly h?:number}\n/** `removeArtboard` argument. */\nexport interface RemoveArtboardOp {readonly id:string}\n/** `moveArtboard` argument; `to_index` is the new position in the list (0 = first). */\nexport interface MoveArtboardOp {readonly id:string;readonly to_index:number}\n\n/** How the navigator lays artboards out. */\nexport type ArtboardLayout=\"list\"|\"grid\";\n\n/** Size of a new artboard when there is nothing to copy. */\nexport const DEFAULT_ARTBOARD_SIZE={w:1920,h:1080} as const;\n/** Gap, in document pixels, between a new artboard and the rightmost one. */\nexport const ARTBOARD_GAP=100;\n/** Narrowest grid tile in points; the column count follows the pane width. */\nexport const ARTBOARD_TILE_MIN=148;\n/** Upper bound on artboards the navigator renders; larger documents need virtualization. */\nexport const ARTBOARD_MAX=300;\n\n/** Throws a RangeError for duplicate or empty ids, blank names, non-positive sizes or non-finite geometry. */\nexport function validateArtboards(artboards:readonly ArtboardItem[]):void{\n  if(artboards.length>ARTBOARD_MAX)throw new RangeError(\"Artboard navigator exceeds \"+ARTBOARD_MAX+\" artboards\");\n  const seen=new Set<string>();\n  for(const a of artboards){\n    if(!a.id.trim()||a.id.length>512||seen.has(a.id))throw new RangeError(\"Duplicate or empty artboard id: \"+a.id);\n    seen.add(a.id);\n    if(!a.name.trim()||a.name.length>512)throw new RangeError(\"Artboard name is blank: \"+a.id);\n    if(![a.x,a.y,a.w,a.h,a.x+a.w,a.y+a.h].every(Number.isFinite)||a.w<=0||a.h<=0)throw new RangeError(\"Invalid artboard geometry: \"+a.id);\n    if(a.revision!==undefined&&(!Number.isSafeInteger(a.revision)||a.revision<0))throw new RangeError(\"Invalid artboard revision: \"+a.id);\n  }\n}\n\n/** \"Artboard N\" with the smallest N not already used. */\nexport function nextArtboardName(artboards:readonly Pick<ArtboardItem,\"name\">[]):string{\n  const used=new Set(artboards.map(a=>a.name.trim().toLowerCase()));\n  // Counting from 1 means deleting \"Artboard 2\" lets the next new one take the name.\n  for(let k=1;;k++)if(!used.has(\"artboard \"+k))return \"Artboard \"+k;\n}\n\n/**\n * The `addArtboard` argument for the add button: same size as `like` (the\n * selected artboard, else the last one, else 1920x1080), placed 100 px right of\n * the rightmost artboard and level with the top-most one, so it never overlaps.\n */\nexport function newArtboardOp(artboards:readonly ArtboardItem[],likeId?:string):AddArtboardOp{\n  validateArtboards(artboards);if(artboards.length>=ARTBOARD_MAX)throw new RangeError(\"Artboard render limit reached\");\n  const like=artboards.find(a=>a.id===likeId)??artboards[artboards.length-1];\n  const w=like?.w??DEFAULT_ARTBOARD_SIZE.w,h=like?.h??DEFAULT_ARTBOARD_SIZE.h;\n  const name=nextArtboardName(artboards);\n  if(artboards.length===0)return {name,x:0,y:0,w,h};\n  const right=Math.max(...artboards.map(a=>a.x+a.w));\n  const top=Math.min(...artboards.map(a=>a.y));\n  const x=right+ARTBOARD_GAP;if(!Number.isFinite(x+w)||x<=right)throw new RangeError(\"No representable position for the next artboard\");\n  return {name,x,y:top,w,h};\n}\n\n/** Grid columns for a pane `width` points wide. Never below 1. */\nexport function artboardColumns(width:number,gap=8):number{\n  if(!Number.isFinite(gap)||gap<0)throw new RangeError(\"Invalid artboard tile gap\");\n  if(!Number.isFinite(width)||width<=0)return 1;\n  return Math.min(ARTBOARD_MAX,Math.max(1,Math.floor((width+gap)/(ARTBOARD_TILE_MIN+gap))));\n}\n\n/**\n * Index a dragged tile lands on. In a list only `dy` counts; in a grid the drag\n * moves by whole cells in both axes, reading order left to right (right to\n * left in RTL), then down. Clamped to the list.\n */\nexport function artboardDropIndex({from,dx,dy,count,columns,cellWidth,cellHeight,rtl=false}:{\n  from:number;dx:number;dy:number;count:number;columns:number;cellWidth:number;cellHeight:number;rtl?:boolean;\n}):number{\n  if(!Number.isSafeInteger(count)||count<1||count>ARTBOARD_MAX||!Number.isSafeInteger(columns)||columns<1||columns>ARTBOARD_MAX)throw new RangeError(\"Invalid artboard count or columns\");\n  if(!Number.isInteger(from)||from<0||from>=count)throw new RangeError(\"Drag start index out of range\");\n  if(![dx,dy,cellWidth,cellHeight].every(Number.isFinite)||cellWidth<=0||cellHeight<=0||columns<1)\n    throw new RangeError(\"Invalid drag metrics\");\n  const cols=Math.floor(columns);\n  const row=Math.floor(from/cols)+Math.round(dy/cellHeight);\n  const col=cols===1?0:Math.min(cols-1,Math.max(0,from%cols+Math.round((rtl?-dx:dx)/cellWidth)));\n  return Math.min(count-1,Math.max(0,row*cols+col));\n}\n\n/** What a key press on a focused artboard does. */\nexport type ArtboardKeyAction=\n  |{readonly kind:\"focus\";readonly index:number}\n  |{readonly kind:\"move\";readonly to:number}\n  |{readonly kind:\"select\"}\n  |{readonly kind:\"rename\"}\n  |{readonly kind:\"remove\"};\n\n/**\n * Keyboard map for a focused artboard. Arrows move focus (left/right flip in\n * RTL; up/down jump a row in a grid), Home/End jump to the ends, and the same\n * keys with Alt held reorder the artboard instead. Enter or Space selects\n * (navigates to) it, F2 renames, Delete or Backspace removes. `null` means the\n * key is not handled.\n */\nexport function artboardKeyAction(key:string|undefined,{index,count,columns,layout,rtl=false,alt=false}:{\n  index:number;count:number;columns:number;layout:ArtboardLayout;rtl?:boolean;alt?:boolean;\n}):ArtboardKeyAction|null{\n  if(!Number.isSafeInteger(count)||count<0||count>ARTBOARD_MAX||!Number.isSafeInteger(columns)||columns<1||columns>ARTBOARD_MAX||!Number.isInteger(index)||index<0||count>0&&index>=count||![\"list\",\"grid\"].includes(layout))throw new RangeError(\"Invalid artboard keyboard metrics\");\n  if(key===undefined||count===0)return null;\n  if(!alt){\n    if(key===\"Enter\"||key===\" \")return {kind:\"select\"};\n    if(key===\"F2\")return {kind:\"rename\"};\n    if(key===\"Delete\"||key===\"Backspace\")return {kind:\"remove\"};\n  }\n  const row=layout===\"grid\"?Math.max(1,Math.floor(columns)):1;\n  const forward=rtl?\"ArrowLeft\":\"ArrowRight\",back=rtl?\"ArrowRight\":\"ArrowLeft\";\n  let target:number|undefined;\n  if(key===\"ArrowDown\")target=index+row;\n  else if(key===\"ArrowUp\")target=index-row;\n  else if(key===forward&&(layout===\"grid\"||!alt))target=index+1;\n  else if(key===back&&(layout===\"grid\"||!alt))target=index-1;\n  else if(key===\"Home\")target=0;\n  else if(key===\"End\")target=count-1;\n  if(target===undefined)return null;\n  const clamped=Math.min(count-1,Math.max(0,target));\n  if(clamped===index)return null;\n  return alt?{kind:\"move\",to:clamped}:{kind:\"focus\",index:clamped};\n}\n\n/** \"1920 × 1080\" with whole pixels. */\nexport function formatArtboardSize(a:Pick<ArtboardItem,\"w\"|\"h\">):string{\n  return Math.round(a.w)+\" × \"+Math.round(a.h);\n}\n\n/** Spoken label for an artboard tile. */\nexport function artboardAccessibilityLabel(a:ArtboardItem,index:number,count:number):string{\n  return `${a.name}, ${Math.round(a.w)} by ${Math.round(a.h)} pixels, ${index+1} of ${count}`;\n}\n\n/** Thumbnail cache id for an artboard preview, kept apart from layer ids. */\nexport function artboardThumbnailId(id:string):string{\n  return \"artboard:\"+id;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/layers/artboard-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/layers/artboard-model",
+    "exports": [
+      "ARTBOARD_GAP",
+      "ARTBOARD_MAX",
+      "ARTBOARD_TILE_MIN",
+      "AddArtboardOp",
+      "ArtboardItem",
+      "ArtboardKeyAction",
+      "ArtboardLayout",
+      "DEFAULT_ARTBOARD_SIZE",
+      "MoveArtboardOp",
+      "RemoveArtboardOp",
+      "UpdateArtboardOp",
+      "artboardAccessibilityLabel",
+      "artboardColumns",
+      "artboardDropIndex",
+      "artboardKeyAction",
+      "artboardThumbnailId",
+      "formatArtboardSize",
+      "newArtboardOp",
+      "nextArtboardName",
+      "validateArtboards"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

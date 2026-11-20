@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/fieldGeometry",
+  "title": "field Geometry",
+  "description": "field Geometry, a color helper module. Exports hsvToPoint, pointToHsv.",
+  "registryDependencies": [
+    "@nyc-tron/forge/color"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/fieldGeometry.ts",
+      "content": "import {assertHsv,wrapHue,type HsvColor} from \"@/components/nyc-tron/ui/components/forge/color\";\n\n/** A point inside the saturation/value field, in layout units. */\nexport interface FieldPoint {\n readonly x:number;\n readonly y:number;\n}\n/** Measured size of the saturation/value field, in layout units. */\nexport interface FieldSize {\n readonly width:number;\n readonly height:number;\n}\nconst assertSize=(size:FieldSize)=>{\n if(![size.width,size.height].every(Number.isFinite)||size.width<=0||size.height<=0)\n  throw new RangeError(\"Color field dimensions must be positive and finite\");\n};\n/**\n * Maps a point to saturation (X, left to right) and value (Y, bottom to top),\n * clamped to the field. Hue and alpha come from `current`. Preview and commit\n * use this same mapping.\n */\nexport function pointToHsv(point:FieldPoint,size:FieldSize,current:HsvColor):HsvColor{\n assertHsv(current);\n assertSize(size);\n if(!Number.isFinite(point.x)||!Number.isFinite(point.y))\n  throw new RangeError(\"Color field coordinates must be finite\");\n return {\n  h:wrapHue(current.h),\n  s:Math.max(0,Math.min(1,point.x/size.width)),\n  v:Math.max(0,Math.min(1,1-point.y/size.height)),\n  alpha:current.alpha,\n };\n}\n/** Inverse of {@linkcode pointToHsv}: where the thumb sits for `color`. */\nexport function hsvToPoint(color:HsvColor,size:FieldSize):FieldPoint{\n assertHsv(color);\n assertSize(size);\n return {x:size.width*color.s,y:size.height*(1-color.v)};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/color/fieldGeometry.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/fieldGeometry",
+    "exports": [
+      "FieldPoint",
+      "FieldSize",
+      "hsvToPoint",
+      "pointToHsv"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

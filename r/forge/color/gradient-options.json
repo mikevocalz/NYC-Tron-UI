@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/gradient-options",
+  "title": "gradient options",
+  "description": "gradient options, a color helper module. Exports changeGradientType, rotateGradient, sampleGradient.",
+  "registryDependencies": [
+    "@nyc-tron/forge/vector/gradient-handles-model",
+    "@nyc-tron/forge/vector/vector-types"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/gradient-options.ts",
+      "content": "import {validateGradient} from \"@/components/nyc-tron/ui/components/forge/vector/gradient-handles-model\";\nimport type {GradientPaint,Rgba} from \"@/components/nyc-tron/ui/components/forge/vector/vector-types\";\n/** Explicit interpolation and interval-midpoint settings for GradientStopEditor. */\nexport interface GradientOptions {\n readonly interpolation:'srgb'|'linear-rgb';\n /** One relative midpoint per adjacent stop pair, strictly between zero and one. */\n readonly midpoints:readonly number[];\n}\n/** Checks the hint topology before a paint/options transaction. */\nexport function validateGradientOptions(paint:GradientPaint,options:GradientOptions):void{\n validateGradient(paint);if(!['srgb','linear-rgb'].includes(options.interpolation)||options.midpoints.length!==paint.stops.length-1||options.midpoints.some(n=>!Number.isFinite(n)||n<=0||n>=1))throw new RangeError('Gradient options require one interior midpoint per stop interval and a known interpolation space');\n}\n// sRGB transfer constants: https://www.w3.org/TR/css-color-4/#color-conversion-code\nconst linear=(n:number)=>n<=.04045?n/12.92:((n+.055)/1.055)**2.4;\nconst encoded=(n:number)=>n<=.0031308?n*12.92:1.055*n**(1/2.4)-.055;\n/** Samples straight-alpha display RGBA through premultiplied interpolation and the selected midpoint. */\nexport function sampleGradient(paint:GradientPaint,options:GradientOptions,offset:number):Rgba{\n validateGradientOptions(paint,options);if(!Number.isFinite(offset)||offset<0||offset>1)throw new RangeError('Gradient offset must be 0..1');\n const right=paint.stops.findIndex(s=>s.offset>offset);if(right===0)return paint.stops[0]!.color;if(right<0)return paint.stops.at(-1)!.color;\n const a=paint.stops[right-1]!,b=paint.stops[right]!,u=(offset-a.offset)/(b.offset-a.offset),mid=options.midpoints[right-1]!;\n // A piecewise linear color hint: the given position is exactly half-way in color.\n const t=u<=mid?.5*u/mid:.5+.5*(u-mid)/(1-mid),alpha=(a.color[3]*(1-t)+b.color[3]*t)/255;\n const channels=[0,1,2].map(index=>{\n  if(alpha===0)return 0;const from=a.color[index]!/255,to=b.color[index]!/255;\n  const value=((options.interpolation==='linear-rgb'?linear(from):from)*a.color[3]/255*(1-t)+(options.interpolation==='linear-rgb'?linear(to):to)*b.color[3]/255*t)/alpha;\n  return Math.round(Math.max(0,Math.min(1,options.interpolation==='linear-rgb'?encoded(value):value))*255);\n });return [channels[0]!,channels[1]!,channels[2]!,Math.round(alpha*255)];\n}\n/** Changes linear/radial geometry around its existing origin, preserving every stop. */\nexport function changeGradientType(paint:GradientPaint,type:GradientPaint['type']):GradientPaint{\n validateGradient(paint);if(type===paint.type)return paint;\n if(type==='radial'&&paint.type==='linear')return {type:'radial',cx:paint.x0,cy:paint.y0,r:Math.max(.001,Math.hypot(paint.x1-paint.x0,paint.y1-paint.y0)),stops:paint.stops};\n if(type==='linear'&&paint.type==='radial')return {type:'linear',x0:paint.cx,y0:paint.cy,x1:paint.cx+paint.r,y1:paint.cy,stops:paint.stops};\n throw new TypeError('Unknown gradient type');\n}\n/** Rotates a linear gradient about its start, retaining length. Angle follows document coordinates. */\nexport function rotateGradient(paint:GradientPaint,degrees:number):GradientPaint{\n validateGradient(paint);if(paint.type!=='linear'||!Number.isFinite(degrees))throw new TypeError('Gradient angle requires a linear gradient and finite degrees');\n const radius=Math.max(.001,Math.hypot(paint.x1-paint.x0,paint.y1-paint.y0)),radians=degrees*Math.PI/180;\n return {...paint,x1:paint.x0+Math.cos(radians)*radius,y1:paint.y0+Math.sin(radians)*radius};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/color/gradient-options.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/gradient-options",
+    "exports": [
+      "GradientOptions",
+      "changeGradientType",
+      "rotateGradient",
+      "sampleGradient",
+      "validateGradientOptions"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

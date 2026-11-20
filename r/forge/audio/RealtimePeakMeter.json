@@ -1,0 +1,65 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/RealtimePeakMeter",
+  "title": "Realtime Peak Meter",
+  "description": "Realtime Peak Meter, an audio mixing and editing component. Props: measurement, clockMs, length.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/forge/audio/LevelMeter",
+    "@nyc-tron/forge/audio/level",
+    "@nyc-tron/forge/audio/meter-ballistics"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/RealtimePeakMeter.tsx",
+      "content": "import {useLayoutEffect,useRef} from 'react';\nimport {Text,View,type ViewProps} from 'react-native';\nimport {createStore} from 'zustand/vanilla';\nimport {useStore} from 'zustand';\nimport {Button} from '@/components/nyc-tron/ui/components/Button';\nimport {LevelMeter} from '@/components/nyc-tron/ui/components/forge/audio/LevelMeter';\nimport {createPeakHold,type PeakHoldOptions} from '@/components/nyc-tron/ui/components/forge/audio/meter-ballistics';\nimport {formatDb} from '@/components/nyc-tron/ui/components/forge/audio/level';\nimport {controlIdentity} from '@/components/nyc-tron/ui/components/forge/inputs/useScopedControl';\nexport interface RealtimePeakMeasurement {timeMs:number;samplePeak:number;truePeak?:number;rms?:number}\nexport interface RealtimePeakMeterProps extends Omit<ViewProps,'children'>,PeakHoldOptions {\n scope?:string;revision?:string|number;measurement:RealtimePeakMeasurement|null;\n /** Same monotonic clock as measurement.timeMs; host drives visual falloff ticks. */\n clockMs:number;length?:number;mode?:'sample'|'true';orientation?:'horizontal'|'vertical';unstyled?:boolean;\n}\nexport function RealtimePeakMeter({scope='realtime-meter',revision=0,measurement,clockMs,length=160,mode='sample',holdMs=1500,fallDbPerSecond=20,orientation='horizontal',unstyled=false,style,...props}:RealtimePeakMeterProps){\n if(!Number.isFinite(length)||length<44||length>2048||!Number.isFinite(clockMs)||clockMs<0||measurement!==null&&(!Number.isFinite(measurement.timeMs)||measurement.timeMs>clockMs||!Number.isFinite(measurement.samplePeak)||![measurement.samplePeak,measurement.truePeak,measurement.rms].every(n=>n===undefined||Number.isFinite(n)&&n>=0))||!['sample','true'].includes(mode)||!Number.isFinite(holdMs)||holdMs<0||!Number.isFinite(fallDbPerSecond)||fallDbPerSecond<=0)throw new RangeError('Invalid peak meter measurement');\n const owner=JSON.stringify([...controlIdentity(scope,revision),mode,holdMs,fallDbPerSecond]);\n const engine=useRef<{owner:string;meter:ReturnType<typeof createPeakHold>;time:number|null}|null>(null);\n const local=useRef<ReturnType<typeof makeStore>|null>(null);local.current??=makeStore();const store=local.current,s=useStore(store,v=>v);\n const peak=measurement===null?undefined:mode==='true'?measurement.truePeak:measurement.samplePeak;\n useLayoutEffect(()=>{\n  if(!engine.current||engine.current.owner!==owner)engine.current={owner,meter:createPeakHold({holdMs,fallDbPerSecond}),time:null};\n  const current=engine.current;if(measurement===null||peak===undefined){store.setState({level:0,hold:0});return;}\n  const fresh=current.time!==measurement.timeMs;current.time=measurement.timeMs;\n  store.setState(current.meter(fresh?peak:0,clockMs));\n },[owner,measurement?.timeMs,peak,clockMs,s.reset]);\n const clipping=measurement!==null&&(measurement.samplePeak>=1||(measurement.truePeak??0)>=1);\n return <View {...props} style={[{gap:8,minWidth:0},style]} accessibilityLabel={mode==='true'?'True peak meter':'Sample peak meter'}>\n  {peak===undefined?<Text {...{className:unstyled?undefined:'text-text'}}>{measurement===null?'No meter measurement':'True peak measurement not reported'}</Text>:<View style={orientation==='vertical'?{height:length,width:44,alignItems:'center'}:{height:16,width:'100%'}}><LevelMeter level={s.level} peakHold={s.hold} orientation={orientation} unstyled={unstyled} accessibilityLabel={mode==='true'?'Measured true peak':'Measured sample peak'}/></View>}\n  <Text {...{className:unstyled?undefined:'text-text'}}>{peak===undefined?'Not reported':formatDb(peak)+'FS'}{clipping?'; clipping':''}; RMS {measurement?.rms===undefined?'not reported':measurement.rms.toFixed(4)}</Text>\n  <Button title=\"Reset visual peak hold\" variant=\"ghost\" unstyled={unstyled} onPress={()=>{engine.current=null;store.setState(v=>({reset:v.reset+1}));}}/>\n </View>;\n}\nfunction makeStore(){return createStore(()=>({level:0,hold:0,reset:0}));}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/audio/RealtimePeakMeter.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/inputs/useScopedControl.ts",
+      "content": "import {useLayoutEffect,useRef} from 'react';\nimport {useOwnedAction} from '@/components/nyc-tron/ui/components/shell/useOwnedAction';\n\n/** Document identity for controlled editor tools. Native handles remain outside UI state. */\nexport interface ScopedControlProps {scope?:string;revision?:string|number;disabledReason?:string}\nexport function controlIdentity(scope:string,revision:string|number){\n if(!scope.trim()||scope.length>512||typeof revision==='number'&&!Number.isFinite(revision)||typeof revision==='string'&&revision.length>512)throw new RangeError('Invalid control identity');\n return [scope,revision] as const;\n}\n\n/** Admit one host operation and invalidate handlers at the committed boundary. */\nexport function useScopedControl<P>(boundary:string,props:P,disabled=false){\n const action=useOwnedAction(boundary),pending=action.pending!==null;\n const committed=useRef<{boundary:string;props:P;disabled:boolean}|null>(null);\n const admitted=useRef<symbol|null>(null);\n useLayoutEffect(()=>{committed.current={boundary,props,disabled};});\n useLayoutEffect(()=>{admitted.current=null;},[boundary]);\n useLayoutEffect(()=>()=>{committed.current=null;},[]);\n const current=()=>{const p=committed.current;return p&&p.boundary===boundary&&!p.disabled&&!pending&&!admitted.current?p.props:null;};\n const run=(id:string,operation:(props:P,signal:AbortSignal)=>unknown|Promise<unknown>)=>{\n  const p=current();if(!p)return;\n  const token=Symbol(id);admitted.current=token;\n  return action.run(id,signal=>operation(p,signal),undefined,{pendingForAsyncOnly:true}).finally(()=>{if(admitted.current===token)admitted.current=null;});\n };\n const cancel=()=>{if(committed.current?.boundary!==boundary)return false;admitted.current=null;action.cancel();return true;};\n return {current,run,cancel,pending,pendingId:action.pending,error:action.error};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/action-owner.ts",
+      "content": "import { createStore } from \"zustand/vanilla\";\n\n/** UI request state. Abort controllers stay in the owner's closure. */\nexport interface ActionState { readonly pending: string | null; readonly error: string | null }\nexport function createActionOwner(currentScope: () => string) {\n  const store = createStore<ActionState>(() => ({ pending: null, error: null }));\n  let active = false;\n  let current: { readonly scope: string; readonly abort: AbortController } | null = null;\n  function cancel() {\n    const previous = current; current = null;\n    previous?.abort.abort();\n  }\n  return {\n    store,\n    activate() { cancel(); active = true; store.setState({ pending: null, error: null }); },\n    deactivate() { active = false; cancel(); },\n    cancel() { cancel(); store.setState({ pending: null }); },\n    async run<T>(id: string, operation: (signal: AbortSignal) => T | Promise<T>, consume?: (value: T) => void, options?: { pendingForAsyncOnly?: boolean }): Promise<boolean> {\n      if (!active) return false;\n      cancel();\n      const request = { scope: currentScope(), abort: new AbortController() };\n      current = request;\n      const valid = () => active && current === request && request.scope === currentScope();\n      if (options?.pendingForAsyncOnly) store.setState({ error: null });\n      else store.setState({ pending: id, error: null });\n      try {\n        if (!valid()) return false;\n        const result = operation(request.abort.signal);\n        let value: T;\n        if (options?.pendingForAsyncOnly) {\n          if (result && typeof (result as Promise<T>).then === 'function') {\n            // A synchronous acknowledgement or already-resolved promise must not\n            // disable (and blur) the focused control between keyboard commands.\n            let settled = false;\n            const completion = Promise.resolve(result).then(value => { settled = true; return value; }, error => { settled = true; throw error; });\n            void Promise.resolve().then(() => { if (!settled && valid()) store.setState({ pending: id, error: null }); });\n            value = await completion;\n          } else value = result as T;\n        } else value = await result;\n        if (!valid()) return false;\n        consume?.(value);\n        if (!valid()) return false;\n        store.setState({ pending: null });\n        return true;\n      } catch (error) {\n        if (!valid()) return false;\n        store.setState({ pending: null, error: error instanceof Error ? error.message : String(error) });\n        return false;\n      } finally { if (current === request) current = null; }\n    },\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/action-owner.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/useOwnedAction.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport { useStore } from \"zustand\";\nimport { createActionOwner } from \"@/components/nyc-tron/ui/components/shell/action-owner\";\n\n/** Cancel stale requests at the committed document boundary, before new controls accept input. */\nexport function useOwnedAction(scope: string) {\n  const committed = useRef(scope);\n  const ref = useRef<ReturnType<typeof createActionOwner> | null>(null);\n  ref.current ??= createActionOwner(() => committed.current);\n  const owner = ref.current;\n  useLayoutEffect(() => {\n    committed.current = scope;\n    owner.activate();\n    return () => owner.deactivate();\n  }, [owner, scope]);\n  const state = useStore(owner.store, value => value);\n  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);\n  return { ...state, run, cancel: owner.cancel };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/RealtimePeakMeter",
+    "exports": [
+      "RealtimePeakMeasurement",
+      "RealtimePeakMeter",
+      "RealtimePeakMeterProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

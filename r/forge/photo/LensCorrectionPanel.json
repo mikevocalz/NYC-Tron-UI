@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/LensCorrectionPanel",
+  "title": "Lens Correction Panel",
+  "description": "Lens Correction Panel, a photo editing component. Props: value, profiles, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/Select",
+    "@nyc-tron/forge/photo/photo-adjustments",
+    "@nyc-tron/shell/UnitInput"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/canvas/SettingSwitch.tsx",
+      "content": "import {Pressable,Text,View} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\n\n/**\n * Labeled on/off row shared by the canvas settings panels: a 44pt switch with\n * the label on the start side and the track on the end side (mirrored in RTL).\n */\nexport function SettingSwitch({label,on,onChange,disabled,styled,hint}:{\n  label:string;on:boolean;onChange:(on:boolean)=>void;disabled:boolean;styled:boolean;hint?:string|undefined;\n}){\n  return <Pressable role=\"switch\" aria-checked={on} accessibilityRole=\"switch\" accessibilityState={{checked:on,disabled}}\n    aria-label={label} accessibilityHint={hint} disabled={disabled} onPress={()=>onChange(!on)}\n    {...{className:joinClasses(styled&&\"rounded-control focus-visible:ring-2 focus-visible:ring-focus\")}}\n    style={{minHeight:44,flexDirection:\"row\",alignItems:\"center\",justifyContent:\"space-between\",gap:12,paddingHorizontal:4,opacity:disabled?0.5:1}}>\n    <Text {...{className:joinClasses(styled&&\"text-text text-sm\")}} style={{flexShrink:1}}>{label}</Text>\n    <View pointerEvents=\"none\" {...{className:joinClasses(styled&&\"border\",styled&&(on?\"bg-primary border-primary\":\"bg-surface-sunken border-border\"))}}\n      style={{width:40,height:24,borderRadius:12,padding:2,justifyContent:\"center\",alignItems:on?\"flex-end\":\"flex-start\"}}>\n      <View {...{className:joinClasses(styled&&(on?\"bg-on-primary\":\"bg-text-muted\"))}} style={{width:18,height:18,borderRadius:9}}/>\n    </View>\n  </Pressable>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/canvas/SettingSwitch.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/photo/LensCorrectionPanel.tsx",
+      "content": "import {View,type ViewProps} from 'react-native';\nimport {Select} from '@/components/nyc-tron/ui/components/Select';\nimport {UnitInput} from '@/components/nyc-tron/ui/components/shell/UnitInput';\nimport {SettingSwitch} from '@/components/nyc-tron/ui/components/forge/canvas/SettingSwitch';\nimport {validateLens,type LensSettings} from '@/components/nyc-tron/ui/components/forge/photo/photo-adjustments';\nexport type {LensSettings} from '@/components/nyc-tron/ui/components/forge/photo/photo-adjustments';\nexport interface LensProfile {readonly id:string;readonly label:string}\nexport interface LensCorrectionPanelProps extends Omit<ViewProps,'children'> {readonly value:LensSettings;readonly profiles:readonly LensProfile[];readonly onCommit:(value:LensSettings)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}\n/** Host-supplied calibrated profile identity and manual distortion/CA intent. */\nexport function LensCorrectionPanel({value,profiles,onCommit,disabled=false,unstyled=false,...props}:LensCorrectionPanelProps){\n validateLens(value);\n const ids=new Set<string>();for(const p of profiles){if(!p.id.trim()||!p.label.trim()||ids.has(p.id))throw new TypeError('Lens profiles require unique nonempty identities and labels');ids.add(p.id);}\n const set=(change:Partial<LensSettings>)=>{if(disabled)return;const next={...value,...change};validateLens(next);onCommit(next);};\n const options=[{value:'',label:'Manual correction'},...profiles.map(p=>({value:p.id,label:p.label}))];\n if(value.profileId!==null&&!ids.has(value.profileId))options.push({value:value.profileId,label:`Unavailable profile: ${value.profileId}`});\n return <View {...props} style={[{gap:8},props.style]}>\n  <SettingSwitch label=\"Enable lens corrections\" on={value.enabled} onChange={enabled=>set({enabled})} disabled={disabled} styled={!unstyled}/>\n  <Select label=\"Lens correction profile\" value={value.profileId??''} options={options} disabled={disabled||!value.enabled} unstyled={unstyled} onValueChange={id=>set({profileId:id||null})}/>\n  <UnitInput label=\"Lens distortion\" value={value.distortion} min={-100} max={100} step={1} disabled={disabled||!value.enabled} unstyled={unstyled} onCommit={distortion=>{if(distortion!==value.distortion)set({distortion});}}/>\n  <SettingSwitch label=\"Remove chromatic aberration\" on={value.chromaticAberration} onChange={chromaticAberration=>set({chromaticAberration})} disabled={disabled||!value.enabled} styled={!unstyled}/>\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/photo/LensCorrectionPanel.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/LensCorrectionPanel",
+    "exports": [
+      "LensCorrectionPanel",
+      "LensCorrectionPanelProps",
+      "LensProfile",
+      "LensSettings"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

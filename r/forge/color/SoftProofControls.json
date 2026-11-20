@@ -1,0 +1,50 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/SoftProofControls",
+  "title": "Soft Proof Controls",
+  "description": "Soft Proof Controls, a color component. Props: value, profiles, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/Select",
+    "@nyc-tron/forge/color/color-management"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/canvas/SettingSwitch.tsx",
+      "content": "import {Pressable,Text,View} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\n\n/**\n * Labeled on/off row shared by the canvas settings panels: a 44pt switch with\n * the label on the start side and the track on the end side (mirrored in RTL).\n */\nexport function SettingSwitch({label,on,onChange,disabled,styled,hint}:{\n  label:string;on:boolean;onChange:(on:boolean)=>void;disabled:boolean;styled:boolean;hint?:string|undefined;\n}){\n  return <Pressable role=\"switch\" aria-checked={on} accessibilityRole=\"switch\" accessibilityState={{checked:on,disabled}}\n    aria-label={label} accessibilityHint={hint} disabled={disabled} onPress={()=>onChange(!on)}\n    {...{className:joinClasses(styled&&\"rounded-control focus-visible:ring-2 focus-visible:ring-focus\")}}\n    style={{minHeight:44,flexDirection:\"row\",alignItems:\"center\",justifyContent:\"space-between\",gap:12,paddingHorizontal:4,opacity:disabled?0.5:1}}>\n    <Text {...{className:joinClasses(styled&&\"text-text text-sm\")}} style={{flexShrink:1}}>{label}</Text>\n    <View pointerEvents=\"none\" {...{className:joinClasses(styled&&\"border\",styled&&(on?\"bg-primary border-primary\":\"bg-surface-sunken border-border\"))}}\n      style={{width:40,height:24,borderRadius:12,padding:2,justifyContent:\"center\",alignItems:on?\"flex-end\":\"flex-start\"}}>\n      <View {...{className:joinClasses(styled&&(on?\"bg-on-primary\":\"bg-text-muted\"))}} style={{width:18,height:18,borderRadius:9}}/>\n    </View>\n  </Pressable>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/canvas/SettingSwitch.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/color/SoftProofControls.tsx",
+      "content": "import { View, type ViewProps } from \"react-native\";\nimport { Select } from \"@/components/nyc-tron/ui/components/Select\";\nimport { SettingSwitch } from \"@/components/nyc-tron/ui/components/forge/canvas/SettingSwitch\";\nimport { validateSoftProof, type ColorProfile, type SoftProofSettings } from \"@/components/nyc-tron/ui/components/forge/color/color-management\";\nexport type { SoftProofSettings } from \"@/components/nyc-tron/ui/components/forge/color/color-management\";\n/** Explicit output proof configuration rendered by SoftProofControls. */\nexport interface SoftProofControlsProps extends Omit<ViewProps, \"children\"> {\n  readonly value: SoftProofSettings;\n  readonly profiles: readonly ColorProfile[];\n  readonly onCommit: (settings: SoftProofSettings) => void;\n  readonly disabled?: boolean;\n  readonly unstyled?: boolean;\n}\n/** Controls a host's proof transform; UI does not pretend to perform ICC conversion. */\nexport function SoftProofControls({ value, profiles, onCommit, disabled = false, unstyled = false, ...props }: SoftProofControlsProps) {\n  validateSoftProof(value, profiles);\n  const set = (change: Partial<SoftProofSettings>) => { if (disabled) return; const next = { ...value, ...change }; validateSoftProof(next, profiles); onCommit(next); };\n  return <View {...props} style={[{ gap: 8 }, props.style]}>\n    <Select label=\"Proof output profile\" value={value.profileId ?? \"\"} placeholder=\"Choose a proof profile\" options={profiles.map(profile => ({ value: profile.id, label: profile.label }))} disabled={disabled} unstyled={unstyled} onValueChange={profileId => set({ profileId })}/>\n    <SettingSwitch label=\"Enable soft proof\" on={value.enabled} onChange={enabled => set({ enabled })} disabled={disabled || value.profileId === null} styled={!unstyled}/>\n    <Select label=\"Rendering intent\" value={value.intent} options={([\"perceptual\", \"relative-colorimetric\", \"saturation\", \"absolute-colorimetric\"] as const).map(value => ({ value, label: value.replaceAll(\"-\", \" \") }))} disabled={disabled} unstyled={unstyled} onValueChange={intent => set({ intent: intent as SoftProofSettings[\"intent\"] })}/>\n    <SettingSwitch label=\"Show proof gamut clipping\" on={value.showGamutClipping??false} onChange={showGamutClipping=>set({showGamutClipping})} disabled={disabled} styled={!unstyled}/>\n    {([['blackPointCompensation', 'Black point compensation'], ['simulatePaper', 'Simulate paper color'], ['simulateBlackInk', 'Simulate black ink']] as const).map(([key, label]) => <SettingSwitch key={key} label={label} on={value[key]} onChange={on => set({ [key]: on })} disabled={disabled} styled={!unstyled}/>)}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/color/SoftProofControls.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/SoftProofControls",
+    "exports": [
+      "SoftProofControls",
+      "SoftProofControlsProps",
+      "SoftProofSettings"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

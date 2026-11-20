@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/FindReplacePopover",
+  "title": "Find Replace Popover",
+  "description": "FindReplaceContent inside an AnchoredPopover, placed by anchor rectangle or trigger, for React Native.",
+  "registryDependencies": [
+    "@nyc-tron/overlays/AnchoredPopover",
+    "@nyc-tron/shell/FindReplaceContent"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/FindReplacePopover.tsx",
+      "content": "import { AnchoredPopover, type PopoverAnchorProps, type PopoverTriggerProps } from \"@/components/nyc-tron/ui/components/overlays/AnchoredPopover\";\nimport { FindReplaceContent, type FindReplaceContentProps } from \"@/components/nyc-tron/ui/components/shell/FindReplaceContent\";\nexport type { FindReplaceContentProps } from \"@/components/nyc-tron/ui/components/shell/FindReplaceContent\";\nexport type FindReplacePopoverProps = Omit<FindReplaceContentProps, \"onClose\" | \"active\"> & (\n  Omit<PopoverAnchorProps, \"children\" | \"accessibilityLabel\"> | Omit<PopoverTriggerProps, \"children\" | \"accessibilityLabel\">\n);\n\n/** Portable anchored search. The Expo-controls entry supplies SwiftUI/Compose popover surfaces. */\nexport function FindReplacePopover(props: FindReplacePopoverProps) {\n  const { document, onFind, onReplace, onNavigate, initialQuery, unstyled, ...popover } = props;\n  return <AnchoredPopover {...popover} accessibilityLabel=\"Find and replace\">\n    <FindReplaceContent active={props.open} document={document} onFind={onFind} onReplace={onReplace} onNavigate={onNavigate}\n      {...(initialQuery !== undefined ? { initialQuery } : {})} {...(unstyled !== undefined ? { unstyled } : {})} onClose={() => props.onOpenChange(false)}/>\n  </AnchoredPopover>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/shell/FindReplacePopover.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-fail",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/FindReplacePopover",
+    "exports": [
+      "FindReplaceContentProps",
+      "FindReplacePopover",
+      "FindReplacePopoverProps"
+    ]
+  },
+  "categories": [
+    "overlay"
+  ],
+  "type": "registry:ui"
+}

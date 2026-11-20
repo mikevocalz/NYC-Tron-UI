@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/frame-throttle",
+  "title": "frame throttle",
+  "description": "frame throttle, a creative app helper module. Exports animationFrameScheduler, createFrameThrottle.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/frame-throttle.ts",
+      "content": "/** Scheduler pair for {@linkcode createFrameThrottle}; defaults to `requestAnimationFrame`. */\nexport interface FrameScheduler {\n  request(callback:()=>void):unknown;\n  cancel(handle:unknown):void;\n}\n\n/** Handle returned by {@linkcode createFrameThrottle}. */\nexport interface FrameThrottle<T> {\n  /** Queues `value`. Only the newest queued value is delivered, once, on the next frame. */\n  push(value:T):void;\n  /** Delivers the queued value now, if any, and drops the pending frame. */\n  flush():void;\n  /** Drops the queued value without delivering it. */\n  cancel():void;\n  /** Whether a value is waiting for the next frame. */\n  readonly pending:boolean;\n}\n\nconst fallback:FrameScheduler={\n  request:callback=>setTimeout(callback,16),\n  cancel:handle=>clearTimeout(handle as ReturnType<typeof setTimeout>),\n};\n\n/** `requestAnimationFrame` where the runtime has it (browsers, React Native), else a 16 ms timer. */\nexport function animationFrameScheduler():FrameScheduler{\n  const g=globalThis as {requestAnimationFrame?:(cb:()=>void)=>number;cancelAnimationFrame?:(id:number)=>void};\n  if(typeof g.requestAnimationFrame!==\"function\"||typeof g.cancelAnimationFrame!==\"function\")return fallback;\n  return {request:cb=>g.requestAnimationFrame!(cb),cancel:id=>g.cancelAnimationFrame!(id as number)};\n}\n\n/**\n * Coalesces rapid values (drag moves, typed edits) into at most one `deliver`\n * call per animation frame. Nothing is scheduled until the first `push`, so a\n * caller with no consumer never starts a frame loop.\n */\nexport function createFrameThrottle<T>(deliver:(value:T)=>void,scheduler:FrameScheduler=animationFrameScheduler()):FrameThrottle<T>{\n  let queued:{value:T}|undefined;\n  let handle:unknown;\n  let scheduled=false;\n  const run=()=>{\n    scheduled=false;\n    const next=queued;\n    queued=undefined;\n    if(next)deliver(next.value);\n  };\n  return {\n    push(value){\n      queued={value};\n      if(scheduled)return;\n      scheduled=true;\n      handle=scheduler.request(run);\n    },\n    flush(){\n      if(scheduled){scheduler.cancel(handle);scheduled=false;}\n      const next=queued;\n      queued=undefined;\n      if(next)deliver(next.value);\n    },\n    cancel(){\n      if(scheduled){scheduler.cancel(handle);scheduled=false;}\n      queued=undefined;\n    },\n    get pending(){return queued!==undefined;},\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/frame-throttle.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/frame-throttle",
+    "exports": [
+      "FrameScheduler",
+      "FrameThrottle",
+      "animationFrameScheduler",
+      "createFrameThrottle"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

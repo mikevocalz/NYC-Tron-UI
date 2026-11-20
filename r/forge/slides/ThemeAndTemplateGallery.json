@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/slides/ThemeAndTemplateGallery",
+  "title": "Theme And Template Gallery",
+  "description": "Theme And Template Gallery, a presentation slide component. Props: presets, themeFields, onThemeFieldCommit.",
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/AssetPresetGallery",
+    "@nyc-tron/forge/inputs/PropertyInspector"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/slides/ThemeAndTemplateGallery.tsx",
+      "content": "import {View} from 'react-native';\nimport {AssetPresetGallery,type AssetPresetGalleryProps,type AssetPreset} from '@/components/nyc-tron/ui/components/forge/inputs/AssetPresetGallery';\nimport {PropertyInspector,type InspectorProperty} from '@/components/nyc-tron/ui/components/forge/inputs/PropertyInspector';\nexport interface PresentationPreset extends AssetPreset {kind:'theme'|'template'}\nexport interface ThemeAndTemplateGalleryProps extends Omit<AssetPresetGalleryProps,'label'|'items'> {\n presets:readonly PresentationPreset[];\n /** Actual theme roles, font options and document color IDs; unavailable resources must be admitted by the host. */\n themeFields:readonly InspectorProperty[];onThemeFieldCommit:(id:string,value:string|number|boolean,signal?:AbortSignal)=>unknown;\n}\nexport function ThemeAndTemplateGallery({presets,themeFields,onThemeFieldCommit,...props}:ThemeAndTemplateGalleryProps){return <View style={{gap:12}}><AssetPresetGallery {...props} label=\"Slide themes and templates\" items={presets.map(p=>({...p,description:p.kind+' · '+p.description}))}/><PropertyInspector scope={props.scope??'slide-theme'} revision={props.revision??0} disabledReason={props.disabledReason} unstyled={props.unstyled} label=\"Theme colors and fonts\" fields={themeFields} onCommit={onThemeFieldCommit}/></View>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/slides/ThemeAndTemplateGallery.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/slides/ThemeAndTemplateGallery",
+    "exports": [
+      "PresentationPreset",
+      "ThemeAndTemplateGallery",
+      "ThemeAndTemplateGalleryProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

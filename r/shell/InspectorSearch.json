@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/InspectorSearch",
+  "title": "Inspector Search",
+  "description": "Search field with clear button and live-region match summary for inspector panels, for React Native.",
+  "registryDependencies": [
+    "@nyc-tron/shell/inspector-model",
+    "@nyc-tron/shell/shell-keys"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/InspectorSearch.tsx",
+      "content": "import {useLayoutEffect,useRef} from \"react\";\nimport {Pressable,Text,TextInput,View,type ViewProps} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {shellKey} from \"@/components/nyc-tron/ui/components/shell/shell-keys\";\n\nexport {matchesQuery} from \"@/components/nyc-tron/ui/components/shell/inspector-model\";\n\n/** Props for {@linkcode InspectorSearch}. */\nexport interface InspectorSearchProps extends Omit<ViewProps,\"children\"> {\n  scope?:string;disabled?:boolean;\n  query:string;\n  maxLength?:number;\n  onQueryChange:(query:string)=>void;\n  /** Accessible name and placeholder. @default \"Search properties\" */\n  label?:string;\n  /**\n   * Polite live-region text such as \"3 properties match\". {@linkcode InspectorPanel}\n   * supplies it; standalone filters (assets, controls) pass their own.\n   */\n  summary?:string;\n  className?:string;\n  unstyled?:boolean;\n}\n\n/**\n * Filter field for inspector properties, controls or assets. Typing filters\n * as you go; Escape or the 44pt clear button empties it. Pair it with\n * {@linkcode matchesQuery} to filter app-owned lists the same way the\n * inspector filters rows.\n */\nexport function InspectorSearch({\n  scope=\"inspector-search\",disabled=false,query,maxLength=2048,onQueryChange,label=\"Search properties\",summary,className,unstyled=false,style,...rest\n}:InspectorSearchProps){\n  if(!Number.isInteger(maxLength)||maxLength<1||maxLength>100000)throw new RangeError(\"Invalid inspector search budget\");\n  const styled=!unstyled;\n  const committed=useRef<{scope:string;disabled:boolean;onQueryChange:typeof onQueryChange}|null>(null);\n  useLayoutEffect(()=>{committed.current={scope,disabled,onQueryChange};});\n  useLayoutEffect(()=>()=>{committed.current=null;},[]);\n  const change=(value:string)=>{const p=committed.current;if(p?.scope===scope&&!p.disabled)p.onQueryChange(value.slice(0,maxLength));};\n  return <View {...rest} {...{className:joinClasses(\"gap-1\",className)}} style={style}>\n    <View {...{className:joinClasses(styled&&\"rounded-control border border-border bg-surface-sunken focus-within:border-focus\")}}\n      style={{flexDirection:\"row\",alignItems:\"center\",minHeight:44,paddingHorizontal:10}}>\n      <SearchGlyph styled={styled}/>\n      <TextInput role=\"searchbox\" accessibilityLabel={label} placeholder={label}\n        value={query} maxLength={maxLength} editable={!disabled} accessibilityState={{disabled}} onChangeText={change} autoCorrect={false} autoCapitalize=\"none\" returnKeyType=\"search\"\n        onKeyPress={event=>{\n          const k=shellKey(event);\n          if(k.key===\"Escape\"&&query){k.preventDefault();change(\"\");}\n        }}\n        {...{className:joinClasses(styled&&\"text-text placeholder:text-text-muted focus-visible:outline-none\")}}\n        style={{flex:1,minHeight:44,paddingHorizontal:8}}/>\n      {query?<Pressable accessibilityRole=\"button\" accessibilityLabel=\"Clear search\" disabled={disabled} onPress={()=>change(\"\")}\n        {...{className:joinClasses(\"min-h-11 min-w-11 items-center justify-center\",styled&&\"rounded-control focus-visible:ring-2 focus-visible:ring-focus\")}}>\n        <View pointerEvents=\"none\" style={{width:12,height:12,alignItems:\"center\",justifyContent:\"center\"}}>\n          <View {...{className:joinClasses(styled&&\"border-text-muted\")}} style={{position:\"absolute\",width:13,height:0,borderTopWidth:1.5,transform:[{rotate:\"45deg\"}]}}/>\n          <View {...{className:joinClasses(styled&&\"border-text-muted\")}} style={{position:\"absolute\",width:13,height:0,borderTopWidth:1.5,transform:[{rotate:\"-45deg\"}]}}/>\n        </View>\n      </Pressable>:null}\n    </View>\n    <Text accessibilityLiveRegion=\"polite\" {...{className:joinClasses(styled&&\"text-text-muted text-xs\")}}\n      style={{minHeight:summary?undefined:0}}>{summary??\"\"}</Text>\n  </View>;\n}\n\nfunction SearchGlyph({styled}:{styled:boolean}){\n  return <View pointerEvents=\"none\" style={{width:14,height:14}}>\n    <View {...{className:joinClasses(styled&&\"border-text-muted\")}} style={{width:10,height:10,borderRadius:5,borderWidth:1.5}}/>\n    <View {...{className:joinClasses(styled&&\"border-text-muted\")}}\n      style={{position:\"absolute\",left:8,top:10,width:5,height:0,borderTopWidth:1.5,transform:[{rotate:\"45deg\"}]}}/>\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/shell/InspectorSearch.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-fail",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/InspectorSearch",
+    "exports": [
+      "InspectorSearch",
+      "InspectorSearchProps",
+      "matchesQuery"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "input"
+  ],
+  "type": "registry:ui"
+}

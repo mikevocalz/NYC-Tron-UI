@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/canvas/SmartGuides",
+  "title": "Smart Guides",
+  "description": "Smart Guides, a canvas component. Props: viewport, result, names.",
+  "registryDependencies": [
+    "@nyc-tron/forge/canvas/canvas-viewport",
+    "@nyc-tron/forge/canvas/ruler-model",
+    "@nyc-tron/forge/canvas/smart-guides-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/canvas/SmartGuides.tsx",
+      "content": "import {Text,View,type ViewProps} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {docToScreen,validateViewport,type CanvasViewport} from \"@/components/nyc-tron/ui/components/forge/canvas/canvas-viewport\";\nimport {formatRulerNumber} from \"@/components/nyc-tron/ui/components/forge/canvas/ruler-model\";\nimport {smartGuideSummary,validateSmartGuideResult,type SmartGuideResult} from \"@/components/nyc-tron/ui/components/forge/canvas/smart-guides-model\";\n\n/** Props for {@linkcode SmartGuides}. */\nexport interface SmartGuidesProps extends Omit<ViewProps,\"children\"> {\n  readonly viewport:CanvasViewport;\n  /**\n   * The current drag's guides from `computeSmartGuides`, or `undefined` when\n   * nothing is moving. The host commits `result.rect` on release, so what is\n   * drawn is what lands.\n   */\n  readonly result:SmartGuideResult|undefined;\n  /** Layer names by id, for the spoken summary. */\n  readonly names?:Readonly<Record<string,string>>;\n  /** Formats a gap label. @default whole or decimal document pixels, e.g. \"24\" */\n  readonly formatGap?:(gap:number)=>string;\n  className?:string;\n  unstyled?:boolean;\n}\n\n/**\n * Live smart-guide layer (B-05): alignment lines through the edges and\n * centres the moving layer shares with others, and equal-spacing bars with\n * their gap, in the accent color. It takes no touches. One polite live\n * region reads what the layer lines up with, so the snap is heard as well\n * as seen.\n */\nexport function SmartGuides({viewport,result,names,formatGap=formatRulerNumber,className,unstyled=false,style,...rest}:SmartGuidesProps){\n  validateViewport(viewport);\n  if(result)validateSmartGuideResult(result);\n  const styled=!unstyled;\n  const accent=joinClasses(styled&&\"bg-accent\");\n  const sx=(v:number)=>docToScreen(viewport,\"x\",v),sy=(v:number)=>docToScreen(viewport,\"y\",v);\n  const summary=result?smartGuideSummary(result,names):undefined;\n  return <View {...rest} pointerEvents=\"none\" {...{className:joinClasses(className)}}\n    style={[{position:\"absolute\",left:0,top:0,width:viewport.width,height:viewport.height,overflow:\"hidden\",direction:\"ltr\"},style]}>\n    {result?.alignments.map((g,i)=>g.axis===\"x\"\n      ?<View key={\"a\"+i} {...{className:accent}} style={{position:\"absolute\",left:sx(g.value)-0.5,width:1,top:sy(g.from),height:Math.max(1,sy(g.to)-sy(g.from))}}/>\n      :<View key={\"a\"+i} {...{className:accent}} style={{position:\"absolute\",top:sy(g.value)-0.5,height:1,left:sx(g.from),width:Math.max(1,sx(g.to)-sx(g.from))}}/>)}\n    {result?.spacings.flatMap((s,i)=>s.gaps.map((m,j)=>{\n      const horizontal=s.axis===\"x\";\n      const a=horizontal?sx(m.from):sy(m.from),b=horizontal?sx(m.to):sy(m.to),at=horizontal?sy(m.at):sx(m.at);\n      const len=Math.max(1,b-a);\n      return <View key={`s${i}-${j}`} style={{position:\"absolute\",...(horizontal?{left:a,top:at-6,width:len,height:12}:{top:a,left:at-6,height:len,width:12}),\n        alignItems:\"center\",justifyContent:\"center\"}}>\n        <View {...{className:accent}} style={horizontal?{position:\"absolute\",left:0,right:0,top:5.5,height:1}:{position:\"absolute\",top:0,bottom:0,left:5.5,width:1}}/>\n        <View {...{className:accent}} style={horizontal?{position:\"absolute\",left:0,top:0,width:1,height:12}:{position:\"absolute\",top:0,left:0,height:1,width:12}}/>\n        <View {...{className:accent}} style={horizontal?{position:\"absolute\",right:0,top:0,width:1,height:12}:{position:\"absolute\",bottom:0,left:0,height:1,width:12}}/>\n        {len>=28?<Text numberOfLines={1} {...{className:joinClasses(styled&&\"bg-accent text-surface-raised rounded-control\")}}\n          style={{fontSize:10,lineHeight:14,paddingHorizontal:4,fontVariant:[\"tabular-nums\"],\n            ...(horizontal?{position:\"absolute\",top:14}:{position:\"absolute\",left:14})}}>{formatGap(s.gap)}</Text>:null}\n      </View>;\n    }))}\n    <Text accessibilityLiveRegion=\"polite\" aria-live=\"polite\"\n      style={{position:\"absolute\",width:1,height:1,overflow:\"hidden\",opacity:0}}>{summary??\"\"}</Text>\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/canvas/SmartGuides.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/canvas/SmartGuides",
+    "exports": [
+      "SmartGuides",
+      "SmartGuidesProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

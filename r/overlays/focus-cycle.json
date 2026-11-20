@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "overlays/focus-cycle",
+  "title": "focus cycle",
+  "description": "focus cycle, an overlay helper module. Exports cycleFocusIndex, cycleFocusTarget.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/overlays/focus-cycle.ts",
+      "content": "/**\n * Tab and Shift+Tab inside an open overlay. Focus wraps at both ends and never\n * leaves the overlay; a focus position that is not in the list (for example\n * the overlay container itself) enters at the first or last stop.\n */\nexport function cycleFocusIndex(count:number,current:number,backwards:boolean):number{\n  if(!Number.isInteger(count)||count<=0)return -1;\n  if(current<0||current>=count)return backwards?count-1:0;\n  return (current+(backwards?-1:1)+count)%count;\n}\n\n/** Same rule over stable IDs, so a list update never leaves a stale index. */\nexport function cycleFocusTarget(\n  ids:readonly string[],currentId:string|undefined,backwards:boolean\n):string|undefined{\n  const next=cycleFocusIndex(ids.length,currentId===undefined?-1:ids.indexOf(currentId),backwards);\n  return next<0?undefined:ids[next];\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/overlays/focus-cycle.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/overlays/focus-cycle",
+    "exports": [
+      "cycleFocusIndex",
+      "cycleFocusTarget"
+    ]
+  },
+  "categories": [
+    "overlay"
+  ],
+  "type": "registry:lib"
+}

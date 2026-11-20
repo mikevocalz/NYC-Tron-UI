@@ -1,0 +1,53 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/FocusAndA11yLayer",
+  "title": "Focus and A11y Layer",
+  "description": "Provider exposing reduce-motion, screen-reader, high-contrast and input-modality state plus announcements, on iOS, Android, web and QNX.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/shell/a11y-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/FocusAndA11yLayer.tsx",
+      "content": "import {createContext,use,useEffect,useMemo,useRef,type ReactNode} from \"react\";\nimport {AccessibilityInfo,Platform,Text,View} from \"react-native\";\nimport {createStore,type StoreApi} from \"zustand/vanilla\";\nimport {useStore} from \"zustand\";\nimport {initialA11yState,modalityAfterKey,queueAnnouncement,type A11yPreferences,type A11yState,type Politeness} from \"@/components/nyc-tron/ui/components/shell/a11y-model\";\n\nexport type {A11yPreferences,InputModality,Politeness} from \"@/components/nyc-tron/ui/components/shell/a11y-model\";\nexport {motionDuration} from \"@/components/nyc-tron/ui/components/shell/a11y-model\";\n\ninterface A11yContextValue {\n  readonly store:StoreApi<A11yState>;\n  readonly announce:(text:string,politeness?:Politeness)=>void;\n}\nconst A11yContext=createContext<A11yContextValue|undefined>(undefined);\n\n/** Props for {@linkcode FocusAndA11yLayer}. */\nexport interface FocusAndA11yLayerProps {\n  children:ReactNode;\n  /** Starting values, e.g. from a test or a server-rendered hint. The platform overrides them once it reports. */\n  initial?:Partial<A11yPreferences>;\n}\n\ntype Sub={remove:()=>void};\ntype LayerState=A11yState&{readFailure?:{error:unknown}};\ntype MediaQuery={matches:boolean;addEventListener?:(t:\"change\",l:(e:{matches:boolean})=>void)=>void;removeEventListener?:(t:\"change\",l:(e:{matches:boolean})=>void)=>void};\ntype WebDocument={documentElement:{dataset:Record<string,string|undefined>};addEventListener:(t:string,l:(e:never)=>void,c?:boolean)=>void;removeEventListener:(t:string,l:(e:never)=>void,c?:boolean)=>void};\nfunction unavailableQtPreference(error:unknown):boolean{\n  const code=(error as {code?:string}|null)?.code;\n  return code===\"ERR_QT_ACCESSIBILITY_UNSUPPORTED\"||code===\"ERR_QT_ACCESSIBILITY_UNAVAILABLE\";\n}\n\n/**\n * Mount once near the app root. It reads reduce motion, screen-reader state\n * and high contrast from the OS (and the browser's media queries on web),\n * tracks whether focus last moved by keyboard or pointer, and gives every\n * component below it {@linkcode useA11yPreferences} and\n * {@linkcode useAnnounce}.\n *\n * On web the input modality is also written to\n * `<html data-input-modality=\"keyboard|pointer\">`, so the app's CSS can show\n * focus rings only for keyboard users across controls it does not own.\n * Announcements use the OS API on iOS and Android and a hidden live region on\n * web.\n */\nexport function FocusAndA11yLayer({children,initial}:FocusAndA11yLayerProps){\n  const ref=useRef<StoreApi<LayerState>|null>(null);\n  if(!ref.current)ref.current=createStore<LayerState>(()=>initialA11yState(initial));\n  const store=ref.current;\n  const announcement=useStore(store,s=>s.announcement);\n  const readFailure=useStore(store,s=>s.readFailure);\n\n  useEffect(()=>{\n    let alive=true;\n    const subs:Sub[]=[];\n    const set=(patch:Partial<A11yPreferences>)=>{if(alive)store.setState(patch);};\n    const fail=(error:unknown):never=>{\n      alive=false;\n      for(const sub of subs.splice(0)){\n        try{sub.remove();}catch{/* Preserve the originating failure while releasing the other subscriptions. */}\n      }\n      throw error;\n    };\n    // An unsupported Qt preference keeps the app's initial value. It must not\n    // prevent independent supported preferences from subscribing. Unexpected\n    // Qt read failures outside those known codes reach the React error boundary.\n    // Other platforms retain their existing rejected-read fallback.\n    const read=(query:()=>Promise<boolean>|undefined,receive:(value:boolean)=>void)=>{\n      try{query()?.then(receive,error=>{\n        if(alive&&(String(Platform.OS)===\"qnx\"||String(Platform.OS)===\"marathon\")&&!unavailableQtPreference(error))store.setState({readFailure:{error}});\n      });}catch(error){if(!unavailableQtPreference(error))fail(error);}\n    };\n    const listen=(event:\"reduceMotionChanged\"|\"screenReaderChanged\"|\"darkerSystemColorsChanged\"|\"highTextContrastChanged\",receive:(value:boolean)=>void)=>{\n      try{subs.push(AccessibilityInfo.addEventListener(event,receive));}\n      catch(error){if(!unavailableQtPreference(error))fail(error);}\n    };\n    read(()=>AccessibilityInfo.isReduceMotionEnabled?.(),v=>set({reduceMotion:v}));\n    read(()=>AccessibilityInfo.isScreenReaderEnabled?.(),v=>set({screenReader:v}));\n    listen(\"reduceMotionChanged\",v=>set({reduceMotion:!!v}));\n    listen(\"screenReaderChanged\",v=>set({screenReader:!!v}));\n    // React Native Web has no darker-colors or high-contrast-text API; web reads forced colors below.\n    if(Platform.OS===\"ios\"){\n      read(()=>AccessibilityInfo.isDarkerSystemColorsEnabled(),v=>set({highContrast:v}));\n      listen(\"darkerSystemColorsChanged\",v=>set({highContrast:!!v}));\n    }\n    if(Platform.OS===\"android\"||String(Platform.OS)===\"qnx\"||String(Platform.OS)===\"marathon\"){\n      read(()=>AccessibilityInfo.isHighTextContrastEnabled(),v=>set({highContrast:v}));\n      listen(\"highTextContrastChanged\",v=>set({highContrast:!!v}));\n    }\n    if(Platform.OS===\"web\"){\n      const g=globalThis as unknown as {matchMedia?:(q:string)=>MediaQuery;document?:WebDocument};\n      const forced=g.matchMedia?.(\"(forced-colors: active)\");\n      const motion=g.matchMedia?.(\"(prefers-reduced-motion: reduce)\");\n      if(forced){\n        set({highContrast:forced.matches});\n        const l=(e:{matches:boolean})=>set({highContrast:e.matches});\n        forced.addEventListener?.(\"change\",l);\n        subs.push({remove:()=>forced.removeEventListener?.(\"change\",l)});\n      }\n      if(motion){\n        set({reduceMotion:motion.matches});\n        const l=(e:{matches:boolean})=>set({reduceMotion:e.matches});\n        motion.addEventListener?.(\"change\",l);\n        subs.push({remove:()=>motion.removeEventListener?.(\"change\",l)});\n      }\n      const doc=g.document;\n      if(doc){\n        const mark=(m:A11yState[\"inputModality\"])=>{\n          if(store.getState().inputModality!==m)set({inputModality:m});\n          doc.documentElement.dataset.inputModality=m;\n        };\n        const onKey=(e:{key:string;ctrlKey?:boolean;metaKey?:boolean;altKey?:boolean})=>\n          mark(modalityAfterKey(store.getState().inputModality,e.key,!!(e.ctrlKey||e.metaKey||e.altKey)));\n        const onPointer=()=>mark(\"pointer\");\n        doc.addEventListener(\"keydown\",onKey as never,true);\n        doc.addEventListener(\"pointerdown\",onPointer as never,true);\n        subs.push({remove:()=>{doc.removeEventListener(\"keydown\",onKey as never,true);doc.removeEventListener(\"pointerdown\",onPointer as never,true);}});\n      }\n    }\n    return ()=>{alive=false;subs.forEach(s=>s.remove());};\n  },[store]);\n\n  useEffect(()=>{\n    if(announcement&&Platform.OS!==\"web\"){\n      try{AccessibilityInfo.announceForAccessibility(announcement.text);}\n      catch(error){if(!unavailableQtPreference(error))throw error;}\n    }\n  },[announcement]);\n\n  const value=useMemo<A11yContextValue>(()=>({store,announce:(text,politeness)=>queueAnnouncement(store,text,politeness)}),[store]);\n  if(readFailure)throw readFailure.error;\n  return <A11yContext.Provider value={value}>\n    {children}\n    {Platform.OS===\"web\"?<View pointerEvents=\"none\"\n      // Visually hidden in place: an off-screen offset would widen the page in right-to-left layouts.\n      style={{position:\"absolute\",width:1,height:1,overflow:\"hidden\",top:0,left:0,clipPath:\"inset(50%)\"} as object}>\n      <Text key={announcement?.seq??0} accessibilityLiveRegion={announcement?.politeness??\"polite\"}\n        {...{\"aria-atomic\":true}}>{announcement?.text??\"\"}</Text>\n    </View>:null}\n  </A11yContext.Provider>;\n}\n\nfunction useLayer(name:string):A11yContextValue{\n  const ctx=use(A11yContext);\n  if(!ctx)throw new Error(`${name} needs a FocusAndA11yLayer above it`);\n  return ctx;\n}\n/** Current accessibility preferences. Re-renders when one changes. Requires {@linkcode FocusAndA11yLayer}. */\nexport function useA11yPreferences():A11yPreferences{\n  const {store}=useLayer(\"useA11yPreferences\");\n  const reduceMotion=useStore(store,s=>s.reduceMotion);\n  const screenReader=useStore(store,s=>s.screenReader);\n  const highContrast=useStore(store,s=>s.highContrast);\n  const inputModality=useStore(store,s=>s.inputModality);\n  return {reduceMotion,screenReader,highContrast,inputModality};\n}\n/** `announce(text, politeness?)` for screen readers. Requires {@linkcode FocusAndA11yLayer}. */\nexport function useAnnounce():(text:string,politeness?:Politeness)=>void{\n  return useLayer(\"useAnnounce\").announce;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/shell/FocusAndA11yLayer.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/FocusAndA11yLayer",
+    "exports": [
+      "A11yPreferences",
+      "FocusAndA11yLayer",
+      "FocusAndA11yLayerProps",
+      "InputModality",
+      "Politeness",
+      "motionDuration",
+      "useA11yPreferences",
+      "useAnnounce"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:ui"
+}
