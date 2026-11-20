@@ -13,6 +13,7 @@
     "./spatial",
     "./spatial-interactions",
     "./theme",
+    "./tokens",
     "./window-chrome",
     "./window-lifecycle"
   ],
