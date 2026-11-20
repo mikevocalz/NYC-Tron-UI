@@ -38,6 +38,7 @@ const INFRA = {
   "packages/ui/tests/contracts.test.mjs": "source-text assertion now accepts size.touch",
   "packages/ui/tests/color-hsv.test.mjs": "source-text assertion now accepts size.touch",
   "packages/ui/tests/shell-inspector.test.mjs": "source-text assertion now accepts size.touch",
+  "packages/ui/tests/vertical-fader-config.test.mjs": "import mock gained a tokens.ts entry (space 1=4, 2=8; opacity 50=0.5), the values the rewrite replaced",
 };
 
 const git = (...a) => execFileSync("git", a, { cwd: root, encoding: "utf8", maxBuffer: 1 << 28 });
