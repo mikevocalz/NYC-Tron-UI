@@ -74,7 +74,7 @@ for (const [id, p] of pages) {
   if (typeof fm.name !== "string" || !/^[A-Z][A-Za-z0-9]*$/.test(fm.name)) here(2, `name ${fm.name} is not PascalCase`);
   if (p.name !== fm.name) here(2, `# heading "${p.name}" != name "${fm.name}"`);
   if (fm.namespace !== "@nyc-tron") here(2, `namespace ${fm.namespace}`);
-  const wantSub = it.specifier;
+  const wantSub = it.pkg === "@nyc-tron/core" ? "@nyc-tron/core/" + id.slice(5) : id === "root" ? "@nyc-tron/ui" : "@nyc-tron/ui/components/" + id;
   if (fm.subpath !== wantSub) here(2, `subpath ${fm.subpath} != ${wantSub}`);
   if (fm.tier !== it.tier) here(2, `tier ${fm.tier} != tier1.json (${it.tier})`);
   if (fm.docs !== "handwritten" && fm.docs !== "generated") here(2, `docs ${fm.docs}`);
@@ -162,6 +162,9 @@ for (const [id, p] of pages) {
       }
     }
   } else if (fm.tier === 1) here(9, "tier 1 Example is the placeholder");
+  // Install: the Import line names the page's own subpath
+  const impLine = (sec.Install ?? "").match(/^- Import: `(.+)`$/m);
+  if (!impLine || !impLine[1].includes(`from "${fm.subpath}"`) && !impLine[1].includes(`import "${fm.subpath}"`)) here(2, `Install Import line does not use subpath ${fm.subpath}`);
   // check 10
   const tierLabel = fm.a11yStatus;
   if (!A11Y_VALUES.includes(tierLabel)) here(10, `a11yStatus ${tierLabel}`);
@@ -214,6 +217,38 @@ for (const [id, p] of pages) {
     if (/\.(ts|tsx|json|mjs|js|md)$/.test(t)) continue;
     if (!tokenValid(t)) here("X3", `token ${t} named in the page is not in tokens.json`);
   }
+}
+
+// SKILL.md and AGENTS.md: every repo path or script they name must exist
+{
+  const checkPaths = (file, text) => {
+    for (const m of text.matchAll(/`([A-Za-z0-9_.\/@-]+\.(?:md|json|mjs|txt|yml|ts|tsx))`/g)) {
+      const t = m[1];
+      if (/[<*{]/.test(t) || t.startsWith("@") || /^https?:/.test(t)) continue;
+      if (!/^(docs|tooling|packages|\.github|skills)\//.test(t) && !/^[A-Za-z0-9_.-]+\.(md|json|txt)$/.test(t)) continue;
+      if (/^(Button|App)\./.test(t)) continue;
+      if (!exists(t) && !/^(r|docs\/components)\//.test(t)) fail("X5", file, `names ${t}, which does not exist`);
+    }
+    for (const m of text.matchAll(/node (tooling\/[A-Za-z0-9_./-]+\.mjs)/g)) if (!exists(m[1])) fail("X5", file, `runs ${m[1]}, which does not exist`);
+  };
+  if (exists("SKILL.md")) {
+    const sk = read("SKILL.md");
+    if (sk.split("\n").length >= 500) fail("X5", "SKILL.md", "500 lines or more");
+    if (!/^---\nname: [a-z0-9-]+\ndescription: .+\n---\n/.test(sk)) fail("X5", "SKILL.md", "frontmatter needs name and description");
+    if (exists("skills/nyc-tron-ui/SKILL.md") && read("skills/nyc-tron-ui/SKILL.md") !== sk) fail("X5", "skills/nyc-tron-ui/SKILL.md", "differs from SKILL.md");
+    checkPaths("SKILL.md", sk);
+    const prim = ["Stack", "Row", "Spacer", "Divider", "Text"].filter((n) => exists(`packages/ui/src/components/layout/${n}.tsx`) || exists(`packages/ui/src/components/${n}.tsx`));
+    if (prim.length && /<!-- primitives:planned -->/.test(sk)) fail("X5", "SKILL.md", `says primitives are planned, but ${prim.join(", ")} exist`);
+    const nt1 = model.items.filter((i) => i.tier === 1).length;
+    if (!sk.includes(`${model.items.length} documentation pages exist: ${nt1} hand-reviewed`)) fail("X5", "SKILL.md", "page counts are stale");
+  } else fail("X5", "SKILL.md", "missing");
+  if (exists("AGENTS.md")) {
+    const ag = read("AGENTS.md");
+    const i = ag.indexOf("## Agent-native");
+    if (i < 0) fail("X5", "AGENTS.md", "no Agent-native section");
+    else checkPaths("AGENTS.md", ag.slice(i));
+  }
+  for (const f of ["llms.txt", "llms-full.txt"]) if (!exists(f)) fail("X5", f, "missing");
 }
 
 // registry.json

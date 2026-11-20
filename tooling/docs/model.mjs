@@ -297,7 +297,7 @@ export function buildModel() {
       if (isComp && !primarySym) name = pascal(base);
       const doc = leadingDoc(text, primarySym?.name);
       const item = {
-        id, sp, pkg: cfg.pkg, specifier: sp === "." ? cfg.pkg : cfg.pkg + "/" + sp.slice(cfg.relPrefix.length), peerDir: cfg.peerDir, files, text, kind, name, base, entry, syms, comps, tier: tier1 ? 1 : 2,
+        id, sp, pkg: cfg.pkg, specifier: sp === "." ? cfg.pkg : cfg.pkg + "/" + sp.slice(2), peerDir: cfg.peerDir, files, text, kind, name, base, entry, syms, comps, tier: tier1 ? 1 : 2,
         symbolNames: symbols, purposeDoc: doc, tier1,
       };
       // props

@@ -73,3 +73,17 @@ and its [candidate evidence](docs/completion/reports/V1-RELEASE-GATES.md);
 earlier phase reports describe their own commits. Source ownership is complete,
 but stable release still requires the actual platform evidence and owner
 distribution review documented in the release conditions.
+
+## Agent-native
+
+User direction (2026-11-19): make the library usable by agents and by people who never open this repo. Nothing in this section replaces a rule above. It adds the files an agent reads first and the commands that keep them honest.
+
+Read order for an agent that consumes the library: [`SKILL.md`](SKILL.md) (also at `skills/nyc-tron-ui/SKILL.md` for skill installers), then [`llms.txt`](llms.txt), then one page at `docs/components/<id>.md`. `llms-full.txt` holds every page and is about 500k tokens; do not read it whole.
+
+- **Pages.** `docs/components/` has one page per registry item (560: 556 `@nyc-tron/ui` subpaths and 4 `@nyc-tron/core` support modules). Format and CI checks: [`docs/agent-native/doc-template.md`](docs/agent-native/doc-template.md). Tier 1 pages (59) are hand-reviewed and say `docs: "handwritten"`. Tier 2 pages say `docs: "generated"` and keep every section between `generated:begin` and `generated:end` markers.
+- **Regenerate, do not hand-edit.** After a change to a component's props, imports, tokens or comments, run `node tooling/docs/build-docs.mjs`, then `node tooling/docs/build-llms.mjs` and `node tooling/docs/build-site.mjs`. Commit the result. `.github/workflows/docs.yml` regenerates all three and fails on any diff. To write a generated page by hand, set its front matter to `docs: "handwritten"` and delete the markers; the generator then leaves it alone.
+- **Check.** `node tooling/docs/check-docs.mjs` runs the 12 template checks plus registry, link and token checks. It exits non-zero on a failure.
+- **Registry files are generated.** `registry.json`, `r/*.json` and `registry-excluded.json` come from `tooling/registry/build-registry.mjs`. Do not edit them. The registry namespace entry lives in `components.json`.
+- **Tokens, not literals.** A new colour, spacing, radius, font size or opacity in `packages/*/src` is a token, never a literal. Colours are the 13 theme variables. Spacing keys are unit multiples (`space.2` is 8px). `docs/agent-native/tokens.json` is the inventory and `docs/agent-native/audit-literals.mjs` counts what is left. A page's front-matter `tokens` list comes from the source scan, so a new literal shows up in a docs diff.
+- **Claims stay narrow.** `a11yStatus` is `reviewed-pass`, `reviewed-fail` or `unverified` for tier 1, from reading source (rule 10 applies). `verified` needs a rendered check and an `Evidence:` path. Generated `Install` sections give the registry command, and the registry install stays unverified until a clean app installs from the tagged `r/` files. Native-only packages are listed in `registry-excluded.json` and install from the release tarball.
+- **Writing.** Pages, `llms.txt`, `SKILL.md` and this section follow the no-ai-slop rule above: lead with the point, name the prop or file, no marketing words.
