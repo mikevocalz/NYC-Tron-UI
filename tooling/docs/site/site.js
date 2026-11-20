@@ -85,6 +85,7 @@
     function manual() {
       var ok = fallbackCopy(text, btn);
       if (ok) return done();
+      say("Copy failed. The text is selected below. Press Command C or Control C to copy it.");
       var pre = D.createElement("pre");
       pre.className = "manual";
       pre.textContent = text;
@@ -161,13 +162,15 @@
     var out = [];
     ix.rows.forEach(function (r) {
       var s = 0;
+      var hit = 0;
       qt.forEach(function (w) {
         var f = r.tf[w];
         if (!f) return;
+        hit++;
         var n = ix.df[w];
         s += (Math.log(1 + (ix.N - n + 0.5) / (n + 0.5)) * f * 2.2) / (f + 1.2 * (0.25 + (0.75 * r.len) / ix.avg));
       });
-      if (s > 0) out.push({id: r.id, s: s});
+      if (s > 0) out.push({id: r.id, s: s, m: hit, of: qt.length});
     });
     return out.sort(function (a, b) { return b.s - a.s || (a.id < b.id ? -1 : 1); });
   }
@@ -206,8 +209,15 @@
     function run(pushState) {
       var q = qf.value.trim();
       var order;
-      if (q) order = rank(ix, q).map(function (r) { return r.id; });
+      var ranked = q ? rank(ix, q) : [];
+      var stat = {};
+      ranked.forEach(function (r) { stat[r.id] = r; });
+      if (q) order = ranked.map(function (r) { return r.id; });
       else order = lis.map(function (li) { return li.getAttribute("data-id"); });
+      lis.forEach(function (li) {
+        var old = $(".hl", li);
+        if (old) old.parentNode.removeChild(old);
+      });
       var shown = 0;
       var grp = {};
       lis.forEach(function (li) { li.hidden = true; if (li.parentNode === flat) li._home.appendChild(li); });
@@ -218,6 +228,13 @@
         if (!li || !match(li)) return;
         li.hidden = false;
         shown++;
+        var st = stat[id];
+        if (q && st && st.of > 1) {
+          var tag = D.createElement("span");
+          tag.className = "hl";
+          tag.textContent = "Matches " + st.m + " of " + st.of + " words";
+          $(".a", li).appendChild(tag);
+        }
         grp[li.getAttribute("data-c")] = true;
         if (q) flat.appendChild(li);
       });
@@ -226,6 +243,12 @@
       $("#fcount").textContent = active ? " (" + active + " active)" : "";
       count.textContent = shown + (shown === 1 ? " result" : " results");
       emptyBox.hidden = shown !== 0;
+      var wk = $("#weak");
+      if (wk) {
+        var best = 0;
+        order.forEach(function (id) { if (byId[id] && match(byId[id]) && stat[id] && stat[id].m > best) best = stat[id].m; });
+        wk.hidden = !(q && shown > 0 && ranked.length && ranked[0].of > 1 && best < ranked[0].of);
+      }
       if (shown === 0) $("#emptyq").textContent = q;
       selId = null;
       $$(".sel", list).forEach(function (n) { n.classList.remove("sel"); });
@@ -250,6 +273,8 @@
       li.classList.add("sel");
       selId = li.getAttribute("data-id");
       qf.setAttribute("aria-activedescendant", li.id);
+      var vv = visible();
+      say("Result " + (vv.indexOf(li) + 1) + " of " + vv.length + ": " + li.getAttribute("data-t"));
       li.scrollIntoView({block: "nearest"});
     }
     D.addEventListener("keydown", function (e) {
@@ -303,6 +328,8 @@
       var bad = $("#cerr");
       bad.hidden = false;
       $("#cerrid").textContent = id || "";
+      $("#cname").textContent = "No page found";
+      D.title = "No page found | NYC-Tron UI";
       body.hidden = true;
     } else {
       render(id, meta);
@@ -344,6 +371,10 @@
       + li("", "Tier " + fm.tier);
     var cmd = "npx shadcn@latest add @nyc-tron/" + id;
     var imp = (md.match(/^- Import: `(.+)`$/m) || [0, ""])[1];
+    $("#cinst").hidden = false;
+    $("#cact").hidden = false;
+    var cn = $("#cnote");
+    if (cn && cn.textContent.trim()) cn.hidden = false;
     $("#ccmd").textContent = cmd;
     $("#ccopy").setAttribute("data-copy", cmd);
     var rawRel = "../components/" + id + ".md";
@@ -396,9 +427,23 @@
     DOCS.items.forEach(function (it) { cats[it.c] = (cats[it.c] || 0) + 1; });
     var nh = "<p class=\"navh\">Categories</p><ul class=\"navlist\">" + Object.keys(cats).sort().map(function (c) { return "<li><a href=\"search.html?category=" + c + "\"" + (c === fm.category ? " aria-current=\"true\"" : "") + ">" + nycEsc(c) + " <span class=\"muted small\">&nbsp;" + cats[c] + "</span></a></li>"; }).join("") + "</ul>";
     var sib = DOCS.items.filter(function (it) { return it.c === fm.category; });
-    nh += "<p class=\"navh\">In " + nycEsc(fm.category) + "</p><ul class=\"navlist\">" + sib.map(function (it) { return "<li><a href=\"c.html?id=" + it.i + "\"" + (it.i === id ? " aria-current=\"page\"" : "") + ">" + nycEsc(it.n) + "</a></li>"; }).join("") + "</ul>";
+    var link = function (it) { return "<li><a href=\"c.html?id=" + it.i + "\"" + (it.i === id ? " aria-current=\"page\"" : "") + ">" + nycEsc(it.n) + "</a></li>"; };
+    nh += "<p class=\"navh\">In " + nycEsc(fm.category) + "</p>";
+    /* A category of hundreds of pages is split by the folder after the category folder, and only the group that holds
+       this page starts open. Small categories stay one flat list. */
+    var groupOf = function (it) { var p = it.i.split("/"); return p.length > 2 ? p[1] : "general"; };
+    if (sib.length > 40) {
+      var gs = {};
+      var order = [];
+      sib.forEach(function (it) { var g = groupOf(it); if (!gs[g]) { gs[g] = []; order.push(g); } gs[g].push(it); });
+      order.sort(function (a, b) { return a === "general" ? -1 : b === "general" ? 1 : a < b ? -1 : 1; });
+      var mine = groupOf({i: id});
+      order.forEach(function (g) {
+        nh += "<details class=\"navgrp\"" + (g === mine ? " open" : "") + "><summary><span>" + nycEsc(g) + "</span><span class=\"muted\">" + gs[g].length + "</span></summary><ul class=\"navlist\">" + gs[g].map(link).join("") + "</ul></details>";
+      });
+    } else nh += "<ul class=\"navlist\">" + sib.map(link).join("") + "</ul>";
     $("#cnav").innerHTML = nh;
-    var cur2 = $("#cnav [aria-current=\"page\"]");
+    var cur2 = $("#cnav a[aria-current=\"page\"]");
     if (cur2 && cur2.scrollIntoView) { var box = $("#cnav").parentNode; try { box.scrollTop = Math.max(0, cur2.offsetTop - 120); } catch (e) { /* ignore */ } }
     /* pager */
     var ix2 = sib.findIndex(function (it) { return it.i === id; });
@@ -410,9 +455,23 @@
     /* copy for agent */
     window.__agentText = function () {
       var props = "";
-      secs.forEach(function (s) { if (s.title === "Props") props = s.lines.join("\n").split(/\n### /)[0].trim().slice(0, 4000); });
+      secs.forEach(function (s) { if (s.title === "Props") { props = s.lines.join("\n").split(/\n### /)[0].trim(); if (props.length > 4000) props = props.slice(0, 4000).replace(/\n[^\n]*$/, "") + "\n(Props table cut at 4000 characters. Full page: " + rawAbs + ")"; } });
       return "NYC-Tron UI item: " + id + "\nInstall: " + cmd + "\nImport: " + imp + "\nPage (raw markdown): " + rawAbs + "\nDocs: " + fm.docs + ", accessibility " + a + "\n\nProps:\n" + props + "\n";
     };
     if (location.hash) { var t = D.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
   }
+  /* ---- scrollable regions reachable by keyboard (WCAG 2.1.1) ---- */
+  function scrollables() {
+    $$("pre,.tw").forEach(function (n) {
+      var wide = n.scrollWidth > n.clientWidth + 1;
+      if (wide && !n.hasAttribute("tabindex")) {
+        n.setAttribute("tabindex", "0");
+        if (n.className === "tw") { n.setAttribute("role", "region"); n.setAttribute("aria-label", "Table, scrolls sideways"); }
+      } else if (!wide && n.getAttribute("data-sc") === "1") { n.removeAttribute("tabindex"); }
+      if (wide) n.setAttribute("data-sc", "1");
+    });
+  }
+  window.addEventListener("resize", scrollables);
+  window.addEventListener("load", scrollables);
+  setTimeout(scrollables, 0);
 })();

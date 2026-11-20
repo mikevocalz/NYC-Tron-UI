@@ -188,7 +188,7 @@ const home = page({
   rail: false,
   body: `<h1>NYC-Tron UI</h1>
 <p>${esc(statement)}</p>
-<form action="search.html" method="get" role="search" class="actions"><label class="vh" for="bq">Search ${items.length} pages by name or by what the component does</label><input class="field" id="bq" name="q" type="search" placeholder="Search by name or what it does, for example segmented control" autocomplete="off"><button class="btn primary" type="submit">Search</button></form>
+<form action="search.html" method="get" role="search" class="actions"><label class="vh" for="bq">Search ${items.length} pages by name or by what the component does</label><input class="field" id="bq" name="q" type="search" placeholder="Name or what it does" autocomplete="off"><button class="btn primary" type="submit">Search</button></form>
 ${installBox("Button")}
 <p class="actions"><a class="btn" href="../../llms.txt">llms.txt</a><a class="btn" href="../components/Button.md">Raw page: Button.md</a><button class="btn" type="button" data-copy="Read ${LLMS} first, then fetch one page at ${rawUrl(TAG, "docs/components/<id>.md")} where &lt;id&gt; is the registry item id, for example shell/UnitInput. Install with npx shadcn@latest add @nyc-tron/&lt;id&gt;.">Copy for agent</button></p>
 <h2>Hand-reviewed components</h2>
@@ -204,7 +204,7 @@ const searchRows = cats
   .map((c) => {
     const list = items.filter((i) => i.c === c).sort((a, b) => a.k - b.k || a.i.localeCompare(b.i));
     return `<section data-group="${c}"><h2>${cap(c)}</h2><ul class="rows">\n${list
-      .map((i) => `<li id="r-${rowN++}" data-id="${esc(i.i)}" data-t="${esc(i.t)}" data-d="${esc(i.d)}" data-c="${c}" data-k="${i.k}" data-p="${i.p.join(" ")}"><div class="a"><a href="c.html?id=${esc(i.i)}">${esc(i.t)}</a><div class="d">${esc(i.d)}</div></div><div class="m">${cap(i.c)}. ${i.k === 1 ? "Hand-reviewed" : "Generated"}. ${esc(i.a)}</div><div class="act"><button class="btn" type="button" data-copy="npx shadcn@latest add @nyc-tron/${esc(i.i)}">Copy install</button></div></li>`)
+      .map((i) => `<li id="r-${rowN++}" data-id="${esc(i.i)}" data-t="${esc(i.t)}" data-d="${esc(i.d)}" data-c="${c}" data-k="${i.k}" data-p="${i.p.join(" ")}"><div class="a"><a href="c.html?id=${esc(i.i)}">${esc(i.t)}</a><div class="d">${esc(i.d)}</div></div><div class="m">${cap(i.c)}. ${i.k === 1 ? "Hand-reviewed" : "Generated"}. Accessibility: ${esc(i.a)}</div><div class="act"><button class="btn" type="button" data-copy="npx shadcn@latest add @nyc-tron/${esc(i.i)}">Copy install</button></div></li>`)
       .join("\n")}\n</ul></section>`;
   })
   .join("\n");
@@ -223,6 +223,7 @@ const search = page({
 </div></details>
 <p class="nojs muted">Ranking needs JavaScript. The list below is unranked.</p>
 <p id="count" class="muted" role="status" aria-live="polite">${items.length} results</p>
+<p id="weak" class="small muted" hidden>No page matches every word. Pages that match some of the words come first, each marked with how many.</p>
 <div id="empty" class="status" hidden><p>No match for "<span id="emptyq"></span>". Try a component name or what it does, for example "segmented control" or "context menu".</p><button class="btn" type="button" id="clear">Clear filters</button></div>
 <div id="err" class="status err" hidden>Search could not read its index. The list below is unranked.</div>
 <div id="results">
@@ -240,6 +241,8 @@ for (const l of themeMd.split("\n")) {
 }
 const sentence = themeMd.split("\n").slice(2, 8).join(" ").replace(/\s+/g, " ").match(/^(.*?\.)\s/)?.[1] ?? "NYC-Tron components ship no colors.";
 const cr = (a, b) => ratio(a, b).toFixed(2);
+// An on-colour is drawn on its fill, never on the page surface, so its ratio is taken against that fill.
+const fillOf = {onPrimary: "primary", onDanger: "danger"};
 const colorRows = colorTokens.map((t) => {
   const k = camelKey(t.name);
   const req = ["primary", "onPrimary", "surfaceRaised", "surfaceSunken", "border", "text", "textMuted", "focus"].includes(k);
@@ -253,11 +256,11 @@ const colorRows = colorTokens.map((t) => {
     `<code>${THEMES["reference-dark"].c[k]}</code>`,
     `<code>${THEMES["infrax-light"].c[k]}</code>`,
     `<code>${THEMES["infrax-dark"].c[k]}</code>`,
-    k === "surfaceRaised" ? "n/a" : `${cr(THEMES["reference-light"].c[k], THEMES["reference-light"].c.surfaceRaised)} / ${cr(THEMES["reference-dark"].c[k], THEMES["reference-dark"].c.surfaceRaised)}`,
+    k === "surfaceRaised" ? "n/a" : `${cr(THEMES["reference-light"].c[k], THEMES["reference-light"].c[fillOf[k] ?? "surfaceRaised"])} / ${cr(THEMES["reference-dark"].c[k], THEMES["reference-dark"].c[fillOf[k] ?? "surfaceRaised"])}${fillOf[k] ? " on " + fillOf[k] : ""}`,
   ];
-  return `<tr class="tokrow" data-tok="${esc(t.name.toLowerCase() + " " + t.cssVariable)}">${cells.map((c, j) => `<td data-label="${["Swatch", "Name", "CSS variable", "Utilities in use", "Required", "Reference light", "Reference dark", "InFraX light", "InFraX dark", "Contrast on surfaceRaised, light / dark"][j]}">${c}</td>`).join("")}</tr>`;
+  return `<tr class="tokrow" data-tok="${esc(t.name.toLowerCase() + " " + t.cssVariable)}">${cells.map((c, j) => `<td data-label="${["Swatch", "Name", "CSS variable", "Utilities in use", "Required", "Reference light", "Reference dark", "InFraX light", "InFraX dark", "Contrast (Reference, light / dark)"][j]}">${c}</td>`).join("")}</tr>`;
 });
-const colHead = ["Swatch", "Name", "CSS variable", "Utilities in use", "Required", "Reference light", "Reference dark", "InFraX light", "InFraX dark", "Contrast on surfaceRaised (Reference, light / dark)"];
+const colHead = ["Swatch", "Name", "CSS variable", "Utilities in use", "Required", "Reference light", "Reference dark", "InFraX light", "InFraX dark", "Contrast (Reference, light / dark)"];
 const tokenGroups = [
   ["Spacing", "spacing", "Unit multiples of 4px. `space.2` is 8px."],
   ["Radius steps", "radius", "Steps for literal radii. The theme radii are `radius.control` and `radius.card` above."],
@@ -302,6 +305,7 @@ const tokensPage = page({
 <div id="tokempty" class="status" hidden><p>No token matches "<span id="tokq"></span>". Clear the filter to see all <span id="tokall"></span>.</p><button class="btn" type="button" id="tokclear">Clear filter</button></div>
 <h2>Colour</h2>
 <div class="tw"><table class="stack"><thead><tr>${colHead.map((h) => `<th scope="col">${h}</th>`).join("")}</tr></thead><tbody>${colorRows.join("")}</tbody></table></div>
+<p class="small muted">Contrast is against <code>surfaceRaised</code>, except <code>onPrimary</code> and <code>onDanger</code>, which are against the fill they sit on.</p>
 <p class="small muted">Source: <code>packages/core/src/theme.ts</code>, <code>docs/THEME_TOKENS.md</code>, <code>packages/core/src/presets/infrax.ts</code>. <code>border</code> is 1.58:1 on the raised surface, below the 3:1 that WCAG 1.4.11 asks of an input edge, so this site draws input edges with <code>textMuted</code>.</p>
 <h2>Radius</h2>
 <div class="tw"><table class="stack"><thead><tr><th scope="col">Name</th><th scope="col">CSS variable</th><th scope="col">Reference</th><th scope="col">InFraX</th><th scope="col">Source</th></tr></thead><tbody>${radiusRows.join("")}</tbody></table></div>
@@ -395,10 +399,10 @@ const comp = page({
 <ul class="facts" id="cfacts"></ul>
 <div id="cerr" class="status err" hidden><p>No page for "<span id="cerrid"></span>". Check the id, or find it in search.</p><p><a class="btn" href="search.html">Search</a></p></div>
 <noscript><div class="status"><p>This page renders from <code>assets/pages.js</code> and needs JavaScript. The raw markdown for each page is in <code>docs/components/&lt;id&gt;.md</code>, which is readable without a script.</p></div></noscript>
-<div class="install"><button class="btn primary" type="button" id="ccopy" data-copy="">Copy</button><pre><code id="ccmd"></code></pre></div>
-<p class="small muted">${verified ? "" : `Registry install is unverified until the first push of <code>r/</code> under tag ${esc(TAG)} and a clean app install. The release tarball works today (<a href="install.html#tarball">steps</a>).`}</p>
+<div class="install" id="cinst" hidden><button class="btn primary" type="button" id="ccopy" data-copy="">Copy</button><pre><code id="ccmd"></code></pre></div>
+<p class="small muted" id="cnote" hidden>${verified ? "" : `Registry install is unverified until the first push of <code>r/</code> under tag ${esc(TAG)} and a clean app install. The release tarball works today (<a href="install.html#tarball">steps</a>).`}</p>
 <p class="small muted" data-offline hidden>You are offline. The install command needs a connection.</p>
-<p class="actions"><button class="btn" type="button" data-copy-agent>Copy for agent</button><a class="btn" id="craw" href="../components/Button.md">View as markdown</a></p>
+<p class="actions" id="cact" hidden><button class="btn" type="button" data-copy-agent>Copy for agent</button><a class="btn" id="craw" href="../components/Button.md">View as markdown</a></p>
 <div id="cbody"></div>
 <nav class="pager" id="cpager" aria-label="Pages in this category"></nav>`,
 });
@@ -450,6 +454,19 @@ for (const [f, text] of Object.entries(files)) {
   }
 }
 
+// duplicate ids and dead CSS selectors (a class in site.css that no page, script or renderer ever emits)
+const dupIds = [];
+for (const [f, text] of Object.entries(files)) {
+  if (!f.endsWith(".html")) continue;
+  const seen = new Set();
+  for (const m of text.matchAll(/\sid="([^"]+)"/g)) {
+    if (seen.has(m[1])) dupIds.push(`${f}: id="${m[1]}"`);
+    seen.add(m[1]);
+  }
+}
+const emitted = Object.entries(files).filter(([f]) => /\.(html|js)$/.test(f) && f !== "assets/pages.js").map(([, t]) => t).join("\n");
+const emittedWords = new Set(emitted.split(/[^\w-]+/));
+const deadCss = [...new Set([...css.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\[[^\]]*\]/g, "").matchAll(/\.([a-zA-Z][\w-]*)/g)].map((m) => m[1]))].filter((c) => !emittedWords.has(c));
 let changed = 0;
 let total = 0;
 for (const [f, text] of Object.entries(files)) {
@@ -467,6 +484,8 @@ for (const [f, text] of Object.entries(files)) {
 const sizes = Object.entries(files).map(([f, t]) => `${f} ${bytes(t)}`).join(", ");
 console.log(`site: ${Object.keys(files).length} files, ${total} bytes (${(total / 1048576).toFixed(2)} MB); component pages render from one pages.js (${items.length} pages)`);
 console.log(sizes);
+console.log(`duplicate ids: ${dupIds.length}${dupIds.length ? "\n  " + dupIds.slice(0, 10).join("\n  ") : ""}`);
+console.log(`dead css classes: ${deadCss.length}${deadCss.length ? " " + deadCss.join(", ") : ""}`);
 console.log(`broken relative links: ${broken.length}${broken.length ? "\n  " + broken.slice(0, 10).join("\n  ") : ""}`);
 console.log(`${CHECK ? "would change" : "written"}: ${changed} file(s)`);
-if (broken.length || (CHECK && changed)) process.exit(1);
+if (broken.length || dupIds.length || deadCss.length || (CHECK && changed)) process.exit(1);
