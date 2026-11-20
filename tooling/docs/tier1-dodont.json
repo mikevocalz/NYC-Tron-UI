@@ -1,0 +1,681 @@
+{
+ "Button": {
+  "do": [
+   "Set `loading` while a save runs, since it shows the ActivityIndicator, sets `accessibilityState.busy` and disables the control in one prop.",
+   "Pass `targetSize` of 44 or more when a design needs a larger hit area, because it sets both `minWidth` and `minHeight`.",
+   "Give `numberOfLines` an integer from 1 to 64 to cap long labels, because the value is forwarded to the label Text."
+  ],
+  "dont": [
+   "Do not pass `targetSize` below 44 or a non-finite value, because it throws a RangeError at render.",
+   "Do not rely on the loading spinner against `primary` or `danger` fills; its iOS default color measures 2.04:1 and 1.19:1 (F11) and is UNVERIFIED.",
+   "Do not assume `className` reaches the Pressable on every host; the page marks that UNVERIFIED because it depends on the host's className interop."
+  ]
+ },
+ "Card": {
+  "do": [
+   "Pick `surface` of `sunken` to set a card apart from a `raised` page area, since both keep the `border-border` outline.",
+   "Leave `padded` at its default `true` for content cards, which adds `p-4`, and set it to false only when a child supplies its own padding."
+  ],
+  "dont": [
+   "Do not set `unstyled` and expect the radius or border, because it removes all default classes including `rounded-card`.",
+   "Do not put tap handlers on `Card` and expect a button, because it is a plain View with no role and the a11y review marks it a static container."
+  ]
+ },
+ "DragGrabHandle": {
+  "do": [
+   "Pass a descriptive `label`, since it becomes the `accessibilityLabel` for the only element a screen reader user reaches.",
+   "Handle `onCancel` by discarding the preview, because it fires on Escape, termination, a second pointer or when the handle becomes `disabled`.",
+   "Use `onMove` for preview only and apply the change in `onCommit`, which runs once per completed drag."
+  ],
+  "dont": [
+   "Do not ship `DragGrabHandle` as the only way to move something, because it has no activation action and screen reader users hear a hint for a control they cannot operate (F14).",
+   "Do not assume Escape cancels a web drag reliably, because the page marks Escape reaching `onKeyDown` as UNVERIFIED.",
+   "Do not expect it in the tab order, because `focusable` is false in the source."
+  ]
+ },
+ "FieldGroup": {
+  "do": [
+   "Use `FieldGroup.Section` with a `title`, since it sets both the header text and the group `aria-label`.",
+   "Pass `footer` for helper text under the body, which keeps it in the same labelled group.",
+   "Set `titleUppercase` for compact section headers, which adds `uppercase tracking-wide`."
+  ],
+  "dont": [
+   "Do not put interactive state expectations on `FieldGroup`, because it is static layout with no focus or pressed code.",
+   "Do not claim native screen readers announce the group name, because the page marks `role=\"group\"` with `aria-label` UNVERIFIED."
+  ]
+ },
+ "IconButton": {
+  "do": [
+   "Always pass `aria-label`, since it is required and sets both `aria-label` and `accessibilityLabel` for an icon-only control.",
+   "Use `size` of `md` on Android, because `sm` is 44 and 4dp under the 48dp guideline (F08).",
+   "Set `selected` only for real toggles, since undefined means not a toggle and it drives `aria-pressed` on web."
+  ],
+  "dont": [
+   "Do not use `selected` on `outline`, `secondary` or `ghost` as the only cue, because the `bg-primary/10` tint is 1.15:1 and the review is FAIL (F04).",
+   "Do not pass `targetSize` below 44 or non-finite, because it throws a RangeError.",
+   "Do not assume icon contrast on `primary` or `danger` fills, because the icon color is the caller's and the page marks it UNVERIFIED."
+  ]
+ },
+ "List": {
+  "do": [
+   "Pass `onPress` for tappable rows, since it renders a Pressable with `accessibilityRole` button and the `accessibilityHint` is applied there.",
+   "Give pressable rows string or number `children`, because the accessible label is built from them plus `supportingText`.",
+   "Add `aria-label` on `List` to name the group, since the root carries `role=\"list\"`."
+  ],
+  "dont": [
+   "Do not use `selected` alone to mark the current row, because `bg-primary/10` is 1.15:1 (F04) and the review is FAIL (1.4.11).",
+   "Do not set `selected` on a row without `onPress` and expect iOS to announce it, because the state lands on a View that is not accessible.",
+   "Do not set `disabled` on a non-pressable row, because it only applies in the Pressable branch."
+  ]
+ },
+ "NavigationRail": {
+  "do": [
+   "Set `edge` on both `NavigationRail` and `NavigationShell` to the same side, because it chooses `border-l` or `border-r` and the `rail` slot position.",
+   "Give every item a clear `label`, since it doubles as the item `accessibilityLabel` while `icon` is hidden from accessibility."
+  ],
+  "dont": [
+   "Don't assume `collapsed` removes labels from screen readers; it hides labels only and the `label` still names the item.",
+   "Don't treat the selected item's focus ring as proven visible: `ring-focus` matches the `bg-primary` fill at 1/1:1 (F07) and the page marks it `UNVERIFIED`.",
+   "Don't claim arrow-key navigation works; the page says no roving handler exists, so every `tablist` tab is a Tab stop."
+  ]
+ },
+ "SegmentedControl": {
+  "do": [
+   "Set `aria-label` or `aria-labelledby` so the radiogroup has a name.",
+   "Use `segmentStyle` as a function when you need the `pressed` state, since that is the only route to it."
+  ],
+  "dont": [
+   "Don't expect `onChange` for the already selected option or a disabled one; it is not called.",
+   "Don't rely on arrow keys on native: key handling and `tabIndex` attach only when `Platform.OS` is web.",
+   "Don't assume the focused active segment shows a ring; `ring-focus` equals the `bg-primary` fill at 1/1:1 (F07), still `UNVERIFIED`."
+  ]
+ },
+ "Select": {
+  "do": [
+   "Pass either `options` or `groups`, never both, because `selectOptions` throws `TypeError` when both are set.",
+   "Set `errorText` to show a failure, since it replaces `hint` and renders a message with `accessibilityRole=\"alert\"`."
+  ],
+  "dont": [
+   "Don't depend on the keyboard-active option cue: `bg-surface-sunken` against the list is 1.11/1.11:1 and vanishes when the option is selected (2.4.7, FAIL).",
+   "Don't rely on the trigger border for contrast; `border-border` on `bg-surface-sunken` is 1.42/1.75:1 (F03).",
+   "Don't assume iOS and Android announce a listbox; the page marks the plain `list` announcement `UNVERIFIED`."
+  ]
+ },
+ "TabBar": {
+  "do": [
+   "Use `semantics=\"navigation\"` with `href` for link tabs; it gives `aria-current=\"page\"` instead of `aria-selected`.",
+   "Give every tab a unique `key` and a `label`, which also becomes the tab `aria-label`.",
+   "Set `aria-label` to a meaningful name when several bars exist; the default is 'Navigation'."
+  ],
+  "dont": [
+   "Do not assume the active tab shows focus; `bg-primary` and `ring-focus` are one colour (F07), unverified.",
+   "Do not set `href` expecting links in `semantics=\"tabs\"`; it applies only with `navigation` on web, and react-native-web behaviour is UNVERIFIED.",
+   "Do not rely on `density=\"compact\"` for Android touch size; it is 44, 4dp under the 48dp guideline (F08)."
+  ]
+ },
+ "TextField": {
+  "do": [
+   "Pass a unique `id` and `label`; the label `nativeID` is `id + \"-label\"` and `label` is the input's `accessibilityLabel`.",
+   "Use `errorText` for validation; it replaces `helperText`, turns the border `border-danger` and announces as an alert.",
+   "Use `startAdornment` for a leading icon inside the border box."
+  ],
+  "dont": [
+   "Do not rely on the field border alone; `border-border` on `bg-surface-sunken` is 1.42/1.75:1 (F03) and the status is FAIL.",
+   "Do not expect a focus style; the file adds none and the platform caret or outline applies (GU1).",
+   "Do not assume `accessibilityLabelledBy` reads the same on every platform; that is UNVERIFIED."
+  ]
+ },
+ "Toolbar": {
+  "do": [
+   "Set `actionsLabel` when `title` is absent or several toolbars exist; the fallback is `<title> actions` or `Actions`.",
+   "Use `density=\"compact\"` for tight headers; it uses `min-h-13` and a smaller title.",
+   "Pass `actions` focusable children, since arrow keys move among them on web."
+  ],
+  "dont": [
+   "Do not assume `min-h-13` resolves; it is defined nowhere in the files read and depends on your Tailwind config (UNVERIFIED).",
+   "Do not put `role` on the root; `ToolbarProps` omits it.",
+   "Do not omit `title` expecting a heading; without it only a spacer renders."
+  ]
+ },
+ "content/KeyValueList": {
+  "do": [
+   "Give every entry in `items` a unique `key`, since it is used as the React key for each pair.",
+   "Set `emptyLabel` to wording that fits the field, because a `null` or `undefined` value renders it in muted italic text.",
+   "Use `twoColumnMinWidth` to control when the list goes to two columns, since the measured width is compared against it."
+  ],
+  "dont": [
+   "Do not pass `surface` expecting a visual change, because it is accepted and discarded.",
+   "Do not expect a two-column layout on the first render, because before the first layout the width is `null` and the list is one column.",
+   "Do not claim screen reader pairing for `role=\"list\"` output as verified, because the page marks it UNVERIFIED and pairing is by order only."
+  ]
+ },
+ "data/DataTable": {
+  "do": [
+   "Pass `getRowId` when rows have stable ids, since it is forwarded to `useTable` only when set.",
+   "Set `layout` to `cards` or `table` when the breakpoint must not depend on measured width, because `auto` falls back to `cards` before the first measurement.",
+   "Set `onRowPress` only on rows that open a record, since it turns them into buttons with the hint \"Opens this record\"."
+  ],
+  "dont": [
+   "Do not ship the wide `table` layout as an accessible table, because the a11y review is FAIL with no table, row or columnheader role (F01).",
+   "Do not pass a `cardsBelow` of 0 or less, an unknown `layout` string or a negative `width`, because each throws a RangeError.",
+   "Do not treat announcements for the sort buttons and `onRowPress` row buttons as verified, because the page marks them UNVERIFIED."
+  ]
+ },
+ "data/TreeGrid": {
+  "do": [
+   "Pass `expandedIds` with `onExpandedChange` to control expansion, because each of the three state groups is controlled only when the matching prop is not `undefined`.",
+   "Provide `renderCell` for non-string values, since the fallback renders `String(node.values?.[column.id] ?? \"\")`.",
+   "Set `compactBelow` to the width where columns stop fitting, because narrower layouts drop the header and stack label over cells."
+  ],
+  "dont": [
+   "Do not rely on the selected row tint alone, because `bg-primary/10` measures 1.15:1 against the raised surface (F04) and the review is FAIL (1.4.11).",
+   "Do not assume `treeGridKey` key handling is documented, because the page marks which keys it handles as UNVERIFIED.",
+   "Do not trust `pinnedColumnIds` alignment during native-driver scrolling, because the page marks it UNVERIFIED."
+  ]
+ },
+ "feedback/Badge": {
+  "do": [
+   "Choose `tone` of `info`, `success`, `danger` or `accent` when status matters, since each adds a dot and `text-text` label rather than relying on color alone.",
+   "Use `size` of `xs` for dense rows, which tightens padding to `px-1.5 py-0.5`.",
+   "Write a short, self-describing `label`, since it is both the visible text and the `accessibilityLabel`."
+  ],
+  "dont": [
+   "Do not add `onPress` behaviour to a `Badge`, because it is static and not focusable per the a11y review.",
+   "Do not set `unstyled` and expect the tone dot, because the dot and `tone` classes come with the built-in styling."
+  ]
+ },
+ "feedback/Banner": {
+  "do": [
+   "Set `live` to `alert` only for urgent failures, because it maps to an assertive live region while the default `status` is polite.",
+   "Pass `onDismiss` to render the close button, and set `dismissLabel` when \"Dismiss\" is not specific enough.",
+   "Always supply `tone` and `title`, since both are required and the title carries the meaning."
+  ],
+  "dont": [
+   "Do not assume the announcement is verified on every platform, because the page marks `role=\"alert\"` and `status` behaviour on native as UNVERIFIED.",
+   "Do not omit `tone`, because it is required and has no default.",
+   "Do not rely on `ps-4`, `pe-1` and `pe-4` spacing without checking your Tailwind setup, because the page marks logical-property support UNVERIFIED."
+  ]
+ },
+ "feedback/EmptyState": {
+  "do": [
+   "Set `titleLevel` to match the page outline, since it is passed as `aria-level` and defaults to 2.",
+   "Use `exitAction` for a single secondary escape, because it renders a `Button variant=\"secondary\"` with an optional `accessibilityHint`.",
+   "Pass `illustration` when you have art, since `icon` is ignored when it is given."
+  ],
+  "dont": [
+   "Do not pass both `action` and `exitAction` expecting two buttons, because `action` takes precedence.",
+   "Do not pass `tone` expecting a visual change, because it is accepted and discarded.",
+   "Do not treat the heading level as verified on native, because the page marks `role=\"heading\"` with `aria-level` exposure UNVERIFIED."
+  ]
+ },
+ "feedback/ErrorMessage": {
+  "do": [
+   "Pass `message` only when an error exists, because a falsy value returns `null` and renders nothing.",
+   "Rely on the built-in `role=\"alert\"` with `text-danger` at 6.57:1, since the text carries the signal and the glyph is not the only cue."
+  ],
+  "dont": [
+   "Do not pass `surface` expecting a theme change, because it is accepted and discarded.",
+   "Do not claim the `message` is announced on first mount, because the page marks live region behaviour for a Text mounted with it as UNVERIFIED."
+  ]
+ },
+ "forge/inputs/PrecisionScrubber": {
+  "do": [
+   "Set `min`, `max` and `step` with `max` above `min` and `step` above 0, since all three are required for the range.",
+   "Return a promise from `onCommit` for async saves, because the control is disabled while it is pending and a rejection shows its message.",
+   "Pass `scaleColor` and `accentColor` checked against your surface, since rail and tick contrast depends on them (F15)."
+  ],
+  "dont": [
+   "Do not pass a blank `label`, a bad `scope` or a bad `revision`, because the identity check throws `RangeError('Invalid scrubber identity')`.",
+   "Do not set `targetSize` below 44 or non-finite, because it throws a RangeError.",
+   "Do not rely on the default `bg-border` rail at 1.58:1 as accessible, because the review is UNVERIFIED on rail and tick contrast (F15)."
+  ]
+ },
+ "forge/inputs/PropertyInspector": {
+  "do": [
+   "Give every entry in `fields` a unique `id`, since duplicate ids throw and the maximum is 128 fields.",
+   "Set `disabledReason` to explain why editing is locked, because it disables every field and shows the text as an error.",
+   "Set `min`, `max` and `step` on number fields with `min` below `max`, since `validateInspectorFields` rejects anything else."
+  ],
+  "dont": [
+   "Do not rely on the root `accessibilityLabel` as the group name, because the root has no role and the review is FAIL (F03).",
+   "Do not pass a number `value` outside `min` and `max`, or a non-integer when `integer` is set, because validation throws a RangeError.",
+   "Do not claim `Button` `accessibilityState` announces as a toggle for boolean fields, because the page marks it UNVERIFIED."
+  ]
+ },
+ "forge/office/office-controls": {
+  "do": [
+   "Set `checked` to `\"mixed\"` for partial selections, since it sets `accessibilityState.checked` and uses the `togglebutton` role.",
+   "Set `iconOnly` with a clear `label`, because the label stays as the accessible name while the text is hidden.",
+   "Use `OFFICE_TOUCH_TARGET` (44) when you size neighbouring controls, so hit areas match `ToolButton`."
+  ],
+  "dont": [
+   "Do not leave `checked` undefined on a toggle, because `undefined` makes a plain `button` with no pressed state.",
+   "Do not claim how screen readers announce `togglebutton` states, because the page marks it UNVERIFIED.",
+   "Do not assume `PlayGlyph` draws identically on every host, because the `transformOrigin` clipping is UNVERIFIED."
+  ]
+ },
+ "gestures/PanResponderDrag": {
+  "do": [
+   "Pass exactly one host view as `children`, since the pan handlers are merged into it with `cloneElement`.",
+   "Handle `onCancel` to clear state, because it fires on termination or when a start event has other than one touch.",
+   "Set `disabled` to block drags, since it is read at event time and makes `onStartShouldSetPanResponder` return false."
+  ],
+  "dont": [
+   "Do not expect a parent responder to take over a drag, because `onPanResponderTerminationRequest` always returns false once granted.",
+   "Do not assume `cloneElement` replaces responder handlers already set on the child, because the page marks that UNVERIFIED.",
+   "Do not rely on `pageX` and `pageY` values matching across platforms, because delivery is UNVERIFIED."
+  ]
+ },
+ "layout/AdaptiveColumns": {
+  "do": [
+   "Set `minWidth` on each `AdaptiveColumns.Item` to the narrowest usable column, since it becomes `flexBasis` and drives wrapping.",
+   "Use `grow` of 0 for a column that must keep its width, because it becomes `flexGrow` and defaults to 1."
+  ],
+  "dont": [
+   "Do not omit `gap`, or pass a negative or non-finite value, because it is required and throws a RangeError.",
+   "Do not pass a `minWidth` of 0 or less, because the item throws a RangeError unless it is above 0.",
+   "Do not promise exact wrap points for a given `minWidth`, because they come from the layout engine and the page marks them UNVERIFIED."
+  ]
+ },
+ "layout/ContentFrame": {
+  "do": [
+   "Set `maxWidth` to the readable width in logical units, since it caps the frame while `width` stays `100%`.",
+   "Use `align` of `start` or `end` to pin the frame to one edge, because the default `center` sets both margins to auto."
+  ],
+  "dont": [
+   "Do not pass a `maxWidth` of 0, negative or non-finite, because it throws during render.",
+   "Do not claim `marginStart` auto resolves the same in every layout engine, because the page marks Yoga and React Native Web behaviour UNVERIFIED."
+  ]
+ },
+ "navigation/CollapsibleDrawer": {
+  "do": [
+   "Give each `DrawerDestination` a `label`, since without `icon` the first letter of the label is shown.",
+   "Pass `expandedWidth` of at least 180 and `compactWidth` between 44 and `expandedWidth`, since other values throw.",
+   "Wire `onOpenChange` to state, because `open` is controlled and the scrim, toggle and item choice all close it through that callback."
+  ],
+  "dont": [
+   "Do not pass `compactWidth` below 44 or at or above `expandedWidth`, because it throws a RangeError.",
+   "Do not ship without checking focus on the toggle and `items`, because neither has a focus-visible class and the status is UNVERIFIED (F10).",
+   "Do not assume Tab stays inside the pane when `open` in `compact` or `minimal` mode, because hidden content staying unfocusable is UNVERIFIED."
+  ]
+ },
+ "overlays/AnchoredPopover": {
+  "do": [
+   "Pass exactly one of `anchor` or `trigger`, because `isTriggerPopover` throws `TypeError` for both or neither.",
+   "Set `accessibilityLabel` on every popover, since it becomes the `aria-label` of the dialog.",
+   "Spread `triggerProps` onto the trigger element so it carries `aria-expanded` and `aria-haspopup=\"dialog\"`."
+  ],
+  "dont": [
+   "Don't pass `anchor` without `usableRegions`; the rect form requires both, and with no usable region the component renders `null`.",
+   "Don't state where `placePopover` puts the surface for a given anchor; the page marks that placement `UNVERIFIED`."
+  ]
+ },
+ "overlays/CommandPalette": {
+  "do": [
+   "Give each `commands` entry a unique `id` matching `/^[a-zA-Z0-9][a-zA-Z0-9._:-]*$/`, because `validateCommands` throws on bad or repeated ids.",
+   "Bump `revision` or change `scope` when the command set changes, since both belong to the reset boundary that clears query and active id."
+  ],
+  "dont": [
+   "Don't rely on the active option tint as the keyboard focus cue: `bg-primary/10` measures 1.15/1.2:1 and the review status is FAIL (F02).",
+   "Don't pass more than 1000 `commands` or a blank `label`; `validateCommands` throws on every render.",
+   "Don't put the search field forward as accessible by default; the `TextField` boundary is 1.42/1.75:1 (F03)."
+  ]
+ },
+ "overlays/CommandPopover": {
+  "do": [
+   "Provide `onDismiss` and flip `visible` to false inside it, since it runs on dismissal and after every selection.",
+   "Mark destructive items with `danger` so they use `text-danger`, which measures 6.57/7.24:1."
+  ],
+  "dont": [
+   "Don't count on the focused item being visible: the only source cue is `focus-visible:bg-primary/10` at 1.15/1.2:1 (F12), and a host outline is `UNVERIFIED`.",
+   "Don't pass an `anchor` with no matching `usableRegions`; with no usable region it renders `null`.",
+   "Don't expect a second `onSelect` in the same open; the open token is marked settled after the first dismiss or select."
+  ]
+ },
+ "shell/AdaptiveDock": {
+  "do": [
+   "Keep `layout` and `panels` consistent and update `layout` in `onLayoutChange`, because `validateDockLayout` throws on duplicate or unknown panels and empty stacks.",
+   "Set `compactBelow` to the width where side stacks stop fitting, since narrower docks merge all panels into one stack under the workspace."
+  ],
+  "dont": [
+   "Don't pass a blank `editScope` or a `revision` string over 512 chars; both throw `RangeError`.",
+   "Don't claim keyboard-only moving of floating panels works; `DragGrabHandle` is not focusable (F14) and the menu route is `UNVERIFIED`.",
+   "Don't count on the selected tab being visible at 3:1; only bold text marks it (F13), `UNVERIFIED`."
+  ]
+ },
+ "shell/AssetBrowser": {
+  "do": [
+   "Update `revision` whenever `entries` change, because it is sent back as `expectedRevision` in `AssetRequest`.",
+   "Keep `selectedIds` to one id in the default `selectionMode` of `single`, and switch to `multiple` for ranges."
+  ],
+  "dont": [
+   "Don't pass a `height` below 44 or a non-finite number; it throws `RangeError`.",
+   "Don't ship the sort and search fields as accessible fields: they inherit the 1.42/1.75:1 boundary from `Select` and `InspectorSearch` (F03, FAIL).",
+   "Don't send more than 20000 `entries` or duplicate ids; the list is validated."
+  ]
+ },
+ "shell/ContextMenu": {
+  "do": [
+   "Set `label` to the target's name, because the menu `accessibilityLabel` is built as \"Actions for\" plus `label`.",
+   "Pass `usableRegions` when the target sits in a constrained pane, since the default is the whole window."
+  ],
+  "dont": [
+   "Don't give every item `disabled`; with no enabled item or no usable region the menu never opens.",
+   "Don't assume the menu has a strong focus cue; it delegates to `CommandPopover` and its `focus-visible:bg-primary/10` tint (F12), `UNVERIFIED`.",
+   "Don't claim `longpress` and `onContextMenu` fire once per gesture; the page marks that `UNVERIFIED`."
+  ]
+ },
+ "shell/ContextualToolbar": {
+  "do": [
+   "Set `selectionKind` and `appliesTo` together so only items for the current selection show.",
+   "Set `disabledReason` on a blocked item so users get a hint and a visible line instead of an unexplained dead button."
+  ],
+  "dont": [
+   "Don't pass `onLayout` and expect it to run; the component sets its own `onLayout` after the spread and overrides it.",
+   "Don't use duplicate or blank item `id` values or more than 1000 `items`; `validateToolbarItems` throws.",
+   "Don't trust the focus ring on a `pressed` item: `ring-focus` and `bg-primary` share one colour (F07), `UNVERIFIED`."
+  ]
+ },
+ "shell/DocumentTabBar": {
+  "do": [
+   "Pass `onClose` and `onReorder` only when you support them, since without them no close button shows and tabs cannot be reordered.",
+   "Set `dirty` on unsaved documents so the label reads \"unsaved changes\" and the `border-accent` dot appears."
+  ],
+  "dont": [
+   "Don't rely on the selected tab styling alone; raised against sunken is 1.11/1.11:1 plus weight (F13), `UNVERIFIED`.",
+   "Don't pass an `activeId` that matches no tab and expect a selection; none is selected and the first tab becomes the web tab stop.",
+   "Don't use more than 1000 `documents` or blank titles; they are rejected."
+  ]
+ },
+ "shell/FindReplaceContent": {
+  "do": [
+   "Return a `FindResponse` with a `token` and ordered non-overlapping ranges from `onFind`, because `validateFindResponse` fails the action otherwise.",
+   "Set `active` to `false` when the surface is hidden so no search runs and the inputs stop being editable."
+  ],
+  "dont": [
+   "Don't ship the `Find text` and `Replacement text` inputs as meeting contrast; the boundary is 1.42/1.75:1 (1.4.11, F03) and the review status is FAIL.",
+   "Don't expect `initialQuery` to update later; it is read once when the store is created.",
+   "Don't claim the live region announces every state change; the page marks that `UNVERIFIED`."
+  ]
+ },
+ "shell/FindReplacePopover": {
+  "do": [
+   "Pass exactly one of `anchor` or `trigger`, because `AnchoredPopover` throws `TypeError` otherwise.",
+   "Control `open` and `onOpenChange` together, since `active` on the inner content follows `open` and searching stops when closed."
+  ],
+  "dont": [
+   "Don't pass `onClose` or `active`; both are omitted from the props type and the popover owns them.",
+   "Don't treat the popover as passing contrast; it renders `FindReplaceContent` and inherits the 1.42/1.75:1 input boundary (F03, FAIL).",
+   "Don't assume the native SwiftUI or Compose surface applies; that entry was not read and is `UNVERIFIED`."
+  ]
+ },
+ "shell/FocusAndA11yLayer": {
+  "do": [
+   "Mount `FocusAndA11yLayer` above any component that calls `useA11yPreferences` or `useAnnounce`, because both throw outside it.",
+   "Wrap animation lengths in `motionDuration` so `reduceMotion` returns `0`."
+  ],
+  "dont": [
+   "Don't pass a negative or non-finite value to `motionDuration`; it throws `RangeError`.",
+   "Don't assume `reduceMotion` already changes the library; no tier 1 component consumes it (F09).",
+   "Don't assume what VoiceOver or TalkBack speak for `useAnnounce`; that output is `UNVERIFIED`."
+  ]
+ },
+ "shell/HistoryPanel": {
+  "do": [
+   "Keep `cursor` an integer from 0 to `entries.length`, where 0 is the initial state, because anything else throws `RangeError`.",
+   "Update `revision` after each edit so `onJump` receives the correct `expectedRevision`."
+  ],
+  "dont": [
+   "Don't pass `height` below 44; it throws `RangeError`.",
+   "Don't reuse an `id` or leave a `label` blank in `entries`; entries are validated.",
+   "Don't assume `aria-current` is read on native; the screen reader output of `aria-current=\"step\"` is `UNVERIFIED`."
+  ]
+ },
+ "shell/InspectorPanel": {
+  "do": [
+   "Set `scope` explicitly when the selection object is rebuilt each render, since the default is `JSON.stringify(selection)` and a change drops editor drafts.",
+   "Pass `onQueryChange` together with `query` so a selection other than `none` shows `InspectorSearch`."
+  ],
+  "dont": [
+   "Don't ship the panel's search as accessible by default; it renders `InspectorSearch` with a 1.42/1.75:1 boundary (F03, FAIL).",
+   "Don't use a blank or over 512 char `title` in a `single` selection, or a `multiple` `count` under 2; both are rejected.",
+   "Don't claim the `region` label is announced; that output is `UNVERIFIED`."
+  ]
+ },
+ "shell/InspectorSearch": {
+  "do": [
+   "Pass `summary` so the polite live region reports how many properties match.",
+   "Use `matchesQuery` with `keywords` for filtering so every query word can match a label word."
+  ],
+  "dont": [
+   "Don't treat the field boundary as accessible; `border-border` on `bg-surface-sunken` is 1.42/1.75:1 (F03, FAIL).",
+   "Don't set `maxLength` outside 1 to 100000 or non-integer; it throws `RangeError`.",
+   "Don't assume Escape clears the field on native; `onKeyPress` reaching Escape there is `UNVERIFIED`."
+  ]
+ },
+ "shell/InspectorSection": {
+  "do": [
+   "Provide `onEnabledChange` only when the section has a toggle, since its presence shows the header switch.",
+   "Pass `onReset` and leave `modified` at its default to show the Reset button."
+  ],
+  "dont": [
+   "Don't pass a blank `title` or one over 512 chars; it throws `RangeError`.",
+   "Don't expect a section to unmount during a search; with no matches it gets `display:\"none\"` but stays mounted.",
+   "Don't assume `PropertyRow` honours `enabled`; how it consumes the disabled context is `UNVERIFIED`."
+  ]
+ },
+ "shell/KeyboardShortcutHUD": {
+  "do": [
+   "Pass `onRebind` to allow changes and a `recorder` on iOS and Android, since rebinding there needs a hardware key source.",
+   "Set `defaultBinding` on each `ShortcutCommand` so Reset appears when `binding` differs."
+  ],
+  "dont": [
+   "Don't ship the search as accessible by default; the HUD renders `InspectorSearch` with a 1.42/1.75:1 boundary (F03, FAIL).",
+   "Don't expect `onRebind` to run once on a conflict; it is called twice, first `(conflictId, undefined)`.",
+   "Don't rely on `@nyc-tron/hardware-keys` as a `recorder` source; its existence is `UNVERIFIED`."
+  ]
+ },
+ "shell/MenuButton": {
+  "do": [
+   "Set `label` on every `MenuButton`, because it becomes the `accessibilityLabel` and the popover label.",
+   "Give at least one enabled entry in `items`, since the button disables itself when none is enabled."
+  ],
+  "dont": [
+   "Don't pass a blank `editScope` or one over 32768 characters; it throws `RangeError`.",
+   "Don't count on a visible focus cue inside the menu; `CommandPopover` uses a 1.15/1.2:1 tint (F12), and a host outline is `UNVERIFIED`.",
+   "Don't expect focus to return to the button on every platform; the page says it is explicit only when `Platform.OS` is `qnx` or `marathon`."
+  ]
+ },
+ "shell/PaneSplitter": {
+  "do": [
+   "Pass a non-blank `label`; it becomes the divider's `accessibilityLabel` and the only name a screen reader gets for the handle.",
+   "Update `size` from `onCommit`, which fires once per drag, keyboard step, jump or accessibility action, and use `onPreview` for live feedback during the drag.",
+   "Set `isRTL` when the start pane sits on the right in a horizontal splitter, so the arrow-key direction swaps to match."
+  ],
+  "dont": [
+   "Do not pass a blank or non-finite `editScope`, `size`, `minStart`, `minEnd` or `keyboardStep`; each throws a `RangeError`.",
+   "Do not rely on the idle divider as the only cue; the 1px `color.border` line measures 1.42/1.75:1 and fails the a11y review (F06).",
+   "Do not assume hinge snapping or screen reader announcements of `aria-valuetext` work; the page marks both UNVERIFIED."
+  ]
+ },
+ "shell/PresetGallery": {
+  "do": [
+   "Pass both `onFavoriteChange` and `onFilterChange` when you want the All and Favorites buttons, since they render only when both are set.",
+   "Treat `onPreview` as hover and focus feedback and make it side-effect light, because it also fires on focus (F18).",
+   "Set `label` to a descriptive name; it names the radiogroup and the filter group is named `<label> filter`."
+  ],
+  "dont": [
+   "Do not claim focus-driven `onPreview` is accessible without a screen reader test; whether it counts as a change of context is UNVERIFIED (F18).",
+   "Do not assume the column count or arrow-key target math; `galleryColumns` and `gridFocusTarget` were not read and are UNVERIFIED.",
+   "Do not omit `selectedId`, `onSelect` or `presets`; they are required props, and `presets` is checked by `validatePresets`."
+  ]
+ },
+ "shell/PropertyRow": {
+  "do": [
+   "Pass `mixed` when the selection holds differing values; it shows a Mixed badge and adds ', mixed values' to `editorLabel`.",
+   "Set `override=\"overridden\"` together with `onRevert` to get the Revert button, which is labelled 'Revert {label}' and has a 44pt target.",
+   "Use the render-function form of `children` and apply the `PropertyEditorState` fields (`disabled`, `mixed`, `editorLabel`) to your editor."
+  ],
+  "dont": [
+   "Do not pass a blank `label` or one over 512 characters; it throws a `RangeError`.",
+   "Do not give `keywords` more than 256 entries or entries over 512 characters, since either throws a `RangeError`.",
+   "Do not expect Revert to show with only `override=\"overridden\"`; without `onRevert` the button is absent and only the hidden dot marks the state."
+  ]
+ },
+ "shell/RangeSlider": {
+  "do": [
+   "Set `min`, `max` and `step` with `max > min` and `step > 0`; `assertRange` throws otherwise.",
+   "Use `thumbLabels` to give each thumb a distinct name, since thumb names are `<label> <thumbLabel>` and default to Minimum and Maximum.",
+   "Pass `context` when users should type endpoints with units; `unit` alone is only appended to `aria-valuetext`."
+  ],
+  "dont": [
+   "Do not ship it as accessible yet; it renders `UnitInput`, whose field boundary is 1.42/1.75:1 (F03), and the page status is FAIL.",
+   "Do not rely on the unfilled track as a visible cue; its `color.border` contrast is 1.42/1.75:1 and still unverified by measurement (F15).",
+   "Do not pass a blank `label` or `scope`, or a non-finite range, because each throws a `RangeError`."
+  ]
+ },
+ "shell/RibbonTabs": {
+  "do": [
+   "Give every tab in `tabs` a unique `id` and non-empty label; `validateRibbon` throws on duplicates, empty labels or more than 64 tabs.",
+   "Pass `onCollapsedChange` if users should collapse the ribbon, because the chevron renders only when it is set.",
+   "Read `itemId` in `onCommand` to tell split flyout and gallery picks apart from plain button presses."
+  ],
+  "dont": [
+   "Do not assume menu focus is visible; focus inside the `SplitButton` and `MenuButton` menus is UNVERIFIED (F12).",
+   "Do not pick a `selectedId` that is not in a gallery's `items`; `validateRibbon` rejects an invalid gallery selection.",
+   "Do not rely on the inline gallery count of 4; it comes from a doc comment and `inlineGalleryItems` is UNVERIFIED."
+  ]
+ },
+ "shell/RotaryKnob": {
+  "do": [
+   "Pass a finite `defaultValue` inside `min` and `max`; the Reset button then shows whenever it differs from `value`.",
+   "Pick `input=\"circular\"` for angle-following drags and keep the default `relative` for vertical drags with fine adjustment past 28 points sideways.",
+   "Leave `size` at 72 or set a finite value above 0 and at most 4096; the dial is never smaller than 44."
+  ],
+  "dont": [
+   "Do not ship it as accessible yet; the dial renders `UnitInput` (F03) and the idle `border-border` ring is 1.42/1.75:1, so the status is FAIL.",
+   "Do not pass an `input` value other than `relative` or `circular`, or a non-finite `value`; both throw.",
+   "Do not expect stylus detection; the doc comment says apps that detect a stylus pass `circular`, but nothing in the file detects one (UNVERIFIED)."
+  ]
+ },
+ "shell/SliderField": {
+  "do": [
+   "Set `min`, `max` and `step` explicitly, and keep `value` finite, since an invalid range or non-finite `value` throws.",
+   "Pass `defaultValue` within range so the Reset button appears when `value` differs from it.",
+   "Use `onPreview` for live feedback while dragging and `onCommit` for the final write."
+  ],
+  "dont": [
+   "Do not ship it as accessible yet; it renders `UnitInput` (F03) and the rail `border-border` is 1.42/1.75:1 (F15), so the status is FAIL.",
+   "Do not combine `unit` and `context` expecting a drawn unit; `unit` is not drawn when `context` is given.",
+   "Do not document Shift, Alt or PageUp changes to `step` as fact; they come from a doc comment and are UNVERIFIED."
+  ]
+ },
+ "shell/SplitButton": {
+  "do": [
+   "Pass `label`, `onPress`, `items` and `onSelect`; all four are required.",
+   "Use `variant=\"primary\"` for the main call to action and keep `secondary` as the default for quieter groups.",
+   "Set `menuLabel` when the default `More ${label} options` does not describe the menu."
+  ],
+  "dont": [
+   "Do not assume the `primary` variant shows focus; its fill and `ring-focus` share one colour (F07) and visibility is UNVERIFIED.",
+   "Do not assume the menu's popover behaviour or focus; it lives in `CommandPopover` and is UNVERIFIED (F12).",
+   "Do not expect `unstyled` to restyle the menu half; the `MenuButton` is always rendered `unstyled`."
+  ]
+ },
+ "shell/StatusBar": {
+  "do": [
+   "Pass `zoom` and `units` only when you need them; each renders its own control, and `onFit` adds a 'Fit to window' choice.",
+   "Keep the `presets` list inside `zoom` unique, finite and positive; the default is 25, 50, 100, 200, 400.",
+   "Drive `activity` with the `rendering` kind and a `progress` value to get a progressbar with `aria-valuenow`."
+  ],
+  "dont": [
+   "Do not pass over 1000 presets or duplicates in `zoom`, or over 256 `units` options, since both throw a `RangeError`.",
+   "Do not pass your own `accessibilityLabel`; the component sets 'Status' after the spread and ignores yours.",
+   "Do not assume screen reader output or the 44pt claim for the menu triggers; both are UNVERIFIED (`F12`)."
+  ]
+ },
+ "shell/ToastAndProgress": {
+  "do": [
+   "Pass `onToastAction` whenever any toast has an `action`, and `onJobAction` whenever a job has actions; both are required at runtime.",
+   "Set `tone` to `error` for failures so the title gets `role=\"alert\"`; `info` and `success` use `role=\"status\"`.",
+   "Give a `failed` job an `error` string, which renders an `ErrorMessage`."
+  ],
+  "dont": [
+   "Do not set `height` below 44 or non-finite; it throws a `RangeError`.",
+   "Do not send toast `id` values that are empty or duplicated, or progress outside 0..1; `validateFeedback` throws.",
+   "Do not expect more than three toasts at once; only the first 3 show unless `expanded` is set from the toggle button."
+  ]
+ },
+ "shell/ToolRail": {
+  "do": [
+   "Pass `activeToolId` explicitly, even as `undefined`; the key is required.",
+   "Choose `edge` to match placement, since `bottom` switches to a wrapping row and a horizontal roving axis.",
+   "Provide `variants` on a tool to make a group; it gets `aria-haspopup=\"menu\"` and a long-press hint."
+  ],
+  "dont": [
+   "Do not assume the active tool shows focus; its fill and `ring-focus` share one colour (F07), unverified.",
+   "Do not rely on flyout placement or dismissal; both live in `CommandPopover` and are UNVERIFIED (F12).",
+   "Do not pass over 256 `tools`, over 64 variants or duplicate ids; `validateRailTools` throws."
+  ]
+ },
+ "shell/UnitInput": {
+  "do": [
+   "Pass `context` to parse typed units, and set `frameRate`, `sampleRate` or `percentOf` when users type `f`, `smp` or `%`.",
+   "Pass `units` with `onUnitChange` and a `context` to get the unit menu; it needs 2 or more units.",
+   "Set `min` and `max` in base units, since `onCommit` receives the clamped value."
+  ],
+  "dont": [
+   "Do not rely on the field border as the only cue; `border-border` is 1.42/1.75:1 (F03) and the status is FAIL.",
+   "Do not expect `onCommit` when the clamped value equals `value`; it is not called.",
+   "Do not assume the expression grammar or conversion factors; `parseUnitExpression` and `unitScale` are UNVERIFIED."
+  ]
+ },
+ "shell/WorkspaceHost": {
+  "do": [
+   "Set `activeModeId` to an id present in `modes`; anything else throws a `TypeError`.",
+   "Provide `layouts` per mode, or rely on each mode's `defaultLayout` when one is missing.",
+   "Set `isRTL` for right-to-left UIs so `direction` and the tab roving direction flip."
+  ],
+  "dont": [
+   "Do not assume the selected tab shows focus; its `bg-primary` fill and `ring-focus` are one colour (F07), unverified.",
+   "Do not pass a non-finite `revision`, or a string over 512 characters.",
+   "Do not assume canvas state survives mode switches; that depends on `AdaptiveDock` and is UNVERIFIED."
+  ]
+ },
+ "shell/WorkspacePresetSwitcher": {
+  "do": [
+   "Pass `activeId` matching a preset so the trigger names it; without a match it reads 'Custom layout'.",
+   "Pass both `recentlyDeleted` and `onUndoDelete` to show the 'Undo delete' button and announce the deletion.",
+   "Keep `scope` non-empty after trim and at most 256 characters."
+  ],
+  "dont": [
+   "Do not ship it as accessible yet; the dialog name field is a `TextField` with a 1.42/1.75:1 boundary (F03), so the status is FAIL.",
+   "Do not assume dialog focus handling for the `TextField` name field; initial focus and return after close are UNVERIFIED.",
+   "Do not pass a non-finite `revision`; it throws a `RangeError`."
+  ]
+ },
+ "theme/NightScope": {
+  "do": [
+   "Pass a theme name your app defines as `scheme`; it defaults to `dark`.",
+   "Wrap only the subtree that needs the scheme, passing it as `children`.",
+   "Scope the theme class in your web CSS, since the `display: contents` wrapper depends on it."
+  ],
+  "dont": [
+   "Do not assume `ScopedTheme` resolves variables identically on every platform; that is UNVERIFIED.",
+   "Do not expect `scheme` type checking; it is a free string cast with `as never`.",
+   "Do not treat it as UI; it takes `children` and `scheme` only, has no states and adds no elements on native."
+  ]
+ },
+ "window/WindowTitleBar": {
+  "do": [
+   "Pass `controls` with `kind` `drawn` and a `layout` of `macos` or `windows`, or `native` with `insets`.",
+   "Set `closeBlockedLabel` to localized text, since it is announced after a vetoed close.",
+   "Set `edited` to show the dot and ', edited' title suffix."
+  ],
+  "dont": [
+   "Do not use the Windows close hover as is; `hover:bg-danger` leaves the glyph at 1.07/1.01:1 (F05), a proven FAIL.",
+   "Do not pass an empty `title`; it shows 'Untitled'.",
+   "Do not assume exact controls per layout; `describeTitleBar` output is UNVERIFIED."
+  ]
+ }
+}

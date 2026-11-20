@@ -1,0 +1,83 @@
+---
+name: "LayerBlendModelModule"
+namespace: "@nyc-tron"
+subpath: "@nyc-tron/ui/forge/layers/layer-blend-model"
+tier: 2
+docs: "generated"
+platforms: []
+category: "forge"
+tokens: []
+registryDependencies: []
+a11yStatus: "unverified"
+---
+
+# LayerBlendModelModule
+
+## Purpose
+
+<!-- generated:begin purpose source=packages/ui/src/components/forge/layers/layer-blend-model.ts -->
+_Not documented._
+<!-- generated:end purpose -->
+
+## Install
+
+<!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/layer-blend-model.ts -->
+- Package: @nyc-tron/ui
+- Import: `import { defaultAlphaModes, layerBlendProblem, layerOpacityFromPercent, validateLayerBlend } from "@nyc-tron/ui/forge/layers/layer-blend-model";`
+- Peers: react, react-native
+- Requires: none
+
+```sh
+npx shadcn@latest add @nyc-tron/forge/layers/layer-blend-model
+```
+<!-- generated:end install -->
+
+## Props
+
+<!-- generated:begin props source=docs/api-signatures.json,packages/ui/src/components/forge/layers/layer-blend-model.ts -->
+No component props. This module exports functions, types or constants.
+
+### Exports
+
+| Name | Kind | Signature |
+|---|---|---|
+| `LayerAlphaMode` | type | `type LayerAlphaMode = 'straight' \| 'premultiplied';` |
+| `LayerAlphaOption` | interface | `interface LayerAlphaOption { readonly id: LayerAlphaMode; readonly label: string; readonly unavailableReason?: string; }` |
+| `LayerBlendMode` | interface | `interface LayerBlendMode { readonly id: string; readonly label: string; readonly unavailableReason?: string; }` |
+| `LayerBlendSpace` | interface | `interface LayerBlendSpace { readonly id: string; readonly label: string; readonly transfer: 'linear' \| 'encoded'; readonly modeIds: readonly string[]; readon...` |
+| `LayerBlendValue` | interface | `interface LayerBlendValue { readonly mode: string; readonly opacity: number; readonly spaceId: string; readonly alphaMode: LayerAlphaMode; }` |
+| `defaultAlphaModes` | const | `const defaultAlphaModes: readonly [ { readonly id: 'straight'; readonly label: 'Straight alpha'; }, { readonly id: 'premultiplied'; readonly label: 'Premulti...` |
+| `layerBlendProblem` | function | `function layerBlendProblem(value: LayerBlendValue, modes: readonly LayerBlendMode[], spaces: readonly LayerBlendSpace[], alphaModes?: readonly LayerAlphaOpti...` |
+| `layerOpacityFromPercent` | function | `function layerOpacityFromPercent(percent: number): number;` |
+| `validateLayerBlend` | function | `function validateLayerBlend(value: LayerBlendValue, modes: readonly LayerBlendMode[], spaces: readonly LayerBlendSpace[], alphaModes?: readonly LayerAlphaOpt...` |
+<!-- generated:end props -->
+
+## Variants
+
+<!-- generated:begin variants source=docs/api-signatures.json -->
+none
+<!-- generated:end variants -->
+
+## States
+
+<!-- generated:begin states source=docs/api-signatures.json -->
+_Not documented._
+<!-- generated:end states -->
+
+## A11y
+
+<!-- generated:begin a11y source=packages/ui/src/components/forge/layers/layer-blend-model.ts -->
+_Not documented._
+<!-- generated:end a11y -->
+
+## Example
+
+<!-- generated:begin example source=docs/api-signatures.json -->
+_Not documented._
+<!-- generated:end example -->
+
+## Do/Don't
+
+<!-- generated:begin dont source=docs/agent-native/doc-template.md -->
+_Not documented._
+<!-- generated:end dont -->

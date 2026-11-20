@@ -1,0 +1,84 @@
+---
+name: "KeyboardMapModule"
+namespace: "@nyc-tron"
+subpath: "@nyc-tron/ui/shell/keyboard-map"
+tier: 2
+docs: "generated"
+platforms: []
+category: "shell"
+tokens: []
+registryDependencies: []
+a11yStatus: "unverified"
+---
+
+# KeyboardMapModule
+
+## Purpose
+
+<!-- generated:begin purpose source=packages/ui/src/components/shell/keyboard-map.ts -->
+_Not documented._
+<!-- generated:end purpose -->
+
+## Install
+
+<!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/keyboard-map.ts -->
+- Package: @nyc-tron/ui
+- Import: `import { createKeyboardMap, isTextEditingBinding, reservedBindingReason, toNativeKeyBinding } from "@nyc-tron/ui/shell/keyboard-map";`
+- Peers: react, react-native
+- Requires: none
+
+```sh
+npx shadcn@latest add @nyc-tron/shell/keyboard-map
+```
+<!-- generated:end install -->
+
+## Props
+
+<!-- generated:begin props source=docs/api-signatures.json,packages/ui/src/components/shell/keyboard-map.ts -->
+No component props. This module exports functions, types or constants.
+
+### Exports
+
+| Name | Kind | Signature |
+|---|---|---|
+| `KeyDispatchContext` | interface | `interface KeyDispatchContext { readonly activeScopes?: readonly string[]; readonly textInputFocused?: boolean; }` |
+| `KeyboardMap` | interface | `interface KeyboardMap { readonly entries: readonly KeyboardMapEntry[]; resolve(chord: KeyChord, context?: KeyDispatchContext): KeyboardMapEntry \| undefined; ...` |
+| `KeyboardMapConflict` | interface | `interface KeyboardMapConflict { readonly binding: Binding; readonly scope: string; readonly ids: readonly string[]; }` |
+| `KeyboardMapEntry` | interface | `interface KeyboardMapEntry extends ShortcutCommand { readonly scope?: string; readonly allowInTextInput?: boolean; readonly disabled?: boolean; }` |
+| `NativeKeyBinding` | interface | `interface NativeKeyBinding { readonly binding: Binding; readonly key: string; readonly mod: boolean; readonly ctrl: boolean; readonly alt: boolean; readonly ...` |
+| `ReservedBindingIssue` | interface | `interface ReservedBindingIssue { readonly id: string; readonly binding: Binding; readonly reason: string; }` |
+| `createKeyboardMap` | function | `function createKeyboardMap(entries: readonly KeyboardMapEntry[], apple: boolean): KeyboardMap;` |
+| `isTextEditingBinding` | function | `function isTextEditingBinding(binding: Binding): boolean;` |
+| `reservedBindingReason` | function | `function reservedBindingReason(binding: Binding, apple: boolean): string \| undefined;` |
+| `toNativeKeyBinding` | function | `function toNativeKeyBinding(binding: Binding, title: string): NativeKeyBinding \| undefined;` |
+<!-- generated:end props -->
+
+## Variants
+
+<!-- generated:begin variants source=docs/api-signatures.json -->
+none
+<!-- generated:end variants -->
+
+## States
+
+<!-- generated:begin states source=docs/api-signatures.json -->
+_Not documented._
+<!-- generated:end states -->
+
+## A11y
+
+<!-- generated:begin a11y source=packages/ui/src/components/shell/keyboard-map.ts -->
+_Not documented._
+<!-- generated:end a11y -->
+
+## Example
+
+<!-- generated:begin example source=docs/api-signatures.json -->
+_Not documented._
+<!-- generated:end example -->
+
+## Do/Don't
+
+<!-- generated:begin dont source=docs/agent-native/doc-template.md -->
+_Not documented._
+<!-- generated:end dont -->

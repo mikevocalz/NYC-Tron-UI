@@ -1,0 +1,81 @@
+---
+name: "PrintColorChannels"
+namespace: "@nyc-tron"
+subpath: "@nyc-tron/ui/forge/color/PrintColorChannels"
+tier: 2
+docs: "generated"
+platforms: []
+category: "forge"
+tokens: ["space.2"]
+registryDependencies: ["@nyc-tron/Select", "@nyc-tron/shell/UnitInput"]
+a11yStatus: "unverified"
+---
+
+# PrintColorChannels
+
+## Purpose
+
+<!-- generated:begin purpose source=packages/ui/src/components/forge/color/PrintColorChannels.tsx -->
+Edits actual CMYK percentages or signed Lab channels without approximating ICC conversion from RGB.
+<!-- generated:end purpose -->
+
+## Install
+
+<!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/PrintColorChannels.tsx -->
+- Package: @nyc-tron/ui
+- Import: `import { PrintColorChannels } from "@nyc-tron/ui/forge/color/PrintColorChannels";`
+- Peers: react, react-native
+- Requires: @nyc-tron/Select, @nyc-tron/shell/UnitInput
+
+```sh
+npx shadcn@latest add @nyc-tron/forge/color/PrintColorChannels
+```
+<!-- generated:end install -->
+
+## Props
+
+<!-- generated:begin props source=docs/api-signatures.json,packages/ui/src/components/forge/color/PrintColorChannels.tsx -->
+Extends: `Omit<ViewProps, "children">`
+
+| Name | Type | Default | Required | Description |
+|---|---|---|---|---|
+| `value` | `PrintColor` | not recorded | yes |  |
+| `onCommit` | `(value: PrintColor) => void` | not recorded | yes |  |
+| `conversionPolicy` | `ColorConversionPolicy` | `preserve-numbers` | no | Profile policy is requested, never approximated by this UI. |
+| `onConversionPolicyChange` | `(policy: ColorConversionPolicy) => void` | not recorded | no |  |
+| `labRange` | `readonly [ number, number ]` | `[-128,127]` | no | Editable a-star/b-star bounds selected by the host profile. |
+| `disabled` | `boolean` | not recorded | no |  |
+| `unstyled` | `boolean` | not recorded | no |  |
+<!-- generated:end props -->
+
+## Variants
+
+<!-- generated:begin variants source=docs/api-signatures.json -->
+none
+<!-- generated:end variants -->
+
+## States
+
+<!-- generated:begin states source=docs/api-signatures.json -->
+| State | How it is set |
+|---|---|
+| `disabled` | `disabled` prop, type `boolean` |
+<!-- generated:end states -->
+
+## A11y
+
+<!-- generated:begin a11y source=packages/ui/src/components/forge/color/PrintColorChannels.tsx -->
+_Not documented._
+<!-- generated:end a11y -->
+
+## Example
+
+<!-- generated:begin example source=docs/api-signatures.json -->
+_Not documented._
+<!-- generated:end example -->
+
+## Do/Don't
+
+<!-- generated:begin dont source=docs/agent-native/doc-template.md -->
+_Not documented._
+<!-- generated:end dont -->

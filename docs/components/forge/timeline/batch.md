@@ -1,0 +1,82 @@
+---
+name: "BatchModule"
+namespace: "@nyc-tron"
+subpath: "@nyc-tron/ui/forge/timeline/batch"
+tier: 2
+docs: "generated"
+platforms: []
+category: "forge"
+tokens: []
+registryDependencies: []
+a11yStatus: "unverified"
+---
+
+# BatchModule
+
+## Purpose
+
+<!-- generated:begin purpose source=packages/ui/src/components/forge/timeline/batch.ts -->
+_Not documented._
+<!-- generated:end purpose -->
+
+## Install
+
+<!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/batch.ts -->
+- Package: @nyc-tron/ui
+- Import: `import { SPEED_RANGE, batchRemove, batchRippleDelete, batchShift, batchSpeed, selectedClips } from "@nyc-tron/ui/forge/timeline/batch";`
+- Peers: react, react-native
+- Requires: none
+
+```sh
+npx shadcn@latest add @nyc-tron/forge/timeline/batch
+```
+<!-- generated:end install -->
+
+## Props
+
+<!-- generated:begin props source=docs/api-signatures.json,packages/ui/src/components/forge/timeline/batch.ts -->
+No component props. This module exports functions, types or constants.
+
+### Exports
+
+| Name | Kind | Signature |
+|---|---|---|
+| `BatchEdit` | type | `type BatchEdit = { readonly kind: "move"; readonly clipId: string; readonly startFrame: number; readonly startSeconds: number; } \| { readonly kind: "speed"; ...` |
+| `BatchResult` | type | `type BatchResult = { readonly valid: true; readonly edits: readonly BatchEdit[]; } \| { readonly valid: false; readonly reason: string; };` |
+| `SPEED_RANGE` | const | `const SPEED_RANGE: { readonly min: 0.1; readonly max: 10; };` |
+| `batchRemove` | function | `function batchRemove(tracks: readonly TimelineTrack[], ids: readonly string[]): BatchResult;` |
+| `batchRippleDelete` | function | `function batchRippleDelete(tracks: readonly TimelineTrack[], ids: readonly string[], scope: RippleScope): BatchResult;` |
+| `batchShift` | function | `function batchShift(tracks: readonly TimelineTrack[], ids: readonly string[], deltaFrames: number, rate: FrameRate): BatchResult;` |
+| `batchSpeed` | function | `function batchSpeed(tracks: readonly TimelineTrack[], ids: readonly string[], speed: number): BatchResult;` |
+| `selectedClips` | function | `function selectedClips(tracks: readonly TimelineTrack[], ids: readonly string[]): Located[];` |
+<!-- generated:end props -->
+
+## Variants
+
+<!-- generated:begin variants source=docs/api-signatures.json -->
+none
+<!-- generated:end variants -->
+
+## States
+
+<!-- generated:begin states source=docs/api-signatures.json -->
+_Not documented._
+<!-- generated:end states -->
+
+## A11y
+
+<!-- generated:begin a11y source=packages/ui/src/components/forge/timeline/batch.ts -->
+_Not documented._
+<!-- generated:end a11y -->
+
+## Example
+
+<!-- generated:begin example source=docs/api-signatures.json -->
+_Not documented._
+<!-- generated:end example -->
+
+## Do/Don't
+
+<!-- generated:begin dont source=docs/agent-native/doc-template.md -->
+_Not documented._
+<!-- generated:end dont -->
