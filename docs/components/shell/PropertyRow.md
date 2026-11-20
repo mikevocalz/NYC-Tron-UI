@@ -21,7 +21,7 @@ Row for one inspector property: label and editor, with mixed-value badge, overri
 
 - Package: @nyc-tron/ui
 - Import: `import { PropertyRow } from "@nyc-tron/ui/components/shell/PropertyRow";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh

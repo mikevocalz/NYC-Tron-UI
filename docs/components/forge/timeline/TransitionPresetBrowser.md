@@ -24,7 +24,7 @@ Transition chooser (D-37): search, a list of kinds with a drawn diagram each, a 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TransitionPresetBrowser.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TransitionPresetBrowser } from "@nyc-tron/ui/components/forge/timeline/TransitionPresetBrowser";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage
 
 ```sh

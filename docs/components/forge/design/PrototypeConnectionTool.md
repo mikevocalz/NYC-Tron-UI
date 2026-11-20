@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/PrototypeConnectionTool.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PrototypeConnectionTool } from "@nyc-tron/ui/components/forge/design/PrototypeConnectionTool";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D
 
 ```sh

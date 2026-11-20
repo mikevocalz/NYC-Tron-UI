@@ -24,7 +24,7 @@ Versioned preset transfer with validation before any host write, plus rename/del
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PresetManager.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PresetManager } from "@nyc-tron/ui/components/forge/photo/PresetManager";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh

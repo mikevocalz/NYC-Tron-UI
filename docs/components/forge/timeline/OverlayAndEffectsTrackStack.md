@@ -24,7 +24,7 @@ The track stack (D-31): `TrackHeaders` beside `TimelineClipLane`, with overlay t
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/OverlayAndEffectsTrackStack.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { OverlayAndEffectsTrackStack } from "@nyc-tron/ui/components/forge/timeline/OverlayAndEffectsTrackStack";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/TimelineClipLane, @nyc-tron/forge/timeline/TrackHeaders
 
 ```sh

@@ -24,7 +24,7 @@ Settings for the magic wand and the selection edge tools (B-20): tolerance, cont
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/MagicSelectionControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MagicSelectionControls, MagicWandCanvas } from "@nyc-tron/ui/components/forge/selection/MagicSelectionControls";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

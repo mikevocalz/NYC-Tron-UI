@@ -24,7 +24,7 @@ Sticky ends follow actual named object anchors; visual routing is presentation g
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ConnectorAndDiagramTools.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ConnectorAndDiagramTools } from "@nyc-tron/ui/components/forge/slides/ConnectorAndDiagramTools";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

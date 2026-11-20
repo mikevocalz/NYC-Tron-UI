@@ -24,7 +24,7 @@ Reference images (B-31) pinned beside or floating over the canvas, or laid over 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas-tools/ReferenceImageBoard.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ReferenceImageBoard } from "@nyc-tron/ui/components/forge/canvas-tools/ReferenceImageBoard";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -24,7 +24,7 @@ Align, distribute and arrange panel (B-25).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/AlignDistributePanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AlignDistributePanel } from "@nyc-tron/ui/components/forge/canvas/AlignDistributePanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

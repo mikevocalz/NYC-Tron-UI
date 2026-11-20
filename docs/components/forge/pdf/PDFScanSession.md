@@ -24,7 +24,7 @@ Actual native camera surfaces and scan artifacts are supplied by the host; corre
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFScanSession.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFScanSession } from "@nyc-tron/ui/components/forge/pdf/PDFScanSession";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D
 
 ```sh

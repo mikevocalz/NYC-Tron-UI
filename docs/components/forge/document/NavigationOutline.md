@@ -24,7 +24,7 @@ Navigation pane for text documents (H-15): the heading outline with collapse and
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/NavigationOutline.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { NavigationOutline } from "@nyc-tron/ui/components/forge/document/NavigationOutline";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh

@@ -24,7 +24,7 @@ Grid and snap feedback layer (B-04).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/SnapGridOverlay.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SnapGridOverlay } from "@nyc-tron/ui/components/forge/canvas/SnapGridOverlay";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

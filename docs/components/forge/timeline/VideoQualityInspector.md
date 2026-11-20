@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/VideoQualityInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { VideoQualityInspector } from "@nyc-tron/ui/components/forge/timeline/VideoQualityInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh

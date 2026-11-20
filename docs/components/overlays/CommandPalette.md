@@ -21,7 +21,7 @@ Searchable command list in a modal, with keyboard selection and an empty-results
 
 - Package: @nyc-tron/ui
 - Import: `import { CommandPalette } from "@nyc-tron/ui/components/overlays/CommandPalette";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/TextField
 
 ```sh

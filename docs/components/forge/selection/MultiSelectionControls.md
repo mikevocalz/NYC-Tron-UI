@@ -24,7 +24,7 @@ Ordered range/toggle selection, group commands and honest shared-property state.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/MultiSelectionControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MultiSelectionControls } from "@nyc-tron/ui/components/forge/selection/MultiSelectionControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/Select, @nyc-tron/shell/PropertyRow, @nyc-tron/shell/UnitInput
 
 ```sh

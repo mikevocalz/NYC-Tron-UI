@@ -24,7 +24,7 @@ On-canvas node editor for one path layer (B-21).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/PenNodeEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PenNodeEditor } from "@nyc-tron/ui/components/forge/vector/PenNodeEditor";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

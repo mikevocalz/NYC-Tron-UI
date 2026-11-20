@@ -24,7 +24,7 @@ Track headers (D-18): one row per track, the height of its lane.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TrackHeaders.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TrackHeaders } from "@nyc-tron/ui/components/forge/timeline/TrackHeaders";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/IconButton, @nyc-tron/feedback/ErrorMessage
 
 ```sh

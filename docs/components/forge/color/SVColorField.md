@@ -24,7 +24,7 @@ Two-dimensional saturation/value field with one commit on release and cancellati
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/SVColorField.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SVColorField } from "@nyc-tron/ui/components/forge/color/SVColorField";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh

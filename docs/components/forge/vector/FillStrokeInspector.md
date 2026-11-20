@@ -24,7 +24,7 @@ Fill and stroke inspector for one vector layer (B-23): fill type and color, fill
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/FillStrokeInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FillStrokeInspector } from "@nyc-tron/ui/components/forge/vector/FillStrokeInspector";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

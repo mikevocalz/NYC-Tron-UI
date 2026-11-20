@@ -21,7 +21,7 @@ Primary action button joined to a dropdown menu of command items, for React Nati
 
 - Package: @nyc-tron/ui
 - Import: `import { SplitButton } from "@nyc-tron/ui/components/shell/SplitButton";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/overlays/CommandPopover, @nyc-tron/shell/MenuButton
 
 ```sh

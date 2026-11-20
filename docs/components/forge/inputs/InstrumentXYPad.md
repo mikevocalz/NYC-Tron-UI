@@ -24,7 +24,7 @@ Multi-input pad with bounded normalized coordinates; no duplicate document state
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/InstrumentXYPad.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InstrumentXYPad } from "@nyc-tron/ui/components/forge/inputs/InstrumentXYPad";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh

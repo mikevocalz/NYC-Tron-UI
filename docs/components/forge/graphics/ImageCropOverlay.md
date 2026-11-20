@@ -24,7 +24,7 @@ Native interactive crop overlay only.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/graphics/ImageCropOverlay.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ImageCropOverlay } from "@nyc-tron/ui/components/forge/graphics/ImageCropOverlay";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: none
 
 ```sh

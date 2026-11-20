@@ -24,7 +24,7 @@ Virtual native page list with stable thumbnail bounds, grouping and one scoped r
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFThumbnailSidebar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFThumbnailSidebar } from "@nyc-tron/ui/components/forge/pdf/PDFThumbnailSidebar";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/MenuButton
 
 ```sh

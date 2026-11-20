@@ -21,7 +21,7 @@ Inspector panel for the current selection: header, search filter and InspectorSe
 
 - Package: @nyc-tron/ui
 - Import: `import { InspectorPanel } from "@nyc-tron/ui/components/shell/InspectorPanel";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/shell/InspectorSearch
 
 ```sh

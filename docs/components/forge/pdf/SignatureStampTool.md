@@ -24,7 +24,7 @@ Visible signature stamp authoring.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/SignatureStampTool.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SignatureStampTool } from "@nyc-tron/ui/components/forge/pdf/SignatureStampTool";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D, @nyc-tron/forge/inputs/PropertyInspector, @nyc-tron/forge/slides/InkAndLaserPointer
 
 ```sh

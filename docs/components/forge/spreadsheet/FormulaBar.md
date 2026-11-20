@@ -24,7 +24,7 @@ Controlled formula text; the workbook owns the draft and evaluates only committe
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/FormulaBar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FormulaBar } from "@nyc-tron/ui/components/forge/spreadsheet/FormulaBar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

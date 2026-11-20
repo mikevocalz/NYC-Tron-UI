@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/TransformGizmo3D.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TransformGizmo3D } from "@nyc-tron/ui/components/forge/cad/TransformGizmo3D";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D, @nyc-tron/forge/inputs/PropertyInspector, @nyc-tron/forge/motion/Transform3DInspector
 
 ```sh

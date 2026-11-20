@@ -24,7 +24,7 @@ Native PDF reading order and glyph rectangles are supplied by the renderer; Unic
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFTextSelection.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFTextSelection } from "@nyc-tron/ui/components/forge/pdf/PDFTextSelection";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

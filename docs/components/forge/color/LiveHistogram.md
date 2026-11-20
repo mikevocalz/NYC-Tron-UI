@@ -24,7 +24,7 @@ Renders bounded, count-preserving histograms; no fake signal or recurring UI tim
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/LiveHistogram.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LiveHistogram } from "@nyc-tron/ui/components/forge/color/LiveHistogram";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

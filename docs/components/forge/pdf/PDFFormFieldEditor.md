@@ -24,7 +24,7 @@ Edits actual AcroForm metadata; native signing, field appearance regeneration an
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFFormFieldEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFFormFieldEditor } from "@nyc-tron/ui/components/forge/pdf/PDFFormFieldEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

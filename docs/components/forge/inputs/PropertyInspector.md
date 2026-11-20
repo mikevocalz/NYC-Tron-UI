@@ -21,7 +21,7 @@ Form built from a field list of number, choice, boolean and text properties, com
 
 - Package: @nyc-tron/ui
 - Import: `import { PropertyInspector } from "@nyc-tron/ui/components/forge/inputs/PropertyInspector";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh

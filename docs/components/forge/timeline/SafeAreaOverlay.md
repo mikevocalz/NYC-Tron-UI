@@ -24,7 +24,7 @@ Guides over a video monitor (D-25): action- and title-safe boxes, an aspect-rati
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/SafeAreaOverlay.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SafeAreaOverlay } from "@nyc-tron/ui/components/forge/timeline/SafeAreaOverlay";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

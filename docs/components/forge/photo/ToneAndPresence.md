@@ -24,7 +24,7 @@ Controlled non-destructive tone settings.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/ToneAndPresence.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ToneAndPresence } from "@nyc-tron/ui/components/forge/photo/ToneAndPresence";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh

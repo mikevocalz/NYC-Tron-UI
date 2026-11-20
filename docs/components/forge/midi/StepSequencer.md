@@ -24,7 +24,7 @@ Controlled beat grid over one clip's notes.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/StepSequencer.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { StepSequencer } from "@nyc-tron/ui/components/forge/midi/StepSequencer";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -24,7 +24,7 @@ Virtualized nested composition/shape/text/footage/adjustment hierarchy with stab
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/CompositionLayerTree.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CompositionLayerTree } from "@nyc-tron/ui/components/forge/motion/CompositionLayerTree";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

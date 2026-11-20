@@ -24,7 +24,7 @@ Controlled non-destructive exposure settings.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/ExposureAndWhiteBalance.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ExposureAndWhiteBalance } from "@nyc-tron/ui/components/forge/photo/ExposureAndWhiteBalance";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh

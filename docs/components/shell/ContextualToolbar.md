@@ -21,7 +21,7 @@ Toolbar whose items filter by selection kind and overflow into a More menu by pr
 
 - Package: @nyc-tron/ui
 - Import: `import { ContextualToolbar } from "@nyc-tron/ui/components/shell/ContextualToolbar";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Toolbar, @nyc-tron/shell/MenuButton
 
 ```sh

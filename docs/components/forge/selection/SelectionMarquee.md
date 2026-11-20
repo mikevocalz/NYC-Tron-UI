@@ -24,7 +24,7 @@ Marquee selection over a host canvas (B-19): rectangle, ellipse, polygon (click 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/SelectionMarquee.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SelectionMarquee } from "@nyc-tron/ui/components/forge/selection/SelectionMarquee";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh

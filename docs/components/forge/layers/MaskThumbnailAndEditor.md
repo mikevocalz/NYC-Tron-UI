@@ -24,7 +24,7 @@ Mask panel for one layer (B-12).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/MaskThumbnailAndEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MaskThumbnailAndEditor } from "@nyc-tron/ui/components/forge/layers/MaskThumbnailAndEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/layers/LayerThumbnail
 
 ```sh

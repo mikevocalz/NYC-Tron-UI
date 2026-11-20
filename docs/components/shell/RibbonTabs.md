@@ -21,7 +21,7 @@ Office-style ribbon of tabs and a command panel of buttons, split buttons and ga
 
 - Package: @nyc-tron/ui
 - Import: `import { RibbonTabs } from "@nyc-tron/ui/components/shell/RibbonTabs";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/MenuButton, @nyc-tron/shell/SplitButton
 
 ```sh

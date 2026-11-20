@@ -24,7 +24,7 @@ Play/pause, stop, jump to start/end and previous/next frame (D-06), each a 44pt 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TransportControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TransportControls } from "@nyc-tron/ui/components/forge/timeline/TransportControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

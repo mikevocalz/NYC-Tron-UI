@@ -24,7 +24,7 @@ Canvas rulers and guides (B-03): a top ruler counting x and a side ruler countin
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/CanvasRuler.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CanvasRuler } from "@nyc-tron/ui/components/forge/canvas/CanvasRuler";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

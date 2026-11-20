@@ -24,7 +24,7 @@ Time ruler (D-10): labeled ticks that switch between frames, seconds and minutes
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimelineRuler.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TimelineRuler } from "@nyc-tron/ui/components/forge/timeline/TimelineRuler";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

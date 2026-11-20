@@ -24,7 +24,7 @@ Controlled tool, size, color, opacity, pressure and history controls for a drawi
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/InkToolbar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InkToolbar } from "@nyc-tron/ui/components/forge/ink/InkToolbar";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh

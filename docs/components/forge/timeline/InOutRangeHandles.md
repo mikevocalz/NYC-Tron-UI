@@ -24,7 +24,7 @@ In and out marks (D-12): Set in / Set out / Clear buttons that act at the playhe
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/InOutRangeHandles.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InOutRangeHandles } from "@nyc-tron/ui/components/forge/timeline/InOutRangeHandles";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -24,7 +24,7 @@ Controlled file transfer form with the existing native picker transport.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/files/FileImportExportSheet.native.tsx,packages/ui/src/components/files/FileImportExportSheet.shared.tsx,packages/ui/src/components/files/FileImportExportSheet.web.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FileImportExportSheet } from "@nyc-tron/ui/components/files/FileImportExportSheet";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/TextField, @nyc-tron/files/FilePicker
 
 ```sh

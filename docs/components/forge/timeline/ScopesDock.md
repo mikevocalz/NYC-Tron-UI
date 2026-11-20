@@ -24,7 +24,7 @@ Actual decoder/compositor measurements, with source/program assignment and stale
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/ScopesDock.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ScopesDock } from "@nyc-tron/ui/components/forge/timeline/ScopesDock";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/forge/color/VideoScopesPanel
 
 ```sh

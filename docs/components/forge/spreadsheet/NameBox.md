@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/NameBox.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { NameBox } from "@nyc-tron/ui/components/forge/spreadsheet/NameBox";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh

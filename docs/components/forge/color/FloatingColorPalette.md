@@ -24,7 +24,7 @@ Dockable color palette (C-26).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/FloatingColorPalette.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FloatingColorPalette } from "@nyc-tron/ui/components/forge/color/FloatingColorPalette";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/color/FloatingPaletteUndockHandle
 
 ```sh

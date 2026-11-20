@@ -24,7 +24,7 @@ Binds theme tokens by identity; previews never replace references with literal c
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ThemeColorReferences.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ThemeColorReferences } from "@nyc-tron/ui/components/forge/color/ThemeColorReferences";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select
 
 ```sh

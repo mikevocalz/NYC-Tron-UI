@@ -24,7 +24,7 @@ Typed, bounded graph editor.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/NodeGraphEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { NodeGraphEditor } from "@nyc-tron/ui/components/forge/motion/NodeGraphEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/graph/PatchGraph, @nyc-tron/shell/UnitInput
 
 ```sh

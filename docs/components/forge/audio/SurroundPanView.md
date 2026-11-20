@@ -24,7 +24,7 @@ Speaker geometry and source positions come from the native routing engine, not i
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SurroundPanView.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SurroundPanView } from "@nyc-tron/ui/components/forge/audio/SurroundPanView";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

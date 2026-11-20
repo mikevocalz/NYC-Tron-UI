@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/MediaInsertInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MediaInsertInspector } from "@nyc-tron/ui/components/forge/slides/MediaInsertInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector, @nyc-tron/forge/timeline/InOutRangeHandles
 
 ```sh

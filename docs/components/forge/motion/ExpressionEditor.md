@@ -24,7 +24,7 @@ Native code text input with explicit, cancellable host language services.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/ExpressionEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ExpressionEditor } from "@nyc-tron/ui/components/forge/motion/ExpressionEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -24,7 +24,7 @@ Tonal hue/saturation wheels and explicit exposure, balance and blending controls
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorGradingWheels.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorGradingWheels } from "@nyc-tron/ui/components/forge/color/ColorGradingWheels";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/forge/color/ColorDiscPicker, @nyc-tron/shell/SliderField
 
 ```sh

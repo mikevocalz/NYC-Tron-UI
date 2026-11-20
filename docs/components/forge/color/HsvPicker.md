@@ -24,7 +24,7 @@ Controlled HSV display-color picker: a saturation/value field, a native `@expo/u
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/HsvPicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { HsvPicker } from "@nyc-tron/ui/components/forge/color/HsvPicker";`
-- Peers: @expo/ui, @nyc-tron/core, expo-linear-gradient, react, react-native
+- Peers: @expo/ui, expo-linear-gradient, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/ColorChannels
 
 ```sh

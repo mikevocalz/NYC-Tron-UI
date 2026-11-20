@@ -24,7 +24,7 @@ Host-supplied calibrated profile identity and manual distortion/CA intent.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/LensCorrectionPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LensCorrectionPanel } from "@nyc-tron/ui/components/forge/photo/LensCorrectionPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/shell/UnitInput
 
 ```sh

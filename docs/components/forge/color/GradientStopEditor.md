@@ -24,7 +24,7 @@ Edits stop positions and RGBA, inserts interpolated stops and prevents fewer tha
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/GradientStopEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { GradientStopEditor } from "@nyc-tron/ui/components/forge/color/GradientStopEditor";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/forge/color/ColorChannelFields, @nyc-tron/shell/UnitInput
 
 ```sh

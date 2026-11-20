@@ -21,7 +21,7 @@ Grid of selectable preset tiles with hover preview, favorites toggle and All or 
 
 - Package: @nyc-tron/ui
 - Import: `import { PresetGallery } from "@nyc-tron/ui/components/shell/PresetGallery";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh

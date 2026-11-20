@@ -24,7 +24,7 @@ Deterministic emitter settings; the compositor owns particle simulation and text
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/ParticleEmitterControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ParticleEmitterControls } from "@nyc-tron/ui/components/forge/motion/ParticleEmitterControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/shell/UnitInput
 
 ```sh

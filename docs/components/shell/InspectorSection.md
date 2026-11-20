@@ -21,7 +21,7 @@ Collapsible inspector group with optional enable switch and reset button, indent
 
 - Package: @nyc-tron/ui
 - Import: `import { InspectorSection } from "@nyc-tron/ui/components/shell/InspectorSection";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh

@@ -24,7 +24,7 @@ Horizontal photo preset previews with explicit cancellable apply to the selected
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PresetFilmstrip.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PresetFilmstrip } from "@nyc-tron/ui/components/forge/photo/PresetFilmstrip";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

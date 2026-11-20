@@ -24,7 +24,7 @@ Time readout (D-08) in timecode (with drop-frame at 29.97/59.94), frames, second
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimecodeDisplay.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TimecodeDisplay } from "@nyc-tron/ui/components/forge/timeline/TimecodeDisplay";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -24,7 +24,7 @@ One mixer column: routing and group line, level fader with dB readout, optional 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/ChannelStrip.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ChannelStrip } from "@nyc-tron/ui/components/forge/audio/ChannelStrip";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/audio/LevelFader, @nyc-tron/forge/audio/LevelMeter, @nyc-tron/forge/audio/PanControl, @nyc-tron/forge/audio/SoloMuteButtons
 
 ```sh

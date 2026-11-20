@@ -24,7 +24,7 @@ Controlled read-aloud transport shared by H-21 and K-18: the current sentence wi
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/office/ReadAloudTransport.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ReadAloudTransport } from "@nyc-tron/ui/components/forge/office/ReadAloudTransport";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh

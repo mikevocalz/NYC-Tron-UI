@@ -21,7 +21,7 @@ Menu to switch, save, rename, duplicate, reset and delete workspace layout prese
 
 - Package: @nyc-tron/ui
 - Import: `import { WorkspacePresetSwitcher } from "@nyc-tron/ui/components/shell/WorkspacePresetSwitcher";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/TextField, @nyc-tron/shell/MenuButton
 
 ```sh

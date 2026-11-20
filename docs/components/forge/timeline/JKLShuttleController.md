@@ -24,7 +24,7 @@ J/K/L shuttle (D-09): three 44pt keys and the current rate.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/JKLShuttleController.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { JKLShuttleController } from "@nyc-tron/ui/components/forge/timeline/JKLShuttleController";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

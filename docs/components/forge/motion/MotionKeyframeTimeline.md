@@ -24,7 +24,7 @@ Virtualized property lanes and full key list share one controlled selection.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/MotionKeyframeTimeline.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MotionKeyframeTimeline } from "@nyc-tron/ui/components/forge/motion/MotionKeyframeTimeline";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/shell/UnitInput
 
 ```sh

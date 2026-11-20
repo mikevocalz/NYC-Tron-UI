@@ -21,7 +21,7 @@ Side navigation drawer menu in expanded, compact or minimal mode, with overlay a
 
 - Package: @nyc-tron/ui
 - Import: `import { CollapsibleDrawer } from "@nyc-tron/ui/components/navigation/CollapsibleDrawer";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

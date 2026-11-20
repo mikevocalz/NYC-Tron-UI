@@ -24,7 +24,7 @@ Shared native recognizer/ink state owner.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/PresenterInkOverlay.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PresenterInkOverlay } from "@nyc-tron/ui/components/forge/slides/PresenterInkOverlay";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

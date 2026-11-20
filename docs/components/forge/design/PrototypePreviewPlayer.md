@@ -24,7 +24,7 @@ Surface and transition clock come from the actual prototype runtime; no UI timer
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/PrototypePreviewPlayer.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PrototypePreviewPlayer } from "@nyc-tron/ui/components/forge/design/PrototypePreviewPlayer";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh

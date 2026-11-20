@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SplitSpreadsheetView.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SplitSpreadsheetView } from "@nyc-tron/ui/components/forge/spreadsheet/SplitSpreadsheetView";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag
 
 ```sh

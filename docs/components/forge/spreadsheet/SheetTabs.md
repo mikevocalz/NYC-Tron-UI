@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SheetTabs.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SheetTabs } from "@nyc-tron/ui/components/forge/spreadsheet/SheetTabs";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

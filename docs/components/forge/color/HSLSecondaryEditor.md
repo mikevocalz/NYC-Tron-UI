@@ -24,7 +24,7 @@ Edits wrapping hue selection, saturation/luma bounds, mask refinement and correc
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/HSLSecondaryEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { HSLSecondaryEditor } from "@nyc-tron/ui/components/forge/color/HSLSecondaryEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh

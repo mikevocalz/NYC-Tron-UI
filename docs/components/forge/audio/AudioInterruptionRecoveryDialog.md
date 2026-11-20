@@ -24,7 +24,7 @@ Explicit recovery decisions; rejected actions keep the dialog open with the erro
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AudioInterruptionRecoveryDialog.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AudioInterruptionRecoveryDialog } from "@nyc-tron/ui/components/forge/audio/AudioInterruptionRecoveryDialog";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button
 
 ```sh

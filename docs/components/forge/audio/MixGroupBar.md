@@ -24,7 +24,7 @@ Controlled mix group chips: name, member count, and Solo and Mute toggles for th
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/MixGroupBar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MixGroupBar } from "@nyc-tron/ui/components/forge/audio/MixGroupBar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

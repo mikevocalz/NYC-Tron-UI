@@ -21,7 +21,7 @@ ToolButton with checked and mixed toggle state, plus play, pause, skip, plus and
 
 - Package: @nyc-tron/ui
 - Import: `import { ToolButton, PlayGlyph, PauseGlyph, SkipGlyph, PlusGlyph, ChevronGlyph, CloseMark } from "@nyc-tron/ui/components/forge/office/office-controls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

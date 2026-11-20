@@ -24,7 +24,7 @@ Editable slide (J-05): objects drawn to scale, press to select, drag to move wit
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideCanvas.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SlideCanvas } from "@nyc-tron/ui/components/forge/slides/SlideCanvas";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls, @nyc-tron/forge/slides/SlideThumbnail
 
 ```sh

@@ -24,7 +24,7 @@ Virtualized catalog page with host-generated thumbnails; originals are never dec
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PhotoLibraryGrid.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PhotoLibraryGrid } from "@nyc-tron/ui/components/forge/photo/PhotoLibraryGrid";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button
 
 ```sh

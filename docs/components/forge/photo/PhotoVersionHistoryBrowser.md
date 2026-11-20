@@ -24,7 +24,7 @@ Read-only snapshots with explicit compare/restore; there is no original-delete o
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PhotoVersionHistoryBrowser.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PhotoVersionHistoryBrowser } from "@nyc-tron/ui/components/forge/photo/PhotoVersionHistoryBrowser";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -21,7 +21,7 @@ Single-choice segmented control exposed as a radio group, for React Native; arro
 
 - Package: @nyc-tron/ui
 - Import: `import { SegmentedControl } from "@nyc-tron/ui/components/SegmentedControl";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

@@ -24,7 +24,7 @@ Clip lanes (D-15): one lane per track, clips positioned by frame, only the visib
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimelineClipLane.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TimelineClipLane } from "@nyc-tron/ui/components/forge/timeline/TimelineClipLane";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/ClipTrimHandles, @nyc-tron/forge/timeline/ModeEdgeHandles
 
 ```sh

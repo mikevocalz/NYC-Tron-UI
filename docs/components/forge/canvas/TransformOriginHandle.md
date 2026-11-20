@@ -24,7 +24,7 @@ Pivot editor for one layer (B-08).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/TransformOriginHandle.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TransformOriginHandle } from "@nyc-tron/ui/components/forge/canvas/TransformOriginHandle";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

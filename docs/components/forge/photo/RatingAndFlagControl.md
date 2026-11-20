@@ -24,7 +24,7 @@ Independent star, named color-label and mutually exclusive pick/reject fields.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/RatingAndFlagControl.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RatingAndFlagControl } from "@nyc-tron/ui/components/forge/photo/RatingAndFlagControl";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/Select
 
 ```sh

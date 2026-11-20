@@ -24,7 +24,7 @@ Controlled MIDI note editor for one clip.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/MIDIPianoRoll.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MIDIPianoRoll } from "@nyc-tron/ui/components/forge/midi/MIDIPianoRoll";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/midi/MidiChannelPicker
 
 ```sh

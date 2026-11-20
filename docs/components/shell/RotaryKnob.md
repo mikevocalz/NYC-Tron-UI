@@ -21,7 +21,7 @@ Dial control with relative or circular drag, fine adjustment, detents and reset 
 
 - Package: @nyc-tron/ui
 - Import: `import { RotaryKnob } from "@nyc-tron/ui/components/shell/RotaryKnob";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
 
 ```sh

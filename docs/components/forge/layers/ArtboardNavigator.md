@@ -24,7 +24,7 @@ Artboard list or grid with previews (B-14).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/ArtboardNavigator.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ArtboardNavigator } from "@nyc-tron/ui/components/forge/layers/ArtboardNavigator";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/DragGrabHandle, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/layers/LayerThumbnail, @nyc-tron/gestures/PanResponderDrag
 
 ```sh

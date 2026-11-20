@@ -24,7 +24,7 @@ Host-layout pages with actual native plain text inputs or an explicit native ric
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/PaginatedTextCanvas.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PaginatedTextCanvas } from "@nyc-tron/ui/components/forge/document/PaginatedTextCanvas";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/document/TextSelectionAndCaret
 
 ```sh

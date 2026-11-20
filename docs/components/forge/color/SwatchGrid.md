@@ -24,7 +24,7 @@ Searchable swatch groups (C-13).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/SwatchGrid.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SwatchGrid } from "@nyc-tron/ui/components/forge/color/SwatchGrid";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button
 
 ```sh

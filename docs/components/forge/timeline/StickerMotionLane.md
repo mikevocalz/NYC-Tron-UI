@@ -24,7 +24,7 @@ Sticker objects retain their own ranges, transforms and shared editable motion k
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/StickerMotionLane.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { StickerMotionLane } from "@nyc-tron/ui/components/forge/timeline/StickerMotionLane";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler
+- Peers: react, react-native, react-native-gesture-handler
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/motion/MotionKeyframeTimeline, @nyc-tron/forge/timeline/InOutRangeHandles, @nyc-tron/shell/MenuButton
 
 ```sh

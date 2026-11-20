@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/FlowOverview.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FlowOverview } from "@nyc-tron/ui/components/forge/design/FlowOverview";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

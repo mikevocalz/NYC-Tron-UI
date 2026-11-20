@@ -21,7 +21,7 @@ Search field with clear button and live-region match summary for inspector panel
 
 - Package: @nyc-tron/ui
 - Import: `import { InspectorSearch } from "@nyc-tron/ui/components/shell/InspectorSearch";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

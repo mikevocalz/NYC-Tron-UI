@@ -24,7 +24,7 @@ Host file picker/parser/conversion transactions; preview rows and failures are a
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/DataImportWizard.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DataImportWizard } from "@nyc-tron/ui/components/forge/spreadsheet/DataImportWizard";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

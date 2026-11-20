@@ -24,7 +24,7 @@ Controlled preset list for one insert effect, with a label search.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/PluginPresetBrowser.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PluginPresetBrowser } from "@nyc-tron/ui/components/forge/audio/PluginPresetBrowser";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

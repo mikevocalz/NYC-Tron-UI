@@ -24,7 +24,7 @@ Vertical slide filmstrip (J-01): numbered thumbnails drawn from the slide's obje
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideFilmstrip.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SlideFilmstrip } from "@nyc-tron/ui/components/forge/slides/SlideFilmstrip";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls, @nyc-tron/forge/slides/SlideThumbnail
 
 ```sh

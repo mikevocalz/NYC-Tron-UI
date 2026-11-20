@@ -24,7 +24,7 @@ Chooses actual source frames/assets; applying the exported cover remains an engi
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/CoverFramePicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CoverFramePicker } from "@nyc-tron/ui/components/forge/timeline/CoverFramePicker";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/layers/LayerThumbnail, @nyc-tron/forge/timeline/VideoFilmstrip
 
 ```sh

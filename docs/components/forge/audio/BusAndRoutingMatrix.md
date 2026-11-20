@@ -24,7 +24,7 @@ Controlled routing matrix for track outputs and post-fader sends.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/BusAndRoutingMatrix.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BusAndRoutingMatrix } from "@nyc-tron/ui/components/forge/audio/BusAndRoutingMatrix";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/EmptyState, @nyc-tron/feedback/ErrorMessage
 
 ```sh

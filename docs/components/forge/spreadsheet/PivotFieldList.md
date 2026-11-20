@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/PivotFieldList.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PivotFieldList } from "@nyc-tron/ui/components/forge/spreadsheet/PivotFieldList";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -24,7 +24,7 @@ Actual presentation telemetry against the audio master clock, without a second U
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AudioVideoSync.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AudioVideoSync } from "@nyc-tron/ui/components/forge/audio/AudioVideoSync";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -24,7 +24,7 @@ Composes non-destructive RAW settings; does not decode RAW or simulate an image 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/RAWDevelopPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RAWDevelopPanel } from "@nyc-tron/ui/components/forge/photo/RAWDevelopPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/photo/EightBandColorMixer, @nyc-tron/forge/photo/ExposureAndWhiteBalance, @nyc-tron/forge/photo/LensCorrectionPanel, @nyc-tron/forge/photo/ToneAndPresence
 
 ```sh

@@ -24,7 +24,7 @@ Trim tools (D-21): a picker for select, slip, slide, roll and ripple, which sets
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/RollSlipSlideControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RollSlipSlideControls } from "@nyc-tron/ui/components/forge/timeline/RollSlipSlideControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/TimelineClipLane
 
 ```sh

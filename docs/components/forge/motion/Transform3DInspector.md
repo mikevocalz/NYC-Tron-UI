@@ -24,7 +24,7 @@ Controlled scene/document transform; rotations retain complete turns.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/Transform3DInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { Transform3DInspector } from "@nyc-tron/ui/components/forge/motion/Transform3DInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/shell/UnitInput
 
 ```sh

@@ -24,7 +24,7 @@ Edits for several clips at once (D-41): shift by a number of frames, set speed (
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/BatchEditPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BatchEditPanel } from "@nyc-tron/ui/components/forge/timeline/BatchEditPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage
 
 ```sh

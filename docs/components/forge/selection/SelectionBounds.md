@@ -24,7 +24,7 @@ Scope-safe move/resize/rotation handles.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/SelectionBounds.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SelectionBounds } from "@nyc-tron/ui/components/forge/selection/SelectionBounds";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: none
 
 ```sh

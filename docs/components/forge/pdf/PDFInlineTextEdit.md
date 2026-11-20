@@ -24,7 +24,7 @@ Actual native PDF hit tests/font admission and save acknowledgement; edits never
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFInlineTextEdit.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFInlineTextEdit } from "@nyc-tron/ui/components/forge/pdf/PDFInlineTextEdit";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh

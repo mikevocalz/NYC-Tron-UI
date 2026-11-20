@@ -21,7 +21,7 @@ Sortable data table on TanStack Table that renders cards below a width threshold
 
 - Package: @nyc-tron/ui
 - Import: `import { DataTable } from "@nyc-tron/ui/components/data/DataTable";`
-- Peers: @nyc-tron/core, @tanstack/react-table, react, react-native, zustand
+- Peers: @tanstack/react-table, react, react-native, zustand
 - Requires: none
 
 ```sh

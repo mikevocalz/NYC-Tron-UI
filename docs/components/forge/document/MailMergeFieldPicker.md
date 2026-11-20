@@ -24,7 +24,7 @@ Preview values are supplied by the selected recipient's admitted data source.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/MailMergeFieldPicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MailMergeFieldPicker } from "@nyc-tron/ui/components/forge/document/MailMergeFieldPicker";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

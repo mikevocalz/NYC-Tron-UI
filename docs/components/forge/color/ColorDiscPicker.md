@@ -24,7 +24,7 @@ Controlled hue/saturation disc with a brightness track (C-27): angle is hue, dis
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorDiscPicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorDiscPicker } from "@nyc-tron/ui/components/forge/color/ColorDiscPicker";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

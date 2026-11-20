@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/RealtimePeakMeter.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RealtimePeakMeter } from "@nyc-tron/ui/components/forge/audio/RealtimePeakMeter";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/forge/audio/LevelMeter
 
 ```sh

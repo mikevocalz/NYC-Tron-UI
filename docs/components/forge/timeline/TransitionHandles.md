@@ -24,7 +24,7 @@ Transitions on the timeline (D-23), placed over the lanes like `TimelinePlayhead
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TransitionHandles.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TransitionHandles } from "@nyc-tron/ui/components/forge/timeline/TransitionHandles";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

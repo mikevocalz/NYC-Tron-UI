@@ -24,7 +24,7 @@ Sample-clock recording boundaries; the host owns rolling, looping and take alloc
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LoopPunchRecording.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LoopPunchRecording } from "@nyc-tron/ui/components/forge/audio/LoopPunchRecording";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

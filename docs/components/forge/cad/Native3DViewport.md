@@ -24,7 +24,7 @@ Native gesture front end for an actual host 3D surface.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/Native3DViewport.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { Native3DViewport } from "@nyc-tron/ui/components/forge/cad/Native3DViewport";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh

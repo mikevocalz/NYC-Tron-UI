@@ -21,7 +21,7 @@ Undo and redo list with a cursor and jump to any entry; async jump with cancel, 
 
 - Package: @nyc-tron/ui
 - Import: `import { HistoryPanel } from "@nyc-tron/ui/components/shell/HistoryPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

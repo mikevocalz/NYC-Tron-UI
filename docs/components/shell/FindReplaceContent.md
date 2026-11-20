@@ -21,7 +21,7 @@ Find and replace form with match navigation, replace one or all, and async searc
 
 - Package: @nyc-tron/ui
 - Import: `import { FindReplaceContent } from "@nyc-tron/ui/components/shell/FindReplaceContent";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

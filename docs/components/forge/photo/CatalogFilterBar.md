@@ -24,7 +24,7 @@ Explicit host-indexed catalog filters.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/CatalogFilterBar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CatalogFilterBar } from "@nyc-tron/ui/components/forge/photo/CatalogFilterBar";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/shell/UnitInput
 
 ```sh

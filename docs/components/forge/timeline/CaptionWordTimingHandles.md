@@ -24,7 +24,7 @@ Frame-snapped word boundaries with neighboring-word collision checks.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/CaptionWordTimingHandles.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CaptionWordTimingHandles } from "@nyc-tron/ui/components/forge/timeline/CaptionWordTimingHandles";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/InOutRangeHandles
 
 ```sh

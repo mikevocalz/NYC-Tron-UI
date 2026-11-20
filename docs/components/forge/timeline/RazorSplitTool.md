@@ -24,7 +24,7 @@ Razor controls (D-20): a toggle that turns clip presses in `TimelineClipLane` in
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/RazorSplitTool.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RazorSplitTool } from "@nyc-tron/ui/components/forge/timeline/RazorSplitTool";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/TimelineClipLane
 
 ```sh

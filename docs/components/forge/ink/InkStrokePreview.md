@@ -24,7 +24,7 @@ A bounded pressure-sensitive Graphite test stroke, independent of the production
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/InkStrokePreview.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InkStrokePreview } from "@nyc-tron/ui/components/forge/ink/InkStrokePreview";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, react-native-skia, zustand
+- Peers: react, react-native, react-native-gesture-handler, react-native-skia, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/canvas/GPUCanvasViewport
 
 ```sh

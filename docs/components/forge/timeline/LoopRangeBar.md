@@ -24,7 +24,7 @@ The playback loop (D-13): a Loop switch for the player, "Loop marked range" to t
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/LoopRangeBar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LoopRangeBar } from "@nyc-tron/ui/components/forge/timeline/LoopRangeBar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

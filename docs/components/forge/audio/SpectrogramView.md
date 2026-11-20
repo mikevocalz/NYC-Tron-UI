@@ -24,7 +24,7 @@ Spectrogram drawn with plain Views: time runs left to right (also in RTL), low f
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SpectrogramView.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SpectrogramView } from "@nyc-tron/ui/components/forge/audio/SpectrogramView";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -24,7 +24,7 @@ Encoder-neutral queue controls; no UI timer invents render progress or completio
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/RenderQueuePanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RenderQueuePanel } from "@nyc-tron/ui/components/forge/motion/RenderQueuePanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/Select, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh

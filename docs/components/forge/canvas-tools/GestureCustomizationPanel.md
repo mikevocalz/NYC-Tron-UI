@@ -24,7 +24,7 @@ Gesture customisation (B-34): one row per quick action with a gesture menu, a ho
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas-tools/GestureCustomizationPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { GestureCustomizationPanel } from "@nyc-tron/ui/components/forge/canvas-tools/GestureCustomizationPanel";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

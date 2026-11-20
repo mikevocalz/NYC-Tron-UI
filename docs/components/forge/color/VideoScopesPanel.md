@@ -24,7 +24,7 @@ Renders actual decoded measurements with bounded density pooling; no synthetic s
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/VideoScopesPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { VideoScopesPanel } from "@nyc-tron/ui/components/forge/color/VideoScopesPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/forge/color/LiveHistogram
 
 ```sh

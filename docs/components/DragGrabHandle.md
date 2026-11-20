@@ -21,7 +21,7 @@ Three-bar drag handle, 44 by 44 minimum, reporting start, move, commit and cance
 
 - Package: @nyc-tron/ui
 - Import: `import { DragGrabHandle } from "@nyc-tron/ui/components/DragGrabHandle";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/gestures/PanResponderDrag
 
 ```sh

@@ -24,7 +24,7 @@ Edge handles for the roll and ripple tools (D-21) on the selected clip.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/ModeEdgeHandles.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ModeEdgeHandles } from "@nyc-tron/ui/components/forge/timeline/ModeEdgeHandles";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

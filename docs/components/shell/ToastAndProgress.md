@@ -21,7 +21,7 @@ List of toast notifications and progress jobs with dismiss and action buttons; s
 
 - Package: @nyc-tron/ui
 - Import: `import { ToastAndProgress } from "@nyc-tron/ui/components/shell/ToastAndProgress";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/PBRMaterialInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PBRMaterialInspector } from "@nyc-tron/ui/components/forge/cad/PBRMaterialInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

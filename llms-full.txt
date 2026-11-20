@@ -1,6 +1,6 @@
 # NYC-Tron UI, full documentation
 
-> Every documentation page in one file (560 pages, tag v1.0.0-rc.2). This file is large. For one component, fetch its page: https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/<id>.md. The short index is https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/llms.txt.
+> Every documentation page in one file (565 pages, tag v1.0.0-rc.2). This file is large. For one component, fetch its page: https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/<id>.md. The short index is https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/llms.txt.
 
 ## Theme contract
 
@@ -52,7 +52,7 @@ Pressable text button with primary, secondary, ghost and danger variants, loadin
 
 - Package: @nyc-tron/ui
 - Import: `import { Button } from "@nyc-tron/ui/components/Button";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -340,7 +340,7 @@ Three-bar drag handle, 44 by 44 minimum, reporting start, move, commit and cance
 
 - Package: @nyc-tron/ui
 - Import: `import { DragGrabHandle } from "@nyc-tron/ui/components/DragGrabHandle";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/gestures/PanResponderDrag
 
 ```sh
@@ -619,7 +619,7 @@ Icon-only pressable button with five variants and an optional selected toggle st
 
 - Package: @nyc-tron/ui
 - Import: `import { IconButton } from "@nyc-tron/ui/components/IconButton";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -1078,7 +1078,7 @@ Single-choice segmented control exposed as a radio group, for React Native; arro
 
 - Package: @nyc-tron/ui
 - Import: `import { SegmentedControl } from "@nyc-tron/ui/components/SegmentedControl";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -1798,7 +1798,7 @@ Label and value list that goes from one to two columns at a measured width, with
 
 - Package: @nyc-tron/ui
 - Import: `import { KeyValueList } from "@nyc-tron/ui/components/content/KeyValueList";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh
@@ -1944,7 +1944,7 @@ Sortable data table on TanStack Table that renders cards below a width threshold
 
 - Package: @nyc-tron/ui
 - Import: `import { DataTable } from "@nyc-tron/ui/components/data/DataTable";`
-- Peers: @nyc-tron/core, @tanstack/react-table, react, react-native, zustand
+- Peers: @tanstack/react-table, react, react-native, zustand
 - Requires: none
 
 ```sh
@@ -2106,7 +2106,7 @@ Tree table with expandable rows, row selection, column reorder and pinned column
 
 - Package: @nyc-tron/ui
 - Import: `import { TreeGrid } from "@nyc-tron/ui/components/data/TreeGrid";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh
@@ -2272,7 +2272,7 @@ Small status badge with neutral, info, success, danger or accent tone, a status 
 
 - Package: @nyc-tron/ui
 - Import: `import { Badge } from "@nyc-tron/ui/components/feedback/Badge";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -2392,7 +2392,7 @@ Inline status banner with info, success, danger or neutral tone, title, descript
 
 - Package: @nyc-tron/ui
 - Import: `import { Banner } from "@nyc-tron/ui/components/feedback/Banner";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -2777,7 +2777,7 @@ Drag-to-scrub number control with fine, normal and coarse modes, detents, previe
 
 - Package: @nyc-tron/ui
 - Import: `import { PrecisionScrubber } from "@nyc-tron/ui/components/forge/inputs/PrecisionScrubber";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag
 
 ```sh
@@ -2932,7 +2932,7 @@ Form built from a field list of number, choice, boolean and text properties, com
 
 - Package: @nyc-tron/ui
 - Import: `import { PropertyInspector } from "@nyc-tron/ui/components/forge/inputs/PropertyInspector";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -3077,7 +3077,7 @@ ToolButton with checked and mixed toggle state, plus play, pause, skip, plus and
 
 - Package: @nyc-tron/ui
 - Import: `import { ToolButton, PlayGlyph, PauseGlyph, SkipGlyph, PlusGlyph, ChevronGlyph, CloseMark } from "@nyc-tron/ui/components/forge/office/office-controls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -3490,7 +3490,7 @@ Width-capped container that aligns its content to the start, center or end of th
 
 - Package: @nyc-tron/ui
 - Import: `import { ContentFrame } from "@nyc-tron/ui/components/layout/ContentFrame";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -3591,6 +3591,658 @@ export const Example = () => (
 - Do not pass a `maxWidth` of 0, negative or non-finite, because it throws during render.
 - Do not claim `marginStart` auto resolves the same in every layout engine, because the page marks Yoga and React Native Web behaviour UNVERIFIED.
 
+<!-- page id=layout/Divider tier=1 url=https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/layout/Divider.md -->
+---
+name: "Divider"
+namespace: "@nyc-tron"
+subpath: "@nyc-tron/ui/components/layout/Divider"
+tier: 1
+docs: "handwritten"
+platforms: []
+category: "layout"
+tokens: ["color.border"]
+registryDependencies: ["@nyc-tron/layout/Stack"]
+a11yStatus: "reviewed-pass"
+---
+
+# Divider
+
+## Purpose
+
+Decorative horizontal or vertical line, one border-width step thick, border colour role, no accessibility role, for React Native.
+
+## Install
+
+- Package: @nyc-tron/ui
+- Import: `import { Divider } from "@nyc-tron/ui/components/layout/Divider";`
+- Peers: react, react-native
+- Requires: @nyc-tron/layout/Stack
+
+```sh
+npx shadcn@latest add @nyc-tron/layout/Divider
+```
+
+### Dependencies
+
+- `react-native`: `View`, `ViewProps`, `ViewStyle`.
+- `border` and `space` from `../../tokens.ts`; `joinClasses` from `../styles.ts`; `StackSpace` (type only) from `./Stack.tsx`.
+
+## Props
+
+Tier-1 reason: R2 core family (layout)
+Import count: 0
+
+`DividerProps extends Omit<ViewProps, "children">`. The component reads `orientation`, `inset`, `className` and `style`; every other `ViewProps` field is forwarded to the `View`. It sets no `accessibilityRole`, no label and no `accessible` prop. Pass them yourself if a screen needs the line announced.
+
+Extends: `Omit<ViewProps, "children">`
+
+| Name | Type | Default | Required | Description |
+|---|---|---|---|---|
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | no | `horizontal` is `border[1]` high, `vertical` is `border[1]` wide. Both set `alignSelf: "stretch"`. |
+| `inset` | `StackSpace` | none | no | Key of `space`. Margin at both ends of the line: `marginHorizontal` for `horizontal`, `marginVertical` for `vertical`. |
+| `className` | `string` | none | no | Appended after `bg-border`. |
+
+### Inherited props this component reads
+
+Documented by hand from the source. They come from the extended type, so they are not in the table above.
+
+| Name | Type | Default | Required | Description |
+|---|---|---|---|---|
+| style | `StyleProp<ViewStyle>` | none | no | Placed after the built-in style, so it wins. |
+
+### Tokens
+
+- `border.1`: the line thickness, `border[1]` (computed, not listed by `token-use.mjs`).
+- `color.border`: `bg-border` class x1.
+- `space.0` to `space.4`: `inset` is looked up in `space` by key.
+
+Tailwind default classes (no token): none.
+
+### Unverified
+
+- UNVERIFIED: whether the `bg-border` class paints on every host; it depends on the consumer's Tailwind or Uniwind interop, and without it the line has no colour.
+- UNVERIFIED: how a screen reader treats an empty View with no role; no screen reader was run.
+
+## Variants
+
+### orientation
+
+| Value | Effect |
+|---|---|
+| `horizontal` | `height: border[1]`, margin at the left and right ends from `inset`. |
+| `vertical` | `width: border[1]`, margin at the top and bottom ends from `inset`. |
+
+## States
+
+None. The component has no interactive or conditional state.
+
+### Motion
+
+none in source
+
+### Platform notes
+
+none in source
+
+## A11y
+
+- Contrast: bg-border on raised and sunken surfaces is 1.58/1.58:1 and 1.42/1.75:1 (F03 pair). It is a decorative separator, not a control boundary, so SC 1.4.11 does not apply.
+- Keyboard and focus: Not interactive.
+- Touch target: Not interactive.
+- Screen reader: Decorative by construction: no `accessibilityRole`, no label, no `accessible` prop. How each screen reader treats an empty View is covered by GU2.
+- Motion: None.
+- Review status: **PASS**. Decorative line with no semantics to get wrong.
+- Reviewed from source only. Nothing was rendered and no screen reader was run. See `docs/agent-native/05-accessibility-review.md`.
+
+## Example
+
+```tsx example=Divider
+import { Text } from "react-native";
+import { Stack } from "@nyc-tron/ui/components/layout/Stack";
+import { Divider } from "@nyc-tron/ui/components/layout/Divider";
+
+export const Example = () => (
+  <Stack gap={3}>
+    <Text>General</Text>
+    <Divider inset={3} testID="section-divider" />
+    <Text>Advanced</Text>
+  </Stack>
+);
+```
+
+## Do/Don't
+
+### Do
+
+- Use `inset` to shorten the line at both ends, since it sets `marginHorizontal` for `horizontal` and `marginVertical` for `vertical`.
+- Set `orientation` to `vertical` inside a `Row`, because `alignSelf: "stretch"` then fills the row height.
+
+### Don't
+
+- Do not read it as a landmark: `Divider` sets no `accessibilityRole`, so a screen reader gets no separator announcement.
+- Do not expect colour without `bg-border`; the page marks the class interop UNVERIFIED on some hosts.
+- Do not use it to mark a control boundary, because the `border` role measures 1.58:1 on raised surfaces, under the 3:1 a boundary needs.
+
+<!-- page id=layout/Row tier=1 url=https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/layout/Row.md -->
+---
+name: "Row"
+namespace: "@nyc-tron"
+subpath: "@nyc-tron/ui/components/layout/Row"
+tier: 1
+docs: "handwritten"
+platforms: []
+category: "layout"
+tokens: []
+registryDependencies: ["@nyc-tron/layout/Stack"]
+a11yStatus: "reviewed-pass"
+---
+
+# Row
+
+## Purpose
+
+Horizontal flex View with the same token-keyed gap, padding, align, justify and wrap as Stack, for React Native.
+
+## Install
+
+- Package: @nyc-tron/ui
+- Import: `import { Row } from "@nyc-tron/ui/components/layout/Row";`
+- Peers: react, react-native
+- Requires: @nyc-tron/layout/Stack
+
+```sh
+npx shadcn@latest add @nyc-tron/layout/Row
+```
+
+### Dependencies
+
+- `react-native`: `View`.
+- `StackProps` (type only) from `./Stack.tsx` and `stackStyle` from `./stack-style.ts`.
+
+## Props
+
+Tier-1 reason: R2 core family (layout)
+Import count: 0
+
+`RowProps` is `StackProps`: same fields, same defaults. The only difference is `flexDirection: "row"`.
+
+| Name | Type | Default | Required | Description |
+|---|---|---|---|---|
+| children | `ReactNode` | none | no | Rendered inside the `View`. |
+| gap | `StackSpace` | `2` | no | Key of `space`. `space[gap]` px between children, 8 for the default. Set through the RN `gap` style. |
+| padding | `StackSpace` | none | no | Key of `space`. Sets `padding`. |
+| paddingX | `StackSpace` | none | no | Key of `space`. Sets `paddingHorizontal`. |
+| paddingY | `StackSpace` | none | no | Key of `space`. Sets `paddingVertical`. |
+| align | `"flex-start" \| "flex-end" \| "center" \| "stretch" \| "baseline"` | none | no | Sets `alignItems`. Unset leaves the View default. |
+| justify | `"flex-start" \| "flex-end" \| "center" \| "space-between" \| "space-around" \| "space-evenly"` | none | no | Sets `justifyContent`. |
+| wrap | `boolean` | `false` | no | `true` sets `flexWrap: "wrap"`. |
+| className | `string` | none | no | Forwarded to the `View` as `className`. Declared on the interface, so it is read here and passed back explicitly. |
+| style | `StyleProp<ViewStyle>` | none | no | Placed after the built-in style, so it wins. |
+
+### Tokens
+
+- `space.0` to `space.4`: `gap`, `padding`, `paddingX` and `paddingY` are looked up in `space` by key, so `token-use.mjs` does not list them (computed values).
+
+Tailwind default classes (no token): none.
+
+### Unverified
+
+- UNVERIFIED: how the `gap` style resolves on React Native Web and on the Windows, macOS and QNX hosts; no runtime was run.
+- UNVERIFIED: whether `className` reaches the `View` on every host; it depends on the consumer's Tailwind or Uniwind interop, which this file does not check.
+
+## Variants
+
+none
+
+## States
+
+None. Row has no interactive or conditional state. `flexDirection: "row"` follows the reading direction, so the first child sits at the start edge in both left-to-right and right-to-left layouts.
+
+### Motion
+
+none in source
+
+### Platform notes
+
+none in source
+
+## A11y
+
+- Contrast: No colour.
+- Keyboard and focus: Not interactive. `flexDirection: "row"` keeps source order, so reading and focus order follow child order.
+- Touch target: Not interactive.
+- Screen reader: Layout only. Sets no role, label or `accessible` prop.
+- Motion: None.
+- Review status: **PASS**. Pure layout.
+- Reviewed from source only. Nothing was rendered and no screen reader was run. See `docs/agent-native/05-accessibility-review.md`.
+
+## Example
+
+```tsx example=Row
+import { Text } from "react-native";
+import { Row } from "@nyc-tron/ui/components/layout/Row";
+
+export const Example = () => (
+  <Row gap={2} align="center" justify="space-between" paddingX={3}>
+    <Text>Volume</Text>
+    <Text>80</Text>
+  </Row>
+);
+```
+
+## Do/Don't
+
+### Do
+
+- Use `Row` with `Spacer` `flex` to push one child to the far end, since `justify` alone cannot split a group.
+- Set `wrap` for chip or tag lists, because `flexWrap` then moves children to the next line.
+- Use `paddingX` and `paddingY` instead of `padding` when the two axes differ.
+
+### Don't
+
+- Do not hard-code left and right, because `Row` follows the reading direction and `start` flips in right-to-left layouts.
+- Do not nest a `Row` inside a `Row` only to add spacing; set `gap` on the outer one.
+- Do not rely on `gap` with `wrap` spacing lines the same on every host, because the page marks the `gap` behaviour UNVERIFIED.
+
+<!-- page id=layout/Spacer tier=1 url=https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/layout/Spacer.md -->
+---
+name: "Spacer"
+namespace: "@nyc-tron"
+subpath: "@nyc-tron/ui/components/layout/Spacer"
+tier: 1
+docs: "handwritten"
+platforms: []
+category: "layout"
+tokens: []
+registryDependencies: ["@nyc-tron/layout/Stack"]
+a11yStatus: "reviewed-pass"
+---
+
+# Spacer
+
+## Purpose
+
+Empty View with a fixed length from the space scale, or flex to fill free space on the main axis, for React Native.
+
+## Install
+
+- Package: @nyc-tron/ui
+- Import: `import { Spacer } from "@nyc-tron/ui/components/layout/Spacer";`
+- Peers: react, react-native
+- Requires: @nyc-tron/layout/Stack
+
+```sh
+npx shadcn@latest add @nyc-tron/layout/Spacer
+```
+
+### Dependencies
+
+- `react-native`: `View`, `ViewProps`.
+- `space` from `../../tokens.ts`; `StackSpace` (type only) from `./Stack.tsx`.
+
+## Props
+
+Tier-1 reason: R2 core family (layout)
+Import count: 0
+
+`SpacerProps` is `Omit<ViewProps, "children"> & SpacerSize`. `SpacerSize` is a union: pass `size`, or pass `flex`, never both. Every other `ViewProps` field is forwarded to the `View`. A Spacer takes no children.
+
+| Name | Type | Default | Required | Description |
+|---|---|---|---|---|
+| size | `StackSpace` | none | yes, unless `flex` | Key of `space`. Sets `flexBasis` to `space[size]` with `flexGrow: 0` and `flexShrink: 0`, so it is a fixed length on the parent's main axis. |
+| flex | `true` | none | yes, unless `size` | Sets `flexGrow: 1` and `flexShrink: 1`, so it takes the free space on the parent's main axis and pushes siblings apart. |
+| style | `StyleProp<ViewStyle>` | none | no | Placed after the built-in style, so it wins. |
+
+### Tokens
+
+- `space.0` to `space.4`: `size` is looked up in `space` by key, so `token-use.mjs` does not list it (computed value).
+
+Tailwind default classes (no token): none.
+
+### Unverified
+
+- UNVERIFIED: that `flexBasis` sets the length on the main axis the same way in every host layout engine, in a Stack and in a Row; no runtime was run.
+
+## Variants
+
+`size` and `flex` are mutually exclusive in the type.
+- `size`: fixed length, one of the `space` keys.
+- `flex`: flexible length.
+
+## States
+
+None. The component has no interactive or conditional state.
+
+### Motion
+
+none in source
+
+### Platform notes
+
+none in source
+
+## A11y
+
+- Contrast: No colour.
+- Keyboard and focus: Not interactive.
+- Touch target: Not interactive.
+- Screen reader: Empty View. Sets no role, label or `accessible` prop.
+- Motion: None.
+- Review status: **PASS**. Pure layout.
+- Reviewed from source only. Nothing was rendered and no screen reader was run. See `docs/agent-native/05-accessibility-review.md`.
+
+## Example
+
+```tsx example=Spacer
+import { Text } from "react-native";
+import { Row } from "@nyc-tron/ui/components/layout/Row";
+import { Spacer } from "@nyc-tron/ui/components/layout/Spacer";
+
+export const Example = () => (
+  <Row align="center">
+    <Text>Title</Text>
+    <Spacer flex />
+    <Text>Edit</Text>
+    <Spacer size={2} />
+    <Text>Share</Text>
+  </Row>
+);
+```
+
+## Do/Don't
+
+### Do
+
+- Pass `size` as a `space` key for a fixed gap that differs from the parent `gap`, since it sets `flexBasis` on the parent's main axis.
+- Use `flex` to fill the free space between two groups in a `Row`.
+
+### Don't
+
+- Do not pass `size` and `flex` together, because the type rejects it.
+- Do not give a `Spacer` children, because its props omit `children`.
+- Do not use it for padding around content; use `padding` on `Stack` or `Row`.
+
+<!-- page id=layout/Stack tier=1 url=https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/layout/Stack.md -->
+---
+name: "Stack"
+namespace: "@nyc-tron"
+subpath: "@nyc-tron/ui/components/layout/Stack"
+tier: 1
+docs: "handwritten"
+platforms: []
+category: "layout"
+tokens: []
+registryDependencies: []
+a11yStatus: "reviewed-pass"
+---
+
+# Stack
+
+## Purpose
+
+Vertical flex View with token-keyed gap, padding, align, justify and wrap, no role and no colour, for React Native.
+
+## Install
+
+- Package: @nyc-tron/ui
+- Import: `import { Stack } from "@nyc-tron/ui/components/layout/Stack";`
+- Peers: react, react-native
+- Requires: none
+
+```sh
+npx shadcn@latest add @nyc-tron/layout/Stack
+```
+
+### Dependencies
+
+- `react-native`: `View`, `ViewProps`.
+- `space` from `../../tokens.ts` and `stackStyle` from `./stack-style.ts`, which imports the `StackProps` type from `./Stack.tsx`.
+
+## Props
+
+Tier-1 reason: R2 core family (layout)
+Import count: 0
+
+`StackProps extends Omit<ViewProps, "children">`. Every other `ViewProps` field, `testID` and the `accessibility*` props included, is forwarded to the `View`.
+
+Extends: `Omit<ViewProps, "children">`
+
+| Name | Type | Default | Required | Description |
+|---|---|---|---|---|
+| `children` | `ReactNode` | none | no | Rendered inside the `View`. |
+| `gap` | `StackSpace` | `2` | no | Key of `space`. `space[gap]` px between children, 8 for the default. Set through the RN `gap` style. |
+| `padding` | `StackSpace` | none | no | Key of `space`. Sets `padding`. |
+| `paddingX` | `StackSpace` | none | no | Key of `space`. Sets `paddingHorizontal`. |
+| `paddingY` | `StackSpace` | none | no | Key of `space`. Sets `paddingVertical`. |
+| `align` | `StackAlign` | none | no | Sets `alignItems`. Unset leaves the View default. |
+| `justify` | `StackJustify` | none | no | Sets `justifyContent`. |
+| `wrap` | `boolean` | `false` | no | `true` sets `flexWrap: "wrap"`. |
+| `className` | `string` | none | no | Forwarded to the `View` as `className`. Declared on the interface, so it is read here and passed back explicitly. |
+
+### Inherited props this component reads
+
+Documented by hand from the source. They come from the extended type, so they are not in the table above.
+
+| Name | Type | Default | Required | Description |
+|---|---|---|---|---|
+| style | `StyleProp<ViewStyle>` | none | no | Placed after the built-in style, so it wins. |
+
+### Tokens
+
+- `space.0` to `space.4`: `gap`, `padding`, `paddingX` and `paddingY` are looked up in `space` by key, so `token-use.mjs` does not list them (computed values). Keys: 0, 0.25, 0.5, 0.75, 1, 1.5, 2, 2.5, 3, 3.5, 4.
+
+Tailwind default classes (no token): none.
+
+### Unverified
+
+- UNVERIFIED: how the `gap` style resolves on React Native Web and on the Windows, macOS and QNX hosts; no runtime was run.
+- UNVERIFIED: whether `className` reaches the `View` on every host; it depends on the consumer's Tailwind or Uniwind interop, which this file does not check.
+
+## Variants
+
+none
+
+## States
+
+None. The component has no interactive or conditional state. A `StackSpace` key that is not in `space` is a compile error, not a runtime one.
+
+### Motion
+
+none in source
+
+### Platform notes
+
+none in source
+
+## A11y
+
+- Contrast: No colour.
+- Keyboard and focus: Not interactive.
+- Touch target: Not interactive.
+- Screen reader: Layout only. Sets no role, label or `accessible` prop; `testID` and `accessibility*` props pass through to the View.
+- Motion: None.
+- Review status: **PASS**. Pure layout.
+- Reviewed from source only. Nothing was rendered and no screen reader was run. See `docs/agent-native/05-accessibility-review.md`.
+
+## Example
+
+```tsx example=Stack
+import { Text } from "react-native";
+import { Stack } from "@nyc-tron/ui/components/layout/Stack";
+
+export const Example = () => (
+  <Stack gap={3} padding={4} align="stretch" testID="settings-stack">
+    <Text>Account</Text>
+    <Text>Notifications</Text>
+  </Stack>
+);
+```
+
+## Do/Don't
+
+### Do
+
+- Pass `gap` as a `space` key such as `3`, since a raw pixel value does not compile and the key keeps spacing on the 4 px unit.
+- Set `align` to `stretch` or `center` when children differ in width, because it maps straight to `alignItems`.
+- Put your own `style` last in the prop list, since it is applied after the built-in style and wins on any field.
+
+### Don't
+
+- Do not expect a role or a label from `Stack`, because it renders a plain `View`; set `accessibilityRole` yourself when a group needs one.
+- Do not rely on `className` reaching the `View` on every host; the page marks that UNVERIFIED because it depends on the consumer's interop.
+- Do not leave `gap` unset and assume zero, because it defaults to `2`, which is 8 px.
+
+<!-- page id=layout/Text tier=1 url=https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/layout/Text.md -->
+---
+name: "Text"
+namespace: "@nyc-tron"
+subpath: "@nyc-tron/ui/components/layout/Text"
+tier: 1
+docs: "handwritten"
+platforms: []
+category: "layout"
+tokens: ["color.accent", "color.danger", "color.info", "color.onDanger", "color.onPrimary", "color.primary", "color.success", "color.text", "color.textMuted"]
+registryDependencies: []
+a11yStatus: "unverified"
+---
+
+# Text
+
+## Purpose
+
+Text with body or caption size from the token scale, a font-size override and a theme colour tone, no weight, for React Native.
+
+## Install
+
+- Package: @nyc-tron/ui
+- Import: `import { Text } from "@nyc-tron/ui/components/layout/Text";`
+- Peers: react, react-native
+- Requires: none
+
+```sh
+npx shadcn@latest add @nyc-tron/layout/Text
+```
+
+### Dependencies
+
+- `react-native`: `Text` (imported as `NativeText`), `TextProps`, `TextStyle`.
+- `font` and `leading` from `../../tokens.ts`; `joinClasses` from `../styles.ts`.
+
+## Props
+
+Tier-1 reason: R2 core family (layout)
+Import count: 0
+
+`TextProps extends Omit<TextProps (react-native), "children">`. The component reads `children`, `variant`, `size`, `tone`, `className` and `style`; every other React Native `Text` prop, `testID`, `numberOfLines` and the `accessibility*` props included, is forwarded.
+
+Extends: `Omit<NativeTextProps, "children">`
+
+| Name | Type | Default | Required | Description |
+|---|---|---|---|---|
+| `children` | `ReactNode` | none | no | Rendered inside the React Native `Text`. |
+| `variant` | `TextVariant` | none | no | Font size and line height from the token scale. Omit it to inherit the size from the parent. |
+| `size` | `TextSize` | none | no | Key of `font` (10 to 17). Sets `fontSize` only and replaces the variant, so the variant line height is dropped. |
+| `tone` | `TextTone` | `"text"` | no | Theme colour role, as a class (see Variants). |
+| `className` | `string` | none | no | Appended after the tone class. |
+
+### Inherited props this component reads
+
+Documented by hand from the source. They come from the extended type, so they are not in the table above.
+
+| Name | Type | Default | Required | Description |
+|---|---|---|---|---|
+| style | `StyleProp<TextStyle>` | none | no | Placed after the built-in style, so it wins. |
+
+### Tokens
+
+- `font.11`, `font.12`, `leading.14`, `leading.16`: the two variants. `size` looks up `font` by key, so any `font.10` to `font.17` can be reached (computed, not listed by `token-use.mjs`).
+- `color.text`, `color.textMuted`, `color.danger`, `color.primary`, `color.accent`, `color.info`, `color.success`, `color.onPrimary`, `color.onDanger`: one tone class each.
+
+Tailwind default classes (no token): none.
+
+### Unverified
+
+- UNVERIFIED: whether the tone classes paint on every host; they depend on the consumer's Tailwind or Uniwind interop and on the consumer defining the matching CSS variables.
+- UNVERIFIED: how a fixed `lineHeight` behaves under the system font scale on each host; no runtime was run.
+
+## Variants
+
+### variant
+
+| Value | Effect |
+|---|---|
+| `body` | `fontSize: font[12]`, `lineHeight: leading[16]`. |
+| `caption` | `fontSize: font[11]`, `lineHeight: leading[14]`. |
+
+Those are the two size and line height pairs that occur three or more times in `ui`. There is no weight and no font family: Text does not set `fontWeight` or `fontFamily`.
+
+### tone
+
+| Value | Effect |
+|---|---|
+| `text` | `text-text`. |
+| `muted` | `text-text-muted`. |
+| `danger` | `text-danger`. |
+| `primary` | `text-primary`. |
+| `accent` | `text-accent`. |
+| `info` | `text-info`. |
+| `success` | `text-success`. |
+| `onPrimary` | `text-on-primary`. |
+| `onDanger` | `text-on-danger`. |
+
+## States
+
+None. The component has no interactive or conditional state.
+
+### Motion
+
+none in source
+
+### Platform notes
+
+none in source
+
+## A11y
+
+- Contrast: Colour is the caller's `tone` on the caller's surface. Reference theme, text tones on raised surfaces: text 17.79/13.83:1, muted 6.16/7.14:1, danger 6.57/7.24:1, accent 5.17/8.86:1, info 6.45/8.17:1, success 5.38/8.72:1, primary 5.81/6.93:1, all above 4.5:1. On sunken surfaces only text, muted and danger are measured (16.01/15.31, 5.54/7.9, 5.91/8.01). onPrimary and onDanger are only meant for filled backgrounds (5.81/7.46:1 and 6.57/8.11:1).
+  - UNVERIFIED: tones on surfaces that are not in the contrast table (info, success, accent on sunken) and any consumer theme override (GU3).
+- Keyboard and focus: Not interactive.
+- Touch target: Not interactive.
+- Screen reader: React Native `Text` is read as text. Sets no role. All `accessibility*` props pass through.
+  - UNVERIFIED: how a fixed `lineHeight` behaves under the system font scale on each host.
+- Motion: None.
+- Review status: **UNVERIFIED**. The ratios above are arithmetic on the reference theme, but the surface is the caller's and the font-scale behaviour needs a render.
+- Reviewed from source only. Nothing was rendered and no screen reader was run. See `docs/agent-native/05-accessibility-review.md`.
+
+## Example
+
+```tsx example=LayoutText
+import { Stack } from "@nyc-tron/ui/components/layout/Stack";
+import { Text } from "@nyc-tron/ui/components/layout/Text";
+
+export const Example = () => (
+  <Stack gap={1}>
+    <Text variant="body">Last sync 09:41</Text>
+    <Text variant="caption" tone="muted">Synced 3 devices</Text>
+    <Text size={13} tone="danger">Upload failed</Text>
+  </Stack>
+);
+```
+
+## Do/Don't
+
+### Do
+
+- Pick `variant` `caption` for secondary lines, since it is `font[11]` with `leading[14]`.
+- Use `tone` `muted` for supporting text, which maps to `text-text-muted` at 6.16/7.14:1 on raised surfaces.
+- Pass `size` for a one-off size such as `13`; it replaces the variant and drops the line height.
+
+### Don't
+
+- Do not look for bold or a heading style, because `Text` sets no `fontWeight` and no `fontFamily`; pass them in `style`.
+- Do not use `onPrimary` or `onDanger` on a plain surface; they are meant for filled backgrounds only.
+- Do not assume a fixed `lineHeight` suits large system font sizes, because the page marks that UNVERIFIED.
+
 <!-- page id=navigation/CollapsibleDrawer tier=1 url=https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/navigation/CollapsibleDrawer.md -->
 ---
 name: "CollapsibleDrawer"
@@ -3615,7 +4267,7 @@ Side navigation drawer menu in expanded, compact or minimal mode, with overlay a
 
 - Package: @nyc-tron/ui
 - Import: `import { CollapsibleDrawer } from "@nyc-tron/ui/components/navigation/CollapsibleDrawer";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -3921,7 +4573,7 @@ Searchable command list in a modal, with keyboard selection and an empty-results
 
 - Package: @nyc-tron/ui
 - Import: `import { CommandPalette } from "@nyc-tron/ui/components/overlays/CommandPalette";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/TextField
 
 ```sh
@@ -4426,7 +5078,7 @@ Asset list with breadcrumb path, search, sort, single or multiple selection and 
 
 - Package: @nyc-tron/ui
 - Import: `import { AssetBrowser } from "@nyc-tron/ui/components/shell/AssetBrowser";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/InspectorSearch
 
 ```sh
@@ -4597,7 +5249,7 @@ Wraps a target to open a command menu on right-click, long-press, keyboard or sc
 
 - Package: @nyc-tron/ui
 - Import: `import { ContextMenu } from "@nyc-tron/ui/components/shell/ContextMenu";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/overlays/CommandPopover
 
 ```sh
@@ -4739,7 +5391,7 @@ Toolbar whose items filter by selection kind and overflow into a More menu by pr
 
 - Package: @nyc-tron/ui
 - Import: `import { ContextualToolbar } from "@nyc-tron/ui/components/shell/ContextualToolbar";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Toolbar, @nyc-tron/shell/MenuButton
 
 ```sh
@@ -4900,7 +5552,7 @@ Tab strip for open documents with activate, close and reorder; keyboard shortcut
 
 - Package: @nyc-tron/ui
 - Import: `import { DocumentTabBar } from "@nyc-tron/ui/components/shell/DocumentTabBar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -5065,7 +5717,7 @@ Find and replace form with match navigation, replace one or all, and async searc
 
 - Package: @nyc-tron/ui
 - Import: `import { FindReplaceContent } from "@nyc-tron/ui/components/shell/FindReplaceContent";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -5474,7 +6126,7 @@ Undo and redo list with a cursor and jump to any entry; async jump with cancel, 
 
 - Package: @nyc-tron/ui
 - Import: `import { HistoryPanel } from "@nyc-tron/ui/components/shell/HistoryPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -5623,7 +6275,7 @@ Inspector panel for the current selection: header, search filter and InspectorSe
 
 - Package: @nyc-tron/ui
 - Import: `import { InspectorPanel } from "@nyc-tron/ui/components/shell/InspectorPanel";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/shell/InspectorSearch
 
 ```sh
@@ -5775,7 +6427,7 @@ Search field with clear button and live-region match summary for inspector panel
 
 - Package: @nyc-tron/ui
 - Import: `import { InspectorSearch } from "@nyc-tron/ui/components/shell/InspectorSearch";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -5915,7 +6567,7 @@ Collapsible inspector group with optional enable switch and reset button, indent
 
 - Package: @nyc-tron/ui
 - Import: `import { InspectorSection } from "@nyc-tron/ui/components/shell/InspectorSection";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh
@@ -6065,7 +6717,7 @@ Searchable keyboard shortcut list grouped by category, with rebinding and Apple 
 
 - Package: @nyc-tron/ui
 - Import: `import { KeyboardShortcutHUD } from "@nyc-tron/ui/components/shell/KeyboardShortcutHUD";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/shell/InspectorSearch
 
 ```sh
@@ -6501,7 +7153,7 @@ Grid of selectable preset tiles with hover preview, favorites toggle and All or 
 
 - Package: @nyc-tron/ui
 - Import: `import { PresetGallery } from "@nyc-tron/ui/components/shell/PresetGallery";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh
@@ -6652,7 +7304,7 @@ Row for one inspector property: label and editor, with mixed-value badge, overri
 
 - Package: @nyc-tron/ui
 - Import: `import { PropertyRow } from "@nyc-tron/ui/components/shell/PropertyRow";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh
@@ -6781,7 +7433,7 @@ Two-thumb slider that selects a min and max value, with step, detents, minimum g
 
 - Package: @nyc-tron/ui
 - Import: `import { RangeSlider } from "@nyc-tron/ui/components/shell/RangeSlider";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -6931,7 +7583,7 @@ Office-style ribbon of tabs and a command panel of buttons, split buttons and ga
 
 - Package: @nyc-tron/ui
 - Import: `import { RibbonTabs } from "@nyc-tron/ui/components/shell/RibbonTabs";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/MenuButton, @nyc-tron/shell/SplitButton
 
 ```sh
@@ -7084,7 +7736,7 @@ Dial control with relative or circular drag, fine adjustment, detents and reset 
 
 - Package: @nyc-tron/ui
 - Import: `import { RotaryKnob } from "@nyc-tron/ui/components/shell/RotaryKnob";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -7235,7 +7887,7 @@ Single-thumb slider with number field, step, detents, units and reset to default
 
 - Package: @nyc-tron/ui
 - Import: `import { SliderField } from "@nyc-tron/ui/components/shell/SliderField";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -7384,7 +8036,7 @@ Primary action button joined to a dropdown menu of command items, for React Nati
 
 - Package: @nyc-tron/ui
 - Import: `import { SplitButton } from "@nyc-tron/ui/components/shell/SplitButton";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/overlays/CommandPopover, @nyc-tron/shell/MenuButton
 
 ```sh
@@ -7511,7 +8163,7 @@ Application status bar with zoom steps and menu, units menu, selection summary a
 
 - Package: @nyc-tron/ui
 - Import: `import { StatusBar } from "@nyc-tron/ui/components/shell/StatusBar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/MenuButton
 
 ```sh
@@ -7656,7 +8308,7 @@ List of toast notifications and progress jobs with dismiss and action buttons; s
 
 - Package: @nyc-tron/ui
 - Import: `import { ToastAndProgress } from "@nyc-tron/ui/components/shell/ToastAndProgress";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -7937,7 +8589,7 @@ Number field that parses and formats typed units from a UnitContext, with unit m
 
 - Package: @nyc-tron/ui
 - Import: `import { UnitInput } from "@nyc-tron/ui/components/shell/UnitInput";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/shell/MenuButton
 
 ```sh
@@ -8232,7 +8884,7 @@ Menu to switch, save, rename, duplicate, reset and delete workspace layout prese
 
 - Package: @nyc-tron/ui
 - Import: `import { WorkspacePresetSwitcher } from "@nyc-tron/ui/components/shell/WorkspacePresetSwitcher";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/TextField, @nyc-tron/shell/MenuButton
 
 ```sh
@@ -8896,7 +9548,7 @@ iOS and Android drop target over expo-drag-drop-content-view (optional peer, nee
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/files/DropZone.native.tsx,packages/ui/src/components/files/DropZone.shared.tsx,packages/ui/src/components/files/DropZone.types.ts,packages/ui/src/components/files/DropZone.web.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DropZone } from "@nyc-tron/ui/components/files/DropZone";`
-- Peers: @nyc-tron/core, expo-drag-drop-content-view, react, react-native, zustand
+- Peers: expo-drag-drop-content-view, react, react-native, zustand
 - Requires: @nyc-tron/files/FilePicker
 
 ```sh
@@ -8996,7 +9648,7 @@ Controlled file transfer form with the existing native picker transport.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/files/FileImportExportSheet.native.tsx,packages/ui/src/components/files/FileImportExportSheet.shared.tsx,packages/ui/src/components/files/FileImportExportSheet.web.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FileImportExportSheet } from "@nyc-tron/ui/components/files/FileImportExportSheet";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/TextField, @nyc-tron/files/FilePicker
 
 ```sh
@@ -9371,7 +10023,7 @@ Controlled native RGBA sliders, SDK 58-only optional `@expo/ui` backend.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ColorChannels.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorChannels } from "@nyc-tron/ui/components/forge/ColorChannels";`
-- Peers: @expo/ui, @nyc-tron/core, react, react-native
+- Peers: @expo/ui, react, react-native
 - Requires: none
 
 ```sh
@@ -9456,7 +10108,7 @@ Frame-accurate seek bar on the OS slider: SwiftUI `Slider` on iOS, Material 3 `S
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/NativeSeekBar.native.tsx,packages/ui/src/components/forge/NativeSeekBar.shared.tsx,packages/ui/src/components/forge/NativeSeekBar.types.ts,packages/ui/src/components/forge/NativeSeekBar.web.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { NativeSeekBar } from "@nyc-tron/ui/components/forge/NativeSeekBar";`
-- Peers: @expo/ui, @nyc-tron/core, react, react-native, zustand
+- Peers: @expo/ui, react, react-native, zustand
 - Requires: @nyc-tron/Button
 
 ```sh
@@ -9527,7 +10179,7 @@ Three-pane sheet: frozen headers and frozen rows/columns sit outside the body sc
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/SpreadsheetGrid.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SpreadsheetGrid } from "@nyc-tron/ui/components/forge/SpreadsheetGrid";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/spreadsheet/FormulaBar, @nyc-tron/gestures/PanResponderDrag
 
 ```sh
@@ -9729,7 +10381,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AudioClipTrimAndFade.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AudioClipTrimAndFade } from "@nyc-tron/ui/components/forge/audio/AudioClipTrimAndFade";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/WaveformLane, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -9812,7 +10464,7 @@ Audio-specific lifecycle around the shared parameter/preset/effect-stack owner.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AudioEffectsPresetPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AudioEffectsPresetPanel } from "@nyc-tron/ui/components/forge/audio/AudioEffectsPresetPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/motion/EffectStackAndInspector
 
 ```sh
@@ -9895,7 +10547,7 @@ Explicit recovery decisions; rejected actions keep the dialog open with the erro
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AudioInterruptionRecoveryDialog.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AudioInterruptionRecoveryDialog } from "@nyc-tron/ui/components/forge/audio/AudioInterruptionRecoveryDialog";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button
 
 ```sh
@@ -10062,7 +10714,7 @@ Shared controlled processing lifecycle.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AudioProcessingPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AudioProcessingPanel } from "@nyc-tron/ui/components/forge/audio/AudioProcessingPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -10155,7 +10807,7 @@ Actual presentation telemetry against the audio master clock, without a second U
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AudioVideoSync.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AudioVideoSync } from "@nyc-tron/ui/components/forge/audio/AudioVideoSync";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -10323,7 +10975,7 @@ Controlled automation lane for one track parameter.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AutomationLane.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AutomationLane } from "@nyc-tron/ui/components/forge/audio/AutomationLane";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/audio/AutomationModePicker
 
 ```sh
@@ -10507,7 +11159,7 @@ Actual host beat detection, sharing timeline marker movement, naming, adding and
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/BeatDetectionMarkerLane.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BeatDetectionMarkerLane } from "@nyc-tron/ui/components/forge/audio/BeatDetectionMarkerLane";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/timeline/TimelineMarkers
 
 ```sh
@@ -10596,7 +11248,7 @@ Controlled routing matrix for track outputs and post-fader sends.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/BusAndRoutingMatrix.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BusAndRoutingMatrix } from "@nyc-tron/ui/components/forge/audio/BusAndRoutingMatrix";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/EmptyState, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -10690,7 +11342,7 @@ One mixer column: routing and group line, level fader with dB readout, optional 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/ChannelStrip.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ChannelStrip } from "@nyc-tron/ui/components/forge/audio/ChannelStrip";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/audio/LevelFader, @nyc-tron/forge/audio/LevelMeter, @nyc-tron/forge/audio/PanControl, @nyc-tron/forge/audio/SoloMuteButtons
 
 ```sh
@@ -10862,7 +11514,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/DeviceAndChannelPicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DeviceAndChannelPicker } from "@nyc-tron/ui/components/forge/audio/DeviceAndChannelPicker";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -10943,7 +11595,7 @@ Controlled compressor transfer graph: input level across, output level up, both 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/DynamicsTransferGraph.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DynamicsTransferGraph } from "@nyc-tron/ui/components/forge/audio/DynamicsTransferGraph";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -11036,7 +11688,7 @@ Controlled parametric EQ graph.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/EQFrequencyGraph.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EQFrequencyGraph } from "@nyc-tron/ui/components/forge/audio/EQFrequencyGraph";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -11131,7 +11783,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/InputMonitorToggle.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InputMonitorToggle } from "@nyc-tron/ui/components/forge/audio/InputMonitorToggle";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -11214,7 +11866,7 @@ Controlled insert chain for one track or bus.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/InsertEffectRack.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InsertEffectRack } from "@nyc-tron/ui/components/forge/audio/InsertEffectRack";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -11306,7 +11958,7 @@ Displays host loopback measurements; calibration tones and device buffers stay n
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LatencyCalibrationPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LatencyCalibrationPanel } from "@nyc-tron/ui/components/forge/audio/LatencyCalibrationPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -11399,7 +12051,7 @@ Controlled audio level fader.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LevelFader.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LevelFader } from "@nyc-tron/ui/components/forge/audio/LevelFader";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -11582,7 +12234,7 @@ A rolling view of measured capture windows.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LiveRecordingWaveform.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LiveRecordingWaveform } from "@nyc-tron/ui/components/forge/audio/LiveRecordingWaveform";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/forge/audio/LevelMeter
 
 ```sh
@@ -11668,7 +12320,7 @@ Sample-clock recording boundaries; the host owns rolling, looping and take alloc
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LoopPunchRecording.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LoopPunchRecording } from "@nyc-tron/ui/components/forge/audio/LoopPunchRecording";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -11751,7 +12403,7 @@ Loudness readout for a rendered range: gated integrated loudness against a targe
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LoudnessMeter.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LoudnessMeter } from "@nyc-tron/ui/components/forge/audio/LoudnessMeter";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -11855,7 +12507,7 @@ Controlled mix group chips: name, member count, and Solo and Mute toggles for th
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/MixGroupBar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MixGroupBar } from "@nyc-tron/ui/components/forge/audio/MixGroupBar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -11944,7 +12596,7 @@ Controlled channel-strip console for tracks and buses.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/MixingConsole.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MixingConsole } from "@nyc-tron/ui/components/forge/audio/MixingConsole";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/EmptyState, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/audio/BusAndRoutingMatrix, @nyc-tron/forge/audio/ChannelStrip, @nyc-tron/forge/audio/InsertEffectRack, @nyc-tron/forge/audio/MixGroupBar
 
 ```sh
@@ -12045,7 +12697,7 @@ Requests the host's existing native audio session; no second audio graph or UI c
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/NativeAudioTransport.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { NativeAudioTransport } from "@nyc-tron/ui/components/forge/audio/NativeAudioTransport";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -12209,7 +12861,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/PanAndBalanceControl.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PanAndBalanceControl } from "@nyc-tron/ui/components/forge/audio/PanAndBalanceControl";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/audio/PanControl, @nyc-tron/forge/audio/SurroundPanView
 
 ```sh
@@ -12285,7 +12937,7 @@ Controlled mono pan control.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/PanControl.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PanControl } from "@nyc-tron/ui/components/forge/audio/PanControl";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh
@@ -12377,7 +13029,7 @@ Controlled preset list for one insert effect, with a label search.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/PluginPresetBrowser.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PluginPresetBrowser } from "@nyc-tron/ui/components/forge/audio/PluginPresetBrowser";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -12468,7 +13120,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/RealtimePeakMeter.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RealtimePeakMeter } from "@nyc-tron/ui/components/forge/audio/RealtimePeakMeter";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/forge/audio/LevelMeter
 
 ```sh
@@ -12550,7 +13202,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/RecordingArmButton.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RecordingArmButton } from "@nyc-tron/ui/components/forge/audio/RecordingArmButton";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -12728,7 +13380,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SampleEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SampleEditor } from "@nyc-tron/ui/components/forge/audio/SampleEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/audio/AudioClipTrimAndFade, @nyc-tron/forge/audio/LoopPunchRecording, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -12810,7 +13462,7 @@ Controlled mute and solo toggles for one channel.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SoloMuteButtons.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SoloMuteButtons } from "@nyc-tron/ui/components/forge/audio/SoloMuteButtons";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -12903,7 +13555,7 @@ Searches admitted sound metadata.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SoundEffectsLibrary.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SoundEffectsLibrary } from "@nyc-tron/ui/components/forge/audio/SoundEffectsLibrary";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -12991,7 +13643,7 @@ Spectrogram drawn with plain Views: time runs left to right (also in RTL), low f
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SpectrogramView.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SpectrogramView } from "@nyc-tron/ui/components/forge/audio/SpectrogramView";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -13084,7 +13736,7 @@ Take selection plus shared ASR speaker/text correction and real word-boundary ed
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SpeechTranscriptTakeReview.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SpeechTranscriptTakeReview } from "@nyc-tron/ui/components/forge/audio/SpeechTranscriptTakeReview";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/AutoCaptionTranscriptTimeline, @nyc-tron/forge/timeline/CaptionWordTimingHandles
 
 ```sh
@@ -13164,7 +13816,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/StereoMultichannelWaveform.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { StereoMultichannelWaveform } from "@nyc-tron/ui/components/forge/audio/StereoMultichannelWaveform";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler
+- Peers: react, react-native, react-native-gesture-handler
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/forge/WaveformLane
 
 ```sh
@@ -13246,7 +13898,7 @@ Speaker geometry and source positions come from the native routing engine, not i
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SurroundPanView.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SurroundPanView } from "@nyc-tron/ui/components/forge/audio/SurroundPanView";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -13332,7 +13984,7 @@ Swipe a take lane to request a comp range; host performs edits and crossfades tr
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/TakePlaylistAndComping.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TakePlaylistAndComping } from "@nyc-tron/ui/components/forge/audio/TakePlaylistAndComping";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler
+- Peers: react, react-native, react-native-gesture-handler
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/WaveformLane, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -13419,7 +14071,7 @@ Tempo, tap tempo, time signature and metronome.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/TempoAndMetronome.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TempoAndMetronome } from "@nyc-tron/ui/components/forge/audio/TempoAndMetronome";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -13663,7 +14315,7 @@ Countdown follows native capture telemetry.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/VoiceoverCountdownAndTakeBin.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { VoiceoverCountdownAndTakeBin } from "@nyc-tron/ui/components/forge/audio/VoiceoverCountdownAndTakeBin";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/audio/LiveRecordingWaveform
 
 ```sh
@@ -15289,7 +15941,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/BakingMapPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BakingMapPanel } from "@nyc-tron/ui/components/forge/cad/BakingMapPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -15377,7 +16029,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/DimensionsAndHatching.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DimensionsAndHatching } from "@nyc-tron/ui/components/forge/cad/DimensionsAndHatching";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -15462,7 +16114,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/DraftingCommandLine.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DraftingCommandLine } from "@nyc-tron/ui/components/forge/cad/DraftingCommandLine";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -15546,7 +16198,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/LiveNodeThumbnail.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LiveNodeThumbnail } from "@nyc-tron/ui/components/forge/cad/LiveNodeThumbnail";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -15633,7 +16285,7 @@ Native gesture front end for an actual host 3D surface.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/Native3DViewport.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { Native3DViewport } from "@nyc-tron/ui/components/forge/cad/Native3DViewport";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -15720,7 +16372,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/NodeGraphCanvas.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { NodeGraphCanvas } from "@nyc-tron/ui/components/forge/cad/NodeGraphCanvas";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/canvas/CanvasPanZoom, @nyc-tron/forge/graph/PatchGraph, @nyc-tron/forge/motion/NodeGraphEditor
 
 ```sh
@@ -15805,7 +16457,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/NodeLibrarySearch.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { NodeLibrarySearch } from "@nyc-tron/ui/components/forge/cad/NodeLibrarySearch";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler
+- Peers: react, react-native, react-native-gesture-handler
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/AssetPresetGallery
 
 ```sh
@@ -15884,7 +16536,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/ObjectSnapsAndOrtho.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ObjectSnapsAndOrtho } from "@nyc-tron/ui/components/forge/cad/ObjectSnapsAndOrtho";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -15964,7 +16616,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/PBRMaterialInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PBRMaterialInspector } from "@nyc-tron/ui/components/forge/cad/PBRMaterialInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -16041,7 +16693,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/PaperSpaceLayout.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PaperSpaceLayout } from "@nyc-tron/ui/components/forge/cad/PaperSpaceLayout";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/document/PageSetupPanel, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -16127,7 +16779,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/ParametricConstraintEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ParametricConstraintEditor } from "@nyc-tron/ui/components/forge/cad/ParametricConstraintEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -16213,7 +16865,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/TextureBrush3D.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TextureBrush3D } from "@nyc-tron/ui/components/forge/cad/TextureBrush3D";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -16299,7 +16951,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/TextureMaskAndGenerator.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TextureMaskAndGenerator } from "@nyc-tron/ui/components/forge/cad/TextureMaskAndGenerator";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -16385,7 +17037,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/TextureSetPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TextureSetPanel } from "@nyc-tron/ui/components/forge/cad/TextureSetPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -16467,7 +17119,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/TransformGizmo3D.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TransformGizmo3D } from "@nyc-tron/ui/components/forge/cad/TransformGizmo3D";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D, @nyc-tron/forge/inputs/PropertyInspector, @nyc-tron/forge/motion/Transform3DInspector
 
 ```sh
@@ -16553,7 +17205,7 @@ The host supplies the active normalized tile and selected vertex subset; mesh se
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/UVEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { UVEditor } from "@nyc-tron/ui/components/forge/cad/UVEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D
 
 ```sh
@@ -16640,7 +17292,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/ViewCubeAndAxisGizmo.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ViewCubeAndAxisGizmo } from "@nyc-tron/ui/components/forge/cad/ViewCubeAndAxisGizmo";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -16722,7 +17374,7 @@ ColorDrop (B-30): drag the colour chip onto the canvas to flood-fill there.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas-tools/ColorDropCanvasTarget.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorDropCanvasTarget } from "@nyc-tron/ui/components/forge/canvas-tools/ColorDropCanvasTarget";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -16817,7 +17469,7 @@ Gesture customisation (B-34): one row per quick action with a gesture menu, a ho
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas-tools/GestureCustomizationPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { GestureCustomizationPanel } from "@nyc-tron/ui/components/forge/canvas-tools/GestureCustomizationPanel";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -16905,7 +17557,7 @@ Reference images (B-31) pinned beside or floating over the canvas, or laid over 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas-tools/ReferenceImageBoard.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ReferenceImageBoard } from "@nyc-tron/ui/components/forge/canvas-tools/ReferenceImageBoard";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -17298,7 +17950,7 @@ Align, distribute and arrange panel (B-25).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/AlignDistributePanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AlignDistributePanel } from "@nyc-tron/ui/components/forge/canvas/AlignDistributePanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -17491,7 +18143,7 @@ Canvas rulers and guides (B-03): a top ruler counting x and a side ruler countin
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/CanvasRuler.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CanvasRuler } from "@nyc-tron/ui/components/forge/canvas/CanvasRuler";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -17678,7 +18330,7 @@ Controlled crop geometry and straightening.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/GuidedCropAndStraighten.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { GuidedCropAndStraighten } from "@nyc-tron/ui/components/forge/canvas/GuidedCropAndStraighten";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/graphics/ImageCropOverlay, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -17765,7 +18417,7 @@ Live smart-guide layer (B-05): alignment lines through the edges and centres the
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/SmartGuides.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SmartGuides } from "@nyc-tron/ui/components/forge/canvas/SmartGuides";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -17846,7 +18498,7 @@ Grid and snap feedback layer (B-04).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/SnapGridOverlay.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SnapGridOverlay } from "@nyc-tron/ui/components/forge/canvas/SnapGridOverlay";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -17925,7 +18577,7 @@ Small settings control for the grid and snapping (B-04): show grid, grid spacing
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/SnapGridSettings.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SnapGridSettings } from "@nyc-tron/ui/components/forge/canvas/SnapGridSettings";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -18012,7 +18664,7 @@ Pivot editor for one layer (B-08).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/TransformOriginHandle.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TransformOriginHandle } from "@nyc-tron/ui/components/forge/canvas/TransformOriginHandle";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -18944,7 +19596,7 @@ Controlled opacity slider (C-05): a checkerboard under a transparent-to-opaque g
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/AlphaSlider.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AlphaSlider } from "@nyc-tron/ui/components/forge/color/AlphaSlider";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -19029,7 +19681,7 @@ Typed color entry (C-06): RGB, HSL or HSV channels, hex and opacity.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorChannelFields.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorChannelFields } from "@nyc-tron/ui/components/forge/color/ColorChannelFields";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -19118,7 +19770,7 @@ Controlled hue/saturation disc with a brightness track (C-27): angle is hue, dis
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorDiscPicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorDiscPicker } from "@nyc-tron/ui/components/forge/color/ColorDiscPicker";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -19211,7 +19863,7 @@ Tonal hue/saturation wheels and explicit exposure, balance and blending controls
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorGradingWheels.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorGradingWheels } from "@nyc-tron/ui/components/forge/color/ColorGradingWheels";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/forge/color/ColorDiscPicker, @nyc-tron/shell/SliderField
 
 ```sh
@@ -19293,7 +19945,7 @@ Harmony and contrast helper (C-18): pick a rule, see the base color and its comp
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorHarmonyAssistant.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorHarmonyAssistant } from "@nyc-tron/ui/components/forge/color/ColorHarmonyAssistant";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -19381,7 +20033,7 @@ Color picker dialog (C-01).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorPickerDialog.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorPickerDialog } from "@nyc-tron/ui/components/forge/color/ColorPickerDialog";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/forge/color/AlphaSlider, @nyc-tron/forge/color/ColorChannelFields, @nyc-tron/forge/color/HsvPicker, @nyc-tron/forge/color/SwatchGrid
 
 ```sh
@@ -19555,7 +20207,7 @@ Controlled hue ring (C-03).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorWheel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorWheel } from "@nyc-tron/ui/components/forge/color/ColorWheel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -19646,7 +20298,7 @@ Editable normalized transfer curve with pointer preview, single release commit a
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/CurvesEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CurvesEditor } from "@nyc-tron/ui/components/forge/color/CurvesEditor";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -19741,7 +20393,7 @@ Document-space eyedropper with bounded sampling, explicit apply, cancellation an
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/EyedropperTool.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EyedropperTool } from "@nyc-tron/ui/components/forge/color/EyedropperTool";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -19826,7 +20478,7 @@ Dockable color palette (C-26).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/FloatingColorPalette.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FloatingColorPalette } from "@nyc-tron/ui/components/forge/color/FloatingColorPalette";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/color/FloatingPaletteUndockHandle
 
 ```sh
@@ -20007,7 +20659,7 @@ Foreground and background chips with Swap and Reset (C-12).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ForegroundBackgroundChips.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ForegroundBackgroundChips } from "@nyc-tron/ui/components/forge/color/ForegroundBackgroundChips";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button
 
 ```sh
@@ -20096,7 +20748,7 @@ Announces the actual measured sample count; no guessed gamut test or clipping.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/GamutWarning.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { GamutWarning } from "@nyc-tron/ui/components/forge/color/GamutWarning";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button
 
 ```sh
@@ -20174,7 +20826,7 @@ Nonfolding mesh node editor with drag previews, exact coordinates and per-node c
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/GradientMeshEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { GradientMeshEditor } from "@nyc-tron/ui/components/forge/color/GradientMeshEditor";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/color/ColorChannelFields, @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -20261,7 +20913,7 @@ Edits stop positions and RGBA, inserts interpolated stops and prevents fewer tha
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/GradientStopEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { GradientStopEditor } from "@nyc-tron/ui/components/forge/color/GradientStopEditor";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/forge/color/ColorChannelFields, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -20344,7 +20996,7 @@ Edits wrapping hue selection, saturation/luma bounds, mask refinement and correc
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/HSLSecondaryEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { HSLSecondaryEditor } from "@nyc-tron/ui/components/forge/color/HSLSecondaryEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh
@@ -20424,7 +21076,7 @@ Controlled HSV display-color picker: a saturation/value field, a native `@expo/u
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/HsvPicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { HsvPicker } from "@nyc-tron/ui/components/forge/color/HsvPicker";`
-- Peers: @expo/ui, @nyc-tron/core, expo-linear-gradient, react, react-native
+- Peers: @expo/ui, expo-linear-gradient, react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/ColorChannels
 
 ```sh
@@ -20517,7 +21169,7 @@ Hue gradient, keyboard/screen-reader adjustment and exact degree entry.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/HueSlider.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { HueSlider } from "@nyc-tron/ui/components/forge/color/HueSlider";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh
@@ -20598,7 +21250,7 @@ Edits input/output bounds and gamma with noncrossing constraints.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/LevelsEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LevelsEditor } from "@nyc-tron/ui/components/forge/color/LevelsEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh
@@ -20679,7 +21331,7 @@ Renders bounded, count-preserving histograms; no fake signal or recurring UI tim
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/LiveHistogram.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LiveHistogram } from "@nyc-tron/ui/components/forge/color/LiveHistogram";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -20759,7 +21411,7 @@ Edits actual CMYK percentages or signed Lab channels without approximating ICC c
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/PrintColorChannels.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PrintColorChannels } from "@nyc-tron/ui/components/forge/color/PrintColorChannels";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -20842,7 +21494,7 @@ Two-dimensional saturation/value field with one commit on release and cancellati
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/SVColorField.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SVColorField } from "@nyc-tron/ui/components/forge/color/SVColorField";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh
@@ -20930,7 +21582,7 @@ Controls a host's proof transform; UI does not pretend to perform ICC conversion
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/SoftProofControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SoftProofControls } from "@nyc-tron/ui/components/forge/color/SoftProofControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select
 
 ```sh
@@ -21011,7 +21663,7 @@ Edits named spot/global identity, tint and an explicit sRGB alternate preview.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/SpotAndGlobalColorEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SpotAndGlobalColorEditor } from "@nyc-tron/ui/components/forge/color/SpotAndGlobalColorEditor";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/color/ColorChannelFields, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -21093,7 +21745,7 @@ Searchable swatch groups (C-13).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/SwatchGrid.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SwatchGrid } from "@nyc-tron/ui/components/forge/color/SwatchGrid";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button
 
 ```sh
@@ -21182,7 +21834,7 @@ Binds theme tokens by identity; previews never replace references with literal c
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ThemeColorReferences.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ThemeColorReferences } from "@nyc-tron/ui/components/forge/color/ThemeColorReferences";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select
 
 ```sh
@@ -21264,7 +21916,7 @@ Renders actual decoded measurements with bounded density pooling; no synthetic s
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/VideoScopesPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { VideoScopesPanel } from "@nyc-tron/ui/components/forge/color/VideoScopesPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/forge/color/LiveHistogram
 
 ```sh
@@ -21350,7 +22002,7 @@ Edits floating RGB without quantizing to bytes, clipping to sRGB or guessing a t
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/WideGamutChannels.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { WideGamutChannels } from "@nyc-tron/ui/components/forge/color/WideGamutChannels";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh
@@ -22771,7 +23423,7 @@ Geometry is already mapped into viewport points by the collaboration host; no wa
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/CollaborationPresence.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CollaborationPresence } from "@nyc-tron/ui/components/forge/design/CollaborationPresence";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button
 
 ```sh
@@ -22852,7 +23504,7 @@ Pins and the shared thread panel reference the same authoritative thread IDs.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/CommentPins.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CommentPins } from "@nyc-tron/ui/components/forge/design/CommentPins";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/pdf/CommentsThreadPanel
 
 ```sh
@@ -22931,7 +23583,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/ComponentVariantPicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ComponentVariantPicker } from "@nyc-tron/ui/components/forge/design/ComponentVariantPicker";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -23089,7 +23741,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/DevHandoffInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DevHandoffInspector } from "@nyc-tron/ui/components/forge/design/DevHandoffInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -23172,7 +23824,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/FlowOverview.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FlowOverview } from "@nyc-tron/ui/components/forge/design/FlowOverview";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -23485,7 +24137,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/MultiExportSlices.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MultiExportSlices } from "@nyc-tron/ui/components/forge/design/MultiExportSlices";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -23576,7 +24228,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/PrototypeConnectionTool.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PrototypeConnectionTool } from "@nyc-tron/ui/components/forge/design/PrototypeConnectionTool";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D
 
 ```sh
@@ -23658,7 +24310,7 @@ Surface and transition clock come from the actual prototype runtime; no UI timer
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/PrototypePreviewPlayer.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PrototypePreviewPlayer } from "@nyc-tron/ui/components/forge/design/PrototypePreviewPlayer";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -23820,7 +24472,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/VariablesAndModes.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { VariablesAndModes } from "@nyc-tron/ui/components/forge/design/VariablesAndModes";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -23903,7 +24555,7 @@ Transport-agnostic pairing dialog over a controlled {@linkcode PairingState}.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/devices/DevicePairingDialog.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DevicePairingDialog } from "@nyc-tron/ui/components/forge/devices/DevicePairingDialog";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button
 
 ```sh
@@ -24149,7 +24801,7 @@ Bullets and numbering (H-07): pick the list kind, indent or outdent under the ne
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/BulletsNumberingEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BulletsNumberingEditor } from "@nyc-tron/ui/components/forge/document/BulletsNumberingEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh
@@ -24311,7 +24963,7 @@ Actual recognition events drive interim/final text; insertion is one host undo t
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/DictationSessionPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DictationSessionPanel } from "@nyc-tron/ui/components/forge/document/DictationSessionPanel";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -24479,7 +25131,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/FootnoteCitationEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FootnoteCitationEditor } from "@nyc-tron/ui/components/forge/document/FootnoteCitationEditor";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -24640,7 +25292,7 @@ Native touch selection plus numeric insertion for larger tables and keyboard/acc
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/InsertTableGrid.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InsertTableGrid } from "@nyc-tron/ui/components/forge/document/InsertTableGrid";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -24725,7 +25377,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/LayoutSpreadNavigator.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LayoutSpreadNavigator } from "@nyc-tron/ui/components/forge/document/LayoutSpreadNavigator";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -24810,7 +25462,7 @@ Preview values are supplied by the selected recipient's admitted data source.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/MailMergeFieldPicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MailMergeFieldPicker } from "@nyc-tron/ui/components/forge/document/MailMergeFieldPicker";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -24896,7 +25548,7 @@ Navigation pane for text documents (H-15): the heading outline with collapse and
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/NavigationOutline.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { NavigationOutline } from "@nyc-tron/ui/components/forge/document/NavigationOutline";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh
@@ -25064,7 +25716,7 @@ Host-layout pages with actual native plain text inputs or an explicit native ric
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/PaginatedTextCanvas.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PaginatedTextCanvas } from "@nyc-tron/ui/components/forge/document/PaginatedTextCanvas";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/document/TextSelectionAndCaret
 
 ```sh
@@ -25150,7 +25802,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/ParagraphRuler.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ParagraphRuler } from "@nyc-tron/ui/components/forge/document/ParagraphRuler";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -25232,7 +25884,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/ParagraphStylesGallery.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ParagraphStylesGallery } from "@nyc-tron/ui/components/forge/document/ParagraphStylesGallery";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -25314,7 +25966,7 @@ Home-tab formatting ribbon for text documents (H-03): paragraph style, font fami
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/RichTextRibbon.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RichTextRibbon } from "@nyc-tron/ui/components/forge/document/RichTextRibbon";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh
@@ -25414,7 +26066,7 @@ Portable overlay; content also exports separately for the shared native popover 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/SpellGrammarPopover.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SpellGrammarPopover, SpellGrammarContent } from "@nyc-tron/ui/components/forge/document/SpellGrammarPopover";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/overlays/AnchoredPopover
 
 ```sh
@@ -25486,7 +26138,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/TableLayoutInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TableLayoutInspector } from "@nyc-tron/ui/components/forge/document/TableLayoutInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -25567,7 +26219,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/TableOfContentsEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TableOfContentsEditor } from "@nyc-tron/ui/components/forge/document/TableOfContentsEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -25647,7 +26299,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/TextSelectionAndCaret.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TextSelectionAndCaret } from "@nyc-tron/ui/components/forge/document/TextSelectionAndCaret";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -25739,7 +26391,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/TextWrapAndFrames.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TextWrapAndFrames } from "@nyc-tron/ui/components/forge/document/TextWrapAndFrames";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -25817,7 +26469,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/TrackChangesView.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TrackChangesView } from "@nyc-tron/ui/components/forge/document/TrackChangesView";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -26409,7 +27061,7 @@ Native RN graph interaction surface.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/graph/PatchGraph.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PatchGraph } from "@nyc-tron/ui/components/forge/graph/PatchGraph";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -26593,7 +27245,7 @@ Native interactive crop overlay only.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/graphics/ImageCropOverlay.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ImageCropOverlay } from "@nyc-tron/ui/components/forge/graphics/ImageCropOverlay";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: none
 
 ```sh
@@ -26772,7 +27424,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/BrushDynamicsInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BrushDynamicsInspector } from "@nyc-tron/ui/components/forge/ink/BrushDynamicsInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -26850,7 +27502,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/BrushPresetBrowser.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BrushPresetBrowser } from "@nyc-tron/ui/components/forge/ink/BrushPresetBrowser";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -26934,7 +27586,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/BrushStabilizationPreview.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BrushStabilizationPreview } from "@nyc-tron/ui/components/forge/ink/BrushStabilizationPreview";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/ink/InkStrokePreview, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -27013,7 +27665,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/BrushTaperControl.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BrushTaperControl } from "@nyc-tron/ui/components/forge/ink/BrushTaperControl";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -27096,7 +27748,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/EraserModePicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EraserModePicker } from "@nyc-tron/ui/components/forge/ink/EraserModePicker";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -27176,7 +27828,7 @@ A bounded pressure-sensitive Graphite test stroke, independent of the production
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/InkStrokePreview.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InkStrokePreview } from "@nyc-tron/ui/components/forge/ink/InkStrokePreview";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, react-native-skia, zustand
+- Peers: react, react-native, react-native-gesture-handler, react-native-skia, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/canvas/GPUCanvasViewport
 
 ```sh
@@ -27267,7 +27919,7 @@ Controlled tool, size, color, opacity, pressure and history controls for a drawi
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/InkToolbar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InkToolbar } from "@nyc-tron/ui/components/forge/ink/InkToolbar";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh
@@ -27374,7 +28026,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/TimelapsePlaybackExporter.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TimelapsePlaybackExporter } from "@nyc-tron/ui/components/forge/ink/TimelapsePlaybackExporter";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -27655,7 +28307,7 @@ One virtual gallery owner for source-backed presets; all previews and saved meta
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/AssetPresetGallery.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AssetPresetGallery } from "@nyc-tron/ui/components/forge/inputs/AssetPresetGallery";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -27738,7 +28390,7 @@ Native responder-based parametric control.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/InstrumentKnob.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InstrumentKnob } from "@nyc-tron/ui/components/forge/inputs/InstrumentKnob";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh
@@ -27827,7 +28479,7 @@ Multi-input pad with bounded normalized coordinates; no duplicate document state
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/InstrumentXYPad.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InstrumentXYPad } from "@nyc-tron/ui/components/forge/inputs/InstrumentXYPad";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh
@@ -27918,7 +28570,7 @@ Shared virtual tree owner for bookmarks, component/frame trees and hierarchical 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/OutlineTree.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { OutlineTree } from "@nyc-tron/ui/components/forge/inputs/OutlineTree";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -28003,7 +28655,7 @@ Normalized point editor with one active 44pt native grip and equivalent numeric 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/PointEditor2D.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PointEditor2D } from "@nyc-tron/ui/components/forge/inputs/PointEditor2D";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -28267,7 +28919,7 @@ Artboard list or grid with previews (B-14).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/ArtboardNavigator.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ArtboardNavigator } from "@nyc-tron/ui/components/forge/layers/ArtboardNavigator";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/DragGrabHandle, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/layers/LayerThumbnail, @nyc-tron/gestures/PanResponderDrag
 
 ```sh
@@ -28364,7 +29016,7 @@ Before/after comparison of two canvas images (B-27): side by side (stacked on na
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/CanvasCompareView.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CanvasCompareView } from "@nyc-tron/ui/components/forge/layers/CanvasCompareView";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/gestures/PanResponderDrag
 
 ```sh
@@ -28460,7 +29112,7 @@ Clip/unclip switch for one layer (B-13).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/ClippingMaskControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ClipToggle, ClipIndicator } from "@nyc-tron/ui/components/forge/layers/ClippingMaskControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -28552,7 +29204,7 @@ Compositing policy requests, not document-profile assignment or pixel conversion
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/LayerBlendAndOpacity.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LayerBlendAndOpacity } from "@nyc-tron/ui/components/forge/layers/LayerBlendAndOpacity";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/shell/MenuButton
 
 ```sh
@@ -28642,7 +29294,7 @@ Controlled layer list for editors.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/LayerStack.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LayerStack } from "@nyc-tron/ui/components/forge/layers/LayerStack";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/layers/ClippingMaskControls, @nyc-tron/overlays/AnchoredPopover, @nyc-tron/shell/MenuButton
 
 ```sh
@@ -28747,7 +29399,7 @@ Async, cached preview of a layer, mask or artboard (B-10).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/LayerThumbnail.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LayerThumbnail } from "@nyc-tron/ui/components/forge/layers/LayerThumbnail";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -28833,7 +29485,7 @@ Mask panel for one layer (B-12).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/MaskThumbnailAndEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MaskThumbnailAndEditor } from "@nyc-tron/ui/components/forge/layers/MaskThumbnailAndEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/layers/LayerThumbnail
 
 ```sh
@@ -29671,7 +30323,7 @@ Controlled MIDI note editor for one clip.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/MIDIPianoRoll.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MIDIPianoRoll } from "@nyc-tron/ui/components/forge/midi/MIDIPianoRoll";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/midi/MidiChannelPicker
 
 ```sh
@@ -29775,7 +30427,7 @@ Controlled per-note velocity bars under a {@linkcode MIDIPianoRoll}.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/MIDIVelocityLane.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MIDIVelocityLane } from "@nyc-tron/ui/components/forge/midi/MIDIVelocityLane";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/midi/MIDIPianoRoll, @nyc-tron/forge/midi/MidiChannelPicker
 
 ```sh
@@ -29873,7 +30525,7 @@ Controlled MIDI channel stepper for one note or clip: a visible "Ch" label, the 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/MidiChannelPicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MidiChannelPicker, MidiValueStepper } from "@nyc-tron/ui/components/forge/midi/MidiChannelPicker";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/midi/MIDIPianoRoll
 
 ```sh
@@ -29977,7 +30629,7 @@ Controlled beat grid over one clip's notes.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/StepSequencer.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { StepSequencer } from "@nyc-tron/ui/components/forge/midi/StepSequencer";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -30263,7 +30915,7 @@ Lens/view/depth and lighting values, independent from native app window dimensio
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/CameraAndLightControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CameraAndLightControls } from "@nyc-tron/ui/components/forge/motion/CameraAndLightControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -30345,7 +30997,7 @@ Virtualized nested composition/shape/text/footage/adjustment hierarchy with stab
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/CompositionLayerTree.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CompositionLayerTree } from "@nyc-tron/ui/components/forge/motion/CompositionLayerTree";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -30435,7 +31087,7 @@ Complete typed easing intents.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/EasingPresetGallery.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EasingPresetGallery } from "@nyc-tron/ui/components/forge/motion/EasingPresetGallery";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -30523,7 +31175,7 @@ Host-controlled effect order and schema-driven settings.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/EffectStackAndInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EffectStackAndInspector } from "@nyc-tron/ui/components/forge/motion/EffectStackAndInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/Select, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -30610,7 +31262,7 @@ Native code text input with explicit, cancellable host language services.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/ExpressionEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ExpressionEditor } from "@nyc-tron/ui/components/forge/motion/ExpressionEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -30849,7 +31501,7 @@ The host excludes descendants/cycles; self-matting and explicitly unavailable so
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/MatteAndMaskPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MatteAndMaskPanel } from "@nyc-tron/ui/components/forge/motion/MatteAndMaskPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -30931,7 +31583,7 @@ Virtualized property lanes and full key list share one controlled selection.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/MotionKeyframeTimeline.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MotionKeyframeTimeline } from "@nyc-tron/ui/components/forge/motion/MotionKeyframeTimeline";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -31111,7 +31763,7 @@ Typed, bounded graph editor.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/NodeGraphEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { NodeGraphEditor } from "@nyc-tron/ui/components/forge/motion/NodeGraphEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/graph/PatchGraph, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -31201,7 +31853,7 @@ Deterministic emitter settings; the compositor owns particle simulation and text
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/ParticleEmitterControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ParticleEmitterControls } from "@nyc-tron/ui/components/forge/motion/ParticleEmitterControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -31282,7 +31934,7 @@ Encoder-neutral queue controls; no UI timer invents render progress or completio
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/RenderQueuePanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RenderQueuePanel } from "@nyc-tron/ui/components/forge/motion/RenderQueuePanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/Select, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -31451,7 +32103,7 @@ Controlled scene/document transform; rotations retain complete turns.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/Transform3DInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { Transform3DInspector } from "@nyc-tron/ui/components/forge/motion/Transform3DInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -32373,7 +33025,7 @@ Controlled read-aloud transport shared by H-21 and K-18: the current sentence wi
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/office/ReadAloudTransport.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ReadAloudTransport } from "@nyc-tron/ui/components/forge/office/ReadAloudTransport";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh
@@ -32565,7 +33217,7 @@ PDF markup toolbar (K-06): one 44pt toggle per tool the engine can save, plus un
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/AnnotationToolbar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AnnotationToolbar } from "@nyc-tron/ui/components/forge/pdf/AnnotationToolbar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh
@@ -32729,7 +33381,7 @@ PDF comment threads (K-07), grouped by page: author, time, body, replies, and re
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/CommentsThreadPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CommentsThreadPanel } from "@nyc-tron/ui/components/forge/pdf/CommentsThreadPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh
@@ -32828,7 +33480,7 @@ Passwords live only in this ephemeral, nonpersisted store and the host operation
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/EncryptPermissionsPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EncryptPermissionsPanel } from "@nyc-tron/ui/components/forge/pdf/EncryptPermissionsPanel";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select
 
 ```sh
@@ -32916,7 +33568,7 @@ Native modal review of source order and page selection; host retains file/securi
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/ExtractMergeSplitDialog.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ExtractMergeSplitDialog } from "@nyc-tron/ui/components/forge/pdf/ExtractMergeSplitDialog";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -33002,7 +33654,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/HyperlinkInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { HyperlinkInspector } from "@nyc-tron/ui/components/forge/pdf/HyperlinkInspector";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -33081,7 +33733,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFCompareOverlay.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFCompareOverlay } from "@nyc-tron/ui/components/forge/pdf/PDFCompareOverlay";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -33173,7 +33825,7 @@ Edits actual AcroForm metadata; native signing, field appearance regeneration an
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFFormFieldEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFFormFieldEditor } from "@nyc-tron/ui/components/forge/pdf/PDFFormFieldEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -33258,7 +33910,7 @@ Actual native PDF hit tests/font admission and save acknowledgement; edits never
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFInlineTextEdit.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFInlineTextEdit } from "@nyc-tron/ui/components/forge/pdf/PDFInlineTextEdit";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -33351,7 +34003,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFPageLayoutSelector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFPageLayoutSelector } from "@nyc-tron/ui/components/forge/pdf/PDFPageLayoutSelector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -33505,7 +34157,7 @@ Actual native camera surfaces and scan artifacts are supplied by the host; corre
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFScanSession.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFScanSession } from "@nyc-tron/ui/components/forge/pdf/PDFScanSession";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D
 
 ```sh
@@ -33600,7 +34252,7 @@ Native PDF reading order and glyph rectangles are supplied by the renderer; Unic
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFTextSelection.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFTextSelection } from "@nyc-tron/ui/components/forge/pdf/PDFTextSelection";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -33685,7 +34337,7 @@ Virtual native page list with stable thumbnail bounds, grouping and one scoped r
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFThumbnailSidebar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFThumbnailSidebar } from "@nyc-tron/ui/components/forge/pdf/PDFThumbnailSidebar";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/MenuButton
 
 ```sh
@@ -33771,7 +34423,7 @@ The same native recording session supplies transport, measured waveform and the 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFVoiceNoteAttachment.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFVoiceNoteAttachment } from "@nyc-tron/ui/components/forge/pdf/PDFVoiceNoteAttachment";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/audio/LiveRecordingWaveform, @nyc-tron/forge/audio/NativeAudioTransport
 
 ```sh
@@ -33855,7 +34507,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PageReorderOrganizer.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PageReorderOrganizer } from "@nyc-tron/ui/components/forge/pdf/PageReorderOrganizer";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/pdf/PDFThumbnailSidebar
 
 ```sh
@@ -33932,7 +34584,7 @@ Actual preview/output/profile-validation telemetry; the native host owns PDF/A c
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PrintAndExportPreview.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PrintAndExportPreview } from "@nyc-tron/ui/components/forge/pdf/PrintAndExportPreview";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -34025,7 +34677,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/RedactionReviewTool.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RedactionReviewTool } from "@nyc-tron/ui/components/forge/pdf/RedactionReviewTool";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -34119,7 +34771,7 @@ Visible signature stamp authoring.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/SignatureStampTool.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SignatureStampTool } from "@nyc-tron/ui/components/forge/pdf/SignatureStampTool";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D, @nyc-tron/forge/inputs/PropertyInspector, @nyc-tron/forge/slides/InkAndLaserPointer
 
 ```sh
@@ -34207,7 +34859,7 @@ Document-wide text search for PDFs (K-04): a query field, optional case and whol
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/TextSearchResults.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TextSearchResults } from "@nyc-tron/ui/components/forge/pdf/TextSearchResults";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh
@@ -34301,7 +34953,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/VirtualPDFPageViewer.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { VirtualPDFPageViewer } from "@nyc-tron/ui/components/forge/pdf/VirtualPDFPageViewer";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -34644,7 +35296,7 @@ Configures a host's real batch encoder and reports only provider-supplied progre
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/BatchExportPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BatchExportPanel } from "@nyc-tron/ui/components/forge/photo/BatchExportPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -34811,7 +35463,7 @@ Explicit host-indexed catalog filters.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/CatalogFilterBar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CatalogFilterBar } from "@nyc-tron/ui/components/forge/photo/CatalogFilterBar";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -34984,7 +35636,7 @@ Eight explicit color ranges; edits retain every other band's exact values.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/EightBandColorMixer.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EightBandColorMixer } from "@nyc-tron/ui/components/forge/photo/EightBandColorMixer";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh
@@ -35064,7 +35716,7 @@ Controlled non-destructive exposure settings.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/ExposureAndWhiteBalance.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ExposureAndWhiteBalance } from "@nyc-tron/ui/components/forge/photo/ExposureAndWhiteBalance";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh
@@ -35144,7 +35796,7 @@ Host-supplied calibrated profile identity and manual distortion/CA intent.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/LensCorrectionPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LensCorrectionPanel } from "@nyc-tron/ui/components/forge/photo/LensCorrectionPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -35225,7 +35877,7 @@ Actual bounded mask-coverage preview plus the shared native geometry handles.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/LinearRadialGradientMask.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LinearRadialGradientMask } from "@nyc-tron/ui/components/forge/photo/LinearRadialGradientMask";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/forge/vector/GradientOnCanvasHandles, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -35396,7 +36048,7 @@ Document-only sampling: profile-bearing color is retained, never inferred from a
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/LuminanceColorRangeMask.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LuminanceColorRangeMask } from "@nyc-tron/ui/components/forge/photo/LuminanceColorRangeMask";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -35481,7 +36133,7 @@ Virtualized catalog page with host-generated thumbnails; originals are never dec
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PhotoLibraryGrid.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PhotoLibraryGrid } from "@nyc-tron/ui/components/forge/photo/PhotoLibraryGrid";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button
 
 ```sh
@@ -35572,7 +36224,7 @@ Read-only original EXIF/provenance, with a separate host-owned editing annotatio
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PhotoMetadataInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PhotoMetadataInspector } from "@nyc-tron/ui/components/forge/photo/PhotoMetadataInspector";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button
 
 ```sh
@@ -35655,7 +36307,7 @@ Read-only snapshots with explicit compare/restore; there is no original-delete o
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PhotoVersionHistoryBrowser.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PhotoVersionHistoryBrowser } from "@nyc-tron/ui/components/forge/photo/PhotoVersionHistoryBrowser";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -35746,7 +36398,7 @@ Horizontal photo preset previews with explicit cancellable apply to the selected
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PresetFilmstrip.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PresetFilmstrip } from "@nyc-tron/ui/components/forge/photo/PresetFilmstrip";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -35835,7 +36487,7 @@ Versioned preset transfer with validation before any host write, plus rename/del
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PresetManager.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PresetManager } from "@nyc-tron/ui/components/forge/photo/PresetManager";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -35923,7 +36575,7 @@ Composes non-destructive RAW settings; does not decode RAW or simulate an image 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/RAWDevelopPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RAWDevelopPanel } from "@nyc-tron/ui/components/forge/photo/RAWDevelopPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/photo/EightBandColorMixer, @nyc-tron/forge/photo/ExposureAndWhiteBalance, @nyc-tron/forge/photo/LensCorrectionPanel, @nyc-tron/forge/photo/ToneAndPresence
 
 ```sh
@@ -36010,7 +36662,7 @@ Independent star, named color-label and mutually exclusive pick/reject fields.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/RatingAndFlagControl.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RatingAndFlagControl } from "@nyc-tron/ui/components/forge/photo/RatingAndFlagControl";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/Select
 
 ```sh
@@ -36094,7 +36746,7 @@ Controlled non-destructive tone settings.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/ToneAndPresence.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ToneAndPresence } from "@nyc-tron/ui/components/forge/photo/ToneAndPresence";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh
@@ -36927,7 +37579,7 @@ Settings for the magic wand and the selection edge tools (B-20): tolerance, cont
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/MagicSelectionControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MagicSelectionControls, MagicWandCanvas } from "@nyc-tron/ui/components/forge/selection/MagicSelectionControls";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -37039,7 +37691,7 @@ Ordered range/toggle selection, group commands and honest shared-property state.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/MultiSelectionControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MultiSelectionControls } from "@nyc-tron/ui/components/forge/selection/MultiSelectionControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/Select, @nyc-tron/shell/PropertyRow, @nyc-tron/shell/UnitInput
 
 ```sh
@@ -37135,7 +37787,7 @@ Scope-safe move/resize/rotation handles.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/SelectionBounds.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SelectionBounds } from "@nyc-tron/ui/components/forge/selection/SelectionBounds";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: none
 
 ```sh
@@ -37229,7 +37881,7 @@ Marquee selection over a host canvas (B-19): rectangle, ellipse, polygon (click 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/SelectionMarquee.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SelectionMarquee } from "@nyc-tron/ui/components/forge/selection/SelectionMarquee";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -37826,7 +38478,7 @@ One owner for data, chart series/formatting and table cell layout across office 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ChartAndTableEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ChartAndTableEditor } from "@nyc-tron/ui/components/forge/slides/ChartAndTableEditor";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/forge/document/TableLayoutInspector, @nyc-tron/forge/spreadsheet/ChartBuilder, @nyc-tron/forge/spreadsheet/VirtualSpreadsheetGrid
 
 ```sh
@@ -37909,7 +38561,7 @@ Sticky ends follow actual named object anchors; visual routing is presentation g
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ConnectorAndDiagramTools.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ConnectorAndDiagramTools } from "@nyc-tron/ui/components/forge/slides/ConnectorAndDiagramTools";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -38071,7 +38723,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/MasterLayoutEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MasterLayoutEditor } from "@nyc-tron/ui/components/forge/slides/MasterLayoutEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -38154,7 +38806,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/MediaInsertInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MediaInsertInspector } from "@nyc-tron/ui/components/forge/slides/MediaInsertInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector, @nyc-tron/forge/timeline/InOutRangeHandles
 
 ```sh
@@ -38248,7 +38900,7 @@ Correspondence editing and source-rendered morph frames; no second animation clo
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/MorphPreview.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MorphPreview } from "@nyc-tron/ui/components/forge/slides/MorphPreview";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -38335,7 +38987,7 @@ Shared native recognizer/ink state owner.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/PresenterInkOverlay.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PresenterInkOverlay } from "@nyc-tron/ui/components/forge/slides/PresenterInkOverlay";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -38423,7 +39075,7 @@ Wraps on narrow panes; clear stays disabled until there are committed strokes.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/PresenterInkStrip.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PresenterInkStrip } from "@nyc-tron/ui/components/forge/slides/PresenterInkStrip";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -38511,7 +39163,7 @@ Presenter clock/elapsed values follow the host session.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/PresenterView.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PresenterView } from "@nyc-tron/ui/components/forge/slides/PresenterView";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -38602,7 +39254,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/RehearsalTimers.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RehearsalTimers } from "@nyc-tron/ui/components/forge/slides/RehearsalTimers";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -38684,7 +39336,7 @@ Source-backed vector previews and a selected native drag handle, plus numeric/ke
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ShapePresetGallery.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ShapePresetGallery } from "@nyc-tron/ui/components/forge/slides/ShapePresetGallery";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/AssetPresetGallery, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -38767,7 +39419,7 @@ Animation pane for a slide (J-09): the slide's animations in play order with obj
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideAnimationPane.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SlideAnimationPane } from "@nyc-tron/ui/components/forge/slides/SlideAnimationPane";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector, @nyc-tron/forge/office/office-controls
 
 ```sh
@@ -38860,7 +39512,7 @@ Editable slide (J-05): objects drawn to scale, press to select, drag to move wit
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideCanvas.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SlideCanvas } from "@nyc-tron/ui/components/forge/slides/SlideCanvas";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls, @nyc-tron/forge/slides/SlideThumbnail
 
 ```sh
@@ -38954,7 +39606,7 @@ Vertical slide filmstrip (J-01): numbered thumbnails drawn from the slide's obje
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideFilmstrip.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SlideFilmstrip } from "@nyc-tron/ui/components/forge/slides/SlideFilmstrip";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls, @nyc-tron/forge/slides/SlideThumbnail
 
 ```sh
@@ -39047,7 +39699,7 @@ Native notes buffer or an explicit rich-text native editor, sharing the formatti
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideNotesEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SlideNotesEditor } from "@nyc-tron/ui/components/forge/slides/SlideNotesEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/document/RichTextRibbon, @nyc-tron/forge/document/TextSelectionAndCaret
 
 ```sh
@@ -39124,7 +39776,7 @@ Slide sorter grid (J-02) with multiselect: a press selects one slide, Cmd/Ctrl a
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideSorter.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SlideSorter } from "@nyc-tron/ui/components/forge/slides/SlideSorter";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls, @nyc-tron/forge/slides/SlideThumbnail
 
 ```sh
@@ -39293,7 +39945,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ThemeAndTemplateGallery.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ThemeAndTemplateGallery } from "@nyc-tron/ui/components/forge/slides/ThemeAndTemplateGallery";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/AssetPresetGallery, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -39370,7 +40022,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/TransitionPicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TransitionPicker } from "@nyc-tron/ui/components/forge/slides/TransitionPicker";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -39825,7 +40477,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/CellFormatInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CellFormatInspector } from "@nyc-tron/ui/components/forge/spreadsheet/CellFormatInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -39903,7 +40555,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/CellSelectionOverlay.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CellSelectionOverlay } from "@nyc-tron/ui/components/forge/spreadsheet/CellSelectionOverlay";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -39990,7 +40642,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/ChartBuilder.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ChartBuilder } from "@nyc-tron/ui/components/forge/spreadsheet/ChartBuilder";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -40081,7 +40733,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/ConditionalFormatRules.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ConditionalFormatRules } from "@nyc-tron/ui/components/forge/spreadsheet/ConditionalFormatRules";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -40165,7 +40817,7 @@ Host file picker/parser/conversion transactions; preview rows and failures are a
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/DataImportWizard.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DataImportWizard } from "@nyc-tron/ui/components/forge/spreadsheet/DataImportWizard";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -40347,7 +40999,7 @@ Uses the host's parser/catalog replacement range; does not guess function semant
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/FormulaAutocomplete.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FormulaAutocomplete } from "@nyc-tron/ui/components/forge/spreadsheet/FormulaAutocomplete";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -40429,7 +41081,7 @@ Controlled formula text; the workbook owns the draft and evaluates only committe
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/FormulaBar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FormulaBar } from "@nyc-tron/ui/components/forge/spreadsheet/FormulaBar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -40605,7 +41257,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/FreezeSplitControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FreezeSplitControls } from "@nyc-tron/ui/components/forge/spreadsheet/FreezeSplitControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -40691,7 +41343,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/NameBox.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { NameBox } from "@nyc-tron/ui/components/forge/spreadsheet/NameBox";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -40771,7 +41423,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/PivotFieldList.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PivotFieldList } from "@nyc-tron/ui/components/forge/spreadsheet/PivotFieldList";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -40929,7 +41581,7 @@ Shared licensed tokenizer/tone owner; the host places on-sheet range outlines in
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/ReferenceColorizer.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ReferenceColorizer } from "@nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/spreadsheet/FormulaReferenceText
 
 ```sh
@@ -41014,7 +41666,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SavedSheetViewManager.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SavedSheetViewManager } from "@nyc-tron/ui/components/forge/spreadsheet/SavedSheetViewManager";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/spreadsheet/SortFilterHeader
 
 ```sh
@@ -41098,7 +41750,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SheetTabs.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SheetTabs } from "@nyc-tron/ui/components/forge/spreadsheet/SheetTabs";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -41195,7 +41847,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SortFilterHeader.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SortFilterHeader } from "@nyc-tron/ui/components/forge/spreadsheet/SortFilterHeader";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector, @nyc-tron/shell/MenuButton
 
 ```sh
@@ -41280,7 +41932,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/Sparkline.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { Sparkline } from "@nyc-tron/ui/components/forge/spreadsheet/Sparkline";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -41365,7 +42017,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SparklineEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SparklineEditor } from "@nyc-tron/ui/components/forge/spreadsheet/SparklineEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/spreadsheet/Sparkline
 
 ```sh
@@ -41450,7 +42102,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SplitSpreadsheetView.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SplitSpreadsheetView } from "@nyc-tron/ui/components/forge/spreadsheet/SplitSpreadsheetView";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag
 
 ```sh
@@ -41540,7 +42192,7 @@ Explicit record mode.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SpreadsheetCardsView.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SpreadsheetCardsView } from "@nyc-tron/ui/components/forge/spreadsheet/SpreadsheetCardsView";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -41630,7 +42282,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/TableStyleGallery.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TableStyleGallery } from "@nyc-tron/ui/components/forge/spreadsheet/TableStyleGallery";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh
@@ -41708,7 +42360,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/ValidationDropdown.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ValidationDropdown } from "@nyc-tron/ui/components/forge/spreadsheet/ValidationDropdown";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -42538,7 +43190,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/AudioClipWaveform.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AudioClipWaveform } from "@nyc-tron/ui/components/forge/timeline/AudioClipWaveform";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/WaveformLane
 
 ```sh
@@ -42623,7 +43275,7 @@ Edits actual ASR caption blocks; the host owns recognition and playback clocks.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/AutoCaptionTranscriptTimeline.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AutoCaptionTranscriptTimeline } from "@nyc-tron/ui/components/forge/timeline/AutoCaptionTranscriptTimeline";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/MenuButton
 
 ```sh
@@ -42716,7 +43368,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/AutoReframeGuides.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AutoReframeGuides } from "@nyc-tron/ui/components/forge/timeline/AutoReframeGuides";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/canvas/GuidedCropAndStraighten
 
 ```sh
@@ -42799,7 +43451,7 @@ Edits for several clips at once (D-41): shift by a number of frames, set speed (
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/BatchEditPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BatchEditPanel } from "@nyc-tron/ui/components/forge/timeline/BatchEditPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -42885,7 +43537,7 @@ Frame-snapped word boundaries with neighboring-word collision checks.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/CaptionWordTimingHandles.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CaptionWordTimingHandles } from "@nyc-tron/ui/components/forge/timeline/CaptionWordTimingHandles";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/InOutRangeHandles
 
 ```sh
@@ -42971,7 +43623,7 @@ Head and tail trim handles for the selected clip (D-19).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/ClipTrimHandles.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ClipTrimHandles } from "@nyc-tron/ui/components/forge/timeline/ClipTrimHandles";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -43065,7 +43717,7 @@ Chooses actual source frames/assets; applying the exported cover remains an engi
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/CoverFramePicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CoverFramePicker } from "@nyc-tron/ui/components/forge/timeline/CoverFramePicker";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/layers/LayerThumbnail, @nyc-tron/forge/timeline/VideoFilmstrip
 
 ```sh
@@ -43148,7 +43800,7 @@ Move and ripple settings (D-22): how a dragged clip lands on others (refuse, ove
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/DragReorderAndRipple.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DragReorderAndRipple } from "@nyc-tron/ui/components/forge/timeline/DragReorderAndRipple";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -43235,7 +43887,7 @@ Encoder-specific geometry wraps the shared preset/frame-rate/progress queue owne
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/ExportMonitor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ExportMonitor } from "@nyc-tron/ui/components/forge/timeline/ExportMonitor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/motion/RenderQueuePanel
 
 ```sh
@@ -43314,7 +43966,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/FrameAccurateScrubber.native.tsx,packages/ui/src/components/forge/timeline/FrameAccurateScrubber.shared.tsx,packages/ui/src/components/forge/timeline/FrameAccurateScrubber.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FrameAccurateScrubber } from "@nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/NativeSeekBar
 
 ```sh
@@ -43392,7 +44044,7 @@ In and out marks (D-12): Set in / Set out / Clear buttons that act at the playhe
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/InOutRangeHandles.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InOutRangeHandles } from "@nyc-tron/ui/components/forge/timeline/InOutRangeHandles";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -43487,7 +44139,7 @@ J/K/L shuttle (D-09): three 44pt keys and the current rate.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/JKLShuttleController.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { JKLShuttleController } from "@nyc-tron/ui/components/forge/timeline/JKLShuttleController";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -43579,7 +44231,7 @@ The playback loop (D-13): a Loop switch for the player, "Loop marked range" to t
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/LoopRangeBar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LoopRangeBar } from "@nyc-tron/ui/components/forge/timeline/LoopRangeBar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -43677,7 +44329,7 @@ Shared monitor chrome.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/MediaMonitor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MediaMonitor } from "@nyc-tron/ui/components/forge/timeline/MediaMonitor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/SafeAreaOverlay, @nyc-tron/forge/timeline/SeekBar, @nyc-tron/forge/timeline/TimecodeDisplay, @nyc-tron/forge/timeline/TransportControls
 
 ```sh
@@ -43775,7 +44427,7 @@ Edge handles for the roll and ripple tools (D-21) on the selected clip.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/ModeEdgeHandles.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ModeEdgeHandles } from "@nyc-tron/ui/components/forge/timeline/ModeEdgeHandles";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -43864,7 +44516,7 @@ Actual tracking measurements over the host frame, plus scoped manual correction.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/MotionTrackingOverlay.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MotionTrackingOverlay } from "@nyc-tron/ui/components/forge/timeline/MotionTrackingOverlay";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/selection/SelectionBounds
 
 ```sh
@@ -43952,7 +44604,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/MulticamAngleViewer.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MulticamAngleViewer } from "@nyc-tron/ui/components/forge/timeline/MulticamAngleViewer";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -44034,7 +44686,7 @@ The track stack (D-31): `TrackHeaders` beside `TimelineClipLane`, with overlay t
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/OverlayAndEffectsTrackStack.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { OverlayAndEffectsTrackStack } from "@nyc-tron/ui/components/forge/timeline/OverlayAndEffectsTrackStack";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/TimelineClipLane, @nyc-tron/forge/timeline/TrackHeaders
 
 ```sh
@@ -44119,7 +44771,7 @@ Reflects the OS-reported PiP state.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/PictureInPictureControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PictureInPictureControls } from "@nyc-tron/ui/components/forge/timeline/PictureInPictureControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -44203,7 +44855,7 @@ Playback speed picker (D-07): a 44pt button showing the rate that opens a list o
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/PlaybackRateMenu.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PlaybackRateMenu } from "@nyc-tron/ui/components/forge/timeline/PlaybackRateMenu";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -44369,7 +45021,7 @@ Razor controls (D-20): a toggle that turns clip presses in `TimelineClipLane` in
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/RazorSplitTool.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RazorSplitTool } from "@nyc-tron/ui/components/forge/timeline/RazorSplitTool";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/TimelineClipLane
 
 ```sh
@@ -44459,7 +45111,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/RenderCacheIndicator.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RenderCacheIndicator } from "@nyc-tron/ui/components/forge/timeline/RenderCacheIndicator";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -44540,7 +45192,7 @@ Trim tools (D-21): a picker for select, slip, slide, roll and ripple, which sets
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/RollSlipSlideControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RollSlipSlideControls } from "@nyc-tron/ui/components/forge/timeline/RollSlipSlideControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/TimelineClipLane
 
 ```sh
@@ -44628,7 +45280,7 @@ Guides over a video monitor (D-25): action- and title-safe boxes, an aspect-rati
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/SafeAreaOverlay.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SafeAreaOverlay } from "@nyc-tron/ui/components/forge/timeline/SafeAreaOverlay";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh
@@ -44716,7 +45368,7 @@ Actual decoder/compositor measurements, with source/program assignment and stale
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/ScopesDock.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ScopesDock } from "@nyc-tron/ui/components/forge/timeline/ScopesDock";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/forge/color/VideoScopesPanel
 
 ```sh
@@ -44798,7 +45450,7 @@ Seek track with played and buffered ranges (D-04).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/SeekBar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SeekBar } from "@nyc-tron/ui/components/forge/timeline/SeekBar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -44963,7 +45615,7 @@ Sticker objects retain their own ranges, transforms and shared editable motion k
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/StickerMotionLane.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { StickerMotionLane } from "@nyc-tron/ui/components/forge/timeline/StickerMotionLane";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler
+- Peers: react, react-native, react-native-gesture-handler
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/motion/MotionKeyframeTimeline, @nyc-tron/forge/timeline/InOutRangeHandles, @nyc-tron/shell/MenuButton
 
 ```sh
@@ -45053,7 +45705,7 @@ Time readout (D-08) in timecode (with drop-frame at 29.97/59.94), frames, second
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimecodeDisplay.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TimecodeDisplay } from "@nyc-tron/ui/components/forge/timeline/TimecodeDisplay";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -45142,7 +45794,7 @@ Clip lanes (D-15): one lane per track, clips positioned by frame, only the visib
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimelineClipLane.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TimelineClipLane } from "@nyc-tron/ui/components/forge/timeline/TimelineClipLane";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/ClipTrimHandles, @nyc-tron/forge/timeline/ModeEdgeHandles
 
 ```sh
@@ -45242,7 +45894,7 @@ Sequence markers (D-24): a 44pt row (place it above the ruler) with a flag per m
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimelineMarkers.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TimelineMarkers } from "@nyc-tron/ui/components/forge/timeline/TimelineMarkers";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -45345,7 +45997,7 @@ The playhead (D-11): a line across the ruler and every lane at `frame`, with a 4
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimelinePlayhead.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TimelinePlayhead } from "@nyc-tron/ui/components/forge/timeline/TimelinePlayhead";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -45438,7 +46090,7 @@ Time ruler (D-10): labeled ticks that switch between frames, seconds and minutes
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimelineRuler.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TimelineRuler } from "@nyc-tron/ui/components/forge/timeline/TimelineRuler";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -45525,7 +46177,7 @@ Zoom and scroll controls (D-14): zoom out/in around the playhead (or the view's 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimelineZoomAndScroll.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TimelineZoomAndScroll } from "@nyc-tron/ui/components/forge/timeline/TimelineZoomAndScroll";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -45617,7 +46269,7 @@ Track headers (D-18): one row per track, the height of its lane.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TrackHeaders.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TrackHeaders } from "@nyc-tron/ui/components/forge/timeline/TrackHeaders";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/IconButton, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -45712,7 +46364,7 @@ Transitions on the timeline (D-23), placed over the lanes like `TimelinePlayhead
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TransitionHandles.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TransitionHandles } from "@nyc-tron/ui/components/forge/timeline/TransitionHandles";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -45814,7 +46466,7 @@ Transition chooser (D-37): search, a list of kinds with a drawn diagram each, a 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TransitionPresetBrowser.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TransitionPresetBrowser } from "@nyc-tron/ui/components/forge/timeline/TransitionPresetBrowser";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -45905,7 +46557,7 @@ Play/pause, stop, jump to start/end and previous/next frame (D-06), each a 44pt 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TransportControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TransportControls } from "@nyc-tron/ui/components/forge/timeline/TransportControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -45996,7 +46648,7 @@ Reuses the schema-driven effect owner; actual video/body-effect rendering stays 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/VideoEffectsBrowser.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { VideoEffectsBrowser } from "@nyc-tron/ui/components/forge/timeline/VideoEffectsBrowser";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/motion/EffectStackAndInspector
 
 ```sh
@@ -46075,7 +46727,7 @@ Only visible frame tiles are mounted; the bounded shared thumbnail cache owns th
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/VideoFilmstrip.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { VideoFilmstrip } from "@nyc-tron/ui/components/forge/timeline/VideoFilmstrip";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/layers/LayerThumbnail
 
 ```sh
@@ -46159,7 +46811,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/VideoQualityInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { VideoQualityInspector } from "@nyc-tron/ui/components/forge/timeline/VideoQualityInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -46240,7 +46892,7 @@ Edit speed itself, not its derivative.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/VideoSpeedRampCurve.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { VideoSpeedRampCurve } from "@nyc-tron/ui/components/forge/timeline/VideoSpeedRampCurve";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -46321,7 +46973,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/VideoStabilizationInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { VideoStabilizationInspector } from "@nyc-tron/ui/components/forge/timeline/VideoStabilizationInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -47690,7 +48342,7 @@ Fill and stroke inspector for one vector layer (B-23): fill type and color, fill
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/FillStrokeInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FillStrokeInspector } from "@nyc-tron/ui/components/forge/vector/FillStrokeInspector";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh
@@ -47784,7 +48436,7 @@ On-canvas gradient editor (B-24).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/GradientOnCanvasHandles.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { GradientOnCanvasHandles } from "@nyc-tron/ui/components/forge/vector/GradientOnCanvasHandles";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -47876,7 +48528,7 @@ On-canvas node editor for one path layer (B-21).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/PenNodeEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PenNodeEditor } from "@nyc-tron/ui/components/forge/vector/PenNodeEditor";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -47976,7 +48628,7 @@ Boolean shape builder (B-22).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/ShapeBuilder.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ShapeBuilder } from "@nyc-tron/ui/components/forge/vector/ShapeBuilder";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
@@ -49056,7 +49708,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/html/semantic.native.tsx,packages/ui/src/components/html/semantic.web.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { Page, Main, Header, Footer, Section, Nav, Article, Aside } from "@nyc-tron/ui/components/html";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

@@ -24,7 +24,7 @@ Controlled MIDI channel stepper for one note or clip: a visible "Ch" label, the 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/MidiChannelPicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MidiChannelPicker, MidiValueStepper } from "@nyc-tron/ui/components/forge/midi/MidiChannelPicker";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/midi/MIDIPianoRoll
 
 ```sh

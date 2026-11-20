@@ -24,7 +24,7 @@ Controlled compressor transfer graph: input level across, output level up, both 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/DynamicsTransferGraph.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DynamicsTransferGraph } from "@nyc-tron/ui/components/forge/audio/DynamicsTransferGraph";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

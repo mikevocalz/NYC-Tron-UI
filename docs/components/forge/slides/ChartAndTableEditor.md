@@ -24,7 +24,7 @@ One owner for data, chart series/formatting and table cell layout across office 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ChartAndTableEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ChartAndTableEditor } from "@nyc-tron/ui/components/forge/slides/ChartAndTableEditor";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/forge/document/TableLayoutInspector, @nyc-tron/forge/spreadsheet/ChartBuilder, @nyc-tron/forge/spreadsheet/VirtualSpreadsheetGrid
 
 ```sh

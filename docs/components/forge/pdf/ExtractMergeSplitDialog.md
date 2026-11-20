@@ -24,7 +24,7 @@ Native modal review of source order and page selection; host retains file/securi
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/ExtractMergeSplitDialog.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ExtractMergeSplitDialog } from "@nyc-tron/ui/components/forge/pdf/ExtractMergeSplitDialog";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

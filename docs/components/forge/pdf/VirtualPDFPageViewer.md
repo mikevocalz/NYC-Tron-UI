@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/VirtualPDFPageViewer.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { VirtualPDFPageViewer } from "@nyc-tron/ui/components/forge/pdf/VirtualPDFPageViewer";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -24,7 +24,7 @@ Uses the host's parser/catalog replacement range; does not guess function semant
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/FormulaAutocomplete.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FormulaAutocomplete } from "@nyc-tron/ui/components/forge/spreadsheet/FormulaAutocomplete";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

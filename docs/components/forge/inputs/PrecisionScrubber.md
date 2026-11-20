@@ -21,7 +21,7 @@ Drag-to-scrub number control with fine, normal and coarse modes, detents, previe
 
 - Package: @nyc-tron/ui
 - Import: `import { PrecisionScrubber } from "@nyc-tron/ui/components/forge/inputs/PrecisionScrubber";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag
 
 ```sh

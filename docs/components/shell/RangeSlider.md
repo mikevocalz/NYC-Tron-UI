@@ -21,7 +21,7 @@ Two-thumb slider that selects a min and max value, with step, detents, minimum g
 
 - Package: @nyc-tron/ui
 - Import: `import { RangeSlider } from "@nyc-tron/ui/components/shell/RangeSlider";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
 
 ```sh

@@ -24,7 +24,7 @@ Encoder-specific geometry wraps the shared preset/frame-rate/progress queue owne
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/ExportMonitor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ExportMonitor } from "@nyc-tron/ui/components/forge/timeline/ExportMonitor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/motion/RenderQueuePanel
 
 ```sh

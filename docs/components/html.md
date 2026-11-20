@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/html/semantic.native.tsx,packages/ui/src/components/html/semantic.web.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { Page, Main, Header, Footer, Section, Nav, Article, Aside } from "@nyc-tron/ui/components/html";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

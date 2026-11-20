@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/StereoMultichannelWaveform.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { StereoMultichannelWaveform } from "@nyc-tron/ui/components/forge/audio/StereoMultichannelWaveform";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler
+- Peers: react, react-native, react-native-gesture-handler
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/forge/WaveformLane
 
 ```sh

@@ -24,7 +24,7 @@ Controlled layer list for editors.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/LayerStack.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LayerStack } from "@nyc-tron/ui/components/forge/layers/LayerStack";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/layers/ClippingMaskControls, @nyc-tron/overlays/AnchoredPopover, @nyc-tron/shell/MenuButton
 
 ```sh

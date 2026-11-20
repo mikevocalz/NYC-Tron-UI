@@ -24,7 +24,7 @@ Before/after comparison of two canvas images (B-27): side by side (stacked on na
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/CanvasCompareView.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CanvasCompareView } from "@nyc-tron/ui/components/forge/layers/CanvasCompareView";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/gestures/PanResponderDrag
 
 ```sh

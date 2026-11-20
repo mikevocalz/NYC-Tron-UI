@@ -24,7 +24,7 @@ Boolean shape builder (B-22).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/ShapeBuilder.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ShapeBuilder } from "@nyc-tron/ui/components/forge/vector/ShapeBuilder";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

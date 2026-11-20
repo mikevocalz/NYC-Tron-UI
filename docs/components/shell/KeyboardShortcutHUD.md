@@ -21,7 +21,7 @@ Searchable keyboard shortcut list grouped by category, with rebinding and Apple 
 
 - Package: @nyc-tron/ui
 - Import: `import { KeyboardShortcutHUD } from "@nyc-tron/ui/components/shell/KeyboardShortcutHUD";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/shell/InspectorSearch
 
 ```sh

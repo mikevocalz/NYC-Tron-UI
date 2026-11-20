@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/PaperSpaceLayout.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PaperSpaceLayout } from "@nyc-tron/ui/components/forge/cad/PaperSpaceLayout";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/document/PageSetupPanel, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

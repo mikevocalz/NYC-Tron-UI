@@ -24,7 +24,7 @@ Color picker dialog (C-01).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorPickerDialog.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorPickerDialog } from "@nyc-tron/ui/components/forge/color/ColorPickerDialog";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/forge/color/AlphaSlider, @nyc-tron/forge/color/ColorChannelFields, @nyc-tron/forge/color/HsvPicker, @nyc-tron/forge/color/SwatchGrid
 
 ```sh

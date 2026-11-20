@@ -24,7 +24,7 @@ Actual bounded mask-coverage preview plus the shared native geometry handles.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/LinearRadialGradientMask.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LinearRadialGradientMask } from "@nyc-tron/ui/components/forge/photo/LinearRadialGradientMask";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/forge/vector/GradientOnCanvasHandles, @nyc-tron/shell/UnitInput
 
 ```sh

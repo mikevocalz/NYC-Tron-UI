@@ -24,7 +24,7 @@ ColorDrop (B-30): drag the colour chip onto the canvas to flood-fill there.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas-tools/ColorDropCanvasTarget.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorDropCanvasTarget } from "@nyc-tron/ui/components/forge/canvas-tools/ColorDropCanvasTarget";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

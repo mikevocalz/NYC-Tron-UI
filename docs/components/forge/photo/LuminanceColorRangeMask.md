@@ -24,7 +24,7 @@ Document-only sampling: profile-bearing color is retained, never inferred from a
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/LuminanceColorRangeMask.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LuminanceColorRangeMask } from "@nyc-tron/ui/components/forge/photo/LuminanceColorRangeMask";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh

@@ -21,7 +21,7 @@ Single-thumb slider with number field, step, detents, units and reset to default
 
 - Package: @nyc-tron/ui
 - Import: `import { SliderField } from "@nyc-tron/ui/components/shell/SliderField";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
 
 ```sh

@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFPageLayoutSelector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PDFPageLayoutSelector } from "@nyc-tron/ui/components/forge/pdf/PDFPageLayoutSelector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh

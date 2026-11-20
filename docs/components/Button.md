@@ -21,7 +21,7 @@ Pressable text button with primary, secondary, ghost and danger variants, loadin
 
 - Package: @nyc-tron/ui
 - Import: `import { Button } from "@nyc-tron/ui/components/Button";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

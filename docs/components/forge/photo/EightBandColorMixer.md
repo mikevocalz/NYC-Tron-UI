@@ -24,7 +24,7 @@ Eight explicit color ranges; edits retain every other band's exact values.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/EightBandColorMixer.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EightBandColorMixer } from "@nyc-tron/ui/components/forge/photo/EightBandColorMixer";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh

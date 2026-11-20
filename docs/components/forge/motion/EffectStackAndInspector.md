@@ -24,7 +24,7 @@ Host-controlled effect order and schema-driven settings.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/EffectStackAndInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EffectStackAndInspector } from "@nyc-tron/ui/components/forge/motion/EffectStackAndInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/Select, @nyc-tron/TextField, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh

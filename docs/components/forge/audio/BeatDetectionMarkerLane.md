@@ -24,7 +24,7 @@ Actual host beat detection, sharing timeline marker movement, naming, adding and
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/BeatDetectionMarkerLane.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BeatDetectionMarkerLane } from "@nyc-tron/ui/components/forge/audio/BeatDetectionMarkerLane";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/timeline/TimelineMarkers
 
 ```sh

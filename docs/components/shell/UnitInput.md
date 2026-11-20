@@ -21,7 +21,7 @@ Number field that parses and formats typed units from a UnitContext, with unit m
 
 - Package: @nyc-tron/ui
 - Import: `import { UnitInput } from "@nyc-tron/ui/components/shell/UnitInput";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/shell/MenuButton
 
 ```sh

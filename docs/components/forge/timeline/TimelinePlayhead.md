@@ -24,7 +24,7 @@ The playhead (D-11): a line across the ruler and every lane at `frame`, with a 4
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TimelinePlayhead.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TimelinePlayhead } from "@nyc-tron/ui/components/forge/timeline/TimelinePlayhead";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

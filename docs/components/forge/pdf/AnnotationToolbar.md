@@ -24,7 +24,7 @@ PDF markup toolbar (K-06): one 44pt toggle per tool the engine can save, plus un
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/AnnotationToolbar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AnnotationToolbar } from "@nyc-tron/ui/components/forge/pdf/AnnotationToolbar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh

@@ -21,7 +21,7 @@ Tab strip for open documents with activate, close and reorder; keyboard shortcut
 
 - Package: @nyc-tron/ui
 - Import: `import { DocumentTabBar } from "@nyc-tron/ui/components/shell/DocumentTabBar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

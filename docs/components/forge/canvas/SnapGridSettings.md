@@ -24,7 +24,7 @@ Small settings control for the grid and snapping (B-04): show grid, grid spacing
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/SnapGridSettings.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SnapGridSettings } from "@nyc-tron/ui/components/forge/canvas/SnapGridSettings";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

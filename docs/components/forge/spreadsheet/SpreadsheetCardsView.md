@@ -24,7 +24,7 @@ Explicit record mode.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SpreadsheetCardsView.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SpreadsheetCardsView } from "@nyc-tron/ui/components/forge/spreadsheet/SpreadsheetCardsView";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

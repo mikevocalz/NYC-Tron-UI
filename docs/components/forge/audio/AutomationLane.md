@@ -24,7 +24,7 @@ Controlled automation lane for one track parameter.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/AutomationLane.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AutomationLane } from "@nyc-tron/ui/components/forge/audio/AutomationLane";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/audio/AutomationModePicker
 
 ```sh

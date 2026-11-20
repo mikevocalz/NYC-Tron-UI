@@ -24,7 +24,7 @@ Actual preview/output/profile-validation telemetry; the native host owns PDF/A c
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PrintAndExportPreview.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PrintAndExportPreview } from "@nyc-tron/ui/components/forge/pdf/PrintAndExportPreview";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

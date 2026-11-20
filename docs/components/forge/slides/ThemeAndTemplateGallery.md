@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ThemeAndTemplateGallery.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ThemeAndTemplateGallery } from "@nyc-tron/ui/components/forge/slides/ThemeAndTemplateGallery";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/AssetPresetGallery, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

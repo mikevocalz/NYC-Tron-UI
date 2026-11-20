@@ -24,7 +24,7 @@ One virtual gallery owner for source-backed presets; all previews and saved meta
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/AssetPresetGallery.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AssetPresetGallery } from "@nyc-tron/ui/components/forge/inputs/AssetPresetGallery";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

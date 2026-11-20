@@ -24,7 +24,7 @@ Correspondence editing and source-rendered morph frames; no second animation clo
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/MorphPreview.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MorphPreview } from "@nyc-tron/ui/components/forge/slides/MorphPreview";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

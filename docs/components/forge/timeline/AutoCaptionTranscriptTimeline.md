@@ -24,7 +24,7 @@ Edits actual ASR caption blocks; the host owns recognition and playback clocks.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/AutoCaptionTranscriptTimeline.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AutoCaptionTranscriptTimeline } from "@nyc-tron/ui/components/forge/timeline/AutoCaptionTranscriptTimeline";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/MenuButton
 
 ```sh

@@ -24,7 +24,7 @@ Document-space eyedropper with bounded sampling, explicit apply, cancellation an
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/EyedropperTool.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EyedropperTool } from "@nyc-tron/ui/components/forge/color/EyedropperTool";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh

@@ -24,7 +24,7 @@ Native RN graph interaction surface.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/graph/PatchGraph.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PatchGraph } from "@nyc-tron/ui/components/forge/graph/PatchGraph";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

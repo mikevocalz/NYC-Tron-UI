@@ -24,7 +24,7 @@ Controlled hue ring (C-03).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorWheel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorWheel } from "@nyc-tron/ui/components/forge/color/ColorWheel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

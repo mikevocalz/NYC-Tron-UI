@@ -24,7 +24,7 @@ Passwords live only in this ephemeral, nonpersisted store and the host operation
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/EncryptPermissionsPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EncryptPermissionsPanel } from "@nyc-tron/ui/components/forge/pdf/EncryptPermissionsPanel";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select
 
 ```sh

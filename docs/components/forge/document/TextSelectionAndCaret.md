@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/TextSelectionAndCaret.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TextSelectionAndCaret } from "@nyc-tron/ui/components/forge/document/TextSelectionAndCaret";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

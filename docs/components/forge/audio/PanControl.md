@@ -24,7 +24,7 @@ Controlled mono pan control.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/PanControl.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PanControl } from "@nyc-tron/ui/components/forge/audio/PanControl";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh

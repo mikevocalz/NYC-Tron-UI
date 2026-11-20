@@ -24,7 +24,7 @@ Controlled opacity slider (C-05): a checkerboard under a transparent-to-opaque g
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/AlphaSlider.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AlphaSlider } from "@nyc-tron/ui/components/forge/color/AlphaSlider";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

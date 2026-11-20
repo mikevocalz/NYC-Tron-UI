@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/FootnoteCitationEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { FootnoteCitationEditor } from "@nyc-tron/ui/components/forge/document/FootnoteCitationEditor";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

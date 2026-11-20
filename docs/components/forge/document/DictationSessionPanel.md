@@ -24,7 +24,7 @@ Actual recognition events drive interim/final text; insertion is one host undo t
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/DictationSessionPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DictationSessionPanel } from "@nyc-tron/ui/components/forge/document/DictationSessionPanel";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

@@ -24,7 +24,7 @@ Controlled mute and solo toggles for one channel.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SoloMuteButtons.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SoloMuteButtons } from "@nyc-tron/ui/components/forge/audio/SoloMuteButtons";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

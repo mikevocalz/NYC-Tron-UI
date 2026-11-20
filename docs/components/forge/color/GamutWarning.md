@@ -24,7 +24,7 @@ Announces the actual measured sample count; no guessed gamut test or clipping.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/GamutWarning.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { GamutWarning } from "@nyc-tron/ui/components/forge/color/GamutWarning";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button
 
 ```sh

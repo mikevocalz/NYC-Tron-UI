@@ -21,7 +21,7 @@ Tree table with expandable rows, row selection, column reorder and pinned column
 
 - Package: @nyc-tron/ui
 - Import: `import { TreeGrid } from "@nyc-tron/ui/components/data/TreeGrid";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh

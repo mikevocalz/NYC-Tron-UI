@@ -24,7 +24,7 @@ Source-backed vector previews and a selected native drag handle, plus numeric/ke
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ShapePresetGallery.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ShapePresetGallery } from "@nyc-tron/ui/components/forge/slides/ShapePresetGallery";`
-- Peers: @nyc-tron/core, react, react-native, react-native-gesture-handler, zustand
+- Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/AssetPresetGallery, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

@@ -21,7 +21,7 @@ Application status bar with zoom steps and menu, units menu, selection summary a
 
 - Package: @nyc-tron/ui
 - Import: `import { StatusBar } from "@nyc-tron/ui/components/shell/StatusBar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/MenuButton
 
 ```sh

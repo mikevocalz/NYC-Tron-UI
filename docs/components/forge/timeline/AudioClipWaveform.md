@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/AudioClipWaveform.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { AudioClipWaveform } from "@nyc-tron/ui/components/forge/timeline/AudioClipWaveform";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/WaveformLane
 
 ```sh

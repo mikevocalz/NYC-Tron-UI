@@ -24,7 +24,7 @@ Loudness readout for a rendered range: gated integrated loudness against a targe
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LoudnessMeter.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LoudnessMeter } from "@nyc-tron/ui/components/forge/audio/LoudnessMeter";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

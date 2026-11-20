@@ -1,6 +1,6 @@
 # NYC-Tron UI
 
-> Themeable React Native and Expo component library (1.0.0-rc.2, release candidate, not on npm). 560 documentation pages: 59 hand-reviewed, 501 generated from type declarations. The app owns the theme: components read 13 colour variables and 2 radius variables.
+> Themeable React Native and Expo component library (1.0.0-rc.2, release candidate, not on npm). 565 documentation pages: 64 hand-reviewed, 501 generated from type declarations. The app owns the theme: components read 13 colour variables and 2 radius variables.
 
 Each page is raw markdown at `https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/<id>.md`, where `<id>` is the registry item id (the path under `components/`, for example `shell/UnitInput`). Every page has the same eight sections: Purpose, Install, Props, Variants, States, A11y, Example, Do/Don't. Pages marked `docs: "generated"` in their front matter were produced from `docs/api-signatures.json` and the source, not written by a person.
 
@@ -18,9 +18,9 @@ Registry install, once the CLI check passes: `npx shadcn@latest add @nyc-tron/<i
 Rules in one paragraph: use token names, never colour or spacing literals; spacing keys are unit multiples (`space.2` is 8px, `space.1.5` is 6px) from a closed scale; render every component inside the app's theme CSS; handle default, loading, error, empty, success and offline states yourself, the library draws only what its props say.
 
 ## Layout primitives
-Planned and not in this tree at the tagged commit: Stack, Row, Spacer, Divider, Text. Until they land, use `layout/ContentFrame` and `layout/AdaptiveColumns`, which exist.
+Stack, Row, Spacer, Divider and Text exist under `packages/ui/src/components/layout/`. Use them before hand-rolled `View` rows.
 
-## Components, hand-reviewed (59)
+## Components, hand-reviewed (64)
 - [Button](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/Button.md): Pressable text button with primary, secondary, ghost and danger variants, loading spinner and icon slot, for React Native. a11y unverified.
 - [Card](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/Card.md): Static container View with raised, sunken or transparent surface and optional padding, for React Native. a11y reviewed-pass.
 - [Drag Grab Handle](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/DragGrabHandle.md): Three-bar drag handle, 44 by 44 minimum, reporting start, move, commit and cancel through a pluggable transport, for React Native. a11y unverified.
@@ -46,6 +46,11 @@ Planned and not in this tree at the tagged commit: Stack, Row, Spacer, Divider, 
 - [Pan Responder Drag](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/gestures/PanResponderDrag.md): Single-touch drag transport on React Native PanResponder, no gesture-handler dependency, for React Native and web. a11y reviewed-pass.
 - [Adaptive Columns](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/layout/AdaptiveColumns.md): Wrapping column row; each AdaptiveColumns.Item sets a minimum width and grow factor, for React Native layout. a11y reviewed-pass.
 - [Content Frame](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/layout/ContentFrame.md): Width-capped container that aligns its content to the start, center or end of the parent, for React Native layout. a11y reviewed-pass.
+- [Divider](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/layout/Divider.md): Decorative horizontal or vertical line, one border-width step thick, border colour role, no accessibility role, for React Native. a11y reviewed-pass.
+- [Row](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/layout/Row.md): Horizontal flex View with the same token-keyed gap, padding, align, justify and wrap as Stack, for React Native. a11y reviewed-pass.
+- [Spacer](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/layout/Spacer.md): Empty View with a fixed length from the space scale, or flex to fill free space on the main axis, for React Native. a11y reviewed-pass.
+- [Stack](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/layout/Stack.md): Vertical flex View with token-keyed gap, padding, align, justify and wrap, no role and no colour, for React Native. a11y reviewed-pass.
+- [Text](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/layout/Text.md): Text with body or caption size from the token scale, a font-size override and a theme colour tone, no weight, for React Native. a11y unverified.
 - [Collapsible Drawer](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/navigation/CollapsibleDrawer.md): Side navigation drawer menu in expanded, compact or minimal mode, with overlay and scrim when open, for React Native; Android back. a11y unverified.
 - [Anchored Popover](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/overlays/AnchoredPopover.md): Modal popover placed against an anchor rectangle or trigger element and clamped to usable regions, for React Native; web Tab cycling. a11y reviewed-pass.
 - [Command Palette](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/overlays/CommandPalette.md): Searchable command list in a modal, with keyboard selection and an empty-results message, for React Native. a11y reviewed-fail.
@@ -123,7 +128,7 @@ These pages are generated. Each group line names how many pages it holds and lin
 - **Native-only packages are not installable by shadcn.** 55 subpaths in 9 packages ship native code (hardware-keys 2, macos-appkit 17, native-charts 3, native-controls 7, native-navigation 3, platform-services 7, reserved-regions 3, windows-fluent 3, windows-fluent-fabric 10). A registry add copies files and cannot run pod install, gradle, CMake, nitrogen or a WinUI build. Install them from the release tarball. List: [registry-excluded.json](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/registry-excluded.json).
 - **Engine facades are not registry items.** cadence, folio, pitch, prism, quill, splice, tally and studio-layout need the Rust engine, which ships as a GitHub release tarball.
 - **Registry install is unverified until the live check.** The CLI's acceptance of raw.githubusercontent.com content types was checked against a local server only. Until the item JSON is pushed under tag v1.0.0-rc.2 and a clean app installs from it, use the tarball path.
-- **Accessibility statuses come from reading source, not from rendering.** Of the 59 hand-reviewed items: 19 reviewed-pass, 21 reviewed-fail, 19 unverified. Nothing was rendered and no screen reader was run. `verified` is reserved for a rendered check and no page has it. The 501 generated pages say `declared` when the source sets an accessibility prop and `unverified` when it sets none.
+- **Accessibility statuses come from reading source, not from rendering.** Of the 64 hand-reviewed items: 23 reviewed-pass, 21 reviewed-fail, 20 unverified. Nothing was rendered and no screen reader was run. `verified` is reserved for a rendered check and no page has it. The 501 generated pages say `declared` when the source sets an accessibility prop and `unverified` when it sets none.
 - **Touch targets: 44pt passes Apple, 44dp is 4dp under Android's 48dp guideline.** 41 hand-reviewed items size a control with the literal 44 (finding F08 in docs/agent-native/05-accessibility-review.md). WCAG 2.1 AA has no target-size criterion, so this is a guideline finding, not a conformance failure.
 - **Icons: 47 glyphs are drawn; 42 of 1,463 catalog ids resolve to one; 6 drawn glyphs are not catalog ids.** An unresolved icon name renders nothing. Do not read the catalog size as availability.
 - **No component preview exists.** The components are React Native, and nothing here renders them. Pages carry types, props, tokens and a type-checked example only.
@@ -188,5 +193,5 @@ These pages are generated. Each group line names how many pages it holds and lin
   - [@nyc-tron/windows-fluent-fabric/windows](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/README.md): JS-side entry of @nyc-tron/windows-fluent-fabric. Backed by native code (C++ 33).
 - [llms-full.txt](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/llms-full.txt): every page in one file. Large; read single pages instead when you know the item.
 - [Design system audit](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/agent-native/02-design-system.md): token inventory, closed scale and the proposed layout primitives.
-- [Accessibility review](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/agent-native/05-accessibility-review.md): per-item findings for the 59 hand-reviewed components.
+- [Accessibility review](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/agent-native/05-accessibility-review.md): per-item findings for the 64 hand-reviewed components.
 - [Doc template](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/agent-native/doc-template.md): the page format CI enforces.

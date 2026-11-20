@@ -24,7 +24,7 @@ The host supplies the active normalized tile and selected vertex subset; mesh se
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/UVEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { UVEditor } from "@nyc-tron/ui/components/forge/cad/UVEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D
 
 ```sh

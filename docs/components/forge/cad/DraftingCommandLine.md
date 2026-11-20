@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/DraftingCommandLine.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DraftingCommandLine } from "@nyc-tron/ui/components/forge/cad/DraftingCommandLine";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

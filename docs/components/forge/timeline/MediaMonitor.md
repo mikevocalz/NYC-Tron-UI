@@ -24,7 +24,7 @@ Shared monitor chrome.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/MediaMonitor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MediaMonitor } from "@nyc-tron/ui/components/forge/timeline/MediaMonitor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/SafeAreaOverlay, @nyc-tron/forge/timeline/SeekBar, @nyc-tron/forge/timeline/TimecodeDisplay, @nyc-tron/forge/timeline/TransportControls
 
 ```sh

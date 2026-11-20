@@ -21,6 +21,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -103,6 +108,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -184,6 +194,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -308,6 +323,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -529,6 +549,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -764,6 +789,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -805,6 +835,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/data/TreeGrid.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/data/TreeGrid.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/data/TreeGrid.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/data/TreeGrid.tsx"
@@ -813,6 +848,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -922,6 +962,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -965,6 +1010,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -1049,6 +1099,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -1108,6 +1163,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -1183,6 +1243,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -1374,6 +1439,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -1452,6 +1522,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -1539,6 +1614,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -1674,6 +1754,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -1733,6 +1818,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -1795,6 +1885,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -1907,6 +2002,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -1966,6 +2066,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -2072,6 +2177,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -2202,6 +2312,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -2271,6 +2386,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -2314,6 +2434,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/audio/ChannelStrip.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/audio/ChannelStrip.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/audio/ChannelStrip.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/audio/ChannelStrip.tsx"
@@ -2327,6 +2452,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -2416,6 +2546,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -2458,6 +2593,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/audio/DynamicsTransferGraph.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/audio/DynamicsTransferGraph.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/audio/DynamicsTransferGraph.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/audio/DynamicsTransferGraph.tsx"
@@ -2491,6 +2631,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -2576,6 +2721,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -2636,6 +2786,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -2709,6 +2864,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -2772,6 +2932,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -2856,6 +3021,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -2953,6 +3123,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/audio/LiveRecordingWaveform.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/audio/LiveRecordingWaveform.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3017,6 +3192,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3063,6 +3243,11 @@
           "target": "@components/nyc-tron/ui/components/forge/announce.ts"
         },
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/audio/LoudnessMeter.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/audio/LoudnessMeter.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/audio/LoudnessMeter.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/audio/LoudnessMeter.tsx"
@@ -3086,6 +3271,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3135,6 +3325,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3213,6 +3408,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3271,6 +3471,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3361,6 +3566,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3423,6 +3633,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3494,6 +3709,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3556,6 +3776,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3614,6 +3839,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3728,6 +3958,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3801,6 +4036,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3861,6 +4101,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3931,6 +4176,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -3996,6 +4246,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -4055,6 +4310,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -4117,6 +4377,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -4186,6 +4451,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -4258,6 +4528,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -4404,6 +4679,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5155,6 +5435,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5214,6 +5499,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5272,6 +5562,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5329,6 +5624,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5392,6 +5692,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5460,6 +5765,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5523,6 +5833,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5582,6 +5897,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5621,6 +5941,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/cad/PBRMaterialInspector.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/cad/PBRMaterialInspector.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5678,6 +6003,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5737,6 +6067,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5801,6 +6136,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5863,6 +6203,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5920,6 +6265,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -5985,6 +6335,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -6043,6 +6398,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -6100,6 +6460,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -6142,6 +6507,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/canvas-tools/ColorDropCanvasTarget.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/canvas-tools/ColorDropCanvasTarget.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/canvas-tools/ColorDropCanvasTarget.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/canvas-tools/ColorDropCanvasTarget.tsx"
@@ -6175,6 +6545,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -6242,6 +6617,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -6283,6 +6663,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/canvas-tools/ReferenceImageBoard.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/canvas-tools/ReferenceImageBoard.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/canvas-tools/ReferenceImageBoard.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/canvas-tools/ReferenceImageBoard.tsx"
@@ -6291,6 +6676,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/inputs/useScopedControl.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/selection/switch-row.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/selection/switch-row.tokens.ts"
         },
         {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/selection/switch-row.tsx",
@@ -6311,6 +6701,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -6530,6 +6925,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -6631,6 +7031,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/canvas/CanvasRuler.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/canvas/CanvasRuler.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/canvas/CanvasRuler.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/canvas/CanvasRuler.tsx"
@@ -6664,6 +7069,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -6779,6 +7189,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -6825,6 +7240,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -6865,6 +7285,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -6910,6 +7335,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -6985,6 +7415,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -7495,6 +7930,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -7552,6 +7992,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -7650,6 +8095,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -7698,6 +8148,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -7732,6 +8187,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/color/ColorHarmonyAssistant.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/color/ColorHarmonyAssistant.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/color/ColorHarmonyAssistant.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/color/ColorHarmonyAssistant.tsx"
@@ -7740,6 +8200,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -7797,6 +8262,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -7923,6 +8393,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -7987,6 +8462,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8051,6 +8531,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8112,6 +8597,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8222,6 +8712,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8263,6 +8758,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8327,6 +8827,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8378,6 +8883,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/color/GradientStopEditor.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/color/GradientStopEditor.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8427,6 +8937,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8475,6 +8990,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8572,6 +9092,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8611,6 +9136,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/color/LevelsEditor.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/color/LevelsEditor.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8651,6 +9181,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8688,6 +9223,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/color/PrintColorChannels.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/color/PrintColorChannels.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8754,6 +9294,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8805,6 +9350,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8870,6 +9420,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8930,6 +9485,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -8976,6 +9536,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -9018,6 +9583,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -9054,6 +9624,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/color/WideGamutChannels.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/color/WideGamutChannels.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -9696,6 +10271,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -9754,6 +10334,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -9812,6 +10397,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -9901,6 +10491,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -9958,6 +10553,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -10118,6 +10718,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -10183,6 +10788,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -10243,6 +10853,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -10334,6 +10949,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -10385,6 +11005,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -10513,6 +11138,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -10603,6 +11233,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -10697,6 +11332,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -10794,6 +11434,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -10854,6 +11499,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -10912,6 +11562,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -10986,6 +11641,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -11083,6 +11743,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -11154,6 +11819,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -11214,6 +11884,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -11278,6 +11953,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -11338,6 +12018,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -11399,6 +12084,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -11458,6 +12148,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -11520,6 +12215,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -11559,6 +12259,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/document/TextWrapAndFrames.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/document/TextWrapAndFrames.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -11614,6 +12319,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -11889,6 +12599,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -11990,6 +12705,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12084,6 +12804,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12147,6 +12872,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12209,6 +12939,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12278,6 +13013,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12335,6 +13075,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12404,6 +13149,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12445,6 +13195,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/ink/InkToolbar.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/ink/InkToolbar.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/ink/InkToolbar.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/ink/InkToolbar.tsx"
@@ -12453,6 +13208,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12513,6 +13273,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12668,6 +13433,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12720,6 +13490,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12771,6 +13546,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12828,6 +13608,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12895,6 +13680,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -12939,6 +13729,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/inputs/PrecisionScrubber.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/inputs/PrecisionScrubber.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/inputs/PrecisionScrubber.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/inputs/PrecisionScrubber.tsx"
@@ -12952,6 +13747,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -13018,6 +13818,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -13178,6 +13983,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -13246,6 +14056,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -13310,6 +14125,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -13371,6 +14191,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -13428,6 +14253,11 @@
           "target": "@components/nyc-tron/ui/components/forge/cancel-preview.ts"
         },
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/layers/LayerStack.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/layers/LayerStack.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/layers/LayerStack.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/layers/LayerStack.tsx"
@@ -13446,6 +14276,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -13484,6 +14319,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/layers/LayerThumbnail.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/layers/LayerThumbnail.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/layers/LayerThumbnail.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/layers/LayerThumbnail.tsx"
@@ -13492,6 +14332,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -13556,6 +14401,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -13969,6 +14819,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -14042,6 +14897,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -14089,6 +14949,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -14154,6 +15019,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -14316,6 +15186,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -14376,6 +15251,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -14435,6 +15315,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -14517,6 +15402,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -14590,6 +15480,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -14678,6 +15573,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -14759,6 +15659,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -14812,6 +15717,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -14878,6 +15788,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -14997,6 +15912,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -15059,6 +15979,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -15128,6 +16053,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -15213,6 +16143,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -15258,6 +16193,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/motion/Transform3DInspector.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/motion/Transform3DInspector.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -15655,6 +16595,11 @@
           "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
         },
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/office/ReadAloudTransport.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/office/ReadAloudTransport.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/office/ReadAloudTransport.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/office/ReadAloudTransport.tsx"
@@ -15673,6 +16618,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -15714,6 +16664,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -15827,6 +16782,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -15906,6 +16866,11 @@
           "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
         },
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/pdf/CommentsThreadPanel.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/pdf/CommentsThreadPanel.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/pdf/CommentsThreadPanel.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/pdf/CommentsThreadPanel.tsx"
@@ -15934,6 +16899,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -15991,6 +16961,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16054,6 +17029,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16113,6 +17093,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16177,6 +17162,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16235,6 +17225,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16305,6 +17300,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16370,6 +17370,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16489,6 +17494,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16558,6 +17568,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16632,6 +17647,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16693,6 +17713,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16752,6 +17777,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16815,6 +17845,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16883,6 +17918,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16944,6 +17984,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -16991,6 +18036,11 @@
           "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
         },
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/pdf/TextSearchResults.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/pdf/TextSearchResults.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/pdf/TextSearchResults.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/pdf/TextSearchResults.tsx"
@@ -17009,6 +18059,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17077,6 +18132,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17247,6 +18307,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17338,6 +18403,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17394,6 +18464,11 @@
           "target": "@components/nyc-tron/ui/components/forge/photo/PhotoBrushPanel.tsx"
         },
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/photo/PhotoBrushSurface.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/photo/PhotoBrushSurface.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/photo/PhotoBrushSurface.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/photo/PhotoBrushSurface.tsx"
@@ -17427,6 +18502,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17473,6 +18553,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17511,6 +18596,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/photo/ExposureAndWhiteBalance.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/photo/ExposureAndWhiteBalance.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17558,6 +18648,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17622,6 +18717,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17678,6 +18778,11 @@
           "target": "@components/nyc-tron/ui/components/forge/photo/PhotoBrushPanel.tsx"
         },
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/photo/PhotoBrushSurface.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/photo/PhotoBrushSurface.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/photo/PhotoBrushSurface.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/photo/PhotoBrushSurface.tsx"
@@ -17711,6 +18816,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17781,6 +18891,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17830,6 +18945,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17878,6 +18998,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17938,6 +19063,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -17999,6 +19129,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -18059,6 +19194,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -18122,6 +19262,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -18168,6 +19313,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -18204,6 +19354,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/photo/ToneAndPresence.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/photo/ToneAndPresence.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -18589,6 +19744,11 @@
           "target": "@components/nyc-tron/ui/components/forge/selection/selection-overlay.tsx"
         },
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/selection/switch-row.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/selection/switch-row.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/selection/switch-row.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/selection/switch-row.tsx"
@@ -18612,6 +19772,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -18671,6 +19836,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -18735,6 +19905,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -18811,6 +19986,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19109,6 +20289,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/slides/ChartAndTableEditor.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/slides/ChartAndTableEditor.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19172,6 +20357,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19260,6 +20450,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/slides/MasterLayoutEditor.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/slides/MasterLayoutEditor.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19324,6 +20519,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19389,6 +20589,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19455,6 +20660,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19526,6 +20736,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19583,6 +20798,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19640,6 +20860,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19705,6 +20930,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19788,6 +21018,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19863,6 +21098,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19910,6 +21150,11 @@
           "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
         },
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/slides/SlideFilmstrip.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/slides/SlideFilmstrip.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/slides/SlideFilmstrip.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/slides/SlideFilmstrip.tsx"
@@ -19943,6 +21188,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -19982,6 +21232,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/slides/SlideNotesEditor.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/slides/SlideNotesEditor.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -20058,6 +21313,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -20138,6 +21398,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/slides/ThemeAndTemplateGallery.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/slides/ThemeAndTemplateGallery.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -20193,6 +21458,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -20414,6 +21684,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/spreadsheet/CellFormatInspector.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/spreadsheet/CellFormatInspector.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -20480,6 +21755,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -20558,6 +21838,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -20623,6 +21908,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -20688,6 +21978,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -20812,6 +22107,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -20870,6 +22170,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -20979,6 +22284,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -21040,6 +22350,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -21109,6 +22424,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -21202,6 +22522,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -21261,6 +22586,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -21325,6 +22655,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -21390,6 +22725,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -21435,6 +22775,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -21502,6 +22847,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -21567,6 +22917,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -21626,6 +22981,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -21684,6 +23044,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -21743,6 +23108,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -22127,6 +23497,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -22188,6 +23563,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -22259,6 +23639,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -22345,6 +23730,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -22412,6 +23802,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -22504,6 +23899,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -22566,6 +23966,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -22642,6 +24047,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -22700,6 +24110,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -22775,6 +24190,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -22896,6 +24316,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -22961,6 +24386,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -23078,6 +24508,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -23143,6 +24578,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -23209,6 +24649,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -23270,6 +24715,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -23327,6 +24777,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -23414,6 +24869,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -23471,6 +24931,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -23543,6 +25008,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -23649,6 +25119,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -23707,6 +25182,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -23795,6 +25275,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -23852,6 +25337,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -23891,6 +25381,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/forge/timeline/ScopesDock.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/timeline/ScopesDock.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -24001,6 +25496,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -24098,6 +25598,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -24175,6 +25680,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -24275,6 +25785,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -24378,6 +25893,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -24494,6 +26014,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -24600,6 +26125,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -24700,6 +26230,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -24747,6 +26282,11 @@
           "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
         },
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/timeline/TrackHeaders.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/timeline/TrackHeaders.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/timeline/TrackHeaders.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/timeline/TrackHeaders.tsx"
@@ -24785,6 +26325,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -24891,6 +26436,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -24944,6 +26494,11 @@
           "target": "@components/nyc-tron/ui/components/forge/inputs/useScopedControl.ts"
         },
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/forge/timeline/TransitionPresetBrowser.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/forge/timeline/TransitionPresetBrowser.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/forge/timeline/TransitionPresetBrowser.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/forge/timeline/TransitionPresetBrowser.tsx"
@@ -24982,6 +26537,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/useLocalStore.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -25050,6 +26610,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -25109,6 +26674,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -25169,6 +26739,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -25227,6 +26802,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -25324,6 +26904,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -25383,6 +26968,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/useOwnedAction.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -26053,6 +27643,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -26153,6 +27748,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -26244,6 +27844,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -26322,6 +27927,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -26895,6 +28505,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -26983,6 +28598,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/layout/ContentFrame.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/layout/ContentFrame.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -27002,6 +28622,223 @@
       }
     },
     {
+      "name": "layout/Divider",
+      "type": "registry:ui",
+      "title": "Divider",
+      "description": "Decorative horizontal or vertical line, one border-width step thick, border colour role, no accessibility role, for React Native.",
+      "categories": [
+        "layout"
+      ],
+      "registryDependencies": [
+        "@nyc-tron/layout/Stack"
+      ],
+      "files": [
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/layout/Divider.tsx",
+          "type": "registry:ui",
+          "target": "@components/nyc-tron/ui/components/layout/Divider.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
+        }
+      ],
+      "meta": {
+        "tier": 1,
+        "docs": "handwritten",
+        "platforms": [],
+        "a11yStatus": "reviewed-pass",
+        "package": "@nyc-tron/ui",
+        "subpath": "@nyc-tron/ui/components/layout/Divider",
+        "exports": [
+          "Divider",
+          "DividerProps"
+        ],
+        "peers": {
+          "react-native": ">=0.88.0"
+        }
+      }
+    },
+    {
+      "name": "layout/Row",
+      "type": "registry:ui",
+      "title": "Row",
+      "description": "Horizontal flex View with the same token-keyed gap, padding, align, justify and wrap as Stack, for React Native.",
+      "categories": [
+        "layout"
+      ],
+      "registryDependencies": [
+        "@nyc-tron/layout/Stack"
+      ],
+      "files": [
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/layout/Row.tsx",
+          "type": "registry:ui",
+          "target": "@components/nyc-tron/ui/components/layout/Row.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/layout/stack-style.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/layout/stack-style.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
+        }
+      ],
+      "meta": {
+        "tier": 1,
+        "docs": "handwritten",
+        "platforms": [],
+        "a11yStatus": "reviewed-pass",
+        "package": "@nyc-tron/ui",
+        "subpath": "@nyc-tron/ui/components/layout/Row",
+        "exports": [
+          "Row",
+          "RowProps"
+        ],
+        "peers": {
+          "react-native": ">=0.88.0"
+        }
+      }
+    },
+    {
+      "name": "layout/Spacer",
+      "type": "registry:ui",
+      "title": "Spacer",
+      "description": "Empty View with a fixed length from the space scale, or flex to fill free space on the main axis, for React Native.",
+      "categories": [
+        "layout"
+      ],
+      "registryDependencies": [
+        "@nyc-tron/layout/Stack"
+      ],
+      "files": [
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/layout/Spacer.tsx",
+          "type": "registry:ui",
+          "target": "@components/nyc-tron/ui/components/layout/Spacer.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
+        }
+      ],
+      "meta": {
+        "tier": 1,
+        "docs": "handwritten",
+        "platforms": [],
+        "a11yStatus": "reviewed-pass",
+        "package": "@nyc-tron/ui",
+        "subpath": "@nyc-tron/ui/components/layout/Spacer",
+        "exports": [
+          "Spacer",
+          "SpacerProps"
+        ],
+        "peers": {
+          "react-native": ">=0.88.0"
+        }
+      }
+    },
+    {
+      "name": "layout/Stack",
+      "type": "registry:ui",
+      "title": "Stack",
+      "description": "Vertical flex View with token-keyed gap, padding, align, justify and wrap, no role and no colour, for React Native.",
+      "categories": [
+        "layout"
+      ],
+      "files": [
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/layout/Stack.tsx",
+          "type": "registry:ui",
+          "target": "@components/nyc-tron/ui/components/layout/Stack.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/layout/stack-style.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/layout/stack-style.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
+        }
+      ],
+      "meta": {
+        "tier": 1,
+        "docs": "handwritten",
+        "platforms": [],
+        "a11yStatus": "reviewed-pass",
+        "package": "@nyc-tron/ui",
+        "subpath": "@nyc-tron/ui/components/layout/Stack",
+        "exports": [
+          "Stack",
+          "StackAlign",
+          "StackJustify",
+          "StackProps",
+          "StackSpace"
+        ],
+        "peers": {
+          "react": ">=19.0.0",
+          "react-native": ">=0.88.0"
+        }
+      }
+    },
+    {
+      "name": "layout/Text",
+      "type": "registry:ui",
+      "title": "Text",
+      "description": "Text with body or caption size from the token scale, a font-size override and a theme colour tone, no weight, for React Native.",
+      "categories": [
+        "layout"
+      ],
+      "files": [
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/layout/Text.tsx",
+          "type": "registry:ui",
+          "target": "@components/nyc-tron/ui/components/layout/Text.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
+        }
+      ],
+      "meta": {
+        "tier": 1,
+        "docs": "handwritten",
+        "platforms": [],
+        "a11yStatus": "unverified",
+        "package": "@nyc-tron/ui",
+        "subpath": "@nyc-tron/ui/components/layout/Text",
+        "exports": [
+          "Text",
+          "TextProps",
+          "TextSize",
+          "TextTone",
+          "TextVariant"
+        ],
+        "peers": {
+          "react": ">=19.0.0",
+          "react-native": ">=0.88.0"
+        }
+      }
+    },
+    {
       "name": "navigation/CollapsibleDrawer",
       "type": "registry:ui",
       "title": "Collapsible Drawer",
@@ -27014,6 +28851,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/navigation/CollapsibleDrawer.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/navigation/CollapsibleDrawer.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/navigation/CollapsibleDrawer.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/navigation/CollapsibleDrawer.tsx"
@@ -27022,6 +28864,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -27142,6 +28989,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/overlays/CommandPalette.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/overlays/CommandPalette.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/overlays/CommandPalette.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/overlays/CommandPalette.tsx"
@@ -27150,6 +29002,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -27191,6 +29048,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/overlays/CommandPopover.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/overlays/CommandPopover.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/overlays/CommandPopover.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/overlays/CommandPopover.tsx"
@@ -27199,6 +29061,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -27540,6 +29407,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -27607,6 +29479,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -27656,6 +29533,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/shell/ContextMenu.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/shell/ContextMenu.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -27713,6 +29595,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -27758,6 +29645,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -27823,6 +29715,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -27970,6 +29867,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28020,6 +29922,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28065,6 +29972,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28110,6 +30022,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28155,6 +30072,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/shell/KeyboardShortcutHUD.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/shell/KeyboardShortcutHUD.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/shell/KeyboardShortcutHUD.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/shell/KeyboardShortcutHUD.tsx"
@@ -28163,6 +30085,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28296,6 +30223,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/shell/PaneSplitter.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/shell/PaneSplitter.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/shell/PaneSplitter.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/shell/PaneSplitter.tsx"
@@ -28304,6 +30236,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28346,6 +30283,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/shell/PresetGallery.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/shell/PresetGallery.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/shell/PresetGallery.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/shell/PresetGallery.tsx"
@@ -28354,6 +30296,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28405,6 +30352,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28452,6 +30404,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/shell/RangeSlider.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/shell/RangeSlider.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/shell/RangeSlider.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/shell/RangeSlider.tsx"
@@ -28460,6 +30417,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28511,6 +30473,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28570,6 +30537,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28618,6 +30590,11 @@
       ],
       "files": [
         {
+          "path": "tooling/registry/stage/packages/ui/src/components/shell/SliderField.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/shell/SliderField.tokens.ts"
+        },
+        {
           "path": "tooling/registry/stage/packages/ui/src/components/shell/SliderField.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/shell/SliderField.tsx"
@@ -28626,6 +30603,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28673,6 +30655,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28715,6 +30702,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28774,6 +30766,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28817,6 +30814,11 @@
         "@nyc-tron/shell/tool-rail-model"
       ],
       "files": [
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/shell/ToolRail.tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/shell/ToolRail.tokens.ts"
+        },
         {
           "path": "tooling/registry/stage/packages/ui/src/components/shell/ToolRail.tsx",
           "type": "registry:ui",
@@ -28881,6 +30883,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -28942,6 +30949,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -29006,6 +31018,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/styles.ts",
           "type": "registry:lib",
           "target": "@components/nyc-tron/ui/components/styles.ts"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {
@@ -29961,6 +31978,11 @@
           "path": "tooling/registry/stage/packages/ui/src/components/window/WindowTitleBar.tsx",
           "type": "registry:ui",
           "target": "@components/nyc-tron/ui/components/window/WindowTitleBar.tsx"
+        },
+        {
+          "path": "tooling/registry/stage/packages/ui/src/tokens.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/tokens.ts"
         }
       ],
       "meta": {

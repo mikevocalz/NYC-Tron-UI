@@ -21,7 +21,7 @@ Inline status banner with info, success, danger or neutral tone, title, descript
 
 - Package: @nyc-tron/ui
 - Import: `import { Banner } from "@nyc-tron/ui/components/feedback/Banner";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

@@ -24,7 +24,7 @@ Portable overlay; content also exports separately for the shared native popover 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/SpellGrammarPopover.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SpellGrammarPopover, SpellGrammarContent } from "@nyc-tron/ui/components/forge/document/SpellGrammarPopover";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/overlays/AnchoredPopover
 
 ```sh

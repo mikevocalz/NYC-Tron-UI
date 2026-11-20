@@ -21,7 +21,7 @@ Wraps a target to open a command menu on right-click, long-press, keyboard or sc
 
 - Package: @nyc-tron/ui
 - Import: `import { ContextMenu } from "@nyc-tron/ui/components/shell/ContextMenu";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/overlays/CommandPopover
 
 ```sh

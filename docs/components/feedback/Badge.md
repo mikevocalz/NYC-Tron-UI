@@ -21,7 +21,7 @@ Small status badge with neutral, info, success, danger or accent tone, a status 
 
 - Package: @nyc-tron/ui
 - Import: `import { Badge } from "@nyc-tron/ui/components/feedback/Badge";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

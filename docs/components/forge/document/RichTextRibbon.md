@@ -24,7 +24,7 @@ Home-tab formatting ribbon for text documents (H-03): paragraph style, font fami
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/RichTextRibbon.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { RichTextRibbon } from "@nyc-tron/ui/components/forge/document/RichTextRibbon";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh

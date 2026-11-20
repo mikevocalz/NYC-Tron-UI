@@ -24,7 +24,7 @@ Document-wide text search for PDFs (K-04): a query field, optional case and whol
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/TextSearchResults.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { TextSearchResults } from "@nyc-tron/ui/components/forge/pdf/TextSearchResults";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh

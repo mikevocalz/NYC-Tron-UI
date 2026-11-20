@@ -24,7 +24,7 @@ Configures a host's real batch encoder and reports only provider-supplied progre
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/BatchExportPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BatchExportPanel } from "@nyc-tron/ui/components/forge/photo/BatchExportPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
 
 ```sh

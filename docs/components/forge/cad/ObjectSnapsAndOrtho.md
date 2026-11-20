@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/ObjectSnapsAndOrtho.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ObjectSnapsAndOrtho } from "@nyc-tron/ui/components/forge/cad/ObjectSnapsAndOrtho";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

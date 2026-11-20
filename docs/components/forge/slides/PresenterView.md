@@ -24,7 +24,7 @@ Presenter clock/elapsed values follow the host session.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/PresenterView.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PresenterView } from "@nyc-tron/ui/components/forge/slides/PresenterView";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

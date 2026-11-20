@@ -24,7 +24,7 @@ Editable normalized transfer curve with pointer preview, single release commit a
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/CurvesEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CurvesEditor } from "@nyc-tron/ui/components/forge/color/CurvesEditor";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
 
 ```sh

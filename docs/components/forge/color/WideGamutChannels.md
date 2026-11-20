@@ -24,7 +24,7 @@ Edits floating RGB without quantizing to bytes, clipping to sRGB or guessing a t
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/WideGamutChannels.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { WideGamutChannels } from "@nyc-tron/ui/components/forge/color/WideGamutChannels";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/shell/UnitInput
 
 ```sh

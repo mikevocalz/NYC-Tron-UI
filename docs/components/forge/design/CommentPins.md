@@ -24,7 +24,7 @@ Pins and the shared thread panel reference the same authoritative thread IDs.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/design/CommentPins.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CommentPins } from "@nyc-tron/ui/components/forge/design/CommentPins";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/pdf/CommentsThreadPanel
 
 ```sh

@@ -24,7 +24,7 @@ iOS and Android drop target over expo-drag-drop-content-view (optional peer, nee
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/files/DropZone.native.tsx,packages/ui/src/components/files/DropZone.shared.tsx,packages/ui/src/components/files/DropZone.types.ts,packages/ui/src/components/files/DropZone.web.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DropZone } from "@nyc-tron/ui/components/files/DropZone";`
-- Peers: @nyc-tron/core, expo-drag-drop-content-view, react, react-native, zustand
+- Peers: expo-drag-drop-content-view, react, react-native, zustand
 - Requires: @nyc-tron/files/FilePicker
 
 ```sh

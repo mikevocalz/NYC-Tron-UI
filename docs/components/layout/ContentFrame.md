@@ -21,7 +21,7 @@ Width-capped container that aligns its content to the start, center or end of th
 
 - Package: @nyc-tron/ui
 - Import: `import { ContentFrame } from "@nyc-tron/ui/components/layout/ContentFrame";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

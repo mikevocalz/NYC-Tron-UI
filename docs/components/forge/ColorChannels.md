@@ -24,7 +24,7 @@ Controlled native RGBA sliders, SDK 58-only optional `@expo/ui` backend.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ColorChannels.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorChannels } from "@nyc-tron/ui/components/forge/ColorChannels";`
-- Peers: @expo/ui, @nyc-tron/core, react, react-native
+- Peers: @expo/ui, react, react-native
 - Requires: none
 
 ```sh

@@ -24,7 +24,7 @@ Slide sorter grid (J-02) with multiselect: a press selects one slide, Cmd/Ctrl a
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideSorter.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SlideSorter } from "@nyc-tron/ui/components/forge/slides/SlideSorter";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls, @nyc-tron/forge/slides/SlideThumbnail
 
 ```sh

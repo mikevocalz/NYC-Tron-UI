@@ -24,7 +24,7 @@ Controlled per-note velocity bars under a {@linkcode MIDIPianoRoll}.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/midi/MIDIVelocityLane.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { MIDIVelocityLane } from "@nyc-tron/ui/components/forge/midi/MIDIVelocityLane";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/midi/MIDIPianoRoll, @nyc-tron/forge/midi/MidiChannelPicker
 
 ```sh

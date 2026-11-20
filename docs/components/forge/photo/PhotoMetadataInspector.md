@@ -24,7 +24,7 @@ Read-only original EXIF/provenance, with a separate host-owned editing annotatio
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PhotoMetadataInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PhotoMetadataInspector } from "@nyc-tron/ui/components/forge/photo/PhotoMetadataInspector";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button
 
 ```sh

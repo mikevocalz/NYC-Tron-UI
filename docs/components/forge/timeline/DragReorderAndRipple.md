@@ -24,7 +24,7 @@ Move and ripple settings (D-22): how a dragged clip lands on others (refuse, ove
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/DragReorderAndRipple.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { DragReorderAndRipple } from "@nyc-tron/ui/components/forge/timeline/DragReorderAndRipple";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh

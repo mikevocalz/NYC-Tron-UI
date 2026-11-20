@@ -24,7 +24,7 @@ Requests the host's existing native audio session; no second audio graph or UI c
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/NativeAudioTransport.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { NativeAudioTransport } from "@nyc-tron/ui/components/forge/audio/NativeAudioTransport";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

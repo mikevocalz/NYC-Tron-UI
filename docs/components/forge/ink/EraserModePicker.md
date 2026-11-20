@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/EraserModePicker.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EraserModePicker } from "@nyc-tron/ui/components/forge/ink/EraserModePicker";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage
 
 ```sh

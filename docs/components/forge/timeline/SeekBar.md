@@ -24,7 +24,7 @@ Seek track with played and buffered ranges (D-04).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/SeekBar.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SeekBar } from "@nyc-tron/ui/components/forge/timeline/SeekBar";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

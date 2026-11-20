@@ -24,7 +24,7 @@ PDF comment threads (K-07), grouped by page: author, time, body, replies, and re
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/CommentsThreadPanel.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CommentsThreadPanel } from "@nyc-tron/ui/components/forge/pdf/CommentsThreadPanel";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh

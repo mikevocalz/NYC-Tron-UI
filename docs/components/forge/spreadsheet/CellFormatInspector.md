@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/CellFormatInspector.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { CellFormatInspector } from "@nyc-tron/ui/components/forge/spreadsheet/CellFormatInspector";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
 
 ```sh

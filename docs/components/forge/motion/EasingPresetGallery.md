@@ -24,7 +24,7 @@ Complete typed easing intents.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/EasingPresetGallery.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EasingPresetGallery } from "@nyc-tron/ui/components/forge/motion/EasingPresetGallery";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

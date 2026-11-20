@@ -24,7 +24,7 @@ Shared licensed tokenizer/tone owner; the host places on-sheet range outlines in
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/ReferenceColorizer.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ReferenceColorizer } from "@nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/spreadsheet/FormulaReferenceText
 
 ```sh

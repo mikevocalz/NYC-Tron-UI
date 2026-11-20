@@ -24,7 +24,7 @@ Reflects the OS-reported PiP state.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/PictureInPictureControls.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PictureInPictureControls } from "@nyc-tron/ui/components/forge/timeline/PictureInPictureControls";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
 
 ```sh

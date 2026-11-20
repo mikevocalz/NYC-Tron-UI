@@ -24,7 +24,7 @@ _Not documented._
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/SavedSheetViewManager.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { SavedSheetViewManager } from "@nyc-tron/ui/components/forge/spreadsheet/SavedSheetViewManager";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/spreadsheet/SortFilterHeader
 
 ```sh

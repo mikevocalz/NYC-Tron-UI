@@ -24,7 +24,7 @@ Typed color entry (C-06): RGB, HSL or HSV channels, hex and opacity.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorChannelFields.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ColorChannelFields } from "@nyc-tron/ui/components/forge/color/ColorChannelFields";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: none
 
 ```sh

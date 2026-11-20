@@ -24,7 +24,7 @@ Foreground and background chips with Swap and Reset (C-12).
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ForegroundBackgroundChips.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { ForegroundBackgroundChips } from "@nyc-tron/ui/components/forge/color/ForegroundBackgroundChips";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/Button
 
 ```sh

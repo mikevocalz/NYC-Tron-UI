@@ -24,7 +24,7 @@ Controlled parametric EQ graph.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/EQFrequencyGraph.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { EQFrequencyGraph } from "@nyc-tron/ui/components/forge/audio/EQFrequencyGraph";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
 
 ```sh

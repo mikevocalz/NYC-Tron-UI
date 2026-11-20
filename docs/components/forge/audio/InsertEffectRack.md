@@ -24,7 +24,7 @@ Controlled insert chain for one track or bus.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/InsertEffectRack.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InsertEffectRack } from "@nyc-tron/ui/components/forge/audio/InsertEffectRack";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh

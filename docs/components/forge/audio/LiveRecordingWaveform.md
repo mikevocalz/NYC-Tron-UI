@@ -24,7 +24,7 @@ A rolling view of measured capture windows.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LiveRecordingWaveform.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { LiveRecordingWaveform } from "@nyc-tron/ui/components/forge/audio/LiveRecordingWaveform";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: @nyc-tron/forge/audio/LevelMeter
 
 ```sh

@@ -24,7 +24,7 @@ Bullets and numbering (H-07): pick the list kind, indent or outdent under the ne
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/BulletsNumberingEditor.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { BulletsNumberingEditor } from "@nyc-tron/ui/components/forge/document/BulletsNumberingEditor";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls
 
 ```sh

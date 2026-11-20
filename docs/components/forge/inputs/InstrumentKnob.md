@@ -24,7 +24,7 @@ Native responder-based parametric control.
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/InstrumentKnob.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { InstrumentKnob } from "@nyc-tron/ui/components/forge/inputs/InstrumentKnob";`
-- Peers: @nyc-tron/core, react, react-native, zustand
+- Peers: react, react-native, zustand
 - Requires: none
 
 ```sh

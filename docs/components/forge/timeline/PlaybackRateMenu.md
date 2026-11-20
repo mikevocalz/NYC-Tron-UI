@@ -24,7 +24,7 @@ Playback speed picker (D-07): a 44pt button showing the rate that opens a list o
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/PlaybackRateMenu.tsx -->
 - Package: @nyc-tron/ui
 - Import: `import { PlaybackRateMenu } from "@nyc-tron/ui/components/forge/timeline/PlaybackRateMenu";`
-- Peers: @nyc-tron/core, react, react-native
+- Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
 
 ```sh
