@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/spreadsheet/fill-handle",
+  "title": "fill handle",
+  "description": "fill handle, a spreadsheet helper module. Exports fillFromEdge, fillTarget.",
+  "registryDependencies": [
+    "@nyc-tron/forge/sheet-window"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/spreadsheet/fill-handle.ts",
+      "content": "import type { SheetRange } from \"@/components/nyc-tron/ui/components/forge/sheet-window\";\n\n/** Direction a fill extends its source range. */\nexport type FillDirection = \"down\" | \"up\" | \"right\" | \"left\";\n\n/**\n * Result of dragging the fill handle: the source block repeats into `target`,\n * which always contains `source`. `undefined` from {@linkcode fillTarget}\n * means the pointer has not left the source block.\n */\nexport interface FillPlan {\n  readonly source: SheetRange;\n  readonly target: SheetRange;\n  readonly direction: FillDirection;\n}\n\n/** Sheet size {@linkcode fillTarget} clamps to. */\nexport interface FillBounds {\n  readonly rowCount: number;\n  readonly columnCount: number;\n}\n\nfunction requireRange(range: SheetRange, bounds: FillBounds): void {\n  const ok = [range.startRow, range.endRow, range.startColumn, range.endColumn].every(Number.isSafeInteger) &&\n    range.startRow >= 0 && range.startColumn >= 0 &&\n    range.endRow >= range.startRow && range.endColumn >= range.startColumn &&\n    range.endRow < bounds.rowCount && range.endColumn < bounds.columnCount;\n  if (!ok) throw new RangeError(\"Fill source range is outside the sheet\");\n}\n\n/**\n * Fill plan for a fill-handle drag that has moved `rows`/`columns` whole cells\n * from the source block's bottom-trailing corner. Like spreadsheet fill\n * handles, the fill follows one axis: whichever the pointer travelled further\n * along, measured in cells. Ties go to the row axis.\n */\nexport function fillTarget(\n  source: SheetRange,\n  delta: { readonly rows: number; readonly columns: number },\n  bounds: FillBounds,\n): FillPlan | undefined {\n  requireRange(source, bounds);\n  if (!Number.isFinite(delta.rows) || !Number.isFinite(delta.columns)) {\n    throw new RangeError(\"Fill delta must be finite\");\n  }\n  const rows = Math.trunc(delta.rows);\n  const columns = Math.trunc(delta.columns);\n  if (rows === 0 && columns === 0) return undefined;\n  if (Math.abs(rows) >= Math.abs(columns)) {\n    if (rows > 0) {\n      const endRow = Math.min(bounds.rowCount - 1, source.endRow + rows);\n      return endRow === source.endRow ? undefined : { source, direction: \"down\", target: { ...source, endRow } };\n    }\n    // The pointer row is endRow+rows. Inside the block it fills nothing; above\n    // the block's top edge it fills upward to the pointer row.\n    const startRow = Math.max(0, source.endRow + rows);\n    if (startRow >= source.startRow) return undefined;\n    return { source, direction: \"up\", target: { ...source, startRow } };\n  }\n  if (columns > 0) {\n    const endColumn = Math.min(bounds.columnCount - 1, source.endColumn + columns);\n    return endColumn === source.endColumn ? undefined : { source, direction: \"right\", target: { ...source, endColumn } };\n  }\n  const startColumn = Math.max(0, source.endColumn + columns);\n  if (startColumn >= source.startColumn) return undefined;\n  return { source, direction: \"left\", target: { ...source, startColumn } };\n}\n\n/**\n * Ctrl/Cmd+D and Ctrl/Cmd+R: fill a selection from its first row (down) or\n * first column (right). A one-row (or one-column) selection has nothing to\n * fill into, so it returns `undefined`.\n */\nexport function fillFromEdge(range: SheetRange, direction: \"down\" | \"right\"): FillPlan | undefined {\n  if (direction === \"down\") {\n    if (range.endRow === range.startRow) return undefined;\n    return { direction, target: range, source: { ...range, endRow: range.startRow } };\n  }\n  if (range.endColumn === range.startColumn) return undefined;\n  return { direction, target: range, source: { ...range, endColumn: range.startColumn } };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/spreadsheet/fill-handle.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/spreadsheet/fill-handle",
+    "exports": [
+      "FillBounds",
+      "FillDirection",
+      "FillPlan",
+      "fillFromEdge",
+      "fillTarget"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

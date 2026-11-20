@@ -5,6 +5,7 @@ import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {DEFAULT_SHUTTLE_LADDER,assertLadder,shuttleLabel,shuttleRate} from "./shuttle.ts";
+import {space,opacity,size} from '../../../tokens.ts';
 
 /** Props for {@linkcode JKLShuttleController}. */
 export interface JKLShuttleControllerProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -68,7 +69,7 @@ function JKLShuttleControllerBody({
       {...(testID?{testID:testID+"-"+k}:{})}
       {...{className:joinClasses(styled&&"rounded-control border focus-visible:ring-2 focus-visible:ring-focus",
         styled&&(on?"border-focus bg-surface-sunken":"border-border bg-surface-raised"))}}
-      style={{minWidth:52,minHeight:44,alignItems:"center",justifyContent:"center",opacity:off||disabled?0.4:1}}>
+      style={{minWidth:52,minHeight:size.touch,alignItems:"center",justifyContent:"center",opacity:off||disabled?opacity[40]:1}}>
       <Text {...{className:joinClasses(styled&&(on?"text-text font-semibold":"text-text"))}}>{k.toUpperCase()}</Text>
     </Pressable>;
   return <View {...rest} {...(testID?{testID}:{})} {...{onKeyDown,onKeyUp,onBlur:()=>{kHeld.current=false;}}}
@@ -81,7 +82,7 @@ function JKLShuttleControllerBody({
     {key("l","Forward","Plays forward; press again to go faster",rate>0)}
     <Text accessibilityLiveRegion="polite" {...(testID?{testID:testID+"-rate"}:{})}
       {...{className:joinClasses(styled&&"text-text font-semibold")}}
-      style={{fontVariant:["tabular-nums"],minWidth:88,paddingHorizontal:4}}>{shuttleLabel(rate)}</Text>
+      style={{fontVariant:["tabular-nums"],minWidth:88,paddingHorizontal:space[1]}}>{shuttleLabel(rate)}</Text>
     {disabledReason?<Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}}>{disabledReason}</Text>:null}
   </View>;
 }

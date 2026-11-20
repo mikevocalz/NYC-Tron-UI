@@ -5,6 +5,8 @@ import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {OFFICE_TOUCH_TARGET,PauseGlyph,PlayGlyph,SkipGlyph,ToolButton,officeKey,type OfficeKeyEvent} from "./office-controls.tsx";
 import {clampRate,formatRate,readAloudPosition,stepRate,wordSpans,type ReadAloudSentence} from "./read-aloud-model.ts";
+import {space,font,opacity} from '../../../tokens.ts';
+import {tokens} from './ReadAloudTransport.tokens.ts';
 
 /**
  * Where the voice is. `unavailable` means the device has no usable voice; the
@@ -98,8 +100,8 @@ function ReadAloudTransportBody({actionError,disabledReason,disabled=false,
   const muted=joinClasses(styled&&"text-text-muted text-sm");
   return <View {...rest} accessibilityLabel={label} {...{role:"region",onKeyDown}}
     {...{className:joinClasses(styled&&"rounded-card border border-border bg-surface-raised",className)}}
-    style={[{padding:12,gap:10},rest.style as object]}>
-    <View style={{flexDirection:"row",justifyContent:"space-between",gap:8,flexWrap:"wrap"}}>
+    style={[{padding:space[3],gap:space[2.5]},rest.style as object]}>
+    <View style={{flexDirection:"row",justifyContent:"space-between",gap:space[2],flexWrap:"wrap"}}>
       <Text numberOfLines={1} {...{className:muted}} style={{flexShrink:1}}>{context??label}</Text>
       <Text {...{className:muted}} style={{fontVariant:["tabular-nums"]}}>{readAloudPosition(index,count)}</Text>
     </View>
@@ -109,14 +111,14 @@ function ReadAloudTransportBody({actionError,disabledReason,disabled=false,
         ?<Text {...{className:joinClasses(styled&&"text-text")}}>This document has no text to read.</Text>
         :<SentenceText sentence={current!} wordIndex={playing||status==="paused"?wordIndex:undefined}
           styled={styled} announce={announceSentences}/>}
-    <View style={{flexDirection:"row",alignItems:"center",gap:8,flexWrap:"wrap",direction:"ltr"}}>
+    <View style={{flexDirection:"row",alignItems:"center",gap:space[2],flexWrap:"wrap",direction:"ltr"}}>
       <ToolButton quiet label="Previous sentence" iconOnly disabled={!canBack} styled={styled} onPress={()=>onSkip(-1)}>
         <SkipGlyph styled={styled} back/>
       </ToolButton>
       <Pressable accessibilityRole="button" accessibilityLabel={playing?"Pause":"Play"}
         accessibilityState={{disabled:!canPlay}} disabled={!canPlay} onPress={toggle}
         {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-sunken focus-visible:ring-2 focus-visible:ring-focus")}}
-        style={{width:52,height:52,alignItems:"center",justifyContent:"center",opacity:canPlay?1:0.45}}>
+        style={{width:52,height:52,alignItems:"center",justifyContent:"center",opacity:canPlay?1:opacity[45]}}>
         {playing?<PauseGlyph styled={styled} size={16}/>:<PlayGlyph styled={styled} size={16}/>}
       </Pressable>
       <ToolButton quiet label="Next sentence" iconOnly disabled={!canForward} styled={styled} onPress={()=>onSkip(1)}>
@@ -129,7 +131,7 @@ function ReadAloudTransportBody({actionError,disabledReason,disabled=false,
         accessibilityHint="Tap for the next speed"
         onPress={()=>onRateChange(r>=3?0.5:stepRate(r,1))}
         {...{className:joinClasses(styled&&"rounded-control border border-border focus-visible:ring-2 focus-visible:ring-focus")}}
-        style={{minWidth:64,minHeight:OFFICE_TOUCH_TARGET,paddingHorizontal:10,alignItems:"center",justifyContent:"center"}}>
+        style={{minWidth:64,minHeight:OFFICE_TOUCH_TARGET,paddingHorizontal:space[2.5],alignItems:"center",justifyContent:"center"}}>
         <Text {...{className:joinClasses(styled&&"text-text")}} style={{fontVariant:["tabular-nums"],fontWeight:"600"}}>{formatRate(r)}</Text>
       </Pressable>
       {onStop?<ToolButton label="Stop reading" styled={styled} onPress={onStop}/>:null}
@@ -144,7 +146,7 @@ function SentenceText({sentence,wordIndex,styled,announce}:{sentence:ReadAloudSe
   const chars=[...text];
   const body=joinClasses(styled&&"text-text");
   return <Text selectable accessibilityLiveRegion={announce?"polite":"none"} {...{className:body}}
-    style={{fontSize:17,lineHeight:25}}>
+    style={{fontSize:font[17],lineHeight:tokens.leading25}}>
     {span?<>
       {chars.slice(0,span[0]).join("")}
       <Text {...{className:joinClasses(styled&&"bg-accent/10 text-text")}} style={{fontWeight:"700"}}>{chars.slice(span[0],span[1]).join("")}</Text>

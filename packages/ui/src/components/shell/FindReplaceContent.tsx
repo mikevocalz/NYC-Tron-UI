@@ -8,6 +8,7 @@ import { SettingSwitch } from "../forge/canvas/SettingSwitch.tsx";
 import { joinClasses } from "../styles.ts";
 import { useOwnedAction } from "./useOwnedAction.ts";
 import { validateFindResponse, type FindDocument, type FindQuery, type FindResponse, type FindMatch, type ReplaceRequest } from "./find-replace-model.ts";
+import { space, size } from "../../tokens.ts";
 export type { FindDocument, FindQuery, FindResponse, FindMatch, ReplaceRequest } from "./find-replace-model.ts";
 
 export interface FindReplaceContentProps {
@@ -52,17 +53,17 @@ export function FindReplaceContent({ document, active = true, onFind, onReplace,
     void mutation.run("replace", signal => onReplace(request, signal));
   };
   const fieldClass = joinClasses(styled && "rounded-control border border-border bg-surface-sunken text-text focus-visible:border-focus");
-  return <ScrollView contentContainerStyle={{ padding: 12, gap: 8 }} keyboardShouldPersistTaps="handled">
+  return <ScrollView contentContainerStyle={{ padding: space[3], gap: space[2] }} keyboardShouldPersistTaps="handled">
     <Text accessibilityRole="header" {...{ className: joinClasses(styled && "text-text font-semibold") }}>Find and replace</Text>
     <TextInput accessibilityLabel="Find text" value={state.query} maxLength={256} editable={!pending} autoCapitalize="none" autoCorrect={false}
       onChangeText={text => store.setState({ query: text, selected: 0 })} onSubmitEditing={() => { if (current) navigate((selected + 1) % found!.matches.length); }}
-      {...{ className: fieldClass }} style={{ minHeight: 44, padding: 8 }}/>
+      {...{ className: fieldClass }} style={{ minHeight: size.touch, padding: space[2] }}/>
     <TextInput accessibilityLabel="Replacement text" value={state.replacement} maxLength={4096} editable={!pending} autoCapitalize="none" autoCorrect={false}
-      onChangeText={replacement => store.setState({ replacement })} {...{ className: fieldClass }} style={{ minHeight: 44, padding: 8 }}/>
+      onChangeText={replacement => store.setState({ replacement })} {...{ className: fieldClass }} style={{ minHeight: size.touch, padding: space[2] }}/>
     <SettingSwitch label="Match case" on={state.caseSensitive} onChange={caseSensitive => store.setState({ caseSensitive })} disabled={pending} styled={styled}/>
     <SettingSwitch label="Whole words" on={state.wholeWord} onChange={wholeWord => store.setState({ wholeWord })} disabled={pending} styled={styled}/>
     <Text accessibilityLiveRegion="polite" {...{ className: joinClasses(styled && "text-text-muted") }}>{finder.error ? "Search failed" : searching ? "Finding…" : found ? `${found.total} matches${found.total > found.matches.length ? `; showing first ${found.matches.length}` : ""}` : state.query ? "No search results" : "Enter text to find"}</Text>
-    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
       <Button title="Previous match" disabled={!current || pending} onPress={() => navigate((selected - 1 + found!.matches.length) % found!.matches.length)} unstyled={unstyled}/>
       <Button title="Next match" disabled={!current || pending} onPress={() => navigate((selected + 1) % found!.matches.length)} unstyled={unstyled}/>
       <Button title="Replace match" disabled={!current || pending || searching} onPress={() => replace(false)} unstyled={unstyled}/>

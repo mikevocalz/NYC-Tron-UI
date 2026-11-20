@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/time",
+  "title": "time",
+  "description": "time, a video timeline helper module. Exports assertSampleRate, formatSampleClock, formatTime.",
+  "registryDependencies": [
+    "@nyc-tron/forge/timebase"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timeline/time.ts",
+      "content": "import {assertFrameRate,formatTimecode,framesToSeconds,secondsToFrame,type FrameRate} from \"@/components/nyc-tron/ui/components/forge/timebase\";\n\n/*\n * Rational frame and sample time. Timeline positions are whole frames at the\n * sequence's rational frame rate; audio positions are whole samples at an\n * integer sample rate. Conversions between them go through exact integer\n * (BigInt) arithmetic, so 29.97 fps never accumulates float drift. Seconds are\n * derived only at the engine boundary (Splice takes seconds).\n */\n\nexport type {FrameRate} from \"@/components/nyc-tron/ui/components/forge/timebase\";\nexport {framesToSeconds,secondsToFrame} from \"@/components/nyc-tron/ui/components/forge/timebase\";\n\n/** Lowest and highest sample rates accepted, in Hz. */\nexport const SAMPLE_RATE_RANGE={min:8000,max:768000} as const;\n\nexport function assertSampleRate(rate:number):void{\n  if(!Number.isSafeInteger(rate)||rate<SAMPLE_RATE_RANGE.min||rate>SAMPLE_RATE_RANGE.max)\n    throw new RangeError(\"Sample rate must be an integer from 8000 to 768000 Hz\");\n}\nconst assertIndex=(n:number,what:string)=>{\n  if(!Number.isSafeInteger(n)||n<0)throw new RangeError(what+\" must be a nonnegative safe integer\");\n};\nconst floorDiv=(a:bigint,b:bigint)=>a/b;\n\n/** Frames per second as a float, for display and layout only. */\nexport const fps=(rate:FrameRate)=>{assertFrameRate(rate);return rate.numerator/rate.denominator;};\n\n/**\n * Seconds at a fractional frame position, e.g. a media in-point at a speed\n * other than 1x. Whole frames use `framesToSeconds` from `forge/timebase`\n * (re-exported here), which rejects fractions.\n */\nexport function positionToSeconds(position:number,rate:FrameRate):number{\n  assertFrameRate(rate);\n  if(!Number.isFinite(position)||position<0)throw new RangeError(\"Frame position must be finite and nonnegative\");\n  return position*rate.denominator/rate.numerator;\n}\n\n/**\n * First sample at or after the start of `frame`: `ceil(frame * den * sampleRate / num)`,\n * exactly. Ceiling, not floor: the floored sample can start before the frame and\n * so belong to the previous one.\n */\nexport function framesToSamples(frame:number,rate:FrameRate,sampleRate:number):number{\n  assertFrameRate(rate);assertSampleRate(sampleRate);assertIndex(frame,\"Frame\");\n  const num=BigInt(rate.numerator);\n  return Number(floorDiv(BigInt(frame)*BigInt(rate.denominator)*BigInt(sampleRate)+num-1n,num));\n}\n\n/** The frame that contains `sample`, floored: `sample * num / (den * sampleRate)`, exactly. */\nexport function samplesToFrames(sample:number,rate:FrameRate,sampleRate:number):number{\n  assertFrameRate(rate);assertSampleRate(sampleRate);assertIndex(sample,\"Sample\");\n  return Number(floorDiv(BigInt(sample)*BigInt(rate.numerator),BigInt(rate.denominator)*BigInt(sampleRate)));\n}\n\n/** Sample time as `HH:MM:SS.mmm`, floored to the millisecond. */\nexport function formatSampleClock(sample:number,sampleRate:number):string{\n  assertSampleRate(sampleRate);assertIndex(sample,\"Sample\");\n  const ms=Number(floorDiv(BigInt(sample)*1000n,BigInt(sampleRate)));\n  const pad=(n:number,w=2)=>String(n).padStart(w,\"0\");\n  return `${pad(Math.floor(ms/3600000))}:${pad(Math.floor(ms/60000)%60)}:${pad(Math.floor(ms/1000)%60)}.${pad(ms%1000,3)}`;\n}\n\nconst NTSC=(rate:FrameRate)=>rate.denominator===1001&&(rate.numerator===30000||rate.numerator===60000);\n/** Whether `rate` supports SMPTE drop-frame labels (29.97 or 59.94). */\nexport const supportsDropFrame=(rate:FrameRate)=>NTSC(rate);\n\n/**\n * Parses `HH:MM:SS:FF` (non-drop) or `HH:MM:SS;FF` (drop-frame; `.` and `,` also\n * accepted as the last separator) into a frame index. Drop-frame labels that do\n * not exist (frames 00 and 01, or 00-03 at 59.94, of every minute not divisible by\n * ten) and frame fields at or above the timebase are rejected. Inverse of\n * `formatTimecode`.\n */\nexport function parseTimecode(text:string,rate:FrameRate,opts:{dropFrame?:boolean}={}):number|undefined{\n  assertFrameRate(rate);\n  const m=/^\\s*(\\d{1,3}):(\\d{2}):(\\d{2})([:;.,])(\\d{2,3})\\s*$/.exec(text);\n  if(!m)return undefined;\n  const [h,mi,s,f]=[m[1],m[2],m[3],m[5]].map(Number) as [number,number,number,number];\n  const dropFrame=opts.dropFrame??m[4]!==\":\";\n  const base=Math.round(rate.numerator/rate.denominator);\n  if(mi>59||s>59||f>=base)return undefined;\n  if(!dropFrame)return ((h*60+mi)*60+s)*base+f;\n  if(!NTSC(rate))return undefined;\n  const drop=base===60?4:2;\n  const totalMinutes=h*60+mi;\n  if(s===0&&f<drop&&totalMinutes%10!==0)return undefined;\n  const labeled=((totalMinutes*60)+s)*base+f;\n  return labeled-drop*(totalMinutes-Math.floor(totalMinutes/10));\n}\n\n/** Timeline display formats offered by `TimecodeDisplay`. */\nexport type TimeFormat=\"timecode\"|\"frames\"|\"seconds\"|\"samples\";\n\n/** `frame` in `format`. Samples need `sampleRate`; drop-frame needs an NTSC rate. */\nexport function formatTime(frame:number,rate:FrameRate,format:TimeFormat,opts:{dropFrame?:boolean;sampleRate?:number}={}):string{\n  assertIndex(frame,\"Frame\");\n  switch(format){\n    case \"timecode\":return formatTimecode(frame,rate,{dropFrame:opts.dropFrame??false});\n    case \"frames\":return `${frame} f`;\n    case \"seconds\":return `${framesToSeconds(frame,rate).toFixed(3)} s`;\n    case \"samples\":{\n      if(opts.sampleRate===undefined)throw new RangeError(\"Sample display needs a sample rate\");\n      return `${formatSampleClock(framesToSamples(frame,rate,opts.sampleRate),opts.sampleRate)}`;\n    }\n  }\n}\n\n/**\n * Parses typed time in `format` back to a frame: a timecode, a frame count\n * (`120` or `120 f`), seconds (`4.5` or `4.5 s`, rounded to the nearest frame) or\n * a sample clock. Returns `undefined` for text that is not one.\n */\nexport function parseTime(text:string,rate:FrameRate,format:TimeFormat,opts:{dropFrame?:boolean;sampleRate?:number}={}):number|undefined{\n  const t=text.trim();\n  if(format===\"timecode\")return parseTimecode(t,rate,{dropFrame:opts.dropFrame??false});\n  if(format===\"frames\"){const m=/^(\\d+)\\s*f?$/i.exec(t);return m?Number(m[1]):undefined;}\n  if(format===\"seconds\"){\n    const m=/^(\\d+(?:\\.\\d+)?)\\s*s?$/i.exec(t);\n    return m?secondsToFrame(Number(m[1]),rate):undefined;\n  }\n  const m=/^(\\d{1,3}):(\\d{2}):(\\d{2})\\.(\\d{3})$/.exec(t);\n  if(!m||opts.sampleRate===undefined)return undefined;\n  const [h,mi,s,ms]=[m[1],m[2],m[3],m[4]].map(Number) as [number,number,number,number];\n  if(mi>59||s>59)return undefined;\n  const totalMs=((h*60+mi)*60+s)*1000+ms;\n  // The clock was floored to the millisecond, so the time lies in [ms, ms+1).\n  // Take the last sample of that millisecond: frames are at least 8 ms apart\n  // (120 fps), so this always lands in the frame that was formatted.\n  const lastSample=Number(floorDiv(BigInt(totalMs+1)*BigInt(opts.sampleRate)+999n,1000n))-1;\n  return samplesToFrames(lastSample,rate,opts.sampleRate);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/time.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/time",
+    "exports": [
+      "FrameRate",
+      "SAMPLE_RATE_RANGE",
+      "TimeFormat",
+      "assertSampleRate",
+      "formatSampleClock",
+      "formatTime",
+      "fps",
+      "framesToSamples",
+      "framesToSeconds",
+      "parseTime",
+      "parseTimecode",
+      "positionToSeconds",
+      "samplesToFrames",
+      "secondsToFrame",
+      "supportsDropFrame"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

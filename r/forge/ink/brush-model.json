@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/ink/brush-model",
+  "title": "brush model",
+  "description": "brush model, a digital ink and brush state model. Exports stabilizePreview, validateBrushDynamics, validateBrushTaper.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/ink/brush-model.ts",
+      "content": "/** Engine-neutral brush settings. Presets and processing remain host-owned. */\nexport interface BrushDynamics {size:number;hardness:number;flow:number;spacing:number;stabilizer:number;scatter:number}\nexport const BRUSH_DYNAMICS_FIELDS=[\n {key:'size',label:'Brush size',min:.1,max:4096,step:.1,unit:' px'},\n {key:'hardness',label:'Hardness',min:0,max:1,step:.01,unit:''},\n {key:'flow',label:'Flow',min:0,max:1,step:.01,unit:''},\n {key:'spacing',label:'Spacing',min:.01,max:5,step:.01,unit:' × size'},\n {key:'stabilizer',label:'Stabilizer',min:0,max:1,step:.01,unit:''},\n {key:'scatter',label:'Scatter',min:0,max:5,step:.01,unit:' × size'},\n] as const;\nexport function validateBrushDynamics(value:BrushDynamics){for(const f of BRUSH_DYNAMICS_FIELDS)if(!Number.isFinite(value[f.key])||value[f.key]<f.min||value[f.key]>f.max)throw new RangeError('Invalid '+f.label);}\nexport interface BrushTaper {start:number;end:number;minimumSize:number;pressure:boolean;tip:'round'|'linear'|'sharp'}\nexport interface BrushTaperSettings {pen:BrushTaper;touch:BrushTaper}\nexport function validateBrushTaper(value:BrushTaperSettings){for(const taper of [value.pen,value.touch])if(![taper.start,taper.end,taper.minimumSize].every(n=>Number.isFinite(n)&&n>=0&&n<=1)||typeof taper.pressure!=='boolean'||!['round','linear','sharp'].includes(taper.tip))throw new RangeError('Invalid brush taper');}\nexport interface InkSample {\n readonly x:number;readonly y:number;\n /** RN receipt time in milliseconds unless a native adapter supplies its clock explicitly. */\n readonly timeMs:number;\n readonly pressure?:number;readonly tiltX?:number;readonly tiltY?:number;readonly twist?:number;\n readonly input:'pen'|'touch'|'mouse'|'unknown';\n}\nexport const MAX_INK_PREVIEW_SAMPLES=2048;\nexport function validateInkSamples(samples:readonly InkSample[]){\n if(samples.length>MAX_INK_PREVIEW_SAMPLES)throw new RangeError('Ink preview sample budget exceeded');\n let previous=-Infinity;\n for(const s of samples){if(![s.x,s.y,s.timeMs].every(Number.isFinite)||s.timeMs<previous||s.pressure!==undefined&&(!Number.isFinite(s.pressure)||s.pressure<0||s.pressure>1)||[s.tiltX,s.tiltY,s.twist].some(n=>n!==undefined&&!Number.isFinite(n))||!['pen','touch','mouse','unknown'].includes(s.input))throw new RangeError('Invalid ink sample');previous=s.timeMs;}\n}\nexport interface BrushStabilization {streamline:number;stabilization:number;motionFilter:number}\nexport function validateStabilization(value:BrushStabilization){if(![value.streamline,value.stabilization,value.motionFilter].every(n=>Number.isFinite(n)&&n>=0&&n<=1))throw new RangeError('Invalid stabilization settings');}\n/** A deterministic preview filter; pressure/tilt/twist/time are copied exactly. */\nexport function stabilizePreview(samples:readonly InkSample[],value:BrushStabilization):readonly InkSample[]{\n validateInkSamples(samples);validateStabilization(value);\n const amount=1-(1-value.streamline)*(1-value.stabilization)*(1-value.motionFilter),alpha=Math.max(.02,1-amount*.98);\n let previous:InkSample|undefined;\n return samples.map(sample=>{const next=previous?{...sample,x:previous.x+(sample.x-previous.x)*alpha,y:previous.y+(sample.y-previous.y)*alpha}:sample;previous=next;return next;});\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/ink/brush-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/ink/brush-model",
+    "exports": [
+      "BRUSH_DYNAMICS_FIELDS",
+      "BrushDynamics",
+      "BrushStabilization",
+      "BrushTaper",
+      "BrushTaperSettings",
+      "InkSample",
+      "MAX_INK_PREVIEW_SAMPLES",
+      "stabilizePreview",
+      "validateBrushDynamics",
+      "validateBrushTaper",
+      "validateInkSamples",
+      "validateStabilization"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

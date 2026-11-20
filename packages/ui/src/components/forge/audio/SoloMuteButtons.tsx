@@ -6,6 +6,7 @@ import { Platform, Pressable, Text, View, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
 import { webToggleProps } from "../toggle-a11y.ts";
 import type { Audibility, audibility } from "./mixer.ts";
+import { space, border, opacity } from '../../../tokens.ts';
 
 
 export interface SoloMuteLabels {
@@ -84,7 +85,7 @@ function SoloMuteButtonsBody({actionError,disabledReason,
   // React Native Web drops accessibilityHint; describe the button by id there.
   const webHint = Platform.OS === "web" && hint !== undefined;
   const base = "rounded-control items-center justify-center focus-visible:ring-2 focus-visible:ring-focus active:opacity-80";
-  const box = { minWidth: HIT, minHeight: HIT, borderWidth: 2, opacity: disabled ? 0.45 : 1 };
+  const box = { minWidth: HIT, minHeight: HIT, borderWidth: border[2], opacity: disabled ? opacity[45] : 1 };
   const muteClass = joinClasses(styled && base, styled && (muted
     ? "bg-primary border-primary"
     : silenced ? "border-text-muted bg-surface-sunken" : "border-border bg-surface-sunken"));
@@ -96,7 +97,7 @@ function SoloMuteButtonsBody({actionError,disabledReason,
   const withSafe = onSoloSafeCommit !== undefined;
   return <View {...rest} {...{ className: joinClasses("gap-1", className) }}
     style={[{ flexDirection: withSafe ? "column" : direction }, style]}>
-    <View style={{ flexDirection: direction, gap: 4 }}>
+    <View style={{ flexDirection: direction, gap: space[1] }}>
     <Pressable accessibilityRole="togglebutton" accessibilityLabel={copy.mute(label)}
       accessibilityState={{ checked: muted, disabled }} {...webToggleProps(muted)}
       accessibilityHint={hint} {...(webHint ? { "aria-describedby": hintId } : {})}
@@ -115,7 +116,7 @@ function SoloMuteButtonsBody({actionError,disabledReason,
     {withSafe ? <Pressable accessibilityRole="togglebutton" accessibilityLabel={copy.safe(label)}
       accessibilityState={{ checked: soloSafe, disabled }} {...webToggleProps(soloSafe)}
       disabled={disabled} onPress={() => { void onSoloSafeCommit(!soloSafe); }}
-      {...{ className: safeClass }} style={[box, { paddingHorizontal: 8 }]}>
+      {...{ className: safeClass }} style={[box, { paddingHorizontal: space[2] }]}>
       <Text {...{ className: safeText }}>{copy.safeText}</Text>
     </Pressable> : null}
     {webHint ? <Text nativeID={hintId}

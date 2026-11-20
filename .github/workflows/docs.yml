@@ -1,0 +1,56 @@
+name: docs
+
+# Regenerates the component pages, llms.txt, llms-full.txt and the docs site, then fails if any of them
+# differs from what is committed. Also runs the 12 template checks. No dependencies are installed:
+# the tooling in tooling/docs uses Node built-ins only.
+on:
+  pull_request:
+    paths:
+      - "packages/*/src/**"
+      - "packages/*/package.json"
+      - "docs/**"
+      - "tooling/docs/**"
+      - "registry.json"
+      - "r/**"
+      - "components.json"
+      - "tooling/registry/config.json"
+      - "registry-excluded.json"
+      - "SKILL.md"
+      - "skills/**"
+      - "AGENTS.md"
+      - "llms.txt"
+      - "llms-full.txt"
+      - ".github/workflows/docs.yml"
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Regenerate pages, llms files and site
+        run: |
+          node tooling/docs/build-docs.mjs
+          node tooling/docs/build-llms.mjs
+          node tooling/docs/build-site.mjs
+      - name: Fail on drift
+        run: |
+          git add -N docs/components docs/site llms.txt llms-full.txt
+          git diff --exit-code -- docs/components docs/site llms.txt llms-full.txt || {
+            echo "::error::Generated docs differ from the committed files. Run the three build scripts in tooling/docs and commit the result."
+            exit 1
+          }
+      - name: Check pages, front matter, props parity, tokens, links, SKILL.md
+        run: node tooling/docs/check-docs.mjs
+      - name: Control run, check-docs fails on planted bad pages
+        run: node tooling/docs/check-docs-control.mjs
+      - name: SKILL.md copies match
+        run: cmp SKILL.md skills/nyc-tron-ui/SKILL.md

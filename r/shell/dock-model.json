@@ -1,0 +1,46 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/dock-model",
+  "title": "dock model",
+  "description": "dock model, an app shell state model. Exports activatePanel, clampFloatingRect, closePanel.",
+  "registryDependencies": [
+    "@nyc-tron/overlays/popover-position"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/dock-model.ts",
+      "content": "import type {Rect2D} from \"@/components/nyc-tron/ui/components/overlays/popover-position\";\n\n/**\n * A docking edge of an {@linkcode AdaptiveDock}. Edges are physical: the app\n * mirrors left and right for right-to-left layouts if its product wants that.\n */\nexport type DockEdge=\"left\"|\"right\"|\"bottom\";\n/** Where a panel can be put: one of the edges, or floating over the workspace. */\nexport type DockTarget=DockEdge|\"floating\";\n\n/** Panels stacked on one edge. Only the active one is shown; the others are tabs. */\nexport interface DockStack {\n  readonly panels:readonly string[];\n  readonly active:string;\n  /** Width (left/right) or height (bottom) in points. */\n  readonly size:number;\n}\n/** A panel floating over the workspace, in dock-local coordinates. */\nexport interface FloatingPanel {\n  readonly id:string;\n  readonly rect:Rect2D;\n}\n/**\n * Complete, serializable dock arrangement. The app owns it (and persists it\n * per workspace); {@linkcode AdaptiveDock} only renders it and proposes changes.\n */\nexport interface DockLayout {\n  readonly left?:DockStack;\n  readonly right?:DockStack;\n  readonly bottom?:DockStack;\n  readonly floating:readonly FloatingPanel[];\n  /** Height of the merged panel stack on compact widths. */\n  readonly compactSize?:number;\n}\n/** Defaults used when a panel lands on an empty edge or starts floating. */\nexport interface DockDefaults {\n  readonly edgeSize:number;\n  readonly floatingRect:Rect2D;\n}\n\nconst EDGES:readonly DockEdge[]=[\"left\",\"right\",\"bottom\"];\n\n/** Every panel id in the layout, edges first, then floating panels. */\nexport function dockedPanelIds(layout:DockLayout):string[]{\n  return [...EDGES.flatMap(e=>layout[e]?.panels??[]),...layout.floating.map(f=>f.id)];\n}\n\n/** Where a panel currently is, or undefined if the layout does not contain it. */\nexport function panelLocation(layout:DockLayout,id:string):DockTarget|undefined{\n  for(const e of EDGES)if(layout[e]?.panels.includes(id))return e;\n  return layout.floating.some(f=>f.id===id)?\"floating\":undefined;\n}\n\n/**\n * Throws when a panel appears twice, an active id is not in its stack, a stack\n * is empty, a size is not positive, or a referenced id is not in `known`.\n */\nexport function validateDockLayout(layout:DockLayout,known:readonly string[]):void{\n  if(known.length>256||new Set(known).size!==known.length||known.some(id=>typeof id!==\"string\"||!id.trim()||id.length>256)||layout.floating.length>256)throw new RangeError(\"Invalid known dock panel identities or budget\");\n  if(layout.compactSize!==undefined&&(!Number.isFinite(layout.compactSize)||layout.compactSize<=0))throw new RangeError(\"Invalid compact dock size\");\n  const seen=new Set<string>();\n  const knownIds=new Set(known);\n  const add=(id:string)=>{\n    if(seen.has(id))throw new TypeError(`Panel ${id} is docked twice`);\n    if(!knownIds.has(id))throw new TypeError(`Unknown panel ${id}`);\n    seen.add(id);\n  };\n  for(const e of EDGES){\n    const stack=layout[e];\n    if(!stack)continue;\n    if(!stack.panels.length)throw new TypeError(`Empty ${e} dock stack`);\n    if(!stack.panels.includes(stack.active))throw new TypeError(`Active panel ${stack.active} is not in the ${e} stack`);\n    if(!Number.isFinite(stack.size)||stack.size<=0)throw new RangeError(`Invalid ${e} dock size`);\n    stack.panels.forEach(add);\n  }\n  for(const f of layout.floating){\n    const r=f.rect;\n    if(![r.x,r.y,r.width,r.height].every(Number.isFinite)||r.width<=0||r.height<=0)\n      throw new RangeError(`Invalid floating rect for ${f.id}`);\n    add(f.id);\n  }\n}\n\nfunction without(layout:DockLayout,id:string):DockLayout{\n  const next:{-readonly [K in keyof DockLayout]:DockLayout[K]}={...layout,floating:layout.floating.filter(f=>f.id!==id)};\n  for(const e of EDGES){\n    const stack=layout[e];\n    if(!stack?.panels.includes(id))continue;\n    const panels=stack.panels.filter(p=>p!==id);\n    if(!panels.length){delete next[e];continue;}\n    const at=stack.panels.indexOf(id);\n    const active=stack.active===id?panels[Math.min(at,panels.length-1)]!:stack.active;\n    next[e]={...stack,panels,active};\n  }\n  return next;\n}\n\n/**\n * Move a panel to `target`. On an edge it joins the end of that stack and\n * becomes active; floating, it keeps its old floating rect or takes\n * `defaults.floatingRect`. Moving a panel where it already is only activates it.\n */\nexport function movePanel(layout:DockLayout,id:string,target:DockTarget,defaults:DockDefaults):DockLayout{\n  const from=panelLocation(layout,id);\n  if(from===target)return target===\"floating\"?layout:activatePanel(layout,id);\n  const previous=layout.floating.find(f=>f.id===id)?.rect;\n  const rest=without(layout,id);\n  if(target===\"floating\")return {...rest,floating:[...rest.floating,{id,rect:previous??defaults.floatingRect}]};\n  const stack=rest[target];\n  return {...rest,[target]:stack\n    ?{...stack,panels:[...stack.panels,id],active:id}\n    :{panels:[id],active:id,size:defaults.edgeSize}};\n}\n\n/** Show `id` in its stack. Floating panels are raised to the top. */\nexport function activatePanel(layout:DockLayout,id:string):DockLayout{\n  const at=panelLocation(layout,id);\n  if(at===\"floating\"){\n    const panel=layout.floating.find(f=>f.id===id)!;\n    return {...layout,floating:[...layout.floating.filter(f=>f.id!==id),panel]};\n  }\n  if(!at)return layout;\n  const stack=layout[at]!;\n  return stack.active===id?layout:{...layout,[at]:{...stack,active:id}};\n}\n\n/** Remove a panel from the layout. The app decides how a closed panel is reopened. */\nexport function closePanel(layout:DockLayout,id:string):DockLayout{\n  return panelLocation(layout,id)?without(layout,id):layout;\n}\n\n/** Resize one edge stack. */\nexport function resizeStack(layout:DockLayout,edge:DockEdge,size:number):DockLayout{\n  const stack=layout[edge];\n  if(!stack||!Number.isFinite(size)||size<=0)return layout;\n  return {...layout,[edge]:{...stack,size}};\n}\n\n/**\n * Drop target under a dock-local point: the outer `edgeFraction` of the width\n * docks left or right, the bottom fraction docks to the bottom, the rest\n * floats. Returns undefined outside the dock.\n */\nexport function dockTargetAt(point:{x:number;y:number},size:{width:number;height:number},edgeFraction=0.2):DockTarget|undefined{\n  const {x,y}=point,{width,height}=size;\n  if(![x,y,width,height,edgeFraction].every(Number.isFinite)||width<=0||height<=0)return undefined;\n  if(x<0||y<0||x>width||y>height)return undefined;\n  if(x<width*edgeFraction)return \"left\";\n  if(x>width*(1-edgeFraction))return \"right\";\n  if(y>height*(1-edgeFraction))return \"bottom\";\n  return \"floating\";\n}\n\n/**\n * Keep a floating rect inside one usable region (from the foldable layout\n * owner), so it never spans a hinge. It stays in the region holding its\n * centre, or the largest one, and shrinks only if the region is smaller.\n */\nexport function clampFloatingRect(rect:Rect2D,regions:readonly Rect2D[]):Rect2D{\n  const valid=regions.filter(r=>[r.x,r.y,r.width,r.height].every(Number.isFinite)&&r.width>0&&r.height>0);\n  if(!valid.length)return rect;\n  const cx=rect.x+rect.width/2,cy=rect.y+rect.height/2;\n  const region=valid.find(r=>cx>=r.x&&cx<=r.x+r.width&&cy>=r.y&&cy<=r.y+r.height)\n    ??valid.reduce((a,b)=>b.width*b.height>a.width*a.height?b:a);\n  const width=Math.min(rect.width,region.width),height=Math.min(rect.height,region.height);\n  return {\n    x:Math.max(region.x,Math.min(region.x+region.width-width,rect.x)),\n    y:Math.max(region.y,Math.min(region.y+region.height-height,rect.y)),\n    width,height,\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/dock-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/dock-model",
+    "exports": [
+      "DockDefaults",
+      "DockEdge",
+      "DockLayout",
+      "DockStack",
+      "DockTarget",
+      "FloatingPanel",
+      "activatePanel",
+      "clampFloatingRect",
+      "closePanel",
+      "dockTargetAt",
+      "dockedPanelIds",
+      "movePanel",
+      "panelLocation",
+      "resizeStack",
+      "validateDockLayout"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

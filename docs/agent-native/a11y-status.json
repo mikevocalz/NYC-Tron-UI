@@ -1,0 +1,303 @@
+{
+ "Button": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "Card": {
+  "status": "PASS",
+  "failures": []
+ },
+ "KeyValueList": {
+  "status": "PASS",
+  "failures": []
+ },
+ "DataTable": {
+  "status": "FAIL",
+  "failures": [
+   "F01 1.3.1/4.1.2: wide mode has no table, row, columnheader or cell roles (DataTable.tsx:181-231)"
+  ]
+ },
+ "TreeGrid": {
+  "status": "FAIL",
+  "failures": [
+   "F04 1.4.11: selected-row indicator bg-primary/10 vs surface-raised 1.15/1.2:1"
+  ]
+ },
+ "DragGrabHandle": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "Badge": {
+  "status": "PASS",
+  "failures": []
+ },
+ "Banner": {
+  "status": "PASS",
+  "failures": []
+ },
+ "EmptyState": {
+  "status": "PASS",
+  "failures": []
+ },
+ "ErrorMessage": {
+  "status": "PASS",
+  "failures": []
+ },
+ "FieldGroup": {
+  "status": "PASS",
+  "failures": []
+ },
+ "PrecisionScrubber": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "PropertyInspector": {
+  "status": "FAIL",
+  "failures": [
+   "F03 inherits UnitInput and Select: field boundary 1.42/1.75:1",
+   "F16 root View label without a role (PropertyInspector.tsx:32)"
+  ]
+ },
+ "office-controls": {
+  "status": "PASS",
+  "failures": []
+ },
+ "PanResponderDrag": {
+  "status": "PASS",
+  "failures": []
+ },
+ "IconButton": {
+  "status": "FAIL",
+  "failures": [
+   "F04 1.4.11: selected state tint 1.15/1.2:1 plus border 1.58/1.58:1"
+  ]
+ },
+ "AdaptiveColumns": {
+  "status": "PASS",
+  "failures": []
+ },
+ "ContentFrame": {
+  "status": "PASS",
+  "failures": []
+ },
+ "List": {
+  "status": "FAIL",
+  "failures": [
+   "F04 1.4.11: selected row tint 1.15/1.2:1"
+  ]
+ },
+ "CollapsibleDrawer": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "NavigationRail": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "AnchoredPopover": {
+  "status": "PASS",
+  "failures": []
+ },
+ "CommandPalette": {
+  "status": "FAIL",
+  "failures": [
+   "F02 2.4.7/1.4.11: active option bg-primary/10 vs raised 1.15/1.2:1",
+   "F03 inherits TextField boundary 1.42/1.75:1"
+  ]
+ },
+ "CommandPopover": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "SegmentedControl": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "Select": {
+  "status": "FAIL",
+  "failures": [
+   "F02 2.4.7/1.4.11: active option bg-surface-sunken vs raised 1.11/1.11:1, invisible on the selected option",
+   "F03 1.4.11: trigger boundary 1.42/1.75:1"
+  ]
+ },
+ "AdaptiveDock": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "AssetBrowser": {
+  "status": "FAIL",
+  "failures": [
+   "F03 inherits Select and InspectorSearch field boundary 1.42/1.75:1"
+  ]
+ },
+ "ContextMenu": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "ContextualToolbar": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "DocumentTabBar": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "FindReplaceContent": {
+  "status": "FAIL",
+  "failures": [
+   "F03 1.4.11: input boundary 1.42/1.75:1"
+  ]
+ },
+ "FindReplacePopover": {
+  "status": "FAIL",
+  "failures": [
+   "F03 inherits FindReplaceContent input boundary 1.42/1.75:1"
+  ]
+ },
+ "FocusAndA11yLayer": {
+  "status": "PASS",
+  "failures": []
+ },
+ "HistoryPanel": {
+  "status": "PASS",
+  "failures": []
+ },
+ "InspectorPanel": {
+  "status": "FAIL",
+  "failures": [
+   "F03 inherits InspectorSearch boundary 1.42/1.75:1"
+  ]
+ },
+ "InspectorSearch": {
+  "status": "FAIL",
+  "failures": [
+   "F03 1.4.11: input boundary 1.42/1.75:1"
+  ]
+ },
+ "InspectorSection": {
+  "status": "PASS",
+  "failures": []
+ },
+ "KeyboardShortcutHUD": {
+  "status": "FAIL",
+  "failures": [
+   "F03 inherits InspectorSearch boundary 1.42/1.75:1"
+  ]
+ },
+ "MenuButton": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "PaneSplitter": {
+  "status": "FAIL",
+  "failures": [
+   "F06 1.4.11: idle divider line 1.42/1.75:1"
+  ]
+ },
+ "PresetGallery": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "PropertyRow": {
+  "status": "PASS",
+  "failures": []
+ },
+ "RangeSlider": {
+  "status": "FAIL",
+  "failures": [
+   "F03 inherits UnitInput boundary 1.42/1.75:1"
+  ]
+ },
+ "RibbonTabs": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "RotaryKnob": {
+  "status": "FAIL",
+  "failures": [
+   "F03 inherits UnitInput boundary 1.42/1.75:1"
+  ]
+ },
+ "SliderField": {
+  "status": "FAIL",
+  "failures": [
+   "F03 inherits UnitInput boundary 1.42/1.75:1"
+  ]
+ },
+ "SplitButton": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "StatusBar": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "ToastAndProgress": {
+  "status": "PASS",
+  "failures": []
+ },
+ "ToolRail": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "UnitInput": {
+  "status": "FAIL",
+  "failures": [
+   "F03 1.4.11: input boundary 1.42/1.75:1"
+  ]
+ },
+ "WorkspaceHost": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "WorkspacePresetSwitcher": {
+  "status": "FAIL",
+  "failures": [
+   "F03 inherits TextField boundary 1.42/1.75:1"
+  ]
+ },
+ "TabBar": {
+  "status": "UNVERIFIED",
+  "failures": []
+ },
+ "TextField": {
+  "status": "FAIL",
+  "failures": [
+   "F03 1.4.11: field boundary 1.42/1.75:1"
+  ]
+ },
+ "NightScope": {
+  "status": "PASS",
+  "failures": []
+ },
+ "Toolbar": {
+  "status": "PASS",
+  "failures": []
+ },
+ "WindowTitleBar": {
+  "status": "FAIL",
+  "failures": [
+   "F05 1.4.11: close glyph on hover:bg-danger 1.07/1.01:1"
+  ]
+ },
+ "Stack": {
+  "status": "PASS",
+  "failures": []
+ },
+ "Row": {
+  "status": "PASS",
+  "failures": []
+ },
+ "Spacer": {
+  "status": "PASS",
+  "failures": []
+ },
+ "Divider": {
+  "status": "PASS",
+  "failures": []
+ },
+ "Text": {
+  "status": "UNVERIFIED",
+  "failures": []
+ }
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/recording-model",
+  "title": "recording model",
+  "description": "recording model, an audio mixing and editing state model. Exports formatElapsed, presentRecording, spokenElapsed.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/recording-model.ts",
+      "content": "/**\n * Presentational recording states. The app's recorder (Forge's capture and\n * PCM controllers) owns the real session and maps its phase onto this union;\n * nothing here touches a microphone, file or audio graph.\n */\n\n/** State shown by `RecordingTrack`. One value per phase; no boolean clusters. */\nexport type RecordingViewState =\n  | { readonly kind: \"idle\" }\n  | { readonly kind: \"requesting-permission\" }\n  | { readonly kind: \"permission-denied\" }\n  | { readonly kind: \"no-input-device\" }\n  | { readonly kind: \"preparing\" }\n  | { readonly kind: \"recording\"; readonly durationMs: number }\n  | { readonly kind: \"interrupted\"; readonly durationMs: number; readonly message: string }\n  | { readonly kind: \"stopping\"; readonly durationMs: number }\n  | { readonly kind: \"saved\"; readonly durationMs: number; readonly label?: string }\n  | { readonly kind: \"error\"; readonly message: string };\n\n/** Which callback the primary button calls for a given state. */\nexport type RecordingAction = \"start\" | \"stop\" | \"save-interrupted\" | \"retry\" | \"open-settings\";\n\n/** What `RecordingTrack` renders for a {@linkcode RecordingViewState}. */\nexport interface RecordingPresentation {\n  /** One-line status, also exposed as a polite live region. */\n  readonly status: string;\n  /** Primary action, or `undefined` while the recorder is busy. */\n  readonly action?: { readonly kind: RecordingAction; readonly label: string };\n  /** True while the recorder is between states and input is blocked. */\n  readonly isBusy: boolean;\n  /** True for states that need the user's attention (denied, missing, error). */\n  readonly isProblem: boolean;\n  /** Elapsed take length to display, or `undefined` when there is no take. */\n  readonly durationMs?: number;\n}\n\n/** Elapsed time as `m:ss.t`, e.g. 83_450 ms -> `1:23.4`. */\nexport function formatElapsed(durationMs: number): string {\n  if (!Number.isFinite(durationMs) || durationMs < 0) {\n    throw new RangeError(\"durationMs must be a finite number >= 0\");\n  }\n  const tenths = Math.floor(durationMs / 100);\n  const minutes = Math.floor(tenths / 600);\n  const seconds = Math.floor((tenths % 600) / 10);\n  return minutes + \":\" + String(seconds).padStart(2, \"0\") + \".\" + (tenths % 10);\n}\n\n/** Spoken form of {@linkcode formatElapsed}, e.g. `1 minute 23 seconds`. */\nexport function spokenElapsed(durationMs: number): string {\n  formatElapsed(durationMs);\n  const total = Math.floor(durationMs / 1000);\n  const minutes = Math.floor(total / 60);\n  const seconds = total % 60;\n  const s = seconds + (seconds === 1 ? \" second\" : \" seconds\");\n  return minutes ? minutes + (minutes === 1 ? \" minute \" : \" minutes \") + s : s;\n}\n\n/**\n * Maps a state to its status text and primary action.\n * @param canOpenSettings Pass true when the app supplied an open-settings handler.\n */\nexport function presentRecording(state: RecordingViewState, canOpenSettings: boolean): RecordingPresentation {\n  switch (state.kind) {\n    case \"idle\":\n      return { status: \"Microphone ready\", action: { kind: \"start\", label: \"Start recording\" }, isBusy: false, isProblem: false };\n    case \"requesting-permission\":\n      return { status: \"Waiting for microphone permission\", isBusy: true, isProblem: false };\n    case \"permission-denied\":\n      return {\n        status: \"Microphone access is off. Allow it in Settings to record.\",\n        action: canOpenSettings\n          ? { kind: \"open-settings\", label: \"Open Settings\" }\n          : { kind: \"retry\", label: \"Ask again\" },\n        isBusy: false, isProblem: true,\n      };\n    case \"no-input-device\":\n      return {\n        status: \"No microphone found. Connect one and try again.\",\n        action: { kind: \"retry\", label: \"Try again\" }, isBusy: false, isProblem: true,\n      };\n    case \"preparing\":\n      return { status: \"Preparing microphone\", isBusy: true, isProblem: false };\n    case \"recording\":\n      return { status: \"Recording\", action: { kind: \"stop\", label: \"Stop and save\" }, isBusy: false, isProblem: false, durationMs: state.durationMs };\n    case \"interrupted\":\n      return {\n        status: state.message,\n        action: { kind: \"save-interrupted\", label: \"Save what was recorded\" },\n        isBusy: false, isProblem: true, durationMs: state.durationMs,\n      };\n    case \"stopping\":\n      return { status: \"Saving recording\", isBusy: true, isProblem: false, durationMs: state.durationMs };\n    case \"saved\":\n      return {\n        status: state.label ? \"Saved \" + state.label : \"Recording saved\",\n        action: { kind: \"start\", label: \"Record again\" }, isBusy: false, isProblem: false, durationMs: state.durationMs,\n      };\n    case \"error\":\n      return { status: state.message, action: { kind: \"retry\", label: \"Try again\" }, isBusy: false, isProblem: true };\n  }\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/audio/recording-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/recording-model",
+    "exports": [
+      "RecordingAction",
+      "RecordingPresentation",
+      "RecordingViewState",
+      "formatElapsed",
+      "presentRecording",
+      "spokenElapsed"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

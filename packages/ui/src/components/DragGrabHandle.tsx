@@ -4,6 +4,7 @@ import {createDragController,type DragController} from "./gestures/drag-controll
 import {keyboardKey,type DragPoint,type DragTransport,type KeyEventLike} from "./gestures/drag-transport.ts";
 import {PanResponderDrag} from "./gestures/PanResponderDrag.tsx";
 import {joinClasses} from "./styles.ts";
+import {space,border,opacity,size} from "../tokens.ts";
 
 // Web only: a drag otherwise selects nearby text. Not a ViewStyle key in RN.
 const NO_SELECT=(Platform.OS==="web"?{userSelect:"none"}:{}) as object;
@@ -58,9 +59,9 @@ export function DragGrabHandle({
   // Bars are drawn as top borders: forced-colors mode repaints backgrounds to
   // Canvas but keeps borders visible in CanvasText.
   const bar=color?{borderColor:color}:null;
-  const grip=children ?? <View pointerEvents="none" style={{gap:3}}>
+  const grip=children ?? <View pointerEvents="none" style={{gap:space[0.75]}}>
     {[0,1,2].map(i=><View key={i} {...{className:joinClasses(!unstyled&&!color&&"border-text-muted")}}
-      style={{width:16,height:0,borderTopWidth:2,...bar}}/>)}
+      style={{width:16,height:0,borderTopWidth:border[2],...bar}}/>)}
   </View>;
   return <Transport disabled={disabled}
     onBegin={()=>controller.begin()}
@@ -75,7 +76,7 @@ export function DragGrabHandle({
       // Not a tab stop (there is no keyboard move), but pressing it focuses it,
       // so Escape reaches onKeyDown while the pointer is down on web.
       focusable={false}
-      style={[{minWidth:44,minHeight:44,justifyContent:"center",alignItems:"center",opacity:disabled?0.4:1,...NO_SELECT},style]}>
+      style={[{minWidth:size.touch,minHeight:size.touch,justifyContent:"center",alignItems:"center",opacity:disabled?opacity[40]:1,...NO_SELECT},style]}>
       {grip}
     </View>
   </Transport>;

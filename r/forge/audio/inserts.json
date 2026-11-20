@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/inserts",
+  "title": "inserts",
+  "description": "inserts, an audio mixing and editing helper module. Exports addBlockedReason, describeInsert, filterPresets.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/inserts.ts",
+      "content": "/**\n * Insert-chain and preset helpers for {@linkcode InsertEffectRack} and\n * {@linkcode PluginPresetBrowser}. Pure; no React or engine imports.\n *\n * Original implementation; no CapCraft source consulted. Built from the\n * Cadence insert contract: up to 8 ordered slots per track or bus, each a\n * gain, EQ or compressor that can be bypassed, moved or removed.\n */\n\n/** Effect type of one insert slot, as the Cadence engine names it. */\nexport type InsertKind = \"gain\" | \"eq\" | \"compressor\";\n\n/** Every {@linkcode InsertKind}, in the order the add picker lists them. */\nexport const INSERT_KINDS: readonly InsertKind[] = [\"gain\", \"eq\", \"compressor\"];\n\n/** Display name of each {@linkcode InsertKind}. */\nexport const INSERT_KIND_LABELS = {\n  gain: \"Gain\",\n  eq: \"EQ\",\n  compressor: \"Compressor\",\n} as const satisfies Record<InsertKind, string>;\n\n/** Engine limit on insert slots per track or bus. */\nexport const MAX_INSERTS = 8;\n\n/** One insert slot, as passed to {@linkcode InsertEffectRack}. */\nexport interface InsertSlot {\n  /** Stable engine id; also the React key. */\n  readonly id: string;\n  readonly kind: InsertKind;\n  /** Committed bypass state. A bypassed slot passes audio unchanged. */\n  readonly bypassed: boolean;\n  /** Short parameter or preset summary, e.g. `\"Vocal presence\"`. */\n  readonly summary?: string;\n}\n\n/** One factory or user preset, as passed to {@linkcode PluginPresetBrowser}. */\nexport interface InsertPreset {\n  readonly id: string;\n  readonly label: string;\n}\n\n/**\n * Why a new insert cannot be added, as visible text, or `undefined` when one\n * can. `max` is the slot limit.\n */\nexport function addBlockedReason(count: number, max: number = MAX_INSERTS): string | undefined {\n  if (count < max) return undefined;\n  return `All ${max} slots are in use. Remove an effect to add another.`;\n}\n\n/**\n * Index a slot lands on after one move of `direction` (-1 earlier, 1 later),\n * or `undefined` when it is already at that end of the chain.\n */\nexport function moveTarget(index: number, direction: -1 | 1, count: number): number | undefined {\n  const next = index + direction;\n  return next < 0 || next >= count ? undefined : next;\n}\n\n/** Spoken description of a slot, e.g. `\"Slot 2 of 3, EQ, bypassed\"`. */\nexport function describeInsert(slot: Pick<InsertSlot, \"kind\" | \"bypassed\" | \"summary\">, index: number, count: number): string {\n  const parts = [`Slot ${index + 1} of ${count}`, INSERT_KIND_LABELS[slot.kind]];\n  if (slot.summary) parts.push(slot.summary);\n  if (slot.bypassed) parts.push(\"bypassed\");\n  return parts.join(\", \");\n}\n\nconst fold = (text: string) => text.normalize(\"NFD\").replace(/[̀-ͯ]/g, \"\").toLowerCase().trim();\n\n/**\n * Presets whose label contains every word of `query`, ignoring case and\n * accents, in their original order. An empty query returns all presets.\n */\nexport function filterPresets<T extends Pick<InsertPreset, \"label\">>(presets: readonly T[], query: string): T[] {\n  const words = fold(query).split(/\\s+/).filter(Boolean);\n  if (words.length === 0) return [...presets];\n  return presets.filter(p => {\n    const label = fold(p.label);\n    return words.every(w => label.includes(w));\n  });\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/audio/inserts.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/inserts",
+    "exports": [
+      "INSERT_KINDS",
+      "INSERT_KIND_LABELS",
+      "InsertKind",
+      "InsertPreset",
+      "InsertSlot",
+      "MAX_INSERTS",
+      "addBlockedReason",
+      "describeInsert",
+      "filterPresets",
+      "moveTarget"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

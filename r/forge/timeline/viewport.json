@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/viewport",
+  "title": "viewport",
+  "description": "viewport, a video timeline helper module. Exports clampViewport, fitRange, followPlayhead.",
+  "registryDependencies": [
+    "@nyc-tron/forge/timebase",
+    "@nyc-tron/forge/timeline/ruler"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timeline/viewport.ts",
+      "content": "import type {FrameRate} from \"@/components/nyc-tron/ui/components/forge/timebase\";\nimport {zoomLimits} from \"@/components/nyc-tron/ui/components/forge/timeline/ruler\";\n\n/**\n * The visible slice of a timeline: which frame is at the left edge and how many\n * pixels a frame takes. View state, not document state: the host keeps it in\n * its own store and the engine never sees it. Time always runs left to right,\n * in RTL layouts too, as in other media editors.\n */\nexport interface TimelineViewport {\n  /** Frame at the left edge; fractional while scrolled between frames. */\n  readonly startFrame:number;\n  readonly pxPerFrame:number;\n  /** Width of the lanes area in layout units. */\n  readonly widthPx:number;\n}\n/** A frame range, `start` inclusive and `end` exclusive. */\nexport interface FrameRange {\n  readonly start:number;\n  readonly end:number;\n}\n\nconst assertViewport=(v:TimelineViewport)=>{\n  if(![v.startFrame,v.pxPerFrame,v.widthPx].every(Number.isFinite)||v.pxPerFrame<=0||v.widthPx<0)\n    throw new RangeError(\"Timeline viewport needs a finite start, positive zoom and nonnegative width\");\n};\n\n/** Layout x of `frame`. */\nexport function frameToX(v:TimelineViewport,frame:number):number{\n  assertViewport(v);\n  return (frame-v.startFrame)*v.pxPerFrame;\n}\n/** Fractional frame at layout x. */\nexport function xToFrame(v:TimelineViewport,x:number):number{\n  assertViewport(v);\n  return v.startFrame+x/v.pxPerFrame;\n}\n/** Frames visible across the viewport. */\nexport const visibleFrames=(v:TimelineViewport)=>v.widthPx/v.pxPerFrame;\n/** The visible frame range, rounded outward to whole frames. */\nexport function visibleRange(v:TimelineViewport):FrameRange{\n  assertViewport(v);\n  return {start:Math.floor(v.startFrame),end:Math.ceil(v.startFrame+visibleFrames(v))};\n}\n\n/**\n * The viewport scrolled into `[0, duration]`. The right edge may overscroll by a\n * quarter of the view so the last clip can sit away from the edge; a timeline\n * shorter than the view pins to 0.\n */\nexport function clampViewport(v:TimelineViewport,durationFrames:number):TimelineViewport{\n  assertViewport(v);\n  const span=visibleFrames(v);\n  const max=Math.max(0,durationFrames-span*0.75);\n  return {...v,startFrame:Math.min(Math.max(0,v.startFrame),max)};\n}\n\n/**\n * Zoom by `factor` keeping the frame under `anchorX` fixed (the pointer, the\n * pinch center or the playhead), clamped to {@linkcode zoomLimits}.\n */\nexport function zoomAt(v:TimelineViewport,anchorX:number,factor:number,durationFrames:number,rate:FrameRate):TimelineViewport{\n  assertViewport(v);\n  if(!(factor>0)||!Number.isFinite(factor))throw new RangeError(\"Zoom factor must be positive\");\n  const limits=zoomLimits(Math.max(1,v.widthPx),durationFrames,rate);\n  const pxPerFrame=Math.min(limits.max,Math.max(limits.min,v.pxPerFrame*factor));\n  const anchor=xToFrame(v,anchorX);\n  return clampViewport({...v,pxPerFrame,startFrame:anchor-anchorX/pxPerFrame},durationFrames);\n}\n\n/** Scroll by `dx` layout units (positive moves later in time). */\nexport function scrollBy(v:TimelineViewport,dx:number,durationFrames:number):TimelineViewport{\n  assertViewport(v);\n  return clampViewport({...v,startFrame:v.startFrame+dx/v.pxPerFrame},durationFrames);\n}\n\n/** Zoom and scroll so `range` fills the view with `paddingPx` on each side. */\nexport function fitRange(v:TimelineViewport,range:FrameRange,durationFrames:number,rate:FrameRate,paddingPx=24):TimelineViewport{\n  assertViewport(v);\n  const frames=Math.max(1,range.end-range.start);\n  const usable=Math.max(1,v.widthPx-2*paddingPx);\n  const limits=zoomLimits(Math.max(1,v.widthPx),durationFrames,rate);\n  const pxPerFrame=Math.min(limits.max,Math.max(limits.min,usable/frames));\n  const center=(range.start+range.end)/2;\n  return clampViewport({...v,pxPerFrame,startFrame:center-v.widthPx/2/pxPerFrame},durationFrames);\n}\n\n/**\n * Keep the playhead visible during playback. `page` flips a full view when the\n * playhead passes the right edge (or jumps behind the left edge); `center` keeps\n * it in the middle. A viewport that already shows the playhead is returned as is.\n */\nexport function followPlayhead(v:TimelineViewport,frame:number,durationFrames:number,mode:\"page\"|\"center\"=\"page\"):TimelineViewport{\n  assertViewport(v);\n  const span=visibleFrames(v);\n  if(mode===\"center\")return clampViewport({...v,startFrame:frame-span/2},durationFrames);\n  if(frame>=v.startFrame&&frame<v.startFrame+span)return v;\n  return clampViewport({...v,startFrame:frame>=v.startFrame+span?frame:frame-span*0.1},durationFrames);\n}\n\n/** Where the viewport window sits on a mini-map `widthPx` wide showing the whole timeline. */\nexport function minimapWindow(v:TimelineViewport,durationFrames:number,widthPx:number):{left:number;width:number}{\n  assertViewport(v);\n  const total=Math.max(1,durationFrames,v.startFrame+visibleFrames(v));\n  const width=Math.max(12,Math.min(widthPx,visibleFrames(v)/total*widthPx));\n  const left=Math.min(widthPx-width,Math.max(0,v.startFrame/total*widthPx));\n  return {left,width};\n}\n\n/** The viewport after dragging the mini-map window so its left edge is at `leftPx`. */\nexport function minimapScroll(v:TimelineViewport,leftPx:number,durationFrames:number,widthPx:number):TimelineViewport{\n  assertViewport(v);\n  const total=Math.max(1,durationFrames,v.startFrame+visibleFrames(v));\n  return clampViewport({...v,startFrame:leftPx/Math.max(1,widthPx)*total},durationFrames);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/viewport.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/viewport",
+    "exports": [
+      "FrameRange",
+      "TimelineViewport",
+      "clampViewport",
+      "fitRange",
+      "followPlayhead",
+      "frameToX",
+      "minimapScroll",
+      "minimapWindow",
+      "scrollBy",
+      "visibleFrames",
+      "visibleRange",
+      "xToFrame",
+      "zoomAt"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

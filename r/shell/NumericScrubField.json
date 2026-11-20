@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/NumericScrubField",
+  "title": "Numeric Scrub Field",
+  "description": "Numeric Scrub Field, an app shell component. Props: labels, value, unit, onPreview.",
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/PrecisionScrubber"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/NumericScrubField.tsx",
+      "content": "/**\n * Canonical shell name for the shared precision scrubber. The same implementation\n * supplies bounded numeric entry, pointer precision modes, cancellation,\n * screen-reader adjustment and one async-aware commit boundary.\n */\nexport {PrecisionScrubber as NumericScrubField} from \"@/components/nyc-tron/ui/components/forge/inputs/PrecisionScrubber\";\nexport type {PrecisionScrubberProps as NumericScrubFieldProps} from \"@/components/nyc-tron/ui/components/forge/inputs/PrecisionScrubber\";\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/shell/NumericScrubField.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/NumericScrubField",
+    "exports": [
+      "NumericScrubField",
+      "NumericScrubFieldProps"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:ui"
+}

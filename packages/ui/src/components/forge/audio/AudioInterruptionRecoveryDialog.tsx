@@ -6,6 +6,7 @@ import {useStore} from 'zustand';
 import {Button} from '../../Button.tsx';
 import {joinClasses} from '../../styles.ts';
 import {recoveryMessage,recoveryTitle,type AudioRecoveryNotice} from './audio-recovery-model.ts';
+import {space} from '../../../tokens.ts';
 
 type Action=()=>void|Promise<unknown>;
 type Base=ScopedControlProps&{readonly visible:boolean;readonly onClose:()=>void;readonly error?:string;className?:string;unstyled?:boolean};
@@ -27,13 +28,13 @@ function AudioRecoveryBody(props:AudioInterruptionRecoveryDialogProps){
  const run=async(action:Action)=>{if(store.getState().busy)return;store.setState({busy:true,error:undefined});try{await action();props.onClose();}catch(e){store.setState({error:e instanceof Error?e.message:String(e)});}finally{store.setState({busy:false});}};
  const notice=props.notice,styled=!props.unstyled;
  return <Modal visible={props.visible} transparent animationType="none" onRequestClose={()=>{if(!busy)props.onClose();}}>
-  <View style={{flex:1,padding:16,alignItems:'center',justifyContent:'center'}} {...{className:styled?'bg-text/50':undefined}}>
+  <View style={{flex:1,padding:space[4],alignItems:'center',justifyContent:'center'}} {...{className:styled?'bg-text/50':undefined}}>
    <View accessibilityViewIsModal role="dialog" aria-modal accessibilityLabel={recoveryTitle(notice)} style={{width:'100%',maxWidth:460}} {...{className:joinClasses(styled&&'bg-surface-raised border border-border rounded-card p-4 gap-4',props.className)}}>
     <Text accessibilityRole="header" {...{className:styled?'text-text text-lg font-semibold':undefined}}>{recoveryTitle(notice)}</Text>
     <Text {...{className:styled?'text-text':undefined}}>{recoveryMessage(notice)}</Text>
     {notice.kind==='paused'&&!notice.ready?<Text {...{className:styled?'text-text-muted':undefined}}>Resume is unavailable until the host confirms audio is ready.</Text>:null}
     {error||props.error?<Text accessibilityLiveRegion="polite" {...{className:styled?'text-danger':undefined}}>{error??props.error}</Text>:null}
-    <View style={{flexDirection:'row',flexWrap:'wrap',gap:8,justifyContent:'flex-end'}}>
+    <View style={{flexDirection:'row',flexWrap:'wrap',gap:space[2],justifyContent:'flex-end'}}>
      <Button title="Close" variant="ghost" unstyled={props.unstyled} disabled={busy||props.disabledReason!==undefined} onPress={props.onClose}/>
      {'onKeep' in props?<><Button title="Discard recording" variant="danger" unstyled={props.unstyled} disabled={busy||props.disabledReason!==undefined} onPress={()=>{void run(props.onDiscard);}}/><Button title="Keep recording" unstyled={props.unstyled} disabled={busy||props.disabledReason!==undefined} onPress={()=>{void run(props.onKeep);}}/></>:
       'onRetry' in props?<><Button title="Stop" variant="secondary" unstyled={props.unstyled} disabled={busy||props.disabledReason!==undefined} onPress={()=>{void run(props.onStop);}}/><Button title="Restart audio" unstyled={props.unstyled} disabled={busy||props.disabledReason!==undefined} onPress={()=>{void run(props.onRetry);}}/></>:

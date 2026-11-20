@@ -3,6 +3,7 @@ import {Select} from '../../Select.tsx';
 import {UnitInput} from '../../shell/UnitInput.tsx';
 import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {validateLens,type LensSettings} from './photo-adjustments.ts';
+import {space} from '../../../tokens.ts';
 export type {LensSettings} from './photo-adjustments.ts';
 export interface LensProfile {readonly id:string;readonly label:string}
 export interface LensCorrectionPanelProps extends Omit<ViewProps,'children'> {readonly value:LensSettings;readonly profiles:readonly LensProfile[];readonly onCommit:(value:LensSettings)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}
@@ -13,7 +14,7 @@ export function LensCorrectionPanel({value,profiles,onCommit,disabled=false,unst
  const set=(change:Partial<LensSettings>)=>{if(disabled)return;const next={...value,...change};validateLens(next);onCommit(next);};
  const options=[{value:'',label:'Manual correction'},...profiles.map(p=>({value:p.id,label:p.label}))];
  if(value.profileId!==null&&!ids.has(value.profileId))options.push({value:value.profileId,label:`Unavailable profile: ${value.profileId}`});
- return <View {...props} style={[{gap:8},props.style]}>
+ return <View {...props} style={[{gap:space[2]},props.style]}>
   <SettingSwitch label="Enable lens corrections" on={value.enabled} onChange={enabled=>set({enabled})} disabled={disabled} styled={!unstyled}/>
   <Select label="Lens correction profile" value={value.profileId??''} options={options} disabled={disabled||!value.enabled} unstyled={unstyled} onValueChange={id=>set({profileId:id||null})}/>
   <UnitInput label="Lens distortion" value={value.distortion} min={-100} max={100} step={1} disabled={disabled||!value.enabled} unstyled={unstyled} onCommit={distortion=>{if(distortion!==value.distortion)set({distortion});}}/>

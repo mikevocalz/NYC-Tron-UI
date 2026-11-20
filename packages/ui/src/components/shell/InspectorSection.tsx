@@ -5,6 +5,7 @@ import {createStore} from "zustand/vanilla";
 import {joinClasses} from "../styles.ts";
 import {InspectorPanelContext,InspectorSectionContext} from "./inspector-context.ts";
 import {matchingRowCount} from "./inspector-model.ts";
+import {space,border,opacity,size} from "../../tokens.ts";
 
 /** Props for {@linkcode InspectorSection}. */
 export interface InspectorSectionProps extends Omit<ViewProps,"children"> {
@@ -69,14 +70,14 @@ export function InspectorSection({
     accessibilityLabel={title} style={[hidden?{display:"none"}:null,style]}>
     {/* Indents are leading spacers, not paddingStart: React Native Web resolves start/end
         from I18nManager, not from the CSS direction a web app sets. */}
-    <View style={{flexDirection:"row",alignItems:"center",minHeight:44,paddingHorizontal:4,gap:4}}>
+    <View style={{flexDirection:"row",alignItems:"center",minHeight:size.touch,paddingHorizontal:space[1],gap:space[1]}}>
       <View style={{width:4+indent}}/>
       <Pressable accessibilityRole="button" accessibilityLabel={title}
         accessibilityState={{expanded:open}} aria-expanded={open}
         onPress={toggle}
         {...{className:joinClasses("min-h-11 flex-1 flex-row items-center gap-2",styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}>
         <View pointerEvents="none" {...{className:joinClasses(styled&&"border-text-muted")}}
-          style={{width:7,height:7,borderRightWidth:1.5,borderBottomWidth:1.5,transform:[{rotate:open?"45deg":"-45deg"}],marginHorizontal:4}}/>
+          style={{width:7,height:7,borderRightWidth:border[1.5],borderBottomWidth:border[1.5],transform:[{rotate:open?"45deg":"-45deg"}],marginHorizontal:space[1]}}/>
         <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-sm font-semibold",styled&&(disabled?"text-text-muted":"text-text"))}}
           style={{flexShrink:1}}>{title}</Text>
       </Pressable>
@@ -89,14 +90,14 @@ export function InspectorSection({
       {/* The switch itself is smaller than 44pt; this pointer-only wrapper extends its target. */}
       {onEnabledChange?<Pressable accessible={false} focusable={false} disabled={parent.disabled}
         onPress={()=>enable(committed.current?.enabled===false)}
-        style={{minHeight:44,minWidth:44,alignItems:"center",justifyContent:"center",
+        style={{minHeight:size.touch,minWidth:size.touch,alignItems:"center",justifyContent:"center",
         ...(Platform.OS==="web"?{direction:"ltr" as const}:null)}}>
         <Switch accessibilityLabel={"Enable "+title} value={enabled!==false} disabled={parent.disabled}
           onValueChange={enable} {...(styled?WEB_SWITCH_COLORS:{})}/>
       </Pressable>:null}
     </View>
     <InspectorSectionContext.Provider value={context}>
-      <View aria-disabled={disabled||undefined} style={{display:open?"flex":"none",opacity:disabled?0.55:1,paddingBottom:open?6:0}}>
+      <View aria-disabled={disabled||undefined} style={{display:open?"flex":"none",opacity:disabled?opacity[55]:1,paddingBottom:open?space[1.5]:space[0]}}>
         {children}
       </View>
     </InspectorSectionContext.Provider>

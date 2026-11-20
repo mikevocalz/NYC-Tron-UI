@@ -30,6 +30,7 @@ import {useLocalPointer} from "../../gestures/useLocalPointer.ts";
 import {createValueGesture} from "../../gestures/value-gesture.ts";
 import {formatTimecode,type FrameRate} from "../timebase.ts";
 import {clipEnd,trimEdit,trimPreview,type EditPreview,type TimelineClip,type TimelineEdit,type TimelineTrack} from "./edits.ts";
+import {radius} from '../../../tokens.ts';
 
 /** Props for {@linkcode ClipTrimHandles}. */
 export interface ClipTrimHandlesProps extends ScopedControlProps {
@@ -117,8 +118,8 @@ function Handle({edge,...p}:ClipTrimHandlesProps&{edge:"head"|"tail"}){
     style={{position:"absolute",top:0,height:Math.max(HIT,height),width:HIT,
       ...(edge==="head"?{left:-HIT/2}:{right:-HIT/2}),alignItems:"center",justifyContent:"center",zIndex:2,...NO_SELECT}}>
     <View pointerEvents="none" {...{className:joinClasses(styled&&"bg-focus")}}
-      style={{width:8,height:Math.max(20,height-12),borderRadius:4,alignItems:"center",justifyContent:"center"}}>
-      <View {...{className:joinClasses(styled&&"bg-surface-raised")}} style={{width:2,height:12,borderRadius:1}}/>
+      style={{width:8,height:Math.max(20,height-12),borderRadius:radius[4],alignItems:"center",justifyContent:"center"}}>
+      <View {...{className:joinClasses(styled&&"bg-surface-raised")}} style={{width:2,height:12,borderRadius:radius[1]}}/>
     </View>
   </View>;
 }

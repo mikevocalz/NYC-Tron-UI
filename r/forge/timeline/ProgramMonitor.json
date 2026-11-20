@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/timeline/ProgramMonitor",
+  "title": "Program Monitor",
+  "description": "Program Monitor, a video timeline component.",
+  "registryDependencies": [
+    "@nyc-tron/forge/timeline/MediaMonitor"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/timeline/ProgramMonitor.tsx",
+      "content": "import {MediaMonitor,type MediaMonitorProps} from '@/components/nyc-tron/ui/components/forge/timeline/MediaMonitor';\nexport type ProgramMonitorProps=Omit<MediaMonitorProps,'kind'|'range'|'onRangeChange'|'onOpenSource'>;\n/** Actual presented-frame telemetry, timeline compositor surface and framing overlays. */\nexport function ProgramMonitor(props:ProgramMonitorProps){return <MediaMonitor {...props} kind=\"program\"/>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/timeline/ProgramMonitor.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/timeline/ProgramMonitor",
+    "exports": [
+      "ProgramMonitor",
+      "ProgramMonitorProps"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

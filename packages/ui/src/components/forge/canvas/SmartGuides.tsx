@@ -3,6 +3,7 @@ import {joinClasses} from "../../styles.ts";
 import {docToScreen,validateViewport,type CanvasViewport} from "./canvas-viewport.ts";
 import {formatRulerNumber} from "./ruler-model.ts";
 import {smartGuideSummary,validateSmartGuideResult,type SmartGuideResult} from "./smart-guides-model.ts";
+import {space,font,leading} from "../../../tokens.ts";
 
 /** Props for {@linkcode SmartGuides}. */
 export interface SmartGuidesProps extends Omit<ViewProps,"children"> {
@@ -50,7 +51,7 @@ export function SmartGuides({viewport,result,names,formatGap=formatRulerNumber,c
         <View {...{className:accent}} style={horizontal?{position:"absolute",left:0,top:0,width:1,height:12}:{position:"absolute",top:0,left:0,height:1,width:12}}/>
         <View {...{className:accent}} style={horizontal?{position:"absolute",right:0,top:0,width:1,height:12}:{position:"absolute",bottom:0,left:0,height:1,width:12}}/>
         {len>=28?<Text numberOfLines={1} {...{className:joinClasses(styled&&"bg-accent text-surface-raised rounded-control")}}
-          style={{fontSize:10,lineHeight:14,paddingHorizontal:4,fontVariant:["tabular-nums"],
+          style={{fontSize:font[10],lineHeight:leading[14],paddingHorizontal:space[1],fontVariant:["tabular-nums"],
             ...(horizontal?{position:"absolute",top:14}:{position:"absolute",left:14})}}>{formatGap(s.gap)}</Text>:null}
       </View>;
     }))}

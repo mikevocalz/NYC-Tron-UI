@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/workspace-model",
+  "title": "workspace model",
+  "description": "workspace model, an app shell state model. Exports documentLabel, layoutForMode, modeAnnouncement.",
+  "registryDependencies": [
+    "@nyc-tron/shell/dock-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/workspace-model.ts",
+      "content": "import {validateDockLayout,type DockLayout} from \"@/components/nyc-tron/ui/components/shell/dock-model\";\n\n/** The one document a {@linkcode WorkspaceHost} edits. */\nexport interface WorkspaceDocument {\n  /** Stable id. The canvas is keyed by it, so a new id mounts a new canvas. */\n  readonly id:string;\n  readonly title:string;\n  /** Unsaved changes. Shown as a marker and spoken with the title. */\n  readonly dirty?:boolean;\n}\n\n/** Document identity is also the canvas lifetime boundary. */\nexport function validateWorkspaceDocument(document:WorkspaceDocument):void {\n if(typeof document.id!=='string'||!document.id.trim()||document.id.length>256||typeof document.title!=='string'||!document.title.trim()||document.title.length>512||document.dirty!==undefined&&typeof document.dirty!=='boolean')throw new TypeError('Invalid workspace document identity or title');\n}\n\n/**\n * One editing mode of a {@linkcode WorkspaceHost}, such as edit, color, audio,\n * review or presentation. A mode is a panel set plus the layout it starts in.\n */\nexport interface WorkspaceMode {\n  readonly id:string;\n  /** Tab text and the spoken name, e.g. \"Color\". */\n  readonly label:string;\n  /** Ids of the panels this mode may dock. Its layouts may only use these. */\n  readonly panels:readonly string[];\n  /** Layout used until the host stores one for this mode, and restored by a reset. */\n  readonly defaultLayout:DockLayout;\n}\n\n/** Ctrl/Cmd+1 through Ctrl/Cmd+9 reach the first nine modes. */\nexport const MODE_SHORTCUT_COUNT=9;\n\n/**\n * Throws when mode ids repeat or are empty, a label is blank, a mode names a\n * panel the host does not supply, or a default or stored layout uses a panel\n * outside its mode. Stored layouts for ids that are no longer modes are\n * ignored, so a host can keep them for undo.\n */\nexport function validateWorkspace(\n  modes:readonly WorkspaceMode[],layouts:Readonly<Record<string,DockLayout>>,panelIds:readonly string[],\n):void{\n  if(!modes.length)throw new TypeError(\"A workspace needs at least one mode\");\n  if(modes.length>32||panelIds.length>256||new Set(panelIds).size!==panelIds.length)throw new RangeError(\"Workspace mode/panel identities exceed their budget or repeat\");\n  const seen=new Set<string>();\n  const known=new Set(panelIds);\n  for(const mode of modes){\n    if(typeof mode.id!==\"string\"||!mode.id.trim()||mode.id.length>256||seen.has(mode.id))throw new TypeError(\"Duplicate or missing mode id\");\n    if(typeof mode.label!==\"string\"||!mode.label.trim()||mode.label.length>512)throw new TypeError(`Mode ${mode.id} needs a label`);\n    seen.add(mode.id);\n    for(const id of mode.panels)if(!known.has(id))throw new TypeError(`Mode ${mode.id} names unknown panel ${id}`);\n    validateDockLayout(mode.defaultLayout,mode.panels);\n    const stored=Object.hasOwn(layouts,mode.id)?layouts[mode.id]:undefined;\n    if(stored)validateDockLayout(stored,mode.panels);\n  }\n}\n\n/** The layout a mode shows: the host's stored one, else the mode's default. */\nexport function layoutForMode(mode:WorkspaceMode,layouts:Readonly<Record<string,DockLayout>>):DockLayout{\n  return (Object.hasOwn(layouts,mode.id)?layouts[mode.id]:undefined)??mode.defaultLayout;\n}\n\n/** The modifier and key fields {@linkcode modeShortcutIndex} reads from a keydown. */\nexport interface ShortcutKey {\n  readonly key:string;\n  /** `KeyboardEvent.code`, so layouts whose digit row types symbols (AZERTY) still work. */\n  readonly code?:string;\n  readonly ctrlKey:boolean;\n  readonly metaKey:boolean;\n  readonly altKey:boolean;\n  readonly shiftKey:boolean;\n}\n\n/**\n * Index 0 to 8 for Ctrl+1..9 or Cmd+1..9, or null for anything else.\n * Exactly one of Ctrl and Cmd must be held, with no Alt or Shift.\n */\nexport function modeShortcutIndex(k:ShortcutKey):number|null{\n  if(k.ctrlKey===k.metaKey||k.altKey||k.shiftKey)return null;\n  const digit=/^[1-9]$/.test(k.key)?k.key:/^Digit[1-9]$/.test(k.code??\"\")?k.code!.slice(5):undefined;\n  return digit===undefined?null:Number(digit)-1;\n}\n\n/** Visible shortcut text for the mode at `index`, or undefined past the ninth. */\nexport function modeShortcutLabel(index:number,apple:boolean):string|undefined{\n  if(!Number.isInteger(index)||index<0||index>=MODE_SHORTCUT_COUNT)return undefined;\n  return (apple?\"⌘\":\"Ctrl+\")+(index+1);\n}\n\n/** What a screen reader hears after a mode switch, e.g. \"Color mode, 2 of 5\". */\nexport function modeAnnouncement(modes:readonly WorkspaceMode[],id:string):string{\n  const at=modes.findIndex(m=>m.id===id);\n  if(at<0)return \"\";\n  return `${modes[at]!.label} mode, ${at+1} of ${modes.length}`;\n}\n\n/** Spoken document title, with the unsaved state in words. */\nexport function documentLabel(document:WorkspaceDocument):string{\n  return document.dirty?`${document.title}, unsaved changes`:document.title;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/workspace-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/workspace-model",
+    "exports": [
+      "MODE_SHORTCUT_COUNT",
+      "ShortcutKey",
+      "WorkspaceDocument",
+      "WorkspaceMode",
+      "documentLabel",
+      "layoutForMode",
+      "modeAnnouncement",
+      "modeShortcutIndex",
+      "modeShortcutLabel",
+      "validateWorkspace",
+      "validateWorkspaceDocument"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

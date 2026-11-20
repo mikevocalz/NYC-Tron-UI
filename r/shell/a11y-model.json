@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/a11y-model",
+  "title": "a 11y model",
+  "description": "a 11y model, an app shell state model. Exports initialA11yState, modalityAfterKey, motionDuration.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/a11y-model.ts",
+      "content": "/** How the person last moved focus: by keyboard or by pointer (mouse, touch, pen). */\nexport type InputModality=\"keyboard\"|\"pointer\"|\"unknown\";\n/** Live-region urgency. `assertive` interrupts; keep it for errors. */\nexport type Politeness=\"polite\"|\"assertive\";\n\n/**\n * The accessibility settings a {@linkcode FocusAndA11yLayer} reads from the\n * OS and the browser.\n */\nexport interface A11yPreferences {\n  /** OS \"reduce motion\" (iOS, Android \"remove animations\") or `prefers-reduced-motion`. */\n  readonly reduceMotion:boolean;\n  /** VoiceOver, TalkBack or another screen reader is on. Web cannot detect this and reports false. */\n  readonly screenReader:boolean;\n  /** Web forced colors, iOS \"increase contrast\", Android \"high contrast text\". */\n  readonly highContrast:boolean;\n  readonly inputModality:InputModality;\n}\n/** One pending announcement; `seq` changes so identical text is read again. */\nexport interface Announcement {\n  readonly text:string;\n  readonly politeness:Politeness;\n  readonly seq:number;\n}\n/** Store state behind a {@linkcode FocusAndA11yLayer}. */\nexport interface A11yState extends A11yPreferences {\n  readonly announcement:Announcement|undefined;\n}\n\n/** Every preference off until the platform reports otherwise. */\nexport function initialA11yState(initial:Partial<A11yPreferences>={}):A11yState{\n  return {reduceMotion:false,screenReader:false,highContrast:false,inputModality:\"unknown\",announcement:undefined,...initial};\n}\n\n/**\n * The store contract the layer writes announcements through. A zustand\n * vanilla store satisfies it; this file has no runtime imports so the\n * contract tests run without an install.\n */\nexport interface A11yStore {\n  getState():A11yState;\n  setState(patch:Partial<A11yState>):void;\n}\n\n/** Queue `text` for screen readers. Empty text is ignored. */\nexport function queueAnnouncement(store:A11yStore,text:string,politeness:Politeness=\"polite\"):void{\n  const trimmed=text.trim();\n  if(!trimmed)return;\n  const seq=(store.getState().announcement?.seq??0)+1;\n  store.setState({announcement:{text:trimmed,politeness,seq}});\n}\n\n/** Animation length to use: zero when reduce motion is on. */\nexport function motionDuration(ms:number,preferences:Pick<A11yPreferences,\"reduceMotion\">):number{\n  if(!Number.isFinite(ms)||ms<0)throw new RangeError(\"Invalid duration\");\n  return preferences.reduceMotion?0:ms;\n}\n\nconst NAVIGATION_KEYS=new Set([\"Tab\",\"ArrowUp\",\"ArrowDown\",\"ArrowLeft\",\"ArrowRight\",\"Home\",\"End\",\"PageUp\",\"PageDown\",\"Enter\",\" \",\"Escape\",\"F6\"]);\n/**\n * Modality after a keydown: navigation keys mean keyboard focus. Typing into\n * a field and lone modifier presses leave it unchanged.\n */\nexport function modalityAfterKey(current:InputModality,key:string,modified:boolean):InputModality{\n  return NAVIGATION_KEYS.has(key)||(modified&&key.length===1)?\"keyboard\":current;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/a11y-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/a11y-model",
+    "exports": [
+      "A11yPreferences",
+      "A11yState",
+      "A11yStore",
+      "Announcement",
+      "InputModality",
+      "Politeness",
+      "initialA11yState",
+      "modalityAfterKey",
+      "motionDuration",
+      "queueAnnouncement"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

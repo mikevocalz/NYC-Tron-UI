@@ -13,6 +13,7 @@ import {
   COMPARE_MODES,REFERENCE_SCALE,compareFrame,compareReason,normalizeFraction,resolveCompareSource,sideBySideDirection,
   splitFromDrag,splitFromKey,splitValueText,type CompareImage,type CompareMode,type CompareSource,
 } from "./compare-model.ts";
+import {space,radius,elevation} from '../../../tokens.ts';
 
 /** Props for {@linkcode CanvasCompareView}. Mode, split and opacity are host state. */
 export interface CanvasCompareViewProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -111,14 +112,14 @@ function CanvasCompareViewBody({
       style={{position:"absolute",left:box.x,top:box.y,width:box.width,height:box.height,...extra}}/>;
   const chip=(text:string,position:object)=><View pointerEvents="none"
     {...{className:joinClasses(styled&&"rounded-control bg-surface-raised border border-border")}}
-    style={{position:"absolute",paddingHorizontal:8,paddingVertical:3,...position}}>
+    style={{position:"absolute",paddingHorizontal:space[2],paddingVertical:space[0.75],...position}}>
     <Text {...{className:joinClasses(styled&&"text-text text-xs font-semibold")}}>{text}</Text>
   </View>;
 
   const stage=()=>{
     if(!frame||width<=0)return null;
     if(missing&&mode!=="reference"){
-      return <View style={{flex:1,alignItems:"center",justifyContent:"center",padding:16}}>
+      return <View style={{flex:1,alignItems:"center",justifyContent:"center",padding:space[4]}}>
         <Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{textAlign:"center"}}>{missing}</Text>
       </View>;
     }
@@ -184,9 +185,9 @@ function CanvasCompareViewBody({
             <View pointerEvents="none" {...{className:joinClasses(styled&&"bg-surface-raised")}}
               style={{position:"absolute",top:0,bottom:0,width:2}}/>
             <View pointerEvents="none" {...{className:joinClasses(styled&&"bg-surface-raised border border-border")}}
-              style={{width:28,height:44,borderRadius:14,alignItems:"center",justifyContent:"center",flexDirection:"row",gap:3,
-                boxShadow:"0 1px 3px rgba(0,0,0,0.25)"}}>
-              {[0,1].map(i=><View key={i} {...{className:joinClasses(styled&&"bg-text-muted")}} style={{width:1.5,height:14,borderRadius:1}}/>)}
+              style={{width:28,height:44,borderRadius:radius[14],alignItems:"center",justifyContent:"center",flexDirection:"row",gap:space[0.75],
+                boxShadow:elevation[1]}}>
+              {[0,1].map(i=><View key={i} {...{className:joinClasses(styled&&"bg-text-muted")}} style={{width:1.5,height:14,borderRadius:radius[1]}}/>)}
             </View>
           </View>
         </PanResponderDrag>
@@ -213,8 +214,8 @@ function CanvasCompareViewBody({
         </View>}
       {beforeImage&&ref?<View accessible accessibilityRole="image" accessibilityLabel={beforeLabel+" image"}
         {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-raised")}}
-        style={{position:"absolute",top:12,end:12,width:ref.width+8,height:ref.height+8,padding:4,overflow:"hidden",
-          boxShadow:"0 4px 12px rgba(0,0,0,0.18)"}}>
+        style={{position:"absolute",top:12,end:12,width:ref.width+8,height:ref.height+8,padding:space[1],overflow:"hidden",
+          boxShadow:elevation[2]}}>
         <Image source={{uri:beforeImage.uri}} accessibilityIgnoresInvertColors resizeMode="stretch"
           style={{width:ref.width,height:ref.height}}/>
         {chip(beforeLabel,{start:8,bottom:8})}
@@ -234,7 +235,7 @@ function CanvasCompareViewBody({
       }}
       {...{className:joinClasses("overflow-hidden",styled&&"rounded-card bg-surface-sunken border border-border")}}
       style={{flex:1,minHeight:200,...NO_SELECT}}>
-      {primary?stage():<View style={{flex:1,alignItems:"center",justifyContent:"center",padding:16}}>
+      {primary?stage():<View style={{flex:1,alignItems:"center",justifyContent:"center",padding:space[4]}}>
         <Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{textAlign:"center"}}>{missing}</Text>
       </View>}
     </View>

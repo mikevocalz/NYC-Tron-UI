@@ -4,6 +4,8 @@ import {
 } from "react-native";
 import { drawerGeometry, type DrawerMode } from "./drawer-model.ts";
 import { joinClasses } from "../styles.ts";
+import { space, scrim } from "../../tokens.ts";
+import { tokens } from "./CollapsibleDrawer.tokens.ts";
 
 export interface DrawerDestination {
   readonly id: string;
@@ -70,7 +72,7 @@ export function CollapsibleDrawer({
         !unstyled && "rounded-control", itemClassName,
       ) }}
     >
-      <Text aria-hidden style={{ fontSize: 22 }}>☰</Text>
+      <Text aria-hidden style={{ fontSize: tokens.font22 }}>☰</Text>
     </Pressable>
   );
   const renderItems = (group: readonly DrawerDestination[]) =>
@@ -128,7 +130,7 @@ export function CollapsibleDrawer({
           accessibilityLabel="Close navigation menu"
           onPress={() => onOpenChange(false)}
           style={{ position: "absolute", top: 0, right: 0, bottom: 0, left: 0,
-            zIndex: 2, backgroundColor: "rgba(0,0,0,0.25)" }}
+            zIndex: 2, backgroundColor: scrim[25] }}
         />
       ) : null}
       <View
@@ -157,14 +159,14 @@ export function CollapsibleDrawer({
         <ScrollView
           accessibilityLabel="Navigation destinations"
           keyboardShouldPersistTaps="handled"
-          contentContainerStyle={{ gap: 4, paddingHorizontal: 6, paddingVertical: 8 }}
+          contentContainerStyle={{ gap: space[1], paddingHorizontal: space[1.5], paddingVertical: space[2] }}
         >
           {renderItems(items)}
         </ScrollView>
         {footerItems.length ? (
           <View
             accessibilityLabel="Navigation footer"
-            style={{ paddingHorizontal: 6, paddingVertical: 8 }}
+            style={{ paddingHorizontal: space[1.5], paddingVertical: space[2] }}
           >{renderItems(footerItems)}</View>
         ) : null}
       </View>

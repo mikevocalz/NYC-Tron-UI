@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/shell-keys",
+  "title": "shell keys",
+  "description": "shell keys, an app shell helper module. Exports arrowStep, nodeIsRTL, rovingTarget.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/shell-keys.ts",
+      "content": "/**\n * Keyboard helpers shared by the studio shell controls. React Native Web\n * delivers a browser KeyboardEvent as `nativeEvent`; desktop hosts can\n * deliver the same fields. Hosts without key events use the native\n * screen-reader actions alongside these rules.\n *\n * Horizontal arrows follow reading direction: in RTL, ArrowLeft moves to the\n * next item. Vertical arrows never flip.\n */\nexport interface ShellKey {\n  readonly key:string;\n  readonly altKey:boolean;\n  readonly ctrlKey:boolean;\n  readonly metaKey:boolean;\n  readonly shiftKey:boolean;\n  preventDefault():void;\n  stopPropagation():void;\n  readonly target:unknown;\n}\n\n/** Read the key data from an RN web or desktop keydown event. */\nexport function shellKey(event:unknown):ShellKey{\n  const e=event as Record<string,unknown>&{nativeEvent?:Record<string,unknown>;preventDefault?:()=>void;stopPropagation?:()=>void;currentTarget?:unknown;target?:unknown};\n  const n=e.nativeEvent??e;\n  return {\n    key:String(n.key??\"\"),altKey:!!n.altKey,ctrlKey:!!n.ctrlKey,metaKey:!!n.metaKey,shiftKey:!!n.shiftKey,\n    preventDefault:()=>e.preventDefault?.(),stopPropagation:()=>e.stopPropagation?.(),\n    target:e.currentTarget??e.target,\n  };\n}\n\n/** Orientation of a list of focus stops. */\nexport type ShellAxis=\"horizontal\"|\"vertical\";\n\n/** +1/-1 for an arrow that moves along `axis`, or null for any other key. */\nexport function arrowStep(key:string,axis:ShellAxis,rtl:boolean):1|-1|null{\n  if(axis===\"horizontal\"){\n    if(key===\"ArrowRight\")return rtl?-1:1;\n    if(key===\"ArrowLeft\")return rtl?1:-1;\n    return null;\n  }\n  if(key===\"ArrowDown\")return 1;\n  if(key===\"ArrowUp\")return -1;\n  return null;\n}\n\n/**\n * Roving focus target for arrows (wrapping), Home and End over the enabled\n * entries of `disabled`. `current` -1 enters at the first or last stop.\n * Returns null for any other key or when every entry is disabled.\n */\nexport function rovingTarget(current:number,key:string,disabled:readonly boolean[],axis:ShellAxis,rtl:boolean):number|null{\n  const enabled=disabled.flatMap((off,i)=>off?[]:[i]);\n  if(!enabled.length)return null;\n  if(key===\"Home\")return enabled[0]!;\n  if(key===\"End\")return enabled[enabled.length-1]!;\n  const step=arrowStep(key,axis,rtl);\n  if(step===null)return null;\n  const at=enabled.indexOf(current);\n  if(at<0)return step===1?enabled[0]!:enabled[enabled.length-1]!;\n  return enabled[(at+step+enabled.length)%enabled.length]!;\n}\n\n/** True when a DOM node on RN web lays out right to left. Native callers use I18nManager. */\nexport function nodeIsRTL(node:unknown):boolean{\n  const view=globalThis as {getComputedStyle?:(n:unknown)=>{direction?:string}};\n  if(!node||typeof view.getComputedStyle!==\"function\")return false;\n  try{return view.getComputedStyle(node).direction===\"rtl\";}catch{return false;}\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/shell-keys.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/shell-keys",
+    "exports": [
+      "ShellAxis",
+      "ShellKey",
+      "arrowStep",
+      "nodeIsRTL",
+      "rovingTarget",
+      "shellKey"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

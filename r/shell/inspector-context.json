@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/inspector-context",
+  "title": "Inspector Panel Context",
+  "description": "Inspector Panel Context, an app shell component. Also exports InspectorSectionContext.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/shell/inspector-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/inspector-context.ts",
+      "content": "import {createContext} from \"react\";\nimport type {StoreApi} from \"zustand/vanilla\";\nimport type {InspectorRegistryState} from \"@/components/nyc-tron/ui/components/shell/inspector-model\";\n\n/** Provided by {@linkcode InspectorPanel} to its sections and rows. */\nexport interface InspectorPanelContextValue {\n  readonly query:string;\n  readonly registry:StoreApi<InspectorRegistryState>;\n}\n/** Provided by {@linkcode InspectorSection} to nested sections and rows. */\nexport interface InspectorSectionContextValue {\n  /** Ids of this section and every section around it, outermost first. */\n  readonly path:readonly string[];\n  /** True when this section or one around it is switched off. */\n  readonly disabled:boolean;\n  readonly depth:number;\n}\n\nexport const InspectorPanelContext=createContext<InspectorPanelContextValue|undefined>(undefined);\nexport const InspectorSectionContext=createContext<InspectorSectionContextValue>({path:[],disabled:false,depth:0});\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/inspector-context.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/inspector-context",
+    "exports": [
+      "InspectorPanelContext",
+      "InspectorPanelContextValue",
+      "InspectorSectionContext",
+      "InspectorSectionContextValue"
+    ],
+    "peers": {
+      "react": ">=19.0.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

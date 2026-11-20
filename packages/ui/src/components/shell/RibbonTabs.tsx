@@ -6,6 +6,7 @@ import {MenuButton} from "./MenuButton.tsx";
 import {SplitButton} from "./SplitButton.tsx";
 import {nodeIsRTL,rovingTarget,shellKey} from "./shell-keys.ts";
 import {inlineGalleryItems,ribbonTabLabel,validateRibbon,type RibbonCommand,type RibbonGallery,type RibbonTab} from "./ribbon-model.ts";
+import {space,border} from "../../tokens.ts";
 
 export type {RibbonButton,RibbonCommand,RibbonGallery,RibbonGalleryItem,RibbonGroup,RibbonSplit,RibbonTab} from "./ribbon-model.ts";
 
@@ -84,13 +85,13 @@ export function RibbonTabs({
   };
   return <View {...rest} {...{className:joinClasses(styled&&"border-b border-border bg-surface-raised",className)}} style={style}>
     <View style={{flexDirection:"row",alignItems:"flex-end"}}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{flex:1}} contentContainerStyle={{paddingHorizontal:4}}>
-        <View accessibilityRole="tablist" accessibilityLabel={label} style={{flexDirection:"row",alignItems:"flex-end",gap:2}}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{flex:1}} contentContainerStyle={{paddingHorizontal:space[1]}}>
+        <View accessibilityRole="tablist" accessibilityLabel={label} style={{flexDirection:"row",alignItems:"flex-end",gap:space[0.5]}}>
           {tabs.map((tab,i)=>{
             const selected=i===activeIndex;
             return <View key={tab.id} style={{alignItems:"stretch"}}>
               {tab.contextualGroup?<Text numberOfLines={1} {...{className:joinClasses(styled&&"text-accent text-xs font-semibold")}}
-                style={{paddingHorizontal:12,paddingTop:2}} accessibilityElementsHidden importantForAccessibility="no">{tab.contextualGroup}</Text>:null}
+                style={{paddingHorizontal:space[3],paddingTop:space[0.5]}} accessibilityElementsHidden importantForAccessibility="no">{tab.contextualGroup}</Text>:null}
               <Pressable ref={node=>{refs.current[i]=node;}} accessibilityRole="tab"
                 accessibilityLabel={ribbonTabLabel(tab)} disabled={disabled} accessibilityState={{selected:selected&&!collapsed,disabled}} aria-selected={selected&&!collapsed}
                 onPress={()=>pick(tab.id)}
@@ -102,7 +103,7 @@ export function RibbonTabs({
               {/* Selection rule is a border so forced colors keeps it. */}
               {/* Forced colors paints even transparent borders, so an unselected tab draws no rule at all. */}
               <View {...{className:joinClasses(styled&&selected&&!collapsed&&"border-primary")}}
-                style={{height:selected&&!collapsed?0:3,borderTopWidth:selected&&!collapsed?3:0}}/>
+                style={{height:selected&&!collapsed?0:3,borderTopWidth:selected&&!collapsed?border[3]:border[0]}}/>
             </View>;
           })}
         </View>
@@ -111,15 +112,15 @@ export function RibbonTabs({
         disabled={disabled} aria-expanded={!collapsed} onPress={()=>current()?.onCollapsedChange?.(!collapsed)}
         {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center",styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}>
         <View pointerEvents="none" {...{className:joinClasses(styled&&"border-text-muted")}}
-          style={{width:8,height:8,borderRightWidth:1.5,borderBottomWidth:1.5,transform:[{rotate:collapsed?"45deg":"-135deg"}],marginTop:collapsed?-4:4}}/>
+          style={{width:8,height:8,borderRightWidth:border[1.5],borderBottomWidth:border[1.5],transform:[{rotate:collapsed?"45deg":"-135deg"}],marginTop:collapsed?-space[1]:space[1]}}/>
       </Pressable>:null}
     </View>
     {active&&!collapsed?<View accessibilityLabel={ribbonTabLabel(active)} {...{role:"tabpanel",className:joinClasses(styled&&"border-t border-border")}}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{padding:4,gap:4,alignItems:"stretch"}}>
-        {active.groups.map((group,gi)=><View key={group.id} style={{flexDirection:"row",gap:4}}>
-          {gi>0?<View pointerEvents="none" {...{className:joinClasses(styled&&"border-border")}} style={{width:0,borderLeftWidth:1,marginVertical:4}}/>:null}
-          <View accessibilityLabel={group.label} {...{role:"group"}} style={{paddingHorizontal:6,gap:2,justifyContent:"space-between"}}>
-            <View style={{flexDirection:"row",alignItems:"center",gap:4}}>{group.commands.map(command)}</View>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{padding:space[1],gap:space[1],alignItems:"stretch"}}>
+        {active.groups.map((group,gi)=><View key={group.id} style={{flexDirection:"row",gap:space[1]}}>
+          {gi>0?<View pointerEvents="none" {...{className:joinClasses(styled&&"border-border")}} style={{width:0,borderLeftWidth:border[1],marginVertical:space[1]}}/>:null}
+          <View accessibilityLabel={group.label} {...{role:"group"}} style={{paddingHorizontal:space[1.5],gap:space[0.5],justifyContent:"space-between"}}>
+            <View style={{flexDirection:"row",alignItems:"center",gap:space[1]}}>{group.commands.map(command)}</View>
             <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{textAlign:"center"}}>{group.label}</Text>
           </View>
         </View>)}
@@ -133,7 +134,7 @@ function Gallery({editScope,disabled,gallery,styled,onPick,usableRegions}:{editS
   const refs=useRef<(ComponentRef<typeof Pressable>|null)[]>([]);
   const selectedIndex=Math.max(0,shown.findIndex(i=>i.id===gallery.selectedId));
   const onKeyDown=(index:number)=>(event:unknown)=>{if(disabled)return;const k=shellKey(event);if(k.altKey||k.ctrlKey||k.metaKey)return;const next=rovingTarget(index,k.key,shown.map(()=>false),"horizontal",nodeIsRTL(k.target)||I18nManager.isRTL);if(next===null)return;k.preventDefault();(refs.current[next] as unknown as {focus?:()=>void}|null)?.focus?.();onPick(shown[next]!.id);};
-  return <View accessibilityLabel={gallery.label} {...{role:"radiogroup"}} style={{flexDirection:"row",alignItems:"center",gap:2}}>
+  return <View accessibilityLabel={gallery.label} {...{role:"radiogroup"}} style={{flexDirection:"row",alignItems:"center",gap:space[0.5]}}>
     {shown.map((item,index)=>{
       const on=item.id===gallery.selectedId;
       return <Pressable key={item.id} ref={node=>{refs.current[index]=node;}} {...(Platform.OS==="web"?{onKeyDown:onKeyDown(index),tabIndex:!disabled&&index===selectedIndex?0:-1}:{})} accessibilityLabel={item.label} {...{role:"radio"}} aria-checked={on}
@@ -142,7 +143,7 @@ function Gallery({editScope,disabled,gallery,styled,onPick,usableRegions}:{editS
           styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus",
           styled&&(on?"border border-focus bg-primary/10":"hover:bg-surface-sunken"))}}
         // Unselected items draw no border (forced colors would paint a transparent one); padding keeps the size.
-        style={{padding:on&&styled?3:4}}>
+        style={{padding:on&&styled?space[0.75]:space[1]}}>
         <View pointerEvents="none">{item.preview}</View>
       </Pressable>;
     })}

@@ -8,6 +8,8 @@ import {
 } from "./tree-grid.ts";
 import {createRowHeightIndex} from "./tree-row-heights.ts";
 import {joinClasses} from "../styles.ts";
+import {space,size} from "../../tokens.ts";
+import {tokens} from "./TreeGrid.tokens.ts";
 
 /** A value column of {@linkcode TreeGrid}. The hierarchy label column is always first and always pinned. */
 export interface TreeGridColumn {id:string;title:string;width?:number}
@@ -152,25 +154,25 @@ export function TreeGrid({
     const isSelected=selected.has(id);
     const isFocused=focusId===id;
     const isExpanded=expanded.has(id);
-    const label=<View style={{flexDirection:"row",alignItems:"center",minHeight:44,
+    const label=<View style={{flexDirection:"row",alignItems:"center",minHeight:size.touch,
       width:compact?undefined:LABEL_WIDTH,flex:compact?1:undefined,paddingLeft:Math.min(item.depth*16,128)}}>
       {item.hasChildren?<Pressable accessibilityRole="button"
         accessibilityLabel={(isExpanded?"Collapse ":"Expand ")+item.node.label}
         accessibilityState={{expanded:isExpanded}}
         onPress={()=>toggleExpanded(id)}
         {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
-        style={{minWidth:44,minHeight:44,justifyContent:"center",alignItems:"center"}}>
+        style={{minWidth:size.touch,minHeight:size.touch,justifyContent:"center",alignItems:"center"}}>
         <Text {...{className:text}}>{isExpanded?"▾":"▸"}</Text>
       </Pressable>
       // Leaves get a spacer, not a disabled "Expand" button screen readers would announce.
       :<View importantForAccessibility="no-hide-descendants" accessibilityElementsHidden
-        style={{minWidth:44,minHeight:44}}/>}
+        style={{minWidth:size.touch,minHeight:size.touch}}/>}
       <Text {...{className:text}} style={{flex:1,fontWeight:isSelected?"700":"400"}}>{item.node.label}</Text>
     </View>;
     const cells=(list:readonly TreeGridColumn[])=>list.map(c=><View key={c.id} role="cell"
       style={{width:compact?"100%":c.width??140,
-      flexDirection:compact?"row":"column",gap:8,alignItems:compact?"center":"flex-start",justifyContent:"center",
-      minHeight:compact?28:44}}>
+      flexDirection:compact?"row":"column",gap:space[2],alignItems:compact?"center":"flex-start",justifyContent:"center",
+      minHeight:compact?28:size.touch}}>
       {compact?<Text {...{className:muted}} style={{width:"42%",fontWeight:"600"}}>{c.title}</Text>:null}
       <View style={{flex:1}}>{cellValue(item.node,c)}</View>
     </View>);
@@ -186,9 +188,9 @@ export function TreeGrid({
       }}
       {...{className:joinClasses(styled&&"border-b border-border",
         styled&&isSelected&&"bg-primary/10",styled&&isFocused&&"ring-2 ring-focus")}}
-      style={{minHeight:compact?rowHeight+44:rowHeight,flexDirection:compact?"column":"row",paddingVertical:4}}>
+      style={{minHeight:compact?rowHeight+44:rowHeight,flexDirection:compact?"column":"row",paddingVertical:space[1]}}>
       {compact
-        ?<>{label}<View style={{paddingLeft:44}}>{cells([...pinned,...scrollable])}</View></>
+        ?<>{label}<View style={{paddingLeft:tokens.space11}}>{cells([...pinned,...scrollable])}</View></>
         // The pinned strip is opaque so scrolled cells pass under it; it
         // repeats the row's selection and focus tint on its inner layer.
         :<><Animated.View {...{className:surface}} style={[{width:pinnedWidth},stick]}>
@@ -203,7 +205,7 @@ export function TreeGrid({
     renderItem={renderRow}
     onScrollToIndexFailed={info=>listRef.current?.scrollToOffset({
       offset:info.index<heights.current.count?heights.current.offsetOf(info.index):info.averageItemLength*info.index,animated:false})}
-    ListEmptyComponent={<Text {...{className:text}} style={{padding:12}}>{emptyLabel}</Text>}/>;
+    ListEmptyComponent={<Text {...{className:text}} style={{padding:space[3]}}>{emptyLabel}</Text>}/>;
 
   return <View {...rest} role="treegrid" focusable
     accessibilityLabel={rest.accessibilityLabel??"Tree grid"}
@@ -223,7 +225,7 @@ export function TreeGrid({
           style={{flexDirection:"row",height:44,alignItems:"center"}}>
           <Animated.View {...{className:joinClasses(styled&&"bg-surface-sunken")}}
             style={[{flexDirection:"row",width:pinnedWidth,height:44,alignItems:"center"},stick]}>
-            <View role="columnheader" style={{width:LABEL_WIDTH,paddingLeft:44,justifyContent:"center"}}>
+            <View role="columnheader" style={{width:LABEL_WIDTH,paddingLeft:tokens.space11,justifyContent:"center"}}>
               <Text {...{className:text}} style={{fontWeight:"700"}}>Name</Text>
             </View>
             {pinned.map(c=>header(c,true))}

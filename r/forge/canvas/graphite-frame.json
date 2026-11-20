@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/canvas/graphite-frame",
+  "title": "graphite frame",
+  "description": "graphite frame, a canvas helper module. Exports submitCanvasFrame.",
+  "dependencies": [
+    "react-native-skia@>=3.9.1 <4"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/forge/canvas/canvas-viewport"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/canvas/graphite-frame.ts",
+      "content": "import type {SkCanvas,SkGraphiteContext} from 'react-native-skia';\nimport {validateViewport,type CanvasViewport} from '@/components/nyc-tron/ui/components/forge/canvas/canvas-viewport';\n/** Synchronously record and submit one complete document frame. Never reports presentation. */\nexport function submitCanvasFrame(context:SkGraphiteContext,viewport:CanvasViewport,clearColor:Parameters<SkCanvas['clear']>[0],draw:(canvas:SkCanvas,viewport:CanvasViewport)=>void,isCurrent:()=>boolean):boolean{\n validateViewport(viewport);\n if(!isCurrent()||viewport.width<=0||viewport.height<=0||context.width<=0||context.height<=0)return false;\n const canvas=context.beginRecording();let recording:ReturnType<SkGraphiteContext['finishRecording']>|undefined,finished=false;\n try{\n  canvas.clear(clearColor);canvas.save();\n  try{canvas.scale(context.width/viewport.width,context.height/viewport.height);canvas.translate(viewport.panX,viewport.panY);canvas.scale(viewport.zoom,viewport.zoom);const result:unknown=draw(canvas,viewport);if(result&&typeof (result as {then?:unknown}).then==='function')throw new TypeError('Canvas draw callbacks must finish synchronously');}\n  finally{canvas.restore();}\n  finished=true;recording=context.finishRecording();\n  if(!isCurrent())return false;\n  context.submit(recording);return true;\n }finally{\n  // Graphite exposes no abort operation. Close a failed recording without submitting it.\n  if(!finished)recording=context.finishRecording();\n  recording?.dispose();\n }\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/canvas/graphite-frame.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/canvas/graphite-frame",
+    "exports": [
+      "submitCanvasFrame"
+    ],
+    "optionalPeers": [
+      "react-native-skia"
+    ],
+    "requiresNativeRebuild": true
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

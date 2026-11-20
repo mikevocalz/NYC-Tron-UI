@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/document/list-model",
+  "title": "list model",
+  "description": "list model, a word processor state model. Exports canIndent, canOutdent, defaultLevelFormats.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/document/list-model.ts",
+      "content": "/** How one list level numbers its items. */\nexport type ListFormat=\"bullet\"|\"decimal\"|\"lowerLetter\"|\"upperLetter\"|\"lowerRoman\"|\"upperRoman\";\n\n/** What a paragraph is, list-wise. `none` takes it out of the list. */\nexport type ListKind=\"none\"|\"bullet\"|\"numbered\"|\"multilevel\";\n\n/** Deepest level index; levels run 0..8, nine in all, as in Word and OOXML. */\nexport const LIST_MAX_LEVEL=8;\n\n/** Every {@linkcode ListFormat}, in picker order. */\nexport const LIST_FORMATS:readonly ListFormat[]=[\"bullet\",\"decimal\",\"lowerLetter\",\"upperLetter\",\"lowerRoman\",\"upperRoman\"];\n\n/** Level formats a {@linkcode ListKind} starts with; multilevel cycles 1. a. i. down the levels. */\nexport function defaultLevelFormats(kind:Exclude<ListKind,\"none\">):ListFormat[]{\n  if(kind===\"bullet\")return Array(LIST_MAX_LEVEL+1).fill(\"bullet\");\n  if(kind===\"numbered\")return Array(LIST_MAX_LEVEL+1).fill(\"decimal\");\n  return Array.from({length:LIST_MAX_LEVEL+1},(_,i)=>([\"decimal\",\"lowerLetter\",\"lowerRoman\"] as const)[i%3]!);\n}\n\nconst BULLETS=[\"•\",\"◦\",\"▪\"] as const;\n\nfunction roman(n:number):string{\n  const table:Array<[number,string]>=[[1000,\"m\"],[900,\"cm\"],[500,\"d\"],[400,\"cd\"],[100,\"c\"],[90,\"xc\"],[50,\"l\"],[40,\"xl\"],[10,\"x\"],[9,\"ix\"],[5,\"v\"],[4,\"iv\"],[1,\"i\"]];\n  let out=\"\",v=n;\n  for(const [k,s] of table)while(v>=k){out+=s;v-=k;}\n  return out;\n}\n\nfunction letters(n:number):string{\n  // a..z, then aa, bb, ... as Word numbers past 26.\n  const i=(n-1)%26,repeat=Math.floor((n-1)/26)+1;\n  return String.fromCharCode(97+i).repeat(repeat);\n}\n\n/** The marker for item number `n` (1-based) at `level` in `format`: \"3.\", \"c.\", \"iii.\", \"•\". */\nexport function listMarker(format:ListFormat,n:number,level=0):string{\n  if(!Number.isSafeInteger(n)||n<1)throw new RangeError(`List item number must be a positive integer, got ${n}`);\n  switch(format){\n    case \"bullet\":return BULLETS[level%BULLETS.length]!;\n    case \"decimal\":return n+\".\";\n    case \"lowerLetter\":return letters(n)+\".\";\n    case \"upperLetter\":return letters(n).toUpperCase()+\".\";\n    case \"lowerRoman\":return roman(n)+\".\";\n    case \"upperRoman\":return roman(n).toUpperCase()+\".\";\n  }\n}\n\n/** Source capability; consumers must check the linked control, not assume a release has it. */\nexport const BULLETS_NUMBERING_CAPABILITIES=Object.freeze({version:1 as const,authoritativeMarkers:true as const});\n/** Maximum UTF-16 code units in one host-supplied, single-line marker. */\nexport const LIST_PREVIEW_MARKER_MAX=4096;\n\n/** One paragraph of a list. */\nexport interface ListItemLevel {\n  readonly level:number;\n}\n\n/** Checks every level is an integer in 0..{@linkcode LIST_MAX_LEVEL}. */\nexport function validateLevels(items:readonly ListItemLevel[]):void{\n  items.forEach((it,i)=>{\n    if(!Number.isSafeInteger(it.level)||it.level<0||it.level>LIST_MAX_LEVEL)throw new RangeError(`Item ${i} has invalid level ${it.level}`);\n  });\n}\n\n/**\n * Markers for consecutive list items. A level's counter restarts whenever a\n * shallower item appears, so \"1. a. b. 2. a.\" numbers the way readers expect.\n */\nexport function listMarkers(items:readonly ListItemLevel[],formats:readonly ListFormat[]):string[]{\n  validateLevels(items);\n  const counters=Array<number>(LIST_MAX_LEVEL+1).fill(0);\n  return items.map(it=>{\n    counters[it.level]!++;\n    for(let d=it.level+1;d<=LIST_MAX_LEVEL;d++)counters[d]=0;\n    return listMarker(formats[it.level]??\"bullet\",counters[it.level]!,it.level);\n  });\n}\n\n/** Optional authoritative text; the empty string intentionally represents no marker. */\nexport interface ListMarkerItem extends ListItemLevel {readonly marker?:string}\n/** Preserve the legacy counter helper while allowing document-owned starts/mixed contexts. */\nexport function listPreviewMarkers(items:readonly ListMarkerItem[],formats:readonly ListFormat[],kind:ListKind|\"mixed\"):string[]{\n  validateLevels(items);\n  for(const item of items){if(item.marker!==undefined&&(typeof item.marker!==\"string\"||item.marker.length>LIST_PREVIEW_MARKER_MAX||/[\\p{Cc}\\p{Cf}\\p{Cs}\\p{Zl}\\p{Zp}]/u.test(item.marker)))throw new RangeError(\"Invalid authoritative list preview marker\");}\n  const defaults=items.some(item=>item.marker===undefined)?(kind===\"none\"?items.map(()=>\"\"):listMarkers(items,formats)):undefined;\n  return items.map((item,index)=>item.marker??defaults![index]!);\n}\n\n/**\n * Nesting policy: an item may go at most one level deeper than the item\n * before it, never deeper than {@linkcode LIST_MAX_LEVEL}, and the first item\n * stays at level 0. Applies to the range `[from, to]` as one block.\n */\nexport function canIndent(items:readonly ListItemLevel[],from:number,to=from):boolean{\n  if(from<=0||to<from||to>=items.length)return false;\n  const prev=items[from-1]!.level;\n  for(let i=from;i<=to;i++)if(items[i]!.level>=LIST_MAX_LEVEL)return false;\n  return items[from]!.level+1<=prev+1;\n}\n\n/** An outdent is allowed when every item in `[from, to]` is below level 0. */\nexport function canOutdent(items:readonly ListItemLevel[],from:number,to=from):boolean{\n  if(from<0||to<from||to>=items.length)return false;\n  for(let i=from;i<=to;i++)if(items[i]!.level<=0)return false;\n  return true;\n}\n\n/** New levels after indenting (+1) or outdenting (-1) `[from, to]`; throws when the policy forbids it. */\nexport function shiftLevels<T extends ListItemLevel>(items:readonly T[],from:number,to:number,direction:1|-1):T[]{\n  const ok=direction>0?canIndent(items,from,to):canOutdent(items,from,to);\n  if(!ok)throw new RangeError(direction>0?\"Cannot indent these items further\":\"These items are already at the first level\");\n  return items.map((it,i)=>i>=from&&i<=to?{...it,level:it.level+direction}:it);\n}\n\n/** Spoken name of a format, e.g. \"1, 2, 3\". */\nexport function formatLabel(format:ListFormat):string{\n  return {bullet:\"Bullet\",decimal:\"1, 2, 3\",lowerLetter:\"a, b, c\",upperLetter:\"A, B, C\",lowerRoman:\"i, ii, iii\",upperRoman:\"I, II, III\"}[format];\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/document/list-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/document/list-model",
+    "exports": [
+      "BULLETS_NUMBERING_CAPABILITIES",
+      "LIST_FORMATS",
+      "LIST_MAX_LEVEL",
+      "LIST_PREVIEW_MARKER_MAX",
+      "ListFormat",
+      "ListItemLevel",
+      "ListKind",
+      "ListMarkerItem",
+      "canIndent",
+      "canOutdent",
+      "defaultLevelFormats",
+      "formatLabel",
+      "listMarker",
+      "listMarkers",
+      "listPreviewMarkers",
+      "shiftLevels",
+      "validateLevels"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

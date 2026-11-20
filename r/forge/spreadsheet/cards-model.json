@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/spreadsheet/cards-model",
+  "title": "cards model",
+  "description": "cards model, a spreadsheet state model. Exports sheetCardAt, sheetCards.",
+  "registryDependencies": [
+    "@nyc-tron/forge/sheet-window"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/spreadsheet/cards-model.ts",
+      "content": "// Portions ported from GridCraft for Android,\n// apps/gridcraft-android/android/app/src/main/java/io/github/artcraftandroid/gridcraft/ui/editor/Cards.kt\n// at https://github.com/artcraft-android/gridcraft-android/commit/72d5bfc0729d0966e9bd966c2eabaa0312eea3ff\n// Copyright (c) 2026 ArtCraft Team and the GridCraft contributors.\n// Licensed under the MIT License or the Apache License, Version 2.0, at your option;\n// see licenses/GridCraft-MIT.txt and licenses/GridCraft-Apache-2.0.txt.\n// Modified by NYC-Tron UI contributors, 2026-11-05: rewritten in TypeScript as a pure\n// model over A1-addressed cells; the AppViewModel/TableCards source is replaced by a\n// header row plus a cell record supplied by the app.\nimport { cellAddress, type SheetRange } from \"@/components/nyc-tron/ui/components/forge/sheet-window\";\n\n/** How many fields after the title a card in the list shows (GridCraft `CARD_LINES`). */\nexport const CARD_PREVIEW_FIELDS = 3;\n\n/** One field of a card: a cell in the table row. */\nexport interface SheetCardField {\n  /** Column header text, or the column letter when the header is blank. */\n  readonly name: string;\n  /** Cell address the field edits. */\n  readonly address: string;\n  /** What the cell holds as typed (a formula keeps its `=`). Edits start from this. */\n  readonly raw: string;\n  /** The engine's computed value, as text. */\n  readonly display: string;\n}\n\n/** One table row as a card. */\nexport interface SheetCard {\n  /** 0-based sheet row. */\n  readonly row: number;\n  readonly title: string;\n  readonly fields: readonly SheetCardField[];\n}\n\n/** Cell values the model reads, keyed by A1 address. */\nexport type CardCellValues = Readonly<Record<string, {\n  readonly raw: string;\n  readonly computed: string | number | boolean | null;\n} | undefined>>;\n\nconst text = (value: string | number | boolean | null | undefined) =>\n  value === null || value === undefined ? \"\" : String(value);\n\n/** Column letters for a 0-based index (A, B, ..., AA). */\nfunction letters(column: number): string {\n  return cellAddress(0, column).replace(/[0-9]+$/, \"\");\n}\n\n/**\n * Cards for a table range whose first row is the header. The first column is\n * each card's title; a blank title reads `(blank)` as in GridCraft. Throws\n * `RangeError` for a range with no data rows.\n */\nexport function sheetCards(table: SheetRange, cells: CardCellValues): SheetCard[] {\n  if (table.endRow <= table.startRow) throw new RangeError(\"A card table needs a header row and at least one row.\");\n  const names: string[] = [];\n  for (let c = table.startColumn; c <= table.endColumn; c++) {\n    const header = text(cells[cellAddress(table.startRow, c)]?.computed).trim();\n    names.push(header || letters(c));\n  }\n  const cards: SheetCard[] = [];\n  for (let r = table.startRow + 1; r <= table.endRow; r++) {\n    const fields = names.map((name, i) => {\n      const address = cellAddress(r, table.startColumn + i);\n      const cell = cells[address];\n      return { name, address, raw: cell?.raw ?? \"\", display: text(cell?.computed) };\n    });\n    cards.push({ row: r, title: fields[0]!.display.trim() || \"(blank)\", fields });\n  }\n  return cards;\n}\n\n/** Resolve one visible card without allocating the table's other rows. */\nexport function sheetCardAt(table:SheetRange,cells:CardCellValues,index:number):SheetCard{\n if(![table.startRow,table.endRow,table.startColumn,table.endColumn,index].every(Number.isSafeInteger)||table.startRow<0||table.startColumn<0||table.endColumn<table.startColumn||table.endColumn-table.startColumn>=256||index<0||index>=table.endRow-table.startRow)throw new RangeError('Invalid card table or row index');\n const row=table.startRow+index+1,fields:SheetCardField[]=[];\n for(let column=table.startColumn;column<=table.endColumn;column++){\n  const name=text(cells[cellAddress(table.startRow,column)]?.computed).trim()||letters(column),address=cellAddress(row,column),cell=cells[address];\n  fields.push({name,address,raw:cell?.raw??'',display:text(cell?.computed)});\n }\n return {row,title:fields[0]!.display.trim()||'(blank)',fields};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/spreadsheet/cards-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/spreadsheet/cards-model",
+    "exports": [
+      "CARD_PREVIEW_FIELDS",
+      "CardCellValues",
+      "SheetCard",
+      "SheetCardField",
+      "sheetCardAt",
+      "sheetCards"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

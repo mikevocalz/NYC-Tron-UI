@@ -74,6 +74,11 @@
       "types": "./dist/window-chrome.d.ts",
       "react-native": "./dist/window-chrome.js",
       "default": "./dist/window-chrome.js"
+    },
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "react-native": "./dist/tokens.js",
+      "default": "./dist/tokens.js"
     }
   },
   "scripts": {

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/preset-model",
+  "title": "preset model",
+  "description": "preset model, an app shell state model. Exports filterPresets, galleryColumns, gridFocusTarget.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/preset-model.ts",
+      "content": "/** Which presets a {@linkcode PresetGallery} shows. */\nexport type PresetFilter=\"all\"|\"favorites\";\n\n/** The minimal preset fields the gallery logic reads. */\nexport interface PresetLike {\n  readonly id:string;\n  readonly name:string;\n  readonly favorite?:boolean;\n}\n\n/** Throws on a duplicate id or an empty name. */\nexport function validatePresets(presets:readonly PresetLike[]):void{\n  if(presets.length>1000)throw new RangeError(\"Too many gallery presets\");\n  const seen=new Set<string>();\n  for(const p of presets){\n    if(typeof p.id!==\"string\"||!p.id.trim()||p.id.length>256||seen.has(p.id))throw new TypeError(\"Duplicate or missing preset id\");\n    if(typeof p.name!==\"string\"||!p.name.trim()||p.name.length>512)throw new TypeError(`Preset ${p.id} needs a name`);\n    if(p.favorite!==undefined&&typeof p.favorite!==\"boolean\")throw new TypeError(\"Invalid preset favorite state\");\n    seen.add(p.id);\n  }\n}\n\n/** Presets for a filter, in the app's order. */\nexport function filterPresets<T extends PresetLike>(presets:readonly T[],filter:PresetFilter):T[]{\n  return filter===\"favorites\"?presets.filter(p=>p.favorite):[...presets];\n}\n\n/** Columns that fit `width` with tiles at least `minTile` wide and `gap` between them. Never below one. */\nexport function galleryColumns(width:number,minTile:number,gap:number):number{\n  if(![width,minTile,gap].every(Number.isFinite)||minTile<=0||gap<0)throw new RangeError(\"Invalid gallery geometry\");\n  if(width<=0)return 1;\n  return Math.max(1,Math.floor((width+gap)/(minTile+gap)));\n}\n\n/**\n * Grid focus movement: Left/Right step (flipped in RTL), Up/Down move a row,\n * Home/End jump to the ends. Movement stops at the edges instead of\n * wrapping, as in a grid. Returns null for other keys.\n */\nexport function gridFocusTarget(index:number,key:string,count:number,columns:number,rtl=false):number|null{\n  if(count<=0||columns<1)return null;\n  const clampIdx=(i:number)=>Math.max(0,Math.min(count-1,i));\n  switch(key){\n    case \"ArrowRight\":return clampIdx(index+(rtl?-1:1));\n    case \"ArrowLeft\":return clampIdx(index+(rtl?1:-1));\n    case \"ArrowDown\":return index+columns<count?index+columns:index;\n    case \"ArrowUp\":return index-columns>=0?index-columns:index;\n    case \"Home\":return 0;\n    case \"End\":return count-1;\n    default:return null;\n  }\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/preset-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/preset-model",
+    "exports": [
+      "PresetFilter",
+      "PresetLike",
+      "filterPresets",
+      "galleryColumns",
+      "gridFocusTarget",
+      "validatePresets"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

@@ -1,6 +1,7 @@
 import { View, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
 import { sparklineGeometry, type SparklineAxisMin, type SparklineKind, type SparklineMarkTone } from "./sparkline-model.ts";
+import { radius } from "../../../tokens.ts";
 
 /**
  * An in-cell chart drawn with plain views, so it renders inside any grid cell
@@ -35,11 +36,11 @@ export function Sparkline({
     {kind === "winloss" ? <View aria-hidden {...{ className: !unstyled ? "bg-border" : undefined }}
       style={{ position: "absolute", left: 0, right: 0, top: height / 2, height: 1 }} /> : null}
     {g.bars.map(bar => <View key={bar.index} aria-hidden {...{ className: cls(bar.tone) }}
-      style={{ position: "absolute", left: bar.left, top: bar.top, width: bar.width, height: bar.height, borderRadius: 1 }} />)}
+      style={{ position: "absolute", left: bar.left, top: bar.top, width: bar.width, height: bar.height, borderRadius: radius[1] }} />)}
     {g.segments.map((s, i) => <View key={i} aria-hidden {...{ className: cls("normal") }}
       style={{ position: "absolute", left: s.centerX - s.length / 2, top: s.centerY - 1, width: s.length, height: 2,
-        borderRadius: 1, transform: [{ rotate: `${s.angleDeg}deg` }] }} />)}
+        borderRadius: radius[1], transform: [{ rotate: `${s.angleDeg}deg` }] }} />)}
     {g.markers.map(m => <View key={"m" + m.index} aria-hidden {...{ className: joinClasses(cls(m.tone)) }}
-      style={{ position: "absolute", left: m.x - 3, top: m.y - 3, width: 6, height: 6, borderRadius: 3 }} />)}
+      style={{ position: "absolute", left: m.x - 3, top: m.y - 3, width: 6, height: 6, borderRadius: radius[3] }} />)}
   </View>;
 }

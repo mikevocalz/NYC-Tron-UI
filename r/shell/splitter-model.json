@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/splitter-model",
+  "title": "splitter model",
+  "description": "splitter model, an app shell state model. Exports hingeBands, mirrorBands, resolveSplit.",
+  "registryDependencies": [
+    "@nyc-tron/core/folds"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/splitter-model.ts",
+      "content": "import type {FoldFeature,Rect} from \"@/lib/nyc-tron/core/folds\";\n\n/**\n * Direction the panes of a {@linkcode PaneSplitter} are laid out in.\n * `horizontal` puts them side by side (the divider is a vertical line);\n * `vertical` stacks them (the divider is a horizontal line).\n */\nexport type SplitAxis=\"horizontal\"|\"vertical\";\n\n/** Size limits for a split, in points along the split axis. */\nexport interface SplitLimits {\n  /** Length of the splitter along its axis. */\n  readonly total:number;\n  /** Smallest size the start pane may take. */\n  readonly minStart:number;\n  /** Smallest size the end pane may take. */\n  readonly minEnd:number;\n  /** Thickness of the divider when it is not seated on a hinge. */\n  readonly divider:number;\n}\n\n/**\n * A hinge or fold that cuts across the split axis, as a span from the start\n * edge of the splitter. A zero-width separating fold has `start === end`.\n * @see {@linkcode hingeBands}\n */\nexport interface HingeBand {\n  readonly start:number;\n  readonly end:number;\n}\n\n/**\n * Resolved geometry for a split. When the divider is seated on a hinge it\n * spans the whole hinge, so neither pane draws under it.\n * @see {@linkcode resolveSplit}\n */\nexport interface SplitLayout {\n  readonly startSize:number;\n  readonly dividerStart:number;\n  readonly dividerSize:number;\n  readonly endStart:number;\n  readonly endSize:number;\n  /** Index into the bands the divider is seated on, or -1. */\n  readonly hinge:number;\n}\n\nconst finite=(...values:number[])=>values.every(Number.isFinite);\n\n/**\n * Hinges that cross the split axis of a splitter whose window-space bounds are\n * `container`, as spans from its physical start edge (left or top). Only\n * separating or fully occluding features count, the same rule\n * `resolveUsableRegions` in `@nyc-tron/core/folds` applies.\n */\nexport function hingeBands(container:Rect,features:readonly FoldFeature[],axis:SplitAxis):HingeBand[]{\n  if(!finite(container.x,container.y,container.width,container.height)||container.width<0||container.height<0)\n    throw new RangeError(\"Invalid splitter container\");\n  const crossing=axis===\"horizontal\"?\"vertical\":\"horizontal\";\n  const total=axis===\"horizontal\"?container.width:container.height;\n  const bands:HingeBand[]=[];\n  for(const f of features){\n    const b=f.bounds;\n    if(f.orientation!==crossing||(!f.separating&&f.occlusion===\"none\"))continue;\n    if(!finite(b.x,b.y,b.width,b.height)||b.width<0||b.height<0)continue;\n    const from=axis===\"horizontal\"?b.x-container.x:b.y-container.y;\n    const span=axis===\"horizontal\"?b.width:b.height;\n    const start=Math.max(0,from),end=Math.min(total,from+span);\n    if(end<start||start>=total||end<=0)continue;\n    bands.push({start,end});\n  }\n  return bands.sort((a,b)=>a.start-b.start);\n}\n\n/** Bands measured from the opposite edge, for a right-to-left horizontal split. */\nexport function mirrorBands(bands:readonly HingeBand[],total:number):HingeBand[]{\n  return bands.map(b=>({start:total-b.end,end:total-b.start})).sort((a,b)=>a.start-b.start);\n}\n\nfunction layoutAt(startSize:number,dividerSize:number,total:number,hinge:number):SplitLayout{\n  const endStart=startSize+dividerSize;\n  return {startSize,dividerStart:startSize,dividerSize,endStart,endSize:Math.max(0,total-endStart),hinge};\n}\n\n/** The layout with the divider covering band `i`, or null if that breaks a minimum. */\nfunction seat(band:HingeBand,i:number,limits:SplitLimits):SplitLayout|null{\n  const width=band.end-band.start;\n  const size=Math.max(limits.divider,width);\n  const startSize=width>=limits.divider?band.start:(band.start+band.end)/2-limits.divider/2;\n  const layout=layoutAt(startSize,size,limits.total,i);\n  return layout.startSize>=limits.minStart&&layout.endSize>=limits.minEnd?layout:null;\n}\n\n/**\n * Clamp a requested start-pane size to the limits and keep the divider off any\n * hinge. A divider that would overlap a hinge, or lands within `snap` points\n * of one, is seated on it; if seating would break a minimum it moves to the\n * nearer side of the hinge instead.\n *\n * When the panes cannot both fit their minimums, the start pane keeps its\n * minimum and the end pane takes what is left.\n */\nexport function resolveSplit(requested:number,limits:SplitLimits,bands:readonly HingeBand[]=[],snap=0):SplitLayout{\n  const {total,minStart,minEnd,divider}=limits;\n  if(!finite(requested,total,minStart,minEnd,divider,snap)||total<0||minStart<0||minEnd<0||divider<0||snap<0)\n    throw new RangeError(\"Invalid split\");\n  const lo=minStart,hi=total-minEnd-divider;\n  if(hi<lo)return layoutAt(Math.max(0,Math.min(lo,total-divider)),divider,total,-1);\n  const p=Math.max(lo,Math.min(hi,requested));\n  for(let i=0;i<bands.length;i++){\n    const band=bands[i]!;\n    const seated=seat(band,i,limits);\n    const overlaps=p<band.end&&p+divider>band.start;\n    const near=seated!==null&&Math.abs(p-seated.dividerStart)<=snap;\n    if(!overlaps&&!near)continue;\n    if(seated)return seated;\n    if(!overlaps)continue;\n    const before=band.start-divider,after=band.end;\n    const options=[before,after].filter(o=>o>=lo&&o<=hi);\n    if(!options.length)break;\n    const nearest=options.reduce((a,b)=>Math.abs(b-p)<Math.abs(a-p)?b:a);\n    return layoutAt(nearest,divider,total,-1);\n  }\n  return layoutAt(p,divider,total,-1);\n}\n\n/**\n * Keyboard or screen-reader step from `current`. Moving off a seated hinge\n * jumps clear of it; moving into a hinge seats the divider on it.\n */\nexport function stepSplit(current:SplitLayout,direction:1|-1,step:number,limits:SplitLimits,bands:readonly HingeBand[]=[]):SplitLayout{\n  if(!Number.isFinite(step)||step<=0)throw new RangeError(\"Invalid split step\");\n  const band=current.hinge>=0?bands[current.hinge]:undefined;\n  if(band){\n    const requested=direction>0?current.dividerStart+current.dividerSize+step:current.dividerStart-limits.divider-step;\n    const next=resolveSplit(requested,limits,bands);\n    if(next.hinge!==current.hinge)return next;\n    return current;\n  }\n  return resolveSplit(current.startSize+direction*step,limits,bands);\n}\n\n/** Start-pane size for a controlled size measured on either pane. */\nexport function startSizeFor(size:number,edge:\"start\"|\"end\",limits:SplitLimits):number{\n  return edge===\"start\"?size:limits.total-limits.divider-size;\n}\n/** The controlled size of the pane named by `edge` in a resolved layout. */\nexport function sizeForEdge(layout:SplitLayout,edge:\"start\"|\"end\"):number{\n  return edge===\"start\"?layout.startSize:layout.endSize;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/splitter-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/splitter-model",
+    "exports": [
+      "HingeBand",
+      "SplitAxis",
+      "SplitLayout",
+      "SplitLimits",
+      "hingeBands",
+      "mirrorBands",
+      "resolveSplit",
+      "sizeForEdge",
+      "startSizeFor",
+      "stepSplit"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

@@ -3,6 +3,7 @@ import {I18nManager,Platform,Pressable,ScrollView,Text,View,type ViewProps} from
 import {joinClasses} from "../styles.ts";
 import {nodeIsRTL,rovingTarget,shellKey} from "./shell-keys.ts";
 import {documentTabLabel,validateDocumentTabs,type DocumentTab} from "./document-tabs-model.ts";
+import {space,radius,border} from "../../tokens.ts";
 
 export type {DocumentTab} from "./document-tabs-model.ts";
 export {activeAfterClose,moveDocument} from "./document-tabs-model.ts";
@@ -92,8 +93,8 @@ export function DocumentTabBar({
   return <View {...rest} {...{className:joinClasses("min-w-0",styled&&"border-b border-border bg-surface-sunken",className)}} style={style}>
     <ScrollView ref={scroller} horizontal showsHorizontalScrollIndicator={false}
       onLayout={e=>{viewport.current=e.nativeEvent.layout.width;}}
-      contentContainerStyle={{flexDirection:"row",alignItems:"stretch",paddingHorizontal:4,gap:2}}>
-      <View accessibilityRole="tablist" accessibilityLabel={label} style={{flexDirection:"row",gap:2}}>
+      contentContainerStyle={{flexDirection:"row",alignItems:"stretch",paddingHorizontal:space[1],gap:space[0.5]}}>
+      <View accessibilityRole="tablist" accessibilityLabel={label} style={{flexDirection:"row",gap:space[0.5]}}>
         {documents.map((doc,i)=>{
           const selected=i===active;
           const closable=!!onClose&&doc.closable!==false;
@@ -106,7 +107,7 @@ export function DocumentTabBar({
           return <View key={doc.id}
             onLayout={e=>offsets.current.set(doc.id,{x:e.nativeEvent.layout.x,width:e.nativeEvent.layout.width})}
             {...{className:joinClasses(styled&&"rounded-t-control",styled&&(selected?"bg-surface-raised border-x border-t border-border":"bg-transparent"),tabClassName)}}
-            style={{flexDirection:"row",alignItems:"center",maxWidth:240,marginTop:4}}>
+            style={{flexDirection:"row",alignItems:"center",maxWidth:240,marginTop:space[1]}}>
             <Pressable ref={node=>{refs.current[i]=node;}} accessibilityRole="tab"
               accessibilityLabel={documentTabLabel(doc)} disabled={disabled} accessibilityState={{selected,disabled}} aria-selected={selected}
               accessibilityActions={actions}
@@ -122,7 +123,7 @@ export function DocumentTabBar({
               {...{className:joinClasses("min-h-11 flex-row items-center gap-2",styled&&"rounded-control px-3 focus-visible:ring-2 focus-visible:ring-focus")}}
               style={{flexShrink:1}}>
               {doc.dirty?<View pointerEvents="none" {...{className:joinClasses(styled&&"border-accent")}}
-                style={{width:8,height:8,borderRadius:4,borderWidth:4}}/>:null}
+                style={{width:8,height:8,borderRadius:radius[4],borderWidth:border[4]}}/>:null}
               <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-sm",styled&&(selected?"text-text font-semibold":"text-text-muted"))}}
                 style={{flexShrink:1}}>{doc.title}</Text>
             </Pressable>
@@ -144,7 +145,7 @@ function CloseGlyph({styled}:{styled:boolean}){
   // Bars are top borders so forced-colors mode keeps them.
   const bar=joinClasses(styled&&"border-text-muted");
   return <View pointerEvents="none" style={{width:12,height:12,alignItems:"center",justifyContent:"center"}}>
-    <View {...{className:bar}} style={{position:"absolute",width:14,height:0,borderTopWidth:1.5,transform:[{rotate:"45deg"}]}}/>
-    <View {...{className:bar}} style={{position:"absolute",width:14,height:0,borderTopWidth:1.5,transform:[{rotate:"-45deg"}]}}/>
+    <View {...{className:bar}} style={{position:"absolute",width:14,height:0,borderTopWidth:border[1.5],transform:[{rotate:"45deg"}]}}/>
+    <View {...{className:bar}} style={{position:"absolute",width:14,height:0,borderTopWidth:border[1.5],transform:[{rotate:"-45deg"}]}}/>
   </View>;
 }

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/devices/PenPairingDialog",
+  "title": "Pen Pairing Dialog",
+  "description": "Pen Pairing Dialog, a device pairing component.",
+  "registryDependencies": [
+    "@nyc-tron/forge/devices/DevicePairingDialog",
+    "@nyc-tron/forge/devices/pairing-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/devices/PenPairingDialog.tsx",
+      "content": "import {DevicePairingDialog,type DevicePairingDialogProps} from '@/components/nyc-tron/ui/components/forge/devices/DevicePairingDialog';\nexport type PenPairingDialogProps=DevicePairingDialogProps;\nexport type {PairingState,PairingDevice} from '@/components/nyc-tron/ui/components/forge/devices/pairing-model';\n/** Shared pairing owner preserves linked-versus-verified input and close/cancel semantics. */\nexport function PenPairingDialog(props:PenPairingDialogProps){return <DevicePairingDialog {...props} title={props.title??'Connect a pen'} deviceNoun={props.deviceNoun??'pen'}/>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/devices/PenPairingDialog.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/devices/PenPairingDialog",
+    "exports": [
+      "PairingDevice",
+      "PairingState",
+      "PenPairingDialog",
+      "PenPairingDialogProps"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

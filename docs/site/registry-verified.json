@@ -1,0 +1,4 @@
+{
+ "registryVerified": false,
+ "note": "Set to true after a clean Expo app installs from the pushed r/ files at the registry ref (decisions 28 and 45). The site drops the unverified lines when it is true."
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/spreadsheet/FormulaReferenceText",
+  "title": "Formula Reference Text",
+  "description": "Formula Reference Text, a spreadsheet component. Props: formula, sheetName.",
+  "registryDependencies": [
+    "@nyc-tron/forge/spreadsheet/reference-colors"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/spreadsheet/FormulaReferenceText.tsx",
+      "content": "import { useMemo } from \"react\";\nimport { Text, type TextProps } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { colorReferences, formulaSegments, REFERENCE_TONE_CLASSES } from \"@/components/nyc-tron/ui/components/forge/spreadsheet/reference-colors\";\n\n/**\n * A formula with each reference drawn in its tone, matching the outlines\n * `SpreadsheetGrid` draws for the same formula. Use it wherever a formula is\n * shown read-only: a cell inspector, an audit list, a history entry.\n */\nexport interface FormulaReferenceTextProps extends Omit<TextProps, \"children\"> {\n  readonly formula: string;\n  /** References qualified with this sheet count as the current sheet. */\n  readonly sheetName?: string;\n  readonly className?: string;\n  readonly unstyled?: boolean;\n}\n\nexport function FormulaReferenceText({ formula, sheetName, className, unstyled = false, ...props }: FormulaReferenceTextProps) {\n  const segments = useMemo(() => formulaSegments(formula, colorReferences(formula, sheetName)), [formula, sheetName]);\n  return <Text selectable {...props} {...{ className: joinClasses(!unstyled && \"text-text\", className) }}\n    style={[{ fontVariant: [\"tabular-nums\"] }, props.style]}>\n    {segments.map((segment, i) => segment.tone === undefined\n      ? segment.text\n      : <Text key={i} {...{ className: !unstyled ? REFERENCE_TONE_CLASSES[segment.tone]!.text + \" font-semibold\" : undefined }}>\n        {segment.text}\n      </Text>)}\n  </Text>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/spreadsheet/FormulaReferenceText.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/spreadsheet/FormulaReferenceText",
+    "exports": [
+      "FormulaReferenceText",
+      "FormulaReferenceTextProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

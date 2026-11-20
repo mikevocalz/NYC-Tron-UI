@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "NavigationRail",
+  "title": "Navigation Rail",
+  "description": "Vertical rail of icon and label destinations with selected state and a collapsed icon-only mode, for React Native.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/NavigationRail.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport {\n  Pressable,Text,View,\n  type ViewProps\n} from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\n\nexport interface NavigationItem {\n  readonly id:string;\n  readonly label:string;\n  readonly icon?:ReactNode;\n  readonly disabled?:boolean;\n}\nexport interface NavigationRailProps extends Omit<ViewProps,\"children\"> {\n  items:readonly NavigationItem[];\n  selectedId:string|null;\n  onSelectionChange:(id:string)=>void;\n  /** Collapses LABELS only, never primary actions or hit targets. */\n  collapsed?:boolean;\n  className?:string;\n  unstyled?:boolean;\n  itemClassName?:string;\n  selectedItemClassName?:string;\n  labelClassName?:string;\n  /** Caller provides the actual OS-backed navigation policy. */\n  edge:\"left\"|\"right\";\n}\n/** Shared semantic rail; never determines hardware identity from width. */\nexport function NavigationRail({\n  items,selectedId,onSelectionChange,collapsed=false,edge,\n  className,unstyled=false,itemClassName,selectedItemClassName,labelClassName,style,...rest\n}:NavigationRailProps) {\n  return (\n    <View\n      {...rest}\n      {...{className:joinClasses(\n        \"shrink-0 items-center gap-1\",collapsed?\"w-16\":\"w-52\",\n        !unstyled&&\"bg-surface-raised py-3\",\n        !unstyled&&(edge===\"right\"?\"border-l border-border\":\"border-r border-border\"),\n        className\n      )}}\n      style={style}\n      accessibilityRole=\"tablist\"\n    >\n      {items.map(item=> {\n        const selected=item.id===selectedId;\n        return <Pressable\n          key={item.id}\n          onPress={()=>onSelectionChange(item.id)}\n          disabled={item.disabled}\n          accessibilityRole=\"tab\"\n          accessibilityLabel={item.label}\n          accessibilityState={{selected,disabled:!!item.disabled}}\n          {...{className:joinClasses(\n            \"flex-row w-full min-h-11 items-center gap-2\",\n            !unstyled&&\"rounded-control px-3 focus-visible:ring-2 focus-visible:ring-focus\",\n            !unstyled&&(selected?\"bg-primary\":\"bg-transparent\"),\n            item.disabled&&\"opacity-40\",\n            itemClassName,selected&&selectedItemClassName\n          )}}\n        >\n          {item.icon ? <View accessibilityElementsHidden importantForAccessibility=\"no-hide-descendants\">\n            {item.icon}\n          </View> : null}\n          {!collapsed ?\n            <Text numberOfLines={1}\n              {...{className:joinClasses(\n                \"flex-1\",!unstyled&&\"text-sm\",\n                !unstyled&&(selected?\"text-on-primary\":\"text-text\"),labelClassName\n              )}}\n            >{item.label}</Text> : null}\n        </Pressable>;\n      })}\n    </View>\n  );\n}\nexport interface NavigationShellProps extends Omit<ViewProps,\"children\"> {\n  children:ReactNode;\n  rail:ReactNode;\n  /** Physical placement; independent of text RTL. */\n  edge:\"left\"|\"right\";\n  className?:string;\n  contentClassName?:string;\n  isRTL?:boolean;\n}\n/**\n * The outer row is explicitly physically LTR to prevent RTL mirroring the\n * rail edge. The content restores its own semantic text/layout direction.\n */\nexport function NavigationShell({\n children,rail,edge,className,contentClassName,isRTL=false,style,...props\n}:NavigationShellProps){\n return <View {...props}\n  {...{className:joinClasses(\"flex-1\",className)}}\n  style={[{flexDirection:\"row\",direction:\"ltr\"},style]}>\n    {edge===\"left\" ? rail : null}\n    <View {...{className:joinClasses(\"flex-1\",contentClassName)}}\n      style={{direction:isRTL?\"rtl\":\"ltr\"}}>{children}</View>\n    {edge===\"right\" ? rail : null}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/NavigationRail.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/NavigationRail",
+    "exports": [
+      "NavigationItem",
+      "NavigationRail",
+      "NavigationRailProps",
+      "NavigationShell",
+      "NavigationShellProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "navigation"
+  ],
+  "type": "registry:ui"
+}

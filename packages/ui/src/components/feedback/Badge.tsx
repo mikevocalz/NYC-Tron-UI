@@ -1,5 +1,6 @@
 import { Text, View, type ViewProps } from "react-native";
 import { joinClasses } from "../styles.ts";
+import { border } from "../../tokens.ts";
 
 export type BadgeTone="neutral"|"info"|"success"|"danger"|"accent";
 export type BadgeSize="xs"|"sm";
@@ -42,7 +43,7 @@ export function Badge({
         styled&&"rounded-control border border-border",
         styled&&(tone==="neutral"?"bg-surface-sunken":"bg-surface-raised"),
         styled&&s.root,className)}}>
-      {tone!=="neutral" ? <View aria-hidden style={{borderWidth:3}} {...{className:joinClasses("h-1.5 w-1.5 rounded-full",DOT[tone])}}/> : null}
+      {tone!=="neutral" ? <View aria-hidden style={{borderWidth:border[3]}} {...{className:joinClasses("h-1.5 w-1.5 rounded-full",DOT[tone])}}/> : null}
       <Text numberOfLines={1} {...{className:joinClasses(styled&&s.label,
         styled&&(tone==="neutral"?"text-text-muted":"text-text"),labelClassName)}}>{label}</Text>
     </View>

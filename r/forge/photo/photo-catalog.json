@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/photo-catalog",
+  "title": "photo catalog",
+  "description": "photo catalog, a photo editing helper module. Exports emptyPhotoCatalogFilter, togglePhotoSelection, validPhotoDate.",
+  "registryDependencies": [
+    "@nyc-tron/forge/photo/photo-adjustments"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/photo/photo-catalog.ts",
+      "content": "import {validatePhotoRating,type PhotoRating} from '@/components/nyc-tron/ui/components/forge/photo/photo-adjustments';\nexport interface PhotoCatalogItem {readonly id:string;readonly name:string;readonly thumbnailUri:string|null;readonly rating:PhotoRating}\nexport interface CatalogChoice {readonly id:string;readonly label:string}\nexport interface PhotoCatalogFilter {\n readonly query:string;readonly cameraId:string|null;readonly lensId:string|null;readonly albumId:string|null;\n readonly minimumStars:0|1|2|3|4|5;readonly flag:'all'|'none'|'pick'|'reject';\n readonly dateFrom:string|null;readonly dateTo:string|null;\n readonly iso:readonly [number,number]|null;readonly aperture:readonly [number,number]|null;readonly shutterSeconds:readonly [number,number]|null;\n}\nexport function emptyPhotoCatalogFilter():PhotoCatalogFilter{return {query:'',cameraId:null,lensId:null,albumId:null,minimumStars:0,flag:'all',dateFrom:null,dateTo:null,iso:null,aperture:null,shutterSeconds:null};}\n/** Calendar date without silently changing the source timezone. */\nexport function validPhotoDate(value:string):boolean {if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(value))return false;const date=new Date(value+'T00:00:00Z');return Number.isFinite(date.getTime())&&date.toISOString().slice(0,10)===value;}\nexport function validateCatalogFilter(value:PhotoCatalogFilter):void {\n if(typeof value.query!=='string'||value.query.length>256)throw new RangeError('Catalog query must be at most 256 characters');\n for(const key of ['cameraId','lensId','albumId'] as const)if(value[key]!==null&&(typeof value[key]!=='string'||!value[key]!.trim()||value[key]!.length>256))throw new TypeError('Invalid catalog filter identity');\n if(!Number.isInteger(value.minimumStars)||value.minimumStars<0||value.minimumStars>5||!['all','none','pick','reject'].includes(value.flag))throw new TypeError('Invalid rating filter');\n for(const key of ['dateFrom','dateTo'] as const)if(value[key]!==null&&!validPhotoDate(value[key]!))throw new RangeError('Catalog dates must be valid YYYY-MM-DD');\n if(value.dateFrom!==null&&value.dateTo!==null&&value.dateFrom>value.dateTo)throw new RangeError('Catalog date range is reversed');\n for(const [key,min,max] of [['iso',1,409600],['aperture',.1,128],['shutterSeconds',1/1000000,86400]] as const){const pair=value[key];if(pair!==null&&(!Array.isArray(pair)||pair.length!==2||!pair.every(n=>Number.isFinite(n)&&n>=min&&n<=max)||pair[0]>pair[1]))throw new RangeError(`Invalid ${key} range`);}\n}\nexport function validateCatalogChoices(choices:readonly CatalogChoice[]):void {if(choices.length>2000)throw new RangeError('Too many catalog choices');const ids=new Set<string>();for(const choice of choices){if(typeof choice.id!=='string'||!choice.id.trim()||choice.id.length>256||typeof choice.label!=='string'||!choice.label.trim()||choice.label.length>256||ids.has(choice.id))throw new TypeError('Catalog choices require unique IDs and labels');ids.add(choice.id);}}\nexport function validatePhotoCatalog(photos:readonly PhotoCatalogItem[],selectedIds:readonly string[]):void {if(photos.length>100000||selectedIds.length>100000)throw new RangeError('Catalog page exceeds 100,000 photos');const ids=new Set<string>();for(const photo of photos){if(!photo.id.trim()||photo.id.length>256||!photo.name.trim()||photo.name.length>1024||ids.has(photo.id))throw new TypeError('Photo catalog requires unique IDs and names');if(photo.thumbnailUri!==null&&(!photo.thumbnailUri.trim()||photo.thumbnailUri.length>1048576))throw new RangeError('Invalid photo thumbnail');validatePhotoRating(photo.rating);ids.add(photo.id);}if(selectedIds.some(id=>typeof id!=='string'||!id.trim()||id.length>256)||new Set(selectedIds).size!==selectedIds.length)throw new TypeError('Duplicate selected photo');}\n/** Selection may retain IDs outside a currently filtered/paged view. */\nexport function togglePhotoSelection(selected:readonly string[],id:string):readonly string[]{return selected.includes(id)?selected.filter(value=>value!==id):[...selected,id];}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/photo/photo-catalog.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/photo-catalog",
+    "exports": [
+      "CatalogChoice",
+      "PhotoCatalogFilter",
+      "PhotoCatalogItem",
+      "emptyPhotoCatalogFilter",
+      "togglePhotoSelection",
+      "validPhotoDate",
+      "validateCatalogChoices",
+      "validateCatalogFilter",
+      "validatePhotoCatalog"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

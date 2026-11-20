@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/document-tabs-model",
+  "title": "document tabs model",
+  "description": "document tabs model, an app shell state model. Exports activeAfterClose, documentTabLabel, moveDocument.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/document-tabs-model.ts",
+      "content": "/** One open document in a {@linkcode DocumentTabBar}. */\nexport interface DocumentTab {\n  readonly id:string;\n  readonly title:string;\n  /** Unsaved changes. Shown as a marker and announced with the title. */\n  readonly dirty?:boolean;\n  /** @default true */\n  readonly closable?:boolean;\n}\n\n/** Throws on a missing title or a duplicate id, before anything renders. */\nexport function validateDocumentTabs(tabs:readonly DocumentTab[]):void{\n  if(tabs.length>1000)throw new RangeError(\"Too many document tabs\");\n  const seen=new Set<string>();\n  for(const tab of tabs){\n    if(typeof tab.id!==\"string\"||!tab.id.trim()||tab.id.length>256)throw new TypeError(\"Document tab id required\");\n    if(seen.has(tab.id))throw new TypeError(`Duplicate document tab ${tab.id}`);\n    if(typeof tab.title!==\"string\"||!tab.title.trim()||tab.title.length>512)throw new TypeError(`Document tab ${tab.id} needs a title`);\n    if(tab.dirty!==undefined&&typeof tab.dirty!==\"boolean\"||tab.closable!==undefined&&typeof tab.closable!==\"boolean\")throw new TypeError(\"Invalid document tab flags\");\n    seen.add(tab.id);\n  }\n}\n\n/** Accessible name of a tab: the title, plus \"unsaved changes\" when dirty. */\nexport function documentTabLabel(tab:DocumentTab):string{\n  return tab.dirty?tab.title+\", unsaved changes\":tab.title;\n}\n\n/**\n * Order of ids after moving `id` to `toIndex` (clamped). Returns the same\n * array when nothing moves, so callers can skip a no-op update.\n */\nexport function moveDocument(ids:readonly string[],id:string,toIndex:number):readonly string[]{\n  const from=ids.indexOf(id);\n  if(from<0||!Number.isFinite(toIndex))return ids;\n  const to=Math.max(0,Math.min(ids.length-1,Math.trunc(toIndex)));\n  if(to===from)return ids;\n  const next=[...ids];\n  next.splice(to,0,...next.splice(from,1));\n  return next;\n}\n\n/**\n * Which tab to show after `closing` closes: the one that slides into its\n * place, else the one before it. Closing a background tab keeps `active`.\n * Undefined when no tab is left.\n */\nexport function activeAfterClose(ids:readonly string[],closing:string,active:string|undefined):string|undefined{\n  if(closing!==active)return active;\n  const at=ids.indexOf(closing);\n  const rest=ids.filter(id=>id!==closing);\n  if(!rest.length)return undefined;\n  return rest[Math.min(Math.max(at,0),rest.length-1)];\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/document-tabs-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/document-tabs-model",
+    "exports": [
+      "DocumentTab",
+      "activeAfterClose",
+      "documentTabLabel",
+      "moveDocument",
+      "validateDocumentTabs"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

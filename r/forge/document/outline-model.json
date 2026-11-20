@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/document/outline-model",
+  "title": "outline model",
+  "description": "outline model, a word processor state model. Exports headingAtBlock, headingsByPage, rowForHeading.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/document/outline-model.ts",
+      "content": "/**\n * A heading in a document outline. `block` is its position in the document\n * (a Quill block index), used to follow the caret; `page` is 0-based when the\n * host has laid the document out.\n * @see {@linkcode visibleOutline}\n */\nexport interface OutlineHeading {\n  readonly id:string;\n  /** 1 for Heading 1 … 9 for Heading 9. */\n  readonly level:number;\n  readonly text:string;\n  readonly block:number;\n  readonly page?:number;\n}\n\n/** A row the outline shows: the heading, its depth and whether it has children. */\nexport interface OutlineRow {\n  readonly heading:OutlineHeading;\n  readonly index:number;\n  readonly depth:number;\n  readonly hasChildren:boolean;\n  readonly collapsed:boolean;\n}\n\n/** Checks levels are 1..9 and blocks never go backwards. */\nexport function validateOutline(headings:readonly OutlineHeading[]):void{\n  let last=-1;\n  headings.forEach((h,i)=>{\n    if(!Number.isSafeInteger(h.level)||h.level<1||h.level>9)throw new RangeError(`Heading ${i} has invalid level ${h.level}`);\n    if(!Number.isSafeInteger(h.block)||h.block<last)throw new RangeError(`Heading ${i} is out of document order`);\n    last=h.block;\n  });\n}\n\n/**\n * Rows to show: headings under a collapsed heading are hidden, and headings\n * deeper than `showLevel` (1–9; 0 shows all) are left out. Depth is relative,\n * so a document that starts at Heading 2 is not indented for nothing.\n */\nexport function visibleOutline(headings:readonly OutlineHeading[],collapsed:ReadonlySet<string>,showLevel=0):OutlineRow[]{\n  validateOutline(headings);\n  const shown=headings.map((h,index)=>({h,index})).filter(({h})=>showLevel<=0||h.level<=showLevel);\n  const rows:OutlineRow[]=[];\n  const stack:number[]=[];\n  let hideBelow:number|undefined;\n  shown.forEach(({h,index},k)=>{\n    if(hideBelow!==undefined&&h.level>hideBelow)return;\n    hideBelow=undefined;\n    while(stack.length&&stack.at(-1)!>=h.level)stack.pop();\n    const next=shown[k+1]?.h;\n    const hasChildren=next!==undefined&&next.level>h.level;\n    const isCollapsed=hasChildren&&collapsed.has(h.id);\n    rows.push({heading:h,index,depth:stack.length,hasChildren,collapsed:isCollapsed});\n    stack.push(h.level);\n    if(isCollapsed)hideBelow=h.level;\n  });\n  return rows;\n}\n\n/** Index of the heading the caret at `block` sits under, or -1 before the first heading. */\nexport function headingAtBlock(headings:readonly OutlineHeading[],block:number):number{\n  let at=-1;\n  for(let i=0;i<headings.length&&headings[i]!.block<=block;i++)at=i;\n  return at;\n}\n\n/** Index of the visible row that represents heading `index` (itself, or its nearest shown ancestor). */\nexport function rowForHeading(rows:readonly OutlineRow[],index:number):number{\n  let at=-1;\n  for(let i=0;i<rows.length&&rows[i]!.index<=index;i++)at=i;\n  return at;\n}\n\n/** The first heading on each page, for the page list. Pages with no heading map to `undefined`. */\nexport function headingsByPage(headings:readonly OutlineHeading[],pageCount:number):Array<OutlineHeading|undefined>{\n  const out=Array<OutlineHeading|undefined>(Math.max(0,pageCount)).fill(undefined);\n  for(const h of headings)if(h.page!==undefined&&h.page>=0&&h.page<out.length&&out[h.page]===undefined)out[h.page]=h;\n  return out;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/document/outline-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/document/outline-model",
+    "exports": [
+      "OutlineHeading",
+      "OutlineRow",
+      "headingAtBlock",
+      "headingsByPage",
+      "rowForHeading",
+      "validateOutline",
+      "visibleOutline"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

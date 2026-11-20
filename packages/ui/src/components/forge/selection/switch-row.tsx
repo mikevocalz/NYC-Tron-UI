@@ -1,5 +1,7 @@
 import {Pressable,Text,View} from "react-native";
 import {joinClasses} from "../../styles.ts";
+import {space,radius,opacity,size} from "../../../tokens.ts";
+import {tokens} from "./switch-row.tokens.ts";
 
 /** Props for {@linkcode SwitchRow}. */
 export interface SwitchRowProps {
@@ -24,15 +26,15 @@ export function SwitchRow({label,detail,value,onValueChange,disabledReason,unsty
     accessibilityState={{disabled:off,checked:value}} accessibilityHint={disabledReason??detail}
     onPress={()=>{if(!off)onValueChange(!value);}}
     {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
-    style={{minHeight:44,flexDirection:"row",alignItems:"center",gap:12,paddingVertical:6,paddingHorizontal:4}}>
-    <View style={{flex:1,minWidth:0,opacity:off?0.6:1}}>
+    style={{minHeight:size.touch,flexDirection:"row",alignItems:"center",gap:space[3],paddingVertical:space[1.5],paddingHorizontal:space[1]}}>
+    <View style={{flex:1,minWidth:0,opacity:off?opacity[60]:1}}>
       <Text {...{className:joinClasses(styled&&"text-text text-sm font-medium")}}>{label}</Text>
       {disabledReason??detail?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{disabledReason??detail}</Text>:null}
     </View>
     <View pointerEvents="none" {...{className:joinClasses(styled&&"border",styled&&(value?"bg-primary border-primary":"bg-surface-sunken border-border"))}}
-      style={{width:44,height:26,borderRadius:13,justifyContent:"center",paddingHorizontal:3,opacity:off?0.5:1}}>
+      style={{width:44,height:26,borderRadius:tokens.radius13,justifyContent:"center",paddingHorizontal:space[0.75],opacity:off?opacity[50]:1}}>
       <View {...{className:joinClasses(styled&&(value?"bg-on-primary":"bg-text-muted"))}}
-        style={{width:18,height:18,borderRadius:9,alignSelf:value?"flex-end":"flex-start"}}/>
+        style={{width:18,height:18,borderRadius:radius[9],alignSelf:value?"flex-end":"flex-start"}}/>
     </View>
   </Pressable>;
 }

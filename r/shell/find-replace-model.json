@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/find-replace-model",
+  "title": "find replace model",
+  "description": "find replace model, an app shell state model. Exports findLiteralText, literalSearchToken, replaceLiteralText.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/find-replace-model.ts",
+      "content": "export interface FindDocument { readonly id: string; readonly revision: string }\nexport interface FindQuery {\n  readonly document: FindDocument;\n  readonly text: string;\n  readonly caseSensitive: boolean;\n  readonly wholeWord: boolean;\n}\nexport interface FindMatch {\n  readonly id: string;\n  /** UTF-16 offsets, matching React Native text selection. */\n  readonly start: number;\n  readonly end: number;\n  readonly before: string;\n  readonly text: string;\n  readonly after: string;\n}\nexport interface FindResponse { readonly token: string; readonly total: number; readonly matches: readonly FindMatch[] }\nexport type ReplaceRequest = {\n  readonly query: FindQuery;\n  readonly searchToken: string;\n  readonly replacement: string;\n} & ({ readonly kind: \"one\"; readonly matchId: string } | { readonly kind: \"all\" });\nconst expression = (query: FindQuery) => new RegExp(query.text.replace(/[.*+?^${}()|[\\]\\\\]/g, \"\\\\$&\"), query.caseSensitive ? \"gu\" : \"giu\");\nconst wordBoundary = (text: string, start: number, end: number) =>\n  !/[\\p{L}\\p{N}\\p{M}_]$/u.test(text.slice(Math.max(0, start - 2), start)) && !/^[\\p{L}\\p{N}\\p{M}_]/u.test(text.slice(end, end + 2));\nexport const literalSearchToken = (query: FindQuery): string => JSON.stringify([query.document.id, query.document.revision, query.text, query.caseSensitive, query.wholeWord]);\n\nexport function validateFindResponse(response: FindResponse): void {\n  if (!response.token || !Number.isSafeInteger(response.total) || response.total < response.matches.length || response.matches.length > 1000 || (response.total > 0 && !response.matches.length)) throw new RangeError(\"Find responses need a token, total, and at most 1000 visible matches\");\n  let end = -1;\n  const ids = new Set<string>();\n  for (const match of response.matches) {\n    if (!match.id || ids.has(match.id) || !Number.isSafeInteger(match.start) || !Number.isSafeInteger(match.end) || match.start < 0 || match.end <= match.start || match.start < end) throw new RangeError(\"Find matches need distinct IDs and ordered nonoverlapping UTF-16 ranges\");\n    if (match.before.length > 120 || match.after.length > 120 || match.text.length > 4096) throw new RangeError(\"Find preview context exceeds its display budget\");\n    ids.add(match.id); end = match.end;\n  }\n}\n/** Optional literal provider for short text documents. Large/indexed documents supply their own provider. */\nexport function findLiteralText(text: string, query: FindQuery, limit = 1000): FindResponse {\n  if (text.length > 1_000_000 || query.text.length > 256) throw new RangeError(\"Use an indexed provider for text over one million characters or queries over 256 characters\");\n  if (!Number.isSafeInteger(limit) || limit < 1 || limit > 1000) throw new RangeError(\"Find display limit must be in 1...1000\");\n  const matches: FindMatch[] = [];\n  let total = 0;\n  if (query.text) for (const result of text.matchAll(expression(query))) {\n    const start = result.index, end = start + result[0].length;\n    if (query.wholeWord && !wordBoundary(text, start, end)) continue;\n    total++;\n    if (matches.length < limit) matches.push({ id: `${start}:${end}`, start, end, before: text.slice(Math.max(0, start - 40), start), text: result[0], after: text.slice(end, end + 40) });\n  }\n  return { token: literalSearchToken(query), total, matches };\n}\n/** Literal replacement, including literal dollar signs. The host commits its result once. */\nexport function replaceLiteralText(document: FindDocument & { readonly text: string }, request: ReplaceRequest): string {\n  if (request.query.document.id !== document.id || request.query.document.revision !== document.revision || request.searchToken !== literalSearchToken(request.query)) throw Error(\"The document or search changed; find again before replacing\");\n  if (document.text.length > 1_000_000 || request.query.text.length > 256 || request.replacement.length > 4096) throw new RangeError(\"Literal replacement exceeds the short-document provider budget\");\n  if (!request.query.text) return document.text;\n  let replaced = false;\n  const next = document.text.replace(expression(request.query), (value: string, start: number) => {\n    const end = start + value.length;\n    if (request.query.wholeWord && !wordBoundary(document.text, start, end)) return value;\n    if (request.kind === \"one\" && `${start}:${end}` !== request.matchId) return value;\n    replaced = true;\n    return request.replacement;\n  });\n  if (request.kind === \"one\" && !replaced) throw Error(\"The selected match no longer exists\");\n  if (next.length > 1_000_000) throw new RangeError(\"Replacement exceeds the short-document provider budget\");\n  return next;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/find-replace-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/find-replace-model",
+    "exports": [
+      "FindDocument",
+      "FindMatch",
+      "FindQuery",
+      "FindResponse",
+      "ReplaceRequest",
+      "findLiteralText",
+      "literalSearchToken",
+      "replaceLiteralText",
+      "validateFindResponse"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/workspace-preset-model",
+  "title": "workspace preset model",
+  "description": "workspace preset model, an app shell state model. Exports copyName, layoutsEqual, presetActions.",
+  "registryDependencies": [
+    "@nyc-tron/shell/dock-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/workspace-preset-model.ts",
+      "content": "import type {DockLayout} from \"@/components/nyc-tron/ui/components/shell/dock-model\";\n\n/** Bounded size of a workspace preset menu. */\nexport const MAX_WORKSPACE_PRESETS=1000;\n\n/** Ids of the presets every studio workspace ships with. */\nexport const BUILT_IN_PRESET_IDS=[\"edit\",\"color\",\"audio\",\"review\",\"presentation\"] as const;\n/** One of {@linkcode BUILT_IN_PRESET_IDS}. */\nexport type BuiltInPresetId=typeof BUILT_IN_PRESET_IDS[number];\n\n/** Longest preset name, in characters after trimming. */\nexport const PRESET_NAME_MAX=40;\n\n/**\n * A workspace layout preset as a {@linkcode WorkspacePresetSwitcher} shows it.\n * Built-in presets cannot be renamed or deleted; every preset can be reset.\n */\nexport interface WorkspacePreset {\n  readonly id:string;\n  readonly name:string;\n  readonly builtIn:boolean;\n  /** The current layout differs from the preset's saved one, so Reset has work to do. */\n  readonly modified:boolean;\n}\n\n/** Why a name was refused, or undefined when it is usable. */\nexport type PresetNameProblem=\"empty\"|\"too-long\"|\"duplicate\";\n\n/**\n * Checks a proposed name against the other presets. Names compare trimmed and\n * case-insensitively; `exceptId` skips the preset being renamed so keeping\n * its own name is allowed.\n */\nexport function presetNameProblem(name:string,presets:readonly WorkspacePreset[],exceptId?:string):PresetNameProblem|undefined{\n  const trimmed=name.trim();\n  if(!trimmed)return \"empty\";\n  if([...trimmed].length>PRESET_NAME_MAX)return \"too-long\";\n  const key=trimmed.toLocaleLowerCase();\n  if(presets.some(p=>p.id!==exceptId&&p.name.trim().toLocaleLowerCase()===key))return \"duplicate\";\n  return undefined;\n}\n\n/** The message shown under the name field for a {@linkcode PresetNameProblem}. */\nexport function presetNameMessage(problem:PresetNameProblem|undefined,name:string):string|undefined{\n  switch(problem){\n    case \"empty\":return \"Enter a name.\";\n    case \"too-long\":return `Use ${PRESET_NAME_MAX} characters or fewer.`;\n    case \"duplicate\":return `A preset named “${name.trim()}” already exists.`;\n    default:return undefined;\n  }\n}\n\n/** First free \"<name> copy\", \"<name> copy 2\", ... that fits the length cap. */\nexport function copyName(name:string,presets:readonly WorkspacePreset[]):string{\n  if(presets.length>MAX_WORKSPACE_PRESETS)throw new RangeError(\"Workspace preset budget exceeded\");\n  const base=name.trim(),occupied=new Set(presets.map(p=>p.name.trim().toLocaleLowerCase()));\n  for(let n=1;n<=presets.length+1;n++){\n    const suffix=n===1?\" copy\":` copy ${n}`;\n    const room=PRESET_NAME_MAX-[...suffix].length;\n    const candidate=[...base].slice(0,room).join(\"\").trimEnd()+suffix;\n    if(!occupied.has(candidate.toLocaleLowerCase()))return candidate;\n  }\n  throw new RangeError(\"No workspace preset copy name available\");\n}\n\n/** Throws on duplicate or missing ids and blank names. */\nexport function validatePresetList(presets:readonly WorkspacePreset[]):void{\n  if(presets.length>MAX_WORKSPACE_PRESETS)throw new RangeError(\"Workspace preset budget exceeded\");\n  const seen=new Set<string>();\n  for(const p of presets){\n    if(typeof p.id!==\"string\"||!p.id.trim()||p.id.length>256||seen.has(p.id))throw new TypeError(\"Duplicate or missing preset id\");\n    if(typeof p.name!==\"string\"||!p.name.trim()||p.name.length>512)throw new TypeError(`Preset ${p.id} needs a name`);\n    if(typeof p.builtIn!==\"boolean\"||p.modified!==undefined&&typeof p.modified!==\"boolean\")throw new TypeError(\"Invalid workspace preset permissions\");\n    seen.add(p.id);\n  }\n}\n\n/** Which actions the menu offers for the active preset. */\nexport interface PresetActions {\n  readonly canRename:boolean;\n  readonly canDelete:boolean;\n  readonly canReset:boolean;\n}\n/** Built-ins are read-only; Reset needs a modified layout. */\nexport function presetActions(preset:WorkspacePreset|undefined):PresetActions{\n  return {\n    canRename:!!preset&&!preset.builtIn,\n    canDelete:!!preset&&!preset.builtIn,\n    canReset:!!preset&&preset.modified,\n  };\n}\n\n/**\n * Structural equality for dock layouts, for computing\n * {@linkcode WorkspacePreset.modified}. Key order does not matter; floating\n * order does, because it is stacking order.\n */\nexport function layoutsEqual(a:DockLayout,b:DockLayout):boolean{\n  return same(a,b);\n}\nfunction same(a:unknown,b:unknown):boolean{\n  if(a===b)return true;\n  if(typeof a!==\"object\"||typeof b!==\"object\"||!a||!b)return false;\n  if(Array.isArray(a)!==Array.isArray(b))return false;\n  const ka=Object.keys(a).filter(k=>(a as Record<string,unknown>)[k]!==undefined);\n  const kb=Object.keys(b).filter(k=>(b as Record<string,unknown>)[k]!==undefined);\n  if(ka.length!==kb.length)return false;\n  return ka.every(k=>same((a as Record<string,unknown>)[k],(b as Record<string,unknown>)[k]));\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/workspace-preset-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/workspace-preset-model",
+    "exports": [
+      "BUILT_IN_PRESET_IDS",
+      "BuiltInPresetId",
+      "MAX_WORKSPACE_PRESETS",
+      "PRESET_NAME_MAX",
+      "PresetActions",
+      "PresetNameProblem",
+      "WorkspacePreset",
+      "copyName",
+      "layoutsEqual",
+      "presetActions",
+      "presetNameMessage",
+      "presetNameProblem",
+      "validatePresetList"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

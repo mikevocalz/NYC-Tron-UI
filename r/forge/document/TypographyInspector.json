@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/document/TypographyInspector",
+  "title": "Typography Inspector",
+  "description": "Typography Inspector, a word processor component. Props: value, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/PropertyInspector"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/document/TypographyInspector.tsx",
+      "content": "import {PropertyInspector,type PropertyInspectorProps} from '@/components/nyc-tron/ui/components/forge/inputs/PropertyInspector';\nexport interface TypographySettings {kerning:number;tracking:number;leading:number;spaceBefore:number;spaceAfter:number;ligatures:boolean;glyph:string}\nexport interface TypographyInspectorProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {value:TypographySettings;onCommit:(value:TypographySettings,signal?:AbortSignal)=>unknown}\nexport function TypographyInspector({value,onCommit,...props}:TypographyInspectorProps){return <PropertyInspector {...props} label=\"Typography\" fields={[\n {kind:'number',id:'kerning',label:'Kerning',value:value.kerning,min:-100,max:100,step:.1,unit:'pt'},\n {kind:'number',id:'tracking',label:'Tracking',value:value.tracking,min:-1000,max:1000,step:1},\n {kind:'number',id:'leading',label:'Line leading',value:value.leading,min:1,max:1000,step:.5,unit:'pt'},\n {kind:'number',id:'spaceBefore',label:'Paragraph space before',value:value.spaceBefore,min:0,max:1000,step:.5,unit:'pt'},\n {kind:'number',id:'spaceAfter',label:'Paragraph space after',value:value.spaceAfter,min:0,max:1000,step:.5,unit:'pt'},\n {kind:'boolean',id:'ligatures',label:'Standard ligatures',value:value.ligatures},\n {kind:'text',id:'glyph',label:'Glyph or Unicode sequence',value:value.glyph,maxLength:64}\n ]} onCommit={(id,v,s)=>onCommit({...value,[id]:v},s)}/>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/document/TypographyInspector.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/document/TypographyInspector",
+    "exports": [
+      "TypographyInspector",
+      "TypographyInspectorProps",
+      "TypographySettings"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

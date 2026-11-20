@@ -8,6 +8,7 @@ import {
   type WindowCommandResult, type WindowControlDescriptor, type WindowControlLabels,
 } from "@nyc-tron/core/window-chrome";
 import { joinClasses } from "../styles.ts";
+import { space } from "../../tokens.ts";
 
 /** Bar height and minimum hit height, in logical points. */
 export const TITLE_BAR_HEIGHT = 44;
@@ -116,7 +117,7 @@ export function WindowTitleBar({
       {...{ className: joinClasses("flex-row items-center", styled && "bg-surface-sunken border-b border-border", className) }}
       style={[{ minHeight: Math.max(TITLE_BAR_HEIGHT, list.insets.height), paddingStart: startInset, paddingEnd: endInset }, style]}>
       {list.leading.length ? <View style={{ flexDirection: "row" }}>{list.leading.map(button)}</View> : null}
-      <View style={{ flex: 1, minWidth: 0, flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 8 }}>
+      <View style={{ flex: 1, minWidth: 0, flexDirection: "row", alignItems: "center", gap: space[1.5], paddingHorizontal: space[2] }}>
         {/* The dot is circular by nature, so it takes rounded-full from the app's theme rather than a raw radius. */}
         {edited ? <View accessible={false} {...{ className: joinClasses("rounded-full", styled && "border-accent") }} style={{ width: DOT, height: DOT, borderWidth: DOT / 2 }} /> : null}
         <Text accessibilityRole="header" accessibilityLabel={edited ? `${shown}, edited` : shown} numberOfLines={1} ellipsizeMode="tail" style={{ flexShrink: 1 }}

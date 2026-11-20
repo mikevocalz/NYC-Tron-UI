@@ -9,6 +9,7 @@ import {useLocalStore} from "../../useLocalStore.ts";
 import {ToolButton,officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
 import {SlideThumbnail} from "./SlideThumbnail.tsx";
 import {SLIDE_DEFAULT_SIZE,gridColumns,gridMove,moveBlock,nextSelection,slideLabel,type SlideObject,type SlideSize,type SlideSummary} from "./slide-model.ts";
+import {space,radius,border} from '../../../tokens.ts';
 
 /** Props for {@linkcode SlideSorter}. Selection is controlled; actions render only when their callbacks are passed. */
 export interface SlideSorterProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -81,11 +82,11 @@ function SlideSorterBody({boundary,actionError,disabledReason,disabled=false,
   };
   const muted=joinClasses(styled&&"text-text-muted text-sm");
   return <View {...rest} accessibilityLabel="Slide sorter" {...{className:joinClasses("min-w-0",className)}}
-    style={[{gap:10},rest.style as object]}>
-    <View style={{flexDirection:"row",alignItems:"center",gap:4,flexWrap:"wrap"}}>
+    style={[{gap:space[2.5]},rest.style as object]}>
+    <View style={{flexDirection:"row",alignItems:"center",gap:space[1],flexWrap:"wrap"}}>
       <ToolButton label="Select" checked={local.multi} styled={styled} accessibilityHint="Presses add or remove slides from the selection"
         onPress={()=>store.set(s=>({...s,multi:!s.multi}))}/>
-      <Text accessibilityLiveRegion="polite" {...{className:muted}} style={{paddingHorizontal:6}}>
+      <Text accessibilityLiveRegion="polite" {...{className:muted}} style={{paddingHorizontal:space[1.5]}}>
         {count===0?"No slides selected":count===1?"1 slide selected":count+" slides selected"}
       </Text>
       {onReorder?<>
@@ -118,7 +119,7 @@ function SlideSorterBody({boundary,actionError,disabledReason,disabled=false,
           else handled=false;
           if(handled)(e as unknown as {preventDefault?:()=>void}).preventDefault?.();
         };
-        return <View key={slide.id} style={{width:cell,height:tileHeight,gap:4}}>
+        return <View key={slide.id} style={{width:cell,height:tileHeight,gap:space[1]}}>
           <Pressable disabled={disabled} ref={node=>{refs.current.set(index,node as unknown as {focus?:()=>void}|null);if(node&&pendingFocus.current===index){(node as unknown as {focus?:()=>void}).focus?.();pendingFocus.current=null;}}}
             accessibilityRole="checkbox" accessibilityLabel={slideLabel(slide,index,slides.length)} accessibilityState={{checked:on}}
             accessibilityHint={onOpen?"Double tap to select. Use the open action to edit.":undefined}
@@ -131,12 +132,12 @@ function SlideSorterBody({boundary,actionError,disabledReason,disabled=false,
             {...{onKeyDown,onDoubleClick:onOpen?()=>onOpen(slide.id):undefined}}
             {...{className:joinClasses(styled&&"rounded-control border-2 focus-visible:ring-2 focus-visible:ring-focus",
               styled&&(on?"border-accent":"border-border"))}}
-            style={{padding:2,overflow:"hidden"}}>
+            style={{padding:space[0.5],overflow:"hidden"}}>
             <SlideThumbnail slide={slide} width={cell-8} size={size} renderImage={renderImage} styled={styled}/>
             {on?<View {...{className:joinClasses(styled&&"bg-accent")}}
-              style={{position:"absolute",top:6,end:6,width:20,height:20,borderRadius:10,alignItems:"center",justifyContent:"center"}}>
+              style={{position:"absolute",top:6,end:6,width:20,height:20,borderRadius:radius[10],alignItems:"center",justifyContent:"center"}}>
               <View {...{className:joinClasses(styled&&"border-surface-raised")}}
-                style={{width:9,height:5,borderStartWidth:2,borderBottomWidth:2,transform:[{rotate:"-45deg"}],marginTop:-2}}/>
+                style={{width:9,height:5,borderStartWidth:2,borderBottomWidth:border[2],transform:[{rotate:"-45deg"}],marginTop:-space[0.5]}}/>
             </View>:null}
           </Pressable>
           <Text {...{className:muted}} style={{fontVariant:["tabular-nums"],textAlign:"center"}}>{index+1}</Text>

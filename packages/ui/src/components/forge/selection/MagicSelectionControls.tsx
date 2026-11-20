@@ -20,6 +20,7 @@ import {
  validateWandSettings,wandProblem,type MagicWandRequest,type MagicWandSettings,type ModifySelectionRequest,
  type RefineEdgeRequest,type WandSample,
 } from "./magic-selection-model.ts";
+import {space,opacity} from "../../../tokens.ts";
 
 /** Radii the edge tools use, in document pixels. Host-owned like every other setting. */
 export interface SelectionEdgeRadii {
@@ -83,7 +84,7 @@ function MagicSelectionControlsBody({
  const refineProblem=unavailable?(disabledReason??"Selection change in progress"):onRefineEdge===undefined?"Refine edge needs a smoothing operation this editor does not offer"
   :!hasSelection?"Nothing is selected":radii.smooth<1&&radii.feather<1?"Set a smooth or feather radius":undefined;
  const heading=(text:string)=><Text role="heading" aria-level={3}
-  {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}} style={{paddingTop:4}}>{text}</Text>;
+  {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}} style={{paddingTop:space[1]}}>{text}</Text>;
  const reason=(text:string|undefined)=>text?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{text}</Text>:null;
  const radiusScrubber=(key:keyof SelectionEdgeRadii,name:string)=><PrecisionScrubber label={name} unit=" px"
   value={radii[key]} disabled={unavailable} min={0} max={MAX_SELECTION_RADIUS} step={1} unstyled={unstyled} onCommit={setRadius(key)}/>;
@@ -99,7 +100,7 @@ function MagicSelectionControlsBody({
   <SwitchRow label="Contiguous" {...(unavailable?{disabledReason:disabledReason??"Selection change in progress"}:{})} unstyled={unstyled} value={settings.contiguous}
    detail={settings.contiguous?"Only pixels connected to the one you click":"Every matching pixel in the image"}
    onValueChange={contiguous=>set({contiguous})}/>
-  <View style={{gap:4}}>
+  <View style={{gap:space[1]}}>
    <Text nativeID="wand-sample-label" {...{className:joinClasses(styled&&"text-text text-sm font-medium")}}>Sample</Text>
    <SegmentedControl disabled={unavailable} aria-label="Sample" value={settings.sample} unstyled={unstyled}
     options={WAND_SAMPLES.map(o=>({value:o.value,label:o.value==="layer"&&currentLayerName?`Layer: ${currentLayerName}`:o.label,
@@ -111,7 +112,7 @@ function MagicSelectionControlsBody({
   {!hasSelection?<Text accessibilityLiveRegion="polite" {...{className:joinClasses(styled&&"text-text text-xs")}}>
    Make a selection first to grow, shrink, feather or refine it.</Text>:null}
   {radiusScrubber("grow","Grow or shrink by")}
-  <View style={{flexDirection:"row",flexWrap:"wrap",gap:8}}>
+  <View style={{flexDirection:"row",flexWrap:"wrap",gap:space[2]}}>
    <Button size="md" variant="secondary" title="Grow" unstyled={unstyled} disabled={growProblem!==undefined}
     accessibilityHint={growProblem} onPress={()=>onModifySelection(buildModifySelection("grow",radii.grow,hasSelection))}/>
    <Button size="md" variant="secondary" title="Shrink" unstyled={unstyled} disabled={growProblem!==undefined}
@@ -256,7 +257,7 @@ function MagicWandCanvasBody({
     {name:"moveLeft",label:"Move left"},{name:"moveRight",label:"Move right"},{name:"moveUp",label:"Move up"},{name:"moveDown",label:"Move down"}]
     :[{name:"activate",label:"Aim with the keyboard"}]}
    onAccessibilityAction={e=>a11y(e.nativeEvent.actionName)}
-   style={{width,height,position:"relative",opacity:blocked!==undefined?0.6:1,
+   style={{width,height,position:"relative",opacity:blocked!==undefined?opacity[60]:1,
     ...(Platform.OS==="web"?{cursor:blocked?"not-allowed":"crosshair",userSelect:"none"} as object:null)}}>
    <View pointerEvents="none" style={{position:"absolute",left:0,top:0,width,height}}>{children}</View>
    {selectionBounds?<MarchingAnts rect={docRectToView(mapping,selectionBounds)} styled={styled} testID="wand-ants"/>:null}

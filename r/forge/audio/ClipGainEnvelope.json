@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/ClipGainEnvelope",
+  "title": "Clip Gain Envelope",
+  "description": "Clip Gain Envelope, an audio mixing and editing component. Props: lengthSamples, mode.",
+  "registryDependencies": [
+    "@nyc-tron/forge/audio/AutomationLane"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/ClipGainEnvelope.tsx",
+      "content": "import {AutomationLane,type AutomationLaneProps} from '@/components/nyc-tron/ui/components/forge/audio/AutomationLane';\n/** Clip-local sample positions use ticks as integer sample offsets; host owns scheduling. */\nexport type ClipGainEnvelopeProps=Omit<AutomationLaneProps,'param'|'mode'|'lengthTicks'|'ppq'|'beatsPerBar'>&{lengthSamples:number;mode?:'off'|'read'};\nexport function ClipGainEnvelope({lengthSamples,mode='read',...props}:ClipGainEnvelopeProps){\n return <AutomationLane {...props} lengthTicks={lengthSamples} mode={mode} param=\"gain\" ppq={1} beatsPerBar={4}/>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/audio/ClipGainEnvelope.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/ClipGainEnvelope",
+    "exports": [
+      "ClipGainEnvelope",
+      "ClipGainEnvelopeProps"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

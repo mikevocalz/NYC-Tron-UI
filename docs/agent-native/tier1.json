@@ -1,0 +1,1380 @@
+{
+ "schema": 1,
+ "scope": "@nyc-tron/ui subpaths (decision 11). Other packages are not tiered here.",
+ "rule": {
+  "summary": "Tier 1 = R1 root barrel OR R2 core families OR R3 shell core OR R4 imported by >= 10 distinct files. Item = a ui subpath whose source exports a PascalCase function or const. Everything else is tier 2.",
+  "R1": "exported from packages/ui/src/index.ts",
+  "R2": "source directly in components/ or in content, data, feedback, layout, navigation, overlays, theme, window",
+  "R3": "source in components/shell",
+  "R4": "distinct other files in packages/*/src importing the module >= 10",
+  "importCountDefinition": "distinct files from git ls-files packages (src/*.ts,tsx,js,jsx) with a relative import or an @nyc-tron/ui/components/<subpath> import that resolves to the module, self excluded, platform suffixes (.native .web .shared .types) merged",
+  "command": "node docs/agent-native/tier1.mjs",
+  "layoutPrimitivesNote": "Stack, Row, Spacer, Divider and Text (02-design-system section 5) have source under components/layout/, an R2 directory, so the same rule makes them tier 1. No hand-added entries exist; this script regenerates the whole list."
+ },
+ "counts": {
+  "uiSubpaths": 561,
+  "componentSubpaths": 391,
+  "tier1": 64,
+  "tier2": 497
+ },
+ "items": [
+  {
+   "name": "Button",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/Button",
+   "importSpecifier": "@nyc-tron/ui/components/Button",
+   "source": [
+    "packages/ui/src/components/Button.tsx"
+   ],
+   "symbols": [
+    "Button",
+    "ButtonProps",
+    "ButtonSize",
+    "ButtonVariant"
+   ],
+   "tier": 1,
+   "why": [
+    "R1 root barrel export",
+    "R2 core family (components/)",
+    "R4 imported by 169 files"
+   ],
+   "importCount": 169,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Card",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/Card",
+   "importSpecifier": "@nyc-tron/ui/components/Card",
+   "source": [
+    "packages/ui/src/components/Card.tsx"
+   ],
+   "symbols": [
+    "Card",
+    "CardProps",
+    "CardSurface"
+   ],
+   "tier": 1,
+   "why": [
+    "R1 root barrel export",
+    "R2 core family (components/)"
+   ],
+   "importCount": 1,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "KeyValueList",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/content/KeyValueList",
+   "importSpecifier": "@nyc-tron/ui/components/content/KeyValueList",
+   "source": [
+    "packages/ui/src/components/content/KeyValueList.tsx"
+   ],
+   "symbols": [
+    "KeyValueItem",
+    "KeyValueList",
+    "KeyValueListProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (content)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "DataTable",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/data/DataTable",
+   "importSpecifier": "@nyc-tron/ui/components/data/DataTable",
+   "source": [
+    "packages/ui/src/components/data/DataTable.tsx"
+   ],
+   "symbols": [
+    "DataTable",
+    "DataTableProps",
+    "TronColumnDef"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (data)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "TreeGrid",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/data/TreeGrid",
+   "importSpecifier": "@nyc-tron/ui/components/data/TreeGrid",
+   "source": [
+    "packages/ui/src/components/data/TreeGrid.tsx"
+   ],
+   "symbols": [
+    "TreeGrid",
+    "TreeGridColumn",
+    "TreeGridProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (data)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "DragGrabHandle",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/DragGrabHandle",
+   "importSpecifier": "@nyc-tron/ui/components/DragGrabHandle",
+   "source": [
+    "packages/ui/src/components/DragGrabHandle.tsx"
+   ],
+   "symbols": [
+    "DragGrabHandle",
+    "DragGrabHandleProps",
+    "DragPoint"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (components/)"
+   ],
+   "importCount": 3,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Badge",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/feedback/Badge",
+   "importSpecifier": "@nyc-tron/ui/components/feedback/Badge",
+   "source": [
+    "packages/ui/src/components/feedback/Badge.tsx"
+   ],
+   "symbols": [
+    "Badge",
+    "BadgeProps",
+    "BadgeSize",
+    "BadgeTone"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (feedback)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Banner",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/feedback/Banner",
+   "importSpecifier": "@nyc-tron/ui/components/feedback/Banner",
+   "source": [
+    "packages/ui/src/components/feedback/Banner.tsx"
+   ],
+   "symbols": [
+    "Banner",
+    "BannerProps",
+    "BannerTone"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (feedback)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "EmptyState",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/feedback/EmptyState",
+   "importSpecifier": "@nyc-tron/ui/components/feedback/EmptyState",
+   "source": [
+    "packages/ui/src/components/feedback/EmptyState.tsx"
+   ],
+   "symbols": [
+    "EmptyState",
+    "EmptyStateExit",
+    "EmptyStateProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (feedback)"
+   ],
+   "importCount": 2,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "ErrorMessage",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/feedback/ErrorMessage",
+   "importSpecifier": "@nyc-tron/ui/components/feedback/ErrorMessage",
+   "source": [
+    "packages/ui/src/components/feedback/ErrorMessage.tsx"
+   ],
+   "symbols": [
+    "ErrorMessage",
+    "ErrorMessageProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (feedback)",
+    "R4 imported by 211 files"
+   ],
+   "importCount": 211,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "FieldGroup",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/FieldGroup",
+   "importSpecifier": "@nyc-tron/ui/components/FieldGroup",
+   "source": [
+    "packages/ui/src/components/FieldGroup.tsx"
+   ],
+   "symbols": [
+    "FieldGroup",
+    "FieldGroupProps",
+    "FieldSection",
+    "FieldSectionProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (components/)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "PrecisionScrubber",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/forge/inputs/PrecisionScrubber",
+   "importSpecifier": "@nyc-tron/ui/components/forge/inputs/PrecisionScrubber",
+   "source": [
+    "packages/ui/src/components/forge/inputs/PrecisionScrubber.tsx"
+   ],
+   "symbols": [
+    "PrecisionScrubber",
+    "PrecisionScrubberProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R4 imported by 32 files"
+   ],
+   "importCount": 32,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "PropertyInspector",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/forge/inputs/PropertyInspector",
+   "importSpecifier": "@nyc-tron/ui/components/forge/inputs/PropertyInspector",
+   "source": [
+    "packages/ui/src/components/forge/inputs/PropertyInspector.tsx"
+   ],
+   "symbols": [
+    "InspectorProperty",
+    "PropertyInspector",
+    "PropertyInspectorProps",
+    "PropertyValue",
+    "validateInspectorFields"
+   ],
+   "tier": 1,
+   "why": [
+    "R4 imported by 48 files"
+   ],
+   "importCount": 48,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "office-controls",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/forge/office/office-controls",
+   "importSpecifier": "@nyc-tron/ui/components/forge/office/office-controls",
+   "source": [
+    "packages/ui/src/components/forge/office/office-controls.tsx"
+   ],
+   "symbols": [
+    "ChevronGlyph",
+    "CloseMark",
+    "OFFICE_TOUCH_TARGET",
+    "OfficeKeyEvent",
+    "PauseGlyph",
+    "PlayGlyph",
+    "PlusGlyph",
+    "SkipGlyph",
+    "ToolButton",
+    "ToolButtonProps",
+    "officeKey"
+   ],
+   "tier": 1,
+   "why": [
+    "R4 imported by 12 files"
+   ],
+   "importCount": 12,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "PanResponderDrag",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/gestures/PanResponderDrag",
+   "importSpecifier": "@nyc-tron/ui/components/gestures/PanResponderDrag",
+   "source": [
+    "packages/ui/src/components/gestures/PanResponderDrag.tsx"
+   ],
+   "symbols": [
+    "PanResponderDrag"
+   ],
+   "tier": 1,
+   "why": [
+    "R4 imported by 13 files"
+   ],
+   "importCount": 13,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "IconButton",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/IconButton",
+   "importSpecifier": "@nyc-tron/ui/components/IconButton",
+   "source": [
+    "packages/ui/src/components/IconButton.tsx"
+   ],
+   "symbols": [
+    "IconButton",
+    "IconButtonProps",
+    "IconButtonVariant"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (components/)"
+   ],
+   "importCount": 1,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "AdaptiveColumns",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/layout/AdaptiveColumns",
+   "importSpecifier": "@nyc-tron/ui/components/layout/AdaptiveColumns",
+   "source": [
+    "packages/ui/src/components/layout/AdaptiveColumns.tsx"
+   ],
+   "symbols": [
+    "AdaptiveColumn",
+    "AdaptiveColumnProps",
+    "AdaptiveColumns",
+    "AdaptiveColumnsProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (layout)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "ContentFrame",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/layout/ContentFrame",
+   "importSpecifier": "@nyc-tron/ui/components/layout/ContentFrame",
+   "source": [
+    "packages/ui/src/components/layout/ContentFrame.tsx"
+   ],
+   "symbols": [
+    "ContentFrame",
+    "ContentFrameProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (layout)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Divider",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/layout/Divider",
+   "importSpecifier": "@nyc-tron/ui/components/layout/Divider",
+   "source": [
+    "packages/ui/src/components/layout/Divider.tsx"
+   ],
+   "symbols": [
+    "Divider",
+    "DividerProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (layout)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Row",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/layout/Row",
+   "importSpecifier": "@nyc-tron/ui/components/layout/Row",
+   "source": [
+    "packages/ui/src/components/layout/Row.tsx"
+   ],
+   "symbols": [
+    "Row",
+    "RowProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (layout)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Spacer",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/layout/Spacer",
+   "importSpecifier": "@nyc-tron/ui/components/layout/Spacer",
+   "source": [
+    "packages/ui/src/components/layout/Spacer.tsx"
+   ],
+   "symbols": [
+    "Spacer",
+    "SpacerProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (layout)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Stack",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/layout/Stack",
+   "importSpecifier": "@nyc-tron/ui/components/layout/Stack",
+   "source": [
+    "packages/ui/src/components/layout/Stack.tsx"
+   ],
+   "symbols": [
+    "Stack",
+    "StackProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (layout)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Text",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/layout/Text",
+   "importSpecifier": "@nyc-tron/ui/components/layout/Text",
+   "source": [
+    "packages/ui/src/components/layout/Text.tsx"
+   ],
+   "symbols": [
+    "Text",
+    "TextProps",
+    "TextSize",
+    "TextTone",
+    "TextVariant"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (layout)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "List",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/List",
+   "importSpecifier": "@nyc-tron/ui/components/List",
+   "source": [
+    "packages/ui/src/components/List.tsx"
+   ],
+   "symbols": [
+    "List",
+    "ListItem",
+    "ListItemProps",
+    "ListProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (components/)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "CollapsibleDrawer",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/navigation/CollapsibleDrawer",
+   "importSpecifier": "@nyc-tron/ui/components/navigation/CollapsibleDrawer",
+   "source": [
+    "packages/ui/src/components/navigation/CollapsibleDrawer.tsx"
+   ],
+   "symbols": [
+    "CollapsibleDrawer",
+    "CollapsibleDrawerProps",
+    "DrawerDestination"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (navigation)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "NavigationRail",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/NavigationRail",
+   "importSpecifier": "@nyc-tron/ui/components/NavigationRail",
+   "source": [
+    "packages/ui/src/components/NavigationRail.tsx"
+   ],
+   "symbols": [
+    "NavigationItem",
+    "NavigationRail",
+    "NavigationRailProps",
+    "NavigationShell",
+    "NavigationShellProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R1 root barrel export",
+    "R2 core family (components/)"
+   ],
+   "importCount": 1,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "AnchoredPopover",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/overlays/AnchoredPopover",
+   "importSpecifier": "@nyc-tron/ui/components/overlays/AnchoredPopover",
+   "source": [
+    "packages/ui/src/components/overlays/AnchoredPopover.tsx"
+   ],
+   "symbols": [
+    "AnchoredPopover",
+    "PopoverAnchorProps",
+    "PopoverProps",
+    "PopoverTriggerProps",
+    "PopoverTriggerState"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (overlays)"
+   ],
+   "importCount": 4,
+   "importCountOtherPackages": 1
+  },
+  {
+   "name": "CommandPalette",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/overlays/CommandPalette",
+   "importSpecifier": "@nyc-tron/ui/components/overlays/CommandPalette",
+   "source": [
+    "packages/ui/src/components/overlays/CommandPalette.tsx"
+   ],
+   "symbols": [
+    "CommandPalette",
+    "CommandPaletteProps",
+    "PaletteCommand"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (overlays)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "CommandPopover",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/overlays/CommandPopover",
+   "importSpecifier": "@nyc-tron/ui/components/overlays/CommandPopover",
+   "source": [
+    "packages/ui/src/components/overlays/CommandPopover.tsx"
+   ],
+   "symbols": [
+    "CommandMenuItem",
+    "CommandPopover",
+    "CommandPopoverProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (overlays)"
+   ],
+   "importCount": 6,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "SegmentedControl",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/SegmentedControl",
+   "importSpecifier": "@nyc-tron/ui/components/SegmentedControl",
+   "source": [
+    "packages/ui/src/components/SegmentedControl.tsx"
+   ],
+   "symbols": [
+    "SegmentedControl",
+    "SegmentedControlProps",
+    "SegmentedOption"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (components/)",
+    "R4 imported by 28 files"
+   ],
+   "importCount": 28,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Select",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/Select",
+   "importSpecifier": "@nyc-tron/ui/components/Select",
+   "source": [
+    "packages/ui/src/components/Select.tsx"
+   ],
+   "symbols": [
+    "Select",
+    "SelectBaseProps",
+    "SelectGroup",
+    "SelectGroupsChoice",
+    "SelectOption",
+    "SelectOptionsChoice",
+    "SelectProps",
+    "selectOptions"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (components/)",
+    "R4 imported by 58 files"
+   ],
+   "importCount": 58,
+   "importCountOtherPackages": 4
+  },
+  {
+   "name": "AdaptiveDock",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/AdaptiveDock",
+   "importSpecifier": "@nyc-tron/ui/components/shell/AdaptiveDock",
+   "source": [
+    "packages/ui/src/components/shell/AdaptiveDock.tsx"
+   ],
+   "symbols": [
+    "AdaptiveDock",
+    "AdaptiveDockProps",
+    "DockEdge",
+    "DockLayout",
+    "DockPanel",
+    "DockStack",
+    "DockTarget",
+    "FloatingPanel"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 1,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "AssetBrowser",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/AssetBrowser",
+   "importSpecifier": "@nyc-tron/ui/components/shell/AssetBrowser",
+   "source": [
+    "packages/ui/src/components/shell/AssetBrowser.tsx"
+   ],
+   "symbols": [
+    "AssetBrowser",
+    "AssetBrowserProps",
+    "AssetEntry",
+    "AssetLocation",
+    "AssetRequest",
+    "AssetSort"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "ContextMenu",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/ContextMenu",
+   "importSpecifier": "@nyc-tron/ui/components/shell/ContextMenu",
+   "source": [
+    "packages/ui/src/components/shell/ContextMenu.tsx"
+   ],
+   "symbols": [
+    "CommandMenuItem",
+    "ContextMenu",
+    "ContextMenuProps",
+    "ContextMenuSource",
+    "isContextMenuKey",
+    "pointAnchor"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 1,
+   "importCountOtherPackages": 1
+  },
+  {
+   "name": "ContextualToolbar",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/ContextualToolbar",
+   "importSpecifier": "@nyc-tron/ui/components/shell/ContextualToolbar",
+   "source": [
+    "packages/ui/src/components/shell/ContextualToolbar.tsx"
+   ],
+   "symbols": [
+    "ContextualToolbar",
+    "ContextualToolbarItem",
+    "ContextualToolbarProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "DocumentTabBar",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/DocumentTabBar",
+   "importSpecifier": "@nyc-tron/ui/components/shell/DocumentTabBar",
+   "source": [
+    "packages/ui/src/components/shell/DocumentTabBar.tsx"
+   ],
+   "symbols": [
+    "DocumentTab",
+    "DocumentTabBar",
+    "DocumentTabBarProps",
+    "activeAfterClose",
+    "moveDocument"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "FindReplaceContent",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/FindReplaceContent",
+   "importSpecifier": "@nyc-tron/ui/components/shell/FindReplaceContent",
+   "source": [
+    "packages/ui/src/components/shell/FindReplaceContent.tsx"
+   ],
+   "symbols": [
+    "FindDocument",
+    "FindMatch",
+    "FindQuery",
+    "FindReplaceContent",
+    "FindReplaceContentProps",
+    "FindResponse",
+    "ReplaceRequest"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 2,
+   "importCountOtherPackages": 1
+  },
+  {
+   "name": "FindReplacePopover",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/FindReplacePopover",
+   "importSpecifier": "@nyc-tron/ui/components/shell/FindReplacePopover",
+   "source": [
+    "packages/ui/src/components/shell/FindReplacePopover.tsx"
+   ],
+   "symbols": [
+    "FindReplaceContentProps",
+    "FindReplacePopover",
+    "FindReplacePopoverProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 2,
+   "importCountOtherPackages": 2
+  },
+  {
+   "name": "FocusAndA11yLayer",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/FocusAndA11yLayer",
+   "importSpecifier": "@nyc-tron/ui/components/shell/FocusAndA11yLayer",
+   "source": [
+    "packages/ui/src/components/shell/FocusAndA11yLayer.tsx"
+   ],
+   "symbols": [
+    "A11yPreferences",
+    "FocusAndA11yLayer",
+    "FocusAndA11yLayerProps",
+    "InputModality",
+    "Politeness",
+    "motionDuration",
+    "useA11yPreferences",
+    "useAnnounce"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "HistoryPanel",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/HistoryPanel",
+   "importSpecifier": "@nyc-tron/ui/components/shell/HistoryPanel",
+   "source": [
+    "packages/ui/src/components/shell/HistoryPanel.tsx"
+   ],
+   "symbols": [
+    "HistoryEntry",
+    "HistoryJump",
+    "HistoryPanel",
+    "HistoryPanelProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "InspectorPanel",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/InspectorPanel",
+   "importSpecifier": "@nyc-tron/ui/components/shell/InspectorPanel",
+   "source": [
+    "packages/ui/src/components/shell/InspectorPanel.tsx"
+   ],
+   "symbols": [
+    "InspectorPanel",
+    "InspectorPanelProps",
+    "InspectorSelection"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "InspectorSearch",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/InspectorSearch",
+   "importSpecifier": "@nyc-tron/ui/components/shell/InspectorSearch",
+   "source": [
+    "packages/ui/src/components/shell/InspectorSearch.tsx"
+   ],
+   "symbols": [
+    "InspectorSearch",
+    "InspectorSearchProps",
+    "matchesQuery"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 3,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "InspectorSection",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/InspectorSection",
+   "importSpecifier": "@nyc-tron/ui/components/shell/InspectorSection",
+   "source": [
+    "packages/ui/src/components/shell/InspectorSection.tsx"
+   ],
+   "symbols": [
+    "InspectorSection",
+    "InspectorSectionProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "KeyboardShortcutHUD",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/KeyboardShortcutHUD",
+   "importSpecifier": "@nyc-tron/ui/components/shell/KeyboardShortcutHUD",
+   "source": [
+    "packages/ui/src/components/shell/KeyboardShortcutHUD.tsx"
+   ],
+   "symbols": [
+    "Binding",
+    "ChordRecorder",
+    "KeyChord",
+    "KeyboardShortcutHUD",
+    "KeyboardShortcutHUDProps",
+    "ShortcutCommand",
+    "bindingFromChord",
+    "commandForChord",
+    "isApplePlatform"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "MenuButton",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/MenuButton",
+   "importSpecifier": "@nyc-tron/ui/components/shell/MenuButton",
+   "source": [
+    "packages/ui/src/components/shell/MenuButton.tsx"
+   ],
+   "symbols": [
+    "CommandMenuItem",
+    "MenuButton",
+    "MenuButtonProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core",
+    "R4 imported by 13 files"
+   ],
+   "importCount": 13,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "PaneSplitter",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/PaneSplitter",
+   "importSpecifier": "@nyc-tron/ui/components/shell/PaneSplitter",
+   "source": [
+    "packages/ui/src/components/shell/PaneSplitter.tsx"
+   ],
+   "symbols": [
+    "PaneSplitter",
+    "PaneSplitterProps",
+    "SplitAxis"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 1,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "PresetGallery",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/PresetGallery",
+   "importSpecifier": "@nyc-tron/ui/components/shell/PresetGallery",
+   "source": [
+    "packages/ui/src/components/shell/PresetGallery.tsx"
+   ],
+   "symbols": [
+    "Preset",
+    "PresetFilter",
+    "PresetGallery",
+    "PresetGalleryProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "PropertyRow",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/PropertyRow",
+   "importSpecifier": "@nyc-tron/ui/components/shell/PropertyRow",
+   "source": [
+    "packages/ui/src/components/shell/PropertyRow.tsx"
+   ],
+   "symbols": [
+    "PropertyEditorState",
+    "PropertyOverride",
+    "PropertyRow",
+    "PropertyRowProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 1,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "RangeSlider",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/RangeSlider",
+   "importSpecifier": "@nyc-tron/ui/components/shell/RangeSlider",
+   "source": [
+    "packages/ui/src/components/shell/RangeSlider.tsx"
+   ],
+   "symbols": [
+    "RangeSlider",
+    "RangeSliderProps",
+    "RangeThumb",
+    "RangeValue"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "RibbonTabs",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/RibbonTabs",
+   "importSpecifier": "@nyc-tron/ui/components/shell/RibbonTabs",
+   "source": [
+    "packages/ui/src/components/shell/RibbonTabs.tsx"
+   ],
+   "symbols": [
+    "RibbonButton",
+    "RibbonCommand",
+    "RibbonGallery",
+    "RibbonGalleryItem",
+    "RibbonGroup",
+    "RibbonSplit",
+    "RibbonTab",
+    "RibbonTabs",
+    "RibbonTabsProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "RotaryKnob",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/RotaryKnob",
+   "importSpecifier": "@nyc-tron/ui/components/shell/RotaryKnob",
+   "source": [
+    "packages/ui/src/components/shell/RotaryKnob.tsx"
+   ],
+   "symbols": [
+    "KnobInput",
+    "RotaryKnob",
+    "RotaryKnobProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "SliderField",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/SliderField",
+   "importSpecifier": "@nyc-tron/ui/components/shell/SliderField",
+   "source": [
+    "packages/ui/src/components/shell/SliderField.tsx"
+   ],
+   "symbols": [
+    "SliderField",
+    "SliderFieldProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 2,
+   "importCountOtherPackages": 1
+  },
+  {
+   "name": "SplitButton",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/SplitButton",
+   "importSpecifier": "@nyc-tron/ui/components/shell/SplitButton",
+   "source": [
+    "packages/ui/src/components/shell/SplitButton.tsx"
+   ],
+   "symbols": [
+    "SplitButton",
+    "SplitButtonProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 2,
+   "importCountOtherPackages": 1
+  },
+  {
+   "name": "StatusBar",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/StatusBar",
+   "importSpecifier": "@nyc-tron/ui/components/shell/StatusBar",
+   "source": [
+    "packages/ui/src/components/shell/StatusBar.tsx"
+   ],
+   "symbols": [
+    "SelectionNoun",
+    "StatusActivity",
+    "StatusBar",
+    "StatusBarProps",
+    "StatusUnits",
+    "StatusZoom"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "ToastAndProgress",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/ToastAndProgress",
+   "importSpecifier": "@nyc-tron/ui/components/shell/ToastAndProgress",
+   "source": [
+    "packages/ui/src/components/shell/ToastAndProgress.tsx"
+   ],
+   "symbols": [
+    "JobAction",
+    "ProgressJob",
+    "ToastAndProgress",
+    "ToastAndProgressProps",
+    "ToastMessage"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "ToolRail",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/ToolRail",
+   "importSpecifier": "@nyc-tron/ui/components/shell/ToolRail",
+   "source": [
+    "packages/ui/src/components/shell/ToolRail.tsx"
+   ],
+   "symbols": [
+    "RailTool",
+    "RailToolVariant",
+    "ToolIcon",
+    "ToolRail",
+    "ToolRailProps",
+    "shownVariantId",
+    "toolIsActive"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "UnitInput",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/UnitInput",
+   "importSpecifier": "@nyc-tron/ui/components/shell/UnitInput",
+   "source": [
+    "packages/ui/src/components/shell/UnitInput.tsx"
+   ],
+   "symbols": [
+    "UnitContext",
+    "UnitDimension",
+    "UnitInput",
+    "UnitInputProps",
+    "UnitName"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core",
+    "R4 imported by 35 files"
+   ],
+   "importCount": 35,
+   "importCountOtherPackages": 1
+  },
+  {
+   "name": "WorkspaceHost",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/WorkspaceHost",
+   "importSpecifier": "@nyc-tron/ui/components/shell/WorkspaceHost",
+   "source": [
+    "packages/ui/src/components/shell/WorkspaceHost.tsx"
+   ],
+   "symbols": [
+    "DockLayout",
+    "DockPanel",
+    "WorkspaceDocument",
+    "WorkspaceHost",
+    "WorkspaceHostMode",
+    "WorkspaceHostProps",
+    "WorkspaceMode"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "WorkspacePresetSwitcher",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/shell/WorkspacePresetSwitcher",
+   "importSpecifier": "@nyc-tron/ui/components/shell/WorkspacePresetSwitcher",
+   "source": [
+    "packages/ui/src/components/shell/WorkspacePresetSwitcher.tsx"
+   ],
+   "symbols": [
+    "WorkspacePreset",
+    "WorkspacePresetSwitcher",
+    "WorkspacePresetSwitcherProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R3 shell core"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "TabBar",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/TabBar",
+   "importSpecifier": "@nyc-tron/ui/components/TabBar",
+   "source": [
+    "packages/ui/src/components/TabBar.tsx"
+   ],
+   "symbols": [
+    "TabBar",
+    "TabBarProps",
+    "TabBarTab",
+    "TabIconState"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (components/)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "TextField",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/TextField",
+   "importSpecifier": "@nyc-tron/ui/components/TextField",
+   "source": [
+    "packages/ui/src/components/TextField.tsx"
+   ],
+   "symbols": [
+    "TextField",
+    "TextFieldProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R1 root barrel export",
+    "R2 core family (components/)"
+   ],
+   "importCount": 9,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "NightScope",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/theme/NightScope",
+   "importSpecifier": "@nyc-tron/ui/components/theme/NightScope",
+   "source": [
+    "packages/ui/src/components/theme/NightScope.tsx"
+   ],
+   "symbols": [
+    "NightScope",
+    "NightScopeProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (theme)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "Toolbar",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/Toolbar",
+   "importSpecifier": "@nyc-tron/ui/components/Toolbar",
+   "source": [
+    "packages/ui/src/components/Toolbar.tsx"
+   ],
+   "symbols": [
+    "Toolbar",
+    "ToolbarProps"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (components/)"
+   ],
+   "importCount": 1,
+   "importCountOtherPackages": 0
+  },
+  {
+   "name": "WindowTitleBar",
+   "package": "@nyc-tron/ui",
+   "subpath": "./components/window/WindowTitleBar",
+   "importSpecifier": "@nyc-tron/ui/components/window/WindowTitleBar",
+   "source": [
+    "packages/ui/src/components/window/WindowTitleBar.tsx"
+   ],
+   "symbols": [
+    "CAPTION_TARGET_WIDTH",
+    "CONTROL_TARGET",
+    "TITLE_BAR_HEIGHT",
+    "WindowTitleBar",
+    "WindowTitleBarProps",
+    "useWindowChrome"
+   ],
+   "tier": 1,
+   "why": [
+    "R2 core family (window)"
+   ],
+   "importCount": 0,
+   "importCountOtherPackages": 0
+  }
+ ]
+}

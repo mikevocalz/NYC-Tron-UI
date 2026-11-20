@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/office/read-aloud-model",
+  "title": "read aloud model",
+  "description": "read aloud model, an office state model. Exports clampRate, formatRate, readAloudPosition.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/office/read-aloud-model.ts",
+      "content": "// Portions ported from WordCraft for Android, crates/engine/src/speech.rs\n// at https://github.com/artcraft-android/wordcraft-android/commit/b2b7cf913c6f61604062e2db30962f32ec921b11\n// Copyright (c) 2026 ArtCraft Team and the WordCraft contributors.\n// Licensed under the MIT License or the Apache License, Version 2.0, at your option;\n// see licenses/WordCraft-MIT.txt and licenses/WordCraft-Apache-2.0.txt.\n// Modified by NYC-Tron UI contributors, 2026-11-05: rewritten in TypeScript over plain\n// text blocks instead of a WordCraft Document; citation-field skipping and the speech\n// worker thread removed (the app owns the voice); playback-rate steps and the reading\n// position helpers added.\n\n/** Slowest reading speed, as a multiple of the voice's normal rate. */\nexport const READ_ALOUD_MIN_RATE=0.5;\n/** Fastest reading speed. */\nexport const READ_ALOUD_MAX_RATE=3;\n/** Speeds offered by the rate control, in order. */\nexport const READ_ALOUD_RATES=[0.5,0.75,1,1.25,1.5,2,3] as const;\n/** Longest sentence handed to a voice; longer runs are split at a space. */\nexport const READ_ALOUD_MAX_SENTENCE=600;\n/** Most sentences in one queue. */\nexport const READ_ALOUD_MAX_SENTENCES=20_000;\n\n/** Words that end with a full stop without ending the sentence. */\nconst ABBREVIATIONS=new Set([\n  \"al\",\"e.g\",\"i.e\",\"eg\",\"ie\",\"cf\",\"vs\",\"etc\",\"fig\",\"figs\",\"eq\",\"eqs\",\"no\",\"nos\",\"p\",\"pp\",\"vol\",\"vols\",\"ch\",\"chap\",\"sec\",\"tab\",\n  \"ref\",\"refs\",\"dr\",\"mr\",\"mrs\",\"ms\",\"prof\",\"st\",\"approx\",\"ca\",\"resp\",\"ed\",\"eds\",\"suppl\",\"jr\",\"sr\",\"inc\",\"ltd\",\"co\",\"dept\",\n  \"est\",\"min\",\"max\",\"viz\",\"ibid\",\n]);\nconst TERMINAL=new Set([\".\",\"!\",\"?\",\"…\",\"。\",\"！\",\"？\"]);\nconst CLOSERS=new Set([\"\\\"\",\"'\",\"”\",\"’\",\")\",\"]\",\"»\",\".\",\"!\",\"?\"]);\nconst SPACE=/\\s/u;\nconst ALNUM=/[\\p{L}\\p{N}]/u;\n\n/** A block of document text the reader can speak: a paragraph, a heading or a PDF page. */\nexport interface ReadAloudBlock {\n  /** The block's place in its document: a Quill block index or a PDF page index. */\n  readonly block:number;\n  readonly text:string;\n}\n\n/**\n * One sentence in the reading queue. `start` and `end` are char offsets into\n * the block's text (end exclusive), so the app can highlight it.\n * @see {@linkcode readAloudSentences}\n */\nexport interface ReadAloudSentence {\n  readonly text:string;\n  readonly block:number;\n  readonly start:number;\n  readonly end:number;\n}\n\n/** Sentence spans in `text` as char index ranges `[start, end)`, without surrounding whitespace. */\nexport function splitSentences(text:string):Array<[number,number]>{\n  const chars=[...text];\n  const out:Array<[number,number]>=[];\n  let start=0,i=0;\n  while(i<chars.length){\n    const c=chars[i]!;\n    let end:number|undefined;\n    if(TERMINAL.has(c)){\n      let j=i+1;\n      while(j<chars.length&&CLOSERS.has(chars[j]!))j++;\n      const atEnd=j>=chars.length;\n      const spaceAfter=j<chars.length&&SPACE.test(chars[j]!);\n      if((atEnd||spaceAfter)&&(c!==\".\"||!isAbbreviation(chars,start,i)))end=j;\n      i=Math.max(j,i+1);\n    }else i++;\n    // Very long sentences are split at a space so skipping stays fine-grained.\n    if(end===undefined&&i-start>=READ_ALOUD_MAX_SENTENCE&&i<chars.length&&SPACE.test(chars[i]!))end=i;\n    if(end!==undefined){pushTrimmed(chars,start,end,out);start=end;}\n  }\n  pushTrimmed(chars,start,chars.length,out);\n  return out;\n}\n\nfunction pushTrimmed(chars:readonly string[],a:number,b:number,out:Array<[number,number]>){\n  while(a<b&&SPACE.test(chars[a]!))a++;\n  while(b>a&&SPACE.test(chars[b-1]!))b--;\n  if(a<b)out.push([a,b]);\n}\n\n/** Does the full stop at `dot` end an abbreviation (\"et al.\", \"Fig.\", \"J. Smith\") rather than a sentence? */\nfunction isAbbreviation(chars:readonly string[],start:number,dot:number):boolean{\n  let w=dot;\n  while(w>start&&(ALNUM.test(chars[w-1]!)||chars[w-1]===\".\"))w--;\n  const word=chars.slice(w,dot).join(\"\").toLowerCase();\n  if(!word)return false;\n  const letters=[...word].filter(c=>c!==\".\");\n  // An initial: \"J. Smith\", \"A. B. Jones\".\n  if(letters.length===1&&/\\p{L}/u.test(letters[0]!))return true;\n  return ABBREVIATIONS.has(word);\n}\n\n/** Collapses whitespace and tidies empty brackets and spaced punctuation: \"( )\", \" .\" → \".\". */\nexport function tidySpoken(s:string):string{\n  let t=s.split(/\\s+/u).filter(Boolean).join(\" \");\n  for(;;){\n    const before=t;\n    for(const [from,to] of [[\"()\",\"\"],[\"[]\",\"\"],[\"( )\",\"\"],[\"[ ]\",\"\"],[\" .\",\".\"],[\" ,\",\",\"],[\" ;\",\";\"],[\" :\",\":\"],[\"  \",\" \"]] as const){\n      t=t.split(from).join(to);\n    }\n    if(t===before)return t.trim();\n  }\n}\n\n/**\n * The reading queue for `blocks` in order: one entry per sentence that has a\n * letter or digit in it, capped at {@linkcode READ_ALOUD_MAX_SENTENCES}.\n */\nexport function readAloudSentences(blocks:readonly ReadAloudBlock[]):ReadAloudSentence[]{\n  const out:ReadAloudSentence[]=[];\n  for(const b of blocks){\n    const chars=[...b.text.replace(/[\\t\\v\\f\\u2028\\u2029]/gu,\" \")];\n    for(const [a,e] of splitSentences(chars.join(\"\"))){\n      if(out.length>=READ_ALOUD_MAX_SENTENCES)return out;\n      const spoken=tidySpoken(chars.slice(a,e).join(\"\"));\n      if(!ALNUM.test(spoken))continue;\n      out.push({text:spoken,block:b.block,start:a,end:e});\n    }\n  }\n  return out;\n}\n\n/**\n * Char spans `[start, end)` of the words in a sentence's spoken text, counting\n * only runs between spaces that hold a letter or digit, so punctuation is\n * never a word. A voice's word-boundary callback indexes into this list.\n */\nexport function wordSpans(text:string):Array<[number,number]>{\n  const out:Array<[number,number]>=[];\n  const chars=[...text,\" \"];\n  let run:[number,boolean]|undefined;\n  chars.forEach((c,i)=>{\n    if(!SPACE.test(c)){run=[run?.[0]??i,(run?.[1]??false)||ALNUM.test(c)];return;}\n    if(run&&run[1])out.push([run[0],i]);\n    run=undefined;\n  });\n  return out;\n}\n\n/** Clamps a requested speed into {@linkcode READ_ALOUD_MIN_RATE}..{@linkcode READ_ALOUD_MAX_RATE}. */\nexport function clampRate(rate:number):number{\n  if(!Number.isFinite(rate))return 1;\n  return Math.min(READ_ALOUD_MAX_RATE,Math.max(READ_ALOUD_MIN_RATE,rate));\n}\n\n/** The next (or previous) offered speed after `rate`, staying at the ends. */\nexport function stepRate(rate:number,direction:1|-1):number{\n  const r=clampRate(rate);\n  if(direction>0)return READ_ALOUD_RATES.find(x=>x>r+1e-9)??READ_ALOUD_MAX_RATE;\n  return [...READ_ALOUD_RATES].reverse().find(x=>x<r-1e-9)??READ_ALOUD_MIN_RATE;\n}\n\n/** \"1×\", \"1.25×\". */\nexport function formatRate(rate:number):string{\n  return String(Math.round(clampRate(rate)*100)/100)+\"×\";\n}\n\n/** Reading position in plain speech: \"Sentence 3 of 40\". */\nexport function readAloudPosition(index:number,count:number):string{\n  if(count<=0)return \"Nothing to read\";\n  return \"Sentence \"+(Math.min(Math.max(index,0),count-1)+1)+\" of \"+count;\n}\n\n/** The sentence index to resume from at block `block`, or the first sentence after it. */\nexport function sentenceIndexAtBlock(sentences:readonly ReadAloudSentence[],block:number):number{\n  const i=sentences.findIndex(s=>s.block>=block);\n  return i<0?Math.max(0,sentences.length-1):i;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/office/read-aloud-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/office/read-aloud-model",
+    "exports": [
+      "READ_ALOUD_MAX_RATE",
+      "READ_ALOUD_MAX_SENTENCE",
+      "READ_ALOUD_MAX_SENTENCES",
+      "READ_ALOUD_MIN_RATE",
+      "READ_ALOUD_RATES",
+      "ReadAloudBlock",
+      "ReadAloudSentence",
+      "clampRate",
+      "formatRate",
+      "readAloudPosition",
+      "readAloudSentences",
+      "sentenceIndexAtBlock",
+      "splitSentences",
+      "stepRate",
+      "tidySpoken",
+      "wordSpans"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

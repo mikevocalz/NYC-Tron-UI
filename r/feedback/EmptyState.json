@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feedback/EmptyState",
+  "title": "Empty State",
+  "description": "Empty-list placeholder with heading title, description, icon or illustration, and an action or secondary exit button, for React Native.",
+  "registryDependencies": [
+    "@nyc-tron/Button"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/feedback/EmptyState.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { Text, View, type ViewProps } from \"react-native\";\nimport { Button } from \"@/components/nyc-tron/ui/components/Button\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\n\n/** A live way out of the empty state, rendered as the kit's secondary Button. */\nexport interface EmptyStateExit {\n  title:string;\n  onPress:()=>void;\n  accessibilityHint?:string;\n}\n\n/** Props for {@linkcode EmptyState}. Drop-in for Nitro Forge's `StudioEmptyStateProps`. */\nexport interface EmptyStateProps extends Omit<ViewProps,\"children\"> {\n  title:string;\n  /**\n   * Honest copy: what is missing and where the job gets done today. If the\n   * promised feature does not exist yet, say where to go instead; never a\n   * placeholder promise.\n   */\n  description?:string;\n  /** The app's own control. Takes precedence over `exitAction`. */\n  action?:ReactNode;\n  /** Shorthand for the common single exit; ignored when `action` is passed. */\n  exitAction?:EmptyStateExit;\n  /** Small glyph above the title. Ignored when `illustration` is passed. */\n  icon?:ReactNode;\n  /** Art above the title; the caller owns its accessible name or aria-hidden. */\n  illustration?:ReactNode;\n  /** Heading level of the title on web. iOS and Android announce a heading without a level. @default 2 */\n  titleLevel?:1|2|3|4|5|6;\n  /**\n   * Accepted so Forge's brand tones (`royal`, `carolina`) compile unchanged.\n   * Colors come from the app's tokens, so the value does not change the render.\n   */\n  tone?:string;\n  className?:string;\n  titleClassName?:string;\n  descriptionClassName?:string;\n  unstyled?:boolean;\n}\n\n/**\n * The state shown when a pane has nothing to list. It is for real emptiness:\n * a failed read is an error, not an empty state, and renders `ErrorMessage`\n * or a danger `Banner` instead.\n */\nexport function EmptyState({\n  title,description,action,exitAction,icon,illustration,titleLevel=2,tone:_tone,\n  className,titleClassName,descriptionClassName,unstyled=false,...rest\n}:EmptyStateProps) {\n  const styled=!unstyled;\n  const exit=action??(exitAction\n    ? <Button title={exitAction.title} variant=\"secondary\" onPress={exitAction.onPress}\n        accessibilityHint={exitAction.accessibilityHint}/>\n    : null);\n  const art=illustration??icon;\n  return (\n    <View {...rest} {...{className:joinClasses(\"w-full items-center justify-center\",styled&&\"gap-2 px-6 py-8\",className)}}>\n      {art ? <View {...{className:joinClasses(\"items-center\",styled&&\"mb-2\")}}>{art}</View> : null}\n      <Text role=\"heading\" {...{\"aria-level\":titleLevel}}\n        {...{className:joinClasses(\"text-center\",styled&&\"text-base font-semibold leading-6 text-text\",titleClassName)}}>{title}</Text>\n      {description ? (\n        <Text {...{className:joinClasses(\"text-center\",styled&&\"max-w-sm text-sm leading-5 text-text-muted\",descriptionClassName)}}>{description}</Text>\n      ) : null}\n      {exit ? <View {...{className:joinClasses(\"items-center\",styled&&\"mt-3\")}}>{exit}</View> : null}\n    </View>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/feedback/EmptyState.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/feedback/EmptyState",
+    "exports": [
+      "EmptyState",
+      "EmptyStateExit",
+      "EmptyStateProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "feedback"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/slides/canvas-model",
+  "title": "canvas model",
+  "description": "canvas model, a presentation slide state model. Exports fitScale, hitTest, nudge.",
+  "registryDependencies": [
+    "@nyc-tron/forge/slides/slide-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/slides/canvas-model.ts",
+      "content": "import type {SlideObject,SlideSize} from \"@/components/nyc-tron/ui/components/forge/slides/slide-model\";\n\n/** A box in slide units. */\nexport interface SlideRect {\n  readonly x:number;\n  readonly y:number;\n  readonly w:number;\n  readonly h:number;\n}\n\n/** A guide line the canvas draws while an object snaps: vertical at x, or horizontal at y. */\nexport interface SnapGuide {\n  readonly axis:\"x\"|\"y\";\n  readonly at:number;\n}\n\n/** Smallest object edge, in slide units. */\nexport const SLIDE_MIN_OBJECT=8;\n/** Snap distance in screen points; divide by the canvas scale to get slide units. */\nexport const SLIDE_SNAP_POINTS=6;\n\n/** Scale that fits `size` into `width` × `height` points. */\nexport function fitScale(size:SlideSize,width:number,height=Infinity):number{\n  if(!(size.width>0)||!(size.height>0)||!(width>0))return 0;\n  return Math.min(width/size.width,height>0?height/size.height:Infinity);\n}\n\n/**\n * Snaps a moving box's left/center/right and top/middle/bottom to the slide's\n * edges and center and to the other objects' edges and centers, when within\n * `threshold` slide units. Returns the snapped position and the guides hit.\n */\nexport function snapRect(rect:SlideRect,others:readonly SlideRect[],size:SlideSize,threshold:number):{x:number;y:number;guides:SnapGuide[]}{\n  const xs=[0,size.width/2,size.width,...others.flatMap(o=>[o.x,o.x+o.w/2,o.x+o.w])];\n  const ys=[0,size.height/2,size.height,...others.flatMap(o=>[o.y,o.y+o.h/2,o.y+o.h])];\n  const axis=(start:number,len:number,lines:readonly number[])=>{\n    let best:{delta:number;at:number}|undefined;\n    for(const edge of [start,start+len/2,start+len])for(const line of lines){\n      const delta=line-edge;\n      if(Math.abs(delta)<=threshold&&(!best||Math.abs(delta)<Math.abs(best.delta)))best={delta,at:line};\n    }\n    return best;\n  };\n  const bx=axis(rect.x,rect.w,xs),by=axis(rect.y,rect.h,ys);\n  const guides:SnapGuide[]=[];\n  if(bx)guides.push({axis:\"x\",at:bx.at});\n  if(by)guides.push({axis:\"y\",at:by.at});\n  return {x:rect.x+(bx?.delta??0),y:rect.y+(by?.delta??0),guides};\n}\n\n/**\n * New size after dragging the bottom-end corner by `dx`, `dy` slide units.\n * `keepRatio` (Shift) keeps the aspect ratio, following the larger change.\n */\nexport function resizeFromCorner(rect:SlideRect,dx:number,dy:number,keepRatio=false):{w:number;h:number}{\n  let w=Math.max(SLIDE_MIN_OBJECT,rect.w+dx);\n  let h=Math.max(SLIDE_MIN_OBJECT,rect.h+dy);\n  if(keepRatio&&rect.w>0&&rect.h>0){\n    const ratio=rect.w/rect.h;\n    if(Math.abs(dx)>=Math.abs(dy))h=Math.max(SLIDE_MIN_OBJECT,w/ratio);else w=Math.max(SLIDE_MIN_OBJECT,h*ratio);\n  }\n  return {w:round2(w),h:round2(h)};\n}\n\n/** Arrow-key nudge: 1 unit, 10 with Shift. `undefined` for any other key. */\nexport function nudge(key:string,shift:boolean,rtl=false):{dx:number;dy:number}|undefined{\n  const step=shift?10:1;\n  const right=rtl?-step:step;\n  switch(key){\n    case \"ArrowLeft\":return {dx:-right,dy:0};\n    case \"ArrowRight\":return {dx:right,dy:0};\n    case \"ArrowUp\":return {dx:0,dy:-step};\n    case \"ArrowDown\":return {dx:0,dy:step};\n    default:return undefined;\n  }\n}\n\n/** Rotation after a 15° step (`[` or `]`), normalised to -180..180. */\nexport function stepRotation(degrees:number,direction:1|-1,step=15):number{\n  let r=(Math.round(degrees/step)+direction)*step;\n  r=((r+180)%360+360)%360-180;\n  return r===-180?180:r;\n}\n\n/** Topmost object at a slide point, ignoring rotation; `undefined` for empty slide. */\nexport function hitTest(objects:readonly SlideObject[],x:number,y:number):SlideObject|undefined{\n  for(let i=objects.length-1;i>=0;i--){\n    const o=objects[i]!;\n    if(x>=o.x&&x<=o.x+o.w&&y>=o.y&&y<=o.y+o.h)return o;\n  }\n  return undefined;\n}\n\n/** Screen-reader description of an object's place and size. */\nexport function objectLabel(o:SlideObject):string{\n  const what=o.kind===\"text\"?\"Text box\"+(o.text?.trim()?\", \"+o.text.trim().slice(0,60):\", empty\"):o.kind===\"rect\"?\"Rectangle\":\"Image\";\n  return what+\", at \"+Math.round(o.x)+\", \"+Math.round(o.y)+\", \"+Math.round(o.w)+\" by \"+Math.round(o.h)+(o.rotation?\", rotated \"+Math.round(o.rotation)+\" degrees\":\"\");\n}\n\nfunction round2(v:number){return Math.round(v*100)/100;}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/slides/canvas-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/slides/canvas-model",
+    "exports": [
+      "SLIDE_MIN_OBJECT",
+      "SLIDE_SNAP_POINTS",
+      "SlideRect",
+      "SnapGuide",
+      "fitScale",
+      "hitTest",
+      "nudge",
+      "objectLabel",
+      "resizeFromCorner",
+      "snapRect",
+      "stepRotation"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

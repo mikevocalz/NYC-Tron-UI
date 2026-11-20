@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/SplitButton",
+  "title": "Split Button",
+  "description": "Primary action button joined to a dropdown menu of command items, for React Native.",
+  "registryDependencies": [
+    "@nyc-tron/overlays/CommandPopover",
+    "@nyc-tron/overlays/popover-position",
+    "@nyc-tron/shell/MenuButton"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/SplitButton.tsx",
+      "content": "import {useLayoutEffect,useRef,type ReactNode} from \"react\";\nimport {Pressable,Text,View,type ViewProps} from \"react-native\";\nimport type {CommandMenuItem} from \"@/components/nyc-tron/ui/components/overlays/CommandPopover\";\nimport type {Rect2D} from \"@/components/nyc-tron/ui/components/overlays/popover-position\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {MenuButton} from \"@/components/nyc-tron/ui/components/shell/MenuButton\";\nimport {space,border,opacity} from \"@/components/nyc-tron/ui/tokens\";\n\n/** Props for {@linkcode SplitButton}. */\nexport interface SplitButtonProps extends Omit<ViewProps,\"children\"> {\n  /** Text of the primary action, e.g. \"Export\". */\n  editScope?:string;\n  label:string;\n  onPress:()=>void;\n  /** Related actions in the flyout. */\n  items:readonly CommandMenuItem[];\n  onSelect:(id:string)=>void;\n  /** Accessible name of the flyout button. @default \"More <label> options\" */\n  menuLabel?:string;\n  icon?:ReactNode;\n  /** @default \"secondary\" */\n  variant?:\"primary\"|\"secondary\";\n  disabled?:boolean;\n  /** Window-space regions the flyout may use. @default the whole window */\n  usableRegions?:readonly Rect2D[];\n  className?:string;\n  unstyled?:boolean;\n}\n\n/**\n * A primary action with a separate flyout of related actions. The two parts\n * are separate 44pt hit targets and separate buttons for keyboards and\n * screen readers, so the primary action never opens the menu by accident.\n */\nexport function SplitButton({\n  editScope=\"split-button\",label,onPress,items,onSelect,menuLabel,icon,variant=\"secondary\",disabled=false,usableRegions,\n  className,unstyled=false,style,...rest\n}:SplitButtonProps){\n  const styled=!unstyled;\n  const boundary=JSON.stringify([editScope,disabled]);\n  const committed=useRef<{boundary:string;onPress:typeof onPress}|null>(null);\n  useLayoutEffect(()=>{committed.current={boundary,onPress};});\n  useLayoutEffect(()=>()=>{committed.current=null;},[]);\n  const press=()=>{if(!disabled&&committed.current?.boundary===boundary)committed.current.onPress();};\n  const primary=variant===\"primary\";\n  const ink=joinClasses(styled&&\"text-sm font-semibold\",styled&&(primary?\"text-on-primary\":\"text-text\"));\n  const chevron=joinClasses(styled&&(primary?\"border-on-primary\":\"border-text\"));\n  const hover=joinClasses(styled&&!primary&&\"hover:bg-surface-sunken\");\n  // One rounded, bordered container clips both halves; a hairline divides them.\n  return <View {...rest} {...{role:\"group\",className:joinClasses(\"flex-row self-start overflow-hidden\",\n    styled&&\"rounded-control border\",styled&&(primary?\"border-primary bg-primary\":\"border-border bg-surface-raised\"),className)}}\n    accessibilityLabel={label} style={[{opacity:disabled?opacity[50]:1},style]}>\n    <Pressable testID={rest.testID?`${rest.testID}-primary`:undefined} accessibilityRole=\"button\" accessibilityLabel={label} disabled={disabled} onPress={press}\n      {...{className:joinClasses(\"min-h-11 min-w-11 flex-row items-center gap-2 px-3\",hover,\n        styled&&\"focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus\")}}>\n      {icon?<View pointerEvents=\"none\">{icon}</View>:null}\n      <Text numberOfLines={1} {...{className:ink}}>{label}</Text>\n    </Pressable>\n    <View pointerEvents=\"none\" {...{className:joinClasses(styled&&(primary?\"border-on-primary\":\"border-border\"))}}\n      style={{width:0,borderLeftWidth:border[1],opacity:primary?opacity[40]:1}}/>\n    <MenuButton testID={rest.testID?`${rest.testID}-menu`:undefined} editScope={boundary} label={menuLabel??`More ${label} options`} items={items} onSelect={onSelect} disabled={disabled}\n      usableRegions={usableRegions} unstyled\n      {...{className:joinClasses(hover,styled&&\"focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus\")}}>\n      <View pointerEvents=\"none\" {...{className:chevron}}\n        style={{width:8,height:8,borderRightWidth:border[1.5],borderBottomWidth:border[1.5],transform:[{rotate:\"45deg\"}],marginTop:-space[1]}}/>\n    </MenuButton>\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/shell/SplitButton.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    },
+    {
+      "path": "packages/ui/src/tokens.ts",
+      "content": "// Generated by tooling/codemod/generate-token-module.mjs from docs/agent-native/tokens.json.\n// Do not edit by hand. Change tokens.json, regenerate, and run tooling/codemod/prove-equivalence.mjs.\n// Internal copy of the core token module so this package has no runtime dependency on core. Not exported from package.json.\n\n/** One spacing unit in px. `space` keys are multiples of it. */\nexport const SPACE_UNIT = 4;\n\n/** Spacing steps. The key is a multiple of SPACE_UNIT, so `space[2]` is 8 and `space[1.5]` is 6. Negative spacing is `-space[n]`. */\nexport const space = {\n  0: 0,\n  0.25: 1,\n  0.5: 2,\n  0.75: 3,\n  1: 4,\n  1.5: 6,\n  2: 8,\n  2.5: 10,\n  3: 12,\n  3.5: 14,\n  4: 16,\n} as const;\n\n/** Corner radius steps in px. `radius.full` is the pill radius. */\nexport const radius = {\n  1: 1,\n  2: 2,\n  3: 3,\n  4: 4,\n  5: 5,\n  6: 6,\n  7: 7,\n  8: 8,\n  9: 9,\n  10: 10,\n  12: 12,\n  14: 14,\n  full: 9999,\n} as const;\n\n/** Font size steps in px, keyed by value. */\nexport const font = {\n  10: 10,\n  11: 11,\n  12: 12,\n  13: 13,\n  14: 14,\n  15: 15,\n  16: 16,\n  17: 17,\n} as const;\n\n/** Line height steps in px, keyed by value. */\nexport const leading = {\n  14: 14,\n  16: 16,\n} as const;\n\n/** Border width steps in px, keyed by value (`border[1.5]`). */\nexport const border = {\n  0: 0,\n  1: 1,\n  1.5: 1.5,\n  2: 2,\n  3: 3,\n  4: 4,\n  8: 8,\n} as const;\n\n/** Opacity steps keyed by percent (`opacity[45]` is 0.45). 0 and 1 are not tokens. */\nexport const opacity = {\n  30: 0.3,\n  35: 0.35,\n  40: 0.4,\n  45: 0.45,\n  50: 0.5,\n  55: 0.55,\n  60: 0.6,\n  70: 0.7,\n  90: 0.9,\n} as const;\n\n/** Black overlay colours keyed by alpha percent. */\nexport const scrim = {\n  12: \"rgba(0,0,0,0.12)\",\n  18: \"rgba(0,0,0,0.18)\",\n  25: \"rgba(0,0,0,0.25)\",\n  50: \"rgba(0,0,0,0.5)\",\n} as const;\n\n/** Box shadows. `elevation[0]` is none. */\nexport const elevation = {\n  0: \"none\",\n  1: \"0 1px 3px rgba(0,0,0,0.25)\",\n  2: \"0 4px 12px rgba(0,0,0,0.18)\",\n} as const;\n\n/** Fixed sizes. `size.touch` is the 44 px minimum touch target. */\nexport const size = {\n  touch: 44,\n} as const;\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/tokens.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/SplitButton",
+    "exports": [
+      "SplitButton",
+      "SplitButtonProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "input"
+  ],
+  "type": "registry:ui"
+}

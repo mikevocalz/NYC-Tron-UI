@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/VoiceIsolationPanel",
+  "title": "Voice Isolation Panel",
+  "description": "Voice Isolation Panel, an audio mixing and editing component. Props: strength, onStrengthCommit.",
+  "registryDependencies": [
+    "@nyc-tron/forge/audio/AudioProcessingPanel"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/VoiceIsolationPanel.tsx",
+      "content": "import {AudioProcessingPanel,type AudioProcessingPanelProps} from '@/components/nyc-tron/ui/components/forge/audio/AudioProcessingPanel';\nexport type VoiceIsolationPanelProps=Omit<AudioProcessingPanelProps,'label'|'parameters'|'onParameter'>&{\n strength:number;onStrengthCommit:(strength:number,signal?:AbortSignal)=>unknown;\n};\n/** Requests the host's admitted speech separation service and reversible output. */\nexport function VoiceIsolationPanel({strength,onStrengthCommit,...props}:VoiceIsolationPanelProps){return <AudioProcessingPanel {...props} label=\"Voice isolation\" parameters={[{id:'strength',label:'Speech separation strength',min:0,max:1,step:.01,value:strength}]} onParameter={(_id,value,signal)=>onStrengthCommit(value,signal)}/>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/audio/VoiceIsolationPanel.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/VoiceIsolationPanel",
+    "exports": [
+      "VoiceIsolationPanel",
+      "VoiceIsolationPanelProps"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

@@ -116,7 +116,7 @@ See [Architecture](docs/ARCHITECTURE.md), [Component ownership](docs/COMPONENT_O
 | `@nyc-tron/geometry` | Supported | Corner-cut path geometry and standalone overlay placement; pure functions |
 | `@nyc-tron/icons` | Supported | Original 24px outline/filled icon catalog with native and web renderers |
 | `@nyc-tron/panes` | Supported | Master/Detail/Inspector host over `@nyc-tron/core/pane-plan` |
-| `@nyc-tron/ui` | Supported | React Native components, one subpath per component (551 export keys at this commit) |
+| `@nyc-tron/ui` | Supported | React Native components, one subpath per component (561 export keys at this commit) |
 | `@nyc-tron/expo-controls` | Supported | Expo 58 SwiftUI/Compose picker, action menus, popovers and tooltips |
 | `@nyc-tron/native-controls` | Supported | SwiftUI and Jetpack Compose instruments (ArcKnob, XYPad, Display P3 disc, video player) |
 | `@nyc-tron/native-navigation` | Supported | Expo SDK 58 navigation rail: Material3 NavigationRail on Android, SwiftUI on iOS |

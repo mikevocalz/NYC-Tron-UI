@@ -2,6 +2,7 @@ import {useLayoutEffect,useRef} from "react";
 import {Pressable,Text,TextInput,View,type ViewProps} from "react-native";
 import {joinClasses} from "../styles.ts";
 import {shellKey} from "./shell-keys.ts";
+import {space,radius,border,size} from "../../tokens.ts";
 
 export {matchesQuery} from "./inspector-model.ts";
 
@@ -39,7 +40,7 @@ export function InspectorSearch({
   const change=(value:string)=>{const p=committed.current;if(p?.scope===scope&&!p.disabled)p.onQueryChange(value.slice(0,maxLength));};
   return <View {...rest} {...{className:joinClasses("gap-1",className)}} style={style}>
     <View {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-sunken focus-within:border-focus")}}
-      style={{flexDirection:"row",alignItems:"center",minHeight:44,paddingHorizontal:10}}>
+      style={{flexDirection:"row",alignItems:"center",minHeight:size.touch,paddingHorizontal:space[2.5]}}>
       <SearchGlyph styled={styled}/>
       <TextInput role="searchbox" accessibilityLabel={label} placeholder={label}
         value={query} maxLength={maxLength} editable={!disabled} accessibilityState={{disabled}} onChangeText={change} autoCorrect={false} autoCapitalize="none" returnKeyType="search"
@@ -48,12 +49,12 @@ export function InspectorSearch({
           if(k.key==="Escape"&&query){k.preventDefault();change("");}
         }}
         {...{className:joinClasses(styled&&"text-text placeholder:text-text-muted focus-visible:outline-none")}}
-        style={{flex:1,minHeight:44,paddingHorizontal:8}}/>
+        style={{flex:1,minHeight:size.touch,paddingHorizontal:space[2]}}/>
       {query?<Pressable accessibilityRole="button" accessibilityLabel="Clear search" disabled={disabled} onPress={()=>change("")}
         {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center",styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}>
         <View pointerEvents="none" style={{width:12,height:12,alignItems:"center",justifyContent:"center"}}>
-          <View {...{className:joinClasses(styled&&"border-text-muted")}} style={{position:"absolute",width:13,height:0,borderTopWidth:1.5,transform:[{rotate:"45deg"}]}}/>
-          <View {...{className:joinClasses(styled&&"border-text-muted")}} style={{position:"absolute",width:13,height:0,borderTopWidth:1.5,transform:[{rotate:"-45deg"}]}}/>
+          <View {...{className:joinClasses(styled&&"border-text-muted")}} style={{position:"absolute",width:13,height:0,borderTopWidth:border[1.5],transform:[{rotate:"45deg"}]}}/>
+          <View {...{className:joinClasses(styled&&"border-text-muted")}} style={{position:"absolute",width:13,height:0,borderTopWidth:border[1.5],transform:[{rotate:"-45deg"}]}}/>
         </View>
       </Pressable>:null}
     </View>
@@ -64,8 +65,8 @@ export function InspectorSearch({
 
 function SearchGlyph({styled}:{styled:boolean}){
   return <View pointerEvents="none" style={{width:14,height:14}}>
-    <View {...{className:joinClasses(styled&&"border-text-muted")}} style={{width:10,height:10,borderRadius:5,borderWidth:1.5}}/>
+    <View {...{className:joinClasses(styled&&"border-text-muted")}} style={{width:10,height:10,borderRadius:radius[5],borderWidth:border[1.5]}}/>
     <View {...{className:joinClasses(styled&&"border-text-muted")}}
-      style={{position:"absolute",left:8,top:10,width:5,height:0,borderTopWidth:1.5,transform:[{rotate:"45deg"}]}}/>
+      style={{position:"absolute",left:8,top:10,width:5,height:0,borderTopWidth:border[1.5],transform:[{rotate:"45deg"}]}}/>
   </View>;
 }

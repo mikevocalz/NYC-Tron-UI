@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/motion/motion-easing",
+  "title": "motion easing",
+  "description": "motion easing, a motion graphics helper module. Exports validateMotionEasing, validateMotionEasingPresets.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/motion/motion-easing.ts",
+      "content": "export type MotionEasingKind='hold'|'linear'|'bezier'|'spring';\nexport type MotionEasing={readonly kind:'hold'}|{readonly kind:'linear'}|{readonly kind:'bezier';readonly x1:number;readonly y1:number;readonly x2:number;readonly y2:number}|{readonly kind:'spring';readonly mass:number;readonly stiffness:number;readonly damping:number;readonly velocity:number};\nexport interface MotionEasingPreset {readonly id:string;readonly label:string;readonly value:MotionEasing}\nexport const MOTION_EASING_PRESETS:readonly MotionEasingPreset[]=[\n {id:'hold',label:'Hold',value:{kind:'hold'}},{id:'linear',label:'Linear',value:{kind:'linear'}},\n {id:'ease',label:'Ease in and out',value:{kind:'bezier',x1:.42,y1:0,x2:.58,y2:1}},\n {id:'ease-in',label:'Ease in',value:{kind:'bezier',x1:.42,y1:0,x2:1,y2:1}},\n {id:'ease-out',label:'Ease out',value:{kind:'bezier',x1:0,y1:0,x2:.58,y2:1}},\n {id:'overshoot',label:'Overshoot',value:{kind:'bezier',x1:.34,y1:1.56,x2:.64,y2:1}},\n {id:'spring',label:'Damped spring',value:{kind:'spring',mass:1,stiffness:100,damping:10,velocity:0}},\n];\nexport function validateMotionEasing(value:MotionEasing):void {\n if(value.kind==='hold'||value.kind==='linear')return;\n if(value.kind==='bezier'){if(![value.x1,value.x2].every(v=>Number.isFinite(v)&&v>=0&&v<=1)||![value.y1,value.y2].every(v=>Number.isFinite(v)&&v>=-10&&v<=10))throw new RangeError('Invalid temporal Bezier controls');return;}\n if(value.kind==='spring'){if(![value.mass,value.stiffness].every(v=>Number.isFinite(v)&&v>0&&v<=100000)||!Number.isFinite(value.damping)||value.damping<0||value.damping>100000||!Number.isFinite(value.velocity)||Math.abs(value.velocity)>1000)throw new RangeError('Invalid spring parameters');return;}\n throw new TypeError('Unsupported motion easing kind');\n}\nexport function validateMotionEasingPresets(presets:readonly MotionEasingPreset[]):void {if(presets.length>256)throw new RangeError('Easing gallery exceeds 256 presets');const ids=new Set<string>();for(const preset of presets){if(!preset.id.trim()||!preset.label.trim()||ids.has(preset.id))throw new TypeError('Easing presets require distinct labeled identities');validateMotionEasing(preset.value);ids.add(preset.id);}}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/motion/motion-easing.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/motion/motion-easing",
+    "exports": [
+      "MOTION_EASING_PRESETS",
+      "MotionEasing",
+      "MotionEasingKind",
+      "MotionEasingPreset",
+      "validateMotionEasing",
+      "validateMotionEasingPresets"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

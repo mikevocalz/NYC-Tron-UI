@@ -1,0 +1,53 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/RecordingTrack",
+  "title": "Recording Track",
+  "description": "Recording Track, an audio mixing and editing component. Props: state, peaks, level, onStart.",
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/forge/WaveformLane",
+    "@nyc-tron/forge/audio/LevelMeter",
+    "@nyc-tron/forge/audio/recording-model",
+    "@nyc-tron/forge/waveform"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/announce.ts",
+      "content": "import { useEffect, useRef } from \"react\";\nimport { AccessibilityInfo, Platform } from \"react-native\";\n\n/**\n * Speak `text` at low priority after current speech. react-native-web has no\n * `announceForAccessibilityWithOptions`; calling it there threw inside an\n * effect and unmounted the whole screen, so fall back to the plain call.\n * Qt supports priority but no native announcement queue; request low priority\n * there without claiming that speech is queued behind another announcement.\n */\nexport function announce(text: string): void {\n  const info: Partial<typeof AccessibilityInfo> = AccessibilityInfo;\n  if (typeof info.announceForAccessibilityWithOptions === \"function\") {\n    const qt=String(Platform.OS)===\"qnx\"||String(Platform.OS)===\"marathon\";\n    info.announceForAccessibilityWithOptions(text, qt?{priority:\"low\"}:{queue:true,priority:\"low\"});\n  } else {\n    info.announceForAccessibility?.(text);\n  }\n}\n\n/**\n * Announce `status` on iOS each time it changes after mount. Android and web\n * already speak it through the `accessibilityLiveRegion` on the status text;\n * VoiceOver ignores live regions, so without this it heard no phase change.\n */\nexport function useStatusAnnouncement(status: string): void {\n  const previous = useRef(status);\n  useEffect(() => {\n    if (previous.current === status) return;\n    previous.current = status;\n    if (Platform.OS === \"ios\") announce(status);\n  }, [status]);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/announce.ts"
+    },
+    {
+      "path": "packages/ui/src/components/forge/audio/RecordingTrack.tsx",
+      "content": "import { ActivityIndicator, Text, View, type ViewProps } from \"react-native\";\nimport { Button } from \"@/components/nyc-tron/ui/components/Button\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { useStatusAnnouncement } from \"@/components/nyc-tron/ui/components/forge/announce\";\nimport { WaveformLane } from \"@/components/nyc-tron/ui/components/forge/WaveformLane\";\nimport type { WaveformPeak } from \"@/components/nyc-tron/ui/components/forge/waveform\";\nimport { LevelMeter } from \"@/components/nyc-tron/ui/components/forge/audio/LevelMeter\";\nimport {\n  formatElapsed, presentRecording, spokenElapsed, type RecordingAction, type RecordingViewState,\n} from \"@/components/nyc-tron/ui/components/forge/audio/recording-model\";\n\n/** Stopping or saving a live take stays available even when `disabled`. */\nconst keepsTake = (kind: RecordingAction) => kind === \"stop\" || kind === \"save-interrupted\";\n\n/** Props for {@linkcode RecordingTrack}. */\nexport interface RecordingTrackProps extends Omit<ViewProps, \"children\"> {\n  /** Recorder phase, mapped by the app from its own controller. */\n  readonly state: RecordingViewState;\n  /** Measured peaks: live history while recording, the saved take afterwards. */\n  readonly peaks: readonly WaveformPeak[];\n  /** Current linear input peak in [0, 1]. The meter shows only while recording. */\n  readonly level?: number;\n  /** Held input peak in [0, 1]. */\n  readonly peakHold?: number;\n  /** Track name shown above the status, e.g. \"Vocals\". */\n  readonly title?: string;\n  readonly onStart: () => void;\n  readonly onStop: () => void;\n  /** Save an interrupted take. @default onStop */\n  readonly onSaveInterrupted?: () => void;\n  /** Retry after an error, missing device or denied permission. @default onStart */\n  readonly onRetry?: () => void;\n  /** Open system settings after a permission denial. Hides \"Ask again\" when set. */\n  readonly onOpenSettings?: () => void;\n  /** Seek inside a saved take; makes the lane adjustable. */\n  readonly onSeekNormalized?: (position: number) => void;\n  /** Playhead in [0, 1] for a saved take. */\n  readonly position?: number;\n  /**\n   * Blocks starting, retrying and opening Settings. \"Stop and save\" and\n   * \"Save what was recorded\" stay enabled, so a take can never be trapped\n   * recording.\n   */\n  readonly disabled?: boolean;\n  /** @default 96 */\n  readonly columns?: number;\n  /** @default 72 */\n  readonly height?: number;\n  className?: string;\n  unstyled?: boolean;\n}\n\n/**\n * Controlled recording lane: status, elapsed time, one primary action, an\n * input meter while recording and the measured waveform. It has no recorder;\n * the app passes state and peaks and handles the callbacks.\n */\nexport function RecordingTrack({\n  state, peaks, level, peakHold, title, onStart, onStop, onSaveInterrupted, onRetry, onOpenSettings,\n  onSeekNormalized, position, disabled = false, columns = 96, height = 72,\n  className, unstyled = false, testID, ...props\n}: RecordingTrackProps) {\n  const view = presentRecording(state, onOpenSettings !== undefined);\n  useStatusAnnouncement(view.status);\n  const handlers: Record<RecordingAction, (() => void) | undefined> = {\n    start: onStart,\n    stop: onStop,\n    \"save-interrupted\": onSaveInterrupted ?? onStop,\n    retry: onRetry ?? onStart,\n    \"open-settings\": onOpenSettings,\n  };\n  const styled = !unstyled;\n  const recording = state.kind === \"recording\";\n  const seekable = state.kind === \"saved\" ? onSeekNormalized : undefined;\n  return <View\n    {...props}\n    {...(testID ? { testID } : {})}\n    {...{ className: joinClasses(\"w-full gap-3\", styled && \"rounded-control border border-border bg-surface-raised p-3\", className) }}\n  >\n    <View {...{ className: \"flex-row items-center gap-3\" }}>\n      <View {...{ className: \"flex-1 gap-1\" }}>\n        {title ? <Text accessibilityRole=\"header\" {...{ className: joinClasses(styled && \"font-semibold text-text\") }}>{title}</Text> : null}\n        <View {...{ className: \"flex-row items-center gap-2\" }}>\n          {view.isBusy ? <ActivityIndicator accessibilityElementsHidden importantForAccessibility=\"no\" /> : null}\n          {/* Polite live region: changes once per phase, never per frame. */}\n          <Text\n            accessibilityLiveRegion=\"polite\"\n            {...{ className: joinClasses(styled && (view.isProblem ? \"text-danger\" : \"text-text-muted\"), styled && \"text-sm\") }}\n          >{view.status}</Text>\n        </View>\n      </View>\n      {view.durationMs !== undefined ? <Text\n        accessibilityLabel={\"Elapsed \" + spokenElapsed(view.durationMs)}\n        {...{ className: joinClasses(styled && \"text-text font-semibold\") }}\n        style={{ fontVariant: [\"tabular-nums\"] }}\n      >{formatElapsed(view.durationMs)}</Text> : null}\n    </View>\n    {recording && level !== undefined ? <LevelMeter\n      level={level}\n      {...(peakHold === undefined ? {} : { peakHold })}\n      announce\n      {...(testID ? { testID: testID + \"-meter\" } : {})}\n    /> : null}\n    <WaveformLane\n      peaks={peaks}\n      columns={Math.min(128, columns)}\n      height={height}\n      accessibilityLabel={recording ? \"Live input waveform\" : \"Recorded waveform\"}\n      {...(seekable ? { onSeekNormalized: seekable } : {})}\n      {...(position === undefined ? {} : { position })}\n      {...(testID ? { testID: testID + \"-waveform\" } : {})}\n    />\n    {view.action ? <Button\n      title={view.action.label}\n      variant={view.action.kind === \"stop\" ? \"danger\" : view.isProblem ? \"secondary\" : \"primary\"}\n      disabled={(disabled && !keepsTake(view.action.kind)) || handlers[view.action.kind] === undefined}\n      onPress={handlers[view.action.kind]}\n      {...(testID ? { testID: testID + \"-action\" } : {})}\n    /> : null}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/audio/RecordingTrack.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/RecordingTrack",
+    "exports": [
+      "RecordingTrack",
+      "RecordingTrackProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

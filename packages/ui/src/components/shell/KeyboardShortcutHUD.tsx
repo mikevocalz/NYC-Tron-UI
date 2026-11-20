@@ -12,6 +12,8 @@ import {
   bindingFromChord,bindingKeycaps,bindingSpoken,findConflict,isAssignableBinding,normalizeBinding,validateShortcutCommands,
   type Binding,type ChordRecorder,type KeyChord,type ShortcutCommand,
 } from "./shortcut-model.ts";
+import {space,border,size} from "../../tokens.ts";
+import {tokens} from "./KeyboardShortcutHUD.tokens.ts";
 
 export type {Binding,ChordRecorder,KeyChord,ShortcutCommand} from "./shortcut-model.ts";
 export {bindingFromChord,commandForChord} from "./shortcut-model.ts";
@@ -132,18 +134,18 @@ export function KeyboardShortcutHUD({
   // take/stop read the store and props at call time; restart only when the recording row changes.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[web,recorder,capturing,boundary,recordingAllowed]);
-  const keycaps=(binding:Binding)=><View style={{flexDirection:"row",gap:3}} accessibilityLabel={bindingSpoken(binding,apple)}>
+  const keycaps=(binding:Binding)=><View style={{flexDirection:"row",gap:space[0.75]}} accessibilityLabel={bindingSpoken(binding,apple)}>
     {bindingKeycaps(binding,apple).map((cap,i)=><Text key={i} accessibilityElementsHidden importantForAccessibility="no"
       {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-sunken text-text text-xs")}}
-      style={{minWidth:22,paddingHorizontal:5,paddingVertical:2,textAlign:"center",fontVariant:["tabular-nums"]}}>{cap}</Text>)}
+      style={{minWidth:22,paddingHorizontal:tokens.space1_25,paddingVertical:space[0.5],textAlign:"center",fontVariant:["tabular-nums"]}}>{cap}</Text>)}
   </View>;
   const small=joinClasses("min-h-11 min-w-11 items-center justify-center px-2",styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus hover:bg-surface-sunken");
   const row=(c:ShortcutCommand)=>{
     const active=capturing===c.id;
     const conflict=active&&pending?findConflict(commands,c.id,pending):undefined;
     const changed=c.defaultBinding!==undefined&&normalizeBinding(c.defaultBinding)!==(c.binding&&normalizeBinding(c.binding));
-    return <View key={c.id} {...{className:joinClasses(styled&&"border-b border-border")}} style={{paddingVertical:4,gap:4}}>
-      <View style={{flexDirection:"row",alignItems:"center",gap:8,minHeight:44,flexWrap:"wrap"}}>
+    return <View key={c.id} {...{className:joinClasses(styled&&"border-b border-border")}} style={{paddingVertical:space[1],gap:space[1]}}>
+      <View style={{flexDirection:"row",alignItems:"center",gap:space[2],minHeight:size.touch,flexWrap:"wrap"}}>
         <Text {...{className:joinClasses(styled&&"text-text text-sm")}} style={{flex:1,minWidth:140}}>{c.label}</Text>
         {c.binding?keycaps(c.binding):<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>Not set</Text>}
         {canRebind&&!active?<Pressable accessibilityRole="button" accessibilityLabel={"Change shortcut for "+c.label}
@@ -153,18 +155,18 @@ export function KeyboardShortcutHUD({
           onPress={()=>{const binding=current()?.commands.find(v=>v.id===c.id)?.defaultBinding;if(binding)assign(c.id,binding);}}
           {...{className:small}}><Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>Reset</Text></Pressable>:null}
       </View>
-      {active?<View style={{gap:6}}>
+      {active?<View style={{gap:space[1.5]}}>
         <View ref={recordField} accessible accessibilityLabel={"Recording a shortcut for "+c.label+". Press the keys, or Escape to cancel."}
           {...{onKeyDown:record(c.id),focusable:true,className:joinClasses(styled&&"rounded-control border-2 border-focus bg-surface-sunken focus-visible:outline-none")}}
-          style={{minHeight:44,justifyContent:"center",paddingHorizontal:10}}>
+          style={{minHeight:size.touch,justifyContent:"center",paddingHorizontal:space[2.5]}}>
           {pending?keycaps(pending):<Text {...{className:joinClasses(styled&&"text-text text-sm")}}>
             {web?"Press the new shortcut, or Esc to cancel":"Press the new shortcut on the hardware keyboard, or Esc to cancel"}</Text>}
         </View>
         {error?<Text accessibilityLiveRegion="assertive" {...{className:joinClasses(styled&&"text-danger text-xs")}}>{error}</Text>:null}
-        {conflict?<View style={{gap:4}}>
+        {conflict?<View style={{gap:space[1]}}>
           <Text accessibilityLiveRegion="assertive" {...{className:joinClasses(styled&&"text-text text-xs")}}>
             {`${bindingSpoken(pending!,apple)} is already used by ${conflict.label}. Replacing it leaves ${conflict.label} without a shortcut.`}</Text>
-          <View style={{flexDirection:"row",gap:8}}>
+          <View style={{flexDirection:"row",gap:space[2]}}>
             <Pressable accessibilityRole="button" accessibilityLabel={"Replace shortcut for "+conflict.label} onPress={()=>{const state=store.getState();if(state.capturing===c.id&&state.pending)assign(c.id,state.pending);}}
               {...{className:joinClasses(small,styled&&"bg-primary")}}><Text {...{className:joinClasses(styled&&"text-on-primary text-xs font-semibold")}}>Replace</Text></Pressable>
             <Pressable accessibilityRole="button" accessibilityLabel="Cancel" onPress={stop} {...{className:small}}>
@@ -180,27 +182,27 @@ export function KeyboardShortcutHUD({
     <View style={{flex:1}}>
       <Pressable accessibilityRole="button" accessibilityLabel="Close shortcuts" focusable={false} onPress={dismiss}
         {...{className:styled?"bg-text/30":undefined}} style={{position:"absolute",top:0,right:0,bottom:0,left:0}}/>
-      <View style={{position:"absolute",left:region?.x??0,top:region?.y??0,width:region?.width??0,height:region?.height??0,alignItems:"center",justifyContent:"center",padding:16}}>
+      <View style={{position:"absolute",left:region?.x??0,top:region?.y??0,width:region?.width??0,height:region?.height??0,alignItems:"center",justifyContent:"center",padding:space[4]}}>
       <View {...{className:joinClasses(styled&&"rounded-card border border-border bg-surface-raised shadow-md",className)}}
         style={{width:"100%",maxWidth:560,maxHeight:"85%",overflow:"hidden"}}>
-        <View style={{flexDirection:"row",alignItems:"center",paddingHorizontal:16,paddingTop:8,gap:8}}>
+        <View style={{flexDirection:"row",alignItems:"center",paddingHorizontal:space[4],paddingTop:space[2],gap:space[2]}}>
           <Text accessibilityRole="header" {...{className:joinClasses(styled&&"text-text text-base font-semibold")}} style={{flex:1}}>{title}</Text>
           <Pressable accessibilityRole="button" accessibilityLabel="Close" onPress={dismiss} {...{className:small}}>
             <View pointerEvents="none" style={{width:12,height:12,alignItems:"center",justifyContent:"center"}}>
-              <View {...{className:joinClasses(styled&&"border-text")}} style={{position:"absolute",width:14,height:0,borderTopWidth:1.5,transform:[{rotate:"45deg"}]}}/>
-              <View {...{className:joinClasses(styled&&"border-text")}} style={{position:"absolute",width:14,height:0,borderTopWidth:1.5,transform:[{rotate:"-45deg"}]}}/>
+              <View {...{className:joinClasses(styled&&"border-text")}} style={{position:"absolute",width:14,height:0,borderTopWidth:border[1.5],transform:[{rotate:"45deg"}]}}/>
+              <View {...{className:joinClasses(styled&&"border-text")}} style={{position:"absolute",width:14,height:0,borderTopWidth:border[1.5],transform:[{rotate:"-45deg"}]}}/>
             </View>
           </Pressable>
         </View>
         <InspectorSearch scope={boundary} label="Search shortcuts" query={query} onQueryChange={q=>{if(current())store.setState({query:q});}} unstyled={unstyled}
           summary={query.trim()?(shown.length?`${shown.length} ${shown.length===1?"shortcut":"shortcuts"}`:"No shortcuts match"):""}
-          style={{paddingHorizontal:16,paddingTop:4}}/>
-        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{paddingHorizontal:16,paddingBottom:16}}>
-          {groups.map(g=><View key={g||"_"} style={{paddingTop:8}}>
-            {g?<Text accessibilityRole="header" {...{className:joinClasses(styled&&"text-text-muted text-xs font-semibold")}} style={{paddingVertical:4}}>{g}</Text>:null}
+          style={{paddingHorizontal:space[4],paddingTop:space[1]}}/>
+        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{paddingHorizontal:space[4],paddingBottom:space[4]}}>
+          {groups.map(g=><View key={g||"_"} style={{paddingTop:space[2]}}>
+            {g?<Text accessibilityRole="header" {...{className:joinClasses(styled&&"text-text-muted text-xs font-semibold")}} style={{paddingVertical:space[1]}}>{g}</Text>:null}
             {shown.filter(c=>(c.group??"")===g).map(row)}
           </View>)}
-          {!shown.length?<Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{paddingVertical:16}}>
+          {!shown.length?<Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{paddingVertical:space[4]}}>
             {`No command matches "${query.trim()}".`}</Text>:null}
         </ScrollView>
       </View>

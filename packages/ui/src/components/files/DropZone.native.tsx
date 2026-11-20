@@ -6,6 +6,7 @@ import { useStore } from "zustand";
 import { acceptsFile } from "./drop-model.ts";
 import { DropZoneCopy, dropZoneClasses } from "./DropZone.shared.tsx";
 import type { DropZoneProps } from "./DropZone.types.ts";
+import { space } from "../../tokens.ts";
 
 export type { DropAsset, DropAssets, DropZoneProps } from "./DropZone.types.ts";
 
@@ -52,7 +53,7 @@ export function DropZone({
               : acceptsFile({fileName:a.fileName,type:a.type},accept))});
           }}
           // Fills the well so the whole bordered area accepts the drop.
-          style={{alignSelf:"stretch",alignItems:"center",justifyContent:"center",gap:12,flexGrow:1}}>
+          style={{alignSelf:"stretch",alignItems:"center",justifyContent:"center",gap:space[3],flexGrow:1}}>
           {content}
         </DragDropContentView>
       )}

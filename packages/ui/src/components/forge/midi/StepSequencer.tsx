@@ -5,6 +5,7 @@ import { Pressable, ScrollView, Text, View, type KeyDownEvent, type ViewProps } 
 import { joinClasses } from "../../styles.ts";
 import { webToggleProps } from "../toggle-a11y.ts";
 import { stepCells, type MidiNote, type StepLane } from "./note-grid.ts";
+import { space, radius, opacity } from '../../../tokens.ts';
 
 const HIT = 44;
 const NAME_COLUMN = 72;
@@ -77,14 +78,14 @@ function StepSequencerBody({actionError,disabledReason,
   return <View {...rest} accessibilityLabel={label} {...{ role: "group" }}
     {...{ className: joinClasses(styled && "rounded-card border border-border bg-surface-raised", className) }}>
     <View style={{ flexDirection: "row", direction: "ltr" }}>
-      <View style={{ width: NAME_COLUMN, paddingTop: 4, gap: 4 }}>
-        {lanes.map(lane => <View key={lane.pitch} style={{ height: HIT, justifyContent: "center", paddingHorizontal: 8 }}>
+      <View style={{ width: NAME_COLUMN, paddingTop: space[1], gap: space[1] }}>
+        {lanes.map(lane => <View key={lane.pitch} style={{ height: HIT, justifyContent: "center", paddingHorizontal: space[2] }}>
           <Text numberOfLines={1} {...{ className: joinClasses(styled && "text-text font-semibold") }}>{lane.name}</Text>
         </View>)}
       </View>
-      <ScrollView horizontal style={{ flex: 1 }} contentContainerStyle={{ padding: 4, gap: 4 }}>
-        <View style={{ gap: 4 }}>
-          {lanes.map((lane, li) => <View key={lane.pitch} style={{ flexDirection: "row", gap: 4 }}>
+      <ScrollView horizontal style={{ flex: 1 }} contentContainerStyle={{ padding: space[1], gap: space[1] }}>
+        <View style={{ gap: space[1] }}>
+          {lanes.map((lane, li) => <View key={lane.pitch} style={{ flexDirection: "row", gap: space[1] }}>
             {cells[li]!.map((cell, s) => {
               const startTicks = s * stepTicks;
               const playing = s === currentStep;
@@ -112,10 +113,10 @@ function StepSequencerBody({actionError,disabledReason,
                 onLongPress={cell.on ? () => toggleAccent(cell.noteIndex, cell.accent) : undefined}
                 onKeyDown={onKeyDown}
                 {...{ className: cls }}
-                style={{ width: HIT, height: HIT, opacity: disabled ? 0.45 : 1 }}>
+                style={{ width: HIT, height: HIT, opacity: disabled ? opacity[45] : 1 }}>
                 {cell.on && cell.accent
                   ? <View pointerEvents="none" {...{ className: joinClasses(styled && "bg-on-primary") }}
-                      style={{ width: 10, height: 10, borderRadius: 5 }} />
+                      style={{ width: 10, height: 10, borderRadius: radius[5] }} />
                   : null}
               </Pressable>;
             })}

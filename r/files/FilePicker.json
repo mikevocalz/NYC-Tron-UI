@@ -1,0 +1,62 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "files/FilePicker",
+  "title": "File Picker",
+  "description": "File Picker, a file transfer component. Props: accept, multiple, documentSource, onFiles.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/files/FilePicker.native.tsx",
+      "content": "import {useRef} from \"react\";\nimport {Pressable,Text} from \"react-native\";\nimport {createStore,type StoreApi} from \"zustand/vanilla\";\nimport {useStore} from \"zustand\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {filePickerRecipe,type FilePickerProps} from \"@/components/nyc-tron/ui/components/files/FilePicker.types\";\n\nexport type {FilePickerProps,NativeDocument,NativeDocumentSource} from \"@/components/nyc-tron/ui/components/files/FilePicker.types\";\n\n/**\n * iOS and Android: a button that opens the OS document picker through\n * `documentSource` and hands the picked URIs to `onDocuments`. React Native\n * has no `File`, so this is a separate contract from web's `onFiles`; the\n * kit takes no picker dependency of its own.\n *\n * Without both `documentSource` and `onDocuments` it renders nothing, on\n * purpose: a button that opened nothing would be a dead control. While the\n * picker is open the button is busy, so a second tap cannot stack pickers.\n */\nexport function FilePicker({\n  label,accept,multiple=false,disabled=false,documentSource,onDocuments,onError,accessibilityHint,testID,\n  className,labelClassName,unstyled=false,\n}:FilePickerProps){\n  const local=useRef<StoreApi<{busy:boolean}>|null>(null);\n  if(!local.current)local.current=createStore(()=>({busy:false}));\n  const store=local.current;\n  const busy=useStore(store,s=>s.busy);\n  if(!documentSource||!onDocuments)return null;\n  const blocked=disabled||busy;\n  const open=async()=>{\n    if(blocked)return;\n    store.setState({busy:true});\n    try{\n      const documents=await documentSource.pick({...(accept?{accept}:{}),multiple});\n      if(documents.length)onDocuments(documents);\n    }catch(error){\n      const failure=error instanceof Error?error:new Error(String(error));\n      if(onError)onError(failure);else throw failure;\n    }finally{\n      store.setState({busy:false});\n    }\n  };\n  const styled=!unstyled;\n  return (\n    <Pressable onPress={open} disabled={blocked} testID={testID}\n      accessibilityRole=\"button\" accessibilityLabel={label} accessibilityHint={accessibilityHint}\n      accessibilityState={{disabled:blocked,busy}}\n      {...{className:joinClasses(styled&&filePickerRecipe.root,blocked&&\"opacity-50\",className)}}>\n      <Text {...{className:joinClasses(styled&&filePickerRecipe.label,labelClassName)}}>{label}</Text>\n    </Pressable>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/files/FilePicker.native.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/files/FilePicker.types.ts",
+      "content": "/** A file a native picker returned: a URI, not a `File`. */\nexport interface NativeDocument {\n  readonly uri:string;\n  readonly name:string;\n  readonly size?:number;\n  readonly mimeType?:string;\n  /** Reopens an open-in-place pick in a later launch. */\n  readonly bookmark?:string;\n}\n\n/** Opens the OS document picker. `accept` uses the same syntax as the web prop. */\nexport interface NativeDocumentSource {\n  pick(options:{accept?:string;multiple?:boolean}):Promise<readonly NativeDocument[]>;\n}\n\n/** Props for FilePicker. Drop-in for the `FilePicker` Nitro Forge's studio preview imports. */\nexport interface FilePickerProps {\n  /** Visible text and accessible name, e.g. \"Open\". */\n  label:string;\n  /** HTML input syntax, e.g. \".docx,.nfd\". */\n  accept?:string;\n  multiple?:boolean;\n  disabled?:boolean;\n  /** Web: called once per pick with at least one file; cancelling calls nothing. Without it web renders nothing. */\n  onFiles?:(files:File[])=>void;\n  /**\n   * iOS and Android: the OS document picker, e.g.\n   * `documentPickerSource(createPlatformDocuments())` from\n   * `@nyc-tron/platform-services/documents`. Native renders the button only\n   * when this and `onDocuments` are both set. Web ignores it.\n   */\n  documentSource?:NativeDocumentSource;\n  /** iOS and Android: called once per pick with at least one document; cancelling calls nothing. */\n  onDocuments?:(documents:readonly NativeDocument[])=>void;\n  /** iOS and Android: the picker failed (not a cancel). Without it the error is rethrown. */\n  onError?:(error:Error)=>void;\n  accessibilityHint?:string;\n  testID?:string;\n  className?:string;\n  labelClassName?:string;\n  unstyled?:boolean;\n}\n\nexport const filePickerRecipe={\n  root:\"min-h-11 flex-row items-center justify-center gap-2 rounded-control border border-border bg-surface-raised px-4 \"+\n    \"hover:bg-surface-sunken active:opacity-80 focus-visible:ring-2 focus-visible:ring-focus\",\n  label:\"text-sm font-semibold text-text\",\n} as const;\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/files/FilePicker.types.ts"
+    },
+    {
+      "path": "packages/ui/src/components/files/FilePicker.web.tsx",
+      "content": "import { Pressable, Text } from \"react-native\";\nimport { joinClasses } from \"@/components/nyc-tron/ui/components/styles\";\nimport { filePickerRecipe, type FilePickerProps } from \"@/components/nyc-tron/ui/components/files/FilePicker.types\";\n\nexport type { FilePickerProps } from \"@/components/nyc-tron/ui/components/files/FilePicker.types\";\n\n/**\n * Opens the browser's file chooser from a real button. The `<input type=file>`\n * is created on press and never rendered, so the control is the kit's\n * Pressable (keyboard, focus ring, 44pt target) rather than raw HTML UI.\n */\nexport function FilePicker({\n  label,accept,multiple=false,disabled=false,onFiles,accessibilityHint,testID,\n  className,labelClassName,unstyled=false,\n}:FilePickerProps) {\n  const open=()=>{\n    if(disabled||typeof document===\"undefined\")return;\n    const input=document.createElement(\"input\");\n    input.type=\"file\";\n    if(accept)input.accept=accept;\n    input.multiple=multiple;\n    // Attached while open: Safari ignores click() on a detached file input.\n    input.style.display=\"none\";\n    // Safari before 16.4 fires no `cancel`, so the window regaining focus\n    // after the chooser closes also removes the input. `change` can land\n    // just after that focus, hence the delay.\n    const done=()=>{input.remove();window.removeEventListener(\"focus\",onFocus);};\n    const onFocus=()=>setTimeout(()=>{if(!input.files?.length)done();},1000);\n    input.addEventListener(\"change\",()=>{\n      const files=Array.from(input.files??[]);\n      done();\n      if(files.length)onFiles?.(files);\n    },{once:true});\n    input.addEventListener(\"cancel\",done,{once:true});\n    window.addEventListener(\"focus\",onFocus,{once:true});\n    document.body.appendChild(input);\n    input.click();\n  };\n  // No receiver for the files: no button, rather than one that picks into nothing.\n  if(!onFiles)return null;\n  const styled=!unstyled;\n  return (\n    <Pressable onPress={open} disabled={disabled} testID={testID}\n      accessibilityRole=\"button\" accessibilityLabel={label} accessibilityHint={accessibilityHint}\n      accessibilityState={{disabled}}\n      {...{className:joinClasses(styled&&filePickerRecipe.root,disabled&&\"opacity-50\",className)}}>\n      <Text {...{className:joinClasses(styled&&filePickerRecipe.label,labelClassName)}}>{label}</Text>\n    </Pressable>\n  );\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/files/FilePicker.web.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/files/FilePicker",
+    "exports": [
+      "FilePicker",
+      "FilePickerProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:ui"
+}

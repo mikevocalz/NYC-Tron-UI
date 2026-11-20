@@ -1,6 +1,7 @@
 import type {ReactNode} from "react";
 import {Pressable,Text,View} from "react-native";
 import {joinClasses} from "../../styles.ts";
+import {space,radius,leading,border,opacity,size} from "../../../tokens.ts";
 
 /**
  * Internal 44pt button shared by the layer panels. A control that cannot run
@@ -24,15 +25,15 @@ export function PanelButton({label,onPress,reason,role="button",checked,tone="se
     accessibilityHint={reason} testID={testID}
     onPress={()=>{if(!off)onPress();}}
     {...{className:joinClasses(styled&&"rounded-control border focus-visible:ring-2 focus-visible:ring-focus",styled&&fill)}}
-    style={{minHeight:44,minWidth:44,paddingHorizontal:12,flexDirection:"row",alignItems:"center",justifyContent:"center",
-      gap:8,opacity:off?0.45:1,...(grow?{flexGrow:1}:null)}}>
+    style={{minHeight:size.touch,minWidth:size.touch,paddingHorizontal:space[3],flexDirection:"row",alignItems:"center",justifyContent:"center",
+      gap:space[2],opacity:off?opacity[45]:1,...(grow?{flexGrow:1}:null)}}>
     {icon??null}
     <Text numberOfLines={1} {...{className:joinClasses(styled&&ink,styled&&"text-sm font-medium")}}>{label}</Text>
     {role==="switch"?<View pointerEvents="none"
       {...{className:joinClasses(styled&&(on?"bg-primary border-primary":"bg-surface-sunken border-border"))}}
-      style={{width:30,height:18,borderRadius:9,borderWidth:1,justifyContent:"center",paddingHorizontal:2,
+      style={{width:30,height:18,borderRadius:radius[9],borderWidth:border[1],justifyContent:"center",paddingHorizontal:space[0.5],
         alignItems:on?"flex-end":"flex-start"}}>
-      <View {...{className:joinClasses(styled&&(on?"bg-on-primary":"bg-text-muted"))}} style={{width:12,height:12,borderRadius:6}}/>
+      <View {...{className:joinClasses(styled&&(on?"bg-on-primary":"bg-text-muted"))}} style={{width:12,height:12,borderRadius:radius[6]}}/>
     </View>:null}
   </Pressable>;
 }
@@ -40,5 +41,5 @@ export function PanelButton({label,onPress,reason,role="button",checked,tone="se
 /** Visible reason line under a group of controls; renders nothing without a reason. */
 export function Reason({text,styled}:{text:string|undefined;styled:boolean}){
   if(!text)return null;
-  return <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{lineHeight:16}}>{text}</Text>;
+  return <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{lineHeight:leading[16]}}>{text}</Text>;
 }

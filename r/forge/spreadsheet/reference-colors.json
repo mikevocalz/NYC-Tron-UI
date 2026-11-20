@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/spreadsheet/reference-colors",
+  "title": "reference colors",
+  "description": "reference colors, a spreadsheet helper module. Exports colorReferences, formulaSegments, referenceEdges.",
+  "registryDependencies": [
+    "@nyc-tron/forge/formula-refs",
+    "@nyc-tron/forge/sheet-window"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/spreadsheet/reference-colors.ts",
+      "content": "// Portions ported from GridCraft for Android,\n// apps/gridcraft-android/android/app/src/main/java/io/github/artcraftandroid/gridcraft/ui/editor/FormulaRefs.kt\n// at https://github.com/artcraft-android/gridcraft-android/commit/72d5bfc0729d0966e9bd966c2eabaa0312eea3ff\n// Copyright (c) 2026 ArtCraft Team and the GridCraft contributors.\n// Licensed under the MIT License or the Apache License, Version 2.0, at your option;\n// see licenses/GridCraft-MIT.txt and licenses/GridCraft-Apache-2.0.txt.\n// Modified by NYC-Tron UI contributors, 2026-11-05: rewritten in TypeScript; reference\n// tokenizing comes from ../formula-refs.ts; Compose Color values replaced with a tone index\n// the app maps to its own theme tokens; segments for React Native nested Text added.\nimport { formulaReferences } from \"@/components/nyc-tron/ui/components/forge/formula-refs\";\nimport type { SheetRange } from \"@/components/nyc-tron/ui/components/forge/sheet-window\";\n\n/**\n * Number of distinct reference tones. Each tone index maps to one of the\n * theme-token recipes in {@linkcode REFERENCE_TONE_CLASSES}; GridCraft uses\n * seven colors, and four token colors with a solid and a dashed outline give\n * eight distinguishable tones.\n */\nexport const REFERENCE_TONE_COUNT = 8;\n\n/** One reference in a formula with the tone it is drawn in. */\nexport interface ColoredReference {\n  readonly text: string;\n  readonly start: number;\n  readonly end: number;\n  /** `undefined` for the current sheet. */\n  readonly sheet?: string;\n  readonly range: SheetRange;\n  /** `0..REFERENCE_TONE_COUNT-1`. The same reference keeps one tone wherever it appears. */\n  readonly tone: number;\n  /** `true` when the reference points at the sheet shown in the grid. */\n  readonly onSheet: boolean;\n}\n\n/** Normalized key: `$` markers and letter case do not change a reference's tone. */\nfunction referenceKey(text: string): string {\n  return text.replaceAll(\"$\", \"\").toUpperCase();\n}\n\n/**\n * Colored references in a formula, GridCraft style: the first distinct\n * reference gets tone 0, the next tone 1, and a repeated reference reuses its\n * tone. References to other sheets keep their tone in the formula text but\n * are marked `onSheet: false`, since the grid cannot outline them.\n */\nexport function colorReferences(formula: string, sheetName?: string): ColoredReference[] {\n  const current = sheetName?.toLowerCase();\n  const tones = new Map<string, number>();\n  return formulaReferences(formula).map(ref => {\n    const key = referenceKey(ref.text);\n    let tone = tones.get(key);\n    if (tone === undefined) {\n      tone = tones.size % REFERENCE_TONE_COUNT;\n      tones.set(key, tone);\n    }\n    const onSheet = ref.sheet === undefined || (current !== undefined && ref.sheet.toLowerCase() === current);\n    return ref.sheet === undefined\n      ? { text: ref.text, start: ref.start, end: ref.end, range: ref.range, tone, onSheet }\n      : { text: ref.text, start: ref.start, end: ref.end, sheet: ref.sheet, range: ref.range, tone, onSheet };\n  });\n}\n\n/** A run of formula text; `tone` is set for runs that are references. */\nexport interface FormulaSegment {\n  readonly text: string;\n  readonly tone?: number;\n}\n\n/** Splits a formula into plain and reference runs for nested-Text rendering. */\nexport function formulaSegments(formula: string, references: readonly ColoredReference[]): FormulaSegment[] {\n  const out: FormulaSegment[] = [];\n  let at = 0;\n  for (const ref of [...references].sort((a, b) => a.start - b.start)) {\n    if (ref.start < at) continue;\n    if (ref.start > at) out.push({ text: formula.slice(at, ref.start) });\n    out.push({ text: formula.slice(ref.start, ref.end), tone: ref.tone });\n    at = ref.end;\n  }\n  if (at < formula.length) out.push({ text: formula.slice(at) });\n  return out;\n}\n\n/** Literal Tailwind recipes per tone, so a source scan finds every class. */\nexport interface ReferenceToneClasses {\n  /** Formula-bar text color. */\n  readonly text: string;\n  /** Translucent cell fill. */\n  readonly fill: string;\n  /** Outline edges of the referenced block. */\n  readonly top: string;\n  readonly bottom: string;\n  readonly start: string;\n  readonly end: string;\n}\nconst tone = (color: \"primary\" | \"accent\" | \"success\" | \"info\", dashed: boolean): ReferenceToneClasses => {\n  const style = dashed ? \" border-dashed\" : \"\";\n  switch (color) {\n    case \"primary\": return { text: \"text-primary\", fill: \"bg-primary/10\",\n      top: \"border-t-2 border-t-primary\" + style, bottom: \"border-b-2 border-b-primary\" + style,\n      start: \"border-s-2 border-s-primary\" + style, end: \"border-e-2 border-e-primary\" + style };\n    case \"accent\": return { text: \"text-accent\", fill: \"bg-accent/10\",\n      top: \"border-t-2 border-t-accent\" + style, bottom: \"border-b-2 border-b-accent\" + style,\n      start: \"border-s-2 border-s-accent\" + style, end: \"border-e-2 border-e-accent\" + style };\n    case \"success\": return { text: \"text-success\", fill: \"bg-success/10\",\n      top: \"border-t-2 border-t-success\" + style, bottom: \"border-b-2 border-b-success\" + style,\n      start: \"border-s-2 border-s-success\" + style, end: \"border-e-2 border-e-success\" + style };\n    case \"info\": return { text: \"text-info\", fill: \"bg-info/10\",\n      top: \"border-t-2 border-t-info\" + style, bottom: \"border-b-2 border-b-info\" + style,\n      start: \"border-s-2 border-s-info\" + style, end: \"border-e-2 border-e-info\" + style };\n  }\n};\n/**\n * Token recipes indexed by {@linkcode ColoredReference.tone}. Only theme\n * tokens; `danger` is left out so a reference never reads as an error.\n */\nexport const REFERENCE_TONE_CLASSES: readonly ReferenceToneClasses[] = [\n  tone(\"primary\", false), tone(\"accent\", false), tone(\"success\", false), tone(\"info\", false),\n  tone(\"primary\", true), tone(\"accent\", true), tone(\"success\", true), tone(\"info\", true),\n];\n\n/** Which outline edges a cell draws for a referenced block it belongs to. */\nexport function referenceEdges(range: SheetRange, row: number, column: number): {\n  top: boolean; bottom: boolean; start: boolean; end: boolean;\n} {\n  return {\n    top: row === range.startRow, bottom: row === range.endRow,\n    start: column === range.startColumn, end: column === range.endColumn,\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/spreadsheet/reference-colors.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/spreadsheet/reference-colors",
+    "exports": [
+      "ColoredReference",
+      "FormulaSegment",
+      "REFERENCE_TONE_CLASSES",
+      "REFERENCE_TONE_COUNT",
+      "ReferenceToneClasses",
+      "colorReferences",
+      "formulaSegments",
+      "referenceEdges"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

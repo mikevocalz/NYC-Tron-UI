@@ -152,7 +152,7 @@ test("the row registry counts matches per section, nested sections included",()=
 test("inspector and input sources keep Android-safe roles, 44pt targets and no eval",()=>{
   for(const file of ["UnitInput.tsx","SliderField.tsx","RangeSlider.tsx","RotaryKnob.tsx","InspectorPanel.tsx","InspectorSection.tsx","PropertyRow.tsx","InspectorSearch.tsx"]){
     const text=readFileSync(resolve(root,"src/components/shell",file),"utf8");
-    assert.ok(/min-h-11|minHeight:44|height:44/.test(text),file+" has 44pt targets");
+    assert.ok(/min-h-11|minHeight:(44|(?:size|sizeToken)\.touch)|height:44/.test(text),file+" has 44pt targets");
   }
   const parser=readFileSync(resolve(root,"src/components/shell/unit-expression.ts"),"utf8");
   assert.ok(!/\beval\(|new Function|Function\(/.test(parser.replace(/\/\*[\s\S]*?\*\//g,"")),"no dynamic evaluation");

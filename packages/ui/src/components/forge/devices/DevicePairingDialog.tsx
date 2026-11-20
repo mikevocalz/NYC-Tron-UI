@@ -6,6 +6,7 @@ import { useStatusAnnouncement } from "../announce.ts";
 import {
   presentPairing, signalLabel, type PairingAction, type PairingDevice, type PairingState,
 } from "./pairing-model.ts";
+import { space, scrim } from "../../../tokens.ts";
 
 /**
  * Coarse phase handed to {@linkcode DevicePairingDialogProps.renderStatusArt}.
@@ -155,7 +156,7 @@ export function DevicePairingDialog(props: DevicePairingDialogProps) {
   const art = renderStatusArt?.(artPhase(state), state);
   const showIntro = intro !== undefined && intro !== "" && state.kind === "idle";
   return <Modal visible={visible} transparent animationType="fade" onRequestClose={close} statusBarTranslucent>
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 16, backgroundColor: "rgba(0,0,0,0.5)" }}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: space[4], backgroundColor: scrim[50] }}>
       <View
         accessibilityViewIsModal
         {...(testID ? { testID } : {})}
@@ -188,7 +189,7 @@ export function DevicePairingDialog(props: DevicePairingDialogProps) {
         {view.devices && view.devices.length ? <ScrollView
           accessibilityLabel={"Found " + view.devices.length + (view.devices.length === 1 ? " device" : " devices")}
           style={{ maxHeight: 240 }}
-          contentContainerStyle={{ gap: 8 }}
+          contentContainerStyle={{ gap: space[2] }}
         >{view.devices.map(device => <DeviceRow
           key={device.id}
           device={device}

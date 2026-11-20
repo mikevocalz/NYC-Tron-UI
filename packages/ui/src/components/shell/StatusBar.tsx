@@ -7,6 +7,7 @@ import {
   activityAnnouncement,formatElapsed,formatZoom,progressPercent,selectionSummary,stepZoom,
   type SelectionNoun,type StatusActivity,
 } from "./status-model.ts";
+import {space,radius,border,size} from "../../tokens.ts";
 
 export type {SelectionNoun,StatusActivity} from "./status-model.ts";
 
@@ -81,20 +82,20 @@ export function StatusBar({
       disabled={blocked} accessibilityState={{disabled:blocked}} onPress={()=>step(direction)}
       {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center",styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus hover:bg-surface-raised",blocked&&"opacity-40")}}>
       <View pointerEvents="none" style={{width:12,height:12,alignItems:"center",justifyContent:"center"}}>
-        <View {...{className:joinClasses(styled&&"border-text")}} style={{position:"absolute",width:12,height:0,borderTopWidth:1.5}}/>
-        {direction>0?<View {...{className:joinClasses(styled&&"border-text")}} style={{position:"absolute",width:0,height:12,borderLeftWidth:1.5}}/>:null}
+        <View {...{className:joinClasses(styled&&"border-text")}} style={{position:"absolute",width:12,height:0,borderTopWidth:border[1.5]}}/>
+        {direction>0?<View {...{className:joinClasses(styled&&"border-text")}} style={{position:"absolute",width:0,height:12,borderLeftWidth:border[1.5]}}/>:null}
       </View>
     </Pressable>;
   };
   return <View {...rest} accessibilityLabel="Status"
     {...{className:joinClasses(styled&&"border-t border-border bg-surface-sunken px-2",className)}}
-    style={[{flexDirection:"row",flexWrap:"wrap",alignItems:"center",columnGap:12,minHeight:44},style]}>
+    style={[{flexDirection:"row",flexWrap:"wrap",alignItems:"center",columnGap:space[3],minHeight:size.touch},style]}>
     {children}
     {selection?<Text {...{className:text}} style={{fontVariant:["tabular-nums"]}}
       accessibilityLiveRegion="polite">{selectionSummary(selection.count,selection.noun)}</Text>:null}
-    <View style={{flexDirection:"row",alignItems:"center",gap:6,flexGrow:1,minWidth:0}}>
+    <View style={{flexDirection:"row",alignItems:"center",gap:space[1.5],flexGrow:1,minWidth:0}}>
       {activity.kind==="recording"?<>
-        <View {...{className:joinClasses(styled&&"border-danger")}} style={{width:8,height:8,borderRadius:4,borderWidth:4}}/>
+        <View {...{className:joinClasses(styled&&"border-danger")}} style={{width:8,height:8,borderRadius:radius[4],borderWidth:border[4]}}/>
         <Text accessibilityLiveRegion="polite" {...{className:text}}>{announcement}</Text>
         <Text {...{className:muted}} style={{fontVariant:["tabular-nums"]}}
           accessibilityLabel={"Elapsed "+formatElapsed(activity.elapsedMs)}>{formatElapsed(activity.elapsedMs)}</Text>
@@ -104,7 +105,7 @@ export function StatusBar({
           aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent}
           {...{className:joinClasses(styled&&"rounded-control border border-border")}} style={{width:96,height:6,overflow:"hidden"}}>
           {/* The fill is a border so forced-colors mode still shows progress. */}
-          <View {...{className:joinClasses(styled&&"border-accent")}} style={{width:percent===undefined?"35%":`${percent}%`,height:0,borderTopWidth:4}}/>
+          <View {...{className:joinClasses(styled&&"border-accent")}} style={{width:percent===undefined?"35%":`${percent}%`,height:0,borderTopWidth:border[4]}}/>
         </View>
         {percent!==undefined?<Text {...{className:muted}} style={{fontVariant:["tabular-nums"]}}>{percent}%</Text>:null}
       </>:activity.kind==="error"?<Text accessibilityLiveRegion="polite" {...{className:joinClasses(styled&&"text-danger text-xs")}}
@@ -128,7 +129,7 @@ export function StatusBar({
           else if(Number(id)!==z.value&&(z.presets??DEFAULT_PRESETS).includes(Number(id)))z.onChange(Number(id));
         }}
         {...{className:joinClasses(styled&&"px-1 hover:bg-surface-raised")}}>
-        <Text {...{className:text}} style={{fontVariant:["tabular-nums"],minWidth:44,textAlign:"center"}}>{formatZoom(zoom.value)}</Text>
+        <Text {...{className:text}} style={{fontVariant:["tabular-nums"],minWidth:size.touch,textAlign:"center"}}>{formatZoom(zoom.value)}</Text>
       </MenuButton>
       {stepButton(1)}
     </View>:null}

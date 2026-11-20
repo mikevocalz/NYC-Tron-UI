@@ -7,6 +7,7 @@ import type {Rect2D} from "../overlays/popover-position.ts";
 import {joinClasses} from "../styles.ts";
 import {nodeIsRTL,rovingTarget,shellKey,type ShellAxis} from "./shell-keys.ts";
 import {shownVariantId,toolIsActive,validateRailTools,type RailTool} from "./tool-rail-model.ts";
+import {tokens} from "./ToolRail.tokens.ts";
 
 export type {RailTool,RailToolVariant,ToolIcon} from "./tool-rail-model.ts";
 export {shownVariantId,toolIsActive} from "./tool-rail-model.ts";
@@ -131,7 +132,7 @@ export function ToolRail({
         {expanded?<Text numberOfLines={1} {...{className:joinClasses(styled&&"text-sm",styled&&(active?"text-on-primary":"text-text"))}}
           style={{flex:1}}>{current.label}</Text>:null}
         {grouped?<View pointerEvents="none" {...{className:joinClasses(styled&&(active?"border-b-on-primary":"border-b-text-muted"))}}
-          style={{position:"absolute",right:3,bottom:3,width:0,height:0,borderLeftWidth:5,borderBottomWidth:5,
+          style={{position:"absolute",right:3,bottom:3,width:0,height:0,borderLeftWidth:tokens.border5,borderBottomWidth:tokens.border5,
             borderLeftColor:"transparent"}}/>:null}
       </Pressable>;
     })}

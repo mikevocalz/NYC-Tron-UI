@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/slides/slide-model",
+  "title": "slide model",
+  "description": "slide model, a presentation slide state model. Exports gridColumns, gridMove, moveBlock.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/slides/slide-model.ts",
+      "content": "/** RGBA channels 0–255, as presentation engines store document colors. */\nexport type SlideRgba=readonly [number,number,number,number];\n\n/** Kinds of object a slide holds. */\nexport type SlideObjectKind=\"text\"|\"rect\"|\"image\";\n\n/**\n * One object on a slide, in slide units (the deck's coordinate space, see\n * {@linkcode SLIDE_DEFAULT_SIZE}). Fields that only apply to one kind are\n * optional on the shared shape because engines report them that way; the\n * renderer reads them by `kind`.\n */\nexport interface SlideObject {\n  readonly id:string;\n  readonly kind:SlideObjectKind;\n  readonly x:number;\n  readonly y:number;\n  readonly w:number;\n  readonly h:number;\n  /** Degrees clockwise. */\n  readonly rotation:number;\n  readonly text?:string;\n  readonly fontSize?:number;\n  readonly bold?:boolean;\n  readonly italic?:boolean;\n  readonly color?:SlideRgba;\n  readonly fill?:SlideRgba;\n  readonly src?:string;\n  /** Resolved opacity at a preview time, 0–1. @default 1 */\n  readonly opacity?:number;\n}\n\n/** A slide as the filmstrip, sorter and canvas draw it. */\nexport interface SlideSummary {\n  readonly id:string;\n  readonly objects:readonly SlideObject[];\n  readonly background?:SlideRgba;\n}\n\n/** Deck coordinate space used when the engine stores none: 16:9 at 960 × 540 units. */\nexport const SLIDE_DEFAULT_SIZE={width:960,height:540} as const;\n\n/** Width and height of a deck's coordinate space. */\nexport interface SlideSize {\n  readonly width:number;\n  readonly height:number;\n}\n\n/** CSS color for a document RGBA. */\nexport function rgbaCss(c:SlideRgba):string{\n  const ch=(v:number)=>Math.min(255,Math.max(0,Math.round(v)));\n  return `rgba(${ch(c[0])},${ch(c[1])},${ch(c[2])},${Math.round(Math.min(255,Math.max(0,c[3]))/255*1000)/1000})`;\n}\n\n/** The slide's title for labels: its first non-empty text object, else \"Slide n\". */\nexport function slideTitle(slide:SlideSummary,index:number):string{\n  const t=slide.objects.find(o=>o.kind===\"text\"&&o.text?.trim());\n  return t?.text?.trim().split(/\\n/u)[0]!.slice(0,80)??\"Slide \"+(index+1);\n}\n\n/** Screen-reader label for a slide thumbnail. */\nexport function slideLabel(slide:SlideSummary,index:number,count:number):string{\n  const title=slideTitle(slide,index);\n  const n=slide.objects.length;\n  return \"Slide \"+(index+1)+\" of \"+count+(title===\"Slide \"+(index+1)?\"\":\", \"+title)+\", \"+(n===1?\"1 object\":n+\" objects\");\n}\n\n/** `ids` reordered so `id` sits at `toIndex`. Unknown ids or indexes throw. */\nexport function moveId(ids:readonly string[],id:string,toIndex:number):string[]{\n  const from=ids.indexOf(id);\n  if(from<0)throw new RangeError(`Unknown slide \"${id}\"`);\n  if(!Number.isSafeInteger(toIndex)||toIndex<0||toIndex>=ids.length)throw new RangeError(`Slide index ${toIndex} is out of range`);\n  const next=[...ids];\n  next.splice(from,1);\n  next.splice(toIndex,0,id);\n  return next;\n}\n\n/**\n * Moves several slides as a block to `toIndex` (the block's new first\n * position, counted after the block is taken out), keeping their order.\n * Returns the resulting order.\n */\nexport function moveBlock(ids:readonly string[],moving:readonly string[],toIndex:number):string[]{\n  const set=new Set(moving);\n  for(const id of set)if(!ids.includes(id))throw new RangeError(`Unknown slide \"${id}\"`);\n  const block=ids.filter(id=>set.has(id));\n  const rest=ids.filter(id=>!set.has(id));\n  const at=Math.min(Math.max(0,Math.trunc(toIndex)),rest.length);\n  return [...rest.slice(0,at),...block,...rest.slice(at)];\n}\n\n/**\n * Single `from → to` moves (each a valid index in the order at that moment)\n * that turn `before` into `after`. Hosts whose engine moves one slide per\n * call apply these in sequence.\n */\nexport function planMoves(before:readonly string[],after:readonly string[]):Array<{from:number;to:number}>{\n  if(before.length!==after.length||new Set(before).size!==before.length||!after.every(id=>before.includes(id)))\n    throw new RangeError(\"Slide orders must hold the same ids\");\n  const cur=[...before];\n  const out:Array<{from:number;to:number}>=[];\n  after.forEach((id,to)=>{\n    const from=cur.indexOf(id);\n    if(from===to)return;\n    cur.splice(from,1);\n    cur.splice(to,0,id);\n    out.push({from,to});\n  });\n  return out;\n}\n\n/** Selection after a plain, additive (Cmd/Ctrl) or range (Shift) click on `id`. */\nexport function nextSelection(order:readonly string[],selected:readonly string[],anchor:string|undefined,id:string,mode:\"replace\"|\"toggle\"|\"range\"):{selected:string[];anchor:string}{\n  if(mode===\"toggle\")return {selected:selected.includes(id)?selected.filter(s=>s!==id):[...selected,id],anchor:id};\n  if(mode===\"range\"&&anchor!==undefined&&order.includes(anchor)){\n    const a=order.indexOf(anchor),b=order.indexOf(id);\n    return {selected:order.slice(Math.min(a,b),Math.max(a,b)+1),anchor};\n  }\n  return {selected:[id],anchor:id};\n}\n\n/** Columns that fit `width` with cells at least `minCell` wide and `gap` apart (at least 1). */\nexport function gridColumns(width:number,minCell:number,gap:number):number{\n  if(!(width>0)||!(minCell>0))return 1;\n  return Math.max(1,Math.floor((width+gap)/(minCell+gap)));\n}\n\n/** Focus target for an arrow key in a grid of `count` cells and `columns` columns, or `undefined` at an edge. */\nexport function gridMove(index:number,key:string,columns:number,count:number,rtl=false):number|undefined{\n  const right=rtl?-1:1;\n  const delta=key===\"ArrowRight\"?right:key===\"ArrowLeft\"?-right:key===\"ArrowDown\"?columns:key===\"ArrowUp\"?-columns:\n    key===\"Home\"?-index:key===\"End\"?count-1-index:undefined;\n  if(delta===undefined)return undefined;\n  const next=index+delta;\n  return next>=0&&next<count?next:undefined;\n}\n\n/** Bounded source geometry shared by canvas, sorter and filmstrip. */\nexport function validateSlideSummary(slide:SlideSummary):void{\n if(!slide.id.trim()||slide.id.length>256||slide.objects.length>2048||new Set(slide.objects.map(o=>o.id)).size!==slide.objects.length||slide.objects.reduce((n,o)=>n+(o.text?.length??0),0)>1048576||slide.objects.some(o=>!o.id.trim()||o.id.length>256||!['text','rect','image'].includes(o.kind)||![o.x,o.y,o.w,o.h,o.rotation].every(Number.isFinite)||o.w<=0||o.h<=0||o.w>1e7||o.h>1e7||o.src!==undefined&&o.src.length>8192||o.opacity!==undefined&&(!Number.isFinite(o.opacity)||o.opacity<0||o.opacity>1)))throw new RangeError('Invalid slide source geometry');\n for(const rgba of [slide.background,...slide.objects.flatMap(o=>[o.fill,o.color])])if(rgba&&(rgba.length!==4||rgba.some(n=>!Number.isFinite(n)||n<0||n>255)))throw new RangeError('Invalid slide document color');\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/slides/slide-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/slides/slide-model",
+    "exports": [
+      "SLIDE_DEFAULT_SIZE",
+      "SlideObject",
+      "SlideObjectKind",
+      "SlideRgba",
+      "SlideSize",
+      "SlideSummary",
+      "gridColumns",
+      "gridMove",
+      "moveBlock",
+      "moveId",
+      "nextSelection",
+      "planMoves",
+      "rgbaCss",
+      "slideLabel",
+      "slideTitle",
+      "validateSlideSummary"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

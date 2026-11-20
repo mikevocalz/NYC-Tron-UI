@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "overlays/command-filter",
+  "title": "command filter",
+  "description": "command filter, an overlay helper module. Exports filterCommands, nextActiveCommand, normalizeSearchText.",
+  "registryDependencies": [
+    "@nyc-tron/overlays/CommandPopover"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/overlays/command-filter.ts",
+      "content": "import type { CommandMenuItem } from \"@/components/nyc-tron/ui/components/overlays/CommandPopover\";\n\n/** A CommandPopover item plus the fields only search needs. */\nexport type PaletteCommand=CommandMenuItem&Readonly<{\n  /** Extra search terms that are not shown, such as \"save\" for \"Write file\". */\n  keywords?:readonly string[];\n  /** Section name shown before the label and matched by search. */\n  group?:string;\n}>;\n\nconst ID=/^[a-zA-Z0-9][a-zA-Z0-9._:-]*$/;\n\n/** Rejects duplicate or malformed IDs and empty labels before anything renders. */\nexport function validateCommands(commands:readonly PaletteCommand[]):void{\n  if(commands.length>1000)throw new RangeError(\"Too many palette commands\");\n  const seen=new Set<string>();\n  for(const command of commands){\n    if(typeof command.id!==\"string\"||command.id.length>256||!ID.test(command.id)||seen.has(command.id))\n      throw new TypeError(\"Duplicate or invalid command ID\");\n    if(typeof command.label!==\"string\"||!command.label.trim()||command.label.length>512)throw new TypeError(\"Command label required\");\n    if(command.keywords&&(command.keywords.length>256||command.keywords.some(k=>typeof k!==\"string\"||k.length>512)))throw new TypeError(\"Invalid command keywords\");\n    if(command.disabled!==undefined&&typeof command.disabled!==\"boolean\")throw new TypeError(\"Invalid command availability\");\n    seen.add(command.id);\n  }\n}\n\n/** Case- and accent-insensitive comparison form. */\nexport function normalizeSearchText(text:string):string{\n  return text.normalize(\"NFKD\").replace(/\\p{M}/gu,\"\").toLocaleLowerCase(\"en-US\").trim();\n}\n\n// Lower is better. A token must match somewhere or the command is dropped.\nfunction tokenRank(token:string,label:string,words:readonly string[],extra:readonly string[]):number{\n  if(label.startsWith(token))return 0;\n  if(words.some(word=>word.startsWith(token)))return 1;\n  if(label.includes(token))return 2;\n  if(extra.some(term=>term.startsWith(token)))return 3;\n  if(extra.some(term=>term.includes(token)))return 4;\n  return Number.POSITIVE_INFINITY;\n}\n\n/**\n * Every whitespace-separated token must match the label, a keyword, the\n * group or the description. Results sort by how well the label matches; ties\n * keep the caller's order. An empty query returns every command unchanged.\n * Disabled commands stay in the results so people can see they exist.\n */\nexport function filterCommands(commands:readonly PaletteCommand[],query:string):PaletteCommand[]{\n  const tokens=normalizeSearchText(query).split(/\\s+/).filter(Boolean);\n  if(!tokens.length)return [...commands];\n  const ranked:{command:PaletteCommand;score:number;index:number}[]=[];\n  commands.forEach((command,index)=>{\n    const label=normalizeSearchText(command.label);\n    const words=label.split(/[\\s\\-_/.:]+/).filter(Boolean);\n    const extra=[...(command.keywords??[]),command.group??\"\",command.description??\"\"]\n      .map(normalizeSearchText).filter(Boolean);\n    let score=0;\n    for(const token of tokens){\n      const rank=tokenRank(token,label,words,extra);\n      if(rank===Number.POSITIVE_INFINITY)return;\n      score+=rank;\n    }\n    ranked.push({command,score,index});\n  });\n  return ranked.sort((a,b)=>a.score-b.score||a.index-b.index).map(entry=>entry.command);\n}\n\n/** Arrow/Home/End movement over enabled results; wraps like the native menus. */\nexport function nextActiveCommand(\n  results:readonly PaletteCommand[],currentId:string|undefined,key:string\n):string|undefined{\n  const enabled=results.filter(command=>!command.disabled);\n  if(!enabled.length)return undefined;\n  if(key===\"Home\")return enabled[0]!.id;\n  if(key===\"End\")return enabled[enabled.length-1]!.id;\n  if(key!==\"ArrowDown\"&&key!==\"ArrowUp\")return undefined;\n  const index=enabled.findIndex(command=>command.id===currentId);\n  if(index<0)return enabled[key===\"ArrowUp\"?enabled.length-1:0]!.id;\n  return enabled[(index+(key===\"ArrowDown\"?1:-1)+enabled.length)%enabled.length]!.id;\n}\n\n/** The highlighted command after the results change: keep it if still enabled, else the first enabled one. */\nexport function reconcileActiveCommand(\n  results:readonly PaletteCommand[],currentId:string|undefined\n):string|undefined{\n  if(currentId&&results.some(command=>command.id===currentId&&!command.disabled))return currentId;\n  return results.find(command=>!command.disabled)?.id;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/overlays/command-filter.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/overlays/command-filter",
+    "exports": [
+      "PaletteCommand",
+      "filterCommands",
+      "nextActiveCommand",
+      "normalizeSearchText",
+      "reconcileActiveCommand",
+      "validateCommands"
+    ]
+  },
+  "categories": [
+    "overlay"
+  ],
+  "type": "registry:lib"
+}

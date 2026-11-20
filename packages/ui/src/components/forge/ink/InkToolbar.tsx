@@ -9,6 +9,8 @@ import {
  type InkAvailability,type InkCommandOutcome,type InkKeyEvent,type InkPressure,type InkSize,type InkSwatch,
  type InkTool,type InkToolOption,
 } from "./ink-model.ts";
+import {space,radius,font,border,opacity as opacityToken} from "../../../tokens.ts";
+import {tokens} from "./InkToolbar.tokens.ts";
 
 /** Icon slots an {@linkcode InkToolbar} host can fill. Missing slots fall back to text labels. */
 export type InkToolbarIcon=InkTool|"undo"|"redo";
@@ -121,13 +123,13 @@ export function InkToolbar({
  const swatchList=swatches??[];
  const showColor=swatchList.length>0||onRequestCustomColor!==undefined;
  const borderSide=edge==="left"?"border-r":edge==="right"?"border-l":edge==="top"?"border-b":edge==="bottom"?"border-t":undefined;
- const group={flexDirection:vertical?"column":"row",alignItems:"center",gap:4} as const;
+ const group={flexDirection:vertical?"column":"row",alignItems:"center",gap:space[1]} as const;
 
  return <View {...rest} role="toolbar" aria-label={label} aria-orientation={orientation}
    {...{onKeyDown,className:joinClasses("min-w-0",styled&&"bg-surface-raised",styled&&borderSide,styled&&borderSide&&"border-border",className)}}
    style={[vertical?{width:92,maxHeight:"100%"}:{maxWidth:"100%"},style]}>
   <ScrollView horizontal={!vertical} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}
-   contentContainerStyle={{...group,gap:6,padding:6}}>
+   contentContainerStyle={{...group,gap:space[1.5],padding:space[1.5]}}>
    <View role="radiogroup" aria-label="Tool" style={group}>
     {tools.map(option=>{
      const selected=option.tool===tool;
@@ -144,7 +146,7 @@ export function InkToolbar({
     hint="Shortcuts [ and ]"
     onStep={direction=>run(planInkCommand({type:"size",direction},state))}>
     <View pointerEvents="none" {...{className:joinClasses(styled&&"bg-text")}}
-     style={{width:inkSizePreviewDiameter(size,tool),height:inkSizePreviewDiameter(size,tool),borderRadius:14}}/>
+     style={{width:inkSizePreviewDiameter(size,tool),height:inkSizePreviewDiameter(size,tool),borderRadius:radius[14]}}/>
    </Stepper>
    {opacity!==undefined&&onOpacityChange?<Stepper styled={styled} vertical={vertical} label="Opacity"
      valueText={formatInkOpacity(opacity)} valueNow={Math.round(opacity*100)}
@@ -154,7 +156,7 @@ export function InkToolbar({
       else{store.setState({notice:undefined});onOpacityChange(next);}
      }}>
      <Text {...{className:joinClasses(styled&&"text-text")}}
-      style={{fontSize:12,fontWeight:"600",fontVariant:["tabular-nums"]}}>{formatInkOpacity(opacity)}</Text>
+      style={{fontSize:font[12],fontWeight:"600",fontVariant:["tabular-nums"]}}>{formatInkOpacity(opacity)}</Text>
     </Stepper>:null}
    {showColor?<>
     <Divider vertical={vertical} styled={styled}/>
@@ -184,7 +186,7 @@ export function InkToolbar({
   {/* Polite live region: a disabled control explains itself when pressed. */}
   <Text aria-live="polite" accessibilityLiveRegion="polite" numberOfLines={2}
    {...{className:joinClasses(styled&&"text-text-muted")}}
-   style={{fontSize:12,paddingHorizontal:8,paddingBottom:notice?6:0,textAlign:"center",
+   style={{fontSize:font[12],paddingHorizontal:space[2],paddingBottom:notice?space[1.5]:space[0],textAlign:"center",
     ...(notice?null:{height:0,overflow:"hidden"})}}>{notice??""}</Text>
  </View>;
 }
@@ -207,16 +209,16 @@ function ToolbarButton({label,shortLabel,hint,icon,onPress,disabled=false,role="
    styled&&(filled?"bg-primary":"bg-surface-raised"),
    styled&&role==="switch"&&"border",styled&&role==="switch"&&(on?"border-primary":"border-border"))}}
   style={{minWidth:INK_TOUCH_TARGET,minHeight:INK_TOUCH_TARGET,width:vertical?"100%":undefined,
-   paddingHorizontal:vertical?4:10,alignItems:"center",justifyContent:"center",
-   flexDirection:vertical?"column":"row",gap:vertical?3:6,
-   opacity:disabled?0.45:1}}>
+   paddingHorizontal:vertical?space[1]:space[2.5],alignItems:"center",justifyContent:"center",
+   flexDirection:vertical?"column":"row",gap:vertical?space[0.75]:space[1.5],
+   opacity:disabled?opacityToken[45]:1}}>
   {icon??null}
   {icon&&!vertical?null:<Text numberOfLines={1}
    {...{className:joinClasses(styled&&(filled?"text-on-primary":"text-text"))}}
-   style={{fontSize:13,fontWeight:on?"700":"500"}}>{vertical&&shortLabel?shortLabel:label}</Text>}
+   style={{fontSize:font[13],fontWeight:on?"700":"500"}}>{vertical&&shortLabel?shortLabel:label}</Text>}
   {role==="switch"?<View pointerEvents="none"
    {...{className:joinClasses(styled&&(on?"bg-primary":"bg-border"))}}
-   style={vertical?{width:20,height:3,borderRadius:2}:{width:8,height:8,borderRadius:4}}/>:null}
+   style={vertical?{width:20,height:3,borderRadius:radius[2]}:{width:8,height:8,borderRadius:radius[4]}}/>:null}
  </Pressable>;
 }
 
@@ -228,7 +230,7 @@ function Stepper({label,valueText,valueNow,hint,onStep,children,styled,vertical}
   onPress={()=>onStep(direction)}
   {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
   style={{width:INK_TOUCH_TARGET,height:INK_TOUCH_TARGET,alignItems:"center",justifyContent:"center"}}>
-  <Text {...{className:joinClasses(styled&&"text-text")}} style={{fontSize:18}}>{direction<0?"−":"+"}</Text>
+  <Text {...{className:joinClasses(styled&&"text-text")}} style={{fontSize:tokens.font18}}>{direction<0?"−":"+"}</Text>
  </Pressable>;
  return <View style={{flexDirection:vertical?"column-reverse":"row",alignItems:"center"}}
   {...{className:joinClasses(styled&&"rounded-control bg-surface-sunken")}}>
@@ -256,14 +258,14 @@ function Swatch({swatch,selected,onPress,reason,styled}:{
   {...{className:joinClasses(styled&&"rounded-full focus-visible:ring-2 focus-visible:ring-focus")}}
   style={{width:INK_TOUCH_TARGET,height:INK_TOUCH_TARGET,alignItems:"center",justifyContent:"center"}}>
   <View pointerEvents="none" {...{className:joinClasses(styled&&(selected?"border-text":"border-border"))}}
-   style={{width:34,height:34,borderRadius:17,borderWidth:selected?2:1,alignItems:"center",justifyContent:"center",
+   style={{width:34,height:34,borderRadius:tokens.radius17,borderWidth:selected?border[2]:border[1],alignItems:"center",justifyContent:"center",
     borderColor:styled?undefined:selected?swatch.value:undefined}}>
-   <View style={{width:selected?24:30,height:selected?24:30,borderRadius:15,backgroundColor:swatch.value}}/>
+   <View style={{width:selected?24:30,height:selected?24:30,borderRadius:tokens.radius15,backgroundColor:swatch.value}}/>
   </View>
  </Pressable>;
 }
 
 function Divider({vertical,styled}:{vertical:boolean;styled:Styled}){
  return <View pointerEvents="none" {...{className:joinClasses(styled&&"bg-border")}}
-  style={vertical?{height:1,width:40,marginVertical:2}:{width:1,height:28,marginHorizontal:2}}/>;
+  style={vertical?{height:1,width:40,marginVertical:space[0.5]}:{width:1,height:28,marginHorizontal:space[0.5]}}/>;
 }

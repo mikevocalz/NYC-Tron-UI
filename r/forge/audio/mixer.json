@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/mixer",
+  "title": "mixer",
+  "description": "mixer, an audio mixing and editing helper module. Exports audibility, describeAudibility.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/mixer.ts",
+      "content": "/**\n * Mixer state helpers for {@linkcode MixingConsole} and\n * {@linkcode SoloMuteButtons}. Pure; no React or engine imports.\n */\n\n/** Engine id of a track or bus. */\ntype ChannelId = string | number;\n\n/**\n * One post-fader send from a track to a bus, as the engine reports it.\n * @see {@linkcode MixerChannel.sends}\n */\nexport interface MixerSend {\n  /** Id of the receiving bus channel. */\n  readonly bus: ChannelId;\n  /** Linear send level, 0 .. 1. */\n  readonly level: number;\n}\n\n/** One channel as the engine reports it. All values are committed state. */\nexport interface MixerChannel {\n  /** Stable engine id; also the React key. */\n  readonly id: ChannelId;\n  readonly name: string;\n  /** Linear gain, 0 (silence) .. 1 (0 dB). */\n  readonly gain: number;\n  /**\n   * -1 .. 1. Equal-power mono pan on a track; balance on a bus, where the\n   * far side is attenuated and the near side kept.\n   */\n  readonly pan: number;\n  readonly muted: boolean;\n  readonly solo: boolean;\n  /**\n   * `\"bus\"` sums the tracks routed or sent to it and feeds the master.\n   * @default \"track\"\n   */\n  readonly kind?: \"track\" | \"bus\";\n  /** Mix group name. Group solo and mute act on every member at once. */\n  readonly group?: string;\n  /**\n   * A solo-safe channel that is not muted keeps sounding while other\n   * channels are soloed. @default false\n   */\n  readonly soloSafe?: boolean;\n  /** Id of the bus this channel feeds; `null` or absent means the master. */\n  readonly output?: ChannelId | null;\n  /** Post-fader sends to buses. */\n  readonly sends?: readonly MixerSend[];\n}\n\n/**\n * Why a channel is or is not heard. Solo takes precedence over mute, the\n * same rule as the Cadence engine's render.\n * @see {@linkcode audibility}\n */\nexport type Audibility =\n  | \"audible\"\n  | \"muted\"\n  /** Silent because another track or bus is soloed. */\n  | \"silenced-by-solo\";\n\n/**\n * Fields {@linkcode audibility} reads. Only `muted` and `solo` are required,\n * so callers from before buses and solo-safe keep working.\n */\nexport type AudibilityInput = Pick<MixerChannel, \"muted\" | \"solo\">\n  & Partial<Pick<MixerChannel, \"id\" | \"kind\" | \"soloSafe\" | \"output\" | \"sends\">>;\n\nfunction feeds(source: AudibilityInput, busId: ChannelId | undefined): boolean {\n  if (busId === undefined) return false;\n  return source.output === busId || (source.sends ?? []).some(s => s.bus === busId);\n}\n\n/**\n * Audibility of each channel, in input order, mirroring the Cadence\n * engine's `audible()`:\n *\n * - With nothing soloed, every unmuted channel sounds.\n * - With any track or bus soloed, a track sounds when it is soloed, or\n *   solo-safe and unmuted, or routed or sent into a soloed bus; a bus sounds\n *   when it is soloed, or solo-safe and unmuted, or fed by a soloed channel.\n * - Solo beats mute: a soloed channel sounds even when muted.\n *\n * Ids are compared with `===`, so pass the same id type the engine uses.\n */\nexport function audibility(channels: readonly AudibilityInput[]): Audibility[] {\n  const anySolo = channels.some(c => c.solo);\n  return channels.map(c => {\n    if (!anySolo) return c.muted ? \"muted\" : \"audible\";\n    if (c.solo || (c.soloSafe === true && !c.muted)) return \"audible\";\n    const heard = c.kind === \"bus\"\n      ? channels.some(src => src.solo && feeds(src, c.id))\n      : channels.some(bus => bus.kind === \"bus\" && bus.solo && feeds(c, bus.id));\n    return heard ? \"audible\" : \"silenced-by-solo\";\n  });\n}\n\n/** Extra facts {@linkcode describeAudibility} can speak. */\nexport interface AudibilityDetails {\n  /** @default \"track\" */\n  readonly kind?: \"track\" | \"bus\";\n  /** @default false */\n  readonly soloSafe?: boolean;\n  /** Mix group name. */\n  readonly group?: string;\n}\n\n/**\n * Spoken summary for a strip, e.g. `\"Bass, muted\"` or\n * `\"Drum bus, bus, group Drums, soloed\"`.\n */\nexport function describeAudibility(\n  name: string, state: Audibility, solo: boolean, details: AudibilityDetails = {},\n): string {\n  const parts = [name];\n  if (details.kind === \"bus\") parts.push(\"bus\");\n  if (details.group) parts.push(\"group \" + details.group);\n  if (solo) parts.push(\"soloed\");\n  if (details.soloSafe) parts.push(\"solo safe\");\n  if (state === \"muted\") parts.push(\"muted\");\n  if (state === \"silenced-by-solo\") parts.push(\"silent while another channel is soloed\");\n  return parts.join(\", \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/audio/mixer.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/mixer",
+    "exports": [
+      "Audibility",
+      "AudibilityDetails",
+      "AudibilityInput",
+      "MixerChannel",
+      "MixerSend",
+      "audibility",
+      "describeAudibility"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

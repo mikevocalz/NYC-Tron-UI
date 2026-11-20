@@ -10,6 +10,7 @@ import { shellKey } from "./shell-keys.ts";
 import { useOwnedAction } from "./useOwnedAction.ts";
 import { joinClasses } from "../styles.ts";
 import { filterAssets, selectAsset, formatAssetBytes, assetDisplayName, type AssetEntry, type AssetLocation, type AssetRequest, type AssetSort } from "./asset-browser-model.ts";
+import { space } from "../../tokens.ts";
 export type { AssetEntry, AssetLocation, AssetRequest, AssetSort } from "./asset-browser-model.ts";
 
 export interface AssetBrowserProps extends Omit<ViewProps, "children"> {
@@ -89,12 +90,12 @@ export function AssetBrowser({ locationId, revision, entries, path, selectedIds,
     if (node) { node.focus?.(); focusRequest.current = null; }
     else list.current?.scrollToIndex({ index: next, animated: false });
   };
-  const header = <View style={{ gap: 8 }} onLayout={event => {
+  const header = <View style={{ gap: space[2] }} onLayout={event => {
     const height = Math.ceil(event.nativeEvent.layout.height);
     if (Number.isFinite(height) && height !== local.current!.getState().headerHeight) local.current!.setState({ headerHeight: height });
   }}>
     {before}
-    <View accessibilityRole="toolbar" accessibilityLabel="Asset location" style={{ flexDirection: "row", flexWrap: "wrap", gap: 4 }}>
+    <View accessibilityRole="toolbar" accessibilityLabel="Asset location" style={{ flexDirection: "row", flexWrap: "wrap", gap: space[1] }}>
       {path.map(item => <Button key={item.id} title={item.label} disabled={busy || item.id === locationId} unstyled={unstyled}
         onPress={() => { void action.run(`navigate:${item.id}`, signal => onNavigate(item.id, signal)); }}/>) }
     </View>
@@ -102,8 +103,8 @@ export function AssetBrowser({ locationId, revision, entries, path, selectedIds,
     <Select label="Sort assets" value={state.sort} options={[{ value: "name", label: "Name" }, { value: "modified", label: "Newest" }, { value: "size", label: "Largest" }]}
       onValueChange={sort => local.current!.setState({ sort: sort as AssetSort })} disabled={busy} unstyled={unstyled}/>
   </View>;
-  const footer = <View style={{ gap: 8 }}>
-    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+  const footer = <View style={{ gap: space[2] }}>
+    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
       <Button title="Open selected asset" disabled={busy || selectedIds.length !== 1 || !entries.some(entry => entry.id === selectedIds[0])}
         onPress={() => { const entry = entries.find(item => item.id === selectedIds[0]); if (entry) open(entry); }} unstyled={unstyled}/>
       {action.pending ? <Button title="Cancel asset request" onPress={action.cancel} unstyled={unstyled}/> : null}
@@ -128,7 +129,7 @@ export function AssetBrowser({ locationId, revision, entries, path, selectedIds,
         onPress={event => choose(item.id, event.nativeEvent as { shiftKey?: boolean; ctrlKey?: boolean; metaKey?: boolean })}
         accessibilityActions={[{ name: "activate", label: "Select asset" }, { name: "open", label: `Open ${item.name}` }]}
         onAccessibilityAction={event => { if (event.nativeEvent.actionName === "open") open(item); else if (event.nativeEvent.actionName === "activate") choose(item.id); }}
-        style={{ minHeight: 64, padding: 10, flexDirection: "row", gap: 10, alignItems: "center" }}>
+        style={{ minHeight: 64, padding: space[2.5], flexDirection: "row", gap: space[2.5], alignItems: "center" }}>
         {item.thumbnailUri ? <Image source={{ uri: item.thumbnailUri }} style={{ width: 40, height: 40 }} accessibilityIgnoresInvertColors/> : null}
         <View style={{ flex: 1, minWidth: 0 }}><Text {...{ className: joinClasses(styled && "text-text") }}>{assetDisplayName(item.name)}</Text>
           <Text {...{ className: joinClasses(styled && "text-text-muted text-sm") }}>{item.kind === "folder" ? "Folder" : item.mediaType ?? "File"}</Text></View>

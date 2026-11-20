@@ -11,6 +11,7 @@ import {
   originAccessibilityValue,originKeyCommand,originPayload,pivotInDoc,validateTransform,
   type BoundsCorners,type LayerTransform,type OriginAnchor,
 } from "./transform-origin-model.ts";
+import {space,radius,opacity} from "../../../tokens.ts";
 
 /** Props for {@linkcode TransformOriginHandle}. */
 export interface TransformOriginHandleProps extends Omit<ViewProps,"children"> {
@@ -140,18 +141,18 @@ export function TransformOriginHandle({
       aria-disabled={disabled}
       {...{onKeyDown,focusable:!disabled,className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
       style={{position:"absolute",left:handleLeft,top:handleTop,width:HIT,height:HIT,alignItems:"center",justifyContent:"center",
-        opacity:disabled?0.5:1,...NO_SELECT}}>
+        opacity:disabled?opacity[50]:1,...NO_SELECT}}>
       <View pointerEvents="none" style={{width:22,height:22,alignItems:"center",justifyContent:"center"}}>
         <View {...{className:joinClasses(styled&&"bg-primary")}} style={{position:"absolute",width:22,height:2}}/>
         <View {...{className:joinClasses(styled&&"bg-primary")}} style={{position:"absolute",width:2,height:22}}/>
         <View {...{className:joinClasses(styled&&"border-2",styled&&(state.drag?"border-accent bg-surface-raised":"border-primary bg-surface-raised"))}}
-          style={{width:12,height:12,borderRadius:6}}/>
+          style={{width:12,height:12,borderRadius:radius[6]}}/>
       </View>
     </View>:null}
     {!transform&&unavailableReason?<View pointerEvents="none" style={{position:"absolute",left:Math.max(4,Math.min(center.x-110,viewport.width-224)),top:center.y-14,width:220,alignItems:"center"}}>
       <Text accessibilityLiveRegion="polite"
         {...{className:joinClasses(styled&&"bg-surface-raised border border-border rounded-control text-text text-xs")}}
-        style={{paddingHorizontal:8,paddingVertical:4,textAlign:"center"}}>{unavailableReason}</Text>
+        style={{paddingHorizontal:space[2],paddingVertical:space[1],textAlign:"center"}}>{unavailableReason}</Text>
     </View>:null}
   </View>;
 }

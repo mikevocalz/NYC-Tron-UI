@@ -18,6 +18,7 @@ import {
   type TimelineCut,type TimelineTransition,type TransitionRequest,
 } from "./transitions.ts";
 import {frameToX,type TimelineViewport} from "./viewport.ts";
+import {space,radius,opacity} from '../../../tokens.ts';
 
 /** Props for {@linkcode TransitionHandles}. */
 export interface TransitionHandlesProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -95,7 +96,7 @@ function Band({t,cut,max,top,height,viewport,rate,selected,onChange,onRemove,onS
   };
   const edge=(side:-1|1)=><View {...(side<0?left:right)} pointerEvents={disabled?"none":"auto"}
     style={{position:"absolute",top:0,bottom:0,width:HIT,[side<0?"left":"right"]:-HIT/2,alignItems:"center",justifyContent:"center",...NO_SELECT}}>
-    <View pointerEvents="none" {...{className:joinClasses(styled&&"bg-accent")}} style={{width:4,height:Math.max(16,height-20),borderRadius:2}}/>
+    <View pointerEvents="none" {...{className:joinClasses(styled&&"bg-accent")}} style={{width:4,height:Math.max(16,height-20),borderRadius:radius[2]}}/>
   </View>;
   return <View style={{position:"absolute",left:cx-w/2,top,width:w,height,zIndex:6}}>
     <View {...{onKeyDown,focusable:!disabled,className:joinClasses(styled&&"rounded-control border focus-visible:ring-2 focus-visible:ring-focus",
@@ -115,7 +116,7 @@ function Band({t,cut,max,top,height,viewport,rate,selected,onChange,onRemove,onS
         {/* Two crossing lines: the outgoing and incoming clip. */}
         <View pointerEvents="none" style={{flex:1,justifyContent:"center",overflow:"hidden"}}>
           <View {...{className:joinClasses(styled&&"bg-accent")}} style={{height:2,transform:[{rotate:"18deg"}]}}/>
-          <View {...{className:joinClasses(styled&&"bg-accent")}} style={{height:2,marginTop:-2,transform:[{rotate:"-18deg"}]}}/>
+          <View {...{className:joinClasses(styled&&"bg-accent")}} style={{height:2,marginTop:-space[0.5],transform:[{rotate:"-18deg"}]}}/>
         </View>
       </Pressable>
     </View>
@@ -186,10 +187,10 @@ function TransitionHandlesBody({
           onPress={()=>{if(off)return;if(onSelectCut)onSelectCut(chosen?undefined:cut);else if(request)onAdd(request);}}
           {...(testID?{testID:testID+"-cut-"+key}:{})}
           {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
-          style={{position:"absolute",left:x-HIT/2,top:top+(laneHeight-HIT)/2,width:HIT,height:HIT,alignItems:"center",justifyContent:"center",zIndex:5,opacity:off?0.4:1}}>
+          style={{position:"absolute",left:x-HIT/2,top:top+(laneHeight-HIT)/2,width:HIT,height:HIT,alignItems:"center",justifyContent:"center",zIndex:5,opacity:off?opacity[40]:1}}>
           {/* A diamond on the cut. */}
           <View pointerEvents="none" {...{className:joinClasses(styled&&(chosen?"bg-focus border-2 border-focus":"bg-surface-raised border-2 border-accent"))}}
-            style={{width:14,height:14,borderRadius:2,transform:[{rotate:"45deg"}]}}/>
+            style={{width:14,height:14,borderRadius:radius[2],transform:[{rotate:"45deg"}]}}/>
         </Pressable>];
       });
     })}

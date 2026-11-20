@@ -9,6 +9,8 @@ import {joinClasses} from "../../styles.ts";
 import {IconButton} from "../../IconButton.tsx";
 import {useLocalStore} from "../../useLocalStore.ts";
 import {trackSilenced,type TimelineTrack,type TrackKind} from "./edits.ts";
+import {space,radius,border,size} from '../../../tokens.ts';
+import {tokens} from './TrackHeaders.tokens.ts';
 
 /** A track switch Splice stores (`setTrackFlags`). */
 export type TrackFlag="locked"|"hidden"|"muted"|"solo";
@@ -62,15 +64,15 @@ export const trackFlags=(kind:TrackKind):readonly TrackFlag[]=>kind==="audio"?["
 function LockGlyph({open,styled}:{open:boolean;styled:boolean}){
   const ink=styled?"border-text":"";
   return <View style={{alignItems:"center",width:16,height:18}}>
-    <View {...{className:ink}} style={{width:10,height:8,borderWidth:2,borderBottomWidth:0,borderTopLeftRadius:5,borderTopRightRadius:5,
-      marginLeft:open?8:0}}/>
-    <View {...{className:styled?"bg-text":""}} style={{width:14,height:9,borderRadius:2}}/>
+    <View {...{className:ink}} style={{width:10,height:8,borderWidth:border[2],borderBottomWidth:border[0],borderTopLeftRadius:radius[5],borderTopRightRadius:radius[5],
+      marginLeft:open?space[2]:space[0]}}/>
+    <View {...{className:styled?"bg-text":""}} style={{width:14,height:9,borderRadius:radius[2]}}/>
   </View>;
 }
 function EyeGlyph({off,styled}:{off:boolean;styled:boolean}){
   return <View style={{width:20,height:16,alignItems:"center",justifyContent:"center"}}>
-    <View {...{className:styled?"border-text":""}} style={{width:18,height:11,borderWidth:2,borderRadius:9,alignItems:"center",justifyContent:"center"}}>
-      <View {...{className:styled?"bg-text":""}} style={{width:5,height:5,borderRadius:3}}/>
+    <View {...{className:styled?"border-text":""}} style={{width:18,height:11,borderWidth:border[2],borderRadius:radius[9],alignItems:"center",justifyContent:"center"}}>
+      <View {...{className:styled?"bg-text":""}} style={{width:5,height:5,borderRadius:radius[3]}}/>
     </View>
     {off?<View {...{className:styled?"bg-text":""}} style={{position:"absolute",width:22,height:2,transform:[{rotate:"-35deg"}]}}/>:null}
   </View>;
@@ -79,8 +81,8 @@ function Letter({ch,styled}:{ch:string;styled:boolean}){
   return <Text {...{className:joinClasses(styled&&"text-text font-semibold")}}>{ch}</Text>;
 }
 function Chevron({up,styled}:{up:boolean;styled:boolean}){
-  return <View {...{className:styled?(up?"border-b-text":"border-t-text"):""}} style={{width:0,height:0,borderLeftWidth:7,borderRightWidth:7,
-    borderLeftColor:"transparent",borderRightColor:"transparent",...(up?{borderBottomWidth:9}:{borderTopWidth:9})}}/>;
+  return <View {...{className:styled?(up?"border-b-text":"border-t-text"):""}} style={{width:0,height:0,borderLeftWidth:tokens.border7,borderRightWidth:tokens.border7,
+    borderLeftColor:"transparent",borderRightColor:"transparent",...(up?{borderBottomWidth:tokens.border9}:{borderTopWidth:tokens.border9})}}/>;
 }
 
 function NameField({track,onRename,disabled,styled}:{track:TimelineTrack;onRename:(id:string,name:string)=>void;disabled:boolean;styled:boolean}){
@@ -101,7 +103,7 @@ function NameField({track,onRename,disabled,styled}:{track:TimelineTrack;onRenam
     onFocus={()=>{editing.current=true;}} onChangeText={t=>{dirty.current=true;store.set(t);}} onSubmitEditing={commit} onBlur={commit}
     onKeyPress={e=>{if(e.nativeEvent.key==="Escape"){editing.current=false;dirty.current=false;store.set(track.label);}}}
     {...{className:joinClasses(styled&&"rounded-control text-text text-sm font-semibold px-1 focus-visible:ring-2 focus-visible:ring-focus")}}
-    style={{minHeight:28,minWidth:0,flexShrink:1,paddingVertical:2}}/>;
+    style={{minHeight:28,minWidth:0,flexShrink:1,paddingVertical:space[0.5]}}/>;
 }
 
 /**
@@ -157,7 +159,7 @@ function TrackHeadersBody({
             onPress={()=>onOpenTrack?.(open?undefined:track.id)} {...id(track.id+"-open")}
             {...{className:joinClasses(styled&&"rounded-control border focus-visible:ring-2 focus-visible:ring-focus",
               styled&&(open?"border-focus bg-surface-sunken":"border-transparent"))}}
-            style={{width:44,minHeight:44,alignItems:"center",justifyContent:"center",gap:1}}>
+            style={{width:44,minHeight:size.touch,alignItems:"center",justifyContent:"center",gap:space[0.25]}}>
             <Text {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}}>{trackCode(track,tracks)}</Text>
             {status!==TRACK_KIND_LABEL[track.kind]?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>
               {track.locked?"Locked":silenced?(track.kind==="audio"?"Silent":"Hidden"):""}</Text>:null}
@@ -167,8 +169,8 @@ function TrackHeadersBody({
       const up=target(track.id,-1),down=target(track.id,1);
       return <View key={track.id} accessibilityLabel={`${track.label}, ${status}`}
         {...{className:joinClasses(styled&&"bg-surface-raised border-b border-border")}}
-        style={{height:laneHeight,flexDirection:"row",alignItems:"center",gap:4,paddingStart:8,paddingEnd:2}}>
-        <View style={{flex:1,minWidth:0,gap:1}}>
+        style={{height:laneHeight,flexDirection:"row",alignItems:"center",gap:space[1],paddingStart:space[2],paddingEnd:space[0.5]}}>
+        <View style={{flex:1,minWidth:0,gap:space[0.25]}}>
           <NameField track={track} onRename={onRename} disabled={disabled} styled={styled}/>
           <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text-muted text-xs px-1")}}>{status}</Text>
         </View>

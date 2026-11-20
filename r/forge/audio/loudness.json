@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/loudness",
+  "title": "loudness",
+  "description": "loudness, an audio mixing and editing helper module. Exports barCountForWidth, describeLoudness, formatDbfs.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/loudness.ts",
+      "content": "/**\n * Display math for {@linkcode LoudnessMeter}. The numbers come from the app's\n * audio engine (Cadence `loudness` over an offline mixdown: BS.1770\n * K-weighted, gated). This file only formats them, compares them with a\n * target and reduces the momentary history to a bounded number of bars.\n *\n * The engine reports no loudness range (LRA) and no true peak, so nothing\n * here computes or labels either. Sample peak is not true peak: inter-sample\n * overs can sit up to a few dB above it.\n */\n\n/** Bottom of the fixed history scale, in LUFS. Quieter blocks draw empty. */\nexport const LOUDNESS_FLOOR_LUFS = -60;\n/** Top of the fixed history scale, in LUFS. */\nexport const LOUDNESS_CEILING_LUFS = 0;\n\n/** A selectable integrated-loudness target for {@linkcode LoudnessMeter}. */\nexport interface LoudnessTarget {\n  /** Target integrated loudness, in LUFS. */\n  readonly lufs: number;\n  /** Short name shown under the value. */\n  readonly label: string;\n}\n\n/**\n * Default target choices: -14 LUFS (common streaming normalization),\n * -16 LUFS (common podcast delivery) and -23 LUFS (EBU R 128 broadcast).\n */\nexport const LOUDNESS_TARGETS = [\n  { lufs: -14, label: \"Streaming\" },\n  { lufs: -16, label: \"Podcast\" },\n  { lufs: -23, label: \"Broadcast\" },\n] as const satisfies readonly LoudnessTarget[];\n\n/** Default target, in LUFS. */\nexport const DEFAULT_LOUDNESS_TARGET = -14;\n\nconst MINUS = \"−\";\n\n/** Formats a signed number with one decimal and a typographic minus. */\nexport function formatSigned(value: number, digits = 1): string {\n  const fixed = Math.abs(value).toFixed(digits);\n  const zero = Number(fixed) === 0;\n  return (value < 0 && !zero ? MINUS : \"\") + fixed;\n}\n\n/** `-14.2` to \"−14.2 LUFS\"; `null` (silent or too short) to \"No reading\". */\nexport function formatLufs(lufs: number | null): string {\n  return lufs === null || !Number.isFinite(lufs) ? \"No reading\" : formatSigned(lufs) + \" LUFS\";\n}\n\n/** `-0.4` to \"−0.4 dBFS\"; `null` to \"No reading\". */\nexport function formatDbfs(dbfs: number | null): string {\n  return dbfs === null || !Number.isFinite(dbfs) ? \"No reading\" : formatSigned(dbfs) + \" dBFS\";\n}\n\n/** How the integrated loudness sits against the target. */\nexport interface TargetDelta {\n  /** Distance from the target in LU, rounded to 0.1, always >= 0. */\n  readonly lu: number;\n  /** `on` when the rounded distance is 0.0 LU. */\n  readonly direction: \"over\" | \"under\" | \"on\";\n  /** \"1.8 LU over target\", \"0.6 LU under target\" or \"On target\". */\n  readonly text: string;\n}\n\n/**\n * Compares integrated loudness with `target`. Returns `undefined` when there\n * is no integrated reading.\n */\nexport function targetDelta(integratedLufs: number | null, target: number): TargetDelta | undefined {\n  if (integratedLufs === null || !Number.isFinite(integratedLufs)) return undefined;\n  const diff = Math.round((integratedLufs - target) * 10) / 10;\n  if (diff === 0) return { lu: 0, direction: \"on\", text: \"On target\" };\n  const lu = Math.abs(diff);\n  const direction = diff > 0 ? \"over\" : \"under\";\n  return { lu, direction, text: lu.toFixed(1) + \" LU \" + direction + \" target\" };\n}\n\n/** Peak severity. `near` is above -1 dBFS, `over` above 0 dBFS. */\nexport type PeakSeverity = \"none\" | \"ok\" | \"near\" | \"over\";\n\n/** Classifies a sample peak for the warning line under it. */\nexport function peakSeverity(dbfs: number | null): PeakSeverity {\n  if (dbfs === null || !Number.isFinite(dbfs)) return \"none\";\n  if (dbfs > 0) return \"over\";\n  if (dbfs > -1) return \"near\";\n  return \"ok\";\n}\n\n/** Warning text per {@linkcode PeakSeverity}; empty when there is nothing to warn about. */\nexport const PEAK_WARNINGS = {\n  none: \"\",\n  ok: \"\",\n  near: \"Within 1 dB of full scale\",\n  over: \"Over 0 dBFS, the mixdown clips\",\n} as const satisfies Record<PeakSeverity, string>;\n\n/** Position of `lufs` on the fixed scale, 0 at the floor and 1 at 0 LUFS. */\nexport function lufsToFraction(lufs: number): number {\n  if (!Number.isFinite(lufs)) return 0;\n  const f = (lufs - LOUDNESS_FLOOR_LUFS) / (LOUDNESS_CEILING_LUFS - LOUDNESS_FLOOR_LUFS);\n  return Math.min(1, Math.max(0, f));\n}\n\n/** One drawn bar of the momentary history. */\nexport interface MomentaryBar {\n  /** Loudest block in this bar, in LUFS; `null` when every block was silent. */\n  readonly lufs: number | null;\n  /** Height on the fixed scale, in [0, 1]. 0 for a silent bar. */\n  readonly fraction: number;\n}\n\n/**\n * Max-pools the momentary history (one 400 ms block every `stepSeconds`)\n * into at most `maxBars` bars, so the drawn view count stays bounded however\n * long the range is. Each bar keeps the loudest block it covers.\n */\nexport function momentaryBars(momentary: readonly (number | null)[], maxBars: number): MomentaryBar[] {\n  if (!Number.isInteger(maxBars) || maxBars < 1) throw new RangeError(\"maxBars must be an integer >= 1\");\n  const count = Math.min(maxBars, momentary.length);\n  const bars: MomentaryBar[] = [];\n  for (let b = 0; b < count; b++) {\n    const from = Math.floor(b * momentary.length / count);\n    const to = Math.floor((b + 1) * momentary.length / count);\n    let best: number | null = null;\n    for (let i = from; i < to; i++) {\n      const v = momentary[i];\n      if (v !== null && v !== undefined && Number.isFinite(v) && (best === null || v > best)) best = v;\n    }\n    bars.push({ lufs: best, fraction: best === null ? 0 : lufsToFraction(best) });\n  }\n  return bars;\n}\n\n/** Bars to draw for a measured width: one bar per 4 pt, at most 120. */\nexport function barCountForWidth(widthPt: number, momentaryLength: number): number {\n  const byWidth = Math.floor(Math.max(0, widthPt) / 4);\n  return Math.max(1, Math.min(120, byWidth, Math.max(1, momentaryLength)));\n}\n\n/** Seconds covered by the momentary history (block starts every `stepSeconds`, last block 0.4 s long). */\nexport function historySeconds(momentaryLength: number, stepSeconds: number): number {\n  if (momentaryLength <= 0) return 0;\n  return (momentaryLength - 1) * stepSeconds + 0.4;\n}\n\n/** Seconds as \"12.3 s\". */\nexport function formatSeconds(seconds: number): string {\n  return (Math.round(seconds * 10) / 10).toFixed(1) + \" s\";\n}\n\n/** Readings summarized by {@linkcode describeLoudness}. */\nexport interface LoudnessReadings {\n  readonly integratedLufs: number | null;\n  readonly shortTermMaxLufs: number | null;\n  readonly momentaryMaxLufs: number | null;\n  readonly samplePeakDbfs: number | null;\n  readonly target: number;\n}\n\n/**\n * One sentence for screen readers: integrated value, distance to target,\n * maxima and the peak warning.\n */\nexport function describeLoudness(r: LoudnessReadings): string {\n  const parts = [\"Integrated \" + formatLufs(r.integratedLufs)];\n  const delta = targetDelta(r.integratedLufs, r.target);\n  if (delta) parts.push(delta.text + \" of \" + formatLufs(r.target));\n  parts.push(\"short-term max \" + formatLufs(r.shortTermMaxLufs));\n  parts.push(\"momentary max \" + formatLufs(r.momentaryMaxLufs));\n  parts.push(\"sample peak \" + formatDbfs(r.samplePeakDbfs));\n  const warning = PEAK_WARNINGS[peakSeverity(r.samplePeakDbfs)];\n  return parts.join(\", \") + \".\" + (warning ? \" \" + warning + \".\" : \"\");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/audio/loudness.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/loudness",
+    "exports": [
+      "DEFAULT_LOUDNESS_TARGET",
+      "LOUDNESS_CEILING_LUFS",
+      "LOUDNESS_FLOOR_LUFS",
+      "LOUDNESS_TARGETS",
+      "LoudnessReadings",
+      "LoudnessTarget",
+      "MomentaryBar",
+      "PEAK_WARNINGS",
+      "PeakSeverity",
+      "TargetDelta",
+      "barCountForWidth",
+      "describeLoudness",
+      "formatDbfs",
+      "formatLufs",
+      "formatSeconds",
+      "formatSigned",
+      "historySeconds",
+      "lufsToFraction",
+      "momentaryBars",
+      "peakSeverity",
+      "targetDelta"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

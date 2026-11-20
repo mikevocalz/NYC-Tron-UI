@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/pdf/annotation-model",
+  "title": "annotation model",
+  "description": "annotation model, a PDF state model. Exports orderTools, toolForKey, toolForSubtype.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/pdf/annotation-model.ts",
+      "content": "/**\n * Markup tools a PDF annotation toolbar can offer. `select` is the plain\n * pointer; every other tool creates one annotation subtype.\n * @see {@linkcode ANNOTATION_TOOL_INFO}\n */\nexport type AnnotationTool=\"select\"|\"note\"|\"highlight\"|\"underline\"|\"strike\"|\"ink\"|\"rectangle\"|\"ellipse\";\n\n/** Label, PDF subtype (ISO 32000-2 §12.5.6) and web shortcut for each {@linkcode AnnotationTool}. */\nexport const ANNOTATION_TOOL_INFO={\n  select:{label:\"Select\",subtype:undefined,key:\"v\"},\n  note:{label:\"Note\",subtype:\"Text\",key:\"n\"},\n  highlight:{label:\"Highlight\",subtype:\"Highlight\",key:\"h\"},\n  underline:{label:\"Underline\",subtype:\"Underline\",key:\"u\"},\n  strike:{label:\"Strikethrough\",subtype:\"StrikeOut\",key:\"s\"},\n  ink:{label:\"Draw\",subtype:\"Ink\",key:\"d\"},\n  rectangle:{label:\"Rectangle\",subtype:\"Square\",key:\"r\"},\n  ellipse:{label:\"Ellipse\",subtype:\"Circle\",key:\"e\"},\n} as const satisfies Record<AnnotationTool,{label:string;subtype:string|undefined;key:string}>;\n\n/** Display order of the tools. */\nexport const ANNOTATION_TOOL_ORDER:readonly AnnotationTool[]=[\"select\",\"note\",\"highlight\",\"underline\",\"strike\",\"ink\",\"rectangle\",\"ellipse\"];\n\n/** The tool that creates `subtype` (case-insensitive), if any. */\nexport function toolForSubtype(subtype:string):AnnotationTool|undefined{\n  const s=subtype.toLowerCase();\n  return ANNOTATION_TOOL_ORDER.find(t=>ANNOTATION_TOOL_INFO[t].subtype?.toLowerCase()===s);\n}\n\n/** `tools` in display order, deduplicated, with `select` first when present. Throws on an unknown tool. */\nexport function orderTools(tools:readonly AnnotationTool[]):AnnotationTool[]{\n  for(const t of tools)if(!(t in ANNOTATION_TOOL_INFO))throw new RangeError(`Unknown annotation tool \"${String(t)}\"`);\n  return ANNOTATION_TOOL_ORDER.filter(t=>tools.includes(t));\n}\n\n/** The tool a single-letter shortcut picks among `tools`, or `undefined`. Escape returns `select` when offered. */\nexport function toolForKey(key:string,tools:readonly AnnotationTool[]):AnnotationTool|undefined{\n  if(key===\"Escape\")return tools.includes(\"select\")?\"select\":undefined;\n  const k=key.toLowerCase();\n  return tools.find(t=>ANNOTATION_TOOL_INFO[t].key===k);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/pdf/annotation-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/pdf/annotation-model",
+    "exports": [
+      "ANNOTATION_TOOL_INFO",
+      "ANNOTATION_TOOL_ORDER",
+      "AnnotationTool",
+      "orderTools",
+      "toolForKey",
+      "toolForSubtype"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

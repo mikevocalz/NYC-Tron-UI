@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/tool-rail-model",
+  "title": "tool rail model",
+  "description": "tool rail model, an app shell state model. Exports shownVariantId, toolIsActive, validateRailTools.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/tool-rail-model.ts",
+      "content": "import type {ReactNode} from \"react\";\n\n/** Icon content, or a function that draws it for the active and resting states. */\nexport type ToolIcon=ReactNode|((state:{active:boolean})=>ReactNode);\n\n/** One member of a {@linkcode RailTool} group, shown in its flyout. */\nexport interface RailToolVariant {\n  readonly id:string;\n  readonly label:string;\n  readonly icon:ToolIcon;\n  /** Display text for the keyboard shortcut, e.g. \"Shift+B\". The app owns the binding. */\n  readonly shortcut?:string;\n}\n/** A tool button on a {@linkcode ToolRail}. With `variants` it is a group with a flyout. */\nexport interface RailTool {\n  readonly id:string;\n  readonly label:string;\n  readonly icon:ToolIcon;\n  readonly shortcut?:string;\n  readonly disabled?:boolean;\n  readonly variants?:readonly RailToolVariant[];\n}\n\n/** The id a group button selects: the app's choice, else its first variant. */\nexport function shownVariantId(tool:RailTool,groupSelection?:Readonly<Record<string,string>>):string{\n  const variants=tool.variants??[];\n  const chosen=groupSelection&&Object.hasOwn(groupSelection,tool.id)?groupSelection[tool.id]:undefined;\n  return variants.some(v=>v.id===chosen)?chosen!:variants[0]?.id??tool.id;\n}\n/** True when `activeToolId` is the tool or one of its variants. */\nexport function toolIsActive(tool:RailTool,activeToolId:string|undefined):boolean{\n  return !!activeToolId&&(tool.id===activeToolId||!!tool.variants?.some(v=>v.id===activeToolId));\n}\n\n\n/** Bound the declared palette and require globally unambiguous tool identities. */\nexport function validateRailTools(tools:readonly RailTool[]):void {\n if(tools.length>256)throw new RangeError(\"Too many rail tools\");\n const ids=new Set<string>();\n const check=(tool:{id:string;label:string;shortcut?:string})=>{\n  if(typeof tool.id!==\"string\"||!tool.id.trim()||tool.id.length>256||ids.has(tool.id))throw new TypeError(\"Duplicate or invalid rail tool id\");\n  if(typeof tool.label!==\"string\"||!tool.label.trim()||tool.label.length>512||tool.shortcut!==undefined&&(typeof tool.shortcut!==\"string\"||tool.shortcut.length>256))throw new TypeError(\"Invalid rail tool label\");\n  ids.add(tool.id);\n };\n for(const tool of tools){check(tool);if(tool.disabled!==undefined&&typeof tool.disabled!==\"boolean\")throw new TypeError(\"Invalid rail tool availability\");if((tool.variants?.length??0)>64)throw new RangeError(\"Too many tool variants\");for(const variant of tool.variants??[])check(variant);}\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/tool-rail-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/tool-rail-model",
+    "exports": [
+      "RailTool",
+      "RailToolVariant",
+      "ToolIcon",
+      "shownVariantId",
+      "toolIsActive",
+      "validateRailTools"
+    ],
+    "peers": {
+      "react": ">=19.0.0"
+    }
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

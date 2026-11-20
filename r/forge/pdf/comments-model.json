@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/pdf/comments-model",
+  "title": "comments model",
+  "description": "comments model, a PDF state model. Exports groupThreads, resolveReply, threadCounts.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/pdf/comments-model.ts",
+      "content": "/**\n * One comment in a thread. `author` and `timeLabel` are optional because a\n * PDF annotation may carry neither.\n * @see {@linkcode CommentThread}\n */\nexport interface CommentEntry {\n  readonly id:string;\n  readonly body:string;\n  readonly author?:string;\n  /** Already formatted by the app in plain speech (\"Yesterday\", \"2 hours ago\"). */\n  readonly timeLabel?:string;\n}\n\n/** A comment and its replies, anchored to a page. Shown by `CommentsThreadPanel`. */\nexport interface CommentThread extends CommentEntry {\n  /** 0-based page index. */\n  readonly page:number;\n  readonly replies:readonly CommentEntry[];\n  /** `undefined` when the document cannot store resolution. */\n  readonly resolved?:boolean;\n}\n\n/** Which threads the panel lists. */\nexport type CommentFilter=\"open\"|\"resolved\"|\"all\";\n\n/** Threads passing `filter`, grouped by page in page order; threads keep their given order within a page. */\nexport function groupThreads(threads:readonly CommentThread[],filter:CommentFilter=\"all\"):Array<{page:number;threads:CommentThread[]}>{\n  const keep=threads.filter(t=>filter===\"all\"||(filter===\"resolved\"?t.resolved===true:t.resolved!==true));\n  const pages=new Map<number,CommentThread[]>();\n  for(const t of keep){\n    if(!Number.isSafeInteger(t.page)||t.page<0)throw new RangeError(`Thread ${t.id} has invalid page ${t.page}`);\n    const list=pages.get(t.page)??[];\n    list.push(t);\n    pages.set(t.page,list);\n  }\n  return [...pages.entries()].sort((a,b)=>a[0]-b[0]).map(([page,list])=>({page,threads:list}));\n}\n\n/** Counts for the filter labels. */\nexport function threadCounts(threads:readonly CommentThread[]):{open:number;resolved:number;all:number}{\n  const resolved=threads.filter(t=>t.resolved===true).length;\n  return {open:threads.length-resolved,resolved,all:threads.length};\n}\n\n/** A trimmed reply, or `undefined` for a blank one. */\nexport function resolveReply(draft:string):string|undefined{\n  const t=draft.trim();\n  return t?t:undefined;\n}\n\n/** Screen-reader label for a thread row. */\nexport function threadLabel(t:CommentThread):string{\n  const who=t.author?t.author+\": \":\"\";\n  const replies=t.replies.length===0?\"\":t.replies.length===1?\", 1 reply\":\", \"+t.replies.length+\" replies\";\n  return \"Page \"+(t.page+1)+\", \"+who+t.body+replies+(t.resolved?\", resolved\":\"\");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/pdf/comments-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/pdf/comments-model",
+    "exports": [
+      "CommentEntry",
+      "CommentFilter",
+      "CommentThread",
+      "groupThreads",
+      "resolveReply",
+      "threadCounts",
+      "threadLabel"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

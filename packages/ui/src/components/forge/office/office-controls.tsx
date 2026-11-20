@@ -1,6 +1,7 @@
 import type {ReactNode} from "react";
 import {Platform,Pressable,Text,View,type PressableProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
+import {space,radius,border,opacity} from "../../../tokens.ts";
 
 /** Minimum touch target for every office control, in points. */
 export const OFFICE_TOUCH_TARGET=44;
@@ -58,8 +59,8 @@ export function ToolButton({label,children,checked,disabled=false,iconOnly=false
     {...{className:joinClasses(styled&&"rounded-control border focus-visible:ring-2 focus-visible:ring-focus",
       // Mixed keeps the accent outline without the fill, so "partly on" never reads as "on".
       styled&&(on?"border-accent bg-accent/10":mixed?"border-accent":quiet?"border-transparent":"border-border"),className)}}
-    style={[{minWidth:OFFICE_TOUCH_TARGET,minHeight:OFFICE_TOUCH_TARGET,paddingHorizontal:iconOnly?0:10,
-      alignItems:"center",justifyContent:"center",flexDirection:"row",gap:6,opacity:disabled?0.45:1},style as object]}>
+    style={[{minWidth:OFFICE_TOUCH_TARGET,minHeight:OFFICE_TOUCH_TARGET,paddingHorizontal:iconOnly?space[0]:space[2.5],
+      alignItems:"center",justifyContent:"center",flexDirection:"row",gap:space[1.5],opacity:disabled?opacity[45]:1},style as object]}>
     {children??null}
     {iconOnly?null:children===undefined?<Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text text-sm")}}>{label}</Text>:null}
   </Pressable>;
@@ -86,8 +87,8 @@ export function PlayGlyph({styled,size=14,flip=false}:GlyphProps&{flip?:boolean}
 export function PauseGlyph({styled,size=14}:GlyphProps){
   const bar=joinClasses(styled&&"bg-text");
   return <View pointerEvents="none" style={{flexDirection:"row",gap:size*0.28}}>
-    <View {...{className:bar}} style={{width:size*0.3,height:size,borderRadius:1}}/>
-    <View {...{className:bar}} style={{width:size*0.3,height:size,borderRadius:1}}/>
+    <View {...{className:bar}} style={{width:size*0.3,height:size,borderRadius:radius[1]}}/>
+    <View {...{className:bar}} style={{width:size*0.3,height:size,borderRadius:radius[1]}}/>
   </View>;
 }
 
@@ -96,9 +97,9 @@ export function PauseGlyph({styled,size=14}:GlyphProps){
  * next item, or with `back` to the previous one.
  */
 export function SkipGlyph({styled,size=12,back=false,double=false}:GlyphProps&{back?:boolean;double?:boolean}){
-  const bar=<View {...{className:joinClasses(styled&&"bg-text")}} style={{width:2,height:size,borderRadius:1}}/>;
+  const bar=<View {...{className:joinClasses(styled&&"bg-text")}} style={{width:2,height:size,borderRadius:radius[1]}}/>;
   const tri=<PlayGlyph styled={styled} size={size} flip={back}/>;
-  return <View pointerEvents="none" style={{flexDirection:"row",alignItems:"center",gap:1}}>
+  return <View pointerEvents="none" style={{flexDirection:"row",alignItems:"center",gap:space[0.25]}}>
     {back?bar:null}{tri}{double?tri:null}{back?null:bar}
   </View>;
 }
@@ -107,23 +108,23 @@ export function SkipGlyph({styled,size=12,back=false,double=false}:GlyphProps&{b
 export function PlusGlyph({styled,size=14}:GlyphProps){
   const bar=joinClasses(styled&&"bg-text");
   return <View pointerEvents="none" style={{width:size,height:size,alignItems:"center",justifyContent:"center"}}>
-    <View {...{className:bar}} style={{position:"absolute",width:size,height:2,borderRadius:1}}/>
-    <View {...{className:bar}} style={{position:"absolute",width:2,height:size,borderRadius:1}}/>
+    <View {...{className:bar}} style={{position:"absolute",width:size,height:2,borderRadius:radius[1]}}/>
+    <View {...{className:bar}} style={{position:"absolute",width:2,height:size,borderRadius:radius[1]}}/>
   </View>;
 }
 
 /** A chevron pointing right (or down when `open`). */
 export function ChevronGlyph({styled,open=false,size=8}:GlyphProps&{open?:boolean}){
   return <View pointerEvents="none" {...{className:joinClasses(styled&&"border-text-muted")}}
-    style={{width:size,height:size,borderRightWidth:1.5,borderBottomWidth:1.5,
-      transform:[{rotate:open?"45deg":"-45deg"}],marginTop:open?-size/3:0}}/>;
+    style={{width:size,height:size,borderRightWidth:border[1.5],borderBottomWidth:border[1.5],
+      transform:[{rotate:open?"45deg":"-45deg"}],marginTop:open?-size/3:space[0]}}/>;
 }
 
 /** Two crossed bars. */
 export function CloseMark({styled,size=14}:GlyphProps){
   const bar=joinClasses(styled&&"bg-text-muted");
   return <View pointerEvents="none" style={{width:size,height:size,alignItems:"center",justifyContent:"center"}}>
-    <View {...{className:bar}} style={{position:"absolute",width:size+2,height:1.5,borderRadius:1,transform:[{rotate:"45deg"}]}}/>
-    <View {...{className:bar}} style={{position:"absolute",width:size+2,height:1.5,borderRadius:1,transform:[{rotate:"-45deg"}]}}/>
+    <View {...{className:bar}} style={{position:"absolute",width:size+2,height:1.5,borderRadius:radius[1],transform:[{rotate:"45deg"}]}}/>
+    <View {...{className:bar}} style={{position:"absolute",width:size+2,height:1.5,borderRadius:radius[1],transform:[{rotate:"-45deg"}]}}/>
   </View>;
 }

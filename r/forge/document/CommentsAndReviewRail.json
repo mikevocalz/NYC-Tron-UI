@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/document/CommentsAndReviewRail",
+  "title": "Comments And Review Rail",
+  "description": "Comments And Review Rail, a word processor component.",
+  "registryDependencies": [
+    "@nyc-tron/forge/pdf/CommentsThreadPanel"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/document/CommentsAndReviewRail.tsx",
+      "content": "import {CommentsThreadPanel,type CommentsThreadPanelProps} from '@/components/nyc-tron/ui/components/forge/pdf/CommentsThreadPanel';\nexport type CommentsAndReviewRailProps=CommentsThreadPanelProps;\n/** One threaded-comment owner shared by office documents, PDF and range review. */\nexport function CommentsAndReviewRail(props:CommentsAndReviewRailProps){return <CommentsThreadPanel {...props} label={props.label??'Document review comments'}/>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/document/CommentsAndReviewRail.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/document/CommentsAndReviewRail",
+    "exports": [
+      "CommentsAndReviewRail",
+      "CommentsAndReviewRailProps"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

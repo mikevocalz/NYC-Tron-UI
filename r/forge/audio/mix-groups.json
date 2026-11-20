@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/mix-groups",
+  "title": "mix groups",
+  "description": "mix groups, an audio mixing and editing helper module. Exports mixGroups.",
+  "registryDependencies": [
+    "@nyc-tron/forge/audio/mixer"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/mix-groups.ts",
+      "content": "/**\n * Mix group summary for {@linkcode MixGroupBar}. The Cadence engine stores\n * one optional group name per track and applies group solo or mute to every\n * member as one undo step; this file only reads the committed channel list.\n * No React or engine imports.\n */\nimport type { MixerChannel } from \"@/components/nyc-tron/ui/components/forge/audio/mixer\";\n\n/**\n * One mix group as {@linkcode mixGroups} reports it.\n * @see {@linkcode MixGroupBar}\n */\nexport interface MixGroup {\n  /** Group name, as stored on each member's `group`. */\n  readonly name: string;\n  /** Member channel ids, in channel order. Never empty. */\n  readonly memberIds: readonly MixerChannel[\"id\"][];\n  /** Every member is soloed. */\n  readonly solo: boolean;\n  /** Every member is muted. */\n  readonly muted: boolean;\n  /** Some members are soloed and some are not (solo shows as mixed). */\n  readonly mixed: boolean;\n  /** Some members are muted and some are not (mute shows as mixed). */\n  readonly mutedMixed: boolean;\n}\n\n/**\n * Groups in the order their first member appears. Channels without a group\n * (absent or empty string) are skipped.\n */\nexport function mixGroups(\n  channels: readonly Pick<MixerChannel, \"id\" | \"group\" | \"solo\" | \"muted\">[],\n): MixGroup[] {\n  const order: string[] = [];\n  const members = new Map<string, Pick<MixerChannel, \"id\" | \"solo\" | \"muted\">[]>();\n  for (const c of channels) {\n    if (!c.group) continue;\n    let list = members.get(c.group);\n    if (list === undefined) {\n      list = [];\n      members.set(c.group, list);\n      order.push(c.group);\n    }\n    list.push(c);\n  }\n  return order.map(name => {\n    const list = members.get(name) ?? [];\n    const soloCount = list.filter(c => c.solo).length;\n    const muteCount = list.filter(c => c.muted).length;\n    return {\n      name,\n      memberIds: list.map(c => c.id),\n      solo: soloCount === list.length,\n      muted: muteCount === list.length,\n      mixed: soloCount > 0 && soloCount < list.length,\n      mutedMixed: muteCount > 0 && muteCount < list.length,\n    };\n  });\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/audio/mix-groups.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/mix-groups",
+    "exports": [
+      "MixGroup",
+      "mixGroups"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

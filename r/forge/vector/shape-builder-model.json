@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/vector/shape-builder-model",
+  "title": "shape builder model",
+  "description": "shape builder model, a vector drawing state model. Exports booleanAvailability, booleanIds, booleanOpLabel.",
+  "registryDependencies": [
+    "@nyc-tron/forge/vector/vector-types"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/vector/shape-builder-model.ts",
+      "content": "/**\n * Rules and labels for {@linkcode ShapeBuilder} (B-22). The availability rules\n * mirror Prism's `booleanLayers` validation, so the UI explains a refusal\n * before the engine has to reject it.\n */\nimport {AVAILABLE,unavailable,type Availability,type BooleanOp} from \"@/components/nyc-tron/ui/components/forge/vector/vector-types\";\n\n/** Engine layer id (Prism ids are integers from one counter). */\nexport type LayerId=number;\n/** Content kind of a layer as the engine reports it. */\nexport type BuilderLayerKind=\"raster\"|\"shape\"|\"path\"|\"group\"|\"boolean\";\n\n/** A layer as the shape builder needs to see it. */\nexport interface BuilderLayer {\n  readonly id:LayerId;\n  readonly name:string;\n  readonly kind:BuilderLayerKind;\n  /** Parent group or boolean id, or `null` at the document root. */\n  readonly parent:LayerId|null;\n  /** Kind of the parent, when there is one. */\n  readonly parentKind?:\"group\"|\"boolean\";\n  readonly locked:boolean;\n}\n/** The boolean group being edited, with its operands top to bottom. */\nexport interface BooleanGroup {\n  readonly id:LayerId;\n  readonly name:string;\n  readonly op:BooleanOp;\n  readonly locked:boolean;\n  /** Operand layers, topmost first (the bottom operand is last). */\n  readonly operands:readonly BuilderLayer[];\n}\n\n/** The four boolean operations, labelled, in toolbar order. */\nexport const BOOLEAN_OPS=[\n  {value:\"union\",label:\"Union\",description:\"Merge the shapes into one outline\"},\n  {value:\"subtract\",label:\"Subtract\",description:\"Cut the upper shapes out of the bottom one\"},\n  {value:\"intersect\",label:\"Intersect\",description:\"Keep only where every shape overlaps\"},\n  {value:\"exclude\",label:\"Exclude\",description:\"Keep where shapes do not overlap\"},\n] as const satisfies readonly {value:BooleanOp;label:string;description:string}[];\n/** Label for a {@linkcode BooleanOp}. */\nexport function booleanOpLabel(op:BooleanOp):string{\n  const found=BOOLEAN_OPS.find(o=>o.value===op);\n  if(!found)throw new RangeError(\"Unknown boolean op: \"+String(op));\n  return found.label;\n}\n\nconst KIND_NAMES={raster:\"pixel\",shape:\"shape\",path:\"path\",group:\"group\",boolean:\"boolean\"} as const satisfies Record<BuilderLayerKind,string>;\n/** Lower-case noun for a layer kind, e.g. \"pixel\" for raster. */\nexport function layerKindName(kind:BuilderLayerKind):string{\n  return KIND_NAMES[kind];\n}\n\n/**\n * Whether `selection` can become a boolean. Reasons, in order: fewer than two\n * layers, a layer that is not a shape or path, layers in different parents,\n * layers already inside a boolean, a locked layer.\n */\nexport function booleanAvailability(selection:readonly BuilderLayer[]):Availability{\n  if(selection.length<2)return unavailable(\"Select at least two shapes or paths\");\n  const other=selection.find(l=>l.kind!==\"shape\"&&l.kind!==\"path\");\n  if(other)return unavailable(`“${other.name}” is a ${KIND_NAMES[other.kind]} layer; booleans take shapes and paths`);\n  if(new Set(selection.map(l=>l.parent)).size>1)return unavailable(\"Booleans combine layers in the same group; move them together first\");\n  if(selection.some(l=>l.parentKind===\"boolean\"))\n    return unavailable(\"These shapes are already in a boolean; change its operation instead\");\n  const locked=selection.find(l=>l.locked);\n  if(locked)return unavailable(`“${locked.name}” is locked`);\n  return AVAILABLE;\n}\n/** Ids to send to `booleanLayers`, in selection order. */\nexport function booleanIds(selection:readonly BuilderLayer[]):LayerId[]{\n  return selection.map(l=>l.id);\n}\n/** Whether the edited boolean can change op, be released or be expanded. */\nexport function groupAvailability(group:BooleanGroup|undefined):Availability{\n  if(!group)return unavailable(\"Select a boolean group to edit it\");\n  if(group.locked)return unavailable(`Unlock “${group.name}” first`);\n  return AVAILABLE;\n}\n\n/** Throws a RangeError for a boolean group the builder cannot show honestly. */\nexport function validateBooleanGroup(group:BooleanGroup):void{\n  if(!Number.isInteger(group.id))throw new RangeError(\"Boolean id must be an integer\");\n  if(!BOOLEAN_OPS.some(o=>o.value===group.op))throw new RangeError(\"Unknown boolean op: \"+String(group.op));\n  const seen=new Set<LayerId>();\n  for(const operand of group.operands){\n    if(seen.has(operand.id))throw new RangeError(\"Duplicate operand: \"+operand.id);\n    seen.add(operand.id);\n    if(operand.kind!==\"shape\"&&operand.kind!==\"path\")throw new RangeError(\"Boolean operands are shapes or paths: \"+operand.id);\n  }\n}\n\n/** Screen-reader label for an operand row, e.g. \"Circle, path, operand 1 of 3, top, locked\". */\nexport function operandAccessibilityLabel(operand:BuilderLayer,index:number,count:number):string{\n  return [operand.name,KIND_NAMES[operand.kind],`operand ${index+1} of ${count}`,\n    index===0?\"top\":index===count-1?\"bottom\":undefined,operand.locked?\"locked\":undefined].filter(Boolean).join(\", \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/vector/shape-builder-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/vector/shape-builder-model",
+    "exports": [
+      "BOOLEAN_OPS",
+      "BooleanGroup",
+      "BuilderLayer",
+      "BuilderLayerKind",
+      "LayerId",
+      "booleanAvailability",
+      "booleanIds",
+      "booleanOpLabel",
+      "groupAvailability",
+      "layerKindName",
+      "operandAccessibilityLabel",
+      "validateBooleanGroup"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

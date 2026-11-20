@@ -1,0 +1,81 @@
+name: Registry
+
+# Rebuilds registry.json and r/*.json from source and fails when the committed copy differs,
+# then checks every import in every generated file and runs the token equivalence proof.
+# No pnpm install: the generator has no dependencies and fetches shadcn@4.23.0 through npx, and the
+# codemod tools get ts-morph from a small npm install outside the repo (CODEMOD_TOOLS_DIR).
+on:
+  pull_request:
+  push:
+    branches: [main, "agent-native-**"]
+
+permissions:
+  contents: read
+
+jobs:
+  registry:
+    name: registry build, drift, imports, schema
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0 # the equivalence proof reads the original of every changed file from origin/main
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "24.19.0"
+
+      # Writes registry.json, registry-excluded.json, components.json and runs `shadcn build`.
+      # A schema error in any item fails here through the shadcn exit code.
+      - name: Build registry (generator and shadcn build)
+        run: node tooling/registry/build-registry.mjs
+
+      - name: Fail on drift between source and committed registry output
+        run: |
+          git diff --exit-code -- r registry.json registry-excluded.json components.json
+          untracked="$(git ls-files --others --exclude-standard -- r registry.json registry-excluded.json components.json)"
+          if [ -n "$untracked" ]; then
+            echo "::error::generated files are not committed:"
+            echo "$untracked"
+            exit 1
+          fi
+
+      - name: Check every import in every generated file
+        run: node tooling/registry/check-imports.mjs
+
+      # JSON-schema check against the published schema. Skips with a notice if ui.shadcn.com is unreachable.
+      - name: Validate registry.json against the shadcn schema
+        run: |
+          npm install --prefix "$RUNNER_TEMP/ajv" ajv@8.17.1 --no-audit --no-fund --silent
+          node tooling/registry/validate-schema.mjs --ajv "$RUNNER_TEMP/ajv"
+
+      # ts-morph at the version the root package.json pins, installed outside the repo. No pnpm install.
+      - name: Install ts-morph for the codemod tools
+        run: |
+          version="$(node -p "require('./package.json').devDependencies['ts-morph']")"
+          npm install --prefix "$RUNNER_TEMP/codemod-tools" "ts-morph@${version}" --no-audit --no-fund --silent
+          echo "CODEMOD_TOOLS_DIR=$RUNNER_TEMP/codemod-tools" >> "$GITHUB_ENV"
+
+      - name: Token modules match tokens.json
+        run: node tooling/codemod/generate-token-module.mjs --check
+
+      # Every changed packages/*/src file folds back to its original AST once token references are replaced
+      # by the values they stand for. Needs ts-morph (CODEMOD_TOOLS_DIR above) and origin/main (fetch-depth 0).
+      - name: Prove the token rewrite is value-equivalent
+        run: node tooling/codemod/prove-equivalence.mjs --base origin/main
+
+      - name: No hardcoded values in packages
+        run: |
+          if [ -f tooling/codemod/check-no-hardcoded.mjs ]; then
+            node tooling/codemod/check-no-hardcoded.mjs
+          else
+            echo "::warning::tooling/codemod/check-no-hardcoded.mjs does not exist yet, so the hardcoded-value check was skipped"
+          fi
+
+      - name: Docs pages match registry items
+        run: |
+          if [ -f tooling/docs/check-docs.mjs ]; then
+            node tooling/docs/check-docs.mjs
+          else
+            echo "::warning::tooling/docs/check-docs.mjs does not exist yet, so the docs-page check was skipped"
+          fi

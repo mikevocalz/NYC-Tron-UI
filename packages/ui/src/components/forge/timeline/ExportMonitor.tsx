@@ -3,6 +3,7 @@ import {RenderQueuePanel,type RenderQueuePanelProps} from '../motion/RenderQueue
 import {Select} from '../../Select.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
+import {space} from '../../../tokens.ts';
 export interface VideoExportOutput {width:number;height:number;codecId:string}
 export interface VideoExportCodec {id:string;label:string;maxWidth:number;maxHeight:number;widthMultiple:number;heightMultiple:number;unavailableReason?:string}
 export interface ExportMonitorProps extends Omit<RenderQueuePanelProps,'onEnqueue'> {
@@ -16,7 +17,7 @@ export function ExportMonitor({revision=0,output,codecs,onOutputChange:_output,o
  const reasonFor=(candidate:VideoExportOutput,choices:readonly VideoExportCodec[])=>{const codec=choices.find(c=>c.id===candidate.codecId);return !codec?'Encoder is not available':codec.unavailableReason??(candidate.width>codec.maxWidth||candidate.height>codec.maxHeight?'Resolution exceeds this encoder capability':candidate.width%codec.widthMultiple||candidate.height%codec.heightMultiple?`Encoder dimensions require multiples of ${codec.widthMultiple} × ${codec.heightMultiple}`:undefined);};
  const reason=reasonFor(output,codecs);
  const set=(patch:Partial<VideoExportOutput>)=>{const current=guard.current();if(current)current.onOutputChange({...current.output,...patch});};
- return <View style={{gap:8,minWidth:0}} accessibilityLabel="Video export monitor">
+ return <View style={{gap:space[2],minWidth:0}} accessibilityLabel="Video export monitor">
   <Select label="Video codec" value={output.codecId} options={codecs.map(c=>({value:c.id,label:c.label,disabled:c.unavailableReason!==undefined}))} disabled={props.disabled} unstyled={props.unstyled} onValueChange={codecId=>set({codecId})}/>
   {(['width','height'] as const).map(key=><PrecisionScrubber key={key} scope={props.scope} revision={revision} label={'Export '+key+' pixels'} value={output[key]} min={1} max={16384} step={1} disabled={props.disabled} unstyled={props.unstyled} onCommit={n=>set({[key]:Math.round(n)})}/>)}
   {reason?<Text {...{className:props.unstyled?undefined:'text-text'}}>{reason}</Text>:null}

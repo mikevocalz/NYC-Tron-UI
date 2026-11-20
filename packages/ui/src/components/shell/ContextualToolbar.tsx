@@ -7,6 +7,7 @@ import {joinClasses} from '../styles.ts';
 import {webToggleProps} from '../forge/toggle-a11y.ts';
 import {MenuButton} from './MenuButton.tsx';
 import {itemsForSelection,splitOverflow,validateToolbarItems,overflowDescription,type ToolbarItemSpec} from './contextual-toolbar-model.ts';
+import {size} from '../../tokens.ts';
 
 /** An action shown by {@linkcode ContextualToolbar}. */
 export interface ContextualToolbarItem extends ToolbarItemSpec {readonly icon?:ReactNode;}
@@ -34,7 +35,7 @@ export function ContextualToolbar({scope="toolbar",revision=0,disabled=false,ite
   accessible={!measure} focusable={!measure} {...(measure?{tabIndex:-1}:{})} accessibilityRole="button" accessibilityLabel={item.label} accessibilityHint={item.disabledReason}
   {...(item.pressed===undefined?{}:webToggleProps(item.pressed))} accessibilityState={{disabled:disabled||!!item.disabledReason,...(item.pressed===undefined?{}:{selected:item.pressed})}}
   disabled={disabled||!!item.disabledReason} onPress={()=>invoke(item.id)}
-  {...{className:joinClasses(!unstyled&&'rounded-control px-3 gap-2 flex-row items-center justify-center focus-visible:ring-2 focus-visible:ring-focus',!unstyled&&(item.pressed?'bg-primary':'bg-surface-raised'),item.disabledReason&&'opacity-50')}} style={{minWidth:44,minHeight:44,flexShrink:0}}>
+  {...{className:joinClasses(!unstyled&&'rounded-control px-3 gap-2 flex-row items-center justify-center focus-visible:ring-2 focus-visible:ring-focus',!unstyled&&(item.pressed?'bg-primary':'bg-surface-raised'),item.disabledReason&&'opacity-50')}} style={{minWidth:size.touch,minHeight:size.touch,flexShrink:0}}>
   {item.icon}<Text {...{className:joinClasses(!unstyled&&(item.pressed?'text-on-primary':'text-text'))}}>{item.label}</Text>
  </Pressable>;
  return <View {...rest} onLayout={e=>store.setState({width:e.nativeEvent.layout.width})} style={[{minWidth:0,direction:isRTL?'rtl':'ltr'},style]} {...{className}}>

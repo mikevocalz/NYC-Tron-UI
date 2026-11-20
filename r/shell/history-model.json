@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/history-model",
+  "title": "history model",
+  "description": "history model, an app shell state model. Exports validateHistory.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/history-model.ts",
+      "content": "export interface HistoryEntry {\n  readonly id: string;\n  readonly label: string;\n  readonly detail?: string;\n  readonly timestampMs?: number;\n}\nexport interface HistoryJump {\n  readonly documentId: string;\n  readonly expectedRevision: string;\n  /** Zero is the initial state; N is the state after entry N-1. */\n  readonly cursor: number;\n}\nexport function validateHistory(entries: readonly HistoryEntry[], cursor: number): void {\n  if (!Number.isSafeInteger(cursor) || cursor < 0 || cursor > entries.length) throw new RangeError(\"History cursor is outside the document history\");\n  const ids = new Set<string>();\n  for (const entry of entries) {\n    if (!entry.id || ids.has(entry.id) || !entry.label.trim()) throw new TypeError(\"History entries need distinct IDs and labels\");\n    if (entry.timestampMs !== undefined && !Number.isFinite(entry.timestampMs)) throw new RangeError(\"History timestamp must be finite\");\n    ids.add(entry.id);\n  }\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/history-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/history-model",
+    "exports": [
+      "HistoryEntry",
+      "HistoryJump",
+      "validateHistory"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

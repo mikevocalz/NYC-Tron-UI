@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "files/drop-model",
+  "title": "drop model",
+  "description": "drop model, a file transfer state model. Exports acceptsFile, dragDepth, matchesAccept.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/files/drop-model.ts",
+      "content": "/**\n * Platform-free rules shared by the web and native DropZone and FilePicker:\n * `accept` strings in the HTML input syntax, MIME allowlists, and the\n * enter/leave depth counter that keeps nested drag targets from flickering.\n */\nexport type AcceptRule=\n  | {readonly kind:\"extension\";readonly value:string}\n  | {readonly kind:\"mime\";readonly value:string}\n  | {readonly kind:\"mimeGroup\";readonly value:string};\n\n/** Parses \".docx,.nfd\", \"image/*\" or \"application/pdf\" lists. Blank entries are ignored. */\nexport function parseAccept(accept:string|undefined):AcceptRule[] {\n  if(!accept)return [];\n  return accept.split(\",\").map(s=>s.trim().toLowerCase()).filter(Boolean).map(entry=>\n    entry.startsWith(\".\")?{kind:\"extension\",value:entry}\n    : entry.endsWith(\"/*\")?{kind:\"mimeGroup\",value:entry.slice(0,-1)}\n    : {kind:\"mime\",value:entry});\n}\n\nexport interface FileLike {readonly fileName?:string;readonly type?:string}\n\n/** True when `accept` is empty or any of its rules matches the file's name or type. */\nexport function matchesAccept(file:FileLike,accept:string|undefined):boolean {\n  const rules=parseAccept(accept);\n  if(!rules.length)return true;\n  const name=(file.fileName??\"\").toLowerCase();\n  const type=(file.type??\"\").toLowerCase();\n  return rules.some(rule=>\n    rule.kind===\"extension\"?name.endsWith(rule.value)\n    : rule.kind===\"mimeGroup\"?type.startsWith(rule.value)\n    : type===rule.value);\n}\n\n/**\n * expo-drag-drop-content-view's `allowedMimeTypes` semantics: undefined allows\n * everything, an empty list allows nothing, strings match exactly, RegExps test.\n */\nexport function matchesMime(type:string,allowed:readonly (string|RegExp)[]|undefined):boolean {\n  if(allowed===undefined)return true;\n  return allowed.some(rule=>{\n    if(typeof rule===\"string\")return rule===type;\n    rule.lastIndex=0;\n    return rule.test(type);\n  });\n}\n\n/** Both filters together: what a drop or a pick keeps. */\nexport function acceptsFile(file:FileLike,accept:string|undefined,allowed?:readonly (string|RegExp)[]):boolean {\n  return matchesAccept(file,accept)&&matchesMime(file.type||\"application/octet-stream\",allowed);\n}\n\n/**\n * `dragenter`/`dragleave` fire for every child the pointer crosses. Counting\n * depth reports one enter and one exit per drag over the whole zone.\n */\nexport function dragDepth(depth:number,event:\"enter\"|\"leave\"|\"drop\"):{depth:number;edge:\"enter\"|\"exit\"|null} {\n  if(event===\"drop\")return {depth:0,edge:depth>0?\"exit\":null};\n  if(event===\"enter\")return {depth:depth+1,edge:depth===0?\"enter\":null};\n  const next=Math.max(0,depth-1);\n  return {depth:next,edge:depth>0&&next===0?\"exit\":null};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/files/drop-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/files/drop-model",
+    "exports": [
+      "AcceptRule",
+      "FileLike",
+      "acceptsFile",
+      "dragDepth",
+      "matchesAccept",
+      "matchesMime",
+      "parseAccept"
+    ]
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:lib"
+}

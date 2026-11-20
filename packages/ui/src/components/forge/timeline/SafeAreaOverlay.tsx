@@ -3,6 +3,7 @@ import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
 import {rgbaToHex} from "../color.ts";
 import {guideRect,safeAreas,type OverlayRect,type SafeAreaSpec} from "./safe-area.ts";
+import {border,opacity} from "../../../tokens.ts";
 
 // A letterbox matte is black by definition, in any theme; it is a picture value, not a UI color.
 const MATTE=rgbaToHex({r:0,g:0,b:0,alpha:1},false);
@@ -55,23 +56,23 @@ export function SafeAreaOverlay({
     accessibilityElementsHidden importantForAccessibility="no-hide-descendants" aria-hidden
     onLayout={e=>{const {width,height}=e.nativeEvent.layout;if([width,height].every(Number.isFinite)&&width>=0&&height>=0)store.set({width,height});}}
     {...{className:joinClasses(className)}} style={[{position:"absolute",left:0,top:0,right:0,bottom:0,direction:"ltr"},style]}>
-    {masks.map((r,i)=><View key={"m"+i} style={{...box(r),backgroundColor:MATTE,opacity:0.6}}/>)}
-    {framed?<View {...{className:line}} style={{...box(framed),borderWidth:1}}/>:null}
+    {masks.map((r,i)=><View key={"m"+i} style={{...box(r),backgroundColor:MATTE,opacity:opacity[60]}}/>)}
+    {framed?<View {...{className:line}} style={{...box(framed),borderWidth:border[1]}}/>:null}
     {areas&&showSafeAreas?<>
-      <View {...{className:line}} style={{...box(areas.action),borderWidth:1,borderStyle:"dashed"}}>
+      <View {...{className:line}} style={{...box(areas.action),borderWidth:border[1],borderStyle:"dashed"}}>
         <Text {...{className:label}} style={{position:"absolute",left:4,top:2}}>{`Action safe ${pct(areas.fractions.action)}`}</Text>
       </View>
-      <View {...{className:line}} style={{...box(areas.title),borderWidth:1}}>
+      <View {...{className:line}} style={{...box(areas.title),borderWidth:border[1]}}>
         <Text {...{className:label}} style={{position:"absolute",right:4,bottom:2}}>{`Title safe ${pct(areas.fractions.title)}`}</Text>
       </View>
     </>:null}
     {areas&&showThirds?[1,2].flatMap(k=>[
-      <View key={"v"+k} {...{className:line}} style={{position:"absolute",left:areas.picture.x+areas.picture.width*k/3,top:areas.picture.y,height:areas.picture.height,borderLeftWidth:1,opacity:0.6}}/>,
-      <View key={"h"+k} {...{className:line}} style={{position:"absolute",top:areas.picture.y+areas.picture.height*k/3,left:areas.picture.x,width:areas.picture.width,borderTopWidth:1,opacity:0.6}}/>,
+      <View key={"v"+k} {...{className:line}} style={{position:"absolute",left:areas.picture.x+areas.picture.width*k/3,top:areas.picture.y,height:areas.picture.height,borderLeftWidth:border[1],opacity:opacity[60]}}/>,
+      <View key={"h"+k} {...{className:line}} style={{position:"absolute",top:areas.picture.y+areas.picture.height*k/3,left:areas.picture.x,width:areas.picture.width,borderTopWidth:border[1],opacity:opacity[60]}}/>,
     ]):null}
     {areas&&showCenter?<>
-      <View {...{className:line}} style={{position:"absolute",left:areas.picture.x+areas.picture.width/2-10,top:areas.picture.y+areas.picture.height/2,width:20,borderTopWidth:1}}/>
-      <View {...{className:line}} style={{position:"absolute",top:areas.picture.y+areas.picture.height/2-10,left:areas.picture.x+areas.picture.width/2,height:20,borderLeftWidth:1}}/>
+      <View {...{className:line}} style={{position:"absolute",left:areas.picture.x+areas.picture.width/2-10,top:areas.picture.y+areas.picture.height/2,width:20,borderTopWidth:border[1]}}/>
+      <View {...{className:line}} style={{position:"absolute",top:areas.picture.y+areas.picture.height/2-10,left:areas.picture.x+areas.picture.width/2,height:20,borderLeftWidth:border[1]}}/>
     </>:null}
   </View>;
 }

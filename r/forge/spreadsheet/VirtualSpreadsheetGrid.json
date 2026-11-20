@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/spreadsheet/VirtualSpreadsheetGrid",
+  "title": "Virtual Spreadsheet Grid",
+  "description": "Virtual Spreadsheet Grid, a spreadsheet component.",
+  "registryDependencies": [
+    "@nyc-tron/forge/SpreadsheetGrid"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/spreadsheet/VirtualSpreadsheetGrid.tsx",
+      "content": "import {SpreadsheetGrid,type SpreadsheetGridProps} from '@/components/nyc-tron/ui/components/forge/SpreadsheetGrid';\nexport type VirtualSpreadsheetGridProps=SpreadsheetGridProps;\n/** Canonical entry for the existing two-axis, frozen-pane, window-request grid owner. */\nexport function VirtualSpreadsheetGrid(props:VirtualSpreadsheetGridProps){return <SpreadsheetGrid {...props}/>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/spreadsheet/VirtualSpreadsheetGrid.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/spreadsheet/VirtualSpreadsheetGrid",
+    "exports": [
+      "VirtualSpreadsheetGrid",
+      "VirtualSpreadsheetGridProps"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

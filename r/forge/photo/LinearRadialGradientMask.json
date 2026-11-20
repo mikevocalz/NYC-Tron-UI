@@ -1,0 +1,80 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/LinearRadialGradientMask",
+  "title": "Linear Radial Gradient Mask",
+  "description": "Linear Radial Gradient Mask, a photo editing component. Props: value, imageSize, onCommit.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Select",
+    "@nyc-tron/forge/layers/layer-thumbnail-model",
+    "@nyc-tron/forge/photo/photo-masks",
+    "@nyc-tron/forge/vector/GradientOnCanvasHandles",
+    "@nyc-tron/forge/vector/vector-types",
+    "@nyc-tron/shell/UnitInput"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/canvas/SettingSwitch.tsx",
+      "content": "import {Pressable,Text,View} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {space,radius,opacity,size} from \"@/components/nyc-tron/ui/tokens\";\n\n/**\n * Labeled on/off row shared by the canvas settings panels: a 44pt switch with\n * the label on the start side and the track on the end side (mirrored in RTL).\n */\nexport function SettingSwitch({label,on,onChange,disabled,styled,hint}:{\n  label:string;on:boolean;onChange:(on:boolean)=>void;disabled:boolean;styled:boolean;hint?:string|undefined;\n}){\n  return <Pressable role=\"switch\" aria-checked={on} accessibilityRole=\"switch\" accessibilityState={{checked:on,disabled}}\n    aria-label={label} accessibilityHint={hint} disabled={disabled} onPress={()=>onChange(!on)}\n    {...{className:joinClasses(styled&&\"rounded-control focus-visible:ring-2 focus-visible:ring-focus\")}}\n    style={{minHeight:size.touch,flexDirection:\"row\",alignItems:\"center\",justifyContent:\"space-between\",gap:space[3],paddingHorizontal:space[1],opacity:disabled?opacity[50]:1}}>\n    <Text {...{className:joinClasses(styled&&\"text-text text-sm\")}} style={{flexShrink:1}}>{label}</Text>\n    <View pointerEvents=\"none\" {...{className:joinClasses(styled&&\"border\",styled&&(on?\"bg-primary border-primary\":\"bg-surface-sunken border-border\"))}}\n      style={{width:40,height:24,borderRadius:radius[12],padding:space[0.5],justifyContent:\"center\",alignItems:on?\"flex-end\":\"flex-start\"}}>\n      <View {...{className:joinClasses(styled&&(on?\"bg-on-primary\":\"bg-text-muted\"))}} style={{width:18,height:18,borderRadius:radius[9]}}/>\n    </View>\n  </Pressable>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/canvas/SettingSwitch.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/forge/photo/LinearRadialGradientMask.tsx",
+      "content": "import {useLayoutEffect,useMemo,useRef,type ReactNode} from 'react';\nimport {Image,View,type ViewProps} from 'react-native';\nimport {Select} from '@/components/nyc-tron/ui/components/Select';\nimport {UnitInput} from '@/components/nyc-tron/ui/components/shell/UnitInput';\nimport {useLocalStore} from '@/components/nyc-tron/ui/components/useLocalStore';\nimport {SettingSwitch} from '@/components/nyc-tron/ui/components/forge/canvas/SettingSwitch';\nimport {GradientOnCanvasHandles} from '@/components/nyc-tron/ui/components/forge/vector/GradientOnCanvasHandles';\nimport type {GradientPaint} from '@/components/nyc-tron/ui/components/forge/vector/vector-types';\nimport {rasterToImage} from '@/components/nyc-tron/ui/components/forge/layers/layer-thumbnail-model';\nimport {validatePhotoGradient,photoGradientCoverage,type PhotoGradientMask,type PhotoImageSize,type PhotoMaskCombine} from '@/components/nyc-tron/ui/components/forge/photo/photo-masks';\nimport {space} from '@/components/nyc-tron/ui/tokens';\nexport type {PhotoGradientMask,PhotoGradientGeometry} from '@/components/nyc-tron/ui/components/forge/photo/photo-masks';\nexport interface LinearRadialGradientMaskProps extends Omit<ViewProps,'children'> {\n /** Photo identity and revision. Changing scope abandons an in-progress geometry edit. */\n readonly scope:string;readonly value:PhotoGradientMask;readonly imageSize:PhotoImageSize;readonly width:number;\n readonly onCommit:(mask:PhotoGradientMask)=>void;readonly onPreview?:(mask:PhotoGradientMask|undefined)=>void;\n readonly children?:ReactNode;readonly disabled?:boolean;readonly unstyled?:boolean;\n}\nconst stops=[{offset:0,color:[0,0,0,255] as const},{offset:1,color:[255,255,255,255] as const}];\nfunction paint(value:PhotoGradientMask):GradientPaint {const g=value.geometry;return g.type==='linear'?{...g,stops}:{type:'radial',cx:g.cx,cy:g.cy,r:g.radius,stops};}\nfunction fromPaint(value:PhotoGradientMask,next:GradientPaint):PhotoGradientMask {return {...value,geometry:next.type==='linear'?{type:'linear',x0:next.x0,y0:next.y0,x1:next.x1,y1:next.y1}:{type:'radial',cx:next.cx,cy:next.cy,radius:next.r}};}\n/** Actual bounded mask-coverage preview plus the shared native geometry handles.\n * Coordinates are source pixels; the host applies the mask to its photo. */\nexport function LinearRadialGradientMask({scope,value,imageSize,width,onCommit,onPreview,children,disabled=false,unstyled=false,...props}:LinearRadialGradientMaskProps){\n validatePhotoGradient(value,imageSize);if(!scope.trim()||!Number.isFinite(width)||width<120||width>4000)throw new RangeError('Gradient mask display width must be 120..4000');\n const [local,store]=useLocalStore(()=>({preview:null as PhotoGradientMask|null}));\n const boundary=JSON.stringify([scope,value,imageSize.width,imageSize.height,width,disabled]);\n const committed=useRef<string|null>(null);\n useLayoutEffect(()=>{committed.current=boundary;return()=>{committed.current=null;};},[boundary]);\n useLayoutEffect(()=>{store.set({preview:null});},[boundary,store]);\n const shown=local.preview??value;\n const scale=width/imageSize.width,height=imageSize.height*scale;\n const preview=useMemo(()=>{const factor=64/Math.max(imageSize.width,imageSize.height),w=Math.max(1,Math.round(imageSize.width*factor)),h=Math.max(1,Math.round(imageSize.height*factor)),pixels=new Uint8Array(w*h*4);for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=(y*w+x)*4;pixels[i]=80;pixels[i+1]=180;pixels[i+2]=255;pixels[i+3]=Math.round(photoGradientCoverage(shown,(x+.5)/w*imageSize.width,(y+.5)/h*imageSize.height)*115);}return rasterToImage({width:w,height:h,pixels});},[shown,imageSize.width,imageSize.height]);\n const set=(change:Partial<PhotoGradientMask>)=>{if(disabled||committed.current!==boundary)return;const next={...value,...change};validatePhotoGradient(next,imageSize);onCommit(next);};\n const content=<View style={{width,height}}>{children}<Image source={{uri:preview.uri}} accessible={false} resizeMode=\"stretch\" style={{position:'absolute',inset:0}}/></View>;\n return <View {...props} style={[{gap:space[2]},props.style]}>\n  <Select label=\"Photo gradient mask type\" value={value.geometry.type} options={[{value:'linear',label:'Linear mask'},{value:'radial',label:'Radial mask'}]} disabled={disabled} unstyled={unstyled} onValueChange={type=>{if(type===value.geometry.type)return;set({geometry:type==='linear'?{type:'linear',x0:imageSize.width*.25,y0:imageSize.height*.5,x1:imageSize.width*.75,y1:imageSize.height*.5}:{type:'radial',cx:imageSize.width*.5,cy:imageSize.height*.5,radius:Math.max(.5,Math.min(imageSize.width,imageSize.height)*.4)}});}}/>\n  <UnitInput label=\"Gradient mask feather\" value={value.feather} min={0} max={1} step={.05} disabled={disabled} unstyled={unstyled} onCommit={feather=>set({feather})}/>\n  <Select label=\"Gradient mask combine\" value={value.combine} options={['replace','add','subtract','intersect'].map(value=>({value,label:value}))} disabled={disabled} unstyled={unstyled} onValueChange={combine=>set({combine:combine as PhotoMaskCombine})}/>\n  <SettingSwitch label=\"Invert gradient mask\" on={value.invert} onChange={invert=>set({invert})} disabled={disabled} styled={!unstyled}/>\n  <GradientOnCanvasHandles scope={scope} revision={JSON.stringify(value)} disabledReason={disabled?\"Gradient mask editing disabled\":undefined} geometryOnly showCommands={false} paint={paint(value)} width={width} height={height} transform={[scale,0,0,scale,0,0]} selectedStop={undefined} onSelectStop={()=>{}} onPreview={next=>{if(!next){store.set({preview:null});onPreview?.(undefined);return;}if(disabled||committed.current!==boundary)return;const mask=fromPaint(value,next);try{validatePhotoGradient(mask,imageSize);}catch{onPreview?.(undefined);return;}store.set({preview:mask});onPreview?.(mask);}} onSetFill={next=>{if(committed.current!==boundary)return;const mask=fromPaint(value,next);try{validatePhotoGradient(mask,imageSize);}catch{return;}if(!disabled)onCommit(mask);}} unstyled={unstyled} label=\"Photo gradient mask handles\">{content}</GradientOnCanvasHandles>\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/photo/LinearRadialGradientMask.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/local-store.ts",
+      "content": "import {createStore} from \"zustand/vanilla\";\n\n/**\n * A per-instance store for transient gesture and draft state (a drag preview, a\n * text draft, a measured width). Components use it instead of `useState` so a\n * gesture's bookkeeping lives outside React's render cycle and can be read\n * synchronously from responder callbacks. Created by {@linkcode createLocalStore};\n * components use it through `useLocalStore`. Zustand owns the state; this value-replacement\n * adapter remains independent of React.\n */\nexport interface LocalStore<T> {\n  get():T;\n  /** Replaces the state, or derives it from the previous state. Listeners run only when it changes. */\n  set(next:T|((previous:T)=>T)):void;\n  /** Returns the unsubscribe function. */\n  subscribe(listener:()=>void):()=>void;\n}\n\n/** Creates a {@linkcode LocalStore}. Equal states (by `Object.is`) do not notify. */\nexport function createLocalStore<T>(initial:T):LocalStore<T>{\n  const store=createStore<{value:T}>(()=>({value:initial}));\n  return {\n    get:()=>store.getState().value,\n    set(next){\n      store.setState(current=>{\n        const value=typeof next===\"function\"?(next as (p:T)=>T)(current.value):next;\n        return Object.is(value,current.value)?current:{value};\n      });\n    },\n    subscribe(listener){return store.subscribe(()=>listener());},\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/local-store.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    },
+    {
+      "path": "packages/ui/src/components/useLocalStore.ts",
+      "content": "import {useRef,useSyncExternalStore} from \"react\";\nimport {createLocalStore,type LocalStore} from \"@/components/nyc-tron/ui/components/local-store\";\n\n/**\n * Creates one {@linkcode LocalStore} for the calling component on first render and\n * subscribes to it. Returns the current state and the store.\n */\nexport function useLocalStore<T>(initial:()=>T):readonly [T,LocalStore<T>]{\n  const ref=useRef<LocalStore<T>|null>(null);\n  if(!ref.current)ref.current=createLocalStore(initial());\n  const store=ref.current;\n  const state=useSyncExternalStore(store.subscribe,store.get,store.get);\n  return [state,store] as const;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/useLocalStore.ts"
+    },
+    {
+      "path": "packages/ui/src/tokens.ts",
+      "content": "// Generated by tooling/codemod/generate-token-module.mjs from docs/agent-native/tokens.json.\n// Do not edit by hand. Change tokens.json, regenerate, and run tooling/codemod/prove-equivalence.mjs.\n// Internal copy of the core token module so this package has no runtime dependency on core. Not exported from package.json.\n\n/** One spacing unit in px. `space` keys are multiples of it. */\nexport const SPACE_UNIT = 4;\n\n/** Spacing steps. The key is a multiple of SPACE_UNIT, so `space[2]` is 8 and `space[1.5]` is 6. Negative spacing is `-space[n]`. */\nexport const space = {\n  0: 0,\n  0.25: 1,\n  0.5: 2,\n  0.75: 3,\n  1: 4,\n  1.5: 6,\n  2: 8,\n  2.5: 10,\n  3: 12,\n  3.5: 14,\n  4: 16,\n} as const;\n\n/** Corner radius steps in px. `radius.full` is the pill radius. */\nexport const radius = {\n  1: 1,\n  2: 2,\n  3: 3,\n  4: 4,\n  5: 5,\n  6: 6,\n  7: 7,\n  8: 8,\n  9: 9,\n  10: 10,\n  12: 12,\n  14: 14,\n  full: 9999,\n} as const;\n\n/** Font size steps in px, keyed by value. */\nexport const font = {\n  10: 10,\n  11: 11,\n  12: 12,\n  13: 13,\n  14: 14,\n  15: 15,\n  16: 16,\n  17: 17,\n} as const;\n\n/** Line height steps in px, keyed by value. */\nexport const leading = {\n  14: 14,\n  16: 16,\n} as const;\n\n/** Border width steps in px, keyed by value (`border[1.5]`). */\nexport const border = {\n  0: 0,\n  1: 1,\n  1.5: 1.5,\n  2: 2,\n  3: 3,\n  4: 4,\n  8: 8,\n} as const;\n\n/** Opacity steps keyed by percent (`opacity[45]` is 0.45). 0 and 1 are not tokens. */\nexport const opacity = {\n  30: 0.3,\n  35: 0.35,\n  40: 0.4,\n  45: 0.45,\n  50: 0.5,\n  55: 0.55,\n  60: 0.6,\n  70: 0.7,\n  90: 0.9,\n} as const;\n\n/** Black overlay colours keyed by alpha percent. */\nexport const scrim = {\n  12: \"rgba(0,0,0,0.12)\",\n  18: \"rgba(0,0,0,0.18)\",\n  25: \"rgba(0,0,0,0.25)\",\n  50: \"rgba(0,0,0,0.5)\",\n} as const;\n\n/** Box shadows. `elevation[0]` is none. */\nexport const elevation = {\n  0: \"none\",\n  1: \"0 1px 3px rgba(0,0,0,0.25)\",\n  2: \"0 4px 12px rgba(0,0,0,0.18)\",\n} as const;\n\n/** Fixed sizes. `size.touch` is the 44 px minimum touch target. */\nexport const size = {\n  touch: 44,\n} as const;\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/tokens.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/LinearRadialGradientMask",
+    "exports": [
+      "LinearRadialGradientMask",
+      "LinearRadialGradientMaskProps",
+      "PhotoGradientGeometry",
+      "PhotoGradientMask"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/pdf/BookmarkOutline",
+  "title": "Bookmark Outline",
+  "description": "Bookmark Outline, a PDF component. Props: bookmarks, onJump.",
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/OutlineTree"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/pdf/BookmarkOutline.tsx",
+      "content": "import {OutlineTree,type OutlineTreeProps} from '@/components/nyc-tron/ui/components/forge/inputs/OutlineTree';\nexport interface PDFBookmark {id:string;parentId:string|null;label:string;destination:{pageId:string;x?:number;y?:number;zoom?:number};disabledReason?:string}\nexport interface BookmarkOutlineProps extends Omit<OutlineTreeProps,'label'|'nodes'|'onSelect'> {\n bookmarks:readonly PDFBookmark[];onJump:(destination:PDFBookmark['destination'],signal?:AbortSignal)=>unknown;\n}\nexport function BookmarkOutline({bookmarks,onJump,...props}:BookmarkOutlineProps){\n if(bookmarks.some(b=>!b.destination.pageId.trim()||b.destination.pageId.length>256||[b.destination.x,b.destination.y,b.destination.zoom].some(n=>n!==undefined&&!Number.isFinite(n))||b.destination.zoom!==undefined&&b.destination.zoom<=0))throw new RangeError('Invalid PDF bookmark destination');\n return <OutlineTree {...props} label=\"PDF bookmarks\" nodes={bookmarks.map(b=>({id:b.id,parentId:b.parentId,label:b.label,description:'Destination '+b.destination.pageId,disabledReason:b.disabledReason}))} onSelect={(id,s)=>{const b=bookmarks.find(b=>b.id===id);if(b&&b.disabledReason===undefined)return onJump(b.destination,s);}}/>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/pdf/BookmarkOutline.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/pdf/BookmarkOutline",
+    "exports": [
+      "BookmarkOutline",
+      "BookmarkOutlineProps",
+      "PDFBookmark"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

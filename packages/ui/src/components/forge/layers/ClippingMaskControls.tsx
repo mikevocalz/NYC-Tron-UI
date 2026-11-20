@@ -23,6 +23,7 @@ import {View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {PanelButton,Reason} from "./panel-button.tsx";
 import {CLIP_INDENT,clipReason,clipToggleLabel,type ClipLayer,type SetClippedOp} from "./clipping-model.ts";
+import {radius} from '../../../tokens.ts';
 
 /** Props for {@linkcode ClipToggle}. */
 export interface ClipToggleProps extends Omit<ViewProps,"children"> {
@@ -85,8 +86,8 @@ export function ClipIndicator({unstyled=false,style,...rest}:ClipIndicatorProps)
 function ClipGlyph({styled}:{styled:boolean}){
   const ink=joinClasses(styled&&"bg-text-muted");
   return <View pointerEvents="none" style={{width:12,height:16,alignItems:"center"}}>
-    <View {...{className:ink}} style={{position:"absolute",top:1,width:1.5,height:13,borderRadius:1}}/>
-    <View {...{className:ink}} style={{position:"absolute",top:10,left:1.6,width:6,height:1.5,borderRadius:1,transform:[{rotate:"45deg"}]}}/>
-    <View {...{className:ink}} style={{position:"absolute",top:10,right:1.6,width:6,height:1.5,borderRadius:1,transform:[{rotate:"-45deg"}]}}/>
+    <View {...{className:ink}} style={{position:"absolute",top:1,width:1.5,height:13,borderRadius:radius[1]}}/>
+    <View {...{className:ink}} style={{position:"absolute",top:10,left:1.6,width:6,height:1.5,borderRadius:radius[1],transform:[{rotate:"45deg"}]}}/>
+    <View {...{className:ink}} style={{position:"absolute",top:10,right:1.6,width:6,height:1.5,borderRadius:radius[1],transform:[{rotate:"-45deg"}]}}/>
   </View>;
 }

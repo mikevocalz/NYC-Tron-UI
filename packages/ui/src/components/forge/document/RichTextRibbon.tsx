@@ -5,6 +5,7 @@ import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {OFFICE_TOUCH_TARGET,ToolButton} from "../office/office-controls.tsx";
 import {TEXT_CASE_LABELS,stepFontSize,type InlineToggle,type RibbonState,type SharedValue,type TextCase} from "./ribbon-model.ts";
+import {space,radius,font,border,opacity,size as sizeToken} from '../../../tokens.ts';
 
 /** A color the ribbon offers. `value` is document data (the engine's color string), not a theme token. */
 export interface RibbonColor {
@@ -86,7 +87,7 @@ function RichTextRibbonBody({actionError,disabledReason,
   const sizeKnown=typeof fontSize==="number";
   return <View {...rest} accessibilityRole="toolbar" accessibilityLabel={label}
     {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-raised",className)}}
-    style={[{flexDirection:"row",flexWrap:"wrap",alignItems:"flex-start",columnGap:14,rowGap:4,padding:4},rest.style as object]}>
+    style={[{flexDirection:"row",flexWrap:"wrap",alignItems:"flex-start",columnGap:space[3.5],rowGap:space[1],padding:space[1]},rest.style as object]}>
     {onParagraphStyleChange&&paragraphStyles?.length?<Group label="Paragraph style" styled={styled}>
       {paragraphStyles.map(p=><ToolButton quiet key={p.id} label={p.label} checked={paragraphStyle===p.id} disabled={disabled}
         styled={styled} onPress={()=>onParagraphStyleChange(p.id)}/>)}
@@ -100,15 +101,15 @@ function RichTextRibbonBody({actionError,disabledReason,
     {onFontSizeChange?<Group label="Font size" styled={styled}>
       <ToolButton quiet label="Decrease font size" disabled={disabled||!sizeKnown} styled={styled}
         onPress={()=>sizeKnown&&onFontSizeChange(stepFontSize(fontSize,-1))}>
-        <Text {...{className:joinClasses(styled&&"text-text")}} style={{fontSize:13,fontWeight:"600"}}>A−</Text>
+        <Text {...{className:joinClasses(styled&&"text-text")}} style={{fontSize:font[13],fontWeight:"600"}}>A−</Text>
       </ToolButton>
       <View accessible accessibilityLabel={"Font size "+(sizeKnown?fontSize+" point":"mixed")}
-        style={{minWidth:44,minHeight:OFFICE_TOUCH_TARGET,alignItems:"center",justifyContent:"center"}}>
+        style={{minWidth:sizeToken.touch,minHeight:OFFICE_TOUCH_TARGET,alignItems:"center",justifyContent:"center"}}>
         <Text {...{className:joinClasses(styled&&"text-text")}} style={{fontVariant:["tabular-nums"]}}>{sizeKnown?String(fontSize):"–"}</Text>
       </View>
       <ToolButton quiet label="Increase font size" disabled={disabled||!sizeKnown} styled={styled}
         onPress={()=>sizeKnown&&onFontSizeChange(stepFontSize(fontSize,1))}>
-        <Text {...{className:joinClasses(styled&&"text-text")}} style={{fontSize:17,fontWeight:"600"}}>A+</Text>
+        <Text {...{className:joinClasses(styled&&"text-text")}} style={{fontSize:font[17],fontWeight:"600"}}>A+</Text>
       </ToolButton>
     </Group>:null}
     {onToggle&&toggles.length?<Group label="Character style" styled={styled}>
@@ -116,7 +117,7 @@ function RichTextRibbonBody({actionError,disabledReason,
         const face=TOGGLE_FACE[t];
         return <ToolButton quiet key={t} label={face.label} checked={state[t]} disabled={disabled} styled={styled}
           onPress={()=>onToggle(t,state[t]!==true)}>
-          <Text {...{className:joinClasses(styled&&"text-text")}} style={[{fontSize:17},face.style]}>{face.letter}</Text>
+          <Text {...{className:joinClasses(styled&&"text-text")}} style={[{fontSize:font[17]},face.style]}>{face.letter}</Text>
         </ToolButton>;
       })}
     </Group>:null}
@@ -134,7 +135,7 @@ function RichTextRibbonBody({actionError,disabledReason,
 function Group({label,styled,children}:{label:string;styled:boolean;children:ReactNode}){
   // Groups are set apart by space, not rules: a rule would dangle at the end of every wrapped line.
   return <View accessibilityLabel={label} {...{role:"group"}}
-    style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:2}}>
+    style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:space[0.5]}}>
     {children}
   </View>;
 }
@@ -146,7 +147,7 @@ function Swatches({label,colors,value,onChange,clearLabel,disabled,styled}:{
   return <Group label={label} styled={styled}>
     <ToolButton quiet label={clearLabel} checked={value===undefined} disabled={disabled} styled={styled} onPress={()=>onChange(undefined)}>
       <View {...{className:joinClasses(styled&&"border-text-muted")}}
-        style={{width:20,height:20,borderRadius:10,borderWidth:1.5,alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
+        style={{width:20,height:20,borderRadius:radius[10],borderWidth:border[1.5],alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
         <View {...{className:joinClasses(styled&&"bg-text-muted")}} style={{width:24,height:1.5,transform:[{rotate:"-45deg"}]}}/>
       </View>
     </ToolButton>
@@ -156,9 +157,9 @@ function Swatches({label,colors,value,onChange,clearLabel,disabled,styled}:{
         accessibilityState={{checked:on,disabled}} disabled={disabled} onPress={()=>onChange(c.value)}
         {...{className:joinClasses(styled&&"rounded-control border-2 focus-visible:ring-2 focus-visible:ring-focus",
           styled&&(on?"border-focus":"border-transparent"))}}
-        style={{width:OFFICE_TOUCH_TARGET,height:OFFICE_TOUCH_TARGET,alignItems:"center",justifyContent:"center",opacity:disabled?0.45:1}}>
+        style={{width:OFFICE_TOUCH_TARGET,height:OFFICE_TOUCH_TARGET,alignItems:"center",justifyContent:"center",opacity:disabled?opacity[45]:1}}>
         <View {...{className:joinClasses(styled&&"border border-border")}}
-          style={{width:24,height:24,borderRadius:12,backgroundColor:c.value}}/>
+          style={{width:24,height:24,borderRadius:radius[12],backgroundColor:c.value}}/>
       </Pressable>;
     })}
   </Group>;

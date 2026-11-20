@@ -11,6 +11,7 @@ import type {TimelineViewport} from './viewport.ts';
 import type {FrameRate} from '../timebase.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {space} from '../../../tokens.ts';
 export interface CaptionWord {id:string;text:string;startFrame:number;endFrame:number}
 export interface CaptionWordTimingHandlesProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  words:readonly CaptionWord[];selectedId:string|null;onSelect:(id:string)=>void;durationFrames:number;frame:number;rate:FrameRate;viewport:TimelineViewport;
@@ -28,7 +29,7 @@ export function CaptionWordTimingHandles({scope='caption-word-timing',revision=0
  const local=useRef<ReturnType<typeof makeStore>|null>(null);local.current??=makeStore();const store=local.current,preview=useStore(store,s=>s.preview);
  useLayoutEffect(()=>{store.setState({preview:null});},[boundary]);
  const valid=(range:InOutRange)=>range.inFrame!==undefined&&range.outFrame!==undefined&&Number.isSafeInteger(range.inFrame)&&Number.isSafeInteger(range.outFrame)&&range.inFrame>=low&&range.outFrame<=high&&range.inFrame<range.outFrame;
- return <View {...rest} style={[{gap:8,minWidth:0},style]} accessibilityLabel="Caption word timing">
+ return <View {...rest} style={[{gap:space[2],minWidth:0},style]} accessibilityLabel="Caption word timing">
   <FlatList horizontal data={sorted} keyExtractor={w=>w.id} style={{maxHeight:80}} initialNumToRender={12} windowSize={5} renderItem={({item})=><Button title={item.text||'Empty word'} accessibilityLabel={`${item.text}, frames ${item.startFrame} to ${item.endFrame}`} accessibilityState={{selected:item.id===selectedId}} disabled={off} unstyled={unstyled} onPress={()=>guard.current()?.onSelect(item.id)}/>}/>
   {word?<>
    <Text {...{className:unstyled?undefined:'text-text'}}>{word.text}: {word.startFrame}–{word.endFrame}; available {low}–{high}</Text>

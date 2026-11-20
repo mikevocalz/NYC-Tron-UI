@@ -1,0 +1,52 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/MenuButton",
+  "title": "Menu Button",
+  "description": "Button that opens a command popover menu; ArrowDown opens it on web, for React Native; QNX focus return.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/overlays/CommandPopover",
+    "@nyc-tron/overlays/popover-position",
+    "@nyc-tron/shell/shell-keys"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/MenuButton.tsx",
+      "content": "import {useLayoutEffect,useRef,type ComponentRef,type ReactNode,type Ref} from \"react\";\nimport {Platform,Pressable,useWindowDimensions,type PressableProps} from \"react-native\";\nimport {createStore,type StoreApi} from \"zustand/vanilla\";\nimport {useStore} from \"zustand\";\nimport {CommandPopover,type CommandMenuItem} from \"@/components/nyc-tron/ui/components/overlays/CommandPopover\";\nimport {hasUsableRegion,type Rect2D} from \"@/components/nyc-tron/ui/components/overlays/popover-position\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {shellKey} from \"@/components/nyc-tron/ui/components/shell/shell-keys\";\n\nexport type {CommandMenuItem} from \"@/components/nyc-tron/ui/components/overlays/CommandPopover\";\n\n/** Props for {@linkcode MenuButton}. */\nexport interface MenuButtonProps extends Omit<PressableProps,\"children\"|\"onPress\"|\"accessibilityLabel\"|\"aria-label\"> {\n  /** Accessible name of the button, e.g. \"Panel options\". */\n  label:string;\n  /** Logical document/action identity; changes dismiss pending measurements and menus. */\n  editScope?:string;\n  items:readonly CommandMenuItem[];\n  onSelect:(id:string)=>void;\n  /** Visible content. The button is at least 44 by 44 points. */\n  children:ReactNode;\n  /**\n   * Window-space regions the menu may use, from the foldable layout owner.\n   * @default the whole window\n   */\n  usableRegions?:readonly Rect2D[];\n  /** @default 240 */\n  menuWidth?:number;\n  disabled?:boolean;\n  className?:string;\n  unstyled?:boolean;\n  /** The trigger, for moving focus to it (roving toolbars, closing a follow-up dialog). */\n  ref?:Ref<ComponentRef<typeof Pressable>>;\n}\n\n/**\n * A button that opens a {@linkcode CommandPopover} anchored to itself. Enter,\n * Space, ArrowDown and screen-reader activation open it; focus returns to the\n * button when it closes.\n */\nexport function MenuButton({\n  label,editScope=\"menu\",items,onSelect,children,usableRegions,menuWidth=240,disabled=false,className,unstyled=false,style,ref:forwarded,...rest\n}:MenuButtonProps){\n  if(!editScope.trim()||editScope.length>32768)throw new RangeError(\"Invalid menu edit scope\");\n  const window=useWindowDimensions();\n  type Anchor={rect:Rect2D;scope:string;request:number};\n  type Local={anchor:Anchor|undefined;request:number};\n  const local=useRef<StoreApi<Local>|null>(null);\n  if(!local.current)local.current=createStore<Local>(()=>({anchor:undefined,request:0}));\n  const store=local.current,anchor=useStore(store,s=>s.anchor);\n  const ref=useRef<ComponentRef<typeof Pressable>>(null);\n  const regions=usableRegions??[{x:0,y:0,width:window.width,height:window.height}];\n  const off=disabled||!items.some(item=>!item.disabled)||!hasUsableRegion(regions);\n  const committed=useRef<{scope:string;off:boolean;items:readonly CommandMenuItem[];onSelect:typeof onSelect}|null>(null);\n  useLayoutEffect(()=>{committed.current={scope:editScope,off,items,onSelect};});\n  useLayoutEffect(()=>{store.setState(s=>({anchor:undefined,request:s.request+1}));},[editScope,off,store]);\n  useLayoutEffect(()=>()=>{committed.current=null;},[]);\n  const owns=(at:Anchor)=>committed.current?.scope===at.scope&&!committed.current.off&&store.getState().request===at.request;\n  const open=()=>{\n    const p=committed.current;\n    if(!p||p.off||p.scope!==editScope)return;\n    const node=ref.current as unknown as {measureInWindow?:(cb:(x:number,y:number,w:number,h:number)=>void)=>void}|null;\n    if(!node?.measureInWindow)return;\n    const request=store.getState().request+1;store.setState({request});\n    node.measureInWindow((x,y,width,height)=>{\n      const next={scope:editScope,request,rect:{x,y,width,height}};\n      if(owns(next)&&[x,y,width,height].every(Number.isFinite)&&width>0&&height>0)store.setState({anchor:next});\n    });\n  };\n  const shown=anchor?.scope===editScope&&!off?anchor:undefined;\n  const wasOpen=useRef(false);\n  useLayoutEffect(()=>{\n    if(wasOpen.current&&!shown&&(String(Platform.OS)===\"qnx\"||String(Platform.OS)===\"marathon\"))ref.current?.focus?.();\n    wasOpen.current=shown!==undefined;\n  },[shown]);\n  return <>\n    <Pressable {...rest} ref={node=>{\n      ref.current=node;\n      if(typeof forwarded===\"function\")forwarded(node);else if(forwarded)forwarded.current=node;\n    }} accessibilityRole=\"button\" accessibilityLabel={label}\n      aria-haspopup=\"menu\" aria-expanded={shown!==undefined}\n      accessibilityState={{disabled:off,expanded:shown!==undefined}}\n      disabled={off} onPress={open}\n      {...{onKeyDown:(event:unknown)=>{\n        const k=shellKey(event);\n        if(k.key===\"ArrowDown\"&&!k.altKey&&!k.ctrlKey&&!k.metaKey){k.preventDefault();open();}\n      }}}\n      {...{className:joinClasses(\"min-h-11 min-w-11 items-center justify-center\",\n        !unstyled&&\"rounded-control focus-visible:ring-2 focus-visible:ring-focus\",\n        off&&\"opacity-40\",className)}}\n      style={style}>\n      {children}\n    </Pressable>\n    {shown?<CommandPopover testID={rest.testID?`${rest.testID}-popover`:undefined} scope={editScope} key={shown.request} visible accessibilityLabel={label} anchor={shown.rect} usableRegions={regions}\n      items={items} width={menuWidth} onSelect={id=>{const p=committed.current;if(owns(shown)&&p?.items.some(item=>item.id===id&&!item.disabled))p.onSelect(id);}}\n      onDismiss={()=>{if(owns(shown))store.setState({anchor:undefined});}}/>:null}\n  </>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/shell/MenuButton.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/MenuButton",
+    "exports": [
+      "CommandMenuItem",
+      "MenuButton",
+      "MenuButtonProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "overlay"
+  ],
+  "type": "registry:ui"
+}

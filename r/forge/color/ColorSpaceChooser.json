@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/ColorSpaceChooser",
+  "title": "Color Space Chooser",
+  "description": "Color Space Chooser, a color component. Props: profiles, value, onProfileChange.",
+  "registryDependencies": [
+    "@nyc-tron/Select",
+    "@nyc-tron/forge/color/color-management"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/ColorSpaceChooser.tsx",
+      "content": "import { Select, type SelectBaseProps } from \"@/components/nyc-tron/ui/components/Select\";\nimport { validateProfiles, type ColorProfile } from \"@/components/nyc-tron/ui/components/forge/color/color-management\";\nexport type { ColorProfile } from \"@/components/nyc-tron/ui/components/forge/color/color-management\";\n/** Profile choices and explicit profile-change request from ColorSpaceChooser. */\nexport interface ColorSpaceChooserProps extends Omit<SelectBaseProps, \"label\" | \"value\" | \"onValueChange\"> {\n  readonly profiles: readonly ColorProfile[];\n  readonly value: string;\n  /** Requests the host's profile policy/conversion; the chooser never converts pixels. */\n  readonly onProfileChange: (id: string) => void;\n  readonly label?: string;\n}\n/** Selects an application-provided color profile without conflating assign and convert. */\nexport function ColorSpaceChooser({ profiles, value, onProfileChange, label = \"Color profile\", ...props }: ColorSpaceChooserProps) {\n  validateProfiles(profiles);\n  if (!profiles.some(profile => profile.id === value)) throw new TypeError(\"Selected color profile is unavailable\");\n  return <Select {...props} label={label} value={value} options={profiles.map(profile => ({ value: profile.id, label: `${profile.label} (${profile.model.toUpperCase()})` }))} onValueChange={id => { if (!props.disabled && id !== value) onProfileChange(id); }}/ >;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/color/ColorSpaceChooser.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/ColorSpaceChooser",
+    "exports": [
+      "ColorProfile",
+      "ColorSpaceChooser",
+      "ColorSpaceChooserProps"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

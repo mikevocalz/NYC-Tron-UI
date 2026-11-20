@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/design/InteractionTriggerEditor",
+  "title": "Interaction Trigger Editor",
+  "description": "Interaction Trigger Editor, a UI design tool component. Props: value, triggers, destinations, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/PropertyInspector"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/design/InteractionTriggerEditor.tsx",
+      "content": "import {PropertyInspector,type PropertyInspectorProps} from '@/components/nyc-tron/ui/components/forge/inputs/PropertyInspector';\nexport interface PrototypeInteraction {trigger:'tap'|'press'|'hover'|'drag'|'timer';delayMs:number;action:'navigate'|'overlay'|'back'|'close-overlay'|'set-variable';destinationId:string;transitionId:string;durationMs:number}\nexport interface InteractionTriggerEditorProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {value:PrototypeInteraction;triggers:readonly PrototypeInteraction['trigger'][];destinations:readonly {id:string;label:string}[];transitions:readonly {id:string;label:string}[];onCommit:(value:PrototypeInteraction,signal?:AbortSignal)=>unknown}\nexport function InteractionTriggerEditor({value,triggers,destinations,transitions,onCommit,...props}:InteractionTriggerEditorProps){return <PropertyInspector {...props} label=\"Prototype interaction\" fields={[\n {kind:'choice',id:'trigger',label:'Trigger',value:value.trigger,choices:triggers.map(id=>({id,label:id}))},\n ...(['timer','press','hover'].includes(value.trigger)?[{kind:'number' as const,id:'delayMs',label:'Trigger delay',value:value.delayMs,min:0,max:86400000,step:10,unit:'ms'}]:[]),\n {kind:'choice',id:'action',label:'Action',value:value.action,choices:['navigate','overlay','back','close-overlay','set-variable'].map(id=>({id,label:id}))},\n ...(['navigate','overlay','set-variable'].includes(value.action)?[{kind:'choice' as const,id:'destinationId',label:value.action==='set-variable'?'Variable action target':'Destination',value:value.destinationId,choices:destinations}]:[]),\n {kind:'choice',id:'transitionId',label:'Transition',value:value.transitionId,choices:transitions},{kind:'number',id:'durationMs',label:'Transition duration',value:value.durationMs,min:0,max:600000,step:10,unit:'ms'}\n ]} onCommit={(id,v,s)=>onCommit({...value,[id]:v},s)}/>;}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/design/InteractionTriggerEditor.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/design/InteractionTriggerEditor",
+    "exports": [
+      "InteractionTriggerEditor",
+      "InteractionTriggerEditorProps",
+      "PrototypeInteraction"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

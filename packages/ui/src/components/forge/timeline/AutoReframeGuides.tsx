@@ -4,6 +4,7 @@ import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {GuidedCropAndStraighten,type GuidedCropAndStraightenProps} from '../canvas/GuidedCropAndStraighten.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {space} from '../../../tokens.ts';
 export interface AutoReframeGuidesProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  frame:number;manual:boolean;onManualChange:(manual:boolean)=>void;
  crop:Omit<GuidedCropAndStraightenProps,'scope'|'revision'|'disabledReason'>;
@@ -14,7 +15,7 @@ export function AutoReframeGuides({scope='auto-reframe',revision=0,...props}:Aut
  const {frame,manual,onManualChange:_manual,crop,tracking,onTrack:_track,onStop,unstyled=false,disabledReason,style,...rest}=props;
  if(!Number.isSafeInteger(frame)||frame<0||!['idle','running','ready','lost','error'].includes(tracking.status)||tracking.progress!==undefined&&(!Number.isFinite(tracking.progress)||tracking.progress<0||tracking.progress>1))throw new RangeError('Invalid reframing state');
  const owner=JSON.stringify([...controlIdentity(scope,revision),disabledReason]),guard=useScopedControl(owner,props,disabledReason!==undefined||tracking.status==='running'),off=guard.pending||disabledReason!==undefined||tracking.status==='running';
- return <View {...rest} style={[{gap:8,minWidth:0},style]} accessibilityLabel="Automatic reframing">
+ return <View {...rest} style={[{gap:space[2],minWidth:0},style]} accessibilityLabel="Automatic reframing">
   <Text {...{className:unstyled?undefined:'text-text'}}>Frame {frame}; subject: {tracking.subjectLabel??'Not reported'}</Text>
   <SettingSwitch label="Manual crop override" on={manual} disabled={off} styled={!unstyled} onChange={value=>guard.current()?.onManualChange(value)}/>
   <GuidedCropAndStraighten {...crop} scope={scope} revision={revision} unstyled={unstyled} {...(disabledReason?{disabledReason}:off?{disabledReason:'Tracking operation in progress'}:!manual?{disabledReason:'Enable manual crop override to adjust guides'}:{})}/>

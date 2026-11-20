@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" data-theme="reference" data-scheme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Install | NYC-Tron UI</title>
+<meta name="description" content="Install NYC-Tron UI into an Expo app from the shadcn registry or from a release tarball.">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="alternate" type="text/plain" href="../../llms.txt" title="llms.txt">
+<script>(function(){var r=document.documentElement;r.className="js";try{var t=localStorage.getItem("nyc-docs-theme"),s=localStorage.getItem("nyc-docs-scheme");if(t)r.setAttribute("data-theme",t);if(s)r.setAttribute("data-scheme",s)}catch(e){}})()</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="hd"><div class="hd-in">
+<a class="brand" href="index.html">NYC-Tron UI</a><span class="ver">1.0.0-rc.2</span><span class="sp"></span>
+<button class="btn" type="button" data-cycle="theme" aria-label="Theme: Reference. Press to change.">Reference</button><button class="btn" type="button" data-cycle="scheme" aria-label="Mode: Auto. Press to change.">Auto</button>
+<form action="search.html" method="get" role="search"><label class="vh" for="hq">Search components</label><input class="field" id="hq" name="q" type="search" placeholder="Search components" autocomplete="off"><button class="btn primary" type="submit">Search</button></form>
+</div></header>
+<div class="frame norail">
+<details class="navbox"><summary class="btn">Menu</summary><div><p class="navh">Site</p><ul class="navlist"><li><a href="index.html">Home</a></li><li><a href="install.html" aria-current="page">Install</a></li><li><a href="tokens.html">Theme tokens</a></li><li><a href="search.html">Search</a></li></ul>
+<p class="navh">For agents</p><ul class="navlist"><li><a href="../../llms.txt">llms.txt</a></li><li><a href="../../SKILL.md">SKILL.md</a></li><li><a href="../components/Button.md">Raw page example</a></li></ul></div></details>
+<main id="main" class="col prose">
+<h1>Install</h1>
+<p data-offline hidden class="status">You are offline. Both install methods download from GitHub, so they need a connection. Everything on this page stays readable.</p>
+<p class="actions"><a class="btn" href="#registry">Registry (shadcn CLI)</a><a class="btn" href="#tarball">Release tarball</a></p>
+<h2 id="registry">Registry (shadcn CLI)</h2>
+<p>Each item is copied into your app as source, with the items it depends on. Peers are not installed for you; each page lists them.</p>
+<div class="install"><button class="btn primary" type="button" data-copy="npx shadcn@latest add @nyc-tron/Button">Copy</button><pre><code>npx shadcn@latest add @nyc-tron/Button</code></pre></div>
+<p class="small muted">Registry install is unverified until a clean app installs from the live URL. Registry URLs use ref `main`, a moving ref, until the owner cuts a release tag. They resolve only after this branch is merged to main. Before that, test against a local server. Use the <a href="install.html#tarball">release tarball</a> until then.</p>
+<p class="small muted" data-offline hidden>You are offline. The install command needs a connection.</p>
+<p>Add the namespace to <code>components.json</code>. shadcn rejects unknown keys, so platform targets are not in this file; see <a href="../agent-native/components-contract.md">components-contract.md</a>.</p>
+<pre><code>{
+  &quot;registries&quot;: {
+    &quot;@nyc-tron&quot;: &quot;https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/r/{name}.json&quot;
+  }
+}</code></pre>
+<p>Item JSON is served at <code>https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/r/{name}.json</code>, on the moving ref <code>main</code> until a release tag is cut. It resolves only after this branch is merged to main; before that, test against a local server, where <code>{name}</code> keeps its slashes (<code>shell/UnitInput</code>). Find an item with <code>npx shadcn@latest search @nyc-tron -q "context menu"</code>.</p>
+<p>After a registry install, import from the installed path, for example <code>@/components/nyc-tron/ui/components/Button</code>. <code>shadcn add</code> rewrites the <code>@/components</code> prefix to <code>aliases.components</code>. The tarball package <code>@nyc-tron/ui</code> does not exist in that app. Every component page shows both imports under "Registry install" and "Tarball install", and its example uses the registry one.</p>
+<p>Native packages cannot be added this way. A registry add copies files and cannot run pod install, gradle, CMake, nitrogen or a WinUI build. They install from the tarball and are listed in <a href="../../registry-excluded.json">registry-excluded.json</a>.</p>
+<h2 id="tarball">Release tarball</h2>
+<p>This is the install path that works today. Copied from the README, section "Installing from a release".</p>
+<p>The packages are not on npm. Each tagged release (<code>v*</code>) attaches one <code>.tgz</code> per package to a GitHub Release, plus a <code>SHA256SUMS</code> file. Pin the tarball URL in the consuming app's <code>package.json</code>:</p>
+<div class="cb"><button type="button" class="btn" data-copy-target="code-tb-0">Copy</button><pre><code id="code-tb-0" data-lang="text">https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v&lt;version&gt;/nyc-tron-&lt;name&gt;-&lt;version&gt;.tgz</code></pre></div>
+<p><code>&lt;name&gt;</code> is the package name without the <code>@nyc-tron/</code> scope, for example <code>nyc-tron-reserved-regions-1.0.0.tgz</code> and <code>nyc-tron-windows-fluent-fabric-1.0.0.tgz</code>.</p>
+<p>For a published v1.0.0 release (these candidate URLs become usable after release):</p>
+<div class="cb"><button type="button" class="btn" data-copy-target="code-tb-1">Copy</button><pre><code id="code-tb-1" data-lang="json">{
+  &quot;dependencies&quot;: {
+    &quot;@nyc-tron/core&quot;: &quot;https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v1.0.0/nyc-tron-core-1.0.0.tgz&quot;,
+    &quot;@nyc-tron/ui&quot;: &quot;https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v1.0.0/nyc-tron-ui-1.0.0.tgz&quot;,
+    &quot;@nyc-tron/panes&quot;: &quot;https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v1.0.0/nyc-tron-panes-1.0.0.tgz&quot;
+  }
+}</code></pre></div>
+<p>Install only the packages you import. Sibling packages are peer dependencies, because a tarball cannot fetch <code>@nyc-tron/*</code> from a registry: <code>@nyc-tron/panes</code> needs <code>@nyc-tron/core</code> from the same release listed next to it. Workspace package exports point at compiled <code>dist/*.js</code> and <code>dist/*.d.ts</code>. The isolated Windows Fabric adapter also ships its typed native codegen source, which RNW needs when building its host; it belongs in an RNW 0.85 app, separate from Expo 58.</p>
+<p>Peers: <code>react</code> and <code>react-native</code> are required by <code>ui</code>, <code>panes</code> and <code>native-controls</code>. <code>panes</code> also needs <code>zustand</code>. <code>native-controls</code> needs <code>expo</code> and <code>@expo/ui</code> (it is an Expo module with SwiftUI and Compose views). <code>expo-controls</code> needs <code>expo</code>, <code>@expo/ui</code> and <code>zustand</code>. In <code>ui</code>, every peer except <code>react</code> and <code>react-native</code> is optional and only needed by the subpaths that import it; importing <code>Button</code> pulls none of them. <a href="../../docs/SUPPORT.md">Support policy</a> lists the subpaths that need <code>react-native-skia</code>, and [packages/ui/README.md](packages/ui/README.md) covers the others.</p>
+<p>To check the tarballs before pinning them, download them with the release's <code>SHA256SUMS</code> and verify:</p>
+<div class="cb"><button type="button" class="btn" data-copy-target="code-tb-2">Copy</button><pre><code id="code-tb-2" data-lang="sh">gh release download v1.0.0 --repo mikevocalz/NYC-Tron-UI \
+  -p SHA256SUMS -p 'nyc-tron-core-*.tgz' -p 'nyc-tron-ui-*.tgz'
+shasum -a 256 -c SHA256SUMS --ignore-missing</code></pre></div>
+<p><code>--ignore-missing</code> skips the packages you did not download. pnpm records each tarball's integrity hash in the lockfile on first install, so later installs fail if a release asset changes.</p>
+<p>Upgrading from <code>v0.1.0-alpha.4</code>: see <a href="../../docs/MIGRATION.md">Migration</a>.</p>
+<p>App icons and launcher names: <a href="../../docs/APP_IDENTITY.md">App identity</a> covers the icon tool and the launcher label check you can run on your own app config.</p>
+<h4 id="tb-add-nyc-tron-ui-to-an-expo-app">Add NYC-Tron UI to an Expo app</h4>
+<p>Both paths use one command with the release tarball URLs. <code>&lt;v&gt;</code> is the release version without the leading <code>v</code>:</p>
+<div class="cb"><button type="button" class="btn" data-copy-target="code-tb-3">Copy</button><pre><code id="code-tb-3" data-lang="sh">npm install --allow-remote=all \
+  https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v&lt;v&gt;/nyc-tron-core-&lt;v&gt;.tgz \
+  https://github.com/mikevocalz/NYC-Tron-UI/releases/download/v&lt;v&gt;/nyc-tron-ui-&lt;v&gt;.tgz</code></pre></div>
+<p>npm 12 refuses remote tarballs unless <code>--allow-remote</code> permits them; npm 11 ignores the flag. Do not use <code>npx expo install</code> with tarball URLs: with Expo CLI 58 and npm 12 it fails with <code>EALLOWREMOTE</code> and writes an <code>&quot;undefined&quot;</code> key into <code>package.json</code>.</p>
+<p><strong>New app.</strong> <code>npx create-expo-app@latest my-app --template blank-typescript</code>, run the command above in <code>my-app</code>, then render a component:</p>
+<div class="cb"><button type="button" class="btn" data-copy-target="code-tb-4">Copy</button><pre><code id="code-tb-4" data-lang="tsx">import { Button } from &quot;@nyc-tron/ui/components/Button&quot;;
+
+export default function App() {
+  return &lt;Button title=&quot;Hello&quot; onPress={() =&gt; {}} /&gt;;
+}</code></pre></div>
+<p><strong>Existing app.</strong> Run the same command in the app and add a screen that imports from <code>@nyc-tron/ui</code>. The command changes only <code>package.json</code> and <code>package-lock.json</code>. If the app uses Expo Router's <code>NativeTabs</code> (the default SDK 58 template does), a new route file is not shown on iOS and Android until the tab layout has a <code>NativeTabs.Trigger</code> for it; that is app code, not something the install does. The web layout needs nothing. An app from the default Expo SDK 58 template keeps the <code>react-native-gesture-handler</code> 3.3.x that Expo pins: from this commit, <code>@nyc-tron/ui</code> declares the optional peer <code>&gt;=3.3.0 &lt;4</code> (<a href="../../docs/V1_DECISIONS.md">V1_DECISIONS</a> D5, decision 1). The <code>v1.0.0-rc.1</code> tarballs still declare <code>&gt;=3.4.0 &lt;4</code> and fail this step with <code>ERESOLVE</code>; with them, run <code>npx expo install react-native-gesture-handler@^3.4.0</code> first.</p>
+<p><strong>Desktop app (Spark or React Native Windows).</strong> Spark 0.0.3 ships React Native 0.83.10 and React Native Windows 0.85 ships 0.85.3, below <code>@nyc-tron/ui</code>'s <code>react-native &gt;=0.88</code> floor. The desktop lanes are below ui's React Native floor; only components on the lane's <a href="../../docs/SUPPORT.md#desktop-support-list">support list</a> are supported. Add this override to the app's <code>package.json</code>, then run the same command:</p>
+<div class="cb"><button type="button" class="btn" data-copy-target="code-tb-5">Copy</button><pre><code id="code-tb-5" data-lang="json">&quot;overrides&quot;: { &quot;@nyc-tron/ui&quot;: { &quot;react-native&quot;: &quot;$react-native&quot; } }</code></pre></div>
+<p>The override applies only to <code>@nyc-tron/ui</code>'s <code>react-native</code> peer and points it at the app's own <code>react-native</code> dependency. Do not use <code>--legacy-peer-deps</code>, which drops every peer check in the tree.</p>
+<p><code>@nyc-tron/ui</code> needs no config plugin. Native projects come from <code>npx expo prebuild</code> (or <code>npx expo run:ios</code> / <code>run:android</code>, which prebuild first); no native file is edited by hand. The [install-paths workflow](.github/workflows/install-paths.yml) runs both paths on clean runners for web, the iOS simulator and the Android emulator, and the desktop install in the Spark and React Native Windows lanes, where the native app renders <code>Button</code>.</p>
+<h2 id="peers">Peers and theme</h2>
+<p>Required peers: <code>react</code>, <code>react-native</code>. Optional peers, needed only by the subpaths that import them: <code>@expo/ui</code>, <code>@tanstack/react-table</code>, <code>expo-drag-drop-content-view</code>, <code>expo-linear-gradient</code>, <code>react-native-gesture-handler</code>, <code>uniwind</code>, <code>zustand</code>, <code>react-native-skia</code>. Each component page lists the ones it uses on its <code>Peers:</code> line.</p>
+<p>The app defines 13 colour variables and 2 radii. <a href="tokens.html">See the tokens page</a>. A missing variable does not fail the build.</p>
+<h2 id="agents">For agents</h2>
+<p>Paste this into an agent that has a terminal and a URL fetcher:</p>
+<pre><code id="agentp">Read https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/llms.txt first. It lists every page. Fetch one page at https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/&lt;id&gt;.md, where &lt;id&gt; is the registry item id (for example shell/UnitInput). Use the token names in the page front matter; never colour or spacing literals. Install with npx shadcn@latest add @nyc-tron/&lt;id&gt; once the registry check passes, otherwise use the release tarball. Imports differ by install: after a registry install use @/components/nyc-tron/ui/components/&lt;id&gt;, after a tarball install use @nyc-tron/ui/components/&lt;id&gt;. Examples use the registry form.</code></pre>
+<p class="actions"><button class="btn primary" type="button" data-copy-target="agentp">Copy for agent</button><a class="btn" href="../../llms.txt">llms.txt</a></p>
+</main>
+</div>
+<footer class="ft"><p><a href="tokens.html">Theme tokens</a>, <a href="install.html">install</a>, <a href="https://github.com/mikevocalz/NYC-Tron-UI">source repository</a>, ref <a href="https://github.com/mikevocalz/NYC-Tron-UI/tree/main">main</a>.</p>
+<p>64 pages are hand-reviewed. 501 are generated from type declarations and source, and say so in their front matter. Accessibility statuses come from reading source, not from rendering.</p></footer>
+<div class="vh" id="live" aria-live="polite" role="status"></div>
+<script src="assets/site.js"></script>
+</body>
+</html>

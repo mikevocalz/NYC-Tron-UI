@@ -6,6 +6,7 @@ import {joinClasses} from "../styles.ts";
 import {MenuButton} from "./MenuButton.tsx";
 import {shellKey} from "./shell-keys.ts";
 import {formatUnitValue,parseUnitExpression,unitScale,type UnitContext,type UnitName} from "./unit-expression.ts";
+import {space,opacity,size} from "../../tokens.ts";
 
 export type {UnitContext,UnitDimension,UnitName} from "./unit-expression.ts";
 
@@ -96,9 +97,9 @@ export function UnitInput({
     commit(base+steps*step*scale);
   };
   const errorId=`unit-error-${label.replace(/\W+/g,"-")}`;
-  return <View {...rest} {...{className:joinClasses("gap-1",className)}} style={[{opacity:disabled?0.5:1},style]}>
+  return <View {...rest} {...{className:joinClasses("gap-1",className)}} style={[{opacity:disabled?opacity[50]:1},style]}>
     {!hideLabel?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{label}</Text>:null}
-    <View style={{flexDirection:"row",alignItems:"center",gap:4}}>
+    <View style={{flexDirection:"row",alignItems:"center",gap:space[1]}}>
       <TextInput accessibilityLabel={label} editable={!disabled} aria-disabled={disabled} accessibilityState={{disabled}}
         aria-invalid={!!error} aria-describedby={error?errorId:undefined}
         value={editing?draft:shown}
@@ -124,7 +125,7 @@ export function UnitInput({
         }}
         {...{className:joinClasses(styled&&"rounded-control border bg-surface-sunken text-text px-2",
           styled&&(error?"border-danger":editing?"border-focus":"border-border"))}}
-        style={{flex:1,minWidth:64,minHeight:44,fontVariant:["tabular-nums"]}}/>
+        style={{flex:1,minWidth:64,minHeight:size.touch,fontVariant:["tabular-nums"]}}/>
       {context&&units&&units.length>1&&onUnitChange?<MenuButton label={label+" unit, "+context.unit}
         items={units.map(u=>({id:u,label:u,description:u===context.unit?"Current":undefined}))}
         onSelect={u=>{if(allowed()&&u!==context.unit)onUnitChange(u as UnitName);}} menuWidth={160} disabled={disabled}

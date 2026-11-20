@@ -30,6 +30,7 @@ import {
   type AutomationGeometry, type AutomationMode, type AutomationParam, type AutomationPoint,
 } from "./automation.ts";
 import type { AutomationModePicker } from "./AutomationModePicker.tsx";
+import { space, radius, leading, opacity } from '../../../tokens.ts';
 
 /** Minimum hit size (iOS 44pt / Android 48dp floor). */
 const HIT = 44;
@@ -201,14 +202,14 @@ function AutomationLaneBody({
         ...(web ? { cursor: disabled ? "default" : "copy" } as unknown as ViewStyle : null) }}>
       {lines.map(b => <View key={b} pointerEvents="none"
         {...{ className: joinClasses(styled && (b % beatsPerBar === 0 ? "bg-text-muted" : "bg-border")) }}
-        style={{ position: "absolute", top: 0, bottom: 0, left: b * beatPx, width: 1, opacity: b % beatsPerBar === 0 ? 0.5 : 1 }} />)}
+        style={{ position: "absolute", top: 0, bottom: 0, left: b * beatPx, width: 1, opacity: b % beatsPerBar === 0 ? opacity[50] : 1 }} />)}
       {axis.map(a => <View key={a.t} pointerEvents="none" {...{ className: joinClasses(styled && "bg-border") }}
         style={{ position: "absolute", left: 0, right: 0, top: valueToY(a.v, geometry), height: 1 }} />)}
     </Pressable>
     {automationSegments(shown, geometry).map((s, i) => <View key={i} pointerEvents="none" {...{ className: lineClass }}
       // One extra point each way closes the antialiasing gaps between pieces.
       style={{ position: "absolute", left: s.centerX - s.length / 2 - 1, top: s.centerY - 1, width: s.length + 2, height: 2,
-        borderRadius: 1, transform: [{ rotate: `${s.angleDeg}deg` }] }} />)}
+        borderRadius: radius[1], transform: [{ rotate: `${s.angleDeg}deg` }] }} />)}
     {points.map((point, index) => <PointHandle key={index} index={index} points={points} shown={shown[index] ?? point}
       geometry={geometry} snapTicks={snapTicks} ppq={ppq} beatsPerBar={beatsPerBar} store={store}
       selected={index === selectedIndex} off={off} disabled={disabled} styled={styled}
@@ -220,17 +221,17 @@ function AutomationLaneBody({
     {...{ className: joinClasses(styled && "rounded-card border border-border bg-surface-raised overflow-hidden", className) }}
     style={style}>
     <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
-    <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "baseline", columnGap: 12, rowGap: 2,
-      paddingHorizontal: 12, paddingTop: 10, paddingBottom: 8 }}>
+    <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "baseline", columnGap: space[3], rowGap: space[0.5],
+      paddingHorizontal: space[3], paddingTop: space[2.5], paddingBottom: space[2] }}>
       <Text {...{ className: joinClasses(styled && "text-text font-semibold") }}>{label}</Text>
       <Text {...{ className: joinClasses(styled && "text-text-muted text-sm") }} accessibilityLiveRegion="polite"
         style={{ fontVariant: ["tabular-nums"] }}>{readout}</Text>
     </View>
-    <View style={{ flexDirection: "row", height, opacity: disabled ? 0.45 : 1 }}>
+    <View style={{ flexDirection: "row", height, opacity: disabled ? opacity[45] : 1 }}>
       <View aria-hidden importantForAccessibility="no-hide-descendants" style={{ width: AXIS }}>
         {axis.map(a => <Text key={a.t} {...{ className: joinClasses(styled && "text-text-muted text-xs") }}
-          style={{ position: "absolute", left: 0, right: 0, top: valueToY(a.v, geometry) - 8, height: 16, lineHeight: 16,
-            paddingHorizontal: 8, textAlign: "right", fontVariant: ["tabular-nums"] }}>{a.t}</Text>)}
+          style={{ position: "absolute", left: 0, right: 0, top: valueToY(a.v, geometry) - 8, height: 16, lineHeight: leading[16],
+            paddingHorizontal: space[2], textAlign: "right", fontVariant: ["tabular-nums"] }}>{a.t}</Text>)}
       </View>
       <View {...{ className: joinClasses(styled && "bg-surface-sunken") }}
         style={{ flex: 1, overflow: "hidden", direction: "ltr" }}>
@@ -240,8 +241,8 @@ function AutomationLaneBody({
       </View>
     </View>
     <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between",
-      gap: 8, paddingHorizontal: 12, paddingVertical: 8 }}>
-      <View style={{ flexShrink: 1, flexGrow: 1, flexBasis: 180, gap: 2 }}>
+      gap: space[2], paddingHorizontal: space[3], paddingVertical: space[2] }}>
+      <View style={{ flexShrink: 1, flexGrow: 1, flexBasis: 180, gap: space[0.5] }}>
         {status.map(t => <Text key={t} {...{ className: muted }}>{t}</Text>)}
       </View>
       <Pressable accessibilityRole="button" accessibilityLabel={"Add point at " + formatPosition(cursor, ppq, beatsPerBar)}
@@ -249,7 +250,7 @@ function AutomationLaneBody({
         accessibilityState={{ disabled: disabled || !cursorFree }}
         disabled={disabled || !cursorFree} onPress={addCursor}
         {...{ className: joinClasses(styled && "rounded-control border border-border bg-surface-sunken items-center justify-center active:opacity-80 focus-visible:ring-2 focus-visible:ring-focus") }}
-        style={{ minHeight: HIT, minWidth: HIT, paddingHorizontal: 14, opacity: disabled || !cursorFree ? 0.45 : 1 }}>
+        style={{ minHeight: HIT, minWidth: HIT, paddingHorizontal: space[3.5], opacity: disabled || !cursorFree ? opacity[45] : 1 }}>
         <Text {...{ className: joinClasses(styled && "text-text font-semibold") }}>Add point</Text>
       </Pressable>
     </View>

@@ -17,6 +17,7 @@ import type {RippleScope,TimelineTrack} from "./edits.ts";
 import {
   SPEED_RANGE,batchRemove,batchRippleDelete,batchShift,batchSpeed,selectedClips,type BatchEdit,type BatchResult,
 } from "./batch.ts";
+import {space} from '../../../tokens.ts';
 
 /** Props for {@linkcode BatchEditPanel}. */
 export interface BatchEditPanelProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -76,17 +77,17 @@ function BatchEditPanelBody({
   const n=sel.length;
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-3",className)}} style={style}>
     <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
-    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
+    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:space[2]}}>
       <Text accessibilityLiveRegion="polite" {...id("count")} {...{className:joinClasses(styled&&"text-text font-semibold")}}>
         {n?`${n} clip${n===1?"":"s"} selected`:"No clips selected"}</Text>
       {n&&onClearSelection?<Button title="Clear selection" variant="ghost" size="sm" onPress={onClearSelection} {...id("clear")}/>:null}
     </View>
     {!n?<Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}}>
       Shift-click clips, or use Shift+Enter on a focused clip, to select several.</Text>:null}
-    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"flex-end",gap:8}}>
+    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"flex-end",gap:space[2]}}>
       <TextField id={(testID??"batch")+"-shift"} label="Shift by frames" value={form.shift} keyboardType="number-pad" editable={!disabled}
         onChangeText={shift=>store.set(f=>({...f,shift}))} style={{width:88}} errorText={Number.isNaN(shiftFrames)?"Whole frames":undefined}/>
-      <View style={{flexDirection:"row",gap:8,direction:"ltr"}}>
+      <View style={{flexDirection:"row",gap:space[2],direction:"ltr"}}>
       <Button title="Earlier" variant="secondary" size="sm" disabled={disabled||!earlier.valid} {...id("earlier")}
         accessibilityHint={why(earlier)??"Move every selected clip earlier"} onPress={()=>run(earlier)}/>
       <Button title="Later" variant="secondary" size="sm" disabled={disabled||!later.valid} {...id("later")}
@@ -96,14 +97,14 @@ function BatchEditPanelBody({
     {n&&!earlier.valid&&!later.valid?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{why(later)}.</Text>
       :n&&(!earlier.valid||!later.valid)?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>
         {(!earlier.valid?"Earlier: "+why(earlier):"Later: "+why(later))+"."}</Text>:null}
-    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"flex-end",gap:8}}>
+    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"flex-end",gap:space[2]}}>
       <TextField id={(testID??"batch")+"-speed"} label={`Speed (${SPEED_RANGE.min}x to ${SPEED_RANGE.max}x)`} value={form.speed}
         keyboardType="decimal-pad" editable={!disabled} onChangeText={speed=>store.set(f=>({...f,speed}))} style={{width:88}}/>
       <Button title="Set speed" variant="secondary" size="sm" disabled={disabled||!speedResult.valid} {...id("speed")}
         accessibilityHint={why(speedResult)??"Set every selected clip to this speed"} onPress={()=>run(speedResult)}/>
     </View>
     {n&&!speedResult.valid?<Text {...id("speed-reason")} {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{why(speedResult)}.</Text>:null}
-    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
+    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:space[2]}}>
       <Button title="Remove" variant="secondary" size="sm" disabled={disabled||!remove.valid} {...id("remove")}
         accessibilityHint={why(remove)??"Remove the selected clips and leave gaps"} onPress={()=>run(remove)}/>
       <Button title="Ripple delete" variant="secondary" size="sm" disabled={disabled||!ripple.valid} {...id("ripple")}

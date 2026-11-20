@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/harmony",
+  "title": "harmony",
+  "description": "harmony, a color helper module. Exports harmonyColors.",
+  "registryDependencies": [
+    "@nyc-tron/forge/color"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/harmony.ts",
+      "content": "import {assertHsv,wrapHue,type HsvColor} from \"@/components/nyc-tron/ui/components/forge/color\";\n\n/** Color harmony rules offered by `ColorHarmonyAssistant`. */\nexport type HarmonyKind=\"complementary\"|\"analogous\"|\"triadic\"|\"split-complementary\"|\"square\";\n\n/** Every {@linkcode HarmonyKind} in display order, with its hue offsets in degrees. */\nexport const HARMONY_KINDS=[\n  {kind:\"complementary\",label:\"Complementary\",turns:[180]},\n  {kind:\"analogous\",label:\"Analogous\",turns:[-30,30]},\n  {kind:\"triadic\",label:\"Triadic\",turns:[120,240]},\n  {kind:\"split-complementary\",label:\"Split complementary\",turns:[150,210]},\n  {kind:\"square\",label:\"Square\",turns:[90,180,270]},\n] as const satisfies readonly {kind:HarmonyKind;label:string;turns:readonly number[]}[];\n\n/**\n * The base color followed by its companions for `kind`. Companions rotate the\n * hue and keep saturation, value and alpha, so a gray base yields grays.\n */\nexport function harmonyColors(base:HsvColor,kind:HarmonyKind):HsvColor[]{\n  assertHsv(base);\n  const entry=HARMONY_KINDS.find(k=>k.kind===kind);\n  if(!entry)throw new RangeError(\"Unknown harmony \"+String(kind));\n  const h=wrapHue(base.h);\n  return [{...base,h},...entry.turns.map(t=>({...base,h:wrapHue(h+t)}))];\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/color/harmony.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/harmony",
+    "exports": [
+      "HARMONY_KINDS",
+      "HarmonyKind",
+      "harmonyColors"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

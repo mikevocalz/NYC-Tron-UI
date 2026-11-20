@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/slides/animation-model",
+  "title": "animation model",
+  "description": "animation model, a presentation slide state model. Exports effectLabel, formatSeconds, parseSeconds.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/slides/animation-model.ts",
+      "content": "/** When in a slide's life an effect plays. */\nexport type AnimationCategory=\"entrance\"|\"emphasis\"|\"exit\";\n\n/** An effect the animation pane can offer; `kind` is the engine's effect id. */\nexport interface AnimationEffect {\n  readonly kind:string;\n  readonly category:AnimationCategory;\n  readonly label:string;\n}\n\n/**\n * Effects with their usual names. Hosts pass the subset their engine plays;\n * an effect the engine cannot store is never offered.\n */\nexport const SLIDE_ANIMATION_EFFECTS={\n  fadeIn:{kind:\"fadeIn\",category:\"entrance\",label:\"Fade in\"},\n  slideInLeft:{kind:\"slideInLeft\",category:\"entrance\",label:\"Fly in from left\"},\n  zoomIn:{kind:\"zoomIn\",category:\"entrance\",label:\"Zoom in\"},\n  pulse:{kind:\"pulse\",category:\"emphasis\",label:\"Pulse\"},\n  spin:{kind:\"spin\",category:\"emphasis\",label:\"Spin\"},\n  fadeOut:{kind:\"fadeOut\",category:\"exit\",label:\"Fade out\"},\n  zoomOut:{kind:\"zoomOut\",category:\"exit\",label:\"Zoom out\"},\n} as const satisfies Record<string,AnimationEffect>;\n\n/** One animation on a slide; `index` is its position in the engine's list (what removal takes). */\nexport interface SlideAnimation {\n  readonly index:number;\n  readonly objectId:string;\n  readonly kind:string;\n  /** Seconds from the slide appearing. */\n  readonly startS:number;\n  readonly durationS:number;\n  readonly trigger?:'on-click'|'with-previous'|'after-previous';\n  readonly order?:number;\n}\n\n/** Longest start or duration the pane accepts, in seconds. */\nexport const ANIMATION_MAX_SECONDS=600;\n\n/** Animations in play order: by start time, then by engine order. */\nexport function playOrder(animations:readonly SlideAnimation[]):SlideAnimation[]{\n  return [...animations].sort((a,b)=>a.startS-b.startS||a.index-b.index);\n}\n\n/** When the last animation ends, in seconds; 0 with none. */\nexport function timelineEnd(animations:readonly SlideAnimation[]):number{\n  return animations.reduce((m,a)=>Math.max(m,a.startS+a.durationS),0);\n}\n\n/**\n * Parses a seconds field (\"1\", \"0.5\", \"1,5\", \"2 s\"). Returns the value or an\n * error sentence naming the allowed range.\n */\nexport function parseSeconds(text:string,{allowZero}:{allowZero:boolean}):{value:number}|{error:string}{\n  const t=text.trim().replace(/\\s*s(ec(onds?)?)?$/iu,\"\").replace(\",\",\".\");\n  const v=Number(t);\n  if(t===\"\"||!Number.isFinite(v))return {error:\"Enter a number of seconds.\"};\n  if(allowZero?v<0:v<=0)return {error:allowZero?\"Use 0 seconds or more.\":\"Use more than 0 seconds.\"};\n  if(v>ANIMATION_MAX_SECONDS)return {error:`Use ${ANIMATION_MAX_SECONDS} seconds or less.`};\n  return {value:Math.round(v*1000)/1000};\n}\n\n/** \"0.5 s\", \"2 s\". */\nexport function formatSeconds(v:number):string{\n  return String(Math.round(v*100)/100)+\" s\";\n}\n\n/** Effect name for `kind`, falling back to the raw kind for effects the catalog does not know. */\nexport function effectLabel(kind:string,effects:readonly AnimationEffect[]):string{\n  return effects.find(e=>e.kind===kind)?.label??(SLIDE_ANIMATION_EFFECTS as Record<string,AnimationEffect>)[kind]?.label??kind;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/slides/animation-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/slides/animation-model",
+    "exports": [
+      "ANIMATION_MAX_SECONDS",
+      "AnimationCategory",
+      "AnimationEffect",
+      "SLIDE_ANIMATION_EFFECTS",
+      "SlideAnimation",
+      "effectLabel",
+      "formatSeconds",
+      "parseSeconds",
+      "playOrder",
+      "timelineEnd"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

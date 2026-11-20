@@ -1,0 +1,70 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/photo/PhotoVersionHistoryBrowser",
+  "title": "Photo Version History Browser",
+  "description": "Photo Version History Browser, a photo editing component. Props: photoId, versions, originalVersionId, onSelect.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/feedback/ErrorMessage",
+    "@nyc-tron/forge/photo/photo-adjustments"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/photo/PhotoVersionHistoryBrowser.tsx",
+      "content": "import {useLayoutEffect,useMemo} from 'react';\nimport {FlatList,Pressable,Text,View,type ViewProps} from 'react-native';\nimport {Button} from '@/components/nyc-tron/ui/components/Button';\nimport {ErrorMessage} from '@/components/nyc-tron/ui/components/feedback/ErrorMessage';\nimport {useOwnedAction} from '@/components/nyc-tron/ui/components/shell/useOwnedAction';\nimport {joinClasses} from '@/components/nyc-tron/ui/components/styles';\nimport {validatePhotoDevelop,type PhotoDevelopSettings} from '@/components/nyc-tron/ui/components/forge/photo/photo-adjustments';\nimport {space} from '@/components/nyc-tron/ui/tokens';\nexport interface PhotoVersion {readonly id:string;readonly name:string;readonly timestampMs:number;readonly settings:PhotoDevelopSettings}\nexport interface PhotoVersionHistoryBrowserProps extends Omit<ViewProps,'children'> {\n readonly photoId:string;readonly revision:string;readonly versions:readonly PhotoVersion[];readonly originalVersionId:string|null;readonly selectedId:string|null;readonly currentId:string|null;\n readonly onSelect:(id:string)=>void;readonly onCompare:(version:PhotoVersion|undefined)=>void;\n readonly onRestore:(version:PhotoVersion,signal:AbortSignal)=>void|Promise<void>;\n readonly height?:number;readonly disabled?:boolean;readonly unstyled?:boolean;\n}\n/** Read-only snapshots with explicit compare/restore; there is no original-delete operation. */\nexport function PhotoVersionHistoryBrowser({photoId,revision,versions,originalVersionId,selectedId,currentId,onSelect,onCompare,onRestore,height=320,disabled=false,unstyled=false,...props}:PhotoVersionHistoryBrowserProps){\n const byId=useMemo(()=>{if(versions.length>10000)throw new RangeError('Photo version page exceeds 10,000 snapshots');const map=new Map<string,PhotoVersion>();for(const version of versions){if(!version.id.trim()||!version.name.trim()||version.name.length>256||!Number.isFinite(version.timestampMs)||!Number.isFinite(new Date(version.timestampMs).getTime())||map.has(version.id))throw new TypeError('Invalid photo version identity or timestamp');validatePhotoDevelop(version.settings);map.set(version.id,version);}return map;},[versions]);\n if(!photoId.trim()||!Number.isFinite(height)||height<100||height>4000||originalVersionId!==null&&!byId.has(originalVersionId))throw new RangeError('Invalid photo version scope, original or bounds');\n const action=useOwnedAction(JSON.stringify([photoId,revision])),locked=disabled||action.pending!==null,selected=selectedId===null?undefined:byId.get(selectedId),original=originalVersionId===null?undefined:byId.get(originalVersionId);\n useLayoutEffect(()=>()=>onCompare(undefined),[photoId,revision]);\n const restore=(version:PhotoVersion)=>{if(!locked&&version.id!==currentId)void action.run('restore',signal=>onRestore(version,signal));};\n return <View {...props} style={[{gap:space[2]},props.style]}>\n  <FlatList data={versions} keyExtractor={version=>version.id} initialNumToRender={10} windowSize={5} style={{height}} accessibilityLabel=\"Photo edit versions\" extraData={[selectedId,currentId,locked,originalVersionId]}\n   ListEmptyComponent={<Text {...{className:joinClasses(!unstyled&&'text-text-muted')}}>No photo versions supplied</Text>}\n   renderItem={({item})=><Pressable accessibilityRole=\"radio\" accessibilityLabel={`${item.name}${item.id===originalVersionId?', original':''}${item.id===currentId?', current':''}`} accessibilityState={{checked:item.id===selectedId,disabled:locked}} aria-checked={item.id===selectedId} disabled={locked} onPress={()=>{if(!locked)onSelect(item.id);}} style={{minHeight:56,padding:space[2],gap:space[1]}}><Text {...{className:joinClasses(!unstyled&&'text-text')}}>{item.name}</Text><Text {...{className:joinClasses(!unstyled&&'text-text-muted')}}>{new Date(item.timestampMs).toLocaleString()}</Text></Pressable>}/>\n  <Button title=\"Compare selected photo version\" disabled={locked||!selected} unstyled={unstyled} onPress={()=>{if(!locked&&selected)onCompare(selected);}}/>\n  <Button title=\"Close photo version comparison\" unstyled={unstyled} onPress={()=>onCompare(undefined)}/>\n  <Button title=\"Restore selected photo version\" disabled={locked||!selected||selected.id===currentId} unstyled={unstyled} onPress={()=>{if(selected)restore(selected);}}/>\n  <Button title=\"Restore original photo settings\" disabled={locked||!original||original.id===currentId} unstyled={unstyled} onPress={()=>{if(original)restore(original);}}/>\n  {!original?<Text {...{className:joinClasses(!unstyled&&'text-text-muted')}}>Original settings have not been supplied</Text>:null}\n  {action.pending!==null?<Button title=\"Cancel photo version restore\" unstyled={unstyled} onPress={action.cancel}/>:null}\n  <ErrorMessage {...(action.error?{message:action.error}:{})} unstyled={unstyled}/>\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/photo/PhotoVersionHistoryBrowser.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/shell/action-owner.ts",
+      "content": "import { createStore } from \"zustand/vanilla\";\n\n/** UI request state. Abort controllers stay in the owner's closure. */\nexport interface ActionState { readonly pending: string | null; readonly error: string | null }\nexport function createActionOwner(currentScope: () => string) {\n  const store = createStore<ActionState>(() => ({ pending: null, error: null }));\n  let active = false;\n  let current: { readonly scope: string; readonly abort: AbortController } | null = null;\n  function cancel() {\n    const previous = current; current = null;\n    previous?.abort.abort();\n  }\n  return {\n    store,\n    activate() { cancel(); active = true; store.setState({ pending: null, error: null }); },\n    deactivate() { active = false; cancel(); },\n    cancel() { cancel(); store.setState({ pending: null }); },\n    async run<T>(id: string, operation: (signal: AbortSignal) => T | Promise<T>, consume?: (value: T) => void, options?: { pendingForAsyncOnly?: boolean }): Promise<boolean> {\n      if (!active) return false;\n      cancel();\n      const request = { scope: currentScope(), abort: new AbortController() };\n      current = request;\n      const valid = () => active && current === request && request.scope === currentScope();\n      if (options?.pendingForAsyncOnly) store.setState({ error: null });\n      else store.setState({ pending: id, error: null });\n      try {\n        if (!valid()) return false;\n        const result = operation(request.abort.signal);\n        let value: T;\n        if (options?.pendingForAsyncOnly) {\n          if (result && typeof (result as Promise<T>).then === 'function') {\n            // A synchronous acknowledgement or already-resolved promise must not\n            // disable (and blur) the focused control between keyboard commands.\n            let settled = false;\n            const completion = Promise.resolve(result).then(value => { settled = true; return value; }, error => { settled = true; throw error; });\n            void Promise.resolve().then(() => { if (!settled && valid()) store.setState({ pending: id, error: null }); });\n            value = await completion;\n          } else value = result as T;\n        } else value = await result;\n        if (!valid()) return false;\n        consume?.(value);\n        if (!valid()) return false;\n        store.setState({ pending: null });\n        return true;\n      } catch (error) {\n        if (!valid()) return false;\n        store.setState({ pending: null, error: error instanceof Error ? error.message : String(error) });\n        return false;\n      } finally { if (current === request) current = null; }\n    },\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/action-owner.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/useOwnedAction.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport { useStore } from \"zustand\";\nimport { createActionOwner } from \"@/components/nyc-tron/ui/components/shell/action-owner\";\n\n/** Cancel stale requests at the committed document boundary, before new controls accept input. */\nexport function useOwnedAction(scope: string) {\n  const committed = useRef(scope);\n  const ref = useRef<ReturnType<typeof createActionOwner> | null>(null);\n  ref.current ??= createActionOwner(() => committed.current);\n  const owner = ref.current;\n  useLayoutEffect(() => {\n    committed.current = scope;\n    owner.activate();\n    return () => owner.deactivate();\n  }, [owner, scope]);\n  const state = useStore(owner.store, value => value);\n  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);\n  return { ...state, run, cancel: owner.cancel };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    },
+    {
+      "path": "packages/ui/src/tokens.ts",
+      "content": "// Generated by tooling/codemod/generate-token-module.mjs from docs/agent-native/tokens.json.\n// Do not edit by hand. Change tokens.json, regenerate, and run tooling/codemod/prove-equivalence.mjs.\n// Internal copy of the core token module so this package has no runtime dependency on core. Not exported from package.json.\n\n/** One spacing unit in px. `space` keys are multiples of it. */\nexport const SPACE_UNIT = 4;\n\n/** Spacing steps. The key is a multiple of SPACE_UNIT, so `space[2]` is 8 and `space[1.5]` is 6. Negative spacing is `-space[n]`. */\nexport const space = {\n  0: 0,\n  0.25: 1,\n  0.5: 2,\n  0.75: 3,\n  1: 4,\n  1.5: 6,\n  2: 8,\n  2.5: 10,\n  3: 12,\n  3.5: 14,\n  4: 16,\n} as const;\n\n/** Corner radius steps in px. `radius.full` is the pill radius. */\nexport const radius = {\n  1: 1,\n  2: 2,\n  3: 3,\n  4: 4,\n  5: 5,\n  6: 6,\n  7: 7,\n  8: 8,\n  9: 9,\n  10: 10,\n  12: 12,\n  14: 14,\n  full: 9999,\n} as const;\n\n/** Font size steps in px, keyed by value. */\nexport const font = {\n  10: 10,\n  11: 11,\n  12: 12,\n  13: 13,\n  14: 14,\n  15: 15,\n  16: 16,\n  17: 17,\n} as const;\n\n/** Line height steps in px, keyed by value. */\nexport const leading = {\n  14: 14,\n  16: 16,\n} as const;\n\n/** Border width steps in px, keyed by value (`border[1.5]`). */\nexport const border = {\n  0: 0,\n  1: 1,\n  1.5: 1.5,\n  2: 2,\n  3: 3,\n  4: 4,\n  8: 8,\n} as const;\n\n/** Opacity steps keyed by percent (`opacity[45]` is 0.45). 0 and 1 are not tokens. */\nexport const opacity = {\n  30: 0.3,\n  35: 0.35,\n  40: 0.4,\n  45: 0.45,\n  50: 0.5,\n  55: 0.55,\n  60: 0.6,\n  70: 0.7,\n  90: 0.9,\n} as const;\n\n/** Black overlay colours keyed by alpha percent. */\nexport const scrim = {\n  12: \"rgba(0,0,0,0.12)\",\n  18: \"rgba(0,0,0,0.18)\",\n  25: \"rgba(0,0,0,0.25)\",\n  50: \"rgba(0,0,0,0.5)\",\n} as const;\n\n/** Box shadows. `elevation[0]` is none. */\nexport const elevation = {\n  0: \"none\",\n  1: \"0 1px 3px rgba(0,0,0,0.25)\",\n  2: \"0 4px 12px rgba(0,0,0,0.18)\",\n} as const;\n\n/** Fixed sizes. `size.touch` is the 44 px minimum touch target. */\nexport const size = {\n  touch: 44,\n} as const;\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/tokens.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/photo/PhotoVersionHistoryBrowser",
+    "exports": [
+      "PhotoVersion",
+      "PhotoVersionHistoryBrowser",
+      "PhotoVersionHistoryBrowserProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

@@ -13,6 +13,7 @@ import {Button} from "../../Button.tsx";
 import {SegmentedControl} from "../../SegmentedControl.tsx";
 import {rippleDeleteEdit,type MoveMode,type RippleScope,type TimelineEdit,type TimelineTrack} from "./edits.ts";
 import {TRIM_MODE_PROBLEM_TEXT,rippleDeletePreview} from "./trim-modes.ts";
+import {space} from '../../../tokens.ts';
 
 /** Props for {@linkcode DragReorderAndRipple}. */
 export interface DragReorderAndRippleProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -75,7 +76,7 @@ function DragReorderAndRippleBody({
     <SegmentedControl aria-label="When a moved clip meets another" options={MODES} value={mode} disabled={disabled}
       onChange={v=>onMoveModeChange(v==="strict"?undefined:v)} unstyled={unstyled} {...id("mode")}/>
     <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{MODE_HELP[mode]}</Text>
-    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
+    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:space[2]}}>
       <SegmentedControl aria-label="Ripple affects" value={rippleScope} onChange={onRippleScopeChange} disabled={disabled}
         options={[{value:"track",label:"This track"},{value:"all",label:"All tracks"}]} unstyled={unstyled} {...id("scope")}/>
       <Button title="Ripple delete" variant="secondary" size="sm" disabled={disabled||!found||!preview?.valid} {...id("ripple-delete")}

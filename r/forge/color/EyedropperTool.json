@@ -1,0 +1,74 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/EyedropperTool",
+  "title": "Eyedropper Tool",
+  "description": "Eyedropper Tool, a color component. Props: request, documentWidth, documentHeight, onRequestChange.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/Select",
+    "@nyc-tron/feedback/ErrorMessage",
+    "@nyc-tron/forge/color",
+    "@nyc-tron/shell/UnitInput"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/EyedropperTool.tsx",
+      "content": "import {useRef} from \"react\";\nimport {Text,View,type ViewProps} from \"react-native\";\nimport {createStore,type StoreApi} from \"zustand/vanilla\";\nimport {useStore} from \"zustand\";\nimport {UnitInput} from \"@/components/nyc-tron/ui/components/shell/UnitInput\";\nimport {Select} from \"@/components/nyc-tron/ui/components/Select\";\nimport {Button} from \"@/components/nyc-tron/ui/components/Button\";\nimport {ErrorMessage} from \"@/components/nyc-tron/ui/components/feedback/ErrorMessage\";\nimport {useOwnedAction} from \"@/components/nyc-tron/ui/components/shell/useOwnedAction\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {assertRgba,rgbaToHex,type RgbaColor} from \"@/components/nyc-tron/ui/components/forge/color\";\nimport {space} from \"@/components/nyc-tron/ui/tokens\";\n/** Exact document/revision/pixel selection sent to the host's document sampler. */\nexport interface EyedropperRequest {readonly documentId:string;readonly revision:string;readonly sourceId:string;readonly x:number;readonly y:number;readonly radius:number}\n/** Profile-preserving sampled channels plus a separate display-only sRGB preview. */\nexport interface SampledColor {readonly profileId:string;readonly channels:readonly number[];readonly alpha:number;readonly preview:RgbaColor}\n/** Controlled pixel selection, sampling source and provider contract for EyedropperTool. */\nexport interface EyedropperToolProps extends Omit<ViewProps,'children'>{\n readonly request:EyedropperRequest;\n readonly documentWidth:number;readonly documentHeight:number;\n readonly sources:readonly {readonly id:string;readonly label:string}[];\n readonly onRequestChange:(request:EyedropperRequest)=>void;\n /** Samples document pixels, never an OS screen screenshot. */\n readonly onSample:(request:EyedropperRequest,signal:AbortSignal)=>SampledColor|Promise<SampledColor>;\n /** Applies the exact sampled profile/channels; the host rejects stale document revisions. */\n readonly onApply:(sample:SampledColor,request:EyedropperRequest,signal:AbortSignal)=>void|Promise<void>;\n readonly disabled?:boolean;readonly unstyled?:boolean;\n}\n/** Validates a sampled color without silently converting/clipping it to the display preview. */\nexport function validateSampledColor(sample:SampledColor):void{\n if(!sample.profileId||sample.channels.length<1||sample.channels.length>16||sample.channels.some(n=>!Number.isFinite(n)))throw new TypeError('Sample requires a profile and 1..16 finite channels');\n if(!Number.isFinite(sample.alpha)||sample.alpha<0||sample.alpha>1)throw new RangeError('Sample alpha must be 0..1');assertRgba(sample.preview);\n}\n/** Document-space eyedropper with bounded sampling, explicit apply, cancellation and stale-result suppression. */\nexport function EyedropperTool({request,documentWidth,documentHeight,sources,onRequestChange,onSample,onApply,disabled=false,unstyled=false,...props}:EyedropperToolProps){\n if(![documentWidth,documentHeight].every(n=>Number.isSafeInteger(n)&&n>0)||!request.documentId||!request.revision)throw new TypeError('Eyedropper requires document identity, revision and positive pixel dimensions');\n if(![request.x,request.y,request.radius].every(Number.isSafeInteger)||request.x<0||request.x>=documentWidth||request.y<0||request.y>=documentHeight||request.radius<0||request.radius>128)throw new RangeError('Invalid document sampling point or radius');\n if(sources.length>1000||sources.some(s=>!s.id||!s.label)||new Set(sources.map(s=>s.id)).size!==sources.length||!sources.some(s=>s.id===request.sourceId))throw new TypeError('Choose a distinct, available document sampling source');\n const scope=JSON.stringify([request,documentWidth,documentHeight,disabled]),action=useOwnedAction(scope);\n const local=useRef<StoreApi<{sample:SampledColor|null;scope:string}>|null>(null);local.current??=createStore(()=>({sample:null as SampledColor|null,scope:''}));const store=local.current,state=useStore(store,s=>s),sample=state.scope===scope?state.sample:null,pending=action.pending!==null,locked=disabled||pending;\n const set=(change:Partial<EyedropperRequest>)=>{if(!locked)onRequestChange({...request,...change});};\n return <View {...props} style={[{gap:space[2]},props.style]}>\n  <Select label=\"Document sampling source\" value={request.sourceId} options={sources.map(s=>({value:s.id,label:s.label}))} onValueChange={sourceId=>set({sourceId})} disabled={locked} unstyled={unstyled}/>\n  <UnitInput label=\"Sample pixel X\" value={request.x} min={0} max={documentWidth-1} step={1} precision={0} disabled={locked} unstyled={unstyled} onCommit={x=>set({x:Math.round(x)})}/>\n  <UnitInput label=\"Sample pixel Y\" value={request.y} min={0} max={documentHeight-1} step={1} precision={0} disabled={locked} unstyled={unstyled} onCommit={y=>set({y:Math.round(y)})}/>\n  <UnitInput label=\"Sample radius pixels\" value={request.radius} min={0} max={128} step={1} precision={0} disabled={locked} unstyled={unstyled} onCommit={radius=>set({radius:Math.round(radius)})}/>\n  <Button title=\"Sample document color\" disabled={locked} unstyled={unstyled} onPress={()=>{if(locked)return;store.setState({sample:null,scope:''});void action.run('sample',async signal=>{const result=await onSample(request,signal);validateSampledColor(result);return result;},sample=>store.setState({sample,scope}));}}/>\n  <Text accessibilityLiveRegion=\"polite\" {...{className:joinClasses(!unstyled&&'text-text')}}>{sample?`${sample.profileId}: ${sample.channels.join(', ')}; alpha ${sample.alpha}; display preview ${rgbaToHex(sample.preview,true)}`:'No color sampled for this document selection'}</Text>\n  <Button title=\"Apply sampled color\" disabled={locked||!sample} unstyled={unstyled} onPress={()=>{if(!locked&&sample)void action.run('apply',signal=>onApply(sample,request,signal));}}/>\n  {pending?<Button title=\"Cancel color sampling request\" unstyled={unstyled} onPress={action.cancel}/>:null}\n  <ErrorMessage {...(action.error?{message:action.error}:{})} unstyled={unstyled}/>\n </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/color/EyedropperTool.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/shell/action-owner.ts",
+      "content": "import { createStore } from \"zustand/vanilla\";\n\n/** UI request state. Abort controllers stay in the owner's closure. */\nexport interface ActionState { readonly pending: string | null; readonly error: string | null }\nexport function createActionOwner(currentScope: () => string) {\n  const store = createStore<ActionState>(() => ({ pending: null, error: null }));\n  let active = false;\n  let current: { readonly scope: string; readonly abort: AbortController } | null = null;\n  function cancel() {\n    const previous = current; current = null;\n    previous?.abort.abort();\n  }\n  return {\n    store,\n    activate() { cancel(); active = true; store.setState({ pending: null, error: null }); },\n    deactivate() { active = false; cancel(); },\n    cancel() { cancel(); store.setState({ pending: null }); },\n    async run<T>(id: string, operation: (signal: AbortSignal) => T | Promise<T>, consume?: (value: T) => void, options?: { pendingForAsyncOnly?: boolean }): Promise<boolean> {\n      if (!active) return false;\n      cancel();\n      const request = { scope: currentScope(), abort: new AbortController() };\n      current = request;\n      const valid = () => active && current === request && request.scope === currentScope();\n      if (options?.pendingForAsyncOnly) store.setState({ error: null });\n      else store.setState({ pending: id, error: null });\n      try {\n        if (!valid()) return false;\n        const result = operation(request.abort.signal);\n        let value: T;\n        if (options?.pendingForAsyncOnly) {\n          if (result && typeof (result as Promise<T>).then === 'function') {\n            // A synchronous acknowledgement or already-resolved promise must not\n            // disable (and blur) the focused control between keyboard commands.\n            let settled = false;\n            const completion = Promise.resolve(result).then(value => { settled = true; return value; }, error => { settled = true; throw error; });\n            void Promise.resolve().then(() => { if (!settled && valid()) store.setState({ pending: id, error: null }); });\n            value = await completion;\n          } else value = result as T;\n        } else value = await result;\n        if (!valid()) return false;\n        consume?.(value);\n        if (!valid()) return false;\n        store.setState({ pending: null });\n        return true;\n      } catch (error) {\n        if (!valid()) return false;\n        store.setState({ pending: null, error: error instanceof Error ? error.message : String(error) });\n        return false;\n      } finally { if (current === request) current = null; }\n    },\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/action-owner.ts"
+    },
+    {
+      "path": "packages/ui/src/components/shell/useOwnedAction.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport { useStore } from \"zustand\";\nimport { createActionOwner } from \"@/components/nyc-tron/ui/components/shell/action-owner\";\n\n/** Cancel stale requests at the committed document boundary, before new controls accept input. */\nexport function useOwnedAction(scope: string) {\n  const committed = useRef(scope);\n  const ref = useRef<ReturnType<typeof createActionOwner> | null>(null);\n  ref.current ??= createActionOwner(() => committed.current);\n  const owner = ref.current;\n  useLayoutEffect(() => {\n    committed.current = scope;\n    owner.activate();\n    return () => owner.deactivate();\n  }, [owner, scope]);\n  const state = useStore(owner.store, value => value);\n  const run: typeof owner.run = (id, operation, consume, options) => committed.current === scope ? owner.run(id, operation, consume, options) : Promise.resolve(false);\n  return { ...state, run, cancel: owner.cancel };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/useOwnedAction.ts"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    },
+    {
+      "path": "packages/ui/src/tokens.ts",
+      "content": "// Generated by tooling/codemod/generate-token-module.mjs from docs/agent-native/tokens.json.\n// Do not edit by hand. Change tokens.json, regenerate, and run tooling/codemod/prove-equivalence.mjs.\n// Internal copy of the core token module so this package has no runtime dependency on core. Not exported from package.json.\n\n/** One spacing unit in px. `space` keys are multiples of it. */\nexport const SPACE_UNIT = 4;\n\n/** Spacing steps. The key is a multiple of SPACE_UNIT, so `space[2]` is 8 and `space[1.5]` is 6. Negative spacing is `-space[n]`. */\nexport const space = {\n  0: 0,\n  0.25: 1,\n  0.5: 2,\n  0.75: 3,\n  1: 4,\n  1.5: 6,\n  2: 8,\n  2.5: 10,\n  3: 12,\n  3.5: 14,\n  4: 16,\n} as const;\n\n/** Corner radius steps in px. `radius.full` is the pill radius. */\nexport const radius = {\n  1: 1,\n  2: 2,\n  3: 3,\n  4: 4,\n  5: 5,\n  6: 6,\n  7: 7,\n  8: 8,\n  9: 9,\n  10: 10,\n  12: 12,\n  14: 14,\n  full: 9999,\n} as const;\n\n/** Font size steps in px, keyed by value. */\nexport const font = {\n  10: 10,\n  11: 11,\n  12: 12,\n  13: 13,\n  14: 14,\n  15: 15,\n  16: 16,\n  17: 17,\n} as const;\n\n/** Line height steps in px, keyed by value. */\nexport const leading = {\n  14: 14,\n  16: 16,\n} as const;\n\n/** Border width steps in px, keyed by value (`border[1.5]`). */\nexport const border = {\n  0: 0,\n  1: 1,\n  1.5: 1.5,\n  2: 2,\n  3: 3,\n  4: 4,\n  8: 8,\n} as const;\n\n/** Opacity steps keyed by percent (`opacity[45]` is 0.45). 0 and 1 are not tokens. */\nexport const opacity = {\n  30: 0.3,\n  35: 0.35,\n  40: 0.4,\n  45: 0.45,\n  50: 0.5,\n  55: 0.55,\n  60: 0.6,\n  70: 0.7,\n  90: 0.9,\n} as const;\n\n/** Black overlay colours keyed by alpha percent. */\nexport const scrim = {\n  12: \"rgba(0,0,0,0.12)\",\n  18: \"rgba(0,0,0,0.18)\",\n  25: \"rgba(0,0,0,0.25)\",\n  50: \"rgba(0,0,0,0.5)\",\n} as const;\n\n/** Box shadows. `elevation[0]` is none. */\nexport const elevation = {\n  0: \"none\",\n  1: \"0 1px 3px rgba(0,0,0,0.25)\",\n  2: \"0 4px 12px rgba(0,0,0,0.18)\",\n} as const;\n\n/** Fixed sizes. `size.touch` is the 44 px minimum touch target. */\nexport const size = {\n  touch: 44,\n} as const;\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/tokens.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/EyedropperTool",
+    "exports": [
+      "EyedropperRequest",
+      "EyedropperTool",
+      "EyedropperToolProps",
+      "SampledColor",
+      "validateSampledColor"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

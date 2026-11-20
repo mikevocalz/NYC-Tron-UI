@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/level-meter",
+  "title": "level meter",
+  "description": "level meter, an audio mixing and editing helper module. Exports createMeterAnnouncer, levelToDb, meterBand.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/level-meter.ts",
+      "content": "/**\n * Display math for an input level meter. The level comes from the app's audio\n * engine (Forge owns capture and PCM); this file only maps a linear peak in\n * [0, 1] to dBFS, a fill fraction and a coarse spoken band.\n */\n\n/** Coarse band a screen reader hears instead of a raw number every frame. */\nexport type MeterBand = \"silent\" | \"low\" | \"good\" | \"hot\" | \"clipping\";\n\n/** Lowest dBFS drawn by {@linkcode meterFill}; anything quieter is empty. */\nexport const METER_FLOOR_DB = -60;\n\n/** Band thresholds in dBFS, from loud to quiet. */\nexport const METER_BANDS = {\n  clipping: -0.5,\n  hot: -6,\n  good: -24,\n  low: -48,\n} as const satisfies Record<Exclude<MeterBand, \"silent\">, number>;\n\nfunction assertLevel(level: number): number {\n  if (!Number.isFinite(level) || level < 0) {\n    throw new RangeError(\"Meter level must be a finite linear peak >= 0, got \" + String(level));\n  }\n  return Math.min(1, level);\n}\n\n/** Linear peak to dBFS. Zero maps to -Infinity. */\nexport function levelToDb(level: number): number {\n  const value = assertLevel(level);\n  return value === 0 ? Number.NEGATIVE_INFINITY : 20 * Math.log10(value);\n}\n\n/** Fill fraction in [0, 1] on a dB scale from {@linkcode METER_FLOOR_DB} to 0 dBFS. */\nexport function meterFill(level: number): number {\n  const db = levelToDb(level);\n  if (db <= METER_FLOOR_DB) return 0;\n  return Math.min(1, (db - METER_FLOOR_DB) / -METER_FLOOR_DB);\n}\n\n/** Spoken band for a linear peak. */\nexport function meterBand(level: number): MeterBand {\n  const db = levelToDb(level);\n  if (db >= METER_BANDS.clipping) return \"clipping\";\n  if (db >= METER_BANDS.hot) return \"hot\";\n  if (db >= METER_BANDS.good) return \"good\";\n  if (db >= METER_BANDS.low) return \"low\";\n  return \"silent\";\n}\n\n/** Default spoken text per band. Apps pass their own for localization. */\nexport const METER_BAND_LABELS = {\n  silent: \"No input\",\n  low: \"Input low\",\n  good: \"Input level good\",\n  hot: \"Input hot\",\n  clipping: \"Input clipping\",\n} as const satisfies Record<MeterBand, string>;\n\n/** Options for {@linkcode createMeterAnnouncer}. */\nexport interface MeterAnnouncerOptions {\n  /** Minimum gap between two announcements, in ms. Clipping skips the wait. @default 2000 */\n  readonly minIntervalMs?: number;\n  /** Text per band. @default METER_BAND_LABELS */\n  readonly labels?: Readonly<Record<MeterBand, string>>;\n}\n\n/**\n * Returns a function fed with `(level, nowMs)` on every meter update. It\n * returns text to announce only when the band changed AND the interval has\n * elapsed since the last announcement; otherwise `undefined`. Clipping is\n * announced as soon as it starts, since it means the take is being damaged.\n * A band that flickers back to the last spoken one is never repeated.\n */\nexport function createMeterAnnouncer(\n  { minIntervalMs = 2000, labels = METER_BAND_LABELS }: MeterAnnouncerOptions = {},\n): (level: number, nowMs: number) => string | undefined {\n  if (!Number.isFinite(minIntervalMs) || minIntervalMs < 0) {\n    throw new RangeError(\"minIntervalMs must be a finite number >= 0\");\n  }\n  let spoken: MeterBand | undefined;\n  let spokenAt = Number.NEGATIVE_INFINITY;\n  return (level, nowMs) => {\n    const band = meterBand(level);\n    if (band === spoken) return undefined;\n    if (band !== \"clipping\" && nowMs - spokenAt < minIntervalMs) return undefined;\n    spoken = band;\n    spokenAt = nowMs;\n    return labels[band];\n  };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/audio/level-meter.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/level-meter",
+    "exports": [
+      "METER_BANDS",
+      "METER_BAND_LABELS",
+      "METER_FLOOR_DB",
+      "MeterAnnouncerOptions",
+      "MeterBand",
+      "createMeterAnnouncer",
+      "levelToDb",
+      "meterBand",
+      "meterFill"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

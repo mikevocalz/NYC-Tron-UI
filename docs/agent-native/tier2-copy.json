@@ -1,0 +1,2487 @@
+[
+ {
+  "id": ".",
+  "title": "NYC-Tron UI root",
+  "description": "Root barrel of @nyc-tron/ui, re-exports Button, ButtonProps, ButtonSize, ButtonVariant, Card, CardProps, NavigationItem, NavigationRail."
+ },
+ {
+  "id": "data/tree-grid",
+  "title": "tree grid",
+  "description": "tree grid, a data table helper module. Exports moveColumn, orderTreeColumns, toggleTreeSelection."
+ },
+ {
+  "id": "data/tree-row-heights",
+  "title": "tree row heights",
+  "description": "tree row heights, a data table helper module. Exports createRowHeightIndex."
+ },
+ {
+  "id": "files/DropZone",
+  "title": "Drop Zone",
+  "description": "Drop Zone, a file transfer component. Props: multiple, accept, allowedMimeTypes, onDrop."
+ },
+ {
+  "id": "files/FileImportExportSheet",
+  "title": "File Import Export Sheet",
+  "description": "File Import Export Sheet, a file transfer component. Props: usableRegions, visible, mode, onSettingsChange."
+ },
+ {
+  "id": "files/FilePicker",
+  "title": "File Picker",
+  "description": "File Picker, a file transfer component. Props: accept, multiple, documentSource, onFiles."
+ },
+ {
+  "id": "files/drop-model",
+  "title": "drop model",
+  "description": "drop model, a file transfer state model. Exports acceptsFile, dragDepth, matchesAccept."
+ },
+ {
+  "id": "files/file-transfer-model",
+  "title": "file transfer model",
+  "description": "file transfer model, a file transfer state model. Exports applyFormat, buildExportRequest, defaultExportSettings."
+ },
+ {
+  "id": "forge/ColorChannels",
+  "title": "Color Channels",
+  "description": "Color Channels, a creative app component. Props: value, showAlpha, previewClassName, onValueChange."
+ },
+ {
+  "id": "forge/NativeSeekBar",
+  "title": "Native Seek Bar",
+  "description": "Native Seek Bar, a creative app component."
+ },
+ {
+  "id": "forge/SpreadsheetGrid",
+  "title": "Spreadsheet Grid",
+  "description": "Spreadsheet Grid, a creative app component. Props: sheetId, readOnly, sheetName, onSelectionChange."
+ },
+ {
+  "id": "forge/WaveformLane",
+  "title": "Waveform Lane",
+  "description": "Waveform Lane, a creative app component. Props: peaks, columns, position, onSeekNormalized."
+ },
+ {
+  "id": "forge/audio/AudioClipTrimAndFade",
+  "title": "Audio Clip Trim And Fade",
+  "description": "Audio Clip Trim And Fade, an audio mixing and editing component. Props: lengthSamples, sampleRate, region, onCommit."
+ },
+ {
+  "id": "forge/audio/AudioEffectsPresetPanel",
+  "title": "Audio Effects Preset Panel",
+  "description": "Audio Effects Preset Panel, an audio mixing and editing component. Props: stack, bypassed, previewStatus, onRenderPreview."
+ },
+ {
+  "id": "forge/audio/AudioInterruptionRecoveryDialog",
+  "title": "Audio Interruption Recovery Dialog",
+  "description": "Audio Interruption Recovery Dialog, an audio mixing and editing component. Props: notice, notice, notice, onResume."
+ },
+ {
+  "id": "forge/audio/AudioPreview",
+  "title": "Audio Preview",
+  "description": "Audio Preview, an audio mixing and editing component. Props: state, peaks, onPlay."
+ },
+ {
+  "id": "forge/audio/AudioProcessingPanel",
+  "title": "Audio Processing Panel",
+  "description": "Audio Processing Panel, an audio mixing and editing component. Props: parameters, job, capability, onParameter."
+ },
+ {
+  "id": "forge/audio/AudioVideoSync",
+  "title": "Audio Video Sync",
+  "description": "Audio Video Sync, an audio mixing and editing component. Props: surface, aspectRatio, sampleRate, onLock."
+ },
+ {
+  "id": "forge/audio/AutoDuckEnvelopePanel",
+  "title": "Auto Duck Envelope Panel",
+  "description": "Auto Duck Envelope Panel, an audio mixing and editing component. Props: settings, envelope, onSettingsCommit."
+ },
+ {
+  "id": "forge/audio/AutomationLane",
+  "title": "Automation Lane",
+  "description": "Automation Lane, an audio mixing and editing component. Props: param, points, mode, onSelect."
+ },
+ {
+  "id": "forge/audio/AutomationModePicker",
+  "title": "Automation Mode Picker",
+  "description": "Automation Mode Picker, an audio mixing and editing component. Props: mode, capabilities, onModeCommit."
+ },
+ {
+  "id": "forge/audio/BeatDetectionMarkerLane",
+  "title": "Beat Detection Marker Lane",
+  "description": "Beat Detection Marker Lane, an audio mixing and editing component. Props: lane, sensitivity, detectedBpm, onSensitivityCommit."
+ },
+ {
+  "id": "forge/audio/BusAndRoutingMatrix",
+  "title": "Bus And Routing Matrix",
+  "description": "Bus And Routing Matrix, an audio mixing and editing component. Props: sources, ioBindings, buses, onInputCommit."
+ },
+ {
+  "id": "forge/audio/ChannelStrip",
+  "title": "Channel Strip",
+  "description": "Channel Strip, an audio mixing and editing component. Props: labels, channel, audibility, onGainCommit."
+ },
+ {
+  "id": "forge/audio/ClipGainEnvelope",
+  "title": "Clip Gain Envelope",
+  "description": "Clip Gain Envelope, an audio mixing and editing component. Props: lengthSamples, mode."
+ },
+ {
+  "id": "forge/audio/DeviceAndChannelPicker",
+  "title": "Device And Channel Picker",
+  "description": "Device And Channel Picker, an audio mixing and editing component. Props: devices, value, recording, onCommit."
+ },
+ {
+  "id": "forge/audio/DynamicsTransferGraph",
+  "title": "Dynamics Transfer Graph",
+  "description": "Dynamics Transfer Graph, an audio mixing and editing component. Props: params, curve, inputLevelDb, onThresholdCommit."
+ },
+ {
+  "id": "forge/audio/EQFrequencyGraph",
+  "title": "EQ Frequency Graph",
+  "description": "EQ Frequency Graph, an audio mixing and editing component. Props: bands, response, selectedIndex, onBandCommit."
+ },
+ {
+  "id": "forge/audio/InputMonitorToggle",
+  "title": "Input Monitor Toggle",
+  "description": "Input Monitor Toggle, an audio mixing and editing component. Props: value, hardwareSupported, softwareSupported, onAcknowledgeFeedback."
+ },
+ {
+  "id": "forge/audio/InsertEffectRack",
+  "title": "Insert Effect Rack",
+  "description": "Insert Effect Rack, an audio mixing and editing component. Props: inserts, maxInserts, selectedId, onSelect."
+ },
+ {
+  "id": "forge/audio/LatencyCalibrationPanel",
+  "title": "Latency Calibration Panel",
+  "description": "Latency Calibration Panel, an audio mixing and editing component. Props: deviceLabel, sampleRate, bufferSizes, onMeasure."
+ },
+ {
+  "id": "forge/audio/LevelFader",
+  "title": "Level Fader",
+  "description": "Level Fader, an audio mixing and editing component. Props: labels, value, range, onChange."
+ },
+ {
+  "id": "forge/audio/LevelMeter",
+  "title": "Level Meter",
+  "description": "Level Meter, an audio mixing and editing component. Props: level, peakHold, orientation."
+ },
+ {
+  "id": "forge/audio/LiveRecordingWaveform",
+  "title": "Live Recording Waveform",
+  "description": "Live Recording Waveform, an audio mixing and editing component. Props: capturing, elapsedSamples, sampleRate."
+ },
+ {
+  "id": "forge/audio/LoopPunchRecording",
+  "title": "Loop Punch Recording",
+  "description": "Loop Punch Recording, an audio mixing and editing component. Props: durationSamples, sampleRate, value, onCommit."
+ },
+ {
+  "id": "forge/audio/LoudnessMeter",
+  "title": "Loudness Meter",
+  "description": "Loudness Meter, an audio mixing and editing component. Props: status, rmsDbfs, integratedLufs, onReset."
+ },
+ {
+  "id": "forge/audio/MixGroupBar",
+  "title": "Mix Group Bar",
+  "description": "Mix Group Bar, an audio mixing and editing component. Props: labels, groups, onGroupSoloCommit."
+ },
+ {
+  "id": "forge/audio/MixingConsole",
+  "title": "Mixing Console",
+  "description": "Mixing Console, an audio mixing and editing component. Props: channelLabels, groupLabels, emptyLabels, onGainCommit."
+ },
+ {
+  "id": "forge/audio/NativeAudioTransport",
+  "title": "Native Audio Transport",
+  "description": "Native Audio Transport, an audio mixing and editing component. Props: playing, recording, punching, onAction."
+ },
+ {
+  "id": "forge/audio/NoiseReductionMonitor",
+  "title": "Noise Reduction Monitor",
+  "description": "Noise Reduction Monitor, an audio mixing and editing component. Props: reductionDb, sensitivity, onSettingsCommit."
+ },
+ {
+  "id": "forge/audio/PanAndBalanceControl",
+  "title": "Pan And Balance Control",
+  "description": "Pan And Balance Control, an audio mixing and editing component. Props: mode, surround."
+ },
+ {
+  "id": "forge/audio/PanControl",
+  "title": "Pan Control",
+  "description": "Pan Control, an audio mixing and editing component. Props: labels, value, mode, onChange."
+ },
+ {
+  "id": "forge/audio/PluginPresetBrowser",
+  "title": "Plugin Preset Browser",
+  "description": "Plugin Preset Browser, an audio mixing and editing component. Props: kind, presets, currentId, onApply."
+ },
+ {
+  "id": "forge/audio/RealtimePeakMeter",
+  "title": "Realtime Peak Meter",
+  "description": "Realtime Peak Meter, an audio mixing and editing component. Props: measurement, clockMs, length."
+ },
+ {
+  "id": "forge/audio/RecordingArmButton",
+  "title": "Recording Arm Button",
+  "description": "Recording Arm Button, an audio mixing and editing component. Props: trackId, armed, recording, onArmChange."
+ },
+ {
+  "id": "forge/audio/RecordingTrack",
+  "title": "Recording Track",
+  "description": "Recording Track, an audio mixing and editing component. Props: state, peaks, level, onStart."
+ },
+ {
+  "id": "forge/audio/SampleEditor",
+  "title": "Sample Editor",
+  "description": "Sample Editor, an audio mixing and editing component. Props: source, loop, keyboard, onRegionCommit."
+ },
+ {
+  "id": "forge/audio/SoloMuteButtons",
+  "title": "Solo Mute Buttons",
+  "description": "Solo Mute Buttons, an audio mixing and editing component. Props: labels, muted, solo, onMutedCommit."
+ },
+ {
+  "id": "forge/audio/SoundEffectsLibrary",
+  "title": "Sound Effects Library",
+  "description": "Sound Effects Library, an audio mixing and editing component. Props: sounds, status, error, onPreview."
+ },
+ {
+  "id": "forge/audio/SpectrogramView",
+  "title": "Spectrogram View",
+  "description": "Spectrogram View, an audio mixing and editing component. Props: status, frames, bandsHz, onVisibleRangeCommit."
+ },
+ {
+  "id": "forge/audio/SpeechTranscriptTakeReview",
+  "title": "Speech Transcript Take Review",
+  "description": "Speech Transcript Take Review, an audio mixing and editing component. Props: takes, takeId, transcript, onTakeChange."
+ },
+ {
+  "id": "forge/audio/StereoMultichannelWaveform",
+  "title": "Stereo Multichannel Waveform",
+  "description": "Stereo Multichannel Waveform, an audio mixing and editing component. Props: channels, mode, position, onModeChange."
+ },
+ {
+  "id": "forge/audio/SurroundPanView",
+  "title": "Surround Pan View",
+  "description": "Surround Pan View, an audio mixing and editing component. Props: value, speakers, destinations, onPreview."
+ },
+ {
+  "id": "forge/audio/TakePlaylistAndComping",
+  "title": "Take Playlist And Comping",
+  "description": "Take Playlist And Comping, an audio mixing and editing component. Props: takes, regions, durationSamples, onSelectionChange."
+ },
+ {
+  "id": "forge/audio/TempoAndMetronome",
+  "title": "Tempo And Metronome",
+  "description": "Tempo And Metronome, an audio mixing and editing component. Props: labels, bpm, timeSignature, onTempoCommit."
+ },
+ {
+  "id": "forge/audio/VerticalFader",
+  "title": "Vertical Fader",
+  "description": "Vertical Fader, an audio mixing and editing component. Props: onPreview."
+ },
+ {
+  "id": "forge/audio/VoiceIsolationPanel",
+  "title": "Voice Isolation Panel",
+  "description": "Voice Isolation Panel, an audio mixing and editing component. Props: strength, onStrengthCommit."
+ },
+ {
+  "id": "forge/audio/VoiceoverCountdownAndTakeBin",
+  "title": "Voiceover Countdown And Take Bin",
+  "description": "Voiceover Countdown And Take Bin, an audio mixing and editing component."
+ },
+ {
+  "id": "forge/audio/audio-recovery-model",
+  "title": "audio recovery model",
+  "description": "audio recovery model, an audio mixing and editing state model. Exports recoveryMessage, recoveryTitle."
+ },
+ {
+  "id": "forge/audio/automation",
+  "title": "automation",
+  "description": "automation, an audio mixing and editing helper module. Exports assertGeometry, automationKeyEdit, automationSegments."
+ },
+ {
+  "id": "forge/audio/dynamics-graph",
+  "title": "dynamics graph",
+  "description": "dynamics graph, an audio mixing and editing helper module. Exports clampThreshold, curveOutputAt, describeDynamics."
+ },
+ {
+  "id": "forge/audio/eq-graph",
+  "title": "eq graph",
+  "description": "eq graph, an audio mixing and editing helper module. Exports bandTypeName, clampFreq, dbToY."
+ },
+ {
+  "id": "forge/audio/inserts",
+  "title": "inserts",
+  "description": "inserts, an audio mixing and editing helper module. Exports addBlockedReason, describeInsert, filterPresets."
+ },
+ {
+  "id": "forge/audio/level",
+  "title": "level",
+  "description": "level, an audio mixing and editing helper module. Exports assertFaderRange, clampGain, dbToGain."
+ },
+ {
+  "id": "forge/audio/level-meter",
+  "title": "level meter",
+  "description": "level meter, an audio mixing and editing helper module. Exports createMeterAnnouncer, levelToDb, meterBand."
+ },
+ {
+  "id": "forge/audio/loudness",
+  "title": "loudness",
+  "description": "loudness, an audio mixing and editing helper module. Exports barCountForWidth, describeLoudness, formatDbfs."
+ },
+ {
+  "id": "forge/audio/meter-ballistics",
+  "title": "meter ballistics",
+  "description": "meter ballistics, an audio mixing and editing helper module. Exports createPeakHold."
+ },
+ {
+  "id": "forge/audio/mix-groups",
+  "title": "mix groups",
+  "description": "mix groups, an audio mixing and editing helper module. Exports mixGroups."
+ },
+ {
+  "id": "forge/audio/mixer",
+  "title": "mixer",
+  "description": "mixer, an audio mixing and editing helper module. Exports audibility, describeAudibility."
+ },
+ {
+  "id": "forge/audio/pan",
+  "title": "pan",
+  "description": "pan, an audio mixing and editing helper module. Exports assertPan, describeBalance, describePan."
+ },
+ {
+  "id": "forge/audio/preview-model",
+  "title": "preview model",
+  "description": "preview model, an audio mixing and editing state model. Exports presentPreview."
+ },
+ {
+  "id": "forge/audio/recording-model",
+  "title": "recording model",
+  "description": "recording model, an audio mixing and editing state model. Exports formatElapsed, presentRecording, spokenElapsed."
+ },
+ {
+  "id": "forge/audio/routing",
+  "title": "routing",
+  "description": "routing, an audio mixing and editing helper module. Exports clampSendLevel, cycleOutput, dragToSendLevel."
+ },
+ {
+  "id": "forge/audio/spectrogram",
+  "title": "spectrogram",
+  "description": "spectrogram, an audio mixing and editing helper module. Exports columnsForWidth, describeSpectrogram, formatHz."
+ },
+ {
+  "id": "forge/audio/tempo",
+  "title": "tempo",
+  "description": "tempo, an audio mixing and editing helper module. Exports addTap, assertBpm, beatInBar."
+ },
+ {
+  "id": "forge/cad/BakingMapPanel",
+  "title": "Baking Map Panel",
+  "description": "Baking Map Panel, a CAD and 3D component. Props: maps, settings, maxResolution, onSettings."
+ },
+ {
+  "id": "forge/cad/DimensionsAndHatching",
+  "title": "Dimensions And Hatching",
+  "description": "Dimensions And Hatching, a CAD and 3D component. Props: items, selectedId, patterns, onSelect."
+ },
+ {
+  "id": "forge/cad/DraftingCommandLine",
+  "title": "Drafting Command Line",
+  "description": "Drafting Command Line, a CAD and 3D component. Props: prompt, history, completions, onInput."
+ },
+ {
+  "id": "forge/cad/LiveNodeThumbnail",
+  "title": "Live Node Thumbnail",
+  "description": "Live Node Thumbnail, a CAD and 3D component. Props: nodeId, status, progress, onCook."
+ },
+ {
+  "id": "forge/cad/Native3DViewport",
+  "title": "Native 3D Viewport",
+  "description": "Native 3D Viewport, a CAD and 3D component. Props: surface, interaction, materialModes, onInteractionChange."
+ },
+ {
+  "id": "forge/cad/NodeGraphCanvas",
+  "title": "Node Graph Canvas",
+  "description": "Node Graph Canvas, a CAD and 3D component. Props: nodes, edges, selectedNodeId, onSelectNode."
+ },
+ {
+  "id": "forge/cad/NodeLibrarySearch",
+  "title": "Node Library Search",
+  "description": "Node Library Search, a CAD and 3D component. Props: renderPreview, graphGeometryRevision, screenToGraph, onInsert."
+ },
+ {
+  "id": "forge/cad/ObjectSnapsAndOrtho",
+  "title": "Object Snaps And Ortho",
+  "description": "Object Snaps And Ortho, a CAD and 3D component. Props: settings, modes, candidate, onCommit."
+ },
+ {
+  "id": "forge/cad/PBRMaterialInspector",
+  "title": "PBR Material Inspector",
+  "description": "PBR Material Inspector, a CAD and 3D component. Props: value, renderMaterial, onCommit."
+ },
+ {
+  "id": "forge/cad/PaperSpaceLayout",
+  "title": "Paper Space Layout",
+  "description": "Paper Space Layout, a CAD and 3D component. Props: pageSetup, viewports, selectedId, onSelect."
+ },
+ {
+  "id": "forge/cad/ParametricConstraintEditor",
+  "title": "Parametric Constraint Editor",
+  "description": "Parametric Constraint Editor, a CAD and 3D component. Props: constraints, selectedId, kinds, onSelect."
+ },
+ {
+  "id": "forge/cad/TextureBrush3D",
+  "title": "Texture Brush 3D",
+  "description": "Texture Brush 3D, a CAD and 3D component. Props: surface, cameraRevision, settings, onStroke."
+ },
+ {
+  "id": "forge/cad/TextureMaskAndGenerator",
+  "title": "Texture Mask And Generator",
+  "description": "Texture Mask And Generator, a CAD and 3D component. Props: layerId, kind, generatorId, onCommit."
+ },
+ {
+  "id": "forge/cad/TextureSetPanel",
+  "title": "Texture Set Panel",
+  "description": "Texture Set Panel, a CAD and 3D component. Props: sets, selectedSetId, selectedChannelId, onSelect."
+ },
+ {
+  "id": "forge/cad/TransformGizmo3D",
+  "title": "Transform Gizmo 3D",
+  "description": "Transform Gizmo 3D, a CAD and 3D component. Props: objectId, value, mode, onOptions."
+ },
+ {
+  "id": "forge/cad/UVEditor",
+  "title": "UV Editor",
+  "description": "UV Editor, a CAD and 3D component. Props: islands, points, selectedPointId, onSelectIsland."
+ },
+ {
+  "id": "forge/cad/ViewCubeAndAxisGizmo",
+  "title": "View Cube And Axis Gizmo",
+  "description": "View Cube And Axis Gizmo, a CAD and 3D component. Props: view, projection, axisLabels, onView."
+ },
+ {
+  "id": "forge/canvas-tools/ColorDropCanvasTarget",
+  "title": "Color Drop Canvas Target",
+  "description": "Color Drop Canvas Target, a canvas tool component. Props: color, colorLabel, tolerance, onFill."
+ },
+ {
+  "id": "forge/canvas-tools/GestureCustomizationPanel",
+  "title": "Gesture Customization Panel",
+  "description": "Gesture Customization Panel, a canvas tool component. Props: gestures, actions, value, onSave."
+ },
+ {
+  "id": "forge/canvas-tools/ReferenceImageBoard",
+  "title": "Reference Image Board",
+  "description": "Reference Image Board, a canvas tool component. Props: references, selectedId, renderImage, onSelect."
+ },
+ {
+  "id": "forge/canvas-tools/color-drop-model",
+  "title": "color drop model",
+  "description": "color drop model, a canvas tool state model. Exports buildFill, clampToTarget, classifyPress."
+ },
+ {
+  "id": "forge/canvas-tools/gesture-map-model",
+  "title": "gesture map model",
+  "description": "gesture map model, a canvas tool state model. Exports assignGesture, clampHoldDelay, conflictMessage."
+ },
+ {
+  "id": "forge/canvas-tools/reference-board-model",
+  "title": "reference board model",
+  "description": "reference board model, a canvas tool state model. Exports clampFrame, formatReferenceOpacity, moveFrame."
+ },
+ {
+  "id": "forge/canvas/AlignDistributePanel",
+  "title": "Align Distribute Panel",
+  "description": "Align Distribute Panel, a canvas component. Props: items, reference, artboard, onReferenceChange."
+ },
+ {
+  "id": "forge/canvas/CanvasPanZoom",
+  "title": "Canvas Pan Zoom",
+  "description": "Canvas Pan Zoom, a canvas component. Props: viewport, minZoom, maxZoom, onPreview."
+ },
+ {
+  "id": "forge/canvas/CanvasRuler",
+  "title": "Canvas Ruler",
+  "description": "Canvas Ruler, a canvas component. Props: viewport, unit, dpi, onAddGuide."
+ },
+ {
+  "id": "forge/canvas/GPUCanvasViewport",
+  "title": "GPU Canvas Viewport",
+  "description": "GPU Canvas Viewport, a canvas component. Props: viewport, drawFrame, clearColor, onGpuChange."
+ },
+ {
+  "id": "forge/canvas/GuidedCropAndStraighten",
+  "title": "Guided Crop And Straighten",
+  "description": "Guided Crop And Straighten, a canvas component. Props: value, imageWidth, imageHeight, onPreview."
+ },
+ {
+  "id": "forge/canvas/SmartGuides",
+  "title": "Smart Guides",
+  "description": "Smart Guides, a canvas component. Props: viewport, result, names."
+ },
+ {
+  "id": "forge/canvas/SnapGridOverlay",
+  "title": "Snap Grid Overlay",
+  "description": "Snap Grid Overlay, a canvas component. Props: viewport, grid, snapped."
+ },
+ {
+  "id": "forge/canvas/SnapGridSettings",
+  "title": "Snap Grid Settings",
+  "description": "Snap Grid Settings, a canvas component. Props: grid, snap, onGridChange."
+ },
+ {
+  "id": "forge/canvas/TransformOriginHandle",
+  "title": "Transform Origin Handle",
+  "description": "Transform Origin Handle, a canvas component. Props: showBounds, viewport, corners, onSetOrigin."
+ },
+ {
+  "id": "forge/canvas/align-distribute-model",
+  "title": "align distribute model",
+  "description": "align distribute model, a canvas state model. Exports alignAvailability, alignReference, arrangeAvailability."
+ },
+ {
+  "id": "forge/canvas/canvas-pan-zoom-model",
+  "title": "canvas pan zoom model",
+  "description": "canvas pan zoom model, a canvas state model. Exports canvasFromTouches, canvasFromWheel, fitCanvas."
+ },
+ {
+  "id": "forge/canvas/canvas-viewport",
+  "title": "canvas viewport",
+  "description": "canvas viewport, a canvas helper module. Exports docPointToScreen, docToScreen, screenPointToDoc."
+ },
+ {
+  "id": "forge/canvas/graphite-frame",
+  "title": "graphite frame",
+  "description": "graphite frame, a canvas helper module. Exports submitCanvasFrame."
+ },
+ {
+  "id": "forge/canvas/ruler-model",
+  "title": "ruler model",
+  "description": "ruler model, a canvas state model. Exports centerGuidePosition, formatLength, formatRulerNumber."
+ },
+ {
+  "id": "forge/canvas/smart-guides-model",
+  "title": "smart guides model",
+  "description": "smart guides model, a canvas state model. Exports computeSmartGuides, smartGuideSummary, validateSmartGuideResult."
+ },
+ {
+  "id": "forge/canvas/snap-grid-model",
+  "title": "snap grid model",
+  "description": "snap grid model, a canvas state model. Exports gridLines, gridStep, magneticPull."
+ },
+ {
+  "id": "forge/canvas/transform-origin-model",
+  "title": "transform origin model",
+  "description": "transform origin model, a canvas state model. Exports anchorPoint, contentToDoc, currentAnchor."
+ },
+ {
+  "id": "forge/color",
+  "title": "color",
+  "description": "color, a creative app helper module. Exports alphaPercent, assertHsv, assertRgba."
+ },
+ {
+  "id": "forge/color/AlphaSlider",
+  "title": "Alpha Slider",
+  "description": "Alpha Slider, a color component. Props: value, rtl, onPreview."
+ },
+ {
+  "id": "forge/color/ColorChannelFields",
+  "title": "Color Channel Fields",
+  "description": "Color Channel Fields, a color component. Props: value, model, showAlpha, onCommit."
+ },
+ {
+  "id": "forge/color/ColorDiscPicker",
+  "title": "Color Disc Picker",
+  "description": "Color Disc Picker, a color component. Props: value, maxSize, showBrightness, onPreview."
+ },
+ {
+  "id": "forge/color/ColorGradingWheels",
+  "title": "Color Grading Wheels",
+  "description": "Color Grading Wheels, a color component. Props: value, onCommit."
+ },
+ {
+  "id": "forge/color/ColorHarmonyAssistant",
+  "title": "Color Harmony Assistant",
+  "description": "Color Harmony Assistant, a color component. Props: value, kind, contrastBackground, onKindChange."
+ },
+ {
+  "id": "forge/color/ColorPickerDialog",
+  "title": "Color Picker Dialog",
+  "description": "Color Picker Dialog, a color component. Props: visible, original, value, onValueChange."
+ },
+ {
+  "id": "forge/color/ColorSpaceChooser",
+  "title": "Color Space Chooser",
+  "description": "Color Space Chooser, a color component. Props: profiles, value, onProfileChange."
+ },
+ {
+  "id": "forge/color/ColorWheel",
+  "title": "Color Wheel",
+  "description": "Color Wheel, a color component. Props: value, maxSize, step, onPreview."
+ },
+ {
+  "id": "forge/color/CurvesEditor",
+  "title": "Curves Editor",
+  "description": "Curves Editor, a color component. Props: value, selectedId, createPointId, onSelect."
+ },
+ {
+  "id": "forge/color/EyedropperTool",
+  "title": "Eyedropper Tool",
+  "description": "Eyedropper Tool, a color component. Props: request, documentWidth, documentHeight, onRequestChange."
+ },
+ {
+  "id": "forge/color/FloatingColorPalette",
+  "title": "Floating Color Palette",
+  "description": "Floating Color Palette, a color component. Props: docked, position, bounds, onModeChange."
+ },
+ {
+  "id": "forge/color/FloatingPaletteUndockHandle",
+  "title": "Floating Palette Undock Handle",
+  "description": "Floating Palette Undock Handle, a color component. Props: docked, origin, size, onPreview."
+ },
+ {
+  "id": "forge/color/ForegroundBackgroundChips",
+  "title": "Foreground Background Chips",
+  "description": "Foreground Background Chips, a color component. Props: value, active, defaults, onCommit."
+ },
+ {
+  "id": "forge/color/GamutWarning",
+  "title": "Gamut Warning",
+  "description": "Gamut Warning, a color component. Props: report, onInspect."
+ },
+ {
+  "id": "forge/color/GradientMeshEditor",
+  "title": "Gradient Mesh Editor",
+  "description": "Gradient Mesh Editor, a color component. Props: value, selectedId, transport, onSelect."
+ },
+ {
+  "id": "forge/color/GradientStopEditor",
+  "title": "Gradient Stop Editor",
+  "description": "Gradient Stop Editor, a color component. Props: value, selectedIndex, options, onSelect."
+ },
+ {
+  "id": "forge/color/HSLSecondaryEditor",
+  "title": "HSL Secondary Editor",
+  "description": "HSL Secondary Editor, a color component. Props: value, onCommit."
+ },
+ {
+  "id": "forge/color/HsvPicker",
+  "title": "Hsv Picker",
+  "description": "Hsv Picker, a color component. Props: value, fieldHeight, step, onValueChange."
+ },
+ {
+  "id": "forge/color/HueSlider",
+  "title": "Hue Slider",
+  "description": "Hue Slider, a color component. Props: value, onPreview."
+ },
+ {
+  "id": "forge/color/LevelsEditor",
+  "title": "Levels Editor",
+  "description": "Levels Editor, a color component. Props: value, onCommit."
+ },
+ {
+  "id": "forge/color/LiveHistogram",
+  "title": "Live Histogram",
+  "description": "Live Histogram, a color component. Props: channels, domain, logarithmic."
+ },
+ {
+  "id": "forge/color/PrintColorChannels",
+  "title": "Print Color Channels",
+  "description": "Print Color Channels, a color component. Props: value, conversionPolicy, labRange, onCommit."
+ },
+ {
+  "id": "forge/color/SVColorField",
+  "title": "SV Color Field",
+  "description": "SV Color Field, a color component. Props: value, onPreview."
+ },
+ {
+  "id": "forge/color/SoftProofControls",
+  "title": "Soft Proof Controls",
+  "description": "Soft Proof Controls, a color component. Props: value, profiles, onCommit."
+ },
+ {
+  "id": "forge/color/SpotAndGlobalColorEditor",
+  "title": "Spot And Global Color Editor",
+  "description": "Spot And Global Color Editor, a color component. Props: value, onChange."
+ },
+ {
+  "id": "forge/color/SwatchGrid",
+  "title": "Swatch Grid",
+  "description": "Swatch Grid, a color component. Props: groups, selectedKey, query, onSelect."
+ },
+ {
+  "id": "forge/color/ThemeColorReferences",
+  "title": "Theme Color References",
+  "description": "Theme Color References, a color component. Props: references, referenceId, onBind."
+ },
+ {
+  "id": "forge/color/VideoScopesPanel",
+  "title": "Video Scopes Panel",
+  "description": "Video Scopes Panel, a color component. Props: frameTimeUs, mode, histogram, onModeChange."
+ },
+ {
+  "id": "forge/color/WideGamutChannels",
+  "title": "Wide Gamut Channels",
+  "description": "Wide Gamut Channels, a color component. Props: value, min, max, onCommit."
+ },
+ {
+  "id": "forge/color/channel-fields",
+  "title": "channel fields",
+  "description": "channel fields, a color helper module. Exports channelFields, parseChannel, parseOpacityPercent."
+ },
+ {
+  "id": "forge/color/color-adjustments",
+  "title": "color adjustments",
+  "description": "color adjustments, a color helper module. Exports bounded, evaluateCurve, moveCurvePoint."
+ },
+ {
+  "id": "forge/color/color-management",
+  "title": "color management",
+  "description": "color management, a color helper module. Exports validateColorChannels, validateGamutReport, validateNamedColor."
+ },
+ {
+  "id": "forge/color/color-pair",
+  "title": "color pair",
+  "description": "color pair, a color helper module. Exports sameColorPair, swapColorPair."
+ },
+ {
+  "id": "forge/color/color-picker-dialog-model",
+  "title": "color picker dialog model",
+  "description": "color picker dialog model, a color state model. Exports colorChanged, colorDialogTitle, comparisonContrast."
+ },
+ {
+  "id": "forge/color/contrast",
+  "title": "contrast",
+  "description": "contrast, a color helper module. Exports compositeOver, contrastRating, contrastRatio."
+ },
+ {
+  "id": "forge/color/fieldGeometry",
+  "title": "field Geometry",
+  "description": "field Geometry, a color helper module. Exports hsvToPoint, pointToHsv."
+ },
+ {
+  "id": "forge/color/fieldGesture",
+  "title": "field Gesture",
+  "description": "field Gesture, a color helper module. Exports createFieldGesture."
+ },
+ {
+  "id": "forge/color/floating-palette",
+  "title": "floating palette",
+  "description": "floating palette, a color helper module. Exports nudgePalette, placeFloatingPalette, positionFromGrab."
+ },
+ {
+  "id": "forge/color/gradient-mesh",
+  "title": "gradient mesh",
+  "description": "gradient mesh, a color helper module. Exports editMeshPoint, rasterizeMesh, validateMesh."
+ },
+ {
+  "id": "forge/color/gradient-options",
+  "title": "gradient options",
+  "description": "gradient options, a color helper module. Exports changeGradientType, rotateGradient, sampleGradient."
+ },
+ {
+  "id": "forge/color/harmony",
+  "title": "harmony",
+  "description": "harmony, a color helper module. Exports harmonyColors."
+ },
+ {
+  "id": "forge/color/hsl",
+  "title": "hsl",
+  "description": "hsl, a color helper module. Exports assertHsl, hslToHsv, hslToRgb."
+ },
+ {
+  "id": "forge/color/swatches",
+  "title": "swatches",
+  "description": "swatches, a color helper module. Exports filterSwatchGroups, pushRecentSwatch, swatchColumns."
+ },
+ {
+  "id": "forge/color/wheel-geometry",
+  "title": "wheel geometry",
+  "description": "wheel geometry, a color helper module. Exports angleDelta, createRingDrag, discPointToHsv."
+ },
+ {
+  "id": "forge/design/AutoLayoutInspector",
+  "title": "Auto Layout Inspector",
+  "description": "Auto Layout Inspector, a UI design tool component. Props: value, onCommit."
+ },
+ {
+  "id": "forge/design/CollaborationPresence",
+  "title": "Collaboration Presence",
+  "description": "Collaboration Presence, a UI design tool component. Props: participants, viewport, followingId, onFollow."
+ },
+ {
+  "id": "forge/design/CommentPins",
+  "title": "Comment Pins",
+  "description": "Comment Pins, a UI design tool component. Props: pins, viewport, comments."
+ },
+ {
+  "id": "forge/design/ComponentVariantPicker",
+  "title": "Component Variant Picker",
+  "description": "Component Variant Picker, a UI design tool component. Props: componentId, properties, overrides, onPropertyChange."
+ },
+ {
+  "id": "forge/design/ConstraintsPanel",
+  "title": "Constraints Panel",
+  "description": "Constraints Panel, a UI design tool component. Props: value, targets, onCommit."
+ },
+ {
+  "id": "forge/design/DevHandoffInspector",
+  "title": "Dev Handoff Inspector",
+  "description": "Dev Handoff Inspector, a UI design tool component. Props: objectId, measurements, typography, onCopy."
+ },
+ {
+  "id": "forge/design/FlowOverview",
+  "title": "Flow Overview",
+  "description": "Flow Overview, a UI design tool component. Props: frames, links, selectedId, onSelect."
+ },
+ {
+  "id": "forge/design/FrameAndComponentTree",
+  "title": "Frame And Component Tree",
+  "description": "Frame And Component Tree, a UI design tool component. Props: nodes."
+ },
+ {
+  "id": "forge/design/HugFillFixedSizeControls",
+  "title": "Hug Fill Fixed Size Controls",
+  "description": "Hug Fill Fixed Size Controls, a UI design tool component. Props: x, y, onCommit."
+ },
+ {
+  "id": "forge/design/InteractionTriggerEditor",
+  "title": "Interaction Trigger Editor",
+  "description": "Interaction Trigger Editor, a UI design tool component. Props: value, triggers, destinations, onCommit."
+ },
+ {
+  "id": "forge/design/MultiExportSlices",
+  "title": "Multi Export Slices",
+  "description": "Multi Export Slices, a UI design tool component. Props: slices, selectedId, formats, onSelect."
+ },
+ {
+  "id": "forge/design/PrototypeConnectionTool",
+  "title": "Prototype Connection Tool",
+  "description": "Prototype Connection Tool, a UI design tool component. Props: frames, hotspots, selectedId, onSelect."
+ },
+ {
+  "id": "forge/design/PrototypePreviewPlayer",
+  "title": "Prototype Preview Player",
+  "description": "Prototype Preview Player, a UI design tool component. Props: surface, screens, currentScreenId, onAction."
+ },
+ {
+  "id": "forge/design/ReusableStylesPanel",
+  "title": "Reusable Styles Panel",
+  "description": "Reusable Styles Panel, a UI design tool component. Props: items."
+ },
+ {
+  "id": "forge/design/VariablesAndModes",
+  "title": "Variables And Modes",
+  "description": "Variables And Modes, a UI design tool component. Props: variables, modes, activeModeId, onModeChange."
+ },
+ {
+  "id": "forge/devices/DevicePairingDialog",
+  "title": "Device Pairing Dialog",
+  "description": "Device Pairing Dialog, a device pairing component. Props: visible, state, intro, onScan."
+ },
+ {
+  "id": "forge/devices/PenPairingDialog",
+  "title": "Pen Pairing Dialog",
+  "description": "Pen Pairing Dialog, a device pairing component."
+ },
+ {
+  "id": "forge/devices/pairing-model",
+  "title": "pairing model",
+  "description": "pairing model, a device pairing state model. Exports presentPairing, signalLabel."
+ },
+ {
+  "id": "forge/document/BulletsNumberingEditor",
+  "title": "Bullets Numbering Editor",
+  "description": "Bullets Numbering Editor, a word processor component. Props: items, selectionStart, selectionEnd, onKindChange."
+ },
+ {
+  "id": "forge/document/CommentsAndReviewRail",
+  "title": "Comments And Review Rail",
+  "description": "Comments And Review Rail, a word processor component."
+ },
+ {
+  "id": "forge/document/DictationSessionPanel",
+  "title": "Dictation Session Panel",
+  "description": "Dictation Session Panel, a word processor component. Props: status, permission, offline, onRequestPermission."
+ },
+ {
+  "id": "forge/document/DocumentReadAloudTransport",
+  "title": "Document Read Aloud Transport",
+  "description": "Document Read Aloud Transport, a word processor component. Props: describeBlock."
+ },
+ {
+  "id": "forge/document/FootnoteCitationEditor",
+  "title": "Footnote Citation Editor",
+  "description": "Footnote Citation Editor, a word processor component. Props: sources, notes, styleId, onStyleCommit."
+ },
+ {
+  "id": "forge/document/HeadersFootersEditor",
+  "title": "Headers Footers Editor",
+  "description": "Headers Footers Editor, a word processor component. Props: value, onCommit."
+ },
+ {
+  "id": "forge/document/InsertTableGrid",
+  "title": "Insert Table Grid",
+  "description": "Insert Table Grid, a word processor component. Props: maxRows, maxColumns, onInsert."
+ },
+ {
+  "id": "forge/document/LayoutSpreadNavigator",
+  "title": "Layout Spread Navigator",
+  "description": "Layout Spread Navigator, a word processor component. Props: pages, masters, selectedId, onSelect."
+ },
+ {
+  "id": "forge/document/MailMergeFieldPicker",
+  "title": "Mail Merge Field Picker",
+  "description": "Mail Merge Field Picker, a word processor component. Props: fields, recipientIndex, recipientCount, onRecipientChange."
+ },
+ {
+  "id": "forge/document/NavigationOutline",
+  "title": "Navigation Outline",
+  "description": "Navigation Outline, a word processor component. Props: headings, caretBlock, pageCount, onJumpToHeading."
+ },
+ {
+  "id": "forge/document/PageSetupPanel",
+  "title": "Page Setup Panel",
+  "description": "Page Setup Panel, a word processor component. Props: value, papers, onCommit."
+ },
+ {
+  "id": "forge/document/PaginatedTextCanvas",
+  "title": "Paginated Text Canvas",
+  "description": "Paginated Text Canvas, a word processor component. Props: pages, activePageId, selection, onActivatePage."
+ },
+ {
+  "id": "forge/document/ParagraphRuler",
+  "title": "Paragraph Ruler",
+  "description": "Paragraph Ruler, a word processor component. Props: textWidth, value, onCommit."
+ },
+ {
+  "id": "forge/document/ParagraphStylesGallery",
+  "title": "Paragraph Styles Gallery",
+  "description": "Paragraph Styles Gallery, a word processor component. Props: styles, selectedId, renderPreview, onApply."
+ },
+ {
+  "id": "forge/document/RichTextRibbon",
+  "title": "Rich Text Ribbon",
+  "description": "Rich Text Ribbon, a word processor component. Props: state, toggles, colors, onToggle."
+ },
+ {
+  "id": "forge/document/SpellGrammarPopover",
+  "title": "Spell Grammar Popover",
+  "description": "Spell Grammar Popover, a word processor component. Also exports SpellGrammarContent."
+ },
+ {
+  "id": "forge/document/TableLayoutInspector",
+  "title": "Table Layout Inspector",
+  "description": "Table Layout Inspector, a word processor component. Props: value, colors, canMerge, onCommit."
+ },
+ {
+  "id": "forge/document/TableOfContentsEditor",
+  "title": "Table Of Contents Editor",
+  "description": "Table Of Contents Editor, a word processor component. Props: value, entries, stale, onCommit."
+ },
+ {
+  "id": "forge/document/TextSelectionAndCaret",
+  "title": "Text Selection And Caret",
+  "description": "Text Selection And Caret, a word processor component. Props: initialText, contentRevision, selection, onTextChange."
+ },
+ {
+  "id": "forge/document/TextWrapAndFrames",
+  "title": "Text Wrap And Frames",
+  "description": "Text Wrap And Frames, a word processor component. Props: frames, selectedId, renderFrame, onCommit."
+ },
+ {
+  "id": "forge/document/TrackChangesView",
+  "title": "Track Changes View",
+  "description": "Track Changes View, a word processor component. Props: changes, selectedId, tracking, onFilterChange."
+ },
+ {
+  "id": "forge/document/TypographyInspector",
+  "title": "Typography Inspector",
+  "description": "Typography Inspector, a word processor component. Props: value, onCommit."
+ },
+ {
+  "id": "forge/document/list-model",
+  "title": "list model",
+  "description": "list model, a word processor state model. Exports canIndent, canOutdent, defaultLevelFormats."
+ },
+ {
+  "id": "forge/document/outline-model",
+  "title": "outline model",
+  "description": "outline model, a word processor state model. Exports headingAtBlock, headingsByPage, rowForHeading."
+ },
+ {
+  "id": "forge/document/ribbon-model",
+  "title": "ribbon model",
+  "description": "ribbon model, a word processor state model. Exports applyTextCase, nextToggle, ribbonShortcut."
+ },
+ {
+  "id": "forge/formula-refs",
+  "title": "formula refs",
+  "description": "formula refs, a creative app helper module. Exports formulaReferences, referenceHighlights."
+ },
+ {
+  "id": "forge/frame-throttle",
+  "title": "frame throttle",
+  "description": "frame throttle, a creative app helper module. Exports animationFrameScheduler, createFrameThrottle."
+ },
+ {
+  "id": "forge/graph/PatchGraph",
+  "title": "Patch Graph",
+  "description": "Patch Graph, a node graph component. Props: nodes, edges, scrollEnabled, onInteractionError."
+ },
+ {
+  "id": "forge/graph/model",
+  "title": "model",
+  "description": "model, a node graph state model. Exports compatiblePorts, cubicGraphPoints, getPortAnchor."
+ },
+ {
+  "id": "forge/graphics/ImageCropOverlay",
+  "title": "Image Crop Overlay",
+  "description": "Image Crop Overlay, an image editing component. Props: aspectRatio, grid, rect, onPreview."
+ },
+ {
+  "id": "forge/graphics/crop",
+  "title": "crop",
+  "description": "crop, an image editing helper module. Exports cropToPixels, fitCropAspect, moveCrop."
+ },
+ {
+  "id": "forge/ink/BrushDynamicsInspector",
+  "title": "Brush Dynamics Inspector",
+  "description": "Brush Dynamics Inspector, a digital ink and brush component. Props: value, onCommit."
+ },
+ {
+  "id": "forge/ink/BrushPresetBrowser",
+  "title": "Brush Preset Browser",
+  "description": "Brush Preset Browser, a digital ink and brush component. Props: presets, selectedId, renderPreview, onSelect."
+ },
+ {
+  "id": "forge/ink/BrushStabilizationPreview",
+  "title": "Brush Stabilization Preview",
+  "description": "Brush Stabilization Preview, a digital ink and brush component. Props: value, pad, onCommit."
+ },
+ {
+  "id": "forge/ink/BrushTaperControl",
+  "title": "Brush Taper Control",
+  "description": "Brush Taper Control, a digital ink and brush component. Props: value, input, pressureAvailable, onInputChange."
+ },
+ {
+  "id": "forge/ink/EraserModePicker",
+  "title": "Eraser Mode Picker",
+  "description": "Eraser Mode Picker, a digital ink and brush component. Props: value, capabilities, onChange."
+ },
+ {
+  "id": "forge/ink/InkStrokePreview",
+  "title": "Ink Stroke Preview",
+  "description": "Ink Stroke Preview, a digital ink and brush component. Props: strokeWidth, inkColor, samples, onStroke."
+ },
+ {
+  "id": "forge/ink/InkToolbar",
+  "title": "Ink Toolbar",
+  "description": "Ink Toolbar, a digital ink and brush component. Props: orientation, edge, tools, onToolChange."
+ },
+ {
+  "id": "forge/ink/TimelapsePlaybackExporter",
+  "title": "Timelapse Playback Exporter",
+  "description": "Timelapse Playback Exporter, a digital ink and brush component. Props: recording, eventCount, durationMs, onRecordingChange."
+ },
+ {
+  "id": "forge/ink/brush-model",
+  "title": "brush model",
+  "description": "brush model, a digital ink and brush state model. Exports stabilizePreview, validateBrushDynamics, validateBrushTaper."
+ },
+ {
+  "id": "forge/ink/ink-model",
+  "title": "ink model",
+  "description": "ink model, a digital ink and brush state model. Exports availabilityReason, formatInkOpacity, inkSizePreviewDiameter."
+ },
+ {
+  "id": "forge/inputs/AssetPresetGallery",
+  "title": "Asset Preset Gallery",
+  "description": "Asset Preset Gallery, a precision input component. Props: items, selectedIds, renderPreview, onApply."
+ },
+ {
+  "id": "forge/inputs/InstrumentKnob",
+  "title": "Instrument Knob",
+  "description": "Instrument Knob, a precision input component. Props: value, unit, size, onPreview."
+ },
+ {
+  "id": "forge/inputs/InstrumentXYPad",
+  "title": "Instrument XY Pad",
+  "description": "Instrument XY Pad, a precision input component. Props: x, y, size, onPreview."
+ },
+ {
+  "id": "forge/inputs/OutlineTree",
+  "title": "Outline Tree",
+  "description": "Outline Tree, a precision input component. Props: nodes, selectedId, expandedIds, onSelect."
+ },
+ {
+  "id": "forge/inputs/PointEditor2D",
+  "title": "Point Editor 2D",
+  "description": "Point Editor 2D, a precision input component. Props: points, selectedId, renderPreview, onSelect."
+ },
+ {
+  "id": "forge/inputs/precision",
+  "title": "precision",
+  "description": "precision, a precision input helper module. Exports advancePrecisionGesture, assertRange, beginPrecisionGesture."
+ },
+ {
+  "id": "forge/inputs/precision-scrubber-model",
+  "title": "precision scrubber model",
+  "description": "precision scrubber model, a precision input state model. Exports createScrubberModel, initialScrubberState."
+ },
+ {
+  "id": "forge/layers/ArtboardNavigator",
+  "title": "Artboard Navigator",
+  "description": "Artboard Navigator, an image layer component. Props: artboards, selectedId, loadThumbnail, onSelect."
+ },
+ {
+  "id": "forge/layers/CanvasCompareView",
+  "title": "Canvas Compare View",
+  "description": "Canvas Compare View, an image layer component. Props: before, after, beforeLabel, onModeChange."
+ },
+ {
+  "id": "forge/layers/ClippingMaskControls",
+  "title": "Clip Indicator",
+  "description": "Clip Indicator, an image layer component. Also exports ClipToggle."
+ },
+ {
+  "id": "forge/layers/LayerBlendAndOpacity",
+  "title": "Layer Blend And Opacity",
+  "description": "Layer Blend And Opacity, an image layer component. Props: layerId, value, modes, onPreview."
+ },
+ {
+  "id": "forge/layers/LayerStack",
+  "title": "Layer Stack",
+  "description": "Layer Stack, an image layer component. Props: expandedIds, layers, selectedId, onExpandedChange."
+ },
+ {
+  "id": "forge/layers/LayerThumbnail",
+  "title": "Layer Thumbnail",
+  "description": "Layer Thumbnail, an image layer component. Props: source, variant, cache."
+ },
+ {
+  "id": "forge/layers/MaskThumbnailAndEditor",
+  "title": "Mask Thumbnail And Editor",
+  "description": "Mask Thumbnail And Editor, an image layer component. Props: layerId, layerName, locked, onRefineDraftChange."
+ },
+ {
+  "id": "forge/layers/artboard-model",
+  "title": "artboard model",
+  "description": "artboard model, an image layer state model. Exports artboardAccessibilityLabel, artboardColumns, artboardDropIndex."
+ },
+ {
+  "id": "forge/layers/clipping-model",
+  "title": "clipping model",
+  "description": "clipping model, an image layer state model. Exports clipAccessibilityPhrase, clipReason, clipTarget."
+ },
+ {
+  "id": "forge/layers/compare-model",
+  "title": "compare model",
+  "description": "compare model, an image layer state model. Exports compareFrame, compareReason, normalizeFraction."
+ },
+ {
+  "id": "forge/layers/layer-blend-model",
+  "title": "layer blend model",
+  "description": "layer blend model, an image layer state model. Exports defaultAlphaModes, layerBlendProblem, layerOpacityFromPercent."
+ },
+ {
+  "id": "forge/layers/layer-model",
+  "title": "layer model",
+  "description": "layer model, an image layer state model. Exports dragTargetIndex, formatOpacity, layerAccessibilityLabel."
+ },
+ {
+  "id": "forge/layers/layer-thumbnail-model",
+  "title": "layer thumbnail model",
+  "description": "layer thumbnail model, an image layer state model. Exports checkerCells, createThumbnailCache, decodeBase64."
+ },
+ {
+  "id": "forge/layers/layer-tree-model",
+  "title": "layer tree model",
+  "description": "layer tree model, an image layer state model. Exports flattenLayerTree, moveLayerTree, validateLayerTree."
+ },
+ {
+  "id": "forge/layers/mask-model",
+  "title": "mask model",
+  "description": "mask model, an image layer state model. Exports maskBlockedReason, maskFillReason, maskStateLabel."
+ },
+ {
+  "id": "forge/midi/MIDIPianoRoll",
+  "title": "MIDI Piano Roll",
+  "description": "MIDI Piano Roll, a MIDI component. Props: notes, clipTicks, ppq, onSelect."
+ },
+ {
+  "id": "forge/midi/MIDIVelocityLane",
+  "title": "MIDI Velocity Lane",
+  "description": "MIDI Velocity Lane, a MIDI component. Props: notes, clipTicks, pixelsPerTick, onSelect."
+ },
+ {
+  "id": "forge/midi/MidiChannelPicker",
+  "title": "Midi Channel Picker",
+  "description": "Midi Channel Picker, a MIDI component. Props: channel, onChannelCommit. Also exports MidiValueStepper."
+ },
+ {
+  "id": "forge/midi/StepSequencer",
+  "title": "Step Sequencer",
+  "description": "Step Sequencer, a MIDI component. Props: notes, lanes, clipTicks, onStepAdd."
+ },
+ {
+  "id": "forge/midi/note-grid",
+  "title": "note grid",
+  "description": "note grid, a MIDI helper module. Exports assertGrid, assertMidiNotes, cellAt."
+ },
+ {
+  "id": "forge/midi/velocity-line",
+  "title": "velocity line",
+  "description": "velocity line, a MIDI helper module. Exports describeVelocityBatch, noteLaneX, notesInTimeOrder."
+ },
+ {
+  "id": "forge/motion/CameraAndLightControls",
+  "title": "Camera And Light Controls",
+  "description": "Camera And Light Controls, a motion graphics component. Props: camera, light, onCameraCommit."
+ },
+ {
+  "id": "forge/motion/CompositionLayerTree",
+  "title": "Composition Layer Tree",
+  "description": "Composition Layer Tree, a motion graphics component. Props: compositionId, layers, expandedIds, onExpandedChange."
+ },
+ {
+  "id": "forge/motion/EasingPresetGallery",
+  "title": "Easing Preset Gallery",
+  "description": "Easing Preset Gallery, a motion graphics component. Props: selectedId, supported, presets, onSelect."
+ },
+ {
+  "id": "forge/motion/EffectStackAndInspector",
+  "title": "Effect Stack And Inspector",
+  "description": "Effect Stack And Inspector, a motion graphics component. Props: effects, selectedId, availableEffects, onSelect."
+ },
+ {
+  "id": "forge/motion/ExpressionEditor",
+  "title": "Expression Editor",
+  "description": "Expression Editor, a motion graphics component. Props: value, references, inputClassName, onChange."
+ },
+ {
+  "id": "forge/motion/KeyframeSpeedGraph",
+  "title": "Keyframe Speed Graph",
+  "description": "Keyframe Speed Graph, a motion graphics component."
+ },
+ {
+  "id": "forge/motion/KeyframeValueGraph",
+  "title": "Keyframe Value Graph",
+  "description": "Keyframe Value Graph, a motion graphics component."
+ },
+ {
+  "id": "forge/motion/MatteAndMaskPanel",
+  "title": "Matte And Mask Panel",
+  "description": "Matte And Mask Panel, a motion graphics component. Props: layerId, value, sources, onCommit."
+ },
+ {
+  "id": "forge/motion/MotionKeyframeTimeline",
+  "title": "Motion Keyframe Timeline",
+  "description": "Motion Keyframe Timeline, a motion graphics component. Props: curves, duration, selection, onSelectionChange."
+ },
+ {
+  "id": "forge/motion/MotionPathEditor",
+  "title": "Motion Path Editor",
+  "description": "Motion Path Editor, a motion graphics component. Props: subpaths, selection, snapping, onSelectionChange."
+ },
+ {
+  "id": "forge/motion/NodeGraphEditor",
+  "title": "Node Graph Editor",
+  "description": "Node Graph Editor, a motion graphics component. Props: nodes, edges, selectedNodeId, onSelectNode."
+ },
+ {
+  "id": "forge/motion/ParticleEmitterControls",
+  "title": "Particle Emitter Controls",
+  "description": "Particle Emitter Controls, a motion graphics component. Props: value, textures, onCommit."
+ },
+ {
+  "id": "forge/motion/RenderQueuePanel",
+  "title": "Render Queue Panel",
+  "description": "Render Queue Panel, a motion graphics component. Props: value, jobs, compositions, onChange."
+ },
+ {
+  "id": "forge/motion/TimeRemapCurve",
+  "title": "Time Remap Curve",
+  "description": "Time Remap Curve, a motion graphics component. Props: sourceDuration."
+ },
+ {
+  "id": "forge/motion/Transform3DInspector",
+  "title": "Transform 3D Inspector",
+  "description": "Transform 3D Inspector, a motion graphics component. Props: value, onCommit."
+ },
+ {
+  "id": "forge/motion/composition-tree",
+  "title": "composition tree",
+  "description": "composition tree, a motion graphics helper module. Exports compositionAncestors, flattenCompositionLayers, validateCompositionLayers."
+ },
+ {
+  "id": "forge/motion/motion-curves",
+  "title": "motion curves",
+  "description": "motion curves, a motion graphics helper module. Exports evaluateMotionCurve, evaluateMotionVelocity, insertMotionKey."
+ },
+ {
+  "id": "forge/motion/motion-easing",
+  "title": "motion easing",
+  "description": "motion easing, a motion graphics helper module. Exports validateMotionEasing, validateMotionEasingPresets."
+ },
+ {
+  "id": "forge/motion/motion-effects",
+  "title": "motion effects",
+  "description": "motion effects, a motion graphics helper module. Exports moveMotionEffect, validateEffectChoices, validateEffectParameterValue."
+ },
+ {
+  "id": "forge/motion/motion-expression",
+  "title": "motion expression",
+  "description": "motion expression, a motion graphics helper module. Exports isExpressionBoundary, replaceExpressionRange, validateExpressionCompletions."
+ },
+ {
+  "id": "forge/motion/motion-node-graph",
+  "title": "motion node graph",
+  "description": "motion node graph, a motion graphics helper module. Exports motionGraphCanvasSize, validateMotionConnection, validateMotionNodeGraph."
+ },
+ {
+  "id": "forge/motion/motion-path",
+  "title": "motion path",
+  "description": "motion path, a motion graphics helper module. Exports snapMotionPoint, snapMotionTangent, validateMotionPathSnapping."
+ },
+ {
+  "id": "forge/motion/motion-render",
+  "title": "motion render",
+  "description": "motion render, a motion graphics helper module. Exports moveQueuedRenderJob, validateMotionRenderJobs, validateMotionRenderSettings."
+ },
+ {
+  "id": "forge/motion/motion-settings",
+  "title": "motion settings",
+  "description": "motion settings, a motion graphics helper module. Exports defaultMotionTransform, validateMotionCamera, validateMotionLight."
+ },
+ {
+  "id": "forge/motion/motion-timeline",
+  "title": "motion timeline",
+  "description": "motion timeline, a motion graphics helper module. Exports motionSelectionBounds, motionSelectionKey, moveMotionSelection."
+ },
+ {
+  "id": "forge/office/ReadAloudTransport",
+  "title": "Read Aloud Transport",
+  "description": "Read Aloud Transport, an office component. Props: sentences, index, wordIndex, onRateChange."
+ },
+ {
+  "id": "forge/office/read-aloud-model",
+  "title": "read aloud model",
+  "description": "read aloud model, an office state model. Exports clampRate, formatRate, readAloudPosition."
+ },
+ {
+  "id": "forge/pdf/AnnotationToolbar",
+  "title": "Annotation Toolbar",
+  "description": "Annotation Toolbar, a PDF component. Props: tools, activeTool, canUndo, onToolChange."
+ },
+ {
+  "id": "forge/pdf/BookmarkOutline",
+  "title": "Bookmark Outline",
+  "description": "Bookmark Outline, a PDF component. Props: bookmarks, onJump."
+ },
+ {
+  "id": "forge/pdf/CommentsThreadPanel",
+  "title": "Comments Thread Panel",
+  "description": "Comments Thread Panel, a PDF component. Props: threads, groupBy, describeLocation, onSelect."
+ },
+ {
+  "id": "forge/pdf/EncryptPermissionsPanel",
+  "title": "Encrypt Permissions Panel",
+  "description": "Encrypt Permissions Panel, a PDF component. Props: algorithms, algorithmId, permissions, onAlgorithmChange."
+ },
+ {
+  "id": "forge/pdf/ExtractMergeSplitDialog",
+  "title": "Extract Merge Split Dialog",
+  "description": "Extract Merge Split Dialog, a PDF component. Props: open, mode, sources, onChooseSources."
+ },
+ {
+  "id": "forge/pdf/HyperlinkInspector",
+  "title": "Hyperlink Inspector",
+  "description": "Hyperlink Inspector, a PDF component. Props: value, pages, onCommit."
+ },
+ {
+  "id": "forge/pdf/PDFCompareOverlay",
+  "title": "PDF Compare Overlay",
+  "description": "PDF Compare Overlay, a PDF component. Props: leftDocumentId, rightDocumentId, beforeSurface, onModeChange."
+ },
+ {
+  "id": "forge/pdf/PDFFormFieldEditor",
+  "title": "PDF Form Field Editor",
+  "description": "PDF Form Field Editor, a PDF component. Props: fields, selectedId, validationStatus, onSelect."
+ },
+ {
+  "id": "forge/pdf/PDFInlineTextEdit",
+  "title": "PDF Inline Text Edit",
+  "description": "PDF Inline Text Edit, a PDF component. Props: pageId, surface, activeRun, onHitTest."
+ },
+ {
+  "id": "forge/pdf/PDFPageLayoutSelector",
+  "title": "PDF Page Layout Selector",
+  "description": "PDF Page Layout Selector, a PDF component. Props: value, onChange."
+ },
+ {
+  "id": "forge/pdf/PDFReadAloudTransport",
+  "title": "PDF Read Aloud Transport",
+  "description": "PDF Read Aloud Transport, a PDF component. Props: pageCount, onJumpToPage."
+ },
+ {
+  "id": "forge/pdf/PDFScanSession",
+  "title": "PDF Scan Session",
+  "description": "PDF Scan Session, a PDF component. Props: permission, cameraSurface, pages, onPermission."
+ },
+ {
+  "id": "forge/pdf/PDFTextSelection",
+  "title": "PDF Text Selection",
+  "description": "PDF Text Selection, a PDF component. Props: surface, pageId, selection, onCopy."
+ },
+ {
+  "id": "forge/pdf/PDFThumbnailSidebar",
+  "title": "PDF Thumbnail Sidebar",
+  "description": "PDF Thumbnail Sidebar, a PDF component. Props: pages, selectedIds, groups, onSelectionChange."
+ },
+ {
+  "id": "forge/pdf/PDFVoiceNoteAttachment",
+  "title": "PDF Voice Note Attachment",
+  "description": "PDF Voice Note Attachment, a PDF component. Props: pageId, anchor, transport, onAttach."
+ },
+ {
+  "id": "forge/pdf/PageReorderOrganizer",
+  "title": "Page Reorder Organizer",
+  "description": "Page Reorder Organizer, a PDF component. Props: onDuplicate."
+ },
+ {
+  "id": "forge/pdf/PrintAndExportPreview",
+  "title": "Print And Export Preview",
+  "description": "Print And Export Preview, a PDF component. Props: settings, configurationRevision, papers, onSettingsCommit."
+ },
+ {
+  "id": "forge/pdf/RedactionReviewTool",
+  "title": "Redaction Review Tool",
+  "description": "Redaction Review Tool, a PDF component. Props: marks, planRevision, selectedId, onSelect."
+ },
+ {
+  "id": "forge/pdf/SignatureStampTool",
+  "title": "Signature Stamp Tool",
+  "description": "Signature Stamp Tool, a PDF component. Props: mode, ink, artifact, onModeChange."
+ },
+ {
+  "id": "forge/pdf/TextSearchResults",
+  "title": "Text Search Results",
+  "description": "Text Search Results, a PDF component. Props: query, searchedQuery, hits, onQueryChange."
+ },
+ {
+  "id": "forge/pdf/VirtualPDFPageViewer",
+  "title": "Virtual PDF Page Viewer",
+  "description": "Virtual PDF Page Viewer, a PDF component. Props: pages, currentPageId, layout, onVisiblePagesChange."
+ },
+ {
+  "id": "forge/pdf/annotation-model",
+  "title": "annotation model",
+  "description": "annotation model, a PDF state model. Exports orderTools, toolForKey, toolForSubtype."
+ },
+ {
+  "id": "forge/pdf/comments-model",
+  "title": "comments model",
+  "description": "comments model, a PDF state model. Exports groupThreads, resolveReply, threadCounts."
+ },
+ {
+  "id": "forge/pdf/search-model",
+  "title": "search model",
+  "description": "search model, a PDF state model. Exports findInPageText, groupHitsByPage, insertPageHits."
+ },
+ {
+  "id": "forge/photo/BatchExportPanel",
+  "title": "Batch Export Panel",
+  "description": "Batch Export Panel, a photo editing component. Props: photoIds, value, formats, onChange."
+ },
+ {
+  "id": "forge/photo/BeforeAfterCompare",
+  "title": "Before After Compare",
+  "description": "Before After Compare, a photo editing component. Props: before, after, beforeLabel, onModeChange."
+ },
+ {
+  "id": "forge/photo/CatalogFilterBar",
+  "title": "Catalog Filter Bar",
+  "description": "Catalog Filter Bar, a photo editing component. Props: catalogId, value, cameras, onChange."
+ },
+ {
+  "id": "forge/photo/CleanupAndRetouchPanel",
+  "title": "Cleanup And Retouch Panel",
+  "description": "Cleanup And Retouch Panel, a photo editing component. Props: photoId, imageSize, value, onChange."
+ },
+ {
+  "id": "forge/photo/EightBandColorMixer",
+  "title": "Eight Band Color Mixer",
+  "description": "Eight Band Color Mixer, a photo editing component. Props: value, onCommit."
+ },
+ {
+  "id": "forge/photo/ExposureAndWhiteBalance",
+  "title": "Exposure And White Balance",
+  "description": "Exposure And White Balance, a photo editing component. Props: value, onCommit."
+ },
+ {
+  "id": "forge/photo/LensCorrectionPanel",
+  "title": "Lens Correction Panel",
+  "description": "Lens Correction Panel, a photo editing component. Props: value, profiles, onCommit."
+ },
+ {
+  "id": "forge/photo/LinearRadialGradientMask",
+  "title": "Linear Radial Gradient Mask",
+  "description": "Linear Radial Gradient Mask, a photo editing component. Props: value, imageSize, onCommit."
+ },
+ {
+  "id": "forge/photo/LocalMaskBrush",
+  "title": "Local Mask Brush",
+  "description": "Local Mask Brush, a photo editing component. Props: photoId, imageSize, value, onChange."
+ },
+ {
+  "id": "forge/photo/LuminanceColorRangeMask",
+  "title": "Luminance Color Range Mask",
+  "description": "Luminance Color Range Mask, a photo editing component. Props: photoId, imageSize, value, onChange."
+ },
+ {
+  "id": "forge/photo/PhotoLibraryGrid",
+  "title": "Photo Library Grid",
+  "description": "Photo Library Grid, a photo editing component. Props: photos, selectedIds, minimumTileWidth, onSelectionChange."
+ },
+ {
+  "id": "forge/photo/PhotoMetadataInspector",
+  "title": "Photo Metadata Inspector",
+  "description": "Photo Metadata Inspector, a photo editing component. Props: value, annotation, onAnnotationCommit."
+ },
+ {
+  "id": "forge/photo/PhotoVersionHistoryBrowser",
+  "title": "Photo Version History Browser",
+  "description": "Photo Version History Browser, a photo editing component. Props: photoId, versions, originalVersionId, onSelect."
+ },
+ {
+  "id": "forge/photo/PresetFilmstrip",
+  "title": "Preset Filmstrip",
+  "description": "Preset Filmstrip, a photo editing component. Props: presets, selectedId, photoIds, onSelect."
+ },
+ {
+  "id": "forge/photo/PresetManager",
+  "title": "Preset Manager",
+  "description": "Preset Manager, a photo editing component. Props: presets, selectedId, onSelect."
+ },
+ {
+  "id": "forge/photo/RAWDevelopPanel",
+  "title": "RAW Develop Panel",
+  "description": "RAW Develop Panel, a photo editing component. Props: photoId, value, defaults, onCommit."
+ },
+ {
+  "id": "forge/photo/RatingAndFlagControl",
+  "title": "Rating And Flag Control",
+  "description": "Rating And Flag Control, a photo editing component. Props: value, onCommit."
+ },
+ {
+  "id": "forge/photo/ToneAndPresence",
+  "title": "Tone And Presence",
+  "description": "Tone And Presence, a photo editing component. Props: value, onCommit."
+ },
+ {
+  "id": "forge/photo/photo-adjustments",
+  "title": "photo adjustments",
+  "description": "photo adjustments, a photo editing helper module. Exports defaultPhotoDevelop, parsePhotoDevelop, serializePhotoDevelop."
+ },
+ {
+  "id": "forge/photo/photo-catalog",
+  "title": "photo catalog",
+  "description": "photo catalog, a photo editing helper module. Exports emptyPhotoCatalogFilter, togglePhotoSelection, validPhotoDate."
+ },
+ {
+  "id": "forge/photo/photo-export",
+  "title": "photo export",
+  "description": "photo export, a photo editing helper module. Exports defaultPhotoBatchExport, validatePhotoExport, validatePhotoExportProgress."
+ },
+ {
+  "id": "forge/photo/photo-masks",
+  "title": "photo masks",
+  "description": "photo masks, a photo editing helper module. Exports photoBrushPoint, photoGradientCoverage, validatePhotoBrush."
+ },
+ {
+  "id": "forge/photo/photo-metadata",
+  "title": "photo metadata",
+  "description": "photo metadata, a photo editing helper module. Exports validatePhotoMetadata."
+ },
+ {
+  "id": "forge/photo/photo-presets",
+  "title": "photo presets",
+  "description": "photo presets, a photo editing helper module. Exports parsePhotoPreset, serializePhotoPreset, validatePhotoPreset."
+ },
+ {
+  "id": "forge/platform/AccessiblePrecisionScrubControl",
+  "title": "Accessible Precision Scrub Control",
+  "description": "Accessible Precision Scrub Control, a platform component."
+ },
+ {
+  "id": "forge/range-paste",
+  "title": "range paste",
+  "description": "range paste, a creative app helper module. Exports parseTsv, tsvToRange."
+ },
+ {
+  "id": "forge/range-tsv",
+  "title": "range tsv",
+  "description": "range tsv, a creative app helper module. Exports rangeToTsv, tsvField."
+ },
+ {
+  "id": "forge/selection/MagicSelectionControls",
+  "title": "Magic Selection Controls",
+  "description": "Magic Selection Controls, a selection component. Props: settings, currentLayerName, hasSelection, onSettingsChange."
+ },
+ {
+  "id": "forge/selection/MultiSelectionControls",
+  "title": "Multi Selection Controls",
+  "description": "Multi Selection Controls, a selection component. Props: items, selection, tool, onSelectionChange."
+ },
+ {
+  "id": "forge/selection/SelectionBounds",
+  "title": "Selection Bounds",
+  "description": "Selection Bounds, a selection component. Props: frame, viewport, limits, onPreview."
+ },
+ {
+  "id": "forge/selection/SelectionMarquee",
+  "title": "Selection Marquee",
+  "description": "Selection Marquee, a selection component. Props: usableRegions, renderToolbar, tool, onToolChange."
+ },
+ {
+  "id": "forge/selection/magic-selection-model",
+  "title": "magic selection model",
+  "description": "magic selection model, a selection state model. Exports buildMagicWand, buildModifySelection, describeWand."
+ },
+ {
+  "id": "forge/selection/multi-selection-model",
+  "title": "multi selection model",
+  "description": "multi selection model, a selection state model. Exports combineObjectSelection, pickSelectionObject, selectionGroupState."
+ },
+ {
+  "id": "forge/selection/selection-bounds-model",
+  "title": "selection bounds model",
+  "description": "selection bounds model, a selection state model. Exports editSelectionFrame, hitTestSelection, selectionFrameCorners."
+ },
+ {
+  "id": "forge/selection/selection-model",
+  "title": "selection model",
+  "description": "selection model, a selection state model. Exports appendLassoPoint, boxFromCorners, buildSelectRegion."
+ },
+ {
+  "id": "forge/sheet-window",
+  "title": "sheet window",
+  "description": "sheet window, a creative app helper module. Exports cellAddress, columnName, frozenSheetWindow."
+ },
+ {
+  "id": "forge/slides/ChartAndTableEditor",
+  "title": "Chart And Table Editor",
+  "description": "Chart And Table Editor, a presentation slide component. Props: chart, table."
+ },
+ {
+  "id": "forge/slides/ConnectorAndDiagramTools",
+  "title": "Connector And Diagram Tools",
+  "description": "Connector And Diagram Tools, a presentation slide component. Props: targets, connectors, selectedId, onSelect."
+ },
+ {
+  "id": "forge/slides/InkAndLaserPointer",
+  "title": "Ink And Laser Pointer",
+  "description": "Ink And Laser Pointer, a presentation slide component. Props: laserColor, capture, onCaptureStroke."
+ },
+ {
+  "id": "forge/slides/MasterLayoutEditor",
+  "title": "Master Layout Editor",
+  "description": "Master Layout Editor, a presentation slide component. Props: layouts, layoutId, parentId, onLayoutChange."
+ },
+ {
+  "id": "forge/slides/MediaInsertInspector",
+  "title": "Media Insert Inspector",
+  "description": "Media Insert Inspector, a presentation slide component. Props: mediaId, kind, sourceLabel, onSettingsCommit."
+ },
+ {
+  "id": "forge/slides/MorphPreview",
+  "title": "Morph Preview",
+  "description": "Morph Preview, a presentation slide component. Props: sources, targets, matches, onMatchCommit."
+ },
+ {
+  "id": "forge/slides/PresenterInkOverlay",
+  "title": "Presenter Ink Overlay",
+  "description": "Presenter Ink Overlay, a presentation slide component. Props: mode, color, size, onStrokeCommit."
+ },
+ {
+  "id": "forge/slides/PresenterInkStrip",
+  "title": "Presenter Ink Strip",
+  "description": "Presenter Ink Strip, a presentation slide component. Props: mode, capture, strokeCount, onModeChange."
+ },
+ {
+  "id": "forge/slides/PresenterView",
+  "title": "Presenter View",
+  "description": "Presenter View, a presentation slide component. Props: currentSlideLabel, nextSlideLabel, currentSurface, onNavigate."
+ },
+ {
+  "id": "forge/slides/RehearsalTimers",
+  "title": "Rehearsal Timers",
+  "description": "Rehearsal Timers, a presentation slide component. Props: status, elapsedMs, activeSlideElapsedMs, onAction."
+ },
+ {
+  "id": "forge/slides/ShapePresetGallery",
+  "title": "Shape Preset Gallery",
+  "description": "Shape Preset Gallery, a presentation slide component. Props: selectedId, adjustments, handles, onAdjustmentCommit."
+ },
+ {
+  "id": "forge/slides/SlideAnimationPane",
+  "title": "Slide Animation Pane",
+  "description": "Slide Animation Pane, a presentation slide component. Props: animations, effects, objectLabel, onAdd."
+ },
+ {
+  "id": "forge/slides/SlideCanvas",
+  "title": "Slide Canvas",
+  "description": "Slide Canvas, a presentation slide component. Props: slide, size, selectedObjectId, onSelectObject."
+ },
+ {
+  "id": "forge/slides/SlideFilmstrip",
+  "title": "Slide Filmstrip",
+  "description": "Slide Filmstrip, a presentation slide component. Props: slides, sections, viewportHeight, onSelect."
+ },
+ {
+  "id": "forge/slides/SlideNotesEditor",
+  "title": "Slide Notes Editor",
+  "description": "Slide Notes Editor, a presentation slide component. Props: slideLabel, editor, mode."
+ },
+ {
+  "id": "forge/slides/SlideSorter",
+  "title": "Slide Sorter",
+  "description": "Slide Sorter, a presentation slide component. Props: slides, selectedIds, size, onSelectionChange."
+ },
+ {
+  "id": "forge/slides/SlideThumbnail",
+  "title": "Slide Thumbnail",
+  "description": "Slide Thumbnail, a presentation slide component. Props: slide, size, renderImage. Also exports SlideObjectView."
+ },
+ {
+  "id": "forge/slides/ThemeAndTemplateGallery",
+  "title": "Theme And Template Gallery",
+  "description": "Theme And Template Gallery, a presentation slide component. Props: presets, themeFields, onThemeFieldCommit."
+ },
+ {
+  "id": "forge/slides/TransitionPicker",
+  "title": "Transition Picker",
+  "description": "Transition Picker, a presentation slide component. Props: value, effects, previewProgress, onCommit."
+ },
+ {
+  "id": "forge/slides/animation-model",
+  "title": "animation model",
+  "description": "animation model, a presentation slide state model. Exports effectLabel, formatSeconds, parseSeconds."
+ },
+ {
+  "id": "forge/slides/canvas-model",
+  "title": "canvas model",
+  "description": "canvas model, a presentation slide state model. Exports fitScale, hitTest, nudge."
+ },
+ {
+  "id": "forge/slides/presenter-ink-model",
+  "title": "presenter ink model",
+  "description": "presenter ink model, a presentation slide state model. Exports appendPoint, clearDisabledReason, createStrokeIdFactory."
+ },
+ {
+  "id": "forge/slides/slide-model",
+  "title": "slide model",
+  "description": "slide model, a presentation slide state model. Exports gridColumns, gridMove, moveBlock."
+ },
+ {
+  "id": "forge/spreadsheet/CellFormatInspector",
+  "title": "Cell Format Inspector",
+  "description": "Cell Format Inspector, a spreadsheet component. Props: value, colors, formattedPreview, onCommit."
+ },
+ {
+  "id": "forge/spreadsheet/CellSelectionOverlay",
+  "title": "Cell Selection Overlay",
+  "description": "Cell Selection Overlay, a spreadsheet component. Props: range, rowCount, columnCount, onPreview."
+ },
+ {
+  "id": "forge/spreadsheet/ChartBuilder",
+  "title": "Chart Builder",
+  "description": "Chart Builder, a spreadsheet component. Props: spec, presentation, chartColors, onPresentationChange."
+ },
+ {
+  "id": "forge/spreadsheet/ConditionalFormatRules",
+  "title": "Conditional Format Rules",
+  "description": "Conditional Format Rules, a spreadsheet component. Props: rules, selectedId, styles, onSelect."
+ },
+ {
+  "id": "forge/spreadsheet/DataImportWizard",
+  "title": "Data Import Wizard",
+  "description": "Data Import Wizard, a spreadsheet component. Props: sourceLabel, settings, worksheets, onChooseSource."
+ },
+ {
+  "id": "forge/spreadsheet/FillHandleAndAutoFill",
+  "title": "Fill Handle And Auto Fill",
+  "description": "Fill Handle And Auto Fill, a spreadsheet component. Props: mode, availableModes, onFill. Also exports AutoFillModePicker."
+ },
+ {
+  "id": "forge/spreadsheet/FormulaAutocomplete",
+  "title": "Formula Autocomplete",
+  "description": "Formula Autocomplete, a spreadsheet component. Props: formula, replacement, suggestions, onAccept."
+ },
+ {
+  "id": "forge/spreadsheet/FormulaBar",
+  "title": "Formula Bar",
+  "description": "Formula Bar, a spreadsheet component. Props: address, value, originalValue, onChange."
+ },
+ {
+  "id": "forge/spreadsheet/FormulaReferenceText",
+  "title": "Formula Reference Text",
+  "description": "Formula Reference Text, a spreadsheet component. Props: formula, sheetName."
+ },
+ {
+  "id": "forge/spreadsheet/FreezeSplitControls",
+  "title": "Freeze Split Controls",
+  "description": "Freeze Split Controls, a spreadsheet component. Props: freeze, focus, split, onFreezeChange."
+ },
+ {
+  "id": "forge/spreadsheet/NameBox",
+  "title": "Name Box",
+  "description": "Name Box, a spreadsheet component. Props: selectionLabel, rowCount, columnCount, onNavigate."
+ },
+ {
+  "id": "forge/spreadsheet/PivotFieldList",
+  "title": "Pivot Field List",
+  "description": "Pivot Field List, a spreadsheet component. Props: fields, assignments, onAssign."
+ },
+ {
+  "id": "forge/spreadsheet/RangeComments",
+  "title": "Range Comments",
+  "description": "Range Comments, a spreadsheet component. Props: anchors."
+ },
+ {
+  "id": "forge/spreadsheet/ReferenceColorizer",
+  "title": "Reference Colorizer",
+  "description": "Reference Colorizer, a spreadsheet component. Props: formula, sheetName, renderRangeHighlight, onHighlight."
+ },
+ {
+  "id": "forge/spreadsheet/SavedSheetViewManager",
+  "title": "Saved Sheet View Manager",
+  "description": "Saved Sheet View Manager, a spreadsheet component. Props: sheetId, views, activeId, onSave."
+ },
+ {
+  "id": "forge/spreadsheet/SheetTabs",
+  "title": "Sheet Tabs",
+  "description": "Sheet Tabs, a spreadsheet component. Props: tabs, activeId, direction, onSelect."
+ },
+ {
+  "id": "forge/spreadsheet/SortFilterHeader",
+  "title": "Sort Filter Header",
+  "description": "Sort Filter Header, a spreadsheet component. Props: columns, sorts, filters, onSortCommit."
+ },
+ {
+  "id": "forge/spreadsheet/Sparkline",
+  "title": "Sparkline",
+  "description": "Sparkline, a spreadsheet component. Props: values, kind, axisMin."
+ },
+ {
+  "id": "forge/spreadsheet/SparklineEditor",
+  "title": "Sparkline Editor",
+  "description": "Sparkline Editor, a spreadsheet component. Props: spec, cells, selection, onSpecChange."
+ },
+ {
+  "id": "forge/spreadsheet/SplitSpreadsheetView",
+  "title": "Split Spreadsheet View",
+  "description": "Split Spreadsheet View, a spreadsheet component. Props: split, renderPane, minPane, onSplitChange."
+ },
+ {
+  "id": "forge/spreadsheet/SpreadsheetCardsView",
+  "title": "Spreadsheet Cards View",
+  "description": "Spreadsheet Cards View, a spreadsheet component. Props: name, table, cells, onOpenCardChange."
+ },
+ {
+  "id": "forge/spreadsheet/TableStyleGallery",
+  "title": "Table Style Gallery",
+  "description": "Table Style Gallery, a spreadsheet component. Props: value, styles, renderPreview, onCommit."
+ },
+ {
+  "id": "forge/spreadsheet/ValidationDropdown",
+  "title": "Validation Dropdown",
+  "description": "Validation Dropdown, a spreadsheet component. Props: value, choices, allowOther, onCommit."
+ },
+ {
+  "id": "forge/spreadsheet/VirtualSpreadsheetGrid",
+  "title": "Virtual Spreadsheet Grid",
+  "description": "Virtual Spreadsheet Grid, a spreadsheet component."
+ },
+ {
+  "id": "forge/spreadsheet/cards-model",
+  "title": "cards model",
+  "description": "cards model, a spreadsheet state model. Exports sheetCardAt, sheetCards."
+ },
+ {
+  "id": "forge/spreadsheet/chart-model",
+  "title": "chart model",
+  "description": "chart model, a spreadsheet state model. Exports chartSeriesFromCells, parseA1Range."
+ },
+ {
+  "id": "forge/spreadsheet/fill-handle",
+  "title": "fill handle",
+  "description": "fill handle, a spreadsheet helper module. Exports fillFromEdge, fillTarget."
+ },
+ {
+  "id": "forge/spreadsheet/freeze-split-model",
+  "title": "freeze split model",
+  "description": "freeze split model, a spreadsheet state model. Exports dragSplitRatio, freezeFor, splitGeometry."
+ },
+ {
+  "id": "forge/spreadsheet/reference-colors",
+  "title": "reference colors",
+  "description": "reference colors, a spreadsheet helper module. Exports colorReferences, formulaSegments, referenceEdges."
+ },
+ {
+  "id": "forge/spreadsheet/sheet-tabs-model",
+  "title": "sheet tabs model",
+  "description": "sheet tabs model, a spreadsheet state model. Exports duplicateSheetName, nextSheetName, sheetNameError."
+ },
+ {
+  "id": "forge/spreadsheet/sparkline-model",
+  "title": "sparkline model",
+  "description": "sparkline model, a spreadsheet state model. Exports sparklineGeometry, sparklineSpecProblem."
+ },
+ {
+  "id": "forge/timebase",
+  "title": "timebase",
+  "description": "timebase, a creative app helper module. Exports assertFrameRate, clampFrame, formatTimecode."
+ },
+ {
+  "id": "forge/timeline/AudioClipWaveform",
+  "title": "Audio Clip Waveform",
+  "description": "Audio Clip Waveform, a video timeline component. Props: sourceId, sourceRevision, range, onSeek."
+ },
+ {
+  "id": "forge/timeline/AutoCaptionTranscriptTimeline",
+  "title": "Auto Caption Transcript Timeline",
+  "description": "Auto Caption Transcript Timeline, a video timeline component. Props: segments, speakers, frame, onSelect."
+ },
+ {
+  "id": "forge/timeline/AutoReframeGuides",
+  "title": "Auto Reframe Guides",
+  "description": "Auto Reframe Guides, a video timeline component. Props: frame, manual, crop, onManualChange."
+ },
+ {
+  "id": "forge/timeline/BatchEditPanel",
+  "title": "Batch Edit Panel",
+  "description": "Batch Edit Panel, a video timeline component. Props: tracks, selectedClipIds, rate, onApply."
+ },
+ {
+  "id": "forge/timeline/CaptionWordTimingHandles",
+  "title": "Caption Word Timing Handles",
+  "description": "Caption Word Timing Handles, a video timeline component. Props: words, selectedId, durationFrames, onSelect."
+ },
+ {
+  "id": "forge/timeline/ClipTrimHandles",
+  "title": "Clip Trim Handles",
+  "description": "Clip Trim Handles, a video timeline component. Props: clip, track, rate, onPreview."
+ },
+ {
+  "id": "forge/timeline/CoverFramePicker",
+  "title": "Cover Frame Picker",
+  "description": "Cover Frame Picker, a video timeline component. Props: value, frame, preview, onSeek."
+ },
+ {
+  "id": "forge/timeline/DragReorderAndRipple",
+  "title": "Drag Reorder And Ripple",
+  "description": "Drag Reorder And Ripple, a video timeline component. Props: moveMode, rippleScope, tracks, onMoveModeChange."
+ },
+ {
+  "id": "forge/timeline/ExportMonitor",
+  "title": "Export Monitor",
+  "description": "Export Monitor, a video timeline component. Props: output, codecs, onOutputChange."
+ },
+ {
+  "id": "forge/timeline/FrameAccurateScrubber",
+  "title": "Frame Accurate Scrubber",
+  "description": "Frame Accurate Scrubber, a video timeline component. Props: durationFrames, onSeekFrame."
+ },
+ {
+  "id": "forge/timeline/InOutRangeHandles",
+  "title": "In Out Range Handles",
+  "description": "In Out Range Handles, a video timeline component. Props: showCommands, viewport, range, onPreview."
+ },
+ {
+  "id": "forge/timeline/JKLShuttleController",
+  "title": "JKL Shuttle Controller",
+  "description": "JKL Shuttle Controller, a video timeline component. Props: rate, ladder, supportsReverse, onRateChange."
+ },
+ {
+  "id": "forge/timeline/LoopRangeBar",
+  "title": "Loop Range Bar",
+  "description": "Loop Range Bar, a video timeline component. Props: viewport, range, durationFrames, onLoopingChange."
+ },
+ {
+  "id": "forge/timeline/MediaMonitor",
+  "title": "Media Monitor",
+  "description": "Media Monitor, a video timeline component. Props: kind, sourceId, frame, onPlayPause."
+ },
+ {
+  "id": "forge/timeline/ModeEdgeHandles",
+  "title": "Mode Edge Handles",
+  "description": "Mode Edge Handles, a video timeline component. Props: mode, clip, track, onPreview."
+ },
+ {
+  "id": "forge/timeline/MotionTrackingOverlay",
+  "title": "Motion Tracking Overlay",
+  "description": "Motion Tracking Overlay, a video timeline component. Props: frame, playing, viewport, onPreview."
+ },
+ {
+  "id": "forge/timeline/MulticamAngleViewer",
+  "title": "Multicam Angle Viewer",
+  "description": "Multicam Angle Viewer, a video timeline component. Props: angles, selectedId, frame, onSelect."
+ },
+ {
+  "id": "forge/timeline/OverlayAndEffectsTrackStack",
+  "title": "Overlay And Effects Track Stack",
+  "description": "Overlay And Effects Track Stack, a video timeline component. Props: tracks, headerWidth, compactHeaders, onSetFlag."
+ },
+ {
+  "id": "forge/timeline/PictureInPictureControls",
+  "title": "Picture In Picture Controls",
+  "description": "Picture In Picture Controls, a video timeline component. Props: supported, unsupportedReason, active, onEnter."
+ },
+ {
+  "id": "forge/timeline/PlaybackRateMenu",
+  "title": "Playback Rate Menu",
+  "description": "Playback Rate Menu, a video timeline component. Props: rate, rates, supportsReverse, onRateChange."
+ },
+ {
+  "id": "forge/timeline/ProgramMonitor",
+  "title": "Program Monitor",
+  "description": "Program Monitor, a video timeline component."
+ },
+ {
+  "id": "forge/timeline/RazorSplitTool",
+  "title": "Razor Split Tool",
+  "description": "Razor Split Tool, a video timeline component. Props: tool, tracks, selectedClipId, onToolChange."
+ },
+ {
+  "id": "forge/timeline/RenderCacheIndicator",
+  "title": "Render Cache Indicator",
+  "description": "Render Cache Indicator, a video timeline component. Props: jobs, quality, qualities, onQualityChange."
+ },
+ {
+  "id": "forge/timeline/RollSlipSlideControls",
+  "title": "Roll Slip Slide Controls",
+  "description": "Roll Slip Slide Controls, a video timeline component. Props: tool, tracks, selectedClipId, onToolChange."
+ },
+ {
+  "id": "forge/timeline/SafeAreaOverlay",
+  "title": "Safe Area Overlay",
+  "description": "Safe Area Overlay, a video timeline component. Props: aspect, safeArea, showSafeAreas."
+ },
+ {
+  "id": "forge/timeline/ScopesDock",
+  "title": "Scopes Dock",
+  "description": "Scopes Dock, a video timeline component. Props: target, source, program, onTargetChange."
+ },
+ {
+  "id": "forge/timeline/SeekBar",
+  "title": "Seek Bar",
+  "description": "Seek Bar, a video timeline component. Props: frame, durationFrames, rate, onScrub."
+ },
+ {
+  "id": "forge/timeline/SourceMonitor",
+  "title": "Source Monitor",
+  "description": "Source Monitor, a video timeline component."
+ },
+ {
+  "id": "forge/timeline/StickerMotionLane",
+  "title": "Sticker Motion Lane",
+  "description": "Sticker Motion Lane, a video timeline component. Props: stickers, selectedId, catalog, onSelect."
+ },
+ {
+  "id": "forge/timeline/TimecodeDisplay",
+  "title": "Timecode Display",
+  "description": "Timecode Display, a video timeline component. Props: frame, rate, format, onFormatChange."
+ },
+ {
+  "id": "forge/timeline/TimelineClipLane",
+  "title": "Timeline Clip Lane",
+  "description": "Timeline Clip Lane, a video timeline component. Props: tracks, viewport, rate, onViewportChange."
+ },
+ {
+  "id": "forge/timeline/TimelineMarkers",
+  "title": "Timeline Markers",
+  "description": "Timeline Markers, a video timeline component. Props: markers, colors, snapFrames, onColorChange."
+ },
+ {
+  "id": "forge/timeline/TimelinePlayhead",
+  "title": "Timeline Playhead",
+  "description": "Timeline Playhead, a video timeline component. Props: viewport, frame, durationFrames, onScrub."
+ },
+ {
+  "id": "forge/timeline/TimelineRuler",
+  "title": "Timeline Ruler",
+  "description": "Timeline Ruler, a video timeline component. Props: viewport, rate, durationFrames, onScrub."
+ },
+ {
+  "id": "forge/timeline/TimelineZoomAndScroll",
+  "title": "Timeline Zoom And Scroll",
+  "description": "Timeline Zoom And Scroll, a video timeline component. Props: viewport, durationFrames, rate, onViewportChange."
+ },
+ {
+  "id": "forge/timeline/TrackHeaders",
+  "title": "Track Headers",
+  "description": "Track Headers, a video timeline component. Props: tracks, laneHeight, moveTarget, onSetFlag."
+ },
+ {
+  "id": "forge/timeline/TransitionHandles",
+  "title": "Transition Handles",
+  "description": "Transition Handles, a video timeline component. Props: tracks, transitions, viewport, onAdd."
+ },
+ {
+  "id": "forge/timeline/TransitionPresetBrowser",
+  "title": "Transition Preset Browser",
+  "description": "Transition Preset Browser, a video timeline component. Props: kinds, renderPreview, cut, onApply."
+ },
+ {
+  "id": "forge/timeline/TransportControls",
+  "title": "Transport Controls",
+  "description": "Transport Controls, a video timeline component. Props: playing, frame, durationFrames, onPlayPause."
+ },
+ {
+  "id": "forge/timeline/VideoEffectsBrowser",
+  "title": "Video Effects Browser",
+  "description": "Video Effects Browser, a video timeline component. Props: clipId, preview, appearance, onAppearanceChange."
+ },
+ {
+  "id": "forge/timeline/VideoFilmstrip",
+  "title": "Video Filmstrip",
+  "description": "Video Filmstrip, a video timeline component. Props: sourceId, sourceRevision, durationFrames, onSeek."
+ },
+ {
+  "id": "forge/timeline/VideoQualityInspector",
+  "title": "Video Quality Inspector",
+  "description": "Video Quality Inspector, a video timeline component. Props: media, preview, profileId, onProfileChange."
+ },
+ {
+  "id": "forge/timeline/VideoSpeedRampCurve",
+  "title": "Video Speed Ramp Curve",
+  "description": "Video Speed Ramp Curve, a video timeline component. Props: clipId, allowReverse, allowFreeze, onCommit."
+ },
+ {
+  "id": "forge/timeline/VideoStabilizationInspector",
+  "title": "Video Stabilization Inspector",
+  "description": "Video Stabilization Inspector, a video timeline component. Props: value, qualities, analysis, onChange."
+ },
+ {
+  "id": "forge/timeline/batch",
+  "title": "batch",
+  "description": "batch, a video timeline helper module. Exports batchRemove, batchRippleDelete, batchShift."
+ },
+ {
+  "id": "forge/timeline/edits",
+  "title": "edits",
+  "description": "edits, a video timeline helper module. Exports assertClip, clipEnd, clipLength."
+ },
+ {
+  "id": "forge/timeline/loop-range",
+  "title": "loop range",
+  "description": "loop range, a video timeline helper module. Exports loopCommit, loopFromMarks, loopNext."
+ },
+ {
+  "id": "forge/timeline/markers",
+  "title": "markers",
+  "description": "markers, a video timeline helper module. Exports adjacentMarker, moveMarker, nextMarkerName."
+ },
+ {
+  "id": "forge/timeline/placement",
+  "title": "placement",
+  "description": "placement, a video timeline helper module. Exports placementEdit, placementPreview, trackAtOffset."
+ },
+ {
+  "id": "forge/timeline/ruler",
+  "title": "ruler",
+  "description": "ruler, a video timeline helper module. Exports clockLabel, defaultPxPerFrame, rulerStep."
+ },
+ {
+  "id": "forge/timeline/safe-area",
+  "title": "safe area",
+  "description": "safe area, a video timeline helper module. Exports fitAspect, guideRect, insetRect."
+ },
+ {
+  "id": "forge/timeline/shuttle",
+  "title": "shuttle",
+  "description": "shuttle, a video timeline helper module. Exports assertLadder, shuttleLabel, shuttleRate."
+ },
+ {
+  "id": "forge/timeline/time",
+  "title": "time",
+  "description": "time, a video timeline helper module. Exports assertSampleRate, formatSampleClock, formatTime."
+ },
+ {
+  "id": "forge/timeline/track-stack",
+  "title": "track stack",
+  "description": "track stack, a video timeline helper module. Exports stackMoveTarget, stackOrder."
+ },
+ {
+  "id": "forge/timeline/transition-presets",
+  "title": "transition presets",
+  "description": "transition presets, a video timeline helper module. Exports filterTransitionKinds, transitionDiagram."
+ },
+ {
+  "id": "forge/timeline/transitions",
+  "title": "transitions",
+  "description": "transitions, a video timeline helper module. Exports clampTransitionFrames, clipsOfCut, cutsOf."
+ },
+ {
+  "id": "forge/timeline/trim-modes",
+  "title": "trim modes",
+  "description": "trim modes, a video timeline helper module. Exports nextTouching, previousTouching, rippleDeletePreview."
+ },
+ {
+  "id": "forge/timeline/viewport",
+  "title": "viewport",
+  "description": "viewport, a video timeline helper module. Exports clampViewport, fitRange, followPlayhead."
+ },
+ {
+  "id": "forge/timeline/waveform-cache",
+  "title": "waveform cache",
+  "description": "waveform cache, a video timeline helper module. Exports createWaveformCache, mediaProviderId, sharedWaveformCache."
+ },
+ {
+  "id": "forge/vector/FillStrokeInspector",
+  "title": "Fill Stroke Inspector",
+  "description": "Fill Stroke Inspector, a vector drawing component. Props: kind, fill, stroke, onSetFill."
+ },
+ {
+  "id": "forge/vector/GradientOnCanvasHandles",
+  "title": "Gradient On Canvas Handles",
+  "description": "Gradient On Canvas Handles, a vector drawing component. Props: paint, transform, selectedStop, onSelectStop."
+ },
+ {
+  "id": "forge/vector/PenNodeEditor",
+  "title": "Pen Node Editor",
+  "description": "Pen Node Editor, a vector drawing component. Props: subpaths, editRevision, snapPoint, onSelectionChange."
+ },
+ {
+  "id": "forge/vector/ShapeBuilder",
+  "title": "Shape Builder",
+  "description": "Shape Builder, a vector drawing component. Props: selection, group, onBoolean."
+ },
+ {
+  "id": "forge/vector/fill-stroke-model",
+  "title": "fill stroke model",
+  "description": "fill stroke model, a vector drawing state model. Exports convertPaint, dashForPreset, defaultStroke."
+ },
+ {
+  "id": "forge/vector/gradient-handles-model",
+  "title": "gradient handles model",
+  "description": "gradient handles model, a vector drawing state model. Exports addStop, addStopAvailability, clampFocal."
+ },
+ {
+  "id": "forge/vector/pen-node-model",
+  "title": "pen node model",
+  "description": "pen node model, a vector drawing state model. Exports closeAvailability, convertNodeKind, hitPath."
+ },
+ {
+  "id": "forge/vector/shape-builder-model",
+  "title": "shape builder model",
+  "description": "shape builder model, a vector drawing state model. Exports booleanAvailability, booleanIds, booleanOpLabel."
+ },
+ {
+  "id": "forge/vector/vector-types",
+  "title": "vector types",
+  "description": "vector types, a vector drawing helper module. Exports availabilityReason, deltaToContent, describeRgba."
+ },
+ {
+  "id": "forge/waveform",
+  "title": "waveform",
+  "description": "waveform, a creative app helper module. Exports assertWaveformRange, normalizePeak, peaksToBars."
+ },
+ {
+  "id": "forms/choice-keys",
+  "title": "choice keys",
+  "description": "choice keys, a form helper module. Exports arrowStep, domIsRTL, isModified."
+ },
+ {
+  "id": "forms/option-groups",
+  "title": "option groups",
+  "description": "option groups, a form helper module. Exports flattenOptionGroups, validateOptionGroups."
+ },
+ {
+  "id": "gestures/GestureHandlerDrag",
+  "title": "Gesture Handler Drag",
+  "description": "Gesture Handler Drag, a gesture component."
+ },
+ {
+  "id": "gestures/drag-controller",
+  "title": "drag controller",
+  "description": "drag controller, a gesture helper module. Exports createDragController."
+ },
+ {
+  "id": "gestures/drag-transport",
+  "title": "drag transport",
+  "description": "drag transport, a gesture helper module. Exports keyboardKey."
+ },
+ {
+  "id": "html",
+  "title": "Article",
+  "description": "Article, a UI component. Props: level. Also exports Aside, Footer."
+ },
+ {
+  "id": "navigation/drawer-model",
+  "title": "drawer model",
+  "description": "drawer model, a navigation state model. Exports drawerGeometry."
+ },
+ {
+  "id": "overlays/anchored-popover-types",
+  "title": "anchored popover types",
+  "description": "anchored popover types, an overlay helper module. Exports isTriggerPopover, popoverTriggerState, renderPopoverTrigger."
+ },
+ {
+  "id": "overlays/command-filter",
+  "title": "command filter",
+  "description": "command filter, an overlay helper module. Exports filterCommands, nextActiveCommand, normalizeSearchText."
+ },
+ {
+  "id": "overlays/focus-cycle",
+  "title": "focus cycle",
+  "description": "focus cycle, an overlay helper module. Exports cycleFocusIndex, cycleFocusTarget."
+ },
+ {
+  "id": "overlays/focus-restore",
+  "title": "focus restore",
+  "description": "focus restore, an overlay hook. Exports useRestoreFocus."
+ },
+ {
+  "id": "overlays/measure-anchor",
+  "title": "measure anchor",
+  "description": "measure anchor, an overlay helper module. Exports measureAnchor, windowRegions."
+ },
+ {
+  "id": "overlays/popover-position",
+  "title": "popover position",
+  "description": "popover position, an overlay helper module. Exports hasUsableRegion, placePopover, placementSide."
+ },
+ {
+  "id": "overlays/useTriggerAnchor",
+  "title": "use Trigger Anchor",
+  "description": "use Trigger Anchor, an overlay hook. Exports useTriggerAnchor."
+ },
+ {
+  "id": "shell/NumericScrubField",
+  "title": "Numeric Scrub Field",
+  "description": "Numeric Scrub Field, an app shell component. Props: labels, value, unit, onPreview."
+ },
+ {
+  "id": "shell/a11y-audit",
+  "title": "a 11y audit",
+  "description": "a 11y audit, an app shell helper module. Exports auditAccessibility."
+ },
+ {
+  "id": "shell/a11y-model",
+  "title": "a 11y model",
+  "description": "a 11y model, an app shell state model. Exports initialA11yState, modalityAfterKey, motionDuration."
+ },
+ {
+  "id": "shell/asset-browser-model",
+  "title": "asset browser model",
+  "description": "asset browser model, an app shell state model. Exports assetDisplayName, filterAssets, formatAssetBytes."
+ },
+ {
+  "id": "shell/contextual-toolbar-model",
+  "title": "contextual toolbar model",
+  "description": "contextual toolbar model, an app shell state model. Exports itemsForSelection, overflowDescription, splitOverflow."
+ },
+ {
+  "id": "shell/dock-model",
+  "title": "dock model",
+  "description": "dock model, an app shell state model. Exports activatePanel, clampFloatingRect, closePanel."
+ },
+ {
+  "id": "shell/document-tabs-model",
+  "title": "document tabs model",
+  "description": "document tabs model, an app shell state model. Exports activeAfterClose, documentTabLabel, moveDocument."
+ },
+ {
+  "id": "shell/find-replace-model",
+  "title": "find replace model",
+  "description": "find replace model, an app shell state model. Exports findLiteralText, literalSearchToken, replaceLiteralText."
+ },
+ {
+  "id": "shell/history-model",
+  "title": "history model",
+  "description": "history model, an app shell state model. Exports validateHistory."
+ },
+ {
+  "id": "shell/inspector-context",
+  "title": "Inspector Panel Context",
+  "description": "Inspector Panel Context, an app shell component. Also exports InspectorSectionContext."
+ },
+ {
+  "id": "shell/inspector-model",
+  "title": "inspector model",
+  "description": "inspector model, an app shell state model. Exports matchSummary, matchesQuery, matchingRowCount."
+ },
+ {
+  "id": "shell/keyboard-map",
+  "title": "keyboard map",
+  "description": "keyboard map, an app shell helper module. Exports createKeyboardMap, isTextEditingBinding, reservedBindingReason."
+ },
+ {
+  "id": "shell/preset-model",
+  "title": "preset model",
+  "description": "preset model, an app shell state model. Exports filterPresets, galleryColumns, gridFocusTarget."
+ },
+ {
+  "id": "shell/progress-model",
+  "title": "progress model",
+  "description": "progress model, an app shell state model. Exports jobActionLabel, validateFeedback."
+ },
+ {
+  "id": "shell/ribbon-model",
+  "title": "ribbon model",
+  "description": "ribbon model, an app shell state model. Exports inlineGalleryItems, ribbonTabLabel, validateRibbon."
+ },
+ {
+  "id": "shell/screen-reader-focus",
+  "title": "screen reader focus",
+  "description": "screen reader focus, an app shell helper module. Exports focusForScreenReader."
+ },
+ {
+  "id": "shell/shell-keys",
+  "title": "shell keys",
+  "description": "shell keys, an app shell helper module. Exports arrowStep, nodeIsRTL, rovingTarget."
+ },
+ {
+  "id": "shell/shortcut-model",
+  "title": "shortcut model",
+  "description": "shortcut model, an app shell state model. Exports bindingFromChord, bindingKeycaps, bindingSpoken."
+ },
+ {
+  "id": "shell/slider-model",
+  "title": "slider model",
+  "description": "slider model, an app shell state model. Exports angleAround, applySliderKey, fractionOf."
+ },
+ {
+  "id": "shell/splitter-model",
+  "title": "splitter model",
+  "description": "splitter model, an app shell state model. Exports hingeBands, mirrorBands, resolveSplit."
+ },
+ {
+  "id": "shell/status-model",
+  "title": "status model",
+  "description": "status model, an app shell state model. Exports activityAnnouncement, formatElapsed, formatZoom."
+ },
+ {
+  "id": "shell/tool-rail-model",
+  "title": "tool rail model",
+  "description": "tool rail model, an app shell state model. Exports shownVariantId, toolIsActive, validateRailTools."
+ },
+ {
+  "id": "shell/unit-expression",
+  "title": "unit expression",
+  "description": "unit expression, an app shell helper module. Exports convertFromBase, formatUnitValue, parseUnitExpression."
+ },
+ {
+  "id": "shell/workspace-model",
+  "title": "workspace model",
+  "description": "workspace model, an app shell state model. Exports documentLabel, layoutForMode, modeAnnouncement."
+ },
+ {
+  "id": "shell/workspace-preset-model",
+  "title": "workspace preset model",
+  "description": "workspace preset model, an app shell state model. Exports copyName, layoutsEqual, presetActions."
+ }
+]

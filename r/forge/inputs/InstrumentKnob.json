@@ -1,0 +1,61 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/inputs/InstrumentKnob",
+  "title": "Instrument Knob",
+  "description": "Instrument Knob, a precision input component. Props: value, unit, size, onPreview.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/precision"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/cancel-preview.ts",
+      "content": "/** Restore app-owned transient previews without committing a cancelled gesture. */\nexport function cancelPreview<T>(\n  value: T,\n  restore: (value: T) => void,\n  onPreview?: (value: T) => void,\n): void {\n  restore(value);\n  onPreview?.(value);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/cancel-preview.ts"
+    },
+    {
+      "path": "packages/ui/src/components/forge/inputs/InstrumentKnob.tsx",
+      "content": "import {cancelPreview} from \"@/components/nyc-tron/ui/components/forge/cancel-preview\";\nimport {useRef} from \"react\";\nimport {PanResponder,Pressable,Text,TextInput,View,type ViewProps} from \"react-native\";\nimport {createStore,type StoreApi} from \"zustand/vanilla\";\nimport {useStore} from \"zustand\";\nimport {clamp,scrubValue,snapValue,gestureToAngle,type RangeConfig} from \"@/components/nyc-tron/ui/components/forge/inputs/precision\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {space,radius,border,opacity,size as sizeToken} from \"@/components/nyc-tron/ui/tokens\";\n\ntype Local={preview:number;draft:string;editing:boolean;active:boolean};\nexport interface InstrumentKnobProps extends Omit<ViewProps,\"children\">,RangeConfig {\n  value:number;\n  label:string;\n  unit?:string;\n  size?:number;\n  disabled?:boolean;\n  onPreview?:(value:number)=>void;\n  /** Exactly once per completed gesture, never on every frame. */\n  onCommit:(value:number)=>void|Promise<unknown>;\n  className?:string;\n  unstyled?:boolean;\n  /** Optional override; defaults to the theme's accent token. */\n  accentColor?:string;\n}\n/** Native responder-based parametric control. App owns Tailwind theme; engine owns the committed value. */\nexport function InstrumentKnob({\n  min,max,step,detents,value,label,unit,size=112,disabled=false,onPreview,onCommit,\n  className,unstyled=false,accentColor,...rest\n}:InstrumentKnobProps){\n  const latest=useRef({min,max,step,detents,value,disabled,onPreview,onCommit});\n  latest.current={min,max,step,detents,value,disabled,onPreview,onCommit};\n  const local=useRef<StoreApi<Local>|null>(null);\n  if(!local.current)local.current=createStore<Local>(()=>({preview:value,draft:String(value),editing:false,active:false}));\n  const store=local.current;\n  const active=useStore(store,s=>s.active);\n  const editing=useStore(store,s=>s.editing);\n  const draft=useStore(store,s=>s.draft);\n  const preview=useStore(store,s=>s.preview);\n  const current=active||editing?preview:value;\n  const start=useRef(value);\n  const cancel=()=>cancelPreview(latest.current.value,value=>store.setState({active:false,editing:false,preview:value,draft:String(value)}),latest.current.onPreview);\n  const commit=(next:number)=>{\n    const p=latest.current;\n    if(p.disabled){cancel();return;}\n    const rounded=snapValue(next,p);\n    store.setState({active:false,editing:false,preview:rounded,draft:String(rounded)});\n    if(rounded!==p.value)void p.onCommit(rounded);\n  };\n  const responder=useRef<ReturnType<typeof PanResponder.create>|null>(null);\n  if(!responder.current)responder.current=PanResponder.create({\n    onStartShouldSetPanResponder:()=>!latest.current.disabled,\n    onMoveShouldSetPanResponder:()=>!latest.current.disabled,\n    onPanResponderGrant:()=>{\n      start.current=latest.current.value;\n      store.setState({active:true,preview:start.current,draft:String(start.current)});\n    },\n    onPanResponderMove:(_event,gesture)=>{\n      const p=latest.current;\n      if(p.disabled)return;\n      const next=scrubValue(start.current,gesture.dx,gesture.dy,p);\n      if(next!==store.getState().preview){\n        store.setState({preview:next,draft:String(next)});\n        p.onPreview?.(next);\n      }\n    },\n    onPanResponderRelease:()=>{if(store.getState().active)commit(store.getState().preview);},\n    onPanResponderTerminate:cancel,\n    onPanResponderTerminationRequest:()=>true,\n  });\n  const enter=()=>{\n    if(!store.getState().editing)return;\n    const next=Number(store.getState().draft.trim());\n    if(Number.isFinite(next))commit(next);\n    else store.setState({editing:false,preview:latest.current.value,draft:String(latest.current.value)});\n  };\n  const nudge=(direction:-1|1)=>{\n    if(!disabled)commit(clamp(value+direction*step,min,max));\n  };\n  const styled=!unstyled;\n  const accentBorder=accentColor?{borderColor:accentColor}:null;\n  const accentFill=accentColor?{backgroundColor:accentColor}:null;\n  const text=joinClasses(styled&&\"text-text\");\n  return <View {...rest} {...{className:joinClasses(\"items-center gap-2\",!unstyled&&\"rounded-control bg-surface-raised p-3\",className)}}\n    accessibilityLabel={label}>\n    <Text {...{className:joinClasses(!unstyled&&\"text-text font-semibold\")}}>{label}</Text>\n    <View {...responder.current.panHandlers}\n      accessible accessibilityRole=\"adjustable\"\n      accessibilityLabel={label}\n      accessibilityValue={{min,max,now:current,text:String(current)+(unit?\" \"+unit:\"\")}}\n      accessibilityState={{disabled}}\n      {...{className:joinClasses(styled&&!accentColor&&\"border-accent\")}}\n      accessibilityActions={[{name:\"increment\"},{name:\"decrement\"}]}\n      onAccessibilityAction={e=>{if(e.nativeEvent.actionName===\"increment\")nudge(1);if(e.nativeEvent.actionName===\"decrement\")nudge(-1);}}\n      style={{width:size,height:size,borderRadius:size/2,borderWidth:border[8],...accentBorder,alignItems:\"center\",justifyContent:\"center\",opacity:disabled?opacity[45]:1}}>\n      <View pointerEvents=\"none\" {...{className:joinClasses(styled&&!accentColor&&\"bg-accent\")}}\n        style={{position:\"absolute\",width:3,height:size*0.28,...accentFill,\n        borderRadius:radius[3],transform:[{translateY:-size*0.2},{rotate:gestureToAngle(current,min,max)+\"deg\"}]}} />\n      <Text {...{className:joinClasses(!unstyled&&\"text-text font-semibold\")}}>{String(current)}</Text>\n    </View>\n    <View style={{flexDirection:\"row\",alignItems:\"center\",gap:space[1.5]}}>\n      <Pressable accessibilityRole=\"button\" accessibilityLabel={\"Decrease \"+label} disabled={disabled}\n        onPress={()=>nudge(-1)} style={{minWidth:sizeToken.touch,minHeight:sizeToken.touch,justifyContent:\"center\",alignItems:\"center\",opacity:disabled?opacity[45]:1}}><Text {...{className:text}}>−</Text></Pressable>\n      <TextInput accessibilityLabel={label+\" numeric value\"} keyboardType=\"decimal-pad\" editable={!disabled}\n        {...{className:joinClasses(styled&&\"rounded-control border border-border bg-surface-sunken text-text\")}}\n        style={{minWidth:64,minHeight:sizeToken.touch,textAlign:\"center\"}}\n        value={editing?draft:String(current)}\n        onFocus={()=>store.setState({editing:true,draft:String(value),preview:value})}\n        onChangeText={v=>store.setState({draft:v})}\n        onSubmitEditing={enter}\n        onBlur={enter}/>\n      <Pressable accessibilityRole=\"button\" accessibilityLabel={\"Increase \"+label} disabled={disabled}\n        onPress={()=>nudge(1)} style={{minWidth:sizeToken.touch,minHeight:sizeToken.touch,justifyContent:\"center\",alignItems:\"center\",opacity:disabled?opacity[45]:1}}><Text {...{className:text}}>+</Text></Pressable>\n    </View>\n    {unit?<Text {...{className:joinClasses(styled&&\"text-text-muted\")}}>{unit}</Text>:null}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/inputs/InstrumentKnob.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    },
+    {
+      "path": "packages/ui/src/tokens.ts",
+      "content": "// Generated by tooling/codemod/generate-token-module.mjs from docs/agent-native/tokens.json.\n// Do not edit by hand. Change tokens.json, regenerate, and run tooling/codemod/prove-equivalence.mjs.\n// Internal copy of the core token module so this package has no runtime dependency on core. Not exported from package.json.\n\n/** One spacing unit in px. `space` keys are multiples of it. */\nexport const SPACE_UNIT = 4;\n\n/** Spacing steps. The key is a multiple of SPACE_UNIT, so `space[2]` is 8 and `space[1.5]` is 6. Negative spacing is `-space[n]`. */\nexport const space = {\n  0: 0,\n  0.25: 1,\n  0.5: 2,\n  0.75: 3,\n  1: 4,\n  1.5: 6,\n  2: 8,\n  2.5: 10,\n  3: 12,\n  3.5: 14,\n  4: 16,\n} as const;\n\n/** Corner radius steps in px. `radius.full` is the pill radius. */\nexport const radius = {\n  1: 1,\n  2: 2,\n  3: 3,\n  4: 4,\n  5: 5,\n  6: 6,\n  7: 7,\n  8: 8,\n  9: 9,\n  10: 10,\n  12: 12,\n  14: 14,\n  full: 9999,\n} as const;\n\n/** Font size steps in px, keyed by value. */\nexport const font = {\n  10: 10,\n  11: 11,\n  12: 12,\n  13: 13,\n  14: 14,\n  15: 15,\n  16: 16,\n  17: 17,\n} as const;\n\n/** Line height steps in px, keyed by value. */\nexport const leading = {\n  14: 14,\n  16: 16,\n} as const;\n\n/** Border width steps in px, keyed by value (`border[1.5]`). */\nexport const border = {\n  0: 0,\n  1: 1,\n  1.5: 1.5,\n  2: 2,\n  3: 3,\n  4: 4,\n  8: 8,\n} as const;\n\n/** Opacity steps keyed by percent (`opacity[45]` is 0.45). 0 and 1 are not tokens. */\nexport const opacity = {\n  30: 0.3,\n  35: 0.35,\n  40: 0.4,\n  45: 0.45,\n  50: 0.5,\n  55: 0.55,\n  60: 0.6,\n  70: 0.7,\n  90: 0.9,\n} as const;\n\n/** Black overlay colours keyed by alpha percent. */\nexport const scrim = {\n  12: \"rgba(0,0,0,0.12)\",\n  18: \"rgba(0,0,0,0.18)\",\n  25: \"rgba(0,0,0,0.25)\",\n  50: \"rgba(0,0,0,0.5)\",\n} as const;\n\n/** Box shadows. `elevation[0]` is none. */\nexport const elevation = {\n  0: \"none\",\n  1: \"0 1px 3px rgba(0,0,0,0.25)\",\n  2: \"0 4px 12px rgba(0,0,0,0.18)\",\n} as const;\n\n/** Fixed sizes. `size.touch` is the 44 px minimum touch target. */\nexport const size = {\n  touch: 44,\n} as const;\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/tokens.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/inputs/InstrumentKnob",
+    "exports": [
+      "InstrumentKnob",
+      "InstrumentKnobProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

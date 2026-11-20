@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/audio/tempo",
+  "title": "tempo",
+  "description": "tempo, an audio mixing and editing helper module. Exports addTap, assertBpm, beatInBar.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/audio/tempo.ts",
+      "content": "/**\n * Tempo, tap-tempo and time-signature math for\n * {@linkcode TempoAndMetronome}. Pure; no React, timers or audio imports.\n * Bounds match the Cadence engine (`setTempo` 20..=400 BPM,\n * `setTimeSig` numerator >= 1, denominator a power of two <= 128).\n */\n\nexport const MIN_BPM = 20;\nexport const MAX_BPM = 400;\n\n/** Denominators offered by the picker. The engine also accepts 1, 32, 64 and 128. */\nexport const TIME_SIG_DENOMINATORS = [2, 4, 8, 16] as const;\n\n/** Largest numerator the stepper offers. */\nexport const MAX_NUMERATOR = 32;\n\n/** A gap longer than this starts a new tap sequence. */\nexport const TAP_RESET_MS = 2000;\n\n/** Taps averaged for the estimate; older taps fall off. */\nexport const TAP_WINDOW = 8;\n\n/** Time signature as `[numerator, denominator]`, the engine's `time_sig` shape. */\nexport type TimeSignature = readonly [number, number];\n\n/** @throws {RangeError} When `bpm` is outside 20..400. */\nexport function assertBpm(bpm: number): void {\n  if (!Number.isFinite(bpm) || bpm < MIN_BPM || bpm > MAX_BPM) {\n    throw new RangeError(`Tempo must be ${MIN_BPM}..${MAX_BPM} BPM`);\n  }\n}\n\n/** Round to 0.1 BPM and clamp into the engine's range. */\nexport function clampBpm(bpm: number): number {\n  if (!Number.isFinite(bpm)) throw new RangeError(\"Tempo must be finite\");\n  return Math.round(Math.min(MAX_BPM, Math.max(MIN_BPM, bpm)) * 10) / 10;\n}\n\n/** @returns true when the engine would accept the signature. */\nexport function isValidTimeSignature([n, d]: TimeSignature): boolean {\n  return Number.isInteger(n) && n >= 1 && Number.isInteger(d) && d >= 1 && d <= 128 &&\n    (d & (d - 1)) === 0;\n}\n\n/** `\"7/8\"`. */\nexport function formatTimeSignature([n, d]: TimeSignature): string {\n  return n + \"/\" + d;\n}\n\n/**\n * Append a tap time (ms, any monotonic clock) to a tap history. A gap over\n * {@linkcode TAP_RESET_MS} or a clock that went backwards starts over.\n * Keeps at most {@linkcode TAP_WINDOW} taps.\n */\nexport function addTap(taps: readonly number[], atMs: number): number[] {\n  if (!Number.isFinite(atMs)) throw new RangeError(\"Tap time must be finite\");\n  const last = taps.at(-1);\n  if (last === undefined || atMs <= last || atMs - last > TAP_RESET_MS) return [atMs];\n  return [...taps, atMs].slice(-TAP_WINDOW);\n}\n\n/**\n * Tempo from a tap history: 60000 / mean interval, clamped and rounded to\n * 0.1 BPM. Undefined until there are two taps.\n */\nexport function tapTempo(taps: readonly number[]): number | undefined {\n  if (taps.length < 2) return undefined;\n  const span = taps.at(-1)! - taps[0]!;\n  if (!(span > 0)) return undefined;\n  return clampBpm(60000 / (span / (taps.length - 1)));\n}\n\n/**\n * Zero-based beat inside its bar for a playhead in ticks. `ppq` is ticks\n * per quarter note; a beat is one denominator note.\n */\nexport function beatInBar(ticks: number, ppq: number, [n, d]: TimeSignature): number {\n  if (!Number.isFinite(ticks) || ticks < 0 || !Number.isInteger(ppq) || ppq <= 0) {\n    throw new RangeError(\"Invalid playhead\");\n  }\n  const ticksPerBeat = (ppq * 4) / d;\n  return Math.floor(ticks / ticksPerBeat) % n;\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/audio/tempo.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/audio/tempo",
+    "exports": [
+      "MAX_BPM",
+      "MAX_NUMERATOR",
+      "MIN_BPM",
+      "TAP_RESET_MS",
+      "TAP_WINDOW",
+      "TIME_SIG_DENOMINATORS",
+      "TimeSignature",
+      "addTap",
+      "assertBpm",
+      "beatInBar",
+      "clampBpm",
+      "formatTimeSignature",
+      "isValidTimeSignature",
+      "tapTempo"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

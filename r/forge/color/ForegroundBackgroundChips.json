@@ -1,0 +1,50 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/ForegroundBackgroundChips",
+  "title": "Foreground Background Chips",
+  "description": "Foreground Background Chips, a color component. Props: value, active, defaults, onCommit.",
+  "registryDependencies": [
+    "@nyc-tron/Button",
+    "@nyc-tron/forge/color",
+    "@nyc-tron/forge/color/color-pair"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/ForegroundBackgroundChips.tsx",
+      "content": "import {Pressable,Text,View,type ViewProps} from \"react-native\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {Button} from \"@/components/nyc-tron/ui/components/Button\";\nimport {rgbaToHex} from \"@/components/nyc-tron/ui/components/forge/color\";\nimport {DEFAULT_COLOR_PAIR,sameColorPair,swapColorPair,type ColorPair,type ColorPairSlot} from \"@/components/nyc-tron/ui/components/forge/color/color-pair\";\nimport {space,size} from \"@/components/nyc-tron/ui/tokens\";\n\n/** Props for {@linkcode ForegroundBackgroundChips}. */\nexport interface ForegroundBackgroundChipsProps extends Omit<ViewProps,\"children\"> {\n  readonly value:ColorPair;\n  /** One commit per Swap or Reset. */\n  readonly onCommit:(next:ColorPair)=>void;\n  /** The chip the pickers edit. */\n  readonly active:ColorPairSlot;\n  readonly onActiveChange:(slot:ColorPairSlot)=>void;\n  /** What Reset restores. @default DEFAULT_COLOR_PAIR (black on white) */\n  readonly defaults?:ColorPair;\n  readonly disabled?:boolean;\n  className?:string;\n  unstyled?:boolean;\n}\n\n/**\n * Foreground and background chips with Swap and Reset (C-12). Tapping a chip\n * makes it the one the pickers edit; the host owns both colors and the active\n * slot. Reset is disabled, with its reason in the hint, when the pair already\n * equals the defaults.\n */\nexport function ForegroundBackgroundChips({\n  value,onCommit,active,onActiveChange,defaults=DEFAULT_COLOR_PAIR,disabled=false,className,unstyled=false,testID,style,...rest\n}:ForegroundBackgroundChipsProps){\n  const styled=!unstyled;\n  const id=(s:string)=>testID?{testID:testID+\"-\"+s}:{};\n  const atDefaults=sameColorPair(value,defaults);\n  const chip=(slot:ColorPairSlot,label:string)=>{\n    const on=slot===active;\n    const hex=rgbaToHex(value[slot],value[slot].alpha<1);\n    return <Pressable key={slot} accessibilityRole=\"radio\" aria-checked={on}\n      accessibilityState={{checked:on,disabled}} accessibilityLabel={`${label} ${hex}`}\n      disabled={disabled} onPress={()=>onActiveChange(slot)} {...id(slot)}\n      {...{className:joinClasses(styled&&\"rounded-control border-2 focus-visible:ring-2 focus-visible:ring-focus\",\n        styled&&(on?\"border-focus\":\"border-border\"))}}\n      style={{flexDirection:\"row\",alignItems:\"center\",gap:space[2],minHeight:size.touch,paddingHorizontal:space[1.5],paddingVertical:space[1]}}>\n      <View {...{className:joinClasses(styled&&\"rounded-control border border-border\")}}\n        style={{width:32,height:32,backgroundColor:rgbaToHex(value[slot])}}/>\n      <Text {...{className:joinClasses(styled&&(on?\"text-text font-semibold\":\"text-text-muted\"),styled&&\"text-sm\")}}>{label}</Text>\n    </Pressable>;\n  };\n  return <View {...rest} {...{className:joinClasses(\"gap-2\",className)}} style={[{flexDirection:\"row\",flexWrap:\"wrap\",alignItems:\"center\"},style]}\n    {...(testID?{testID}:{})}>\n    <View accessibilityRole=\"radiogroup\" accessibilityLabel=\"Color being edited\" style={{flexDirection:\"row\",gap:space[2]}}>\n      {chip(\"foreground\",\"Foreground\")}\n      {chip(\"background\",\"Background\")}\n    </View>\n    <View style={{flexDirection:\"row\",gap:space[2]}}>\n      <Button title=\"Swap\" variant=\"secondary\" disabled={disabled} accessibilityLabel=\"Swap foreground and background\"\n        onPress={()=>onCommit(swapColorPair(value))} {...id(\"swap\")}/>\n      <Button title=\"Reset\" variant=\"ghost\" disabled={disabled||atDefaults}\n        accessibilityHint={atDefaults?\"Already at the default colors\":\"Restore the default foreground and background\"}\n        onPress={()=>onCommit(defaults)} {...id(\"reset\")}/>\n    </View>\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/forge/color/ForegroundBackgroundChips.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    },
+    {
+      "path": "packages/ui/src/tokens.ts",
+      "content": "// Generated by tooling/codemod/generate-token-module.mjs from docs/agent-native/tokens.json.\n// Do not edit by hand. Change tokens.json, regenerate, and run tooling/codemod/prove-equivalence.mjs.\n// Internal copy of the core token module so this package has no runtime dependency on core. Not exported from package.json.\n\n/** One spacing unit in px. `space` keys are multiples of it. */\nexport const SPACE_UNIT = 4;\n\n/** Spacing steps. The key is a multiple of SPACE_UNIT, so `space[2]` is 8 and `space[1.5]` is 6. Negative spacing is `-space[n]`. */\nexport const space = {\n  0: 0,\n  0.25: 1,\n  0.5: 2,\n  0.75: 3,\n  1: 4,\n  1.5: 6,\n  2: 8,\n  2.5: 10,\n  3: 12,\n  3.5: 14,\n  4: 16,\n} as const;\n\n/** Corner radius steps in px. `radius.full` is the pill radius. */\nexport const radius = {\n  1: 1,\n  2: 2,\n  3: 3,\n  4: 4,\n  5: 5,\n  6: 6,\n  7: 7,\n  8: 8,\n  9: 9,\n  10: 10,\n  12: 12,\n  14: 14,\n  full: 9999,\n} as const;\n\n/** Font size steps in px, keyed by value. */\nexport const font = {\n  10: 10,\n  11: 11,\n  12: 12,\n  13: 13,\n  14: 14,\n  15: 15,\n  16: 16,\n  17: 17,\n} as const;\n\n/** Line height steps in px, keyed by value. */\nexport const leading = {\n  14: 14,\n  16: 16,\n} as const;\n\n/** Border width steps in px, keyed by value (`border[1.5]`). */\nexport const border = {\n  0: 0,\n  1: 1,\n  1.5: 1.5,\n  2: 2,\n  3: 3,\n  4: 4,\n  8: 8,\n} as const;\n\n/** Opacity steps keyed by percent (`opacity[45]` is 0.45). 0 and 1 are not tokens. */\nexport const opacity = {\n  30: 0.3,\n  35: 0.35,\n  40: 0.4,\n  45: 0.45,\n  50: 0.5,\n  55: 0.55,\n  60: 0.6,\n  70: 0.7,\n  90: 0.9,\n} as const;\n\n/** Black overlay colours keyed by alpha percent. */\nexport const scrim = {\n  12: \"rgba(0,0,0,0.12)\",\n  18: \"rgba(0,0,0,0.18)\",\n  25: \"rgba(0,0,0,0.25)\",\n  50: \"rgba(0,0,0,0.5)\",\n} as const;\n\n/** Box shadows. `elevation[0]` is none. */\nexport const elevation = {\n  0: \"none\",\n  1: \"0 1px 3px rgba(0,0,0,0.25)\",\n  2: \"0 4px 12px rgba(0,0,0,0.18)\",\n} as const;\n\n/** Fixed sizes. `size.touch` is the 44 px minimum touch target. */\nexport const size = {\n  touch: 44,\n} as const;\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/tokens.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/ForegroundBackgroundChips",
+    "exports": [
+      "ForegroundBackgroundChips",
+      "ForegroundBackgroundChipsProps"
+    ],
+    "peers": {
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:ui"
+}

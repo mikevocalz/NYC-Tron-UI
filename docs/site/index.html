@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" data-theme="reference" data-scheme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NYC-Tron UI documentation</title>
+<meta name="description" content="Themeable, independently maintained UI for React Native and Expo on iOS, Android and web, with isolated Windows and macOS adapters under native acceptance.">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="alternate" type="text/plain" href="../../llms.txt" title="llms.txt">
+<script>(function(){var r=document.documentElement;r.className="js";try{var t=localStorage.getItem("nyc-docs-theme"),s=localStorage.getItem("nyc-docs-scheme");if(t)r.setAttribute("data-theme",t);if(s)r.setAttribute("data-scheme",s)}catch(e){}})()</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="hd"><div class="hd-in">
+<a class="brand" href="index.html">NYC-Tron UI</a><span class="ver">1.0.0-rc.2</span><span class="sp"></span>
+<button class="btn" type="button" data-cycle="theme" aria-label="Theme: Reference. Press to change.">Reference</button><button class="btn" type="button" data-cycle="scheme" aria-label="Mode: Auto. Press to change.">Auto</button>
+<form action="search.html" method="get" role="search"><label class="vh" for="hq">Search components</label><input class="field" id="hq" name="q" type="search" placeholder="Search components" autocomplete="off"><button class="btn primary" type="submit">Search</button></form>
+</div></header>
+<div class="frame norail">
+<details class="navbox"><summary class="btn">Menu</summary><div><p class="navh">Categories</p><ul class="navlist"><li><a href="#cat-primitive">Primitive</a></li><li><a href="#cat-input">Input</a></li><li><a href="#cat-display">Display</a></li><li><a href="#cat-feedback">Feedback</a></li><li><a href="#cat-navigation">Navigation</a></li><li><a href="#cat-overlay">Overlay</a></li><li><a href="#cat-layout">Layout</a></li><li><a href="#cat-data">Data</a></li><li><a href="#cat-shell">Shell</a></li><li><a href="#cat-forge">Forge</a></li></ul><p class="navh">Site</p><ul class="navlist"><li><a href="index.html" aria-current="page">Home</a></li><li><a href="install.html">Install</a></li><li><a href="tokens.html">Theme tokens</a></li><li><a href="search.html">Search</a></li></ul>
+<p class="navh">For agents</p><ul class="navlist"><li><a href="../../llms.txt">llms.txt</a></li><li><a href="../../SKILL.md">SKILL.md</a></li><li><a href="../components/Button.md">Raw page example</a></li></ul></div></details>
+<main id="main" class="col prose">
+<h1>NYC-Tron UI</h1>
+<p>Themeable, independently maintained UI for React Native and Expo on iOS, Android and web, with isolated Windows and macOS adapters under native acceptance.</p>
+<form action="search.html" method="get" role="search" class="actions"><label class="vh" for="bq">Search 565 pages by name or by what the component does</label><input class="field" id="bq" name="q" type="search" placeholder="Name or what it does" autocomplete="off"><button class="btn primary" type="submit">Search</button></form>
+<div class="install"><button class="btn primary" type="button" data-copy="npx shadcn@latest add @nyc-tron/Button">Copy</button><pre><code>npx shadcn@latest add @nyc-tron/Button</code></pre></div>
+<p class="small muted">Registry install is unverified until a clean app installs from the live URL. Registry URLs use ref `main`, a moving ref, until the owner cuts a release tag. They resolve only after this branch is merged to main. Before that, test against a local server. Use the <a href="install.html#tarball">release tarball</a> until then.</p>
+<p class="small muted" data-offline hidden>You are offline. The install command needs a connection.</p>
+<p class="actions"><a class="btn" href="../../llms.txt">llms.txt</a><a class="btn" href="../components/Button.md">Raw page: Button.md</a><button class="btn" type="button" data-copy="Read https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/llms.txt first, then fetch one page at https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/<id>.md where &lt;id&gt; is the registry item id, for example shell/UnitInput. Install with npx shadcn@latest add @nyc-tron/&lt;id&gt;.">Copy for agent</button></p>
+<h2>Hand-reviewed components</h2>
+<h3 id="cat-primitive">Primitive (5)</h3>
+<ul class="rows">
+<li><div class="a"><a href="c.html?id=Button">Button</a><div class="d">Pressable text button with primary, secondary, ghost and danger variants, loading spinner and icon slot, for React Native.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=DragGrabHandle">Drag Grab Handle</a><div class="d">Three-bar drag handle, 44 by 44 minimum, reporting start, move, commit and cancel through a pluggable transport, for React Native.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=IconButton">Icon Button</a><div class="d">Icon-only pressable button with five variants and an optional selected toggle state, for React Native; web aria-pressed.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=gestures/PanResponderDrag">Pan Responder Drag</a><div class="d">Single-touch drag transport on React Native PanResponder, no gesture-handler dependency, for React Native and web.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=theme/NightScope">Night Scope</a><div class="d">Wrapper that applies a named Uniwind theme scheme to its subtree, for React Native and web.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+</ul>
+<h3 id="cat-input">Input (12)</h3>
+<ul class="rows">
+<li><div class="a"><a href="c.html?id=SegmentedControl">Segmented Control</a><div class="d">Single-choice segmented control exposed as a radio group, for React Native; arrow-key navigation on web only.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=Select">Select</a><div class="d">Single-select dropdown with flat or grouped options, hint and error text, for React Native; web combobox ARIA; QNX keyboard.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=TextField">Text Field</a><div class="d">Labeled TextInput with helper text, error text, start adornment and error border state, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=shell/FindReplaceContent">Find Replace Content</a><div class="d">Find and replace form with match navigation, replace one or all, and async search with abort, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=shell/InspectorSearch">Inspector Search</a><div class="d">Search field with clear button and live-region match summary for inspector panels, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=shell/PresetGallery">Preset Gallery</a><div class="d">Grid of selectable preset tiles with hover preview, favorites toggle and All or Favorites filter, for React Native.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=shell/PropertyRow">Property Row</a><div class="d">Row for one inspector property: label and editor, with mixed-value badge, override dot and revert button, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=shell/RangeSlider">Range Slider</a><div class="d">Two-thumb slider that selects a min and max value, with step, detents, minimum gap, units and typed endpoints, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=shell/RotaryKnob">Rotary Knob</a><div class="d">Dial control with relative or circular drag, fine adjustment, detents and reset to default, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=shell/SliderField">Slider Field</a><div class="d">Single-thumb slider with number field, step, detents, units and reset to default, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=shell/SplitButton">Split Button</a><div class="d">Primary action button joined to a dropdown menu of command items, for React Native.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=shell/UnitInput">Unit Input</a><div class="d">Number field that parses and formats typed units from a UnitContext, with unit menu, min, max and arrow stepping, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+</ul>
+<h3 id="cat-display">Display (2)</h3>
+<ul class="rows">
+<li><div class="a"><a href="c.html?id=List">List</a><div class="d">Vertical list of rows with title, supporting text, leading and trailing slots; rows with onPress become buttons, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=content/KeyValueList">Key Value List</a><div class="d">Label and value list that goes from one to two columns at a measured width, with empty-value text, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+</ul>
+<h3 id="cat-feedback">Feedback (5)</h3>
+<ul class="rows">
+<li><div class="a"><a href="c.html?id=feedback/Badge">Badge</a><div class="d">Small status badge with neutral, info, success, danger or accent tone, a status dot and size steps, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=feedback/Banner">Banner</a><div class="d">Inline status banner with info, success, danger or neutral tone, title, description, action slot and dismiss button, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=feedback/EmptyState">Empty State</a><div class="d">Empty-list placeholder with heading title, description, icon or illustration, and an action or secondary exit button, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=feedback/ErrorMessage">Error Message</a><div class="d">Inline error text with a danger glyph, announced as an alert; renders nothing when the message is empty, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=shell/ToastAndProgress">Toast and Progress</a><div class="d">List of toast notifications and progress jobs with dismiss and action buttons; shows three toasts until expanded, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+</ul>
+<h3 id="cat-navigation">Navigation (7)</h3>
+<ul class="rows">
+<li><div class="a"><a href="c.html?id=NavigationRail">Navigation Rail</a><div class="d">Vertical rail of icon and label destinations with selected state and a collapsed icon-only mode, for React Native.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=TabBar">Tab Bar</a><div class="d">Tab strip with tablist or link-navigation semantics, icons and compact density, for React Native; web roving focus.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=Toolbar">Toolbar</a><div class="d">Header bar with title, leading slot and actions group in default or compact density; arrow-key focus on web, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=navigation/CollapsibleDrawer">Collapsible Drawer</a><div class="d">Side navigation drawer menu in expanded, compact or minimal mode, with overlay and scrim when open, for React Native; Android back.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=shell/ContextualToolbar">Contextual Toolbar</a><div class="d">Toolbar whose items filter by selection kind and overflow into a More menu by priority, for React Native.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=shell/DocumentTabBar">Document Tab Bar</a><div class="d">Tab strip for open documents with activate, close and reorder; keyboard shortcuts on web, for React Native.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=shell/RibbonTabs">Ribbon Tabs</a><div class="d">Office-style ribbon of tabs and a command panel of buttons, split buttons and galleries; collapsible, for React Native.</div></div><div class="m">Accessibility: unverified</div></li>
+</ul>
+<h3 id="cat-overlay">Overlay (7)</h3>
+<ul class="rows">
+<li><div class="a"><a href="c.html?id=overlays/AnchoredPopover">Anchored Popover</a><div class="d">Modal popover placed against an anchor rectangle or trigger element and clamped to usable regions, for React Native; web Tab cycling.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=overlays/CommandPalette">Command Palette</a><div class="d">Searchable command list in a modal, with keyboard selection and an empty-results message, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=overlays/CommandPopover">Command Popover</a><div class="d">Anchored popover menu of command items, with disabled and danger items, for React Native, web and QNX.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=shell/ContextMenu">Context Menu</a><div class="d">Wraps a target to open a command menu on right-click, long-press, keyboard or screen-reader action, for React Native; QNX focus return.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=shell/FindReplacePopover">Find Replace Popover</a><div class="d">FindReplaceContent inside an AnchoredPopover, placed by anchor rectangle or trigger, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=shell/KeyboardShortcutHUD">Keyboard Shortcut HUD</a><div class="d">Searchable keyboard shortcut list grouped by category, with rebinding and Apple keycaps, for React Native; iOS and Android need a recorder.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=shell/MenuButton">Menu Button</a><div class="d">Button that opens a command popover menu; ArrowDown opens it on web, for React Native; QNX focus return.</div></div><div class="m">Accessibility: unverified</div></li>
+</ul>
+<h3 id="cat-layout">Layout (10)</h3>
+<ul class="rows">
+<li><div class="a"><a href="c.html?id=Card">Card</a><div class="d">Static container View with raised, sunken or transparent surface and optional padding, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=FieldGroup">Field Group</a><div class="d">Form layout wrapper with titled sections and footer text, exposed as FieldGroup.Section, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=layout/AdaptiveColumns">Adaptive Columns</a><div class="d">Wrapping column row; each AdaptiveColumns.Item sets a minimum width and grow factor, for React Native layout.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=layout/ContentFrame">Content Frame</a><div class="d">Width-capped container that aligns its content to the start, center or end of the parent, for React Native layout.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=layout/Divider">Divider</a><div class="d">Decorative horizontal or vertical line, one border-width step thick, border colour role, no accessibility role, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=layout/Row">Row</a><div class="d">Horizontal flex View with the same token-keyed gap, padding, align, justify and wrap as Stack, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=layout/Spacer">Spacer</a><div class="d">Empty View with a fixed length from the space scale, or flex to fill free space on the main axis, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=layout/Stack">Stack</a><div class="d">Vertical flex View with token-keyed gap, padding, align, justify and wrap, no role and no colour, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=layout/Text">Text</a><div class="d">Text with body or caption size from the token scale, a font-size override and a theme colour tone, no weight, for React Native.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=shell/PaneSplitter">Pane Splitter</a><div class="d">Two-pane splitter, horizontal or vertical, resizable by drag, keys or accessibility actions, fold-aware, for React Native and web.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+</ul>
+<h3 id="cat-data">Data (4)</h3>
+<ul class="rows">
+<li><div class="a"><a href="c.html?id=data/DataTable">Data Table</a><div class="d">Sortable data table on TanStack Table that renders cards below a width threshold, with optional row press, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=data/TreeGrid">Tree Grid</a><div class="d">Tree table with expandable rows, row selection, column reorder and pinned columns, plus a compact layout, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=shell/AssetBrowser">Asset Browser</a><div class="d">Asset list with breadcrumb path, search, sort, single or multiple selection and async open, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=shell/HistoryPanel">History Panel</a><div class="d">Undo and redo list with a cursor and jump to any entry; async jump with cancel, for React Native.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+</ul>
+<h3 id="cat-shell">Shell (9)</h3>
+<ul class="rows">
+<li><div class="a"><a href="c.html?id=shell/AdaptiveDock">Adaptive Dock</a><div class="d">Dockable panel layout of tabbed and floating panels; merges into one stack below a width and avoids foldable hinges, for React Native.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=shell/FocusAndA11yLayer">Focus and A11y Layer</a><div class="d">Provider exposing reduce-motion, screen-reader, high-contrast and input-modality state plus announcements, on iOS, Android, web and QNX.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=shell/InspectorPanel">Inspector Panel</a><div class="d">Inspector panel for the current selection: header, search filter and InspectorSection and PropertyRow children, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=shell/InspectorSection">Inspector Section</a><div class="d">Collapsible inspector group with optional enable switch and reset button, indented by nesting depth, for React Native; web switch colors.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+<li><div class="a"><a href="c.html?id=shell/StatusBar">Status Bar</a><div class="d">Application status bar with zoom steps and menu, units menu, selection summary and activity text, for React Native.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=shell/ToolRail">Tool Rail</a><div class="d">Toolbar rail of tool buttons, vertical on the left or right edge or a row at the bottom, with group flyouts, for React Native.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=shell/WorkspaceHost">Workspace Host</a><div class="d">Workspace shell with mode tabs, per-mode dock layouts and Ctrl or Cmd+1..9 shortcuts, for React Native; web shortcuts.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=shell/WorkspacePresetSwitcher">Workspace Preset Switcher</a><div class="d">Menu to switch, save, rename, duplicate, reset and delete workspace layout presets, with undo delete, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=window/WindowTitleBar">Window Title Bar</a><div class="d">Custom window title bar with macOS or Windows close, minimize and zoom controls and an edited marker, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+</ul>
+<h3 id="cat-forge">Forge (3)</h3>
+<ul class="rows">
+<li><div class="a"><a href="c.html?id=forge/inputs/PrecisionScrubber">Precision Scrubber</a><div class="d">Drag-to-scrub number control with fine, normal and coarse modes, detents, preview and commit callbacks, for React Native; web forced-colors.</div></div><div class="m">Accessibility: unverified</div></li>
+<li><div class="a"><a href="c.html?id=forge/inputs/PropertyInspector">Property Inspector</a><div class="d">Form built from a field list of number, choice, boolean and text properties, committing one change at a time, for React Native.</div></div><div class="m">Accessibility: reviewed-fail</div></li>
+<li><div class="a"><a href="c.html?id=forge/office/office-controls">Office Controls</a><div class="d">ToolButton with checked and mixed toggle state, plus play, pause, skip, plus and chevron glyphs, for React Native; web aria-pressed.</div></div><div class="m">Accessibility: reviewed-pass</div></li>
+</ul>
+<h2>Generated pages</h2>
+<p>501 more pages are generated from the type declarations and the source. They have the same eight sections, and a section holds "Not documented." where the source gave nothing. <a href="search.html?tier=2">Browse them in search</a>.</p>
+</main>
+</div>
+<footer class="ft"><p><a href="tokens.html">Theme tokens</a>, <a href="install.html">install</a>, <a href="https://github.com/mikevocalz/NYC-Tron-UI">source repository</a>, ref <a href="https://github.com/mikevocalz/NYC-Tron-UI/tree/main">main</a>.</p>
+<p>64 pages are hand-reviewed. 501 are generated from type declarations and source, and say so in their front matter. Accessibility statuses come from reading source, not from rendering.</p></footer>
+<div class="vh" id="live" aria-live="polite" role="status"></div>
+<script src="assets/site.js"></script>
+</body>
+</html>

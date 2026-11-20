@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "theme/NightScope",
+  "title": "Night Scope",
+  "description": "Wrapper that applies a named Uniwind theme scheme to its subtree, for React Native and web.",
+  "dependencies": [
+    "uniwind@>=1.12.2 <2"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/theme/NightScope.tsx",
+      "content": "import type { ReactNode } from \"react\";\nimport { ScopedTheme } from \"uniwind\";\n\n/** Props for {@linkcode NightScope}. */\nexport interface NightScopeProps {\n  children:ReactNode;\n  /**\n   * The app's Uniwind theme name to resolve inside the subtree. Forge's dark\n   * editor surfaces use the default.\n   * @default \"dark\"\n   */\n  scheme?:string;\n}\n\n/**\n * Scheme scope: every token inside resolves at `scheme`'s value regardless of\n * the page's appearance, so a dark editor surface on a light page keeps its\n * text legible. It delegates to Uniwind's ScopedTheme (an optional peer): on\n * native that resolves the theme's variables for the subtree, and on web it\n * wraps the subtree in a `display: contents` element carrying the theme's\n * class, which the app's theme CSS must scope (`.dark { --color-...: ... }`).\n * Apps on another Tailwind runtime supply their own scope instead of\n * importing this subpath.\n */\nexport function NightScope({children,scheme=\"dark\"}:NightScopeProps) {\n  // ThemeName is declared by the app's generated Uniwind types; the kit cannot see it.\n  return <ScopedTheme theme={scheme as never}>{children}</ScopedTheme>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/theme/NightScope.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [],
+    "a11yStatus": "reviewed-pass",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/theme/NightScope",
+    "exports": [
+      "NightScope",
+      "NightScopeProps"
+    ],
+    "peers": {
+      "react": ">=19.0.0"
+    },
+    "optionalPeers": [
+      "uniwind"
+    ]
+  },
+  "categories": [
+    "primitive"
+  ],
+  "type": "registry:ui"
+}

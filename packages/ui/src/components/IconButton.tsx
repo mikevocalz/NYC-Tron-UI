@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Platform, Pressable, View, type PressableProps } from "react-native";
 import { joinClasses } from "./styles.ts";
+import { size as sizeToken } from "../tokens.ts";
 
 export type IconButtonVariant="primary"|"secondary"|"outline"|"ghost"|"danger";
 export interface IconButtonProps extends Omit<PressableProps,"children"|"disabled"|"style"> {
@@ -43,7 +44,7 @@ export function IconButton({
   if(targetSize!==undefined&&(!Number.isFinite(targetSize)||targetSize<44))throw new RangeError('Icon button target must be at least 44 points');
   const styled=!unstyled;
   const radius=cornerRadius===undefined?undefined:{borderRadius:cornerRadius};
-  const target={minWidth:targetSize??(size==='sm'?44:48),minHeight:targetSize??(size==='sm'?44:48)};
+  const target={minWidth:targetSize??(size==='sm'?sizeToken.touch:48),minHeight:targetSize??(size==='sm'?sizeToken.touch:48)};
   const merged:PressableProps["style"]=typeof style==='function'?state=>[target,radius,style(state),targetSize===undefined?undefined:target]:[target,radius,style,targetSize===undefined?undefined:target];
   return <Pressable {...rest} style={merged}
     accessibilityRole="button" aria-label={ariaLabel} accessibilityLabel={ariaLabel} accessibilityHint={accessibilityHint}

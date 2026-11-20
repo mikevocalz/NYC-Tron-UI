@@ -1,0 +1,62 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/UnitInput",
+  "title": "Unit Input",
+  "description": "Number field that parses and formats typed units from a UnitContext, with unit menu, min, max and arrow stepping, for React Native.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/shell/MenuButton",
+    "@nyc-tron/shell/shell-keys",
+    "@nyc-tron/shell/unit-expression"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/UnitInput.tsx",
+      "content": "import {useEffect,useLayoutEffect,useRef} from \"react\";\nimport {Platform,Text,TextInput,View,type ViewProps} from \"react-native\";\nimport {createStore,type StoreApi} from \"zustand/vanilla\";\nimport {useStore} from \"zustand\";\nimport {joinClasses} from \"@/components/nyc-tron/ui/components/styles\";\nimport {MenuButton} from \"@/components/nyc-tron/ui/components/shell/MenuButton\";\nimport {shellKey} from \"@/components/nyc-tron/ui/components/shell/shell-keys\";\nimport {formatUnitValue,parseUnitExpression,unitScale,type UnitContext,type UnitName} from \"@/components/nyc-tron/ui/components/shell/unit-expression\";\nimport {space,opacity,size} from \"@/components/nyc-tron/ui/tokens\";\n\nexport type {UnitContext,UnitDimension,UnitName} from \"@/components/nyc-tron/ui/components/shell/unit-expression\";\n\n/** Props for {@linkcode UnitInput}. */\nexport interface UnitInputProps extends Omit<ViewProps,\"children\"> {\n  /** Visible label and accessible name. */\n  label:string;\n  /** Document/property identity. Changing it abandons an uncommitted draft. */\n  scope?:string;\n  /** Committed value in the dimension's base unit (pixels, seconds, decibels or a ratio). */\n  value:number;\n  /** Exactly once per accepted entry or arrow step, with the clamped base-unit value. */\n  onCommit:(value:number)=>void;\n  /** Units and conversion facts. Omit for a plain number field that still accepts arithmetic. */\n  context?:UnitContext;\n  /** Display units offered in the unit menu. The menu is hidden unless there are two or more. */\n  units?:readonly UnitName[];\n  /** The person picked another display unit. The value does not change. */\n  onUnitChange?:(unit:UnitName)=>void;\n  /** Lower bound in base units. */\n  min?:number;\n  /** Upper bound in base units. */\n  max?:number;\n  /** Arrow-key step in display units; Shift multiplies by ten, Alt divides by ten. @default 1 */\n  step?:number;\n  /** Decimals for a plain number field. @default 2 */\n  precision?:number;\n  disabled?:boolean;\n  /** Hide the visible label (the field keeps it as its accessible name). @default false */\n  hideLabel?:boolean;\n  className?:string;\n  unstyled?:boolean;\n}\n\ntype Local={editing:boolean;dirty:boolean;draft:string;error:string|undefined};\nconst PLAIN:UnitContext={dimension:\"ratio\",unit:\"x\"};\n\n/** Display text for a plain or unit value. */\nfunction display(value:number,ctx:UnitContext|undefined,precision:number):string{\n  if(!ctx)return String(Number(value.toFixed(precision)));\n  return formatUnitValue(value,ctx);\n}\n\n/**\n * Controlled measurement field. It shows the value in the context's display\n * unit and accepts arithmetic across units (`12mm + 4pt`, `1.5s - 12f`,\n * `(100% - 16px) / 2`) through a bounded parser with no `eval`. Enter or\n * leaving the field commits; Escape restores the committed value; ArrowUp and\n * ArrowDown step. A parse error stays in the field with its message and is\n * announced. Results are clamped to `min` and `max`.\n */\nexport function UnitInput({\n  label,scope,value,onCommit,context,units,onUnitChange,min,max,step=1,precision=2,disabled=false,hideLabel=false,\n  className,unstyled=false,style,...rest\n}:UnitInputProps){\n  const styled=!unstyled;\n  const local=useRef<StoreApi<Local>|null>(null);\n  if(!local.current)local.current=createStore<Local>(()=>({editing:false,dirty:false,draft:\"\",error:undefined}));\n  const store=local.current;\n  const active=useRef(false),committedScope=useRef(scope);\n  useLayoutEffect(()=>{active.current=true;committedScope.current=scope;store.setState({editing:false,dirty:false,draft:\"\",error:undefined});return()=>{active.current=false;};},[scope,store]);\n  useLayoutEffect(()=>{if(disabled)store.setState({editing:false,dirty:false,draft:\"\",error:undefined});},[disabled,store]);\n  const allowed=()=>!disabled&&active.current&&committedScope.current===scope;\n  const {editing,draft,error}=useStore(store,s=>s);\n  const shown=display(value,context,precision);\n  useEffect(()=>{if(!store.getState().editing)store.setState({error:undefined});},[value,store]);\n  const bound=(v:number)=>Math.max(min??-Infinity,Math.min(max??Infinity,v));\n  const commit=(next:number)=>{\n    if(!allowed())return;\n    const bounded=bound(next);\n    store.setState({editing:false,dirty:false,error:undefined});\n    if(bounded!==value)onCommit(bounded);\n  };\n  const apply=()=>{\n    if(!allowed())return;\n    const s=store.getState();\n    if(!s.editing)return;\n    if(!s.dirty){store.setState({editing:false,error:undefined});return;}\n    const result=parseUnitExpression(s.draft,context??PLAIN);\n    if(!result.ok){store.setState({error:result.error});return;}\n    commit(result.value);\n  };\n  const nudge=(steps:number)=>{\n    if(!allowed())return;\n    const scale=context?unitScale(context.unit,context):1;\n    const state=store.getState(),parsed=state.editing&&state.dirty?parseUnitExpression(state.draft,context??PLAIN):undefined;\n    const base=parsed?.ok?parsed.value:value;\n    commit(base+steps*step*scale);\n  };\n  const errorId=`unit-error-${label.replace(/\\W+/g,\"-\")}`;\n  return <View {...rest} {...{className:joinClasses(\"gap-1\",className)}} style={[{opacity:disabled?opacity[50]:1},style]}>\n    {!hideLabel?<Text {...{className:joinClasses(styled&&\"text-text-muted text-xs\")}}>{label}</Text>:null}\n    <View style={{flexDirection:\"row\",alignItems:\"center\",gap:space[1]}}>\n      <TextInput accessibilityLabel={label} editable={!disabled} aria-disabled={disabled} accessibilityState={{disabled}}\n        aria-invalid={!!error} aria-describedby={error?errorId:undefined}\n        value={editing?draft:shown}\n        selectTextOnFocus inputMode=\"text\" autoCorrect={false} autoCapitalize=\"none\" returnKeyType=\"done\"\n        // Enter commits and keeps focus, so an error stays next to the text that caused it.\n        submitBehavior=\"submit\" {...(Platform.OS===\"web\"?{blurOnSubmit:false}:{})}\n        onFocus={()=>{if(allowed())store.setState({editing:true,dirty:false,draft:shown,error:undefined});}}\n        onChangeText={text=>{if(allowed())store.setState({editing:true,dirty:true,draft:text,error:undefined});}}\n        onSubmitEditing={apply}\n        onBlur={()=>{\n          apply();\n          const failed=store.getState();\n          // Leaving with text that does not parse restores the value and says so.\n          if(failed.editing&&failed.error)store.setState({editing:false,error:\"Not applied. \"+failed.error});\n        }}\n        onKeyPress={event=>{\n          const k=shellKey(event);\n          if(k.key===\"Escape\"){store.setState({editing:false,dirty:false,error:undefined,draft:shown});return;}\n          if(k.key===\"ArrowUp\"||k.key===\"ArrowDown\"){\n            k.preventDefault();\n            nudge((k.key===\"ArrowUp\"?1:-1)*(k.shiftKey?10:k.altKey?0.1:1));\n          }\n        }}\n        {...{className:joinClasses(styled&&\"rounded-control border bg-surface-sunken text-text px-2\",\n          styled&&(error?\"border-danger\":editing?\"border-focus\":\"border-border\"))}}\n        style={{flex:1,minWidth:64,minHeight:size.touch,fontVariant:[\"tabular-nums\"]}}/>\n      {context&&units&&units.length>1&&onUnitChange?<MenuButton label={label+\" unit, \"+context.unit}\n        items={units.map(u=>({id:u,label:u,description:u===context.unit?\"Current\":undefined}))}\n        onSelect={u=>{if(allowed()&&u!==context.unit)onUnitChange(u as UnitName);}} menuWidth={160} disabled={disabled}\n        {...{className:joinClasses(styled&&\"border border-border bg-surface-raised px-2\")}}>\n        <Text {...{className:joinClasses(styled&&\"text-text text-sm\")}}>{context.unit}</Text>\n      </MenuButton>:null}\n    </View>\n    {error?<Text nativeID={errorId} accessibilityLiveRegion=\"assertive\" {...{id:errorId,className:joinClasses(styled&&\"text-danger text-xs\")}}>{error}</Text>:null}\n  </View>;\n}\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/shell/UnitInput.tsx"
+    },
+    {
+      "path": "packages/ui/src/components/styles.ts",
+      "content": "/**\n * Tailwind classes are merged at the APP boundary. Joining without\n * tailwind-merge avoids deleting custom typography/color utilities that\n * depend on each consumer's own @theme configuration.\n */\nexport function joinClasses(...items: Array<string|false|null|undefined>):string {\n  return items.filter(Boolean).join(\" \");\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/styles.ts"
+    },
+    {
+      "path": "packages/ui/src/tokens.ts",
+      "content": "// Generated by tooling/codemod/generate-token-module.mjs from docs/agent-native/tokens.json.\n// Do not edit by hand. Change tokens.json, regenerate, and run tooling/codemod/prove-equivalence.mjs.\n// Internal copy of the core token module so this package has no runtime dependency on core. Not exported from package.json.\n\n/** One spacing unit in px. `space` keys are multiples of it. */\nexport const SPACE_UNIT = 4;\n\n/** Spacing steps. The key is a multiple of SPACE_UNIT, so `space[2]` is 8 and `space[1.5]` is 6. Negative spacing is `-space[n]`. */\nexport const space = {\n  0: 0,\n  0.25: 1,\n  0.5: 2,\n  0.75: 3,\n  1: 4,\n  1.5: 6,\n  2: 8,\n  2.5: 10,\n  3: 12,\n  3.5: 14,\n  4: 16,\n} as const;\n\n/** Corner radius steps in px. `radius.full` is the pill radius. */\nexport const radius = {\n  1: 1,\n  2: 2,\n  3: 3,\n  4: 4,\n  5: 5,\n  6: 6,\n  7: 7,\n  8: 8,\n  9: 9,\n  10: 10,\n  12: 12,\n  14: 14,\n  full: 9999,\n} as const;\n\n/** Font size steps in px, keyed by value. */\nexport const font = {\n  10: 10,\n  11: 11,\n  12: 12,\n  13: 13,\n  14: 14,\n  15: 15,\n  16: 16,\n  17: 17,\n} as const;\n\n/** Line height steps in px, keyed by value. */\nexport const leading = {\n  14: 14,\n  16: 16,\n} as const;\n\n/** Border width steps in px, keyed by value (`border[1.5]`). */\nexport const border = {\n  0: 0,\n  1: 1,\n  1.5: 1.5,\n  2: 2,\n  3: 3,\n  4: 4,\n  8: 8,\n} as const;\n\n/** Opacity steps keyed by percent (`opacity[45]` is 0.45). 0 and 1 are not tokens. */\nexport const opacity = {\n  30: 0.3,\n  35: 0.35,\n  40: 0.4,\n  45: 0.45,\n  50: 0.5,\n  55: 0.55,\n  60: 0.6,\n  70: 0.7,\n  90: 0.9,\n} as const;\n\n/** Black overlay colours keyed by alpha percent. */\nexport const scrim = {\n  12: \"rgba(0,0,0,0.12)\",\n  18: \"rgba(0,0,0,0.18)\",\n  25: \"rgba(0,0,0,0.25)\",\n  50: \"rgba(0,0,0,0.5)\",\n} as const;\n\n/** Box shadows. `elevation[0]` is none. */\nexport const elevation = {\n  0: \"none\",\n  1: \"0 1px 3px rgba(0,0,0,0.25)\",\n  2: \"0 4px 12px rgba(0,0,0,0.18)\",\n} as const;\n\n/** Fixed sizes. `size.touch` is the 44 px minimum touch target. */\nexport const size = {\n  touch: 44,\n} as const;\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/tokens.ts"
+    }
+  ],
+  "meta": {
+    "tier": 1,
+    "docs": "handwritten",
+    "platforms": [
+      "web"
+    ],
+    "a11yStatus": "reviewed-fail",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/UnitInput",
+    "exports": [
+      "UnitContext",
+      "UnitDimension",
+      "UnitInput",
+      "UnitInputProps",
+      "UnitName"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "input"
+  ],
+  "type": "registry:ui"
+}

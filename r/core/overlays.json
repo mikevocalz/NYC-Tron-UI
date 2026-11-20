@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "core/overlays",
+  "title": "Core overlays",
+  "description": "Pure TypeScript module from @nyc-tron/core, no React. Exports CommandMenuItem, PopupPosition, Rect2D, hasUsableRegion, placePopover.",
+  "files": [
+    {
+      "path": "packages/core/src/overlays.ts",
+      "content": "/** Popup placement in caller-provided, nonoccluded host/window coordinates. */\nexport type Rect2D=Readonly<{x:number;y:number;width:number;height:number}>;\nexport type PopupPosition=Readonly<{x:number;y:number;width:number;height:number;region:Rect2D}>;\nconst bound=(n:number,low:number,high:number)=>Math.max(low,Math.min(high,n));\nexport function placePopover(anchor:Rect2D,regions:readonly Rect2D[],desiredWidth:number,desiredHeight:number,\n padding=8):PopupPosition{\n const vals=[anchor.x,anchor.y,anchor.width,anchor.height,desiredWidth,desiredHeight,padding];\n if(!vals.every(Number.isFinite)||anchor.width<0||anchor.height<0||desiredWidth<=0||desiredHeight<=0||padding<0)\n  throw new RangeError(\"Invalid popup geometry\");\n const valid=regions.filter(r=>[r.x,r.y,r.width,r.height].every(Number.isFinite)&&r.width>0&&r.height>0);\n if(!valid.length)throw new RangeError(\"No usable popup region\");\n const cx=anchor.x+anchor.width/2,cy=anchor.y+anchor.height/2;\n const containing=valid.filter(r=>cx>=r.x&&cx<=r.x+r.width&&cy>=r.y&&cy<=r.y+r.height);\n const region=(containing.length?containing:valid).sort((a,b)=>\n   (b.width*b.height)-(a.width*a.height))[0];\n const w=Math.max(1,Math.min(desiredWidth,region.width-2*padding));\n const h=Math.max(1,Math.min(desiredHeight,region.height-2*padding));\n const left=bound(anchor.x,region.x+padding,region.x+region.width-w-padding);\n const below=anchor.y+anchor.height+padding,above=anchor.y-h-padding;\n const top=below+h<=region.y+region.height-padding?below:\n   above>=region.y+padding?above:bound(below,region.y+padding,region.y+region.height-h-padding);\n return {x:left,y:top,width:w,height:h,region};\n}\n\n/**\n * Which side of the anchor a placement landed on. Native adapters (SwiftUI\n * popover, Compose menu) position themselves, so they take this preference\n * from the same usable-region computation instead of guessing from width.\n */\nexport function placementSide(anchor:Rect2D,position:PopupPosition):\"below\"|\"above\"|\"overlap\"{\n if(position.y>=anchor.y+anchor.height)return \"below\";\n if(position.y+position.height<=anchor.y)return \"above\";\n return \"overlap\";\n}\n\n/** Whether a layout currently exposes any finite, nonoccluded positive-area pane. */\nexport function hasUsableRegion(regions:readonly Rect2D[]):boolean {\n return regions.some(r=>[r.x,r.y,r.width,r.height].every(Number.isFinite)&&r.width>0&&r.height>0);\n}\n\n/** App-owned command identity shared by portable and native menu adapters. */\nexport type CommandMenuItem=Readonly<{id:string;label:string;description?:string;disabled?:boolean;danger?:boolean}>;\n",
+      "type": "registry:lib",
+      "target": "@lib/nyc-tron/core/overlays.ts"
+    }
+  ],
+  "meta": {
+    "support": true,
+    "platforms": [],
+    "package": "@nyc-tron/core",
+    "subpath": "@nyc-tron/core/overlays",
+    "exports": [
+      "CommandMenuItem",
+      "PopupPosition",
+      "Rect2D",
+      "hasUsableRegion",
+      "placePopover",
+      "placementSide"
+    ]
+  },
+  "categories": [
+    "core"
+  ],
+  "type": "registry:lib"
+}

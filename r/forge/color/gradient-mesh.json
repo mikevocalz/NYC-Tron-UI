@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/gradient-mesh",
+  "title": "gradient mesh",
+  "description": "gradient mesh, a color helper module. Exports editMeshPoint, rasterizeMesh, validateMesh.",
+  "registryDependencies": [
+    "@nyc-tron/forge/color"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/gradient-mesh.ts",
+      "content": "import {assertRgba,type RgbaColor} from \"@/components/nyc-tron/ui/components/forge/color\";\n/** One stable, normalized mesh control point consumed by GradientMeshEditor. */\nexport interface MeshPoint {readonly id:string;readonly x:number;readonly y:number;readonly color:RgbaColor}\n/** Row-major bilinear color mesh. The host owns actual surface rendering. */\nexport interface GradientMesh {readonly rows:number;readonly columns:number;readonly points:readonly MeshPoint[]}\nconst cross=(a:MeshPoint,b:MeshPoint,c:MeshPoint)=>(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);\n/** Rejects folded/singular cells by checking all four bilinear corner Jacobians. */\nexport function validateMesh(mesh:GradientMesh):void{\n if(![mesh.rows,mesh.columns].every(n=>Number.isInteger(n)&&n>=2&&n<=16)||mesh.points.length!==mesh.rows*mesh.columns)throw new RangeError('Mesh requires a 2..16 by 2..16 row-major grid');\n const ids=new Set<string>();for(const p of mesh.points){if(!p.id||ids.has(p.id))throw new TypeError('Mesh point IDs must be distinct');ids.add(p.id);if(![p.x,p.y].every(n=>Number.isFinite(n)&&n>=0&&n<=1))throw new RangeError('Mesh coordinates must be 0..1');assertRgba(p.color);}\n for(let row=0;row<mesh.rows-1;row++)for(let column=0;column<mesh.columns-1;column++){\n  const a=mesh.points[row*mesh.columns+column]!,b=mesh.points[row*mesh.columns+column+1]!,c=mesh.points[(row+1)*mesh.columns+column]!,d=mesh.points[(row+1)*mesh.columns+column+1]!;\n  if(Math.min(cross(a,b,c),cross(b,d,a),cross(c,a,d),cross(d,c,b))<=1e-8)throw new RangeError('Mesh movement would fold or collapse a cell');\n }\n}\n/** Immutable edit; invalid topology leaves the original document unchanged. */\nexport function editMeshPoint(mesh:GradientMesh,id:string,change:Partial<Pick<MeshPoint,'x'|'y'|'color'>>):GradientMesh{\n validateMesh(mesh);if(!mesh.points.some(p=>p.id===id))throw new TypeError('Unknown mesh point');\n const next={...mesh,points:mesh.points.map(p=>p.id===id?{...p,...change}:p)};validateMesh(next);return next;\n}\n\n/**\n * Bounded sRGB display preview of the actual bilinear mesh, including alpha.\n * The host can replace this preview with its color-managed renderer. Each cell\n * uses inverse bilinear coordinates; pixels outside the mesh stay transparent.\n */\nexport function rasterizeMesh(mesh:GradientMesh,edge=48):{width:number;height:number;pixels:Uint8Array}{\n validateMesh(mesh);\n if(!Number.isInteger(edge)||edge<8||edge>128)throw new RangeError('Mesh preview edge must be 8..128');\n const pixels=new Uint8Array(edge*edge*4);\n for(let row=0;row<mesh.rows-1;row++)for(let column=0;column<mesh.columns-1;column++){\n  const a=mesh.points[row*mesh.columns+column]!,b=mesh.points[row*mesh.columns+column+1]!,c=mesh.points[(row+1)*mesh.columns+column]!,d=mesh.points[(row+1)*mesh.columns+column+1]!;\n  const ex=b.x-a.x,ey=b.y-a.y,fx=c.x-a.x,fy=c.y-a.y,gx=a.x-b.x-c.x+d.x,gy=a.y-b.y-c.y+d.y;\n  const x0=Math.max(0,Math.floor(Math.min(a.x,b.x,c.x,d.x)*(edge-1))),x1=Math.min(edge-1,Math.ceil(Math.max(a.x,b.x,c.x,d.x)*(edge-1)));\n  const y0=Math.max(0,Math.floor(Math.min(a.y,b.y,c.y,d.y)*(edge-1))),y1=Math.min(edge-1,Math.ceil(Math.max(a.y,b.y,c.y,d.y)*(edge-1)));\n  for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){\n   const px=x/(edge-1),py=y/(edge-1);let u=.5,v=.5;\n   for(let iteration=0;iteration<8;iteration++){\n    const rx=a.x+ex*u+fx*v+gx*u*v-px,ry=a.y+ey*u+fy*v+gy*u*v-py;\n    const dxdu=ex+gx*v,dydu=ey+gy*v,dxdv=fx+gx*u,dydv=fy+gy*u,det=dxdu*dydv-dxdv*dydu;\n    if(Math.abs(det)<1e-12)break;\n    u-=(rx*dydv-ry*dxdv)/det;v-=(ry*dxdu-rx*dydu)/det;\n    if(Math.abs(rx)+Math.abs(ry)<1e-9)break;\n   }\n   if(!Number.isFinite(u)||!Number.isFinite(v)||u< -1e-7||u>1+1e-7||v< -1e-7||v>1+1e-7)continue;\n   const residual=Math.abs(a.x+ex*u+fx*v+gx*u*v-px)+Math.abs(a.y+ey*u+fy*v+gy*u*v-py);if(residual>1e-6)continue;\n   u=Math.max(0,Math.min(1,u));v=Math.max(0,Math.min(1,v));\n   const weights=[(1-u)*(1-v),u*(1-v),(1-u)*v,u*v],colors=[a.color,b.color,c.color,d.color];\n   const alpha=colors.reduce((sum,color,i)=>sum+color.alpha*weights[i]!,0),offset=(y*edge+x)*4;\n   for(const [channel,key] of ['r','g','b'].entries())pixels[offset+channel]=alpha?Math.round(colors.reduce((sum,color,i)=>sum+color[key as 'r'|'g'|'b']*color.alpha*weights[i]!,0)/alpha):0;\n   pixels[offset+3]=Math.round(alpha*255);\n  }\n }\n return {width:edge,height:edge,pixels};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/color/gradient-mesh.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/gradient-mesh",
+    "exports": [
+      "GradientMesh",
+      "MeshPoint",
+      "editMeshPoint",
+      "rasterizeMesh",
+      "validateMesh"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

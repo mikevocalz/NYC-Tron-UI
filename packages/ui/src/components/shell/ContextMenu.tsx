@@ -5,6 +5,7 @@ import {useStore} from "zustand";
 import {CommandPopover,type CommandMenuItem} from "../overlays/CommandPopover.tsx";
 import {hasUsableRegion,type Rect2D} from "../overlays/popover-position.ts";
 import {shellKey} from "./shell-keys.ts";
+import {size} from "../../tokens.ts";
 
 export type {CommandMenuItem} from "../overlays/CommandPopover.tsx";
 
@@ -101,7 +102,7 @@ export function ContextMenu({
         if(isContextMenuKey(k.key,k.shiftKey)){k.preventDefault();openBeside("keyboard");return;}
         onKeyDown?.(event);
       }}
-      style={state=>[{minWidth:44,minHeight:44},typeof style==="function"?style(state):style]}>
+      style={state=>[{minWidth:size.touch,minHeight:size.touch},typeof style==="function"?style(state):style]}>
       {children}
     </Pressable>
     {anchor&&usable?<CommandPopover testID={rest.testID?`${rest.testID}-menu`:undefined} visible accessibilityLabel={"Actions for "+label} anchor={anchor} usableRegions={regions}

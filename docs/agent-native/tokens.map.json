@@ -1,0 +1,787 @@
+{
+ "generated": "build-tokens.mjs",
+ "rule": "step iff n>=3 and files>=2; exceptions {\"radius\":{\"9999\":\"full\"}}",
+ "categories": {
+  "spacing": {
+   "properties": [
+    "columnGap",
+    "gap",
+    "margin",
+    "marginBottom",
+    "marginEnd",
+    "marginHorizontal",
+    "marginLeft",
+    "marginRight",
+    "marginTop",
+    "marginVertical",
+    "padding",
+    "paddingBottom",
+    "paddingEnd",
+    "paddingHorizontal",
+    "paddingLeft",
+    "paddingRight",
+    "paddingStart",
+    "paddingTop",
+    "paddingVertical",
+    "rowGap"
+   ],
+   "total": 1109,
+   "onScale": {
+    "0": {
+     "token": "space.0",
+     "occurrences": 6,
+     "files": 5
+    },
+    "1": {
+     "token": "space.0.25",
+     "occurrences": 4,
+     "files": 3
+    },
+    "2": {
+     "token": "space.0.5",
+     "occurrences": 55,
+     "files": 39
+    },
+    "3": {
+     "token": "space.0.75",
+     "occurrences": 12,
+     "files": 11
+    },
+    "4": {
+     "token": "space.1",
+     "occurrences": 170,
+     "files": 104
+    },
+    "6": {
+     "token": "space.1.5",
+     "occurrences": 195,
+     "files": 109
+    },
+    "8": {
+     "token": "space.2",
+     "occurrences": 422,
+     "files": 249
+    },
+    "10": {
+     "token": "space.2.5",
+     "occurrences": 51,
+     "files": 38
+    },
+    "12": {
+     "token": "space.3",
+     "occurrences": 110,
+     "files": 65
+    },
+    "14": {
+     "token": "space.3.5",
+     "occurrences": 7,
+     "files": 7
+    },
+    "16": {
+     "token": "space.4",
+     "occurrences": 50,
+     "files": 27
+    },
+    "-2": {
+     "token": "-space.0.5",
+     "occurrences": 4,
+     "files": 4
+    },
+    "-12": {
+     "token": "-space.3",
+     "occurrences": 3,
+     "files": 2
+    },
+    "-4": {
+     "token": "-space.1",
+     "occurrences": 2,
+     "files": 2
+    },
+    "-10": {
+     "token": "-space.2.5",
+     "occurrences": 1,
+     "files": 1
+    }
+   },
+   "offScale": {
+    "5": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.space.1_25",
+     "byFile": {
+      "packages/ui/src/components/shell/KeyboardShortcutHUD.tsx": 1
+     }
+    },
+    "7": {
+     "occurrences": 2,
+     "files": 2,
+     "tokenPattern": "<Component>.space.1_75",
+     "byFile": {
+      "packages/ui/src/components/overlays/CommandPalette.tsx": 1,
+      "packages/ui/src/components/overlays/CommandPopover.tsx": 1
+     }
+    },
+    "9": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.space.2_25",
+     "byFile": {
+      "packages/ui/src/components/forge/audio/ChannelStrip.tsx": 1
+     }
+    },
+    "11": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.space.2_75",
+     "byFile": {
+      "packages/ui/src/components/forge/inputs/PrecisionScrubber.tsx": 1
+     }
+    },
+    "20": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.space.5",
+     "byFile": {
+      "packages/ui/src/components/forge/audio/DynamicsTransferGraph.tsx": 1
+     }
+    },
+    "22": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.space.5_5",
+     "byFile": {
+      "packages/ui/src/components/shell/RangeSlider.tsx": 1
+     }
+    },
+    "24": {
+     "occurrences": 2,
+     "files": 2,
+     "tokenPattern": "<Component>.space.6",
+     "byFile": {
+      "packages/expo-controls/src/components/NativeActionMenu.web.tsx": 1,
+      "packages/windows-fluent/rnw-fabric/example/App.tsx": 1
+     }
+    },
+    "32": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.space.8",
+     "byFile": {
+      "packages/ui/src/components/forge/slides/SlideFilmstrip.tsx": 1
+     }
+    },
+    "44": {
+     "occurrences": 2,
+     "files": 1,
+     "tokenPattern": "<Component>.space.11",
+     "byFile": {
+      "packages/ui/src/components/data/TreeGrid.tsx": 2
+     }
+    },
+    "-22": {
+     "occurrences": 3,
+     "files": 2,
+     "tokenPattern": "<Component>.space.n5_5",
+     "byFile": {
+      "packages/ui/src/components/shell/PaneSplitter.tsx": 2,
+      "packages/ui/src/components/shell/RangeSlider.tsx": 1
+     }
+    },
+    "-1.5": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.space.n0_375",
+     "byFile": {
+      "packages/ui/src/components/forge/inputs/PrecisionScrubber.tsx": 1
+     }
+    },
+    "1.5": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.space.0_375",
+     "byFile": {
+      "packages/ui/src/components/forge/layers/LayerThumbnail.tsx": 1
+     }
+    }
+   }
+  },
+  "radius": {
+   "properties": [
+    "borderBottomLeftRadius",
+    "borderBottomRightRadius",
+    "borderRadius",
+    "borderTopLeftRadius",
+    "borderTopRightRadius"
+   ],
+   "total": 131,
+   "onScale": {
+    "1": {
+     "token": "radius.1",
+     "occurrences": 36,
+     "files": 17
+    },
+    "2": {
+     "token": "radius.2",
+     "occurrences": 17,
+     "files": 13
+    },
+    "3": {
+     "token": "radius.3",
+     "occurrences": 16,
+     "files": 10
+    },
+    "4": {
+     "token": "radius.4",
+     "occurrences": 11,
+     "files": 10
+    },
+    "5": {
+     "token": "radius.5",
+     "occurrences": 9,
+     "files": 8
+    },
+    "6": {
+     "token": "radius.6",
+     "occurrences": 7,
+     "files": 7
+    },
+    "7": {
+     "token": "radius.7",
+     "occurrences": 4,
+     "files": 3
+    },
+    "8": {
+     "token": "radius.8",
+     "occurrences": 3,
+     "files": 3
+    },
+    "9": {
+     "token": "radius.9",
+     "occurrences": 6,
+     "files": 6
+    },
+    "10": {
+     "token": "radius.10",
+     "occurrences": 4,
+     "files": 4
+    },
+    "12": {
+     "token": "radius.12",
+     "occurrences": 4,
+     "files": 4
+    },
+    "14": {
+     "token": "radius.14",
+     "occurrences": 4,
+     "files": 4
+    },
+    "9999": {
+     "token": "radius.full",
+     "occurrences": 1,
+     "files": 1
+    }
+   },
+   "offScale": {
+    "11": {
+     "occurrences": 2,
+     "files": 2,
+     "tokenPattern": "<Component>.radius.11",
+     "byFile": {
+      "packages/ui/src/components/shell/RangeSlider.tsx": 1,
+      "packages/ui/src/components/shell/SliderField.tsx": 1
+     }
+    },
+    "13": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.radius.13",
+     "byFile": {
+      "packages/ui/src/components/forge/selection/switch-row.tsx": 1
+     }
+    },
+    "15": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.radius.15",
+     "byFile": {
+      "packages/ui/src/components/forge/ink/InkToolbar.tsx": 1
+     }
+    },
+    "17": {
+     "occurrences": 2,
+     "files": 2,
+     "tokenPattern": "<Component>.radius.17",
+     "byFile": {
+      "packages/ui/src/components/forge/canvas-tools/ColorDropCanvasTarget.tsx": 1,
+      "packages/ui/src/components/forge/ink/InkToolbar.tsx": 1
+     }
+    },
+    "22": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.radius.22",
+     "byFile": {
+      "packages/ui/src/components/forge/canvas-tools/ColorDropCanvasTarget.tsx": 1
+     }
+    },
+    "2.5": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.radius.2_5",
+     "byFile": {
+      "packages/ui/src/components/forge/layers/LayerStack.tsx": 1
+     }
+    },
+    "3.5": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.radius.3_5",
+     "byFile": {
+      "packages/ui/src/components/forge/layers/LayerThumbnail.tsx": 1
+     }
+    }
+   }
+  },
+  "fontSize": {
+   "properties": [
+    "fontSize"
+   ],
+   "total": 74,
+   "onScale": {
+    "10": {
+     "token": "font.10",
+     "occurrences": 4,
+     "files": 3
+    },
+    "11": {
+     "token": "font.11",
+     "occurrences": 18,
+     "files": 7
+    },
+    "12": {
+     "token": "font.12",
+     "occurrences": 18,
+     "files": 9
+    },
+    "13": {
+     "token": "font.13",
+     "occurrences": 11,
+     "files": 7
+    },
+    "14": {
+     "token": "font.14",
+     "occurrences": 6,
+     "files": 2
+    },
+    "15": {
+     "token": "font.15",
+     "occurrences": 3,
+     "files": 3
+    },
+    "16": {
+     "token": "font.16",
+     "occurrences": 3,
+     "files": 3
+    },
+    "17": {
+     "token": "font.17",
+     "occurrences": 3,
+     "files": 2
+    }
+   },
+   "offScale": {
+    "9": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.font.9",
+     "byFile": {
+      "packages/ui/src/components/forge/canvas/CanvasRuler.tsx": 1
+     }
+    },
+    "18": {
+     "occurrences": 2,
+     "files": 2,
+     "tokenPattern": "<Component>.font.18",
+     "byFile": {
+      "packages/ui/src/components/forge/canvas-tools/ReferenceImageBoard.tsx": 1,
+      "packages/ui/src/components/forge/ink/InkToolbar.tsx": 1
+     }
+    },
+    "20": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.font.20",
+     "byFile": {
+      "packages/native-navigation/src/NativeNavigationRail.web.tsx": 1
+     }
+    },
+    "22": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.font.22",
+     "byFile": {
+      "packages/ui/src/components/navigation/CollapsibleDrawer.tsx": 1
+     }
+    },
+    "24": {
+     "occurrences": 2,
+     "files": 2,
+     "tokenPattern": "<Component>.font.24",
+     "byFile": {
+      "packages/ui/src/components/forge/color/ColorHarmonyAssistant.tsx": 1,
+      "packages/ui/src/components/forge/photo/photo-export.ts": 1
+     }
+    },
+    "30": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.font.30",
+     "byFile": {
+      "packages/ui/src/components/forge/audio/LoudnessMeter.tsx": 1
+     }
+    }
+   }
+  },
+  "lineHeight": {
+   "properties": [
+    "lineHeight"
+   ],
+   "total": 18,
+   "onScale": {
+    "14": {
+     "token": "leading.14",
+     "occurrences": 7,
+     "files": 3
+    },
+    "16": {
+     "token": "leading.16",
+     "occurrences": 6,
+     "files": 4
+    }
+   },
+   "offScale": {
+    "12": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.leading.12",
+     "byFile": {
+      "packages/ui/src/components/forge/canvas/CanvasRuler.tsx": 1
+     }
+    },
+    "20": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.leading.20",
+     "byFile": {
+      "packages/ui/src/components/forge/pdf/TextSearchResults.tsx": 1
+     }
+    },
+    "21": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.leading.21",
+     "byFile": {
+      "packages/ui/src/components/forge/pdf/CommentsThreadPanel.tsx": 1
+     }
+    },
+    "25": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.leading.25",
+     "byFile": {
+      "packages/ui/src/components/forge/office/ReadAloudTransport.tsx": 1
+     }
+    },
+    "34": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.leading.34",
+     "byFile": {
+      "packages/ui/src/components/forge/audio/LoudnessMeter.tsx": 1
+     }
+    }
+   }
+  },
+  "borderWidth": {
+   "properties": [
+    "borderBottomWidth",
+    "borderLeftWidth",
+    "borderRightWidth",
+    "borderTopWidth",
+    "borderWidth"
+   ],
+   "total": 121,
+   "onScale": {
+    "0": {
+     "token": "border.0",
+     "occurrences": 3,
+     "files": 3
+    },
+    "1": {
+     "token": "border.1",
+     "occurrences": 21,
+     "files": 13
+    },
+    "2": {
+     "token": "border.2",
+     "occurrences": 43,
+     "files": 31
+    },
+    "3": {
+     "token": "border.3",
+     "occurrences": 9,
+     "files": 6
+    },
+    "4": {
+     "token": "border.4",
+     "occurrences": 7,
+     "files": 6
+    },
+    "8": {
+     "token": "border.8",
+     "occurrences": 3,
+     "files": 2
+    },
+    "1.5": {
+     "token": "border.1_5",
+     "occurrences": 26,
+     "files": 14
+    }
+   },
+   "offScale": {
+    "5": {
+     "occurrences": 2,
+     "files": 1,
+     "tokenPattern": "<Component>.border.5",
+     "byFile": {
+      "packages/ui/src/components/shell/ToolRail.tsx": 2
+     }
+    },
+    "6": {
+     "occurrences": 2,
+     "files": 1,
+     "tokenPattern": "<Component>.border.6",
+     "byFile": {
+      "packages/ui/src/components/forge/timeline/TransitionPresetBrowser.tsx": 2
+     }
+    },
+    "7": {
+     "occurrences": 2,
+     "files": 1,
+     "tokenPattern": "<Component>.border.7",
+     "byFile": {
+      "packages/ui/src/components/forge/timeline/TrackHeaders.tsx": 2
+     }
+    },
+    "9": {
+     "occurrences": 2,
+     "files": 1,
+     "tokenPattern": "<Component>.border.9",
+     "byFile": {
+      "packages/ui/src/components/forge/timeline/TrackHeaders.tsx": 2
+     }
+    },
+    "13": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.border.13",
+     "byFile": {
+      "packages/ui/src/components/shell/PresetGallery.tsx": 1
+     }
+    }
+   }
+  },
+  "opacity": {
+   "properties": [
+    "opacity"
+   ],
+   "total": 119,
+   "onScale": {
+    "0.3": {
+     "token": "opacity.0_3",
+     "occurrences": 4,
+     "files": 3
+    },
+    "0.35": {
+     "token": "opacity.0_35",
+     "occurrences": 5,
+     "files": 4
+    },
+    "0.4": {
+     "token": "opacity.0_4",
+     "occurrences": 14,
+     "files": 13
+    },
+    "0.45": {
+     "token": "opacity.0_45",
+     "occurrences": 51,
+     "files": 33
+    },
+    "0.5": {
+     "token": "opacity.0_5",
+     "occurrences": 21,
+     "files": 20
+    },
+    "0.55": {
+     "token": "opacity.0_55",
+     "occurrences": 4,
+     "files": 4
+    },
+    "0.6": {
+     "token": "opacity.0_6",
+     "occurrences": 10,
+     "files": 8
+    },
+    "0.7": {
+     "token": "opacity.0_7",
+     "occurrences": 4,
+     "files": 3
+    },
+    "0.9": {
+     "token": "opacity.0_9",
+     "occurrences": 4,
+     "files": 3
+    }
+   },
+   "offScale": {
+    "0.52": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.opacity.0_52",
+     "byFile": {
+      "packages/icons/src/state.js": 1
+     }
+    },
+    "0.85": {
+     "occurrences": 1,
+     "files": 1,
+     "tokenPattern": "<Component>.opacity.0_85",
+     "byFile": {
+      "packages/ui/src/components/forge/timeline/TransitionPresetBrowser.tsx": 1
+     }
+    }
+   }
+  },
+  "colorFn": {
+   "total": 7,
+   "onScale": {
+    "rgba(0,0,0,0.5) @ DevicePairingDialog.tsx": {
+     "token": "scrim.50",
+     "occurrences": 1,
+     "files": 1,
+     "file": "packages/ui/src/components/forge/devices/DevicePairingDialog.tsx"
+    },
+    "rgba(0,0,0,0.25) @ CollapsibleDrawer.tsx": {
+     "token": "scrim.25",
+     "occurrences": 1,
+     "files": 1,
+     "file": "packages/ui/src/components/navigation/CollapsibleDrawer.tsx"
+    },
+    "rgba(0,0,0,0.18) @ AdaptivePaneHost.tsx": {
+     "token": "scrim.18",
+     "occurrences": 1,
+     "files": 1,
+     "file": "packages/panes/src/components/AdaptivePaneHost.tsx"
+    },
+    "rgba(0,0,0,0.12) @ AdaptivePaneHost.tsx": {
+     "token": "scrim.12",
+     "occurrences": 1,
+     "files": 1,
+     "file": "packages/panes/src/components/AdaptivePaneHost.tsx"
+    }
+   },
+   "offScale": {
+    "rgba(80,180,255,0.5)": {
+     "token": "PhotoBrushSurface.color.brushPreview",
+     "occurrences": 1,
+     "files": 1,
+     "file": "packages/ui/src/components/forge/photo/PhotoBrushSurface.tsx"
+    }
+   },
+   "insideBoxShadow": [
+    "rgba(0,0,0,0.25) and rgba(0,0,0,0.18) in CanvasCompareView.tsx, replaced as part of elevation.1 and elevation.2"
+   ],
+   "excludedDataFormatters": [
+    "packages/ui/src/components/forge/slides/slide-model.ts:52",
+    "packages/ui/src/components/forge/vector/vector-types.ts:150 and :148 (template strings that format document colours, not theme values)"
+   ]
+  },
+  "boxShadow": {
+   "total": 2,
+   "onScale": {
+    "0 1px 3px rgba(0,0,0,0.25)": {
+     "token": "elevation.1",
+     "occurrences": 1,
+     "files": 1
+    },
+    "0 4px 12px rgba(0,0,0,0.18)": {
+     "token": "elevation.2",
+     "occurrences": 1,
+     "files": 1
+    }
+   },
+   "offScale": {}
+  },
+  "androidHex": {
+   "total": 10,
+   "note": "Kotlin literals, `\"#rrggbb\"` and `Color(0xFFrrggbb)` forms normalised",
+   "onScale": {},
+   "offScale": {
+    "#8b5cf6": {
+     "token": "TronNativeDefaults.accent",
+     "occurrences": 5,
+     "files": 3,
+     "byFile": {
+      "packages/native-charts/android/src/main/java/com/nyctron/charts/TronChartView.kt": 1,
+      "packages/native-controls/android/src/main/java/com/nyctron/instruments/TronArcKnobView.kt": 2,
+      "packages/native-controls/android/src/main/java/com/nyctron/instruments/TronXYPadView.kt": 2
+     }
+    },
+    "#f5f5f7": {
+     "token": "TronNativeDefaults.knobText",
+     "occurrences": 2,
+     "files": 1,
+     "byFile": {
+      "packages/native-controls/android/src/main/java/com/nyctron/instruments/TronArcKnobView.kt": 2
+     }
+    },
+    "#13131a": {
+     "token": "TronNativeDefaults.padSurface",
+     "occurrences": 2,
+     "files": 1,
+     "byFile": {
+      "packages/native-controls/android/src/main/java/com/nyctron/instruments/TronXYPadView.kt": 2
+     }
+    },
+    "#8a8a99": {
+     "token": "TronNativeDefaults.chartAxis",
+     "occurrences": 1,
+     "files": 1,
+     "byFile": {
+      "packages/native-charts/android/src/main/java/com/nyctron/charts/TronChartView.kt": 1
+     }
+    }
+   }
+  },
+  "minSize44": {
+   "total": 152,
+   "onScale": {
+    "44": {
+     "token": "size.touch",
+     "occurrences": 152,
+     "files": 84
+    }
+   },
+   "properties": [
+    "minWidth",
+    "minHeight"
+   ]
+  },
+  "duration": {
+   "total": 2,
+   "note": "ui has 0 literals. The only 2 hits are `duration=0` in Kotlin (AndroidMediaDecoder.kt), not a style duration. Frame-throttle `setTimeout(...,16)` in forge/frame-throttle.ts is a 60 Hz frame budget, not a motion duration.",
+   "onScale": {},
+   "offScale": {}
+  }
+ }
+}

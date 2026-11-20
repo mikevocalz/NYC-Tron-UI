@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/status-model",
+  "title": "status model",
+  "description": "status model, an app shell state model. Exports activityAnnouncement, formatElapsed, formatZoom.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/status-model.ts",
+      "content": "/**\n * What the document is doing right now, as shown by {@linkcode StatusBar}.\n * Each state carries only the facts that state has.\n */\nexport type StatusActivity=\n  | {readonly kind:\"idle\"}\n  | {readonly kind:\"saving\"}\n  | {readonly kind:\"rendering\";\n      /** 0..1 when the renderer reports it; omit for indeterminate work. */\n      readonly progress?:number;\n      readonly label?:string}\n  | {readonly kind:\"recording\";\n      /** Time since recording began, from the recorder's clock. */\n      readonly elapsedMs:number}\n  | {readonly kind:\"error\";readonly message:string};\n\n/** Singular and plural nouns for a selection count, e.g. layer/layers. */\nexport interface SelectionNoun {\n  readonly one:string;\n  readonly other:string;\n}\n\n/** Zoom percentage as display text: whole numbers, one decimal below 10%. */\nexport function formatZoom(percent:number):string{\n  if(!Number.isFinite(percent)||percent<=0)throw new RangeError(\"Invalid zoom\");\n  return (percent<10?Number(percent.toFixed(1)):Math.round(percent))+\"%\";\n}\n\n/** The next preset above (`1`) or below (`-1`) `value`, or `value` at either end. */\nexport function stepZoom(value:number,presets:readonly number[],direction:1|-1):number{\n  const sorted=[...new Set(presets.filter(p=>Number.isFinite(p)&&p>0))].sort((a,b)=>a-b);\n  if(!sorted.length)return value;\n  if(direction>0)return sorted.find(p=>p>value+1e-9)??value;\n  return [...sorted].reverse().find(p=>p<value-1e-9)??value;\n}\n\n/** \"No selection\", \"1 layer selected\", \"12 layers selected\". */\nexport function selectionSummary(count:number,noun:SelectionNoun={one:\"item\",other:\"items\"}):string{\n  if(!Number.isInteger(count)||count<0)throw new RangeError(\"Invalid selection count\");\n  if(count===0)return \"No selection\";\n  return `${count} ${count===1?noun.one:noun.other} selected`;\n}\n\n/** Elapsed time as m:ss, or h:mm:ss from one hour. */\nexport function formatElapsed(ms:number):string{\n  if(!Number.isFinite(ms)||ms<0)throw new RangeError(\"Invalid elapsed time\");\n  const total=Math.floor(ms/1000);\n  const h=Math.floor(total/3600),m=Math.floor(total/60)%60,s=total%60;\n  const pad=(n:number)=>String(n).padStart(2,\"0\");\n  return h?`${h}:${pad(m)}:${pad(s)}`:`${m}:${pad(s)}`;\n}\n\n/**\n * Text a screen reader announces when the activity changes. The recording\n * clock and render percentage are left out so they are not re-announced on\n * every tick; the progress bar exposes the percentage on demand.\n */\nexport function activityAnnouncement(activity:StatusActivity):string{\n  switch(activity.kind){\n    case \"idle\":return \"\";\n    case \"saving\":return \"Saving\";\n    case \"recording\":return \"Recording\";\n    case \"error\":return activity.message;\n    case \"rendering\":return activity.label??\"Rendering\";\n  }\n}\n\n/** Render progress as a whole percentage, or undefined when indeterminate. Throws outside 0..1. */\nexport function progressPercent(progress:number|undefined):number|undefined{\n  if(progress===undefined)return undefined;\n  if(!Number.isFinite(progress)||progress<0||progress>1)throw new RangeError(\"Invalid render progress\");\n  return Math.round(progress*100);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/status-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/status-model",
+    "exports": [
+      "SelectionNoun",
+      "StatusActivity",
+      "activityAnnouncement",
+      "formatElapsed",
+      "formatZoom",
+      "progressPercent",
+      "selectionSummary",
+      "stepZoom"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

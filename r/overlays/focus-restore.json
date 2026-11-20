@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "overlays/focus-restore",
+  "title": "focus restore",
+  "description": "focus restore, an overlay hook. Exports useRestoreFocus.",
+  "files": [
+    {
+      "path": "packages/ui/src/components/overlays/focus-restore.ts",
+      "content": "import {useEffect,useRef} from 'react';\nimport {Platform} from 'react-native';\ntype Focusable={focus:()=>void;getClientRects?:()=>{length:number}};\ntype FocusDocument={activeElement:unknown;body?:unknown;documentElement?:unknown;contains:(node:unknown)=>boolean};\n/** Restore the web opener after close or conditional unmount without replacing a newer focus choice. */\nexport function useRestoreFocus(open:boolean):void {\n const saved=useRef<Focusable|null>(null),wasOpen=useRef(false),timer=useRef<ReturnType<typeof setTimeout>|null>(null);\n // Capture before child autoFocus/onShow moves focus into the overlay.\n if(open&&!wasOpen.current&&Platform.OS==='web'){\n  const active=(globalThis as {document?:FocusDocument}).document?.activeElement as Partial<Focusable>|null|undefined;\n  saved.current=active&&typeof active.focus==='function'?active as Focusable:null;\n }\n wasOpen.current=open;\n const restore=()=>{\n  if(Platform.OS!=='web')return;\n  const target=saved.current;saved.current=null;if(!target)return;\n  if(timer.current!==null)clearTimeout(timer.current);\n  timer.current=setTimeout(()=>{\n   timer.current=null;const doc=(globalThis as {document?:FocusDocument}).document;if(!doc||!doc.contains(target))return;\n   const active=doc.activeElement as Focusable|null|undefined;\n   const vacant=!active||active===doc.body||active===doc.documentElement||!doc.contains(active)||active.getClientRects?.().length===0;\n   if(vacant)target.focus();\n  },0);\n };\n useEffect(()=>{if(open){if(timer.current!==null){clearTimeout(timer.current);timer.current=null;}}else restore();},[open]);\n useEffect(()=>{if(wasOpen.current&&timer.current!==null){clearTimeout(timer.current);timer.current=null;}return restore;},[]);\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/overlays/focus-restore.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [
+      "web"
+    ],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/overlays/focus-restore",
+    "exports": [
+      "useRestoreFocus"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    }
+  },
+  "categories": [
+    "overlay"
+  ],
+  "type": "registry:lib"
+}

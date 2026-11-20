@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/ribbon-model",
+  "title": "ribbon model",
+  "description": "ribbon model, an app shell state model. Exports inlineGalleryItems, ribbonTabLabel, validateRibbon.",
+  "registryDependencies": [
+    "@nyc-tron/overlays/CommandPopover"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/ribbon-model.ts",
+      "content": "import type {ReactNode} from \"react\";\nimport type {CommandMenuItem} from \"@/components/nyc-tron/ui/components/overlays/CommandPopover\";\n\n/** A plain command button. With `pressed` it is a toggle. */\nexport interface RibbonButton {\n  readonly kind:\"button\";\n  readonly id:string;\n  readonly label:string;\n  readonly icon?:ReactNode;\n  readonly pressed?:boolean;\n  readonly disabled?:boolean;\n}\n/** A command with a primary action and a flyout, drawn as a {@linkcode SplitButton}. */\nexport interface RibbonSplit {\n  readonly kind:\"split\";\n  readonly id:string;\n  readonly label:string;\n  readonly icon?:ReactNode;\n  readonly items:readonly CommandMenuItem[];\n  readonly disabled?:boolean;\n}\n/** One choice in a {@linkcode RibbonGallery}. */\nexport interface RibbonGalleryItem {\n  readonly id:string;\n  readonly label:string;\n  readonly preview:ReactNode;\n}\n/** A row of visual choices, e.g. text styles, with the rest in a \"More\" menu. */\nexport interface RibbonGallery {\n  readonly kind:\"gallery\";\n  readonly id:string;\n  readonly label:string;\n  readonly items:readonly RibbonGalleryItem[];\n  readonly selectedId?:string;\n  /** How many choices show inline. @default 4 */\n  readonly inline?:number;\n}\n/** Anything a {@linkcode RibbonGroup} can hold. */\nexport type RibbonCommand=RibbonButton|RibbonSplit|RibbonGallery;\n\n/** A labelled cluster of commands within a tab. */\nexport interface RibbonGroup {\n  readonly id:string;\n  readonly label:string;\n  readonly commands:readonly RibbonCommand[];\n}\n/**\n * One ribbon tab. A contextual tab (`contextualGroup`, e.g. \"Picture\") is\n * shown only while the app includes it, which it does for the matching\n * selection.\n */\nexport interface RibbonTab {\n  readonly id:string;\n  readonly label:string;\n  readonly contextualGroup?:string;\n  readonly groups:readonly RibbonGroup[];\n}\n\n/** Throws on duplicate tab, group or command ids, empty labels, or a gallery selection that is not an item. */\nexport function validateRibbon(tabs:readonly RibbonTab[]):void{\n  if(tabs.length>64)throw new RangeError(\"Too many ribbon tabs\");\n  const ids=new Set<string>();\n  const claim=(id:string,what:string)=>{\n    if(typeof id!==\"string\"||!id.trim()||id.length>256)throw new TypeError(`${what} id required`);\n    if(ids.has(id))throw new TypeError(`Duplicate ribbon id ${id}`);\n    ids.add(id);\n  };\n  const named=(label:string,what:string)=>{if(typeof label!==\"string\"||!label.trim()||label.length>512)throw new TypeError(`${what} needs a label`);};\n  for(const tab of tabs){\n    claim(tab.id,\"Tab\");named(tab.label,\"Tab \"+tab.id);\n    if(tab.groups.length>64)throw new RangeError(\"Too many ribbon groups\");\n    for(const group of tab.groups){\n      claim(group.id,\"Group\");named(group.label,\"Group \"+group.id);\n      if(group.commands.length>256)throw new RangeError(\"Too many ribbon commands\");\n      for(const command of group.commands){\n        claim(command.id,\"Command\");named(command.label,\"Command \"+command.id);\n        if(![\"button\",\"split\",\"gallery\"].includes(command.kind))throw new TypeError(\"Invalid ribbon command kind\");\n        if(command.kind!==\"button\"){\n          if(command.items.length>1000)throw new RangeError(\"Too many ribbon choices\");\n          const choices=new Set<string>();for(const item of command.items){if(!item.id.trim()||item.id.length>256||choices.has(item.id))throw new TypeError(\"Duplicate or invalid ribbon choice\");choices.add(item.id);named(item.label,\"Ribbon choice\");}\n        }\n        if(command.kind===\"gallery\"&&command.inline!==undefined&&(!Number.isInteger(command.inline)||command.inline<1||command.inline>1000))throw new RangeError(\"Invalid inline gallery count\");\n        if(command.kind===\"gallery\"&&command.selectedId!==undefined&&!command.items.some(i=>i.id===command.selectedId))\n          throw new TypeError(`Gallery ${command.id} selects a missing item`);\n      }\n    }\n  }\n}\n\n/** Accessible tab name; contextual tabs carry their group, e.g. \"Format, Picture tools\". */\nexport function ribbonTabLabel(tab:RibbonTab):string{\n  return tab.contextualGroup?`${tab.label}, ${tab.contextualGroup} tools`:tab.label;\n}\n\n/** Gallery items shown inline: the first `inline`, swapping in the selected one if it is further down. */\nexport function inlineGalleryItems(gallery:RibbonGallery):readonly RibbonGalleryItem[]{\n  const n=Math.max(1,gallery.inline??4);\n  const first=gallery.items.slice(0,n);\n  const selected=gallery.items.find(i=>i.id===gallery.selectedId);\n  if(!selected||first.includes(selected))return first;\n  return [...first.slice(0,n-1),selected];\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/ribbon-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/ribbon-model",
+    "exports": [
+      "RibbonButton",
+      "RibbonCommand",
+      "RibbonGallery",
+      "RibbonGalleryItem",
+      "RibbonGroup",
+      "RibbonSplit",
+      "RibbonTab",
+      "inlineGalleryItems",
+      "ribbonTabLabel",
+      "validateRibbon"
+    ],
+    "peers": {
+      "react": ">=19.0.0"
+    }
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

@@ -13,6 +13,7 @@ import {
   type AlignCommand,type AlignEdge,type AlignItem,type AlignReferenceKind,type ArrangeAction,type Availability,
   type DistributeAxis,type DistributeCommand,type DistributeMode,type MoveLayerCommand,type StackPosition,
 } from "./align-distribute-model.ts";
+import {space,radius,opacity,size} from '../../../tokens.ts';
 
 /** Props for {@linkcode AlignDistributePanel}. Every value is owned by the host. */
 export interface AlignDistributePanelProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -88,13 +89,13 @@ function AlignDistributePanelBody({
   return <View {...rest} accessibilityLabel="Align and arrange"
     {...{role:"group",className:joinClasses(styled&&"gap-4",className)}}>
     <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
-    <View style={{gap:8}}>
+    <View style={{gap:space[2]}}>
       {heading("Align")}
       <SegmentedControl aria-label="Align relative to" value={reference} onChange={onReferenceChange} disabled={disabled} unstyled={unstyled}
         options={[{value:"selection",label:"Selection"},{value:"canvas",label:"Canvas"},
           {value:"artboard",label:"Artboard",disabled:artboard===undefined}]}/>
       {reference==="artboard"&&artboard?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>Aligns to {artboard.name}</Text>:null}
-      <View accessibilityLabel="Align" {...{role:"toolbar"}} style={{flexDirection:"row",flexWrap:"wrap",gap:6}}>
+      <View accessibilityLabel="Align" {...{role:"toolbar"}} style={{flexDirection:"row",flexWrap:"wrap",gap:space[1.5]}}>
         {ALIGN_EDGES.map(({edge,label})=><ToolButton key={edge} label={label} available={align.enabled} styled={styled}
           onPress={press(align,()=>onAlign(planAlign(items,edge,reference,artboard?.id)))}>
           <Glyph shapes={ALIGN_GLYPHS[edge]} styled={styled}/>
@@ -102,7 +103,7 @@ function AlignDistributePanelBody({
       </View>
       {reasonLine(align)}
     </View>
-    <View style={{gap:8}}>
+    <View style={{gap:space[2]}}>
       {heading("Distribute")}
       <SegmentedControl aria-label="Distribute by" value={distributeMode} onChange={onDistributeModeChange} disabled={disabled} unstyled={unstyled}
         options={[{value:"centers",label:"Centers"},{value:"spacing",label:"Gaps"}]}/>
@@ -113,7 +114,7 @@ function AlignDistributePanelBody({
         {spacing!==undefined?<PrecisionScrubber label="Gap" unit="px" value={spacing} min={0} max={DISTRIBUTE_MAX_SPACING} step={1}
           detents={[0,8,16,24,32]} disabled={disabled} unstyled={unstyled} onCommit={v=>onSpacingChange(Math.round(v))}/>:null}
       </>:null}
-      <View accessibilityLabel="Distribute" {...{role:"toolbar"}} style={{flexDirection:"row",flexWrap:"wrap",gap:6}}>
+      <View accessibilityLabel="Distribute" {...{role:"toolbar"}} style={{flexDirection:"row",flexWrap:"wrap",gap:space[1.5]}}>
         {(["horizontal","vertical"] as const satisfies readonly DistributeAxis[]).map(axis=><ToolButton key={axis}
           label={axis==="horizontal"?"Distribute horizontally":"Distribute vertically"}
           text={axis==="horizontal"?"Horizontally":"Vertically"} available={distribute.enabled} styled={styled}
@@ -123,9 +124,9 @@ function AlignDistributePanelBody({
       </View>
       {reasonLine(distribute)}
     </View>
-    <View style={{gap:8}}>
+    <View style={{gap:space[2]}}>
       {heading("Arrange")}
-      <View accessibilityLabel="Arrange" {...{role:"toolbar"}} style={{flexDirection:"row",flexWrap:"wrap",gap:6}}>
+      <View accessibilityLabel="Arrange" {...{role:"toolbar"}} style={{flexDirection:"row",flexWrap:"wrap",gap:space[1.5]}}>
         {ARRANGE_ACTIONS.map(({action,label})=>{
           const a=arrangeState(action);
           return <ToolButton key={action} label={label} text={ARRANGE_SHORT[action]} available={a.enabled} styled={styled}
@@ -152,8 +153,8 @@ function ToolButton({label,text,hint,available,onPress,styled,children}:{
   return <Pressable role="button" aria-label={available?label:label+", unavailable"} accessibilityHint={hint}
     accessibilityState={{disabled:!available}} onPress={onPress}
     {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-raised focus-visible:ring-2 focus-visible:ring-focus")}}
-    style={{minWidth:44,minHeight:44,paddingHorizontal:text?10:0,flexDirection:"row",alignItems:"center",justifyContent:"center",gap:6,
-      opacity:available?1:0.45,...(text?{flexGrow:1}:null)}}>
+    style={{minWidth:size.touch,minHeight:size.touch,paddingHorizontal:text?space[2.5]:space[0],flexDirection:"row",alignItems:"center",justifyContent:"center",gap:space[1.5],
+      opacity:available?1:opacity[45],...(text?{flexGrow:1}:null)}}>
     {children}
     {text?<Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text text-xs font-medium")}}>{text}</Text>:null}
   </Pressable>;
@@ -183,6 +184,6 @@ function Glyph({shapes,styled}:{shapes:readonly Shape[];styled:boolean}){
   return <View pointerEvents="none" style={{width:20,height:20}}>
     {shapes.map(([x,y,w,h,fill],i)=><View key={i}
       {...{className:joinClasses(styled&&(fill?"bg-text":"border-2 border-text-muted bg-surface-raised"))}}
-      style={{position:"absolute",left:x,top:y,width:w,height:h,borderRadius:fill?0:2}}/>)}
+      style={{position:"absolute",left:x,top:y,width:w,height:h,borderRadius:fill?0:radius[2]}}/>)}
   </View>;
 }

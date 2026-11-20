@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forge/color/fieldGesture",
+  "title": "field Gesture",
+  "description": "field Gesture, a color helper module. Exports createFieldGesture.",
+  "registryDependencies": [
+    "@nyc-tron/forge/color",
+    "@nyc-tron/forge/color/fieldGeometry"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/forge/color/fieldGesture.ts",
+      "content": "import type {HsvColor} from \"@/components/nyc-tron/ui/components/forge/color\";\nimport {pointToHsv,type FieldPoint,type FieldSize} from \"@/components/nyc-tron/ui/components/forge/color/fieldGeometry\";\n\n/** Accessors the field gesture reads on every event; see {@linkcode createFieldGesture}. */\nexport interface FieldGestureOptions {\n readonly getSize:()=>FieldSize;\n readonly getValue:()=>HsvColor;\n readonly getDisabled:()=>boolean;\n readonly onChange:(next:HsvColor)=>void;\n}\n/** Responder callbacks returned by {@linkcode createFieldGesture}. */\nexport interface FieldGesture {\n shouldStart():boolean;\n grant(point:FieldPoint):void;\n move(point:FieldPoint):void;\n release():void;\n terminate():void;\n terminationRequest():boolean;\n}\n/**\n * Responder logic for the saturation/value field, free of React Native so it\n * can be unit tested.\n *\n * - Input is ignored until layout reports a positive size, so a touch before\n *   `onLayout` does nothing instead of throwing inside a responder callback.\n * - During a drag the field refuses termination requests, so a parent\n *   ScrollView cannot take over a vertical brightness drag.\n * - A forced platform cancel (`terminate` during a drag) restores the color\n *   from the start of the drag, matching UIKit and Android touch-cancel\n *   behavior. A normal release keeps the last color; the host's Cancel action\n *   discards a previewed color.\n */\nexport function createFieldGesture(options:FieldGestureOptions):FieldGesture{\n let active=false;\n let start:HsvColor|null=null;\n const measured=()=>{\n  const {width,height}=options.getSize();\n  return Number.isFinite(width)&&Number.isFinite(height)&&width>0&&height>0;\n };\n const apply=(point:FieldPoint)=>{\n  if(!active||!measured())return;\n  if(!Number.isFinite(point.x)||!Number.isFinite(point.y))return;\n  const current=options.getValue();\n  const next=pointToHsv(point,options.getSize(),current);\n  // Moves inside one point of the field repeat the same color; skip them so\n  // the host does not re-render the picker for nothing.\n  if(next.s===current.s&&next.v===current.v&&next.h===current.h)return;\n  options.onChange(next);\n };\n return {\n  shouldStart:()=>!options.getDisabled()&&measured(),\n  grant(point){\n   if(options.getDisabled()||!measured())return;\n   active=true;\n   start=options.getValue();\n   apply(point);\n  },\n  move:apply,\n  release(){active=false;start=null;},\n  terminate(){\n   if(active&&start)options.onChange(start);\n   active=false;\n   start=null;\n  },\n  terminationRequest:()=>!active,\n };\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/forge/color/fieldGesture.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/forge/color/fieldGesture",
+    "exports": [
+      "FieldGesture",
+      "FieldGestureOptions",
+      "createFieldGesture"
+    ]
+  },
+  "categories": [
+    "forge"
+  ],
+  "type": "registry:lib"
+}

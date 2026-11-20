@@ -2,6 +2,7 @@ import { useRef, type ComponentRef } from "react";
 import { I18nManager, Platform, Pressable, Text, View, type ViewProps, type StyleProp, type ViewStyle, type TextStyle } from "react-native";
 import { joinClasses } from "./styles.ts";
 import { domIsRTL, isModified, nextChoiceIndex, rovingStop, webKey } from "./forms/choice-keys.ts";
+import { size } from "../tokens.ts";
 
 export interface SegmentedOption<T extends string=string> {
   readonly value:T;
@@ -71,7 +72,7 @@ export function SegmentedControl<T extends string=string>({
         role="radio" aria-checked={active} disabled={off[i]}
         accessibilityState={{checked:active,disabled:off[i]}}
         style={({pressed})=>[
-          {minHeight:44,minWidth:44,alignItems:"center",justifyContent:"center"},
+          {minHeight:size.touch,minWidth:size.touch,alignItems:"center",justifyContent:"center"},
           typeof segmentStyle==="function"?segmentStyle({selected:active,disabled:!!off[i],pressed}):segmentStyle,
         ]}
         onPress={()=>select(i)}

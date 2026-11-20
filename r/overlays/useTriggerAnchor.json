@@ -1,0 +1,44 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "overlays/useTriggerAnchor",
+  "title": "use Trigger Anchor",
+  "description": "use Trigger Anchor, an overlay hook. Exports useTriggerAnchor.",
+  "dependencies": [
+    "zustand@^5.0.0"
+  ],
+  "registryDependencies": [
+    "@nyc-tron/overlays/measure-anchor",
+    "@nyc-tron/overlays/popover-position"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/overlays/useTriggerAnchor.ts",
+      "content": "import {useLayoutEffect,useRef,type ComponentRef,type RefObject} from \"react\";\nimport {useWindowDimensions,type View} from \"react-native\";\nimport {createStore,type StoreApi} from \"zustand/vanilla\";\nimport {useStore} from \"zustand\";\nimport {measureAnchor} from \"@/components/nyc-tron/ui/components/overlays/measure-anchor\";\nimport type {Rect2D} from \"@/components/nyc-tron/ui/components/overlays/popover-position\";\n\n/** What {@linkcode useTriggerAnchor} returns: the ref to put on the trigger wrapper and its last measured frame. */\nexport interface TriggerAnchor{\n  readonly ref:RefObject<ComponentRef<typeof View>|null>;\n  /** Window-space frame from the last measurement; `undefined` until the first open has been measured. */\n  readonly anchor:Rect2D|undefined;\n  /**\n   * `true` once `anchor` was measured for the current open. It turns `false`\n   * on close while `anchor` keeps its value, so a closing surface can stay\n   * mounted long enough to return focus, and a reopen never shows the old frame.\n   */\n  readonly measured:boolean;\n}\ntype AnchorState={anchor:Rect2D|undefined;measured:boolean};\n\n/**\n * Measures the trigger each time a popover opens, so trigger-based popovers\n * never ask the app for a rect. A moved or resized trigger is measured again\n * on the next open.\n */\nexport function useTriggerAnchor(open:boolean,scope?:string,layoutRevision?:string):TriggerAnchor{\n  const window=useWindowDimensions();\n  const ref=useRef<ComponentRef<typeof View>|null>(null);\n  const local=useRef<StoreApi<AnchorState>|null>(null);\n  if(!local.current)local.current=createStore<AnchorState>(()=>({anchor:undefined,measured:false}));\n  const store=local.current;\n  const anchor=useStore(store,s=>s.anchor);\n  const measured=useStore(store,s=>s.measured);\n  const session=useRef<{open:boolean;scope:string|undefined}>({open:false,scope});\n  useLayoutEffect(()=>{\n    const fresh=!session.current.open||session.current.scope!==scope;session.current={open,scope};\n    if(!open){store.setState({measured:false});return;}\n    if(fresh)store.setState({measured:false});\n    let live=true;\n    void measureAnchor(ref.current).then(next=>{\n      if(live&&next)store.setState({anchor:next,measured:true});\n    });\n    return ()=>{live=false;};\n  },[open,scope,window.width,window.height,layoutRevision,store]);\n  return {ref,anchor,measured};\n}\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/overlays/useTriggerAnchor.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/overlays/useTriggerAnchor",
+    "exports": [
+      "TriggerAnchor",
+      "useTriggerAnchor"
+    ],
+    "peers": {
+      "react": ">=19.0.0",
+      "react-native": ">=0.88.0"
+    },
+    "optionalPeers": [
+      "zustand"
+    ]
+  },
+  "categories": [
+    "overlay"
+  ],
+  "type": "registry:lib"
+}

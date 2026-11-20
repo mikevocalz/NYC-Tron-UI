@@ -1,0 +1,87 @@
+{
+ "version": 1,
+ "comment": "Files allowed to keep a hardcoded value. `max` is a ceiling per file: more hits fail, fewer print a notice so the entry can be lowered. Every entry needs a reason. Native code is out of scope for this gate (decision 38).",
+ "files": {
+  "packages/core/src/presets/infrax.ts": {
+   "reason": "Theme preset data: shape.borderWidth and the InFraX palette are the values a consumer theme supplies, not component style (docs/THEME_TOKENS.md).",
+   "max": 28,
+   "kinds": [
+    "borderWidth",
+    "hex"
+   ]
+  },
+  "packages/expo-controls/src/components/NativeActionMenu.native.tsx": {
+   "reason": "Package has no dependency on @nyc-tron/core. Importing @nyc-tron/core/tokens needs a new dependency edge, which is a packaging decision for the owner (AGENTS.md rule 6). Tokenize after that decision.",
+   "max": 4,
+   "kinds": [
+    "minSize"
+   ]
+  },
+  "packages/expo-controls/src/components/NativeActionMenu.web.tsx": {
+   "reason": "Package has no dependency on @nyc-tron/core. Importing @nyc-tron/core/tokens needs a new dependency edge, which is a packaging decision for the owner (AGENTS.md rule 6). Tokenize after that decision.",
+   "max": 9,
+   "kinds": [
+    "spacing",
+    "opacity",
+    "minSize"
+   ]
+  },
+  "packages/expo-controls/src/components/NativeSliderField.native.tsx": {
+   "reason": "Package has no dependency on @nyc-tron/core. Importing @nyc-tron/core/tokens needs a new dependency edge, which is a packaging decision for the owner (AGENTS.md rule 6). Tokenize after that decision.",
+   "max": 7,
+   "kinds": [
+    "spacing",
+    "opacity",
+    "minSize"
+   ]
+  },
+  "packages/expo-controls/src/components/Tooltip.web.tsx": {
+   "reason": "Package has no dependency on @nyc-tron/core. Importing @nyc-tron/core/tokens needs a new dependency edge, which is a packaging decision for the owner (AGENTS.md rule 6). Tokenize after that decision.",
+   "max": 2,
+   "kinds": [
+    "spacing"
+   ]
+  },
+  "packages/native-charts/src/NativeChart.web.tsx": {
+   "reason": "Package has no dependency on @nyc-tron/core. Importing @nyc-tron/core/tokens needs a new dependency edge, which is a packaging decision for the owner (AGENTS.md rule 6). Tokenize after that decision.",
+   "max": 2,
+   "kinds": [
+    "spacing",
+    "borderWidth"
+   ]
+  },
+  "packages/native-navigation/src/NativeNavigationRail.web.tsx": {
+   "reason": "Package has no dependency on @nyc-tron/core. Importing @nyc-tron/core/tokens needs a new dependency edge, which is a packaging decision for the owner (AGENTS.md rule 6). Tokenize after that decision.",
+   "max": 8,
+   "kinds": [
+    "spacing",
+    "radius",
+    "fontSize",
+    "minSize"
+   ]
+  },
+  "packages/panes/src/components/AdaptivePaneHost.tsx": {
+   "reason": "older core tarballs have no ./tokens subpath (decision 46). Panes already requires core, so importing @nyc-tron/core/tokens would break installs against an rc.2 core. Tokenize once panes and core bump together.",
+   "max": 4,
+   "kinds": [
+    "minSize",
+    "colorFn"
+   ]
+  },
+  "packages/ui/src/components/forge/photo/photo-export.ts": {
+   "reason": "Default watermark settings in a data model (fontSize 24, opacity 0.7). Not a style object, so the codemod leaves it.",
+   "max": 2,
+   "kinds": [
+    "fontSize",
+    "opacity"
+   ]
+  },
+  "packages/ui/src/components/shell/ContextualToolbar.tsx": {
+   "reason": "`gap:4` is an argument to splitOverflow(), a layout model input in pixels, not a style.",
+   "max": 1,
+   "kinds": [
+    "spacing"
+   ]
+  }
+ }
+}

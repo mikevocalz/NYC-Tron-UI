@@ -1,0 +1,617 @@
+{
+ "schema": 1,
+ "about": "Queries an agent might send to `shadcn search @nyc-tron <query>`. Written before the descriptions in copy.json and not edited afterwards to fit them. `relevant` lists registry item ids (the path after ./components/ in the @nyc-tron/ui subpath). `tier` is the tier of the relevant items; null means no item in the registry fits and the query is expected to be unsatisfiable. The `stress` array was added after the first scoring run (v1 of the copy). It uses paraphrases and synonyms that do not come from the handoff vocabulary. Headline numbers use `queries` only; stress is reported on its own line.",
+ "queries": [
+  {
+   "id": "q01",
+   "query": "segmented control for iOS and Android",
+   "relevant": [
+    "SegmentedControl"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q02",
+   "query": "data table with sorting",
+   "relevant": [
+    "data/DataTable"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q03",
+   "query": "bottom sheet with drag handle",
+   "relevant": [],
+   "tier": null,
+   "note": "No sheet or drawer-from-bottom item exists. DragGrabHandle is only the handle."
+  },
+  {
+   "id": "q04",
+   "query": "dropdown select with grouped options",
+   "relevant": [
+    "Select"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q05",
+   "query": "primary button with loading spinner",
+   "relevant": [
+    "Button"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q06",
+   "query": "icon-only button that toggles on and off",
+   "relevant": [
+    "IconButton"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q07",
+   "query": "text input with label and error message",
+   "relevant": [
+    "TextField"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q08",
+   "query": "numeric input with units like px or mm",
+   "relevant": [
+    "shell/UnitInput"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q09",
+   "query": "range slider with two thumbs",
+   "relevant": [
+    "shell/RangeSlider"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q10",
+   "query": "rotary knob dial control",
+   "relevant": [
+    "shell/RotaryKnob"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q11",
+   "query": "right-click context menu",
+   "relevant": [
+    "shell/ContextMenu"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q12",
+   "query": "command palette with search",
+   "relevant": [
+    "overlays/CommandPalette"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q13",
+   "query": "popover anchored to a trigger element",
+   "relevant": [
+    "overlays/AnchoredPopover"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q14",
+   "query": "resizable split panes with a draggable divider",
+   "relevant": [
+    "shell/PaneSplitter"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q15",
+   "query": "tabs for open documents with reorder and close",
+   "relevant": [
+    "shell/DocumentTabBar"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q16",
+   "query": "bottom tab bar navigation",
+   "relevant": [
+    "TabBar"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q17",
+   "query": "side navigation rail with icons",
+   "relevant": [
+    "NavigationRail"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q18",
+   "query": "collapsible navigation drawer",
+   "relevant": [
+    "navigation/CollapsibleDrawer"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q19",
+   "query": "toast notifications and progress for background jobs",
+   "relevant": [
+    "shell/ToastAndProgress"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q20",
+   "query": "empty state with call to action",
+   "relevant": [
+    "feedback/EmptyState"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q21",
+   "query": "inline alert banner with dismiss button",
+   "relevant": [
+    "feedback/Banner"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q22",
+   "query": "status badge pill",
+   "relevant": [
+    "feedback/Badge"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q23",
+   "query": "tree table with expandable rows",
+   "relevant": [
+    "data/TreeGrid"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q24",
+   "query": "find and replace panel",
+   "relevant": [
+    "shell/FindReplaceContent",
+    "shell/FindReplacePopover"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q25",
+   "query": "undo redo history list",
+   "relevant": [
+    "shell/HistoryPanel"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q26",
+   "query": "keyboard shortcut cheat sheet with rebinding",
+   "relevant": [
+    "shell/KeyboardShortcutHUD"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q27",
+   "query": "window title bar with close minimize and maximize controls",
+   "relevant": [
+    "window/WindowTitleBar"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q28",
+   "query": "detect reduce motion and screen reader settings",
+   "relevant": [
+    "shell/FocusAndA11yLayer"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q29",
+   "query": "dockable panels that adapt to foldable screens",
+   "relevant": [
+    "shell/AdaptiveDock"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q30",
+   "query": "file and asset browser with breadcrumbs",
+   "relevant": [
+    "shell/AssetBrowser"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q31",
+   "query": "inspector with collapsible sections and property rows",
+   "relevant": [
+    "shell/InspectorPanel",
+    "shell/InspectorSection",
+    "shell/PropertyRow"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q32",
+   "query": "ribbon with tabs and command groups",
+   "relevant": [
+    "shell/RibbonTabs"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q33",
+   "query": "dark theme scope for part of the screen",
+   "relevant": [
+    "theme/NightScope"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q34",
+   "query": "split button with dropdown menu",
+   "relevant": [
+    "shell/SplitButton"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "q35",
+   "query": "date picker calendar",
+   "relevant": [],
+   "tier": null,
+   "note": "No date or calendar item exists."
+  },
+  {
+   "id": "q36",
+   "query": "modal confirmation dialog with confirm and cancel",
+   "relevant": [],
+   "tier": null,
+   "note": "No generic dialog item exists. AnchoredPopover wraps a Modal but is an anchored popover."
+  },
+  {
+   "id": "q37",
+   "query": "color wheel picker",
+   "relevant": [
+    "forge/color/ColorWheel",
+    "forge/color/ColorDiscPicker"
+   ],
+   "tier": 2
+  },
+  {
+   "id": "q38",
+   "query": "MIDI piano roll editor",
+   "relevant": [
+    "forge/midi/MIDIPianoRoll"
+   ],
+   "tier": 2
+  },
+  {
+   "id": "q39",
+   "query": "drag and drop file upload zone",
+   "relevant": [
+    "files/DropZone"
+   ],
+   "tier": 2
+  },
+  {
+   "id": "q40",
+   "query": "spreadsheet formula autocomplete",
+   "relevant": [
+    "forge/spreadsheet/FormulaAutocomplete"
+   ],
+   "tier": 2
+  }
+ ],
+ "stress": [
+  {
+   "id": "s01",
+   "query": "tab strip for switching between open files",
+   "relevant": [
+    "shell/DocumentTabBar"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s02",
+   "query": "popup menu on long press",
+   "relevant": [
+    "shell/ContextMenu"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s03",
+   "query": "modal search box to run actions by typing",
+   "relevant": [
+    "overlays/CommandPalette"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s04",
+   "query": "slider with min and max handles",
+   "relevant": [
+    "shell/RangeSlider"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s05",
+   "query": "volume knob",
+   "relevant": [
+    "shell/RotaryKnob"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s06",
+   "query": "snackbar message",
+   "relevant": [
+    "shell/ToastAndProgress"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s07",
+   "query": "submit button with spinner",
+   "relevant": [
+    "Button"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s08",
+   "query": "checkbox group",
+   "relevant": [],
+   "tier": null
+  },
+  {
+   "id": "s09",
+   "query": "form field wrapper with section titles",
+   "relevant": [
+    "FieldGroup"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s10",
+   "query": "side menu that slides in",
+   "relevant": [
+    "navigation/CollapsibleDrawer"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s11",
+   "query": "settings rows with leading icon and chevron",
+   "relevant": [
+    "List"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s12",
+   "query": "number field with unit conversion",
+   "relevant": [
+    "shell/UnitInput"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s13",
+   "query": "pill label showing status",
+   "relevant": [
+    "feedback/Badge"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s14",
+   "query": "error text under a form input",
+   "relevant": [
+    "feedback/ErrorMessage",
+    "TextField"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s15",
+   "query": "grid with hierarchical rows",
+   "relevant": [
+    "data/TreeGrid"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s16",
+   "query": "responsive table that becomes cards on phones",
+   "relevant": [
+    "data/DataTable"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s17",
+   "query": "max width centered container",
+   "relevant": [
+    "layout/ContentFrame"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s18",
+   "query": "multi column layout that wraps",
+   "relevant": [
+    "layout/AdaptiveColumns"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s19",
+   "query": "toggle button group with one active choice",
+   "relevant": [
+    "SegmentedControl"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s20",
+   "query": "dropdown picker",
+   "relevant": [
+    "Select"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s21",
+   "query": "hover tooltip",
+   "relevant": [],
+   "tier": null
+  },
+  {
+   "id": "s22",
+   "query": "screen reader announcements live region",
+   "relevant": [
+    "shell/FocusAndA11yLayer"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s23",
+   "query": "properties panel for the selected object",
+   "relevant": [
+    "shell/InspectorPanel",
+    "shell/PropertyRow"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s24",
+   "query": "resizable sidebar",
+   "relevant": [
+    "shell/PaneSplitter"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s25",
+   "query": "undo stack",
+   "relevant": [
+    "shell/HistoryPanel"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s26",
+   "query": "save and load layout presets",
+   "relevant": [
+    "shell/WorkspacePresetSwitcher"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s27",
+   "query": "custom macOS style window controls",
+   "relevant": [
+    "window/WindowTitleBar"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s28",
+   "query": "light and dark theme wrapper",
+   "relevant": [
+    "theme/NightScope"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s29",
+   "query": "overflow menu for toolbar items",
+   "relevant": [
+    "shell/ContextualToolbar"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s30",
+   "query": "search inside a document and replace all matches",
+   "relevant": [
+    "shell/FindReplaceContent",
+    "shell/FindReplacePopover"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s31",
+   "query": "vertical toolbar of tools",
+   "relevant": [
+    "shell/ToolRail"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s32",
+   "query": "button with dropdown arrow",
+   "relevant": [
+    "shell/SplitButton"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s33",
+   "query": "gallery of presets with favorites",
+   "relevant": [
+    "shell/PresetGallery"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s34",
+   "query": "page header with title and action buttons",
+   "relevant": [
+    "Toolbar"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s35",
+   "query": "drag with escape to cancel",
+   "relevant": [
+    "DragGrabHandle",
+    "gestures/PanResponderDrag"
+   ],
+   "tier": 1
+  },
+  {
+   "id": "s36",
+   "query": "bottom navigation bar",
+   "relevant": [
+    "TabBar"
+   ],
+   "tier": 1
+  }
+ ]
+}
