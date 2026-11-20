@@ -13,14 +13,14 @@ shadcn validates `components.json` strictly. A file with an `x-nyc-tron` key fai
   "style": "new-york",
   "tailwind": { "css": "global.css", "baseColor": "neutral" },
   "aliases": { "components": "@/components", "ui": "@/components/ui", "lib": "@/lib", "utils": "@/lib/utils", "hooks": "@/hooks" },
-  "registries": { "@nyc-tron": "https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/<tag>/r/{name}.json" }
+  "registries": { "@nyc-tron": "https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/<ref>/r/{name}.json" }
 }
 ```
 
 - `style`, `tailwind.baseColor`, `tailwind.css` and `aliases` are the required keys. `rsc`, `iconLibrary` and `tailwind.config` are not. The repo copy also sets `rsc: false` and `tsx: true`.
 - `tailwind.css` only has to exist if an item carries `cssVars`. No NYC-Tron item does; tokens ship as TypeScript.
 - The project needs a `tsconfig.json` with a `paths` entry for the alias prefix (`@/*`). `shadcn add` stops without one.
-- Replace `<tag>` with the release tag. The repo keeps that tag in one place, `tag` in `tooling/registry/config.json`.
+- Replace `<ref>` with the git ref. The repo keeps it in one place, `ref` in `tooling/registry/config.json`, and `node tooling/registry/set-ref.mjs <ref>` changes it and regenerates everything that embeds it. It is `main`, a moving ref, until the owner cuts a release tag. The URLs resolve only after this branch is merged to `main`; before that, serve the repo with a local HTTP server and set the namespace URL to it.
 
 ## Where files land
 
@@ -35,7 +35,7 @@ The generated files import each other with the default alias prefix (`@/componen
 
 - `<name>` is the `@nyc-tron/ui` export path after `./components/`, slashes kept: `Button`, `shell/UnitInput`, `forge/audio/LoudnessMeter`.
 - `root` is the root barrel (`@nyc-tron/ui`). `index` is avoided because shadcn once used `index.json` for a registry index.
-- `core/<module>` and `tokens` are support items: the `@nyc-tron/core` modules that `ui` imports. They carry `meta.support: true`. `list` returns them with the 556 ui items.
+- `core/<module>` and `tokens` are support items: the `@nyc-tron/core` modules that `ui` imports. They carry `meta.support: true`. `list` returns them with the 561 ui items.
 - Files that are not exported subpaths (helpers, `*.types.ts`, `*.shared.tsx`) are bundled into every item that imports them. When two items share one, `shadcn add` writes it once and skips the identical copy.
 
 ## Item meta

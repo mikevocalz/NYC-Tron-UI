@@ -4,7 +4,7 @@ Status: phase 1 step 4. Binds decisions 11 (two tiers), 28 (registry hosting) an
 
 Files:
 
-- `copy.json`: the 59 tier 1 titles and descriptions (`items`) and the CLI message copy (`messages`).
+- `copy.json`: the 64 tier 1 titles and descriptions (`items`) and the CLI message copy (`messages`).
 - `tier2-describe.mjs`: the deterministic tier 2 generator. `node docs/agent-native/tier2-describe.mjs` writes `tier2-copy.json` (497 items).
 - `retrieval-queries.json`, `retrieval-eval.mjs`: the query set and the BM25 scorer. `node docs/agent-native/retrieval-eval.mjs [--copy copy.v1.json] [--verbose] [--json]`.
 - `copy.v1.json`: the first draft, kept so the "before" numbers reproduce.
@@ -13,7 +13,7 @@ Files:
 
 The reader is an agent that runs `shadcn search @nyc-tron <query>` and sees `title` and `description` per hit. It cannot open the doc page until it picks an item, so the description has to carry the decision.
 
-Rules applied to all 59:
+Rules applied to all 64:
 
 1. One sentence, at most 140 characters (the longest is 140). A check in section 6 enforces it.
 2. Open with the plain noun an agent would search for (`Segmented control`, `Data table`, `Context menu`), then the two or three facts that tell this item from its neighbours: a variant set, a data shape, a distinguishing behaviour.
@@ -86,7 +86,7 @@ Rules applied to all 59:
 
 ## 2. Tier 2 rules and generator
 
-Scope: the 497 non-tier-1 `@nyc-tron/ui` subpaths. 331 export a PascalCase function or const and get a component description. 165 are models, hooks or helper modules. One is the root barrel `.`. The doc template counts 327 component pages for tier 2 (386 minus 59). The generator reads declarations, not source, so it classes 4 more as components than the template's source regex does: `forge/photo/BeforeAfterCompare` (an alias of `CanvasCompareView`), `html`, `shell/NumericScrubField` and `shell/inspector-context`. CI check 1 uses the template's rule; the generator's classing only affects wording.
+Scope: the 497 non-tier-1 `@nyc-tron/ui` subpaths. 331 export a PascalCase function or const and get a component description. 165 are models, hooks or helper modules. One is the root barrel `.`. The doc template counts 327 component pages for tier 2 (386 minus 59 when that template was written). The generator reads declarations, not source, so it classes 4 more as components than the template's source regex does: `forge/photo/BeforeAfterCompare` (an alias of `CanvasCompareView`), `html`, `shell/NumericScrubField` and `shell/inspector-context`. CI check 1 uses the template's rule; the generator's classing only affects wording.
 
 Inputs: `docs/api-signatures.json` and `tier1.json`. It reads no source and no clock, so the output is stable and CI can diff it.
 
@@ -136,14 +136,14 @@ What would fix them is the leading `/** */` comment of each component. The templ
 
 BM25 is a proxy. `shadcn search` does its own matching, and an agent that uses embeddings will rank differently. A miss here means the words are absent from the text. It does not prove a semantic search misses.
 
-**Results on the 40 frozen queries (tier 1 queries, tier 1 corpus of 59 items):**
+**Results on the 40 frozen queries (tier 1 queries, corpus measured when tier 1 had 59 items, before the five layout pages were added):**
 
 | Copy | recall@3 | recall@5 | Misses at 3 |
 |---|---:|---:|---|
 | First draft (`copy.v1.json`) | 97.0% | 97.0% | q29 |
 | Final (`copy.json`) | 100.0% | 100.0% | none |
 
-Scored against the full corpus (59 tier 1 items plus 497 generated tier 2 descriptions), tier 1 recall@3 and recall@5 are the same, 97.0% before and 100.0% after, so the generated tier 2 text does not crowd tier 1 out on these queries. Tier 2 queries (4) against the full corpus: recall@3 87.5%, recall@5 100.0% (before and after, since tier 2 text did not change for this). The one miss at 3 is q37 `color wheel picker`: `ColorWheel` ranks 2nd and `ColorDiscPicker` 5th behind `ColorGradingWheels`.
+Scored against the full corpus as it stood then (59 tier 1 items plus 497 generated tier 2 descriptions; tier 1 has 64 now and the queries were not rerun), tier 1 recall@3 and recall@5 are the same, 97.0% before and 100.0% after, so the generated tier 2 text does not crowd tier 1 out on these queries. Tier 2 queries (4) against the full corpus: recall@3 87.5%, recall@5 100.0% (before and after, since tier 2 text did not change for this). The one miss at 3 is q37 `color wheel picker`: `ColorWheel` ranks 2nd and `ColorDiscPicker` 5th behind `ColorGradingWheels`.
 
 **What changed between before and after, and how much to trust it.** The single miss on the frozen set was q29, `dockable panels that adapt to foldable screens`, with `shell/AdaptiveDock` at rank 7. The first draft said "Dock of tabbed and floating panels ... respects fold features". The final says "Dockable panel layout ... avoids foldable hinges". Both added words are accurate (the handoff documents `FoldFeature` hinge handling in `AdaptiveDock` and `PaneSplitter`), but "dockable" and "foldable" are the query's words. Read the 100.0% as one edit that adds two correct words the query also used.
 
@@ -191,13 +191,13 @@ A search with no good answer still returns hits. The scores differ: on the 33 an
 | Peer installed, version outside the range | {peer} {found} is installed, but {item} needs {range}. | Move to a supported version: npx expo install {peer} |
 | Item not found | No item "{input}" in @nyc-tron. Item ids are the path under components, for example shell/UnitInput. | Find the id: npx shadcn@latest search @nyc-tron -q "{input}" |
 | Wrong or missing namespace in components.json | components.json has no registry "{ns}". The NYC-Tron namespace is @nyc-tron. | Add it, then rerun the add: node -e '...' (full one-liner in `copy.json`) |
-| Registry URL unreachable | Could not fetch {url} ({status}). | Check it from your shell: curl -sSI {url} \| head -1. 404 means a wrong tag or item id. No output means network or proxy. |
+| Registry URL unreachable | Could not fetch {url} ({status}). | Check it from your shell: curl -sSI {url} \| head -1. 404 means a wrong ref or item id, or a ref that has no r/ yet. No output means network or proxy. |
 | Unsupported platform for an item | {item} is documented for {platforms} only. Your project targets {target}. | Find one that lists {target}: npx shadcn@latest search @nyc-tron -q "{noun}" |
 
 Notes:
 
 - `npx expo install` picks the version Expo 58 supports. A peer with a range in `packages/ui/package.json` (zustand `^5.0.0`, `react-native-gesture-handler` `>=3.3.0 <4`, `@tanstack/react-table` `^9.0.0`) is installed the same way.
-- The namespace message ends with a patch to `components.json`. The URL form follows decision 28; `<tag>` is the release tag and is filled in when the registry is built.
+- The namespace message ends with a patch to `components.json`. The URL form follows decision 28; `<ref>` is the `ref` in `tooling/registry/config.json`, `main` until the owner cuts a release tag (decision 45). It resolves only after this branch is merged to `main`.
 - The platform message is raised only for items whose `platforms` array is not empty. An empty array means the source states no platform, so no item is refused for it. Today the handoff finds few platform-restricted items, and the example in `copy.json` is illustrative.
 
 ## 5. Open items and unverified claims
@@ -215,5 +215,5 @@ Notes:
 node docs/agent-native/tier2-describe.mjs        # 497 tier 2 items, 0 over 140 chars
 node docs/agent-native/retrieval-eval.mjs        # final numbers
 node docs/agent-native/retrieval-eval.mjs --copy copy.v1.json   # first-draft numbers
-node -e 'const c=require("./docs/agent-native/copy.json");console.log(c.items.length,Math.max(...c.items.map(i=>i.description.length)))'   # 59 140
+node -e 'const c=require("./docs/agent-native/copy.json");console.log(c.items.length,Math.max(...c.items.map(i=>i.description.length)))'   # 64 140
 ```

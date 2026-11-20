@@ -429,7 +429,7 @@
    "id": "namespace-missing",
    "case": "Wrong or missing namespace in components.json",
    "line1": "components.json has no registry \"{ns}\". The NYC-Tron namespace is @nyc-tron.",
-   "line2": "Add it, then rerun the add: node -e 'const f=\"components.json\",j=JSON.parse(require(\"fs\").readFileSync(f));(j.registries??={})[\"@nyc-tron\"]=\"https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/<tag>/r/{name}.json\";require(\"fs\").writeFileSync(f,JSON.stringify(j,null,2))'",
+   "line2": "Add it, then rerun the add: node -e 'const f=\"components.json\",j=JSON.parse(require(\"fs\").readFileSync(f));(j.registries??={})[\"@nyc-tron\"]=\"https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/<ref>/r/{name}.json\";require(\"fs\").writeFileSync(f,JSON.stringify(j,null,2))'",
    "example": {
     "ns": "@nyc-tron-ui"
    },
@@ -439,9 +439,9 @@
    "id": "registry-unreachable",
    "case": "Registry URL unreachable",
    "line1": "Could not fetch {url} ({status}).",
-   "line2": "Check it from your shell: curl -sSI {url} | head -1. 404 means a wrong tag or item id. No output means network or proxy.",
+   "line2": "Check it from your shell: curl -sSI {url} | head -1. 404 means a wrong ref or item id, or a ref that has no r/ yet. No output means network or proxy.",
    "example": {
-    "url": "https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/<tag>/r/Button.json",
+    "url": "https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/<ref>/r/Button.json",
     "status": "HTTP 404"
    },
    "command": "curl -sSI <url> | head -1"

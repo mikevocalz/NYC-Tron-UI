@@ -137,7 +137,7 @@ docs/site/
 - All links are relative; the generator computes the `../` prefix from the depth of the item id. No absolute path, no origin, no service worker.
 - Markdown is rendered by a built-in subset renderer. The doc template fixes the input: ATX headings, paragraphs, pipe tables, fenced code with an info string, bullet lists, inline code, bold, links. Anything else fails the build.
 - Budgets, checked by the generator and failing the build when exceeded: `site.css` 24 KB, `site.js` 10 KB (unminified source; no minifier), any component page 60 KB, `search.html` 400 KB.
-- Counts such as the number of items or tier 1 pages are read at build time from `tier1.json` and the copy files. They are never typed into a template. The doc template says 386 subpaths export a component while the copy files list 556 items; the generator prints both and the site shows the number of pages it actually emitted.
+- Counts such as the number of items or tier 1 pages are read at build time from `tier1.json` and the copy files. They are never typed into a template. The doc template says 386 subpaths export a component while the copy files list 561 items; the generator prints both and the site shows the number of pages it actually emitted.
 - `site.js` does five things: copy buttons, theme control, mobile nav toggle, search ranking (the same BM25 as `retrieval-eval.mjs`, so what the site ranks matches what the retrieval eval measured), and online/offline notices. Every one is guarded by feature checks. Failure of the script leaves a readable site.
 - The theme control writes `data-theme` on `<html>` and remembers the choice in `localStorage` inside `try/catch`, because `localStorage` can throw on `file://` in some browsers. Without storage the choice lasts for the visit.
 - Clipboard: `navigator.clipboard.writeText` first, then a hidden `textarea` with `execCommand("copy")`, then a visible state `Press Cmd+C or Ctrl+C` with the text pre-selected. All three are needed because `file://` is not a secure context everywhere.
@@ -285,7 +285,7 @@ Content blocks, in order:
 
 1. `h1` `Install`.
 2. Method tabs (links, not script tabs): `Registry (shadcn CLI)` and `Release tarball`. The default is the registry once `registryVerified` is true, and the tarball before. Each method is a section with an anchor, so a tab press is a normal page navigation to `#registry` or `#tarball`.
-3. Registry: the add command, a sentence on what it writes, the raw URL pattern from decision 28 (`raw.githubusercontent.com/<owner>/<repo>/<tag>/r/{name}.json`) pinned to a release tag, and the unverified line while it applies.
+3. Registry: the add command, a sentence on what it writes, the raw URL pattern from decision 28 (`raw.githubusercontent.com/<owner>/<repo>/<ref>/r/{name}.json`) on the registry ref (`main` until a release tag is cut, decision 45), and the unverified line while it applies.
 4. Release tarball: the steps from `README.md` "Installing from a release" copied by the generator. Not rewritten.
 5. Peers and theme: the peer list from `packages/ui/package.json`, then a link to `tokens.html` for the 13 variables. The sentence from `THEME_TOKENS.md`: a missing variable does not fail the build.
 6. For agents: `llms.txt`, a one-paragraph instruction an agent can paste into its own context, and the `Copy for agent` button.

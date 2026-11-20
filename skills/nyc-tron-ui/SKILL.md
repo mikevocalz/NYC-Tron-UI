@@ -17,7 +17,7 @@ Read this file first. Read one component page second, never the whole corpus.
 |---|---|
 | Search by what it does | `npx shadcn@latest search @nyc-tron -q "segmented control"` |
 | Read one item's registry entry | `npx shadcn@latest view @nyc-tron/SegmentedControl` |
-| Read the doc page | `docs/components/<id>.md` in the repo, or `https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/docs/components/<id>.md` |
+| Read the doc page | `docs/components/<id>.md` in the repo, or `https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/<id>.md` |
 | Index of everything (small) | `llms.txt` at the repo root |
 | Everything in one file (about 500k tokens, do not read it whole) | `llms-full.txt` |
 
@@ -42,10 +42,10 @@ npx shadcn@latest add @nyc-tron/Button
 It needs the namespace in `components.json`, which this repo already carries:
 
 ```json
-{ "registries": { "@nyc-tron": "https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/v1.0.0-rc.2/r/{name}.json" } }
+{ "registries": { "@nyc-tron": "https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/r/{name}.json" } }
 ```
 
-It is unverified against live raw.githubusercontent.com until `r/` is pushed under the tag and a clean Expo app installs from it. If it fails, use the tarball path in `README.md`, section "Installing from a release". That path works today and installs whole packages.
+The URL uses ref `main`, a moving ref, until the owner cuts a release tag. It resolves only after this branch is merged to `main`; before that, serve the repo from a local HTTP server and point the namespace at it. It is unverified against live raw.githubusercontent.com until a clean Expo app installs from it. If it fails, use the tarball path in `README.md`, section "Installing from a release". That path works today and installs whole packages.
 
 Items that ship native code cannot be added with shadcn, because a registry add copies files and cannot run pod install, gradle, CMake, nitrogen or a WinUI build. `registry-excluded.json` lists them (55 subpaths in 9 packages, for example `@nyc-tron/macos-appkit`, `@nyc-tron/native-controls`, `@nyc-tron/hardware-keys`). Install those from the release tarball and rebuild the native app. The engine facades (cadence, folio, pitch, prism, quill, splice, tally, studio-layout) need the Rust engine and are not registry items.
 
@@ -75,7 +75,7 @@ No component throws for a missing provider. `theme/NightScope` scopes a named sc
 - Use a token name, never a literal. No `#1f5fd1`, no `padding: 8`, no `borderRadius: 12` in app or library code.
 - Colour: Tailwind utilities over the 13 variables (`bg-primary`, `text-text-muted`, `border-border`, `ring-focus`). Never a hex value.
 - Radius: `rounded-control` for controls, `rounded-card` for cards. Both follow the theme.
-- Spacing keys are multiples of one 4px unit: `space.2` is 8px, `space.1.5` is 6px, `space.4` is 16px. The closed scale is `0, 0.25, 0.5, 0.75, 1, 1.5, 2, 2.5, 3, 3.5, 4`. Do not invent `space.5` or `space.2.25`.
+- Spacing keys are multiples of one 4px unit: `space[2]` is 8px, `space[1.5]` is 6px, `space[4]` is 16px. Write half steps in bracket form: `space.1.5` is a syntax error. The scale keys are unit multiples, so `space[1]` is 4px while `border[1]` is 1px and `radius[4]` is 4px: each table has its own keys. The closed scale is `0, 0.25, 0.5, 0.75, 1, 1.5, 2, 2.5, 3, 3.5, 4`. Do not invent `space[5]` or `space[2.25]`.
 - A value that is not on the scale is a named, component-scoped token with the same value (`<Component>.radius.11`, `<Component>.space.5`), listed in `docs/agent-native/tokens.json`. Do not round it to the nearest step. Rounding changes pixels.
 - The full inventory, with values and status (`existing`, `proposed`, `proposed-scoped`), is `docs/agent-native/tokens.json`. The literal-to-token map is `docs/agent-native/tokens.map.json`. `docs/agent-native/audit-literals.mjs` counts the literals still in `packages/`.
 - Tokens that are `proposed` name steps the closed scale adds. The module that exports them, `packages/core/src/tokens.ts`, is new in this release candidate and not yet in the `@nyc-tron/core` export map. Check `packages/core/package.json` before importing `@nyc-tron/core/tokens`.
