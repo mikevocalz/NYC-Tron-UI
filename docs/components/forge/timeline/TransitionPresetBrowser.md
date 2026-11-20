@@ -6,7 +6,7 @@ tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["-space.3", "TransitionPresetBrowser.opacity.0_85", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
+tokens: ["color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/TextField", "@nyc-tron/feedback/ErrorMessage"]
 a11yStatus: "unverified"
 ---

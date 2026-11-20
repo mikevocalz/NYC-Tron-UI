@@ -1,0 +1,4 @@
+{
+ "registryVerified": false,
+ "note": "Set to true after a clean Expo app installs from the pushed r/ files under the release tag (decision 28). The site drops the unverified lines when it is true."
+}

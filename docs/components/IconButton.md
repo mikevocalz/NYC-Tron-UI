@@ -21,7 +21,7 @@ Icon-only pressable button with five variants and an optional selected toggle st
 
 - Package: @nyc-tron/ui
 - Import: `import { IconButton } from "@nyc-tron/ui/components/IconButton";`
-- Peers: react, react-native
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-theme="reference" data-scheme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Component | NYC-Tron UI</title>
+<meta name="description" content="A NYC-Tron UI component page.">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="alternate" type="text/plain" href="../../llms.txt" title="llms.txt">
+<script>(function(){var r=document.documentElement;r.className="js";try{var t=localStorage.getItem("nyc-docs-theme"),s=localStorage.getItem("nyc-docs-scheme");if(t)r.setAttribute("data-theme",t);if(s)r.setAttribute("data-scheme",s)}catch(e){}})()</script>
+<script src="assets/pages.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="hd"><div class="hd-in">
+<a class="brand" href="index.html">NYC-Tron UI</a><span class="ver">1.0.0-rc.2</span><span class="sp"></span>
+<button class="btn" type="button" data-cycle="theme" aria-label="Theme: Reference. Press to change.">Reference</button><button class="btn" type="button" data-cycle="scheme" aria-label="Mode: Auto. Press to change.">Auto</button>
+<form action="search.html" method="get" role="search"><label class="vh" for="hq">Search components</label><input class="field" id="hq" name="q" type="search" placeholder="Search components" autocomplete="off"><button class="btn primary" type="submit">Search</button></form>
+</div></header>
+<div class="frame">
+<details class="navbox"><summary class="btn">Menu</summary><div><div id="cnav"></div><p class="navh">Site</p><ul class="navlist"><li><a href="index.html">Home</a></li><li><a href="install.html">Install</a></li><li><a href="tokens.html">Theme tokens</a></li><li><a href="search.html">Search</a></li></ul>
+<p class="navh">For agents</p><ul class="navlist"><li><a href="../../llms.txt">llms.txt</a></li><li><a href="../../SKILL.md">SKILL.md</a></li><li><a href="../components/Button.md">Raw page example</a></li></ul></div></details>
+<main id="main" class="col prose" data-component-page>
+<p class="crumb" id="ccrumb"><a href="index.html">Components</a></p>
+<h1 id="cname">Component</h1>
+<ul class="facts" id="cfacts"></ul>
+<div id="cerr" class="status err" hidden><p>No page for "<span id="cerrid"></span>". Check the id, or find it in search.</p><p><a class="btn" href="search.html">Search</a></p></div>
+<noscript><div class="status"><p>This page renders from <code>assets/pages.js</code> and needs JavaScript. The raw markdown for each page is in <code>docs/components/&lt;id&gt;.md</code>, which is readable without a script.</p></div></noscript>
+<div class="install"><button class="btn primary" type="button" id="ccopy" data-copy="">Copy</button><pre><code id="ccmd"></code></pre></div>
+<p class="small muted">Registry install is unverified until the first push of <code>r/</code> under tag v1.0.0-rc.2 and a clean app install. The release tarball works today (<a href="install.html#tarball">steps</a>).</p>
+<p class="small muted" data-offline hidden>You are offline. The install command needs a connection.</p>
+<p class="actions"><button class="btn" type="button" data-copy-agent>Copy for agent</button><a class="btn" id="craw" href="../components/Button.md">View as markdown</a></p>
+<div id="cbody"></div>
+<nav class="pager" id="cpager" aria-label="Pages in this category"></nav>
+</main>
+<aside class="rail" id="crail" aria-label="On this page"></aside>
+</div>
+<footer class="ft"><p><a href="tokens.html">Theme tokens</a>, <a href="install.html">install</a>, <a href="https://github.com/mikevocalz/NYC-Tron-UI">source repository</a>, release <a href="https://github.com/mikevocalz/NYC-Tron-UI/releases/tag/v1.0.0-rc.2">v1.0.0-rc.2</a>.</p>
+<p>59 pages are hand-reviewed. 501 are generated from type declarations and source, and say so in their front matter. Accessibility statuses come from reading source, not from rendering.</p></footer>
+<div class="vh" id="live" aria-live="polite" role="status"></div>
+<script src="assets/site.js"></script>
+</body>
+</html>

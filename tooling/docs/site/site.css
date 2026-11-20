@@ -75,8 +75,7 @@ kbd{border:1px solid var(--color-text-muted);border-radius:var(--radius-control)
   .frame{display:grid;grid-template-columns:240px minmax(0,720px) 200px;justify-content:center;align-items:start}
   .frame.norail{grid-template-columns:240px minmax(0,720px)}
   .navbox,.rail{display:block;position:sticky;top:0;max-height:100vh;overflow:auto;background:transparent;border:0;padding:calc(var(--docs-unit)*6) calc(var(--docs-unit)*3)}
-  .navbox summary{display:none}
-  .navbox>div{display:block!important}
+  .js .navbox summary{display:none}
   .navlist a{min-height:36px}
   .col{border-left:1px solid var(--color-border);border-right:1px solid var(--color-border);min-height:100vh;padding:calc(var(--docs-unit)*10) calc(var(--docs-unit)*10) calc(var(--docs-unit)*16)}
   .hd form{flex:0 1 420px;order:0;margin-left:auto}
@@ -137,7 +136,19 @@ td code{white-space:normal}
 select.field{flex:none;padding-right:calc(var(--docs-unit)*2)}
 .sel{outline:2px solid var(--color-focus);outline-offset:-2px;background:var(--color-surface-sunken)}
 details.f summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:500}
-@media (min-width:1100px){details.f>summary{display:none}details.f>div{display:block!important}}
+@media (min-width:1100px){.js details.f>summary{display:none}}
 .hint{display:none}
 @media (min-width:1100px){.hint{display:block;color:var(--color-text-muted);font-size:12px;line-height:16px;margin-top:calc(var(--docs-unit)*3)}}
 .hl{display:inline-block;padding:0 calc(var(--docs-unit)*2);border-radius:var(--radius-control);background:var(--color-surface-sunken);border:1px solid var(--color-border);font-size:12px;line-height:20px;color:var(--color-text-muted)}
+html:not(.js) [data-cycle]{display:none}
+.cb{position:relative;margin:0 0 calc(var(--docs-unit)*4)}
+.cb .btn{margin:0 0 calc(var(--docs-unit)*2)}
+.cb pre{margin:0}
+.chips .sw{flex:none}
+.rows li{grid-template-columns:minmax(0,1fr)}
+.rows .act{margin-top:calc(var(--docs-unit)*2)}
+@media (min-width:1100px){.rows li{grid-template-columns:minmax(0,1fr) auto auto;align-items:center}.rows .m{grid-column:2;grid-row:1;text-align:right}.rows .act{grid-column:3;grid-row:1;margin:0}.rows .act .btn{min-height:32px;padding:0 calc(var(--docs-unit)*3)}}
+.seghead{font-size:13px;line-height:20px;color:var(--color-text-muted);margin:0 0 calc(var(--docs-unit)*1)}
+.grid2{display:grid;gap:calc(var(--docs-unit)*4)}
+.tokrow[hidden],.rows li[hidden],section[hidden]{display:none}
+@media (max-width:699px){.ver{display:none}.hd-in{gap:calc(var(--docs-unit)*2)}.hd-in .btn{padding:0 calc(var(--docs-unit)*3)}.navbox{padding:calc(var(--docs-unit)*1) calc(var(--docs-unit)*4)}.navbox summary{min-height:36px}}

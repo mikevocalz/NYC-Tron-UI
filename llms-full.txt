@@ -619,7 +619,7 @@ Icon-only pressable button with five variants and an optional selected toggle st
 
 - Package: @nyc-tron/ui
 - Import: `import { IconButton } from "@nyc-tron/ui/components/IconButton";`
-- Peers: react, react-native
+- Peers: @nyc-tron/core, react, react-native
 - Requires: none
 
 ```sh
@@ -45796,7 +45796,7 @@ tier: 2
 docs: "generated"
 platforms: []
 category: "forge"
-tokens: ["-space.3", "TransitionPresetBrowser.opacity.0_85", "color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
+tokens: ["color.border", "color.focus", "color.primary", "color.surfaceRaised", "color.surfaceSunken", "color.text", "color.textMuted", "radius.control"]
 registryDependencies: ["@nyc-tron/Button", "@nyc-tron/SegmentedControl", "@nyc-tron/TextField", "@nyc-tron/feedback/ErrorMessage"]
 a11yStatus: "unverified"
 ---
