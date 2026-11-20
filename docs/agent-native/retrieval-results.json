@@ -1,0 +1,1516 @@
+[
+ {
+  "label": "tier 1 queries vs tier 1 corpus (59 items)",
+  "n": 33,
+  "hit3": 33,
+  "hit5": 33,
+  "rec3": 33,
+  "rec5": 33,
+  "misses": [],
+  "rows": [
+   {
+    "id": "q01",
+    "query": "segmented control for iOS and Android",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "SegmentedControl",
+     "shell/KeyboardShortcutHUD",
+     "shell/FocusAndA11yLayer"
+    ],
+    "top1score": 8.4
+   },
+   {
+    "id": "q02",
+    "query": "data table with sorting",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "data/DataTable",
+     "shell/AssetBrowser",
+     "data/TreeGrid"
+    ],
+    "top1score": 9.8
+   },
+   {
+    "id": "q04",
+    "query": "dropdown select with grouped options",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "Select",
+     "shell/SplitButton",
+     "shell/KeyboardShortcutHUD"
+    ],
+    "top1score": 14.2
+   },
+   {
+    "id": "q05",
+    "query": "primary button with loading spinner",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "Button",
+     "shell/SplitButton",
+     "shell/RibbonTabs"
+    ],
+    "top1score": 12.9
+   },
+   {
+    "id": "q06",
+    "query": "icon-only button that toggles on and off",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "IconButton",
+     "NavigationRail",
+     "Button"
+    ],
+    "top1score": 10.8
+   },
+   {
+    "id": "q07",
+    "query": "text input with label and error message",
+    "ranks": [
+     2
+    ],
+    "top3": [
+     "feedback/ErrorMessage",
+     "TextField",
+     "Select"
+    ],
+    "top1score": 10.2
+   },
+   {
+    "id": "q08",
+    "query": "numeric input with units like px or mm",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/UnitInput",
+     "TextField",
+     "shell/SliderField"
+    ],
+    "top1score": 7
+   },
+   {
+    "id": "q09",
+    "query": "range slider with two thumbs",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/RangeSlider",
+     "shell/SliderField",
+     "content/KeyValueList"
+    ],
+    "top1score": 13.6
+   },
+   {
+    "id": "q10",
+    "query": "rotary knob dial control",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/RotaryKnob",
+     "SegmentedControl",
+     "window/WindowTitleBar"
+    ],
+    "top1score": 14.3
+   },
+   {
+    "id": "q11",
+    "query": "right-click context menu",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/ContextMenu",
+     "shell/UnitInput",
+     "shell/ToolRail"
+    ],
+    "top1score": 11.6
+   },
+   {
+    "id": "q12",
+    "query": "command palette with search",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "overlays/CommandPalette",
+     "shell/InspectorSearch",
+     "overlays/CommandPopover"
+    ],
+    "top1score": 7.3
+   },
+   {
+    "id": "q13",
+    "query": "popover anchored to a trigger element",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "overlays/AnchoredPopover",
+     "shell/FindReplacePopover",
+     "overlays/CommandPopover"
+    ],
+    "top1score": 12.8
+   },
+   {
+    "id": "q14",
+    "query": "resizable split panes with a draggable divider",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/PaneSplitter",
+     "shell/SplitButton",
+     "shell/RibbonTabs"
+    ],
+    "top1score": 8.6
+   },
+   {
+    "id": "q15",
+    "query": "tabs for open documents with reorder and close",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/DocumentTabBar",
+     "shell/RibbonTabs",
+     "TabBar"
+    ],
+    "top1score": 17.6
+   },
+   {
+    "id": "q16",
+    "query": "bottom tab bar navigation",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "TabBar",
+     "shell/DocumentTabBar",
+     "shell/ToolRail"
+    ],
+    "top1score": 8
+   },
+   {
+    "id": "q17",
+    "query": "side navigation rail with icons",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "NavigationRail",
+     "navigation/CollapsibleDrawer",
+     "TabBar"
+    ],
+    "top1score": 10.3
+   },
+   {
+    "id": "q18",
+    "query": "collapsible navigation drawer",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "navigation/CollapsibleDrawer",
+     "shell/RibbonTabs",
+     "shell/InspectorSection"
+    ],
+    "top1score": 9.9
+   },
+   {
+    "id": "q19",
+    "query": "toast notifications and progress for background jobs",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/ToastAndProgress"
+    ],
+    "top1score": 18
+   },
+   {
+    "id": "q20",
+    "query": "empty state with call to action",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "feedback/EmptyState",
+     "overlays/CommandPalette",
+     "feedback/ErrorMessage"
+    ],
+    "top1score": 7.9
+   },
+   {
+    "id": "q21",
+    "query": "inline alert banner with dismiss button",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "feedback/Banner",
+     "feedback/ErrorMessage",
+     "shell/ToastAndProgress"
+    ],
+    "top1score": 12.7
+   },
+   {
+    "id": "q22",
+    "query": "status badge pill",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "feedback/Badge",
+     "shell/StatusBar",
+     "shell/PropertyRow"
+    ],
+    "top1score": 8.3
+   },
+   {
+    "id": "q23",
+    "query": "tree table with expandable rows",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "data/TreeGrid",
+     "data/DataTable",
+     "List"
+    ],
+    "top1score": 14.6
+   },
+   {
+    "id": "q24",
+    "query": "find and replace panel",
+    "ranks": [
+     1,
+     2
+    ],
+    "top3": [
+     "shell/FindReplaceContent",
+     "shell/FindReplacePopover",
+     "shell/InspectorPanel"
+    ],
+    "top1score": 9.4
+   },
+   {
+    "id": "q25",
+    "query": "undo redo history list",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/HistoryPanel",
+     "shell/WorkspacePresetSwitcher",
+     "List"
+    ],
+    "top1score": 13.2
+   },
+   {
+    "id": "q26",
+    "query": "keyboard shortcut cheat sheet with rebinding",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/KeyboardShortcutHUD",
+     "shell/DocumentTabBar",
+     "shell/WorkspaceHost"
+    ],
+    "top1score": 10.7
+   },
+   {
+    "id": "q27",
+    "query": "window title bar with close minimize and maximize controls",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "window/WindowTitleBar",
+     "shell/DocumentTabBar",
+     "Toolbar"
+    ],
+    "top1score": 20.7
+   },
+   {
+    "id": "q28",
+    "query": "detect reduce motion and screen reader settings",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/FocusAndA11yLayer",
+     "shell/ContextMenu"
+    ],
+    "top1score": 12.6
+   },
+   {
+    "id": "q29",
+    "query": "dockable panels that adapt to foldable screens",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/AdaptiveDock",
+     "shell/InspectorPanel",
+     "shell/ContextMenu"
+    ],
+    "top1score": 10.3
+   },
+   {
+    "id": "q30",
+    "query": "file and asset browser with breadcrumbs",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/AssetBrowser"
+    ],
+    "top1score": 12.8
+   },
+   {
+    "id": "q31",
+    "query": "inspector with collapsible sections and property rows",
+    "ranks": [
+     1,
+     3,
+     2
+    ],
+    "top3": [
+     "shell/InspectorPanel",
+     "shell/PropertyRow",
+     "shell/InspectorSection"
+    ],
+    "top1score": 11.6
+   },
+   {
+    "id": "q32",
+    "query": "ribbon with tabs and command groups",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/RibbonTabs",
+     "FieldGroup",
+     "shell/DocumentTabBar"
+    ],
+    "top1score": 10.8
+   },
+   {
+    "id": "q33",
+    "query": "dark theme scope for part of the screen",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "theme/NightScope",
+     "shell/ContextMenu",
+     "shell/FocusAndA11yLayer"
+    ],
+    "top1score": 8
+   },
+   {
+    "id": "q34",
+    "query": "split button with dropdown menu",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/SplitButton",
+     "shell/RibbonTabs",
+     "shell/MenuButton"
+    ],
+    "top1score": 11.3
+   }
+  ],
+  "recall3": 1,
+  "recall5": 1,
+  "hit3r": 1,
+  "hit5r": 1
+ },
+ {
+  "label": "tier 1 queries vs full corpus (556 items)",
+  "n": 33,
+  "hit3": 33,
+  "hit5": 33,
+  "rec3": 33,
+  "rec5": 33,
+  "misses": [],
+  "rows": [
+   {
+    "id": "q01",
+    "query": "segmented control for iOS and Android",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "SegmentedControl",
+     "shell/KeyboardShortcutHUD",
+     "shell/FocusAndA11yLayer"
+    ],
+    "top1score": 12.4
+   },
+   {
+    "id": "q02",
+    "query": "data table with sorting",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "data/DataTable",
+     "forge/spreadsheet/SortFilterHeader",
+     "data/tree-row-heights"
+    ],
+    "top1score": 12.3
+   },
+   {
+    "id": "q04",
+    "query": "dropdown select with grouped options",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "Select",
+     "forms/option-groups",
+     "forge/spreadsheet/ValidationDropdown"
+    ],
+    "top1score": 17.6
+   },
+   {
+    "id": "q05",
+    "query": "primary button with loading spinner",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "Button",
+     "shell/SplitButton",
+     "forge/layers/ArtboardNavigator"
+    ],
+    "top1score": 21.5
+   },
+   {
+    "id": "q06",
+    "query": "icon-only button that toggles on and off",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "IconButton",
+     "NavigationRail",
+     "Button"
+    ],
+    "top1score": 19.1
+   },
+   {
+    "id": "q07",
+    "query": "text input with label and error message",
+    "ranks": [
+     2
+    ],
+    "top3": [
+     "feedback/ErrorMessage",
+     "TextField",
+     "Select"
+    ],
+    "top1score": 15.6
+   },
+   {
+    "id": "q08",
+    "query": "numeric input with units like px or mm",
+    "ranks": [
+     2
+    ],
+    "top3": [
+     "shell/NumericScrubField",
+     "shell/UnitInput",
+     "forge/inputs/InstrumentKnob"
+    ],
+    "top1score": 12.6
+   },
+   {
+    "id": "q09",
+    "query": "range slider with two thumbs",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/RangeSlider",
+     "shell/SliderField",
+     "shell/slider-model"
+    ],
+    "top1score": 18.8
+   },
+   {
+    "id": "q10",
+    "query": "rotary knob dial control",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/RotaryKnob",
+     "forge/inputs/InstrumentKnob",
+     "forge/platform/AccessiblePrecisionScrubControl"
+    ],
+    "top1score": 21.1
+   },
+   {
+    "id": "q11",
+    "query": "right-click context menu",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/ContextMenu",
+     "shell/UnitInput",
+     "shell/inspector-context"
+    ],
+    "top1score": 19.1
+   },
+   {
+    "id": "q12",
+    "query": "command palette with search",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "overlays/CommandPalette",
+     "overlays/command-filter",
+     "forge/color/floating-palette"
+    ],
+    "top1score": 10.9
+   },
+   {
+    "id": "q13",
+    "query": "popover anchored to a trigger element",
+    "ranks": [
+     2
+    ],
+    "top3": [
+     "overlays/anchored-popover-types",
+     "overlays/AnchoredPopover",
+     "shell/FindReplacePopover"
+    ],
+    "top1score": 20.7
+   },
+   {
+    "id": "q14",
+    "query": "resizable split panes with a draggable divider",
+    "ranks": [
+     2
+    ],
+    "top3": [
+     "forge/spreadsheet/SplitSpreadsheetView",
+     "shell/PaneSplitter",
+     "forge/slides/SlideAnimationPane"
+    ],
+    "top1score": 13.7
+   },
+   {
+    "id": "q15",
+    "query": "tabs for open documents with reorder and close",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/DocumentTabBar",
+     "shell/document-tabs-model",
+     "forge/pdf/PageReorderOrganizer"
+    ],
+    "top1score": 25.3
+   },
+   {
+    "id": "q16",
+    "query": "bottom tab bar navigation",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "TabBar",
+     "shell/DocumentTabBar",
+     "forge/spreadsheet/SheetTabs"
+    ],
+    "top1score": 13.1
+   },
+   {
+    "id": "q17",
+    "query": "side navigation rail with icons",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "NavigationRail",
+     "navigation/CollapsibleDrawer",
+     "TabBar"
+    ],
+    "top1score": 16.9
+   },
+   {
+    "id": "q18",
+    "query": "collapsible navigation drawer",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "navigation/CollapsibleDrawer",
+     "navigation/drawer-model",
+     "forge/document/NavigationOutline"
+    ],
+    "top1score": 15.6
+   },
+   {
+    "id": "q19",
+    "query": "toast notifications and progress for background jobs",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/ToastAndProgress",
+     "shell/progress-model",
+     "forge/color/ForegroundBackgroundChips"
+    ],
+    "top1score": 25
+   },
+   {
+    "id": "q20",
+    "query": "empty state with call to action",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "feedback/EmptyState",
+     "shell/progress-model",
+     "shell/workspace-preset-model"
+    ],
+    "top1score": 11.5
+   },
+   {
+    "id": "q21",
+    "query": "inline alert banner with dismiss button",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "feedback/Banner",
+     "feedback/ErrorMessage",
+     "shell/ToastAndProgress"
+    ],
+    "top1score": 20.8
+   },
+   {
+    "id": "q22",
+    "query": "status badge pill",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "feedback/Badge",
+     "shell/status-model",
+     "shell/PropertyRow"
+    ],
+    "top1score": 12.4
+   },
+   {
+    "id": "q23",
+    "query": "tree table with expandable rows",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "data/TreeGrid",
+     "data/tree-row-heights",
+     "data/tree-grid"
+    ],
+    "top1score": 19.9
+   },
+   {
+    "id": "q24",
+    "query": "find and replace panel",
+    "ranks": [
+     2,
+     3
+    ],
+    "top3": [
+     "shell/find-replace-model",
+     "shell/FindReplaceContent",
+     "shell/FindReplacePopover"
+    ],
+    "top1score": 14.1
+   },
+   {
+    "id": "q25",
+    "query": "undo redo history list",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/HistoryPanel",
+     "shell/history-model",
+     "forge/photo/PhotoVersionHistoryBrowser"
+    ],
+    "top1score": 20.2
+   },
+   {
+    "id": "q26",
+    "query": "keyboard shortcut cheat sheet with rebinding",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/KeyboardShortcutHUD",
+     "shell/DocumentTabBar",
+     "forge/spreadsheet/sheet-tabs-model"
+    ],
+    "top1score": 17.3
+   },
+   {
+    "id": "q27",
+    "query": "window title bar with close minimize and maximize controls",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "window/WindowTitleBar",
+     "shell/DocumentTabBar",
+     "forge/sheet-window"
+    ],
+    "top1score": 30.7
+   },
+   {
+    "id": "q28",
+    "query": "detect reduce motion and screen reader settings",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/FocusAndA11yLayer",
+     "shell/screen-reader-focus",
+     "forge/motion/motion-settings"
+    ],
+    "top1score": 16.2
+   },
+   {
+    "id": "q29",
+    "query": "dockable panels that adapt to foldable screens",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/AdaptiveDock",
+     "shell/screen-reader-focus",
+     "forge/canvas/canvas-viewport"
+    ],
+    "top1score": 14.7
+   },
+   {
+    "id": "q30",
+    "query": "file and asset browser with breadcrumbs",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/AssetBrowser",
+     "shell/asset-browser-model",
+     "files/FilePicker"
+    ],
+    "top1score": 17.2
+   },
+   {
+    "id": "q31",
+    "query": "inspector with collapsible sections and property rows",
+    "ranks": [
+     1,
+     3,
+     2
+    ],
+    "top3": [
+     "shell/InspectorPanel",
+     "shell/PropertyRow",
+     "shell/InspectorSection"
+    ],
+    "top1score": 17.8
+   },
+   {
+    "id": "q32",
+    "query": "ribbon with tabs and command groups",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/RibbonTabs",
+     "shell/ribbon-model",
+     "forge/document/ribbon-model"
+    ],
+    "top1score": 16.3
+   },
+   {
+    "id": "q33",
+    "query": "dark theme scope for part of the screen",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "theme/NightScope",
+     "forge/slides/ThemeAndTemplateGallery",
+     "forge/color/ThemeColorReferences"
+    ],
+    "top1score": 10.5
+   },
+   {
+    "id": "q34",
+    "query": "split button with dropdown menu",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/SplitButton",
+     "shell/MenuButton",
+     "shell/RibbonTabs"
+    ],
+    "top1score": 19.3
+   }
+  ],
+  "recall3": 1,
+  "recall5": 1,
+  "hit3r": 1,
+  "hit5r": 1
+ },
+ {
+  "label": "tier 2 queries vs full corpus",
+  "n": 4,
+  "hit3": 4,
+  "hit5": 4,
+  "rec3": 3.5,
+  "rec5": 4,
+  "misses": [
+   {
+    "id": "q37",
+    "query": "color wheel picker",
+    "relevant": [
+     "forge/color/ColorWheel",
+     "forge/color/ColorDiscPicker"
+    ],
+    "ranks": [
+     2,
+     5
+    ],
+    "top3": [
+     "forge/color/ColorGradingWheels",
+     "forge/color/ColorWheel",
+     "forge/color/wheel-geometry"
+    ]
+   }
+  ],
+  "rows": [
+   {
+    "id": "q37",
+    "query": "color wheel picker",
+    "ranks": [
+     2,
+     5
+    ],
+    "top3": [
+     "forge/color/ColorGradingWheels",
+     "forge/color/ColorWheel",
+     "forge/color/wheel-geometry"
+    ],
+    "top1score": 10.8
+   },
+   {
+    "id": "q38",
+    "query": "MIDI piano roll editor",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "forge/midi/MIDIPianoRoll",
+     "forge/midi/MidiChannelPicker",
+     "forge/timeline/RollSlipSlideControls"
+    ],
+    "top1score": 23
+   },
+   {
+    "id": "q39",
+    "query": "drag and drop file upload zone",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "files/DropZone",
+     "files/drop-model",
+     "files/FilePicker"
+    ],
+    "top1score": 20.4
+   },
+   {
+    "id": "q40",
+    "query": "spreadsheet formula autocomplete",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "forge/spreadsheet/FormulaAutocomplete",
+     "forge/spreadsheet/FormulaReferenceText",
+     "forge/spreadsheet/FormulaBar"
+    ],
+    "top1score": 19.4
+   }
+  ],
+  "recall3": 0.875,
+  "recall5": 1,
+  "hit3r": 1,
+  "hit5r": 1
+ },
+ {
+  "label": "stress paraphrases (tier 1 items) vs full corpus",
+  "n": 34,
+  "hit3": 31,
+  "hit5": 31,
+  "rec3": 30,
+  "rec5": 30,
+  "misses": [
+   {
+    "id": "s06",
+    "query": "snackbar message",
+    "relevant": [
+     "shell/ToastAndProgress"
+    ],
+    "ranks": [
+     "none"
+    ],
+    "top3": [
+     "feedback/ErrorMessage",
+     "overlays/CommandPalette",
+     "forge/audio/audio-recovery-model"
+    ]
+   },
+   {
+    "id": "s20",
+    "query": "dropdown picker",
+    "relevant": [
+     "Select"
+    ],
+    "ranks": [
+     14
+    ],
+    "top3": [
+     "forge/spreadsheet/ValidationDropdown",
+     "shell/SplitButton",
+     "files/FilePicker"
+    ]
+   },
+   {
+    "id": "s23",
+    "query": "properties panel for the selected object",
+    "relevant": [
+     "shell/InspectorPanel",
+     "shell/PropertyRow"
+    ],
+    "ranks": [
+     1,
+     6
+    ],
+    "top3": [
+     "shell/InspectorPanel",
+     "forge/slides/SlideCanvas",
+     "forge/cad/TextureSetPanel"
+    ]
+   },
+   {
+    "id": "s25",
+    "query": "undo stack",
+    "relevant": [
+     "shell/HistoryPanel"
+    ],
+    "ranks": [
+     6
+    ],
+    "top3": [
+     "forge/timeline/track-stack",
+     "forge/layers/LayerStack",
+     "forge/motion/EffectStackAndInspector"
+    ]
+   },
+   {
+    "id": "s35",
+    "query": "drag with escape to cancel",
+    "relevant": [
+     "DragGrabHandle",
+     "gestures/PanResponderDrag"
+    ],
+    "ranks": [
+     1,
+     7
+    ],
+    "top3": [
+     "DragGrabHandle",
+     "gestures/drag-controller",
+     "gestures/GestureHandlerDrag"
+    ]
+   }
+  ],
+  "rows": [
+   {
+    "id": "s01",
+    "query": "tab strip for switching between open files",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/DocumentTabBar",
+     "TabBar",
+     "files/FilePicker"
+    ],
+    "top1score": 14.7
+   },
+   {
+    "id": "s02",
+    "query": "popup menu on long press",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/ContextMenu",
+     "forge/timeline/PlaybackRateMenu",
+     "shell/MenuButton"
+    ],
+    "top1score": 14.4
+   },
+   {
+    "id": "s03",
+    "query": "modal search box to run actions by typing",
+    "ranks": [
+     2
+    ],
+    "top3": [
+     "forge/spreadsheet/NameBox",
+     "overlays/CommandPalette",
+     "shell/InspectorSearch"
+    ],
+    "top1score": 7.6
+   },
+   {
+    "id": "s04",
+    "query": "slider with min and max handles",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/RangeSlider",
+     "forge/color/WideGamutChannels",
+     "forge/canvas/CanvasPanZoom"
+    ],
+    "top1score": 13.9
+   },
+   {
+    "id": "s05",
+    "query": "volume knob",
+    "ranks": [
+     2
+    ],
+    "top3": [
+     "forge/inputs/InstrumentKnob",
+     "shell/RotaryKnob"
+    ],
+    "top1score": 7.9
+   },
+   {
+    "id": "s06",
+    "query": "snackbar message",
+    "ranks": [
+     "none"
+    ],
+    "top3": [
+     "feedback/ErrorMessage",
+     "overlays/CommandPalette",
+     "forge/audio/audio-recovery-model"
+    ],
+    "top1score": 6.5
+   },
+   {
+    "id": "s07",
+    "query": "submit button with spinner",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "Button",
+     "forge/canvas/graphite-frame",
+     "."
+    ],
+    "top1score": 10.7
+   },
+   {
+    "id": "s09",
+    "query": "form field wrapper with section titles",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "FieldGroup",
+     "forge/pdf/PDFFormFieldEditor",
+     "forge/inputs/PropertyInspector"
+    ],
+    "top1score": 20.9
+   },
+   {
+    "id": "s10",
+    "query": "side menu that slides in",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "navigation/CollapsibleDrawer",
+     "forge/slides/SlideThumbnail",
+     "forge/slides/SlideFilmstrip"
+    ],
+    "top1score": 8.7
+   },
+   {
+    "id": "s11",
+    "query": "settings rows with leading icon and chevron",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "List",
+     "NavigationRail",
+     "IconButton"
+    ],
+    "top1score": 10.3
+   },
+   {
+    "id": "s12",
+    "query": "number field with unit conversion",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/UnitInput",
+     "shell/SliderField",
+     "shell/NumericScrubField"
+    ],
+    "top1score": 14.1
+   },
+   {
+    "id": "s13",
+    "query": "pill label showing status",
+    "ranks": [
+     2
+    ],
+    "top3": [
+     "shell/status-model",
+     "feedback/Badge",
+     "shell/StatusBar"
+    ],
+    "top1score": 5.2
+   },
+   {
+    "id": "s14",
+    "query": "error text under a form input",
+    "ranks": [
+     2,
+     1
+    ],
+    "top3": [
+     "TextField",
+     "feedback/ErrorMessage",
+     "FieldGroup"
+    ],
+    "top1score": 14.7
+   },
+   {
+    "id": "s15",
+    "query": "grid with hierarchical rows",
+    "ranks": [
+     2
+    ],
+    "top3": [
+     "forge/document/InsertTableGrid",
+     "data/TreeGrid",
+     "forge/canvas/SnapGridSettings"
+    ],
+    "top1score": 8.6
+   },
+   {
+    "id": "s16",
+    "query": "responsive table that becomes cards on phones",
+    "ranks": [
+     2
+    ],
+    "top3": [
+     "forge/spreadsheet/SpreadsheetCardsView",
+     "data/DataTable",
+     "forge/spreadsheet/cards-model"
+    ],
+    "top1score": 11.2
+   },
+   {
+    "id": "s17",
+    "query": "max width centered container",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "layout/ContentFrame",
+     "Card",
+     "forge/document/InsertTableGrid"
+    ],
+    "top1score": 9.1
+   },
+   {
+    "id": "s18",
+    "query": "multi column layout that wraps",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "layout/AdaptiveColumns",
+     "data/TreeGrid",
+     "forge/document/TextWrapAndFrames"
+    ],
+    "top1score": 8.8
+   },
+   {
+    "id": "s19",
+    "query": "toggle button group with one active choice",
+    "ranks": [
+     3
+    ],
+    "top3": [
+     "forge/inputs/PropertyInspector",
+     "IconButton",
+     "SegmentedControl"
+    ],
+    "top1score": 8.8
+   },
+   {
+    "id": "s20",
+    "query": "dropdown picker",
+    "ranks": [
+     14
+    ],
+    "top3": [
+     "forge/spreadsheet/ValidationDropdown",
+     "shell/SplitButton",
+     "files/FilePicker"
+    ],
+    "top1score": 7.4
+   },
+   {
+    "id": "s22",
+    "query": "screen reader announcements live region",
+    "ranks": [
+     2
+    ],
+    "top3": [
+     "shell/screen-reader-focus",
+     "shell/FocusAndA11yLayer",
+     "shell/InspectorSearch"
+    ],
+    "top1score": 15.2
+   },
+   {
+    "id": "s23",
+    "query": "properties panel for the selected object",
+    "ranks": [
+     1,
+     6
+    ],
+    "top3": [
+     "shell/InspectorPanel",
+     "forge/slides/SlideCanvas",
+     "forge/cad/TextureSetPanel"
+    ],
+    "top1score": 8.6
+   },
+   {
+    "id": "s24",
+    "query": "resizable sidebar",
+    "ranks": [
+     2
+    ],
+    "top3": [
+     "forge/pdf/PDFThumbnailSidebar",
+     "shell/PaneSplitter"
+    ],
+    "top1score": 8.1
+   },
+   {
+    "id": "s25",
+    "query": "undo stack",
+    "ranks": [
+     6
+    ],
+    "top3": [
+     "forge/timeline/track-stack",
+     "forge/layers/LayerStack",
+     "forge/motion/EffectStackAndInspector"
+    ],
+    "top1score": 7.4
+   },
+   {
+    "id": "s26",
+    "query": "save and load layout presets",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/WorkspacePresetSwitcher",
+     "shell/workspace-preset-model",
+     "forge/slides/MasterLayoutEditor"
+    ],
+    "top1score": 12.6
+   },
+   {
+    "id": "s27",
+    "query": "custom macOS style window controls",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "window/WindowTitleBar",
+     "forge/sheet-window",
+     "forge/spreadsheet/TableStyleGallery"
+    ],
+    "top1score": 26.3
+   },
+   {
+    "id": "s28",
+    "query": "light and dark theme wrapper",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "theme/NightScope",
+     "forge/motion/CameraAndLightControls",
+     "forge/slides/ThemeAndTemplateGallery"
+    ],
+    "top1score": 11.1
+   },
+   {
+    "id": "s29",
+    "query": "overflow menu for toolbar items",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/ContextualToolbar",
+     "shell/contextual-toolbar-model",
+     "overlays/CommandPopover"
+    ],
+    "top1score": 19.5
+   },
+   {
+    "id": "s30",
+    "query": "search inside a document and replace all matches",
+    "ranks": [
+     1,
+     2
+    ],
+    "top3": [
+     "shell/FindReplaceContent",
+     "shell/FindReplacePopover",
+     "shell/find-replace-model"
+    ],
+    "top1score": 21.2
+   },
+   {
+    "id": "s31",
+    "query": "vertical toolbar of tools",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/ToolRail",
+     "forge/pdf/AnnotationToolbar",
+     "forge/ink/InkToolbar"
+    ],
+    "top1score": 12.4
+   },
+   {
+    "id": "s32",
+    "query": "button with dropdown arrow",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/SplitButton",
+     "shell/MenuButton",
+     "forge/spreadsheet/ValidationDropdown"
+    ],
+    "top1score": 10.6
+   },
+   {
+    "id": "s33",
+    "query": "gallery of presets with favorites",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "shell/PresetGallery",
+     "forge/motion/EasingPresetGallery",
+     "forge/inputs/AssetPresetGallery"
+    ],
+    "top1score": 16.7
+   },
+   {
+    "id": "s34",
+    "query": "page header with title and action buttons",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "Toolbar",
+     "feedback/EmptyState",
+     "feedback/Banner"
+    ],
+    "top1score": 11.8
+   },
+   {
+    "id": "s35",
+    "query": "drag with escape to cancel",
+    "ranks": [
+     1,
+     7
+    ],
+    "top3": [
+     "DragGrabHandle",
+     "gestures/drag-controller",
+     "gestures/GestureHandlerDrag"
+    ],
+    "top1score": 9.3
+   },
+   {
+    "id": "s36",
+    "query": "bottom navigation bar",
+    "ranks": [
+     1
+    ],
+    "top3": [
+     "TabBar",
+     "shell/ToolRail",
+     "forge/document/NavigationOutline"
+    ],
+    "top1score": 7.6
+   }
+  ],
+  "recall3": 0.8823529411764706,
+  "recall5": 0.8823529411764706,
+  "hit3r": 0.9117647058823529,
+  "hit5r": 0.9117647058823529
+ }
+]

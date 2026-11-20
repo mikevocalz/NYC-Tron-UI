@@ -1,0 +1,434 @@
+{
+ "schema": 1,
+ "maxDescriptionChars": 140,
+ "namespace": "@nyc-tron",
+ "about": "Registry title and description for the 59 tier 1 items, plus CLI and error message copy. `id` is the item id: the @nyc-tron/ui subpath without ./components/. Facts come from 03-design-handoff.md. Scored by retrieval-eval.mjs.",
+ "items": [
+  {
+   "id": "Button",
+   "name": "Button",
+   "title": "Button",
+   "description": "Pressable text button with primary, secondary, ghost and danger variants, loading spinner and icon slot, for React Native."
+  },
+  {
+   "id": "Card",
+   "name": "Card",
+   "title": "Card",
+   "description": "Static container View with raised, sunken or transparent surface and optional padding, for React Native."
+  },
+  {
+   "id": "content/KeyValueList",
+   "name": "KeyValueList",
+   "title": "Key Value List",
+   "description": "Label and value list that goes from one to two columns at a measured width, with empty-value text, for React Native."
+  },
+  {
+   "id": "data/DataTable",
+   "name": "DataTable",
+   "title": "Data Table",
+   "description": "Sortable data table on TanStack Table that renders cards below a width threshold, with optional row press, for React Native."
+  },
+  {
+   "id": "data/TreeGrid",
+   "name": "TreeGrid",
+   "title": "Tree Grid",
+   "description": "Tree table with expandable rows, row selection, column reorder and pinned columns, plus a compact layout, for React Native."
+  },
+  {
+   "id": "DragGrabHandle",
+   "name": "DragGrabHandle",
+   "title": "Drag Grab Handle",
+   "description": "Three-bar drag handle, 44 by 44 minimum, reporting start, move, commit and cancel through a pluggable transport, for React Native."
+  },
+  {
+   "id": "feedback/Badge",
+   "name": "Badge",
+   "title": "Badge",
+   "description": "Small status badge with neutral, info, success, danger or accent tone, a status dot and size steps, for React Native."
+  },
+  {
+   "id": "feedback/Banner",
+   "name": "Banner",
+   "title": "Banner",
+   "description": "Inline status banner with info, success, danger or neutral tone, title, description, action slot and dismiss button, for React Native."
+  },
+  {
+   "id": "feedback/EmptyState",
+   "name": "EmptyState",
+   "title": "Empty State",
+   "description": "Empty-list placeholder with heading title, description, icon or illustration, and an action or secondary exit button, for React Native."
+  },
+  {
+   "id": "feedback/ErrorMessage",
+   "name": "ErrorMessage",
+   "title": "Error Message",
+   "description": "Inline error text with a danger glyph, announced as an alert; renders nothing when the message is empty, for React Native."
+  },
+  {
+   "id": "FieldGroup",
+   "name": "FieldGroup",
+   "title": "Field Group",
+   "description": "Form layout wrapper with titled sections and footer text, exposed as FieldGroup.Section, for React Native."
+  },
+  {
+   "id": "forge/inputs/PrecisionScrubber",
+   "name": "PrecisionScrubber",
+   "title": "Precision Scrubber",
+   "description": "Drag-to-scrub number control with fine, normal and coarse modes, detents, preview and commit callbacks, for React Native; web forced-colors."
+  },
+  {
+   "id": "forge/inputs/PropertyInspector",
+   "name": "PropertyInspector",
+   "title": "Property Inspector",
+   "description": "Form built from a field list of number, choice, boolean and text properties, committing one change at a time, for React Native."
+  },
+  {
+   "id": "forge/office/office-controls",
+   "name": "office-controls",
+   "title": "Office Controls",
+   "description": "ToolButton with checked and mixed toggle state, plus play, pause, skip, plus and chevron glyphs, for React Native; web aria-pressed."
+  },
+  {
+   "id": "gestures/PanResponderDrag",
+   "name": "PanResponderDrag",
+   "title": "Pan Responder Drag",
+   "description": "Single-touch drag transport on React Native PanResponder, no gesture-handler dependency, for React Native and web."
+  },
+  {
+   "id": "IconButton",
+   "name": "IconButton",
+   "title": "Icon Button",
+   "description": "Icon-only pressable button with five variants and an optional selected toggle state, for React Native; web aria-pressed."
+  },
+  {
+   "id": "layout/AdaptiveColumns",
+   "name": "AdaptiveColumns",
+   "title": "Adaptive Columns",
+   "description": "Wrapping column row; each AdaptiveColumns.Item sets a minimum width and grow factor, for React Native layout."
+  },
+  {
+   "id": "layout/ContentFrame",
+   "name": "ContentFrame",
+   "title": "Content Frame",
+   "description": "Width-capped container that aligns its content to the start, center or end of the parent, for React Native layout."
+  },
+  {
+   "id": "List",
+   "name": "List",
+   "title": "List",
+   "description": "Vertical list of rows with title, supporting text, leading and trailing slots; rows with onPress become buttons, for React Native."
+  },
+  {
+   "id": "navigation/CollapsibleDrawer",
+   "name": "CollapsibleDrawer",
+   "title": "Collapsible Drawer",
+   "description": "Side navigation drawer menu in expanded, compact or minimal mode, with overlay and scrim when open, for React Native; Android back."
+  },
+  {
+   "id": "NavigationRail",
+   "name": "NavigationRail",
+   "title": "Navigation Rail",
+   "description": "Vertical rail of icon and label destinations with selected state and a collapsed icon-only mode, for React Native."
+  },
+  {
+   "id": "overlays/AnchoredPopover",
+   "name": "AnchoredPopover",
+   "title": "Anchored Popover",
+   "description": "Modal popover placed against an anchor rectangle or trigger element and clamped to usable regions, for React Native; web Tab cycling."
+  },
+  {
+   "id": "overlays/CommandPalette",
+   "name": "CommandPalette",
+   "title": "Command Palette",
+   "description": "Searchable command list in a modal, with keyboard selection and an empty-results message, for React Native."
+  },
+  {
+   "id": "overlays/CommandPopover",
+   "name": "CommandPopover",
+   "title": "Command Popover",
+   "description": "Anchored popover menu of command items, with disabled and danger items, for React Native, web and QNX."
+  },
+  {
+   "id": "SegmentedControl",
+   "name": "SegmentedControl",
+   "title": "Segmented Control",
+   "description": "Single-choice segmented control exposed as a radio group, for React Native; arrow-key navigation on web only."
+  },
+  {
+   "id": "Select",
+   "name": "Select",
+   "title": "Select",
+   "description": "Single-select dropdown with flat or grouped options, hint and error text, for React Native; web combobox ARIA; QNX keyboard."
+  },
+  {
+   "id": "shell/AdaptiveDock",
+   "name": "AdaptiveDock",
+   "title": "Adaptive Dock",
+   "description": "Dockable panel layout of tabbed and floating panels; merges into one stack below a width and avoids foldable hinges, for React Native."
+  },
+  {
+   "id": "shell/AssetBrowser",
+   "name": "AssetBrowser",
+   "title": "Asset Browser",
+   "description": "Asset list with breadcrumb path, search, sort, single or multiple selection and async open, for React Native."
+  },
+  {
+   "id": "shell/ContextMenu",
+   "name": "ContextMenu",
+   "title": "Context Menu",
+   "description": "Wraps a target to open a command menu on right-click, long-press, keyboard or screen-reader action, for React Native; QNX focus return."
+  },
+  {
+   "id": "shell/ContextualToolbar",
+   "name": "ContextualToolbar",
+   "title": "Contextual Toolbar",
+   "description": "Toolbar whose items filter by selection kind and overflow into a More menu by priority, for React Native."
+  },
+  {
+   "id": "shell/DocumentTabBar",
+   "name": "DocumentTabBar",
+   "title": "Document Tab Bar",
+   "description": "Tab strip for open documents with activate, close and reorder; keyboard shortcuts on web, for React Native."
+  },
+  {
+   "id": "shell/FindReplaceContent",
+   "name": "FindReplaceContent",
+   "title": "Find Replace Content",
+   "description": "Find and replace form with match navigation, replace one or all, and async search with abort, for React Native."
+  },
+  {
+   "id": "shell/FindReplacePopover",
+   "name": "FindReplacePopover",
+   "title": "Find Replace Popover",
+   "description": "FindReplaceContent inside an AnchoredPopover, placed by anchor rectangle or trigger, for React Native."
+  },
+  {
+   "id": "shell/FocusAndA11yLayer",
+   "name": "FocusAndA11yLayer",
+   "title": "Focus and A11y Layer",
+   "description": "Provider exposing reduce-motion, screen-reader, high-contrast and input-modality state plus announcements, on iOS, Android, web and QNX."
+  },
+  {
+   "id": "shell/HistoryPanel",
+   "name": "HistoryPanel",
+   "title": "History Panel",
+   "description": "Undo and redo list with a cursor and jump to any entry; async jump with cancel, for React Native."
+  },
+  {
+   "id": "shell/InspectorPanel",
+   "name": "InspectorPanel",
+   "title": "Inspector Panel",
+   "description": "Inspector panel for the current selection: header, search filter and InspectorSection and PropertyRow children, for React Native."
+  },
+  {
+   "id": "shell/InspectorSearch",
+   "name": "InspectorSearch",
+   "title": "Inspector Search",
+   "description": "Search field with clear button and live-region match summary for inspector panels, for React Native."
+  },
+  {
+   "id": "shell/InspectorSection",
+   "name": "InspectorSection",
+   "title": "Inspector Section",
+   "description": "Collapsible inspector group with optional enable switch and reset button, indented by nesting depth, for React Native; web switch colors."
+  },
+  {
+   "id": "shell/KeyboardShortcutHUD",
+   "name": "KeyboardShortcutHUD",
+   "title": "Keyboard Shortcut HUD",
+   "description": "Searchable keyboard shortcut list grouped by category, with rebinding and Apple keycaps, for React Native; iOS and Android need a recorder."
+  },
+  {
+   "id": "shell/MenuButton",
+   "name": "MenuButton",
+   "title": "Menu Button",
+   "description": "Button that opens a command popover menu; ArrowDown opens it on web, for React Native; QNX focus return."
+  },
+  {
+   "id": "shell/PaneSplitter",
+   "name": "PaneSplitter",
+   "title": "Pane Splitter",
+   "description": "Two-pane splitter, horizontal or vertical, resizable by drag, keys or accessibility actions, fold-aware, for React Native and web."
+  },
+  {
+   "id": "shell/PresetGallery",
+   "name": "PresetGallery",
+   "title": "Preset Gallery",
+   "description": "Grid of selectable preset tiles with hover preview, favorites toggle and All or Favorites filter, for React Native."
+  },
+  {
+   "id": "shell/PropertyRow",
+   "name": "PropertyRow",
+   "title": "Property Row",
+   "description": "Row for one inspector property: label and editor, with mixed-value badge, override dot and revert button, for React Native."
+  },
+  {
+   "id": "shell/RangeSlider",
+   "name": "RangeSlider",
+   "title": "Range Slider",
+   "description": "Two-thumb slider that selects a min and max value, with step, detents, minimum gap, units and typed endpoints, for React Native."
+  },
+  {
+   "id": "shell/RibbonTabs",
+   "name": "RibbonTabs",
+   "title": "Ribbon Tabs",
+   "description": "Office-style ribbon of tabs and a command panel of buttons, split buttons and galleries; collapsible, for React Native."
+  },
+  {
+   "id": "shell/RotaryKnob",
+   "name": "RotaryKnob",
+   "title": "Rotary Knob",
+   "description": "Dial control with relative or circular drag, fine adjustment, detents and reset to default, for React Native."
+  },
+  {
+   "id": "shell/SliderField",
+   "name": "SliderField",
+   "title": "Slider Field",
+   "description": "Single-thumb slider with number field, step, detents, units and reset to default, for React Native."
+  },
+  {
+   "id": "shell/SplitButton",
+   "name": "SplitButton",
+   "title": "Split Button",
+   "description": "Primary action button joined to a dropdown menu of command items, for React Native."
+  },
+  {
+   "id": "shell/StatusBar",
+   "name": "StatusBar",
+   "title": "Status Bar",
+   "description": "Application status bar with zoom steps and menu, units menu, selection summary and activity text, for React Native."
+  },
+  {
+   "id": "shell/ToastAndProgress",
+   "name": "ToastAndProgress",
+   "title": "Toast and Progress",
+   "description": "List of toast notifications and progress jobs with dismiss and action buttons; shows three toasts until expanded, for React Native."
+  },
+  {
+   "id": "shell/ToolRail",
+   "name": "ToolRail",
+   "title": "Tool Rail",
+   "description": "Toolbar rail of tool buttons, vertical on the left or right edge or a row at the bottom, with group flyouts, for React Native."
+  },
+  {
+   "id": "shell/UnitInput",
+   "name": "UnitInput",
+   "title": "Unit Input",
+   "description": "Number field that parses and formats typed units from a UnitContext, with unit menu, min, max and arrow stepping, for React Native."
+  },
+  {
+   "id": "shell/WorkspaceHost",
+   "name": "WorkspaceHost",
+   "title": "Workspace Host",
+   "description": "Workspace shell with mode tabs, per-mode dock layouts and Ctrl or Cmd+1..9 shortcuts, for React Native; web shortcuts."
+  },
+  {
+   "id": "shell/WorkspacePresetSwitcher",
+   "name": "WorkspacePresetSwitcher",
+   "title": "Workspace Preset Switcher",
+   "description": "Menu to switch, save, rename, duplicate, reset and delete workspace layout presets, with undo delete, for React Native."
+  },
+  {
+   "id": "TabBar",
+   "name": "TabBar",
+   "title": "Tab Bar",
+   "description": "Tab strip with tablist or link-navigation semantics, icons and compact density, for React Native; web roving focus."
+  },
+  {
+   "id": "TextField",
+   "name": "TextField",
+   "title": "Text Field",
+   "description": "Labeled TextInput with helper text, error text, start adornment and error border state, for React Native."
+  },
+  {
+   "id": "theme/NightScope",
+   "name": "NightScope",
+   "title": "Night Scope",
+   "description": "Wrapper that applies a named Uniwind theme scheme to its subtree, for React Native and web."
+  },
+  {
+   "id": "Toolbar",
+   "name": "Toolbar",
+   "title": "Toolbar",
+   "description": "Header bar with title, leading slot and actions group in default or compact density; arrow-key focus on web, for React Native."
+  },
+  {
+   "id": "window/WindowTitleBar",
+   "name": "WindowTitleBar",
+   "title": "Window Title Bar",
+   "description": "Custom window title bar with macOS or Windows close, minimize and zoom controls and an edited marker, for React Native."
+  }
+ ],
+ "messages": [
+  {
+   "id": "peer-missing",
+   "case": "Missing peer dependency",
+   "line1": "{item} needs {peer} {range}, which is not installed.",
+   "line2": "Install it, then add the item again: npx expo install {peer}",
+   "example": {
+    "item": "@nyc-tron/shell/UnitInput",
+    "peer": "zustand",
+    "range": "^5.0.0"
+   },
+   "command": "npx expo install zustand"
+  },
+  {
+   "id": "peer-range",
+   "case": "Peer installed, version outside the range",
+   "line1": "{peer} {found} is installed, but {item} needs {range}.",
+   "line2": "Move to a supported version: npx expo install {peer}",
+   "example": {
+    "item": "@nyc-tron/gestures/GestureHandlerDrag",
+    "peer": "react-native-gesture-handler",
+    "found": "2.20.0",
+    "range": ">=3.3.0 <4"
+   },
+   "command": "npx expo install react-native-gesture-handler"
+  },
+  {
+   "id": "item-not-found",
+   "case": "Item not found",
+   "line1": "No item \"{input}\" in @nyc-tron. Item ids are the path under components, for example shell/UnitInput.",
+   "line2": "Find the id: npx shadcn@latest search @nyc-tron -q \"{input}\"",
+   "example": {
+    "input": "unit-input"
+   },
+   "command": "npx shadcn@latest search @nyc-tron -q \"unit-input\""
+  },
+  {
+   "id": "namespace-missing",
+   "case": "Wrong or missing namespace in components.json",
+   "line1": "components.json has no registry \"{ns}\". The NYC-Tron namespace is @nyc-tron.",
+   "line2": "Add it, then rerun the add: node -e 'const f=\"components.json\",j=JSON.parse(require(\"fs\").readFileSync(f));(j.registries??={})[\"@nyc-tron\"]=\"https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/<tag>/r/{name}.json\";require(\"fs\").writeFileSync(f,JSON.stringify(j,null,2))'",
+   "example": {
+    "ns": "@nyc-tron-ui"
+   },
+   "command": "node -e '...' (patches components.json)"
+  },
+  {
+   "id": "registry-unreachable",
+   "case": "Registry URL unreachable",
+   "line1": "Could not fetch {url} ({status}).",
+   "line2": "Check it from your shell: curl -sSI {url} | head -1. 404 means a wrong tag or item id. No output means network or proxy.",
+   "example": {
+    "url": "https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/<tag>/r/Button.json",
+    "status": "HTTP 404"
+   },
+   "command": "curl -sSI <url> | head -1"
+  },
+  {
+   "id": "platform-unsupported",
+   "case": "Unsupported platform for an item",
+   "line1": "{item} is documented for {platforms} only. Your project targets {target}.",
+   "line2": "Find one that lists {target}: npx shadcn@latest search @nyc-tron -q \"{noun}\"",
+   "example": {
+    "item": "@nyc-tron/forge/audio/NativeAudioTransport",
+    "platforms": "ios, android",
+    "target": "web",
+    "noun": "audio transport"
+   },
+   "command": "npx shadcn@latest search @nyc-tron -q \"audio transport\"",
+   "note": "Raised only when the item's platforms array is not empty. An empty array means the source states no platform, and no error applies."
+  }
+ ]
+}
