@@ -8,7 +8,7 @@ import {useLocalPointer} from "../../gestures/useLocalPointer.ts";
 import {createValueGesture} from "../../gestures/value-gesture.ts";
 import type {RgbaColor} from "../color.ts";
 import {checkerColumns,trackSegments} from "./segments.ts";
-import {border,opacity} from "@nyc-tron/core/tokens";
+import {border,opacity} from "../../../tokens.ts";
 
 /** Props for {@linkcode ChannelTrack}. */
 export interface ChannelTrackProps extends Omit<ViewProps,"children"> {

@@ -11,7 +11,7 @@ import {
   originAccessibilityValue,originKeyCommand,originPayload,pivotInDoc,validateTransform,
   type BoundsCorners,type LayerTransform,type OriginAnchor,
 } from "./transform-origin-model.ts";
-import {space,radius,opacity} from "@nyc-tron/core/tokens";
+import {space,radius,opacity} from "../../../tokens.ts";
 
 /** Props for {@linkcode TransformOriginHandle}. */
 export interface TransformOriginHandleProps extends Omit<ViewProps,"children"> {

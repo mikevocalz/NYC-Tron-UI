@@ -5,7 +5,7 @@ import {SegmentedControl} from '../../SegmentedControl.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface VideoStabilizationSettings {strength:number;smoothingFrames:number;quality:'fast'|'balanced'|'high'}
 export interface VideoStabilizationInspectorProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  value:VideoStabilizationSettings;qualities:readonly VideoStabilizationSettings['quality'][];

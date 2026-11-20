@@ -2,7 +2,7 @@ import {FlatList,Text,View,type ViewProps} from 'react-native';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface MergeField {id:string;label:string;kind:'text'|'number'|'date'|'boolean';preview:string|null}
 export interface MailMergeFieldPickerProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  fields:readonly MergeField[];recipientIndex:number;recipientCount:number;recipientLabel:string;status:'loading'|'ready'|'error';error?:string;

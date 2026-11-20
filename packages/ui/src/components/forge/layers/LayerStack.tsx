@@ -18,7 +18,7 @@ import {
  dragTargetIndex,formatOpacity,layerAccessibilityLabel,layerDetail,layerOpacityMode,normalizeOpacity,opacityFromDrag,
  resolveRename,stepOpacity,validateLayers,type LayerOpacityMode,type LayerRow,type LayerThumbnail,
 } from "./layer-model.ts";
-import {space,radius,font,border,opacity as opacityToken,size} from "@nyc-tron/core/tokens";
+import {space,radius,font,border,opacity as opacityToken,size} from "../../../tokens.ts";
 import {tokens} from "./LayerStack.tokens.ts";
 
 type OpacityPreview={id:string;value:number};

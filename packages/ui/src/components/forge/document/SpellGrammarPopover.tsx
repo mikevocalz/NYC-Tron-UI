@@ -3,7 +3,7 @@ import {AnchoredPopover,type PopoverAnchorProps} from '../../overlays/AnchoredPo
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface SpellingIssue {id:string;kind:'spelling'|'grammar';text:string;startUTF16:number;endUTF16:number;explanation:string;suggestions:readonly string[]}
 export interface SpellGrammarContentProps extends ScopedControlProps {
  issue:SpellingIssue|null;status:'checking'|'ready'|'error'|'unavailable';offline:boolean;supportsOffline:boolean;error?:string;

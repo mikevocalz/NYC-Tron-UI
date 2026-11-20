@@ -17,7 +17,7 @@ import {
  type DocPoint,type DocRect,type SelectRegionRequest,type SelectionKey,type SelectionMode,type SelectionShape,
  type SelectionTool,type ViewMapping,
 } from "./selection-model.ts";
-import {space,opacity} from "@nyc-tron/core/tokens";
+import {space,opacity} from "../../../tokens.ts";
 
 /** Props for {@linkcode SelectionMarquee}. The selection itself lives in the host's editor. */
 export interface SelectionMarqueeProps extends Omit<ViewProps,"children"> {

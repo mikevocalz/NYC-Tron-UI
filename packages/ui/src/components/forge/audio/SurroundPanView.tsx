@@ -7,7 +7,7 @@ import {Button} from '../../Button.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space,radius} from '@nyc-tron/core/tokens';
+import {space,radius} from '../../../tokens.ts';
 export interface SurroundPosition {x:number;y:number;z:number;spread:number}
 export interface SurroundSpeaker {id:string;label:string;x:number;y:number;z:number}
 export interface SurroundPanViewProps extends Omit<ViewProps,'children'>,ScopedControlProps {

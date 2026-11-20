@@ -9,7 +9,7 @@ import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface SlideMediaSettings {fit:'contain'|'cover'|'stretch';autoplay:boolean;loop:boolean;muted:boolean;volume:number;showControls:boolean;hideWhenStopped:boolean}
 export interface MediaInsertInspectorProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  mediaId:string;kind:'video'|'audio';sourceLabel:string;surface:ReactNode;aspectRatio:number;settings:SlideMediaSettings;

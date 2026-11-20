@@ -6,7 +6,7 @@ import type {ThumbnailSource} from '../layers/layer-thumbnail-model.ts';
 import {VideoFilmstrip,type VideoFilmstripProps} from './VideoFilmstrip.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type VideoCover={kind:'frame';frame:number}|{kind:'image';assetId:string};
 export interface CoverFramePickerProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  value:VideoCover|null;frame:number;preview:ReactNode;

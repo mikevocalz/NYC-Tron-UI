@@ -10,7 +10,7 @@ import {keyboardKey,type KeyEventLike} from '../../gestures/drag-transport.ts';
 import {CanvasKnob,LinePiece,type CanvasKeyEvent} from '../vector/vector-controls.tsx';
 import {joinClasses} from '../../styles.ts';
 import {MOTION_MAX_TIME,MOTION_TIME_EPSILON,validateMotionCurve,evaluateMotionCurve,sampleMotionCurve,motionSegmentControls,moveMotionKeys,setMotionHandle,setMotionInterpolation,insertMotionKey,removeMotionKeys,type MotionPropertyCurve,type MotionKeyframe,type MotionCurvePoint} from './motion-curves.ts';
-import {space,radius,border,size} from '@nyc-tron/core/tokens';
+import {space,radius,border,size} from '../../../tokens.ts';
 export interface MotionCurveEditorProps extends Omit<ViewProps,'children'> {
  readonly scope:string;readonly revision:string;readonly value:MotionPropertyCurve;readonly duration:number;readonly playhead:number;
  readonly viewRange:readonly [number,number];readonly onViewRangeChange:(range:readonly [number,number])=>void;

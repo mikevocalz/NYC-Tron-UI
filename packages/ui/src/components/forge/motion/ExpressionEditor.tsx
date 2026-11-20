@@ -7,7 +7,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useLocalStore} from '../../useLocalStore.ts';
 import {joinClasses} from '../../styles.ts';
 import {EXPRESSION_MAX_LENGTH,isExpressionBoundary,replaceExpressionRange,validateExpressionText,validateExpressionRange,validateExpressionReferences,validateExpressionCompletions,validateExpressionDiagnostics,type ExpressionRange,type ExpressionQuery,type ExpressionReference,type ExpressionCompletion,type ExpressionDiagnostic} from './motion-expression.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {ExpressionRange,ExpressionQuery,ExpressionReference,ExpressionCompletion,ExpressionDiagnostic} from './motion-expression.ts';
 export interface ExpressionEditorProps extends Omit<ViewProps,'children'> {
  readonly scope:string;readonly revision:string|number;readonly value:string;readonly onChange:(text:string)=>void;readonly references:readonly ExpressionReference[];

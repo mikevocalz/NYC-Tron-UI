@@ -6,7 +6,7 @@ import {joinClasses} from "../styles.ts";
 import {MenuButton} from "./MenuButton.tsx";
 import {shellKey} from "./shell-keys.ts";
 import {formatUnitValue,parseUnitExpression,unitScale,type UnitContext,type UnitName} from "./unit-expression.ts";
-import {space,opacity,size} from "@nyc-tron/core/tokens";
+import {space,opacity,size} from "../../tokens.ts";
 
 export type {UnitContext,UnitDimension,UnitName} from "./unit-expression.ts";
 

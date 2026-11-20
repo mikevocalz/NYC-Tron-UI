@@ -15,7 +15,7 @@ import {joinClasses} from "../../styles.ts";
 import {rasterToImage} from "../layers/layer-thumbnail-model.ts";
 import {bounded} from "./color-adjustments.ts";
 import {validateMesh,editMeshPoint,rasterizeMesh,type GradientMesh} from "./gradient-mesh.ts";
-import {space,radius,border} from "@nyc-tron/core/tokens";
+import {space,radius,border} from "../../../tokens.ts";
 export type {GradientMesh,MeshPoint} from "./gradient-mesh.ts";
 /** Host-owned mesh, selection, preview and one-transaction commit boundaries. */
 export interface GradientMeshEditorProps extends Omit<ViewProps,'children'>{

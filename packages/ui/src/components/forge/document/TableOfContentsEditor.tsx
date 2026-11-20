@@ -3,7 +3,7 @@ import {PropertyInspector,type PropertyInspectorProps} from '../inputs/PropertyI
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface ContentsSettings {minimumLevel:number;maximumLevel:number;showPageNumbers:boolean;rightAlignNumbers:boolean;leader:'none'|'dots'|'dashes';hyperlinks:boolean}
 export interface TableOfContentsEditorProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {
  value:ContentsSettings;entries:readonly {id:string;label:string;level:number;pageLabel:string}[];stale:boolean;

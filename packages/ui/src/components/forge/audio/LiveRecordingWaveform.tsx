@@ -4,7 +4,7 @@ import {useStore} from 'zustand';
 import {Text,View,type ViewProps} from 'react-native';
 import {LevelMeter} from './LevelMeter.tsx';
 import {normalizePeak,peaksToBars,type WaveformPeak} from '../waveform.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface RecordingPeakWindow extends WaveformPeak {timeMs:number}
 export interface LiveRecordingWaveformProps extends Omit<ViewProps,'children'> {
  capturing:boolean;elapsedSamples:number;sampleRate:number;windows:readonly RecordingPeakWindow[];

@@ -4,7 +4,7 @@ import {PropertyInspector,type PropertyInspectorProps} from '../inputs/PropertyI
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface SlideTransition {effectId:string;durationMs:number;advance:'manual'|'after';advanceAfterMs:number;easing:'linear'|'ease-in'|'ease-out'|'ease-in-out'}
 export interface TransitionPickerProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {
  value:SlideTransition;effects:readonly {id:string;label:string;minDurationMs:number;maxDurationMs:number;unavailableReason?:string}[];

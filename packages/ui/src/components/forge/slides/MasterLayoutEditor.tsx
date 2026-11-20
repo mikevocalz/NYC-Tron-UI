@@ -1,7 +1,7 @@
 import type {ReactNode} from 'react';
 import {View,Text} from 'react-native';
 import {PropertyInspector,type PropertyInspectorProps} from '../inputs/PropertyInspector.tsx';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface MasterPlaceholder {id:string;label:string;kind:'title'|'body'|'image'|'media'|'date'|'footer'|'page-number';x:number;y:number;width:number;height:number;inheritTheme:boolean}
 export interface MasterLayoutEditorProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {
  layouts:readonly {id:string;label:string;parentId:string|null}[];layoutId:string;parentId:string|null;placeholderId:string|null;placeholders:readonly MasterPlaceholder[];

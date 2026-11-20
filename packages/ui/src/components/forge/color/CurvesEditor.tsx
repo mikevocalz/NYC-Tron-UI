@@ -11,7 +11,7 @@ import {keyboardKey} from "../../gestures/drag-transport.ts";
 import {LinePiece} from "../vector/vector-controls.tsx";
 import {joinClasses} from "../../styles.ts";
 import {bounded,validateCurve,moveCurvePoint,evaluateCurve,type ColorCurve} from "./color-adjustments.ts";
-import {space,radius,border} from "@nyc-tron/core/tokens";
+import {space,radius,border} from "../../../tokens.ts";
 export type {ColorCurve,CurvePoint} from "./color-adjustments.ts";
 /** One controlled channel curve and its document revision boundary. */
 export interface CurvesEditorProps extends Omit<ViewProps,"children">{

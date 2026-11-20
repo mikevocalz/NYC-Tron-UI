@@ -28,7 +28,7 @@ import {
 } from "./velocity-line.ts";
 import { MidiValueStepper } from "./MidiChannelPicker.tsx";
 import type { MIDIPianoRoll } from "./MIDIPianoRoll.tsx";
-import { space, radius, opacity } from '@nyc-tron/core/tokens';
+import { space, radius, opacity } from '../../../tokens.ts';
 
 const HIT = 44;
 const BAR = 8;

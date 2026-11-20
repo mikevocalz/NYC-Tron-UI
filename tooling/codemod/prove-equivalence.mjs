@@ -15,7 +15,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { dirname, join, posix } from "node:path";
 import { createAnalyzer, listSourceFiles } from "./analyze.mjs";
-import { EXPORT_ORDER, FAMILY_OF_CATEGORY, decodeScopedKey, normalizeColor, readModel, root, sharedTable } from "./token-model.mjs";
+import { EXPORT_ORDER, FAMILY_OF_CATEGORY, TOKEN_COPIES, decodeScopedKey, normalizeColor, readModel, root, sharedTable } from "./token-model.mjs";
 
 const argv = process.argv.slice(2);
 const base = argv.includes("--base") ? argv[argv.indexOf("--base") + 1] : "origin/main";
@@ -24,6 +24,7 @@ const jsonOut = argv.includes("--json") ? argv[argv.indexOf("--json") + 1] : nul
 // Paths under packages/ that may differ from <base> without being codemod output. Each has a reason.
 const INFRA = {
   "packages/core/src/tokens.ts": "generated token module",
+  "packages/ui/src/tokens.ts": "generated internal copy of the token module (decision 42)",
   "packages/core/package.json": "adds the ./tokens subpath",
   "packages/ui/tests/contracts.test.mjs": "source-text assertion now accepts size.touch",
   "packages/ui/tests/color-hsv.test.mjs": "source-text assertion now accepts size.touch",
@@ -69,22 +70,27 @@ function readTable(sf, exportName) {
 }
 
 // ---------- layer 3: token module and map integrity --------------------------
-function checkTokenModule() {
-  const sf = parse("tokens.ts", readFileSync(join(root, "packages/core/src/tokens.ts"), "utf8"));
-  if (parseErrors(sf)) fail("tokens.ts has parse errors");
+function checkCopy(rel) {
+  const sf = parse("tokens-" + rel.replace(/\//g, "_"), readFileSync(join(root, rel), "utf8"));
+  if (parseErrors(sf)) fail(rel + " has parse errors");
   const exported = sf.getVariableStatements().filter((s) => s.isExported()).flatMap((s) => s.getDeclarations().map((d) => d.getName()));
   const want = ["SPACE_UNIT", ...EXPORT_ORDER];
-  if (exported.join() !== want.join()) fail(`tokens.ts exports [${exported}] expected [${want}]`);
+  if (exported.join() !== want.join()) fail(`${rel} exports [${exported}] expected [${want}]`);
   const text = sf.getFullText();
-  if (/\b(function|=>|import|require|Math\.|new )\b/.test(text.replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, ""))) fail("tokens.ts contains logic");
+  if (/\b(function|=>|import|require|Math\.|new )\b/.test(text.replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, ""))) fail(rel + " contains logic");
   const table = {};
   for (const fam of EXPORT_ORDER) {
     const t = readTable(sf, fam);
     table[fam] = t;
     const exp = expected[fam] ?? {};
-    for (const [k, v] of Object.entries(exp)) if (t.get(k) !== v) fail(`tokens.ts ${fam}[${k}] = ${t.get(k)} but tokens.json says ${v}`);
-    for (const k of t.keys()) if (!(k in exp)) fail(`tokens.ts ${fam}[${k}] is not in tokens.json`);
+    for (const [k, v] of Object.entries(exp)) if (t.get(k) !== v) fail(`${rel} ${fam}[${k}] = ${t.get(k)} but tokens.json says ${v}`);
+    for (const k of t.keys()) if (!(k in exp)) fail(`${rel} ${fam}[${k}] is not in tokens.json`);
   }
+  return table;
+}
+function checkTokenModule() {
+  const tables = TOKEN_COPIES.map(checkCopy); // every generated copy must equal tokens.json
+  const table = tables[0];
   // tokens.map.json: every on-scale literal equals the value of the token it names
   let checked = 0;
   for (const cat of Object.keys(FAMILY_OF_CATEGORY)) {
@@ -167,7 +173,11 @@ for (const f of rewritten) {
   const removals = [];
   for (const d of sf.getImportDeclarations()) {
     const spec = d.getModuleSpecifierValue();
-    if (spec === "@nyc-tron/core/tokens") {
+    const pkg = f.split("/")[1];
+    const ownCopy = spec.startsWith(".") && posix.normalize(posix.join(dirname(f), spec.replace(/\.ts$/, "") + ".ts")) === `packages/${pkg}/src/tokens.ts`;
+    if (ownCopy && !TOKEN_COPIES.includes(`packages/${pkg}/src/tokens.ts`)) fail(`${f}: imports ${spec} but the package has no generated copy`);
+    if (spec === "@nyc-tron/core/tokens" || ownCopy) {
+      if (spec === "@nyc-tron/core/tokens" && pkg === "ui") fail(`${f}: ui must not import @nyc-tron/core (decision 42)`);
       for (const n of d.getNamedImports()) {
         const fam = n.getName();
         if (!EXPORT_ORDER.includes(fam)) fail(`${f}: imports unknown token export ${fam}`);

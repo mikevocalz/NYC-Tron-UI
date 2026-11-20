@@ -32,7 +32,7 @@ import {
   normalizeRefine,refineOp,refineReason,validateMaskInfo,
   type AddMaskOp,type InvertMaskOp,type MaskInfo,type RefineDraft,type RefineMaskOp,type RemoveMaskOp,type SetMaskEnabledOp,
 } from "./mask-model.ts";
-import {space,opacity} from '@nyc-tron/core/tokens';
+import {space,opacity} from '../../../tokens.ts';
 
 /** Props for {@linkcode MaskThumbnailAndEditor}. Each `on*` payload is one engine op's argument. */
 export interface MaskThumbnailAndEditorProps extends Omit<ViewProps,"children"> {

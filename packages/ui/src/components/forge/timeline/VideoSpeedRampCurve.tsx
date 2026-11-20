@@ -3,7 +3,7 @@ import {MotionCurveEditor,type MotionCurveEditorProps} from '../motion/MotionCur
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface VideoSpeedRampCurveProps extends Omit<MotionCurveEditorProps,'mode'|'valueLabel'|'onCommit'> {
  clipId:string;allowReverse?:boolean;allowFreeze?:boolean;estimatedSourceDurationSeconds?:number;
  onCommit:(...args:[...Parameters<MotionCurveEditorProps['onCommit']>,signal?:AbortSignal])=>void|Promise<unknown>;

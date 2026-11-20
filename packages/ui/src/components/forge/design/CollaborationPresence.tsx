@@ -1,7 +1,7 @@
 import {FlatList,Text,View,type ViewProps} from 'react-native';
 import {Button} from '../../Button.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space,border} from '@nyc-tron/core/tokens';
+import {space,border} from '../../../tokens.ts';
 export interface DesignPresence {id:string;name:string;color:string;cursor:{x:number;y:number}|null;selectionRects:readonly {x:number;y:number;width:number;height:number}[];status:'editing'|'viewing'|'offline';conflict?:string}
 export interface CollaborationPresenceProps extends Omit<ViewProps,'children'>,ScopedControlProps {participants:readonly DesignPresence[];viewport:{width:number;height:number};onFollow:(id:string)=>void;followingId?:string;connection:'connected'|'reconnecting'|'offline';unstyled?:boolean}
 /** Geometry is already mapped into viewport points by the collaboration host; no wall-clock freshness inference. */

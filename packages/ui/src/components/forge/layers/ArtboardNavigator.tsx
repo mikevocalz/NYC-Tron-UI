@@ -18,7 +18,7 @@ import {
   formatArtboardSize,newArtboardOp,validateArtboards,
   type AddArtboardOp,type ArtboardItem,type ArtboardLayout,type MoveArtboardOp,type RemoveArtboardOp,type UpdateArtboardOp,
 } from "./artboard-model.ts";
-import {space,radius,border,opacity,size} from "@nyc-tron/core/tokens";
+import {space,radius,border,opacity,size} from "../../../tokens.ts";
 
 /** Props for {@linkcode ArtboardNavigator}. Each `on*Artboard` payload is one engine op's argument. */
 export interface ArtboardNavigatorProps extends Omit<ViewProps,"children"> {

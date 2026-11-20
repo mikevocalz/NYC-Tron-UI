@@ -10,7 +10,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useOwnedAction} from '../../shell/useOwnedAction.ts';
 import {joinClasses} from '../../styles.ts';
 import {moveQueuedRenderJob,validateRenderChoices,validateMotionRenderSettings,validateMotionRenderJobs,type MotionRenderSettings,type MotionRenderJob,type MotionRenderFormat,type MotionRenderProfile} from './motion-render.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {MotionRenderSettings,MotionRenderJob,MotionRenderFormat,MotionRenderProfile} from './motion-render.ts';
 export interface RenderQueuePanelProps extends Omit<ViewProps,'children'> {
  /** Project identity; progress updates alone should not change this scope. */

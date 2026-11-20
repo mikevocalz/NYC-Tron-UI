@@ -6,7 +6,7 @@ import {PropertyInspector,type PropertyInspectorProps} from '../inputs/PropertyI
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PDFHyperlink {kind:'web'|'email'|'page';value:string;label:string;newWindow:boolean}
 export interface HyperlinkInspectorProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {value:PDFHyperlink;pages:readonly {id:string;label:string}[];onCommit:(value:PDFHyperlink,signal?:AbortSignal)=>unknown;onOpen:(value:PDFHyperlink,signal?:AbortSignal)=>unknown;onRemove:(signal?:AbortSignal)=>unknown}
 function validate(value:PDFHyperlink,pages:HyperlinkInspectorProps['pages']){if(value.label.length>8192||value.value.length>8192)throw new Error('Link exceeds supported length');if(value.kind==='web'){let url:URL;try{url=new URL(value.value);}catch{throw new Error('Enter a complete HTTP or HTTPS link');}if(!['https:','http:'].includes(url.protocol)||url.username||url.password)throw new Error('Use an HTTP or HTTPS link without embedded credentials');}else if(value.kind==='email'){if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.value))throw new Error('Enter an email address');}else if(value.kind==='page'){if(!pages.some(p=>p.id===value.value))throw new Error('Select a page in this PDF');}else throw new Error('Unsupported PDF link action');}

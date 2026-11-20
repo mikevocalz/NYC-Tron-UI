@@ -10,7 +10,7 @@ import {Select} from '../../Select.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface ShapeAdjustmentHandle {id:string;label:string;x:number;y:number;axis:'x'|'y';value:number;min:number;max:number}
 export interface ShapePresetGalleryProps extends Omit<AssetPresetGalleryProps,'label'|'selectedIds'> {
  selectedId:string|null;adjustments:readonly InspectorProperty[];handles:readonly ShapeAdjustmentHandle[];canvasAspectRatio:number;

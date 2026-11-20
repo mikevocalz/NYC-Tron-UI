@@ -19,7 +19,7 @@ import { colorReferences, referenceEdges, REFERENCE_TONE_CLASSES } from "./sprea
 import { fillFromEdge, fillTarget, type FillPlan } from "./spreadsheet/fill-handle.ts";
 import type { DragPoint, DragTransport } from "../gestures/drag-transport.ts";
 import { PanResponderDrag } from "../gestures/PanResponderDrag.tsx";
-import { space, font } from '@nyc-tron/core/tokens';
+import { space, font } from '../../tokens.ts';
 
 /** Only presentation data supplied by the app's TallyDocument.getRange(). */
 export interface SpreadsheetCell {

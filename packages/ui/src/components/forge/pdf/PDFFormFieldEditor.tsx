@@ -3,7 +3,7 @@ import {PropertyInspector,type InspectorProperty,type PropertyValue} from '../in
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type PDFFormField={id:string;label:string;pageId:string;required:boolean;readOnly:boolean;error?:string}&(
  {kind:'text';value:string;maxLength:number;multiline?:boolean}|
  {kind:'checkbox';value:boolean}|

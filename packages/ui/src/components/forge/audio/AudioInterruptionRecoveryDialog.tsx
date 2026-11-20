@@ -6,7 +6,7 @@ import {useStore} from 'zustand';
 import {Button} from '../../Button.tsx';
 import {joinClasses} from '../../styles.ts';
 import {recoveryMessage,recoveryTitle,type AudioRecoveryNotice} from './audio-recovery-model.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 
 type Action=()=>void|Promise<unknown>;
 type Base=ScopedControlProps&{readonly visible:boolean;readonly onClose:()=>void;readonly error?:string;className?:string;unstyled?:boolean};

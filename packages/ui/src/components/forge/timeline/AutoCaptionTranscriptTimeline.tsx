@@ -9,7 +9,7 @@ import {MenuButton} from '../../shell/MenuButton.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {assertFrameRate,formatTimecode,type FrameRate} from '../timebase.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface CaptionSegment {id:string;text:string;speakerId:string|null;startFrame:number;endFrame:number}
 export interface AutoCaptionTranscriptTimelineProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  segments:readonly CaptionSegment[];speakers:readonly {id:string;label:string}[];frame:number;durationFrames:number;rate:FrameRate;selectedId:string|null;onSelect:(id:string)=>void;

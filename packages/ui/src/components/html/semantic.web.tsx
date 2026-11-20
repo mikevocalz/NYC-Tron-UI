@@ -4,7 +4,7 @@ import type { ReactElement } from "react";
 import type {
   HeadingProps, LinkProps, SemanticBaseProps, SemanticBlockProps, SemanticTextProps,
 } from "./types.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../tokens.ts";
 
 export { Input } from "./Input.tsx";
 export type {

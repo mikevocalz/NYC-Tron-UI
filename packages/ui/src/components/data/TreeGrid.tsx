@@ -8,7 +8,7 @@ import {
 } from "./tree-grid.ts";
 import {createRowHeightIndex} from "./tree-row-heights.ts";
 import {joinClasses} from "../styles.ts";
-import {space,size} from "@nyc-tron/core/tokens";
+import {space,size} from "../../tokens.ts";
 import {tokens} from "./TreeGrid.tokens.ts";
 
 /** A value column of {@linkcode TreeGrid}. The hierarchy label column is always first and always pinned. */

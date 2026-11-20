@@ -5,7 +5,7 @@ import {Button} from '../../Button.tsx';
 import {joinClasses} from '../../styles.ts';
 import {webToggleProps} from '../toggle-a11y.ts';
 import {PRESENTER_INK_TOOLS,PRESENTER_INK_TOOL_LABELS,PRESENTER_INK_SHORTCUTS,type PresenterInkMode} from './presenter-ink-model.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 /** Presenter tools; colors/size remain the consuming app's existing ink controls. */
 export interface PresenterInkStripProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  readonly mode:PresenterInkMode;readonly onModeChange:(mode:PresenterInkMode)=>void;

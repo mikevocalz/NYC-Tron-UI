@@ -7,7 +7,7 @@ import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {joinClasses} from '../../styles.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface BrushPreset {id:string;name:string;category:string;favorite:boolean;disabledReason?:string}
 export interface BrushPresetBrowserProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  presets:readonly BrushPreset[];selectedId?:string;onSelect:(id:string,signal?:AbortSignal)=>void|Promise<unknown>;

@@ -4,7 +4,7 @@ import {createDragController,type DragController} from "./gestures/drag-controll
 import {keyboardKey,type DragPoint,type DragTransport,type KeyEventLike} from "./gestures/drag-transport.ts";
 import {PanResponderDrag} from "./gestures/PanResponderDrag.tsx";
 import {joinClasses} from "./styles.ts";
-import {space,border,opacity,size} from "@nyc-tron/core/tokens";
+import {space,border,opacity,size} from "../tokens.ts";
 
 // Web only: a drag otherwise selects nearby text. Not a ViewStyle key in RN.
 const NO_SELECT=(Platform.OS==="web"?{userSelect:"none"}:{}) as object;

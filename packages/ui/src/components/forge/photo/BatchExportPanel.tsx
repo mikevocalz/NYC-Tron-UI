@@ -8,7 +8,7 @@ import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {joinClasses} from '../../styles.ts';
 import {validatePhotoTargets} from './photo-presets.ts';
 import {validatePhotoExport,validatePhotoExportProgress,type PhotoBatchExportSettings,type PhotoExportFormat,type PhotoExportProgress} from './photo-export.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export type {PhotoBatchExportSettings,PhotoExportFormat,PhotoExportProgress} from './photo-export.ts';
 export interface BatchExportPanelProps extends Omit<ViewProps,'children'> {
  readonly scope:string;readonly photoIds:readonly string[];readonly value:PhotoBatchExportSettings;readonly formats:readonly PhotoExportFormat[];

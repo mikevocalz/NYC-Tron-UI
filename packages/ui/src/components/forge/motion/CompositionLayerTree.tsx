@@ -5,7 +5,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useOwnedAction} from '../../shell/useOwnedAction.ts';
 import {joinClasses} from '../../styles.ts';
 import {compositionAncestors,flattenCompositionLayers,validateCompositionLayers,type CompositionLayer,type CompositionTreeRow} from './composition-tree.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export type {CompositionLayer,CompositionLayerKind} from './composition-tree.ts';
 export interface CompositionLayerTreeProps extends Omit<ViewProps,'children'> {
  readonly scope:string;readonly revision?:string|number;readonly compositionId:string;readonly layers:readonly CompositionLayer[];readonly expandedIds:readonly string[];readonly selectedId:string|null;

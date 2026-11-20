@@ -5,7 +5,7 @@ import {useStore} from "zustand";
 import {CommandPopover,type CommandMenuItem} from "../overlays/CommandPopover.tsx";
 import {hasUsableRegion,type Rect2D} from "../overlays/popover-position.ts";
 import {shellKey} from "./shell-keys.ts";
-import {size} from "@nyc-tron/core/tokens";
+import {size} from "../../tokens.ts";
 
 export type {CommandMenuItem} from "../overlays/CommandPopover.tsx";
 

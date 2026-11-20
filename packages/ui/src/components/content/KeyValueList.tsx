@@ -3,7 +3,7 @@ import { Text, View, type LayoutChangeEvent, type ViewProps } from "react-native
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
 import { joinClasses } from "../styles.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../tokens.ts";
 
 export interface KeyValueItem {
   key:string;

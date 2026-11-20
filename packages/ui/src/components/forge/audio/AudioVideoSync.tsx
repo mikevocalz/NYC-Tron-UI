@@ -4,7 +4,7 @@ import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {assertFrameRate,type FrameRate} from '../timebase.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface AudioVideoSyncProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  surface:ReactNode;aspectRatio:number;sampleRate:number;audioSample:number;presentedFrame:number|null;
  rate:FrameRate;pictureOffsetSamples:number;toleranceSamples:number;playing:boolean;

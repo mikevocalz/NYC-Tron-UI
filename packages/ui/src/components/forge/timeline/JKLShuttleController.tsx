@@ -5,7 +5,7 @@ import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {DEFAULT_SHUTTLE_LADDER,assertLadder,shuttleLabel,shuttleRate} from "./shuttle.ts";
-import {space,opacity,size} from '@nyc-tron/core/tokens';
+import {space,opacity,size} from '../../../tokens.ts';
 
 /** Props for {@linkcode JKLShuttleController}. */
 export interface JKLShuttleControllerProps extends Omit<ViewProps,"children">,ScopedControlProps {

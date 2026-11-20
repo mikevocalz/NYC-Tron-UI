@@ -23,7 +23,7 @@ import {
   checkerCells,fitContain,rasterToImage,sharedThumbnailCache,thumbnailAccessibilityLabel,thumbnailRequestMax,thumbnailCacheId,
   type ThumbnailCache,type ThumbnailImage,type ThumbnailSource,type ThumbnailState,
 } from "./layer-thumbnail-model.ts";
-import {space,radius,border,opacity,size} from "@nyc-tron/core/tokens";
+import {space,radius,border,opacity,size} from "../../../tokens.ts";
 import {tokens} from "./LayerThumbnail.tokens.ts";
 
 /** Props for {@linkcode LayerThumbnail}. */

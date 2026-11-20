@@ -8,7 +8,7 @@ import {UnitInput} from '../../shell/UnitInput.tsx';
 import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {joinClasses} from '../../styles.ts';
 import {emptyPhotoCatalogFilter,validateCatalogChoices,validateCatalogFilter,type CatalogChoice,type PhotoCatalogFilter} from './photo-catalog.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export type {PhotoCatalogFilter,CatalogChoice} from './photo-catalog.ts';
 export interface CatalogFilterBarProps extends Omit<ViewProps,'children'> {
  readonly catalogId:string;readonly value:PhotoCatalogFilter;readonly cameras:readonly CatalogChoice[];readonly lenses:readonly CatalogChoice[];readonly albums:readonly CatalogChoice[];

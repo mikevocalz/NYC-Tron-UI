@@ -5,7 +5,7 @@ import {GestureDetector,usePanGesture} from 'react-native-gesture-handler';
 import {AssetPresetGallery,type AssetPresetGalleryProps} from '../inputs/AssetPresetGallery.tsx';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface NodeLibrarySearchProps extends Omit<AssetPresetGalleryProps,'label'|'onApply'|'renderPreview'> {renderPreview:(id:string)=>ReactNode;graphGeometryRevision:string|number;screenToGraph:(point:{x:number;y:number})=>{x:number;y:number}|null;defaultPoint:{x:number;y:number};onInsert:(typeId:string,point:{x:number;y:number},signal?:AbortSignal)=>unknown}
 export function NodeLibrarySearch({onInsert,screenToGraph,defaultPoint,graphGeometryRevision,renderPreview,...props}:NodeLibrarySearchProps){const owner=useEditorBoundary([JSON.stringify([...controlIdentity(props.scope??'node-library',props.revision??0),graphGeometryRevision,props.disabledReason])]),guard=useScopedControl(owner,{...props,onInsert,screenToGraph,defaultPoint},props.disabledReason!==undefined);
  const insert=(id:string,point?:{x:number;y:number})=>guard.run('insert',(h,s)=>{if(!h.items.some(i=>i.id===id&&i.unavailableReason===undefined))throw new Error('Node type unavailable');const at=point?h.screenToGraph(point):h.defaultPoint;if(!at||![at.x,at.y].every(n=>Number.isFinite(n)&&n>=0&&n<=100000))throw new Error('Drop inside the node graph');return h.onInsert(id,at,s);});

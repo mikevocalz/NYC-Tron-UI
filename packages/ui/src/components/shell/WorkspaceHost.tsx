@@ -13,7 +13,7 @@ import {
   documentLabel,layoutForMode,modeAnnouncement,modeShortcutIndex,modeShortcutLabel,validateWorkspace,validateWorkspaceDocument,
   type WorkspaceDocument,type WorkspaceMode,
 } from "./workspace-model.ts";
-import {space,radius,border,size} from "@nyc-tron/core/tokens";
+import {space,radius,border,size} from "../../tokens.ts";
 
 export type {WorkspaceDocument,WorkspaceMode} from "./workspace-model.ts";
 export type {DockLayout,DockPanel};

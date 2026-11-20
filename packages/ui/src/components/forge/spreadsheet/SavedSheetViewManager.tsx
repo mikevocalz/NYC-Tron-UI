@@ -7,7 +7,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import type {SheetSort,SheetFilter} from './SortFilterHeader.tsx';
 import type {FreezeState} from './freeze-split-model.ts';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface SheetViewSnapshot {visibleColumns:readonly string[];sorts:readonly SheetSort[];filters:readonly SheetFilter[];freeze:FreezeState;zoom:number}
 export interface SavedSheetView {id:string;sheetId:string;name:string;visibility:'personal'|'shared';canEdit:boolean;summary:string}
 export interface SavedSheetViewManagerProps extends Omit<ViewProps,'children'>,ScopedControlProps {

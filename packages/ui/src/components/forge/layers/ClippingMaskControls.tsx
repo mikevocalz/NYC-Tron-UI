@@ -23,7 +23,7 @@ import {View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {PanelButton,Reason} from "./panel-button.tsx";
 import {CLIP_INDENT,clipReason,clipToggleLabel,type ClipLayer,type SetClippedOp} from "./clipping-model.ts";
-import {radius} from '@nyc-tron/core/tokens';
+import {radius} from '../../../tokens.ts';
 
 /** Props for {@linkcode ClipToggle}. */
 export interface ClipToggleProps extends Omit<ViewProps,"children"> {

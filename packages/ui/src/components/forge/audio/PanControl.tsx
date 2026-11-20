@@ -10,7 +10,7 @@ import { useStore } from "zustand";
 import { cancelPreview } from "../cancel-preview.ts";
 import { joinClasses } from "../../styles.ts";
 import { describeBalance, describePan, dragToPan, formatPan, panToPosition, quantizePan, stepPan } from "./pan.ts";
-import { space, radius, border, opacity } from '@nyc-tron/core/tokens';
+import { space, radius, border, opacity } from '../../../tokens.ts';
 
 /** Minimum hit size (iOS 44pt / Android 48dp floor). */
 const THUMB = 14;

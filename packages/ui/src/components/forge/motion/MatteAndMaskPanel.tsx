@@ -3,7 +3,7 @@ import {Select} from '../../Select.tsx';
 import {UnitInput} from '../../shell/UnitInput.tsx';
 import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {validateMotionMatte,type MotionMatte} from './motion-settings.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {MotionMatte} from './motion-settings.ts';
 export interface MotionMatteSource {readonly id:string;readonly label:string;readonly unavailableReason?:string}
 export interface MatteAndMaskPanelProps extends Omit<ViewProps,'children'> {

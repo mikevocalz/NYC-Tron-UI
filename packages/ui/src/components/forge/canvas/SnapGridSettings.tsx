@@ -7,7 +7,7 @@ import {
   GRID_MAX_SPACING,GRID_MAX_SUBDIVISIONS,GRID_MIN_SPACING,SNAP_MAX_THRESHOLD,SNAP_MIN_THRESHOLD,
   validateGrid,validateSnap,type GridSettings,type SnapSettings,
 } from "./snap-grid-model.ts";
-import {space} from "@nyc-tron/core/tokens";
+import {space} from "../../../tokens.ts";
 
 /** Props for {@linkcode SnapGridSettings}. */
 export interface SnapGridSettingsProps extends Omit<ViewProps,"children"> {

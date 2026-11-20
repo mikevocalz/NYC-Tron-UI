@@ -12,7 +12,7 @@ import {
   bindingFromChord,bindingKeycaps,bindingSpoken,findConflict,isAssignableBinding,normalizeBinding,validateShortcutCommands,
   type Binding,type ChordRecorder,type KeyChord,type ShortcutCommand,
 } from "./shortcut-model.ts";
-import {space,border,size} from "@nyc-tron/core/tokens";
+import {space,border,size} from "../../tokens.ts";
 import {tokens} from "./KeyboardShortcutHUD.tokens.ts";
 
 export type {Binding,ChordRecorder,KeyChord,ShortcutCommand} from "./shortcut-model.ts";

@@ -1,7 +1,7 @@
 import { Text, View, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
 import { bounded, poolHistogram, type HistogramChannel } from "./color-adjustments.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../../tokens.ts";
 export type { HistogramChannel } from "./color-adjustments.ts";
 /** Actual histogram bins and their explicit numeric domain. */
 export interface LiveHistogramProps extends Omit<ViewProps,"children"> {

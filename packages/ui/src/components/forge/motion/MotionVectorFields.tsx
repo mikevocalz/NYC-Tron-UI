@@ -1,7 +1,7 @@
 import {View} from 'react-native';
 import {UnitInput} from '../../shell/UnitInput.tsx';
 import {validateMotionVector,type MotionVector3} from './motion-settings.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface MotionVectorFieldsProps {readonly label:string;readonly value:MotionVector3;readonly onCommit:(value:MotionVector3)=>void;readonly min?:number;readonly max?:number;readonly step?:number;readonly disabled?:boolean;readonly unstyled?:boolean}
 /** Common axis entry preserves the two untouched floating coordinates. */
 export function MotionVectorFields({label,value,onCommit,min=-1e9,max=1e9,step=1,disabled=false,unstyled=false}:MotionVectorFieldsProps){

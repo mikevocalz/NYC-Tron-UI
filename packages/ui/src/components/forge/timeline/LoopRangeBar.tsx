@@ -12,7 +12,7 @@ import {frameForKey} from "./frame-keys.ts";
 import {loopCommit,loopFromMarks,setLoopEdge,type LoopCommit,type LoopRange} from "./loop-range.ts";
 import {frameToX,xToFrame,type TimelineViewport} from "./viewport.ts";
 import {useFrameScrub} from "./useFrameScrub.ts";
-import {space,border,opacity,size} from '@nyc-tron/core/tokens';
+import {space,border,opacity,size} from '../../../tokens.ts';
 
 /** Props for {@linkcode LoopRangeBar}. */
 export interface LoopRangeBarProps extends Omit<ViewProps,"children">,ScopedControlProps {

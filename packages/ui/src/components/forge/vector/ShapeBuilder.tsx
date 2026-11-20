@@ -12,7 +12,7 @@ import {
 } from "./shape-builder-model.ts";
 import {availabilityReason,type BooleanOp} from "./vector-types.ts";
 import {GroupLabel,NoticeLine,VECTOR_TOUCH_TARGET,VectorButton} from "./vector-controls.tsx";
-import {space,border} from '@nyc-tron/core/tokens';
+import {space,border} from '../../../tokens.ts';
 
 /** Props for {@linkcode ShapeBuilder}. Selection and the boolean group come from the host's document. */
 export interface ShapeBuilderProps extends Omit<ViewProps,"children">,ScopedControlProps {

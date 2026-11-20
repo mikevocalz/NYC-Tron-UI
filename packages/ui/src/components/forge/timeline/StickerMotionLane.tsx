@@ -10,7 +10,7 @@ import type {TimelineViewport} from './viewport.ts';
 import type {FrameRate} from '../timebase.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface StickerTransform {x:number;y:number;rotation:number;scale:number}
 export interface TimelineSticker {id:string;assetId:string;label:string;startFrame:number;endFrame:number;transform:StickerTransform;locked?:boolean}
 export interface StickerMotionLaneProps extends Omit<ViewProps,'children'>,ScopedControlProps {

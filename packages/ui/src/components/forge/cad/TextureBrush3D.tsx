@@ -7,7 +7,7 @@ import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface SurfaceBrushHit {meshId:string;triangle:number;barycentric:readonly [number,number,number];uv:readonly [number,number];world:readonly [number,number,number]}
 export interface TextureBrushSettings {radius:number;hardness:number;flow:number;spacing:number;pressure:boolean;channelId:string}
 export interface TextureBrush3DProps extends Omit<ViewProps,'children'>,ScopedControlProps {surface:ReactNode;cameraRevision:string|number;settings:TextureBrushSettings;channels:readonly {id:string;label:string}[];

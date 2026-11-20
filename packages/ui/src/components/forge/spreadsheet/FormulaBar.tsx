@@ -3,7 +3,7 @@ import {TextInput,View,type ViewProps} from 'react-native';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface FormulaBarProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  address:string;value:string;originalValue:string;onChange:(raw:string)=>void;
  onCommit:(raw:string,signal?:AbortSignal)=>unknown;onCancel:()=>void;pending?:boolean;readOnly?:boolean;hideActions?:boolean;unstyled?:boolean;

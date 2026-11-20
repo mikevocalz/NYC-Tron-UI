@@ -9,7 +9,7 @@ import {PanResponder,Pressable,Text,View,type GestureResponderEvent} from "react
 import {createCanvasResponder} from "../../gestures/canvas-responder.ts";
 import {joinClasses} from "../../styles.ts";
 import type {Point} from "./vector-types.ts";
-import {space,font,opacity as opacityToken} from "@nyc-tron/core/tokens";
+import {space,font,opacity as opacityToken} from "../../../tokens.ts";
 
 /** Every vector-tools control target is at least this many points square. */
 export const VECTOR_TOUCH_TARGET=44;

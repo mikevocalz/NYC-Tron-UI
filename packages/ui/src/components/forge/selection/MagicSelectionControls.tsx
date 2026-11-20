@@ -20,7 +20,7 @@ import {
  validateWandSettings,wandProblem,type MagicWandRequest,type MagicWandSettings,type ModifySelectionRequest,
  type RefineEdgeRequest,type WandSample,
 } from "./magic-selection-model.ts";
-import {space,opacity} from "@nyc-tron/core/tokens";
+import {space,opacity} from "../../../tokens.ts";
 
 /** Radii the edge tools use, in document pixels. Host-owned like every other setting. */
 export interface SelectionEdgeRadii {

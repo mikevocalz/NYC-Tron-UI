@@ -6,7 +6,7 @@ import {Select} from '../../Select.tsx';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PrototypeFrameTarget {id:string;label:string;x:number;y:number;width:number;height:number}
 export interface PrototypeHotspot {id:string;label:string;frameId:string;x:number;y:number;destinationId:string|null}
 export interface PrototypeConnectionToolProps extends Omit<ViewProps,'children'>,ScopedControlProps {frames:readonly PrototypeFrameTarget[];hotspots:readonly PrototypeHotspot[];selectedId:string|null;onSelect:(id:string)=>void;onConnect:(hotspotId:string,destinationId:string,signal?:AbortSignal)=>unknown;onDisconnect:(hotspotId:string,signal?:AbortSignal)=>unknown;renderCanvas:(drag?:{x:number;y:number})=>ReactNode;unstyled?:boolean}

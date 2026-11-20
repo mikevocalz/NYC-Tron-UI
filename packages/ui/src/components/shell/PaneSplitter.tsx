@@ -12,7 +12,7 @@ import {
   hingeBands,mirrorBands,resolveSplit,sizeForEdge,startSizeFor,stepSplit,
   type HingeBand,type SplitAxis,type SplitLayout,type SplitLimits,
 } from "./splitter-model.ts";
-import {border} from "@nyc-tron/core/tokens";
+import {border} from "../../tokens.ts";
 import {tokens} from "./PaneSplitter.tokens.ts";
 
 export type {SplitAxis} from "./splitter-model.ts";

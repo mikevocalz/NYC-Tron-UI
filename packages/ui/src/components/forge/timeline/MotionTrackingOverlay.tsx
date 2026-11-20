@@ -7,7 +7,7 @@ import {validateViewport,type CanvasViewport} from '../canvas/canvas-viewport.ts
 import type {Rect2D} from '../../overlays/popover-position.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface MotionTrackingOverlayProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  frame:number;playing:boolean;viewport:CanvasViewport;usableRegions?:readonly Rect2D[];surface:ReactNode;seed:SelectionFrame;
  measurement:{frame:number;bounds:SelectionFrame;confidence:number}|null;

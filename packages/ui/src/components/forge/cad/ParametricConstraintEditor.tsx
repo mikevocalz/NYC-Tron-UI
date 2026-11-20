@@ -3,7 +3,7 @@ import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface ParametricConstraint {id:string;label:string;kind:string;expression:string;enabled:boolean;references:readonly string[];readOnly:boolean;resolvedValue?:string;error?:string}
 export interface ParametricConstraintEditorProps extends Omit<ViewProps,'children'>,ScopedControlProps {constraints:readonly ParametricConstraint[];selectedId:string|null;kinds:readonly {id:string;label:string;canCreate:boolean}[];solver:{status:'dirty'|'solving'|'solved'|'conflict'|'error';revision:string|number;degreesOfFreedom:number|null;conflicts:readonly {id:string;label:string;constraintIds:readonly string[]}[]};onSelect:(id:string)=>void;onCommit:(value:ParametricConstraint,signal?:AbortSignal)=>unknown;onAdd:(kind:string,signal?:AbortSignal)=>unknown;onRemove:(id:string,signal?:AbortSignal)=>unknown;onSolve:(signal?:AbortSignal)=>unknown;onRevealConflict:(ids:readonly string[])=>void;unstyled?:boolean}
 export function ParametricConstraintEditor({scope='parametric-constraints',revision=0,...props}:ParametricConstraintEditorProps){const {constraints,selectedId,kinds,solver,onSelect:_select,onCommit:_commit,onAdd:_add,onRemove:_remove,onSolve:_solve,onRevealConflict:_conflict,unstyled=false,disabledReason,style,...rest}=props;

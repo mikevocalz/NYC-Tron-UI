@@ -3,7 +3,7 @@ import {Select} from '../../Select.tsx';
 import {UnitInput} from '../../shell/UnitInput.tsx';
 import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {validateLens,type LensSettings} from './photo-adjustments.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {LensSettings} from './photo-adjustments.ts';
 export interface LensProfile {readonly id:string;readonly label:string}
 export interface LensCorrectionPanelProps extends Omit<ViewProps,'children'> {readonly value:LensSettings;readonly profiles:readonly LensProfile[];readonly onCommit:(value:LensSettings)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}

@@ -9,7 +9,7 @@ import {joinClasses} from "../../styles.ts";
 import {IconButton} from "../../IconButton.tsx";
 import {useLocalStore} from "../../useLocalStore.ts";
 import {trackSilenced,type TimelineTrack,type TrackKind} from "./edits.ts";
-import {space,radius,border,size} from '@nyc-tron/core/tokens';
+import {space,radius,border,size} from '../../../tokens.ts';
 import {tokens} from './TrackHeaders.tokens.ts';
 
 /** A track switch Splice stores (`setTrackFlags`). */

@@ -8,7 +8,7 @@ import {Select} from '../../Select.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from './useScopedControl.ts';
-import {space,radius,size} from '@nyc-tron/core/tokens';
+import {space,radius,size} from '../../../tokens.ts';
 export interface EditorPoint2D {id:string;label:string;x:number;y:number}
 export interface PointEditor2DProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  points:readonly EditorPoint2D[];selectedId:string|null;onSelect:(id:string)=>void;

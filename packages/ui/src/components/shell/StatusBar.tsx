@@ -7,7 +7,7 @@ import {
   activityAnnouncement,formatElapsed,formatZoom,progressPercent,selectionSummary,stepZoom,
   type SelectionNoun,type StatusActivity,
 } from "./status-model.ts";
-import {space,radius,border,size} from "@nyc-tron/core/tokens";
+import {space,radius,border,size} from "../../tokens.ts";
 
 export type {SelectionNoun,StatusActivity} from "./status-model.ts";
 

@@ -1,6 +1,6 @@
 import { Text, View, type ViewProps } from "react-native";
 import { joinClasses } from "../styles.ts";
-import { border } from "@nyc-tron/core/tokens";
+import { border } from "../../tokens.ts";
 
 export type BadgeTone="neutral"|"info"|"success"|"danger"|"accent";
 export type BadgeSize="xs"|"sm";

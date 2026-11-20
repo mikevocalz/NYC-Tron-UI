@@ -6,7 +6,7 @@ import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PDFSignatureArtifact {id:string;kind:'ink'|'image';label:string;aspectRatio:number}
 export interface SignatureStampToolProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  mode:'ink'|'image';ink:Omit<InkAndLaserPointerProps,'capture'|'onCaptureStroke'>;

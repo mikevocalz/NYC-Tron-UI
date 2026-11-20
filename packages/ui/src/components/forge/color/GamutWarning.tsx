@@ -3,7 +3,7 @@ import { Button } from "../../Button.tsx";
 import { joinClasses } from "../../styles.ts";
 import {rgbaToHex} from "../color.ts";
 import { validateGamutReport, type GamutReport } from "./color-management.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../../tokens.ts";
 export type { GamutReport } from "./color-management.ts";
 /** Measured gamut information and optional host inspection action. */
 export interface GamutWarningProps extends Omit<ViewProps, "children"> {

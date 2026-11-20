@@ -1,7 +1,7 @@
 import {View} from 'react-native';
 import {AssetPresetGallery,type AssetPresetGalleryProps,type AssetPreset} from '../inputs/AssetPresetGallery.tsx';
 import {PropertyInspector,type InspectorProperty} from '../inputs/PropertyInspector.tsx';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PresentationPreset extends AssetPreset {kind:'theme'|'template'}
 export interface ThemeAndTemplateGalleryProps extends Omit<AssetPresetGalleryProps,'label'|'items'> {
  presets:readonly PresentationPreset[];

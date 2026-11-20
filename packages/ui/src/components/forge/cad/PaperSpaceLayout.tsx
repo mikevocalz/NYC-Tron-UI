@@ -5,7 +5,7 @@ import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PaperViewport {id:string;label:string;x:number;y:number;width:number;height:number;scale:number;locked:boolean}
 export interface PaperSpaceLayoutProps extends Omit<ViewProps,'children'>,ScopedControlProps {pageSetup:Omit<PageSetupPanelProps,'scope'|'revision'>;viewports:readonly PaperViewport[];selectedId:string|null;templates:readonly {id:string;label:string}[];templateId:string;renderSheet:()=>ReactNode;onSelect:(id:string)=>void;onViewport:(value:PaperViewport,signal?:AbortSignal)=>unknown;onTemplate:(id:string,signal?:AbortSignal)=>unknown;onPrint:(signal?:AbortSignal)=>unknown;printReady:boolean;unstyled?:boolean}
 export function PaperSpaceLayout({scope='paper-space',revision=0,...props}:PaperSpaceLayoutProps){const {pageSetup,viewports,selectedId,templates,templateId,renderSheet,onSelect:_select,onViewport:_viewport,onTemplate:_template,onPrint:_print,printReady,unstyled=false,disabledReason,style,...rest}=props;

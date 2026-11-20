@@ -3,7 +3,7 @@ import {Button} from '../../Button.tsx';
 import {SegmentedControl} from '../../SegmentedControl.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type InputMonitorMode='off'|'hardware'|'software';
 export interface InputMonitorToggleProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  value:InputMonitorMode;hardwareSupported:boolean;softwareSupported:boolean;feedbackRisk:boolean;feedbackAcknowledged:boolean;

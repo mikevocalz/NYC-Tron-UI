@@ -9,7 +9,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useOwnedAction} from '../../shell/useOwnedAction.ts';
 import {PhotoBrushSurface} from './PhotoBrushSurface.tsx';
 import {validatePhotoBrush,validatePhotoBrushPoints,type PhotoBrushSettings,type PhotoBrushPoint,type PhotoImageSize} from './photo-masks.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 /** Shared brush settings/input owner, specialized by LocalMaskBrush and retouch. */
 export interface PhotoBrushPanelProps extends Omit<ViewProps,'children'> {
  readonly scope:string;readonly imageSize:PhotoImageSize;readonly value:PhotoBrushSettings;

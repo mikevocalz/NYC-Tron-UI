@@ -2,7 +2,7 @@ import { useRef, type ComponentRef } from "react";
 import { I18nManager, Platform, Pressable, Text, View, type ViewProps, type StyleProp, type ViewStyle, type TextStyle } from "react-native";
 import { joinClasses } from "./styles.ts";
 import { domIsRTL, isModified, nextChoiceIndex, rovingStop, webKey } from "./forms/choice-keys.ts";
-import { size } from "@nyc-tron/core/tokens";
+import { size } from "../tokens.ts";
 
 export interface SegmentedOption<T extends string=string> {
   readonly value:T;

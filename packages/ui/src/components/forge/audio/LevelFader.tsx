@@ -16,7 +16,7 @@ import {
   FADER_RANGES, clampGain, dragToGain, formatDb, gainToPosition, stepGain,
   type FaderRange,
 } from "./level.ts";
-import { space, radius, border, opacity } from '@nyc-tron/core/tokens';
+import { space, radius, border, opacity } from '../../../tokens.ts';
 
 /** Visual thickness of the thumb along the travel axis, in points. */
 const THUMB = 16;

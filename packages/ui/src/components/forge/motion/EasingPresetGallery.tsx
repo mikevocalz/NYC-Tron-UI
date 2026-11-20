@@ -4,7 +4,7 @@ import {useLocalStore} from '../../useLocalStore.ts';
 import {joinClasses} from '../../styles.ts';
 import {nodeIsRTL,shellKey} from '../../shell/shell-keys.ts';
 import {MOTION_EASING_PRESETS,validateMotionEasingPresets,type MotionEasingKind,type MotionEasingPreset} from './motion-easing.ts';
-import {space,opacity} from '@nyc-tron/core/tokens';
+import {space,opacity} from '../../../tokens.ts';
 export type {MotionEasing,MotionEasingKind,MotionEasingPreset} from './motion-easing.ts';
 export interface EasingPresetGalleryProps extends Omit<ViewProps,'children'> {
  readonly scope:string;readonly selectedId:string|null;readonly supported:readonly MotionEasingKind[];

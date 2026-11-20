@@ -6,7 +6,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import type {Rect2D} from '../../overlays/popover-position.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface SheetSort {columnId:string;direction:'ascending'|'descending'}
 export interface SheetFilter {columnId:string;operator:'all'|'equals'|'contains'|'greater'|'less'|'blank'|'not-blank';operand:string}
 export interface SortFilterHeaderProps extends Omit<ViewProps,'children'>,ScopedControlProps {

@@ -7,7 +7,7 @@ import {ImageCropOverlay} from '../graphics/ImageCropOverlay.tsx';
 import {fitCropAspect,validateCrop,type CropRect} from '../graphics/crop.ts';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface GuidedCropValue {readonly rect:CropRect;readonly angle:number;readonly ratio:'free'|'original'|'1:1'|'4:3'|'3:2'|'16:9'}
 export interface GuidedCropAndStraightenProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  value:GuidedCropValue;imageWidth:number;imageHeight:number;width:number;height:number;

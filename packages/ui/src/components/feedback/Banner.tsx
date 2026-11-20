@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Pressable, Text, View, type ViewProps } from "react-native";
 import { joinClasses } from "../styles.ts";
 import { CloseGlyph, StatusGlyph, type StatusTone } from "./glyphs.tsx";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../tokens.ts";
 
 export type BannerTone=StatusTone;
 

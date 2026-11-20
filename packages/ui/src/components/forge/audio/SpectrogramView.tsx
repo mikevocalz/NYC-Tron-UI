@@ -19,7 +19,7 @@ import {
   SPECTROGRAM_THRESHOLDS_DB, columnsForWidth, describeSpectrogram, frequencyTicks, poolSpectrogram,
   spectrogramRuns, timeTicks, type IntensityStep,
 } from "./spectrogram.ts";
-import { space, font } from '@nyc-tron/core/tokens';
+import { space, font } from '../../../tokens.ts';
 
 /** Load state of a {@linkcode SpectrogramView}. */
 export type SpectrogramStatus = "measuring" | "ready" | "error" | "empty";

@@ -19,7 +19,7 @@ import {
   type HandleOffset,type NodeKind,type NodeRef,type PathNode,type Point,type Subpath,type ViewTransform,
 } from "./vector-types.ts";
 import {CanvasKnob,LinePiece,NoticeLine,VectorButton,type CanvasKeyEvent,type DragModifiers} from "./vector-controls.tsx";
-import {space,radius,border} from '@nyc-tron/core/tokens';
+import {space,radius,border} from '../../../tokens.ts';
 
 /** Source contract for hosts that require scoped, focus-preserving canvas edits.
  * Older alpha.4 artifacts omit this marker; availability must be detected at runtime. */

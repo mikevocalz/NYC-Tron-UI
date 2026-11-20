@@ -8,7 +8,7 @@ import { clampFrame, formatTimecode, frameToPosition, positionToFrame } from "./
 import type { NativeSeekBarProps } from "./NativeSeekBar.types.ts";
 
 import {controlIdentity} from "./inputs/useScopedControl.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../tokens.ts";
 
 type Drag = { preview: number | undefined };
 

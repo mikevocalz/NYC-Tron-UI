@@ -17,7 +17,7 @@ import {formatTimecode,type FrameRate} from "../timebase.ts";
 import {framesToSeconds} from "./time.ts";
 import {adjacentMarker,moveMarker,resizeMarker,sortMarkers,type MarkerUpdate,type TimelineMarker} from "./markers.ts";
 import {frameToX,type TimelineViewport} from "./viewport.ts";
-import {space,radius} from '@nyc-tron/core/tokens';
+import {space,radius} from '../../../tokens.ts';
 
 /** Props for {@linkcode TimelineMarkers}. */
 export interface TimelineMarkersProps extends Omit<ViewProps,"children">,ScopedControlProps {

@@ -9,7 +9,7 @@ import {fillTarget,type FillPlan} from './fill-handle.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {border} from '@nyc-tron/core/tokens';
+import {border} from '../../../tokens.ts';
 export interface SelectionPane {id:string;x:number;y:number;width:number;height:number;startRow:number;endRow:number;startColumn:number;endColumn:number;scrollX:number;scrollY:number}
 export interface CellSelectionOverlayProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  range:SheetRange;rowCount:number;columnCount:number;rowHeight:number;columnWidth:number;

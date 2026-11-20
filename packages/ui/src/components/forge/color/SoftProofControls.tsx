@@ -2,7 +2,7 @@ import { View, type ViewProps } from "react-native";
 import { Select } from "../../Select.tsx";
 import { SettingSwitch } from "../canvas/SettingSwitch.tsx";
 import { validateSoftProof, type ColorProfile, type SoftProofSettings } from "./color-management.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../../tokens.ts";
 export type { SoftProofSettings } from "./color-management.ts";
 /** Explicit output proof configuration rendered by SoftProofControls. */
 export interface SoftProofControlsProps extends Omit<ViewProps, "children"> {

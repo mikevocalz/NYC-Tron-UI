@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { joinClasses } from "../../styles.ts";
-import { space, font, border, size } from "@nyc-tron/core/tokens";
+import { space, font, border, size } from "../../../tokens.ts";
 
 /**
  * Small controlled inputs the spreadsheet panels share. They are internal to

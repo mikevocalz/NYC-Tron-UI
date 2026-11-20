@@ -13,7 +13,7 @@ import {
   activatePanel,clampFloatingRect,closePanel,dockedPanelIds,dockTargetAt,movePanel,panelLocation,resizeStack,
   validateDockLayout,type DockDefaults,type DockEdge,type DockLayout,type DockTarget,
 } from "./dock-model.ts";
-import {space,radius,border,size as sizeToken} from "@nyc-tron/core/tokens";
+import {space,radius,border,size as sizeToken} from "../../tokens.ts";
 
 export type {DockEdge,DockLayout,DockStack,DockTarget,FloatingPanel} from "./dock-model.ts";
 

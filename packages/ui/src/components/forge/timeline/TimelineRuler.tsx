@@ -6,7 +6,7 @@ import type {FrameRate} from "../timebase.ts";
 import {rulerTicks} from "./ruler.ts";
 import {frameToX,visibleFrames,xToFrame,type TimelineViewport} from "./viewport.ts";
 import {useFrameScrub} from "./useFrameScrub.ts";
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 
 /** A named point on the ruler. */
 export interface TimelineMark {

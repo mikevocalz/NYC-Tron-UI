@@ -30,7 +30,7 @@ import {
  referenceA11yLabel,referenceEditProblem,resizeFrame,resolveReferenceKey,stepReferenceOpacity,validateReferences,
  type BoardRect,type ReferenceEdit,type ReferenceFit,type ReferenceImage,type ReferencePatch,type ReferencePlacement,
 } from "./reference-board-model.ts";
-import {space,border,opacity,size} from "@nyc-tron/core/tokens";
+import {space,border,opacity,size} from "../../../tokens.ts";
 import {tokens} from "./ReferenceImageBoard.tokens.ts";
 
 /** Props for {@linkcode ReferenceImageBoard}. The reference list is host state, kept apart from the document. */

@@ -3,7 +3,7 @@ import {Button} from '../../Button.tsx';
 import {Select} from '../../Select.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface RenderCacheJob {id:string;label:string;state:'queued'|'rendering'|'ready'|'stale'|'error';completed?:number;total?:number;error?:string}
 export interface RenderCacheIndicatorProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  jobs:readonly RenderCacheJob[];quality:string;qualities:readonly {id:string;label:string;disabledReason?:string}[];

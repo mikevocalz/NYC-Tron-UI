@@ -18,7 +18,7 @@ import {
   colorChanged,colorDialogTitle,comparisonContrast,comparisonLabel,describeColor,dialogKeyIntent,
   draftFromRgba,draftWithAlpha,revertDraft,type DialogKeyTarget,
 } from "./color-picker-dialog-model.ts";
-import {space} from "@nyc-tron/core/tokens";
+import {space} from "../../../tokens.ts";
 
 /** Props for {@linkcode ColorPickerDialog}. Every color is controlled by the host. */
 export interface ColorPickerDialogProps {

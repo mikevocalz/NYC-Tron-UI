@@ -5,7 +5,7 @@ import {Select} from '../../Select.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface VideoEffectsBrowserProps extends EffectStackAndInspectorProps {
  clipId:string;preview:ReactNode;appearance:{intensity:number;maskId:string|null};masks:readonly {id:string;label:string}[];
  onAppearanceChange:(value:{intensity:number;maskId:string|null},signal?:AbortSignal)=>void|Promise<unknown>;

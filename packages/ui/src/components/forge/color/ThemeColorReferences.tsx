@@ -4,7 +4,7 @@ import { Button } from "../../Button.tsx";
 import { joinClasses } from "../../styles.ts";
 import { assertRgba, rgbaToHex } from "../color.ts";
 import type { ThemeColorReference } from "./color-management.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../../tokens.ts";
 export type { ThemeColorReference } from "./color-management.ts";
 /** Identity-bearing color bindings for ThemeColorReferences. */
 export interface ThemeColorReferencesProps extends Omit<ViewProps, "children"> {

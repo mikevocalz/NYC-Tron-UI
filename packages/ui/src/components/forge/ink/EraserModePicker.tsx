@@ -2,7 +2,7 @@ import {Text,View,type ViewProps} from 'react-native';
 import {SegmentedControl} from '../../SegmentedControl.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type EraserMode='pixel'|'vector'|'mask'|'object';
 export interface EraserCapability {mode:EraserMode;available:boolean;reason?:string}
 export interface EraserModePickerProps extends Omit<ViewProps,'children'>,ScopedControlProps {

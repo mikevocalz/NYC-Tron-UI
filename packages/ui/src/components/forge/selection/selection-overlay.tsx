@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {MAX_DRAWN_SEGMENTS,pathSegments,thinPoints,type DocPoint,type DocRect} from "./selection-model.ts";
-import {radius,border} from "@nyc-tron/core/tokens";
+import {radius,border} from "../../../tokens.ts";
 
 // Shared drawing pieces for the selection surfaces. Everything here is
 // pointer-transparent and hidden from screen readers; the surfaces speak

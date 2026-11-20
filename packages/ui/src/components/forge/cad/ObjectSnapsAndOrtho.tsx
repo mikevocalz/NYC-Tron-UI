@@ -3,7 +3,7 @@ import {Text,View,type ViewProps} from 'react-native';
 import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface DraftingSnapSettings {ortho:boolean;polar:boolean;polarIncrement:number;grid:boolean;gridSpacing:number;enabled:Readonly<Record<string,boolean>>}
 export interface ObjectSnapsAndOrthoProps extends Omit<ViewProps,'children'>,ScopedControlProps {settings:DraftingSnapSettings;modes:readonly {id:string;label:string;available:boolean}[];candidate:{kind:string;label:string;world:readonly [number,number,number];distance:number}|null;renderFeedback:()=>ReactNode;onCommit:(settings:DraftingSnapSettings,signal?:AbortSignal)=>unknown;unstyled?:boolean}
 export function ObjectSnapsAndOrtho({scope='drafting-snaps',revision=0,...props}:ObjectSnapsAndOrthoProps){const {settings,modes,candidate,renderFeedback,onCommit:_commit,unstyled=false,disabledReason,style,...rest}=props;if(modes.length>32||new Set(modes.map(m=>m.id)).size!==modes.length||candidate&&(![...candidate.world,candidate.distance].every(Number.isFinite)||candidate.distance<0))throw new RangeError('Invalid drafting snap feedback');const guard=useScopedControl(JSON.stringify([...controlIdentity(scope,revision),disabledReason]),props,disabledReason!==undefined),off=guard.pending||disabledReason!==undefined;

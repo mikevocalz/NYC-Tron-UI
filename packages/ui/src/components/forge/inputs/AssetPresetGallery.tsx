@@ -6,7 +6,7 @@ import {useStore} from 'zustand';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from './useScopedControl.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface AssetPreset {id:string;label:string;description:string;tags:readonly string[];favorite:boolean;unavailableReason?:string}
 export interface AssetPresetGalleryProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  label:string;items:readonly AssetPreset[];selectedIds:readonly string[];renderPreview:(id:string)=>ReactNode;

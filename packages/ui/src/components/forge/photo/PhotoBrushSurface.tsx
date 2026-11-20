@@ -7,7 +7,7 @@ import {keyboardKey,type KeyEventLike} from '../../gestures/drag-transport.ts';
 import {createFrameThrottle,type FrameThrottle} from '../frame-throttle.ts';
 import {joinClasses} from '../../styles.ts';
 import {MAX_PHOTO_BRUSH_POINTS,photoBrushPoint,validatePhotoBrushPoints,validatePhotoImageSize,type PhotoBrushPoint,type PhotoImageSize} from './photo-masks.ts';
-import {space,opacity} from '@nyc-tron/core/tokens';
+import {space,opacity} from '../../../tokens.ts';
 import {tokens} from './PhotoBrushSurface.tokens.ts';
 export interface PhotoBrushSurfaceProps extends Omit<ViewProps,'children'> {
  readonly scope:string;readonly imageSize:PhotoImageSize;readonly radiusPixels:number;readonly onCommit:(points:readonly PhotoBrushPoint[])=>void;

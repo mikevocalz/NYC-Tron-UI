@@ -7,7 +7,7 @@ import { joinClasses } from "../../styles.ts";
 import type { DragTransport } from "../../gestures/drag-transport.ts";
 import { PanResponderDrag } from "../../gestures/PanResponderDrag.tsx";
 import { dragSplitRatio, splitGeometry, SPLIT_KEY_STEP, type SplitState } from "./freeze-split-model.ts";
-import { radius } from '@nyc-tron/core/tokens';
+import { radius } from '../../../tokens.ts';
 
 /**
  * Two panes of one sheet with a draggable divider. Each pane is whatever

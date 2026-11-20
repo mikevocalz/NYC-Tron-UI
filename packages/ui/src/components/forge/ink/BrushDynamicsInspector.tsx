@@ -3,7 +3,7 @@ import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {BRUSH_DYNAMICS_FIELDS,validateBrushDynamics,type BrushDynamics} from './brush-model.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface BrushDynamicsInspectorProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  value:BrushDynamics;onCommit:(value:BrushDynamics,signal?:AbortSignal)=>void|Promise<unknown>;unstyled?:boolean;
 }

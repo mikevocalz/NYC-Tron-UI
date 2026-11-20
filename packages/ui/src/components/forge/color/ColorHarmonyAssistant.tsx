@@ -3,7 +3,7 @@ import {joinClasses} from "../../styles.ts";
 import {assertHsv,assertRgba,hsvToRgb,rgbaToHex,type HsvColor,type RgbaColor} from "../color.ts";
 import {compositeOver,contrastRating} from "./contrast.ts";
 import {HARMONY_KINDS,harmonyColors,type HarmonyKind} from "./harmony.ts";
-import {space,font,size} from "@nyc-tron/core/tokens";
+import {space,font,size} from "../../../tokens.ts";
 import {tokens} from "./ColorHarmonyAssistant.tokens.ts";
 
 /** Props for {@linkcode ColorHarmonyAssistant}. */

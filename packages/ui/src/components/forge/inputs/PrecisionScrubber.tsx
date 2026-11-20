@@ -8,7 +8,7 @@ import {createScrubberModel,initialScrubberState,type ScrubberModel,type Scrubbe
 import {keyboardKey,type DragTransport,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {PanResponderDrag} from "../../gestures/PanResponderDrag.tsx";
 import {joinClasses} from "../../styles.ts";
-import {space,opacity} from '@nyc-tron/core/tokens';
+import {space,opacity} from '../../../tokens.ts';
 import {tokens} from './PrecisionScrubber.tokens.ts';
 
 /** Props for {@linkcode PrecisionScrubber}. */

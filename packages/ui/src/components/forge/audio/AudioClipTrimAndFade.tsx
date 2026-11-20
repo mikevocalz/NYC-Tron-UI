@@ -12,7 +12,7 @@ export interface AudioClipTrimAndFadeProps extends Omit<ViewProps,'children'>,Sc
  overlapSamples?:number;unstyled?:boolean;
 }
 import {Button} from '../../Button.tsx';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export function AudioClipTrimAndFade({scope='audio-region',revision=0,...props}:AudioClipTrimAndFadeProps){
  const {lengthSamples,sampleRate,region,peaks,overlapSamples=0,onCommit:_commit,onPreview:_preview,disabledReason,unstyled=false,style,...rest}=props;
  const {startSample,endSample,fadeInSamples,fadeOutSamples,gainDb,crossfade}=region,span=endSample-startSample;

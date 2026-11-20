@@ -20,7 +20,7 @@ import {
   type GradientPaint,type Point,type ViewTransform,
 } from "./vector-types.ts";
 import {CanvasKnob,LinePiece,NoticeLine,VectorButton,type CanvasKeyEvent,type DragModifiers} from "./vector-controls.tsx";
-import {space,radius,border} from '@nyc-tron/core/tokens';
+import {space,radius,border} from '../../../tokens.ts';
 
 /** Props for {@linkcode GradientOnCanvasHandles}. The paint and stop selection are owned by the host. */
 export interface GradientOnCanvasHandlesProps extends Omit<ViewProps,"children">,ScopedControlProps {

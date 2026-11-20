@@ -4,7 +4,7 @@ import {Button} from '../../Button.tsx';
 import {PropertyInspector,type PropertyInspectorProps} from '../inputs/PropertyInspector.tsx';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface NamedTableStyle {name:string;styleId:string;header:boolean;totals:boolean;bandedRows:boolean;bandedColumns:boolean;structuredReferences:boolean}
 export interface TableStyleGalleryProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {
  value:NamedTableStyle;styles:readonly {id:string;label:string}[];renderPreview:(styleId:string)=>ReactNode;onCommit:(value:NamedTableStyle,signal?:AbortSignal)=>unknown;

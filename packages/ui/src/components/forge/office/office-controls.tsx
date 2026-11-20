@@ -1,7 +1,7 @@
 import type {ReactNode} from "react";
 import {Platform,Pressable,Text,View,type PressableProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
-import {space,radius,border,opacity} from "@nyc-tron/core/tokens";
+import {space,radius,border,opacity} from "../../../tokens.ts";
 
 /** Minimum touch target for every office control, in points. */
 export const OFFICE_TOUCH_TARGET=44;

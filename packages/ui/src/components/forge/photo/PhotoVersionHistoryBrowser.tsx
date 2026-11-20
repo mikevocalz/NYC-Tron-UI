@@ -5,7 +5,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useOwnedAction} from '../../shell/useOwnedAction.ts';
 import {joinClasses} from '../../styles.ts';
 import {validatePhotoDevelop,type PhotoDevelopSettings} from './photo-adjustments.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PhotoVersion {readonly id:string;readonly name:string;readonly timestampMs:number;readonly settings:PhotoDevelopSettings}
 export interface PhotoVersionHistoryBrowserProps extends Omit<ViewProps,'children'> {
  readonly photoId:string;readonly revision:string;readonly versions:readonly PhotoVersion[];readonly originalVersionId:string|null;readonly selectedId:string|null;readonly currentId:string|null;

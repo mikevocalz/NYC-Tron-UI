@@ -5,7 +5,7 @@ import {useStore} from 'zustand';
 import {Button} from '../../Button.tsx';
 import {joinClasses} from '../../styles.ts';
 import {validatePhotoMetadata,type PhotoMetadata} from './photo-metadata.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {PhotoMetadata,PhotoProvenanceEntry} from './photo-metadata.ts';
 export interface PhotoMetadataInspectorProps extends Omit<ViewProps,'children'> {
  readonly value:PhotoMetadata;readonly annotation:string;readonly onAnnotationCommit:(annotation:string)=>void;readonly disabled?:boolean;readonly unstyled?:boolean;

@@ -9,7 +9,7 @@ import {Button} from "../../Button.tsx";
 import {useLocalStore} from "../../useLocalStore.ts";
 import {CloseMark,OFFICE_TOUCH_TARGET} from "../office/office-controls.tsx";
 import {effectLabel,formatSeconds,parseSeconds,playOrder,timelineEnd,type AnimationCategory,type AnimationEffect,type SlideAnimation} from "./animation-model.ts";
-import {space,opacity} from '@nyc-tron/core/tokens';
+import {space,opacity} from '../../../tokens.ts';
 
 /** Props for {@linkcode SlideAnimationPane}. */
 export interface SlideAnimationPaneProps extends Omit<ViewProps,"children">,ScopedControlProps {

@@ -8,7 +8,7 @@ import {
   FLOATING_PALETTE_WIDTH,PALETTE_MODES,placeFloatingPalette,
   type PaletteMode,type PalettePosition,type PaletteRect,
 } from "./floating-palette.ts";
-import {space,size as sizeToken} from "@nyc-tron/core/tokens";
+import {space,size as sizeToken} from "../../../tokens.ts";
 
 /** Props for {@linkcode FloatingColorPalette}. */
 export interface FloatingColorPaletteProps extends Omit<ViewProps,"children"> {

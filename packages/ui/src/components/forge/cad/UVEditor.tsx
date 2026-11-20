@@ -4,7 +4,7 @@ import {PointEditor2D,type EditorPoint2D} from '../inputs/PointEditor2D.tsx';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface UVEditorProps extends Omit<ViewProps,'children'>,ScopedControlProps {islands:readonly {id:string;label:string;selected:boolean}[];points:readonly EditorPoint2D[];selectedPointId:string|null;selectionEdges:readonly string[];renderUV:(points:readonly EditorPoint2D[])=>ReactNode;renderModelSelection:()=>ReactNode;onSelectIsland:(id:string)=>void;onSelectPoint:(id:string)=>void;onMovePoint:(point:EditorPoint2D,signal?:AbortSignal)=>unknown;onSeams:(edges:readonly string[],marked:boolean,signal?:AbortSignal)=>unknown;onPack:(islandIds:readonly string[],signal?:AbortSignal)=>unknown;status:'idle'|'packing'|'error';unstyled?:boolean}
 /** The host supplies the active normalized tile and selected vertex subset; mesh seams, packing and synchronized model projection stay engine-owned. */
 export function UVEditor({scope='uv-editor',revision=0,...props}:UVEditorProps){const {islands,points,selectedPointId,selectionEdges,renderUV,renderModelSelection,onSelectIsland:_island,onSelectPoint:_point,onMovePoint:_move,onSeams:_seams,onPack:_pack,status,unstyled=false,disabledReason,style,...rest}=props;

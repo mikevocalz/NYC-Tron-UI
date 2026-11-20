@@ -1,7 +1,7 @@
 import {View,type ViewProps} from 'react-native';
 import {UnitInput} from '../../shell/UnitInput.tsx';
 import {TONE_FIELDS,validateTone,type ToneSettings} from './photo-adjustments.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {ToneSettings} from './photo-adjustments.ts';
 export interface ToneAndPresenceProps extends Omit<ViewProps,'children'> {readonly value:ToneSettings;readonly onCommit:(value:ToneSettings)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}
 /** Controlled non-destructive tone settings. The host owns the image transform. */

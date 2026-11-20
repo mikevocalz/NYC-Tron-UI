@@ -4,7 +4,7 @@ import {Button} from '../../Button.tsx';
 import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type DesignVariableValue={kind:'number';value:number}|{kind:'string';value:string}|{kind:'boolean';value:boolean}|{kind:'alias';variableId:string};
 export interface DesignVariable {id:string;name:string;type:'number'|'string'|'boolean';values:Readonly<Record<string,DesignVariableValue>>;bindings:readonly {id:string;label:string}[];readOnly:boolean}
 export interface VariablesAndModesProps extends Omit<ViewProps,'children'>,ScopedControlProps {variables:readonly DesignVariable[];modes:readonly {id:string;label:string}[];activeModeId:string;selectedId:string|null;onModeChange:(id:string,signal?:AbortSignal)=>unknown;onSelect:(id:string)=>void;onCommit:(id:string,modeId:string,value:DesignVariableValue,signal?:AbortSignal)=>unknown;onRevealBinding:(id:string)=>void;unstyled?:boolean}

@@ -6,7 +6,7 @@ import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
 import {ChevronGlyph,OFFICE_TOUCH_TARGET,officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
 import {headingAtBlock,headingsByPage,rowForHeading,visibleOutline,type OutlineHeading} from "./outline-model.ts";
-import {space,font} from '@nyc-tron/core/tokens';
+import {space,font} from '../../../tokens.ts';
 
 /** A named place in the document. */
 export interface OutlineBookmark {

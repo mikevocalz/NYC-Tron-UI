@@ -3,7 +3,7 @@ import {Button} from '../../Button.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type AudioTransportAction='play'|'pause'|'stop'|'record'|'punch-in'|'punch-out'|'request-permission';
 export interface NativeAudioTransportProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  playing:boolean;recording:boolean;punching:boolean;supportsPunch:boolean;canRecord:boolean;

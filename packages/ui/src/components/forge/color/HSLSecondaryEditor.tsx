@@ -3,7 +3,7 @@ import { UnitInput } from "../../shell/UnitInput.tsx";
 import { SettingSwitch } from "../canvas/SettingSwitch.tsx";
 import { joinClasses } from "../../styles.ts";
 import { validateHSLSecondary,type HSLSecondary } from "./color-adjustments.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../../tokens.ts";
 export type { HSLSecondary } from "./color-adjustments.ts";
 /** Host-owned secondary selection and correction values. */
 export interface HSLSecondaryEditorProps extends Omit<ViewProps,"children"> {readonly value:HSLSecondary;readonly onCommit:(value:HSLSecondary)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}

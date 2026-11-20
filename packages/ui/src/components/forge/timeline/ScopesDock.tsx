@@ -1,7 +1,7 @@
 import {Text,View,type ViewProps} from 'react-native';
 import {SegmentedControl} from '../../SegmentedControl.tsx';
 import {VideoScopesPanel,type VideoScopesPanelProps} from '../color/VideoScopesPanel.tsx';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface ScopesDockProps extends Omit<ViewProps,'children'> {
  target:'source'|'program';onTargetChange:(target:'source'|'program')=>void;
  source:VideoScopesPanelProps;program:VideoScopesPanelProps;

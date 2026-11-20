@@ -11,7 +11,7 @@ import type {TimelineViewport} from './viewport.ts';
 import type {FrameRate} from '../timebase.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface CaptionWord {id:string;text:string;startFrame:number;endFrame:number}
 export interface CaptionWordTimingHandlesProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  words:readonly CaptionWord[];selectedId:string|null;onSelect:(id:string)=>void;durationFrames:number;frame:number;rate:FrameRate;viewport:TimelineViewport;

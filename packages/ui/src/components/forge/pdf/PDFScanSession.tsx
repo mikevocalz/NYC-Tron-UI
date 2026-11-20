@@ -8,7 +8,7 @@ import {PointEditor2D,type EditorPoint2D} from '../inputs/PointEditor2D.tsx';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PDFScanPage {id:string;label:string;corners:readonly EditorPoint2D[];rotation:0|90|180|270;correctionStatus:'original'|'processing'|'corrected'|'error';error?:string}
 export interface PDFScanSessionProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  permission:'unknown'|'granted'|'denied';cameraSurface:ReactNode;pages:readonly PDFScanPage[];selectedId:string|null;selectedCornerId:string|null;

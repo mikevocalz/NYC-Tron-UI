@@ -4,7 +4,7 @@ import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface DesignExportSlice {id:string;label:string;selected:boolean;formatId:string;scale:number;transparent:boolean;trimTransparentBounds:boolean;suffix:string;unavailableReason?:string}
 export interface MultiExportSlicesProps extends Omit<ViewProps,'children'>,ScopedControlProps {slices:readonly DesignExportSlice[];selectedId:string|null;formats:readonly {id:string;label:string;alpha:boolean}[];presets:readonly {id:string;label:string}[];presetId:string;status:'idle'|'running'|'complete'|'error';progress:number;results:readonly {id:string;sliceId:string;label:string;bytes:number}[];renderPreview:(id:string)=>ReactNode;onSelect:(id:string)=>void;onCommit:(slice:DesignExportSlice,signal?:AbortSignal)=>unknown;onPreset:(id:string,signal?:AbortSignal)=>unknown;onExport:(slices:readonly DesignExportSlice[],signal?:AbortSignal)=>unknown;onCancel:()=>unknown;onRevealResult:(id:string)=>void;unstyled?:boolean}
 export function MultiExportSlices({scope='export-slices',revision=0,...props}:MultiExportSlicesProps){const {slices,selectedId,formats,presets,presetId,status,progress,results,renderPreview,onSelect:_select,onCommit:_commit,onPreset:_preset,onExport:_export,onCancel,onRevealResult:_reveal,unstyled=false,disabledReason,style,...rest}=props;

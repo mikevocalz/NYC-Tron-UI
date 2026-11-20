@@ -30,7 +30,7 @@ import {
   type AutomationGeometry, type AutomationMode, type AutomationParam, type AutomationPoint,
 } from "./automation.ts";
 import type { AutomationModePicker } from "./AutomationModePicker.tsx";
-import { space, radius, leading, opacity } from '@nyc-tron/core/tokens';
+import { space, radius, leading, opacity } from '../../../tokens.ts';
 
 /** Minimum hit size (iOS 44pt / Android 48dp floor). */
 const HIT = 44;

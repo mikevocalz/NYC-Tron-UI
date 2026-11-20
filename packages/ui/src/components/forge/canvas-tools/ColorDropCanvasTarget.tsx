@@ -28,7 +28,7 @@ import {
  DROP_DOT_SIZE,buildFill,classifyPress,clampToTarget,describeDropTarget,dropKeyMove,dropToDocument,
  thresholdLabel,validateDrop,type DropPoint,type DropRect,type FillRequest,
 } from "./color-drop-model.ts";
-import {space,border,opacity,size} from "@nyc-tron/core/tokens";
+import {space,border,opacity,size} from "../../../tokens.ts";
 import {tokens} from "./ColorDropCanvasTarget.tokens.ts";
 
 /** Props for {@linkcode ColorDropCanvasTarget}. */

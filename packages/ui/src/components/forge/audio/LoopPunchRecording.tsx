@@ -4,7 +4,7 @@ import {Button} from '../../Button.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface LoopPunchConfiguration {loop:boolean;punch:boolean;startSample:number;endSample:number;preRollSamples:number;postRollSamples:number}
 export interface LoopPunchRecordingProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  durationSamples:number;sampleRate:number;value:LoopPunchConfiguration;recording:boolean;passCount:number;

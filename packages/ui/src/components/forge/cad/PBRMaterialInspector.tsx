@@ -1,7 +1,7 @@
 import type {ReactNode} from 'react';
 import {View} from 'react-native';
 import {PropertyInspector,type PropertyInspectorProps} from '../inputs/PropertyInspector.tsx';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PBRMaterial {baseColor:string;roughness:number;metallic:number;normalScale:number;emissiveColor:string;emissiveIntensity:number;opacity:number;doubleSided:boolean}
 export interface PBRMaterialInspectorProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {value:PBRMaterial;renderMaterial:()=>ReactNode;onCommit:(value:PBRMaterial,signal?:AbortSignal)=>unknown}
 export function PBRMaterialInspector({value,renderMaterial,onCommit,...props}:PBRMaterialInspectorProps){return <View style={{gap:space[2]}}><View style={{height:220}}>{renderMaterial()}</View><PropertyInspector {...props} label="PBR material" fields={[

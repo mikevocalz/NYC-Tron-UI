@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Value-preserving tokenization codemod (decisions 6, 10, 12 to 14, 40).
 //
-//   NODE_PATH=<scratch>/node_modules node tooling/codemod/tokenize.mjs [--write] [--report <file>]
+//   NODE_PATH=<scratch>/node_modules node tooling/codemod/tokenize.mjs [--write] [--report <file>] [--retarget-imports]
+// Packages in LOCAL_TOKEN_PACKAGES (token-model.mjs, ui) import their own packages/<pkg>/src/tokens.ts relatively.
 //
 // Rewrites numeric style literals in packages/*/src/**/*.{ts,tsx} to references into
 // @nyc-tron/core/tokens (on-scale) or a sibling <Name>.tokens.ts (off-scale, same value).
@@ -16,11 +17,27 @@ import { root } from "./token-model.mjs";
 
 const args = process.argv.slice(2);
 const write = args.includes("--write");
+const retarget = args.includes("--retarget-imports");
 const reportPath = args.includes("--report") ? args[args.indexOf("--report") + 1] : null;
 const A = createAnalyzer();
 const files = listSourceFiles();
 const tracked = new Set(execFileSync("git", ["ls-files"], { cwd: root, encoding: "utf8", maxBuffer: 1 << 28 }).split("\n"));
 
+if (retarget) {
+  // One-off migration for files rewritten before decision 42: point `@nyc-tron/core/tokens` at the package copy.
+  let n = 0;
+  for (const f of files) {
+    const text = readFileSync(join(root, f), "utf8");
+    const want = A.tokenSpecifier(f);
+    if (want === "@nyc-tron/core/tokens" || !text.includes("@nyc-tron/core/tokens")) continue;
+    const out = text.replace(/(from\s+)(["'])@nyc-tron\/core\/tokens\2/g, (_, a, q) => `${a}${q}${want}${q}`);
+    if (out === text) throw new Error(f + ": could not retarget");
+    n++;
+    if (write) writeFileSync(join(root, f), out);
+  }
+  console.log(`${write ? "retargeted" : "would retarget"} ${n} files`);
+  process.exit(0);
+}
 const report = { files: files.length, changed: [], siblings: {}, replaced: {}, left: {}, leftByFile: {}, extras: [], notInMap: [] };
 const bump = (o, k, n = 1) => { o[k] = (o[k] ?? 0) + n; };
 const siblings = new Map(); // path -> Map(key -> value)

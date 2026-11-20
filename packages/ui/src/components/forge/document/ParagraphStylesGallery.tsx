@@ -3,7 +3,7 @@ import {FlatList,Text,View,type ViewProps} from 'react-native';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface ParagraphStyle {id:string;label:string;basedOn:string|null;level:number;overridden:boolean}
 export interface ParagraphStylesGalleryProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  styles:readonly ParagraphStyle[];selectedId:string|null;renderPreview:(styleId:string)=>ReactNode;

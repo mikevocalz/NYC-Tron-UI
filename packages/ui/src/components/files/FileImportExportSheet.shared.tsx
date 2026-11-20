@@ -10,7 +10,7 @@ import {TextField} from '../TextField.tsx';
 import {joinClasses} from '../styles.ts';
 import type {FilePickerProps} from './FilePicker.types.ts';
 import {applyFormat,buildExportRequest,destinationLabel,exportSummary,filenameProblem,statusText,validateExportFormats,type ExportDestination,type ExportFormat,type ExportRequest,type ExportSettings,type ImportFormat,type TransferStatus} from './file-transfer-model.ts';
-import {space,opacity,size} from '@nyc-tron/core/tokens';
+import {space,opacity,size} from '../../tokens.ts';
 
 /** Host-owned form/status and actual platform picker for {@linkcode FileImportExportSheetBody}. */
 export interface FileImportExportSheetProps {

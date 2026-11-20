@@ -4,7 +4,7 @@ import {useLocalStore} from "../../useLocalStore.ts";
 import {alphaPercent,assertRgba,rgbaToHex,type RgbaColor} from "../color.ts";
 import {ChannelTrack} from "./ChannelTrack.tsx";
 import {parseOpacityPercent} from "./channel-fields.ts";
-import {space,size} from "@nyc-tron/core/tokens";
+import {space,size} from "../../../tokens.ts";
 
 /** Props for {@linkcode AlphaSlider}. */
 export interface AlphaSliderProps extends Omit<ViewProps,"children"> {

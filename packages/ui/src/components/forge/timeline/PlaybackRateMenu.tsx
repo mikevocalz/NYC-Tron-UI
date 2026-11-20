@@ -4,7 +4,7 @@ import {Pressable,Switch,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
 import {speedLabel} from "./ruler.ts";
-import {space,opacity,size} from '@nyc-tron/core/tokens';
+import {space,opacity,size} from '../../../tokens.ts';
 
 /** Props for {@linkcode PlaybackRateMenu}. */
 export interface PlaybackRateMenuProps extends Omit<ViewProps,"children">,ScopedControlProps {

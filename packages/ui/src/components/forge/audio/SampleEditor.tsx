@@ -13,7 +13,7 @@ export interface SampleEditorProps extends Omit<ViewProps,'children'>,ScopedCont
  onKeyboardCommit:(value:SampleKeyboardMap,signal?:AbortSignal)=>unknown;onAudition:(note:number,signal?:AbortSignal)=>unknown;unstyled?:boolean;
 }
 import {Button} from '../../Button.tsx';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export function SampleEditor({scope='sample-editor',revision=0,...props}:SampleEditorProps){
  const {source,loop,keyboard,onRegionCommit:_region,onLoopCommit:_loop,onKeyboardCommit:_keyboard,onAudition:_audition,unstyled=false,disabledReason,style,...rest}=props;
  if(![keyboard.rootNote,keyboard.lowNote,keyboard.highNote].every(n=>Number.isInteger(n)&&n>=0&&n<=127)||keyboard.lowNote>keyboard.highNote||keyboard.rootNote<keyboard.lowNote||keyboard.rootNote>keyboard.highNote||!Number.isFinite(keyboard.tuneCents)||Math.abs(keyboard.tuneCents)>1200)throw new RangeError('Invalid sample keyboard map');

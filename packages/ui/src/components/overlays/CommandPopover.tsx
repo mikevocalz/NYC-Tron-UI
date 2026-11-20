@@ -5,7 +5,7 @@ import {cycleFocusTarget} from "./focus-cycle.ts";
 import {useRestoreFocus} from "./focus-restore.ts";
 import {joinClasses} from "../styles.ts";
 import type { CommandMenuItem } from "@nyc-tron/core/overlays";
-import { space, font, opacity } from "@nyc-tron/core/tokens";
+import { space, font, opacity } from "../../tokens.ts";
 import { tokens } from "./CommandPopover.tokens.ts";
 export type { CommandMenuItem } from "@nyc-tron/core/overlays";
 export interface CommandPopoverProps{

@@ -5,7 +5,7 @@ import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface BeatDetectionMarkerLaneProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  lane:Omit<TimelineMarkersProps,'scope'|'revision'|'disabled'|'disabledReason'|'unstyled'>;
  sensitivity:number;detectedBpm:number|null;status:'idle'|'detecting'|'ready'|'error';progress?:number;error?:string;unavailableReason?:string;

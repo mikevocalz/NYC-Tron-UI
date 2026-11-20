@@ -9,7 +9,7 @@ import {useLocalStore} from "../../useLocalStore.ts";
 import {ToolButton,officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
 import {SlideThumbnail} from "./SlideThumbnail.tsx";
 import {SLIDE_DEFAULT_SIZE,gridColumns,gridMove,moveBlock,nextSelection,slideLabel,type SlideObject,type SlideSize,type SlideSummary} from "./slide-model.ts";
-import {space,radius,border} from '@nyc-tron/core/tokens';
+import {space,radius,border} from '../../../tokens.ts';
 
 /** Props for {@linkcode SlideSorter}. Selection is controlled; actions render only when their callbacks are passed. */
 export interface SlideSorterProps extends Omit<ViewProps,"children">,ScopedControlProps {

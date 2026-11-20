@@ -7,7 +7,7 @@ import {formatTimecode,type FrameRate} from "../timebase.ts";
 import {frameForKey} from "./frame-keys.ts";
 import {frameToX,xToFrame,type TimelineViewport} from "./viewport.ts";
 import {useFrameScrub} from "./useFrameScrub.ts";
-import {space,radius,opacity} from '@nyc-tron/core/tokens';
+import {space,radius,opacity} from '../../../tokens.ts';
 
 /** Props for {@linkcode TimelinePlayhead}. */
 export interface TimelinePlayheadProps extends Omit<ViewProps,"children">,ScopedControlProps {

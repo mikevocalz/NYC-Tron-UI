@@ -6,7 +6,7 @@ import { joinClasses } from "../../styles.ts";
 import { columnName, parseCellAddress } from "../sheet-window.ts";
 import { freezeFor, type FreezeCommand, type FreezeState, type SplitAxis, type SplitState } from "./freeze-split-model.ts";
 import { PanelHeading } from "./panel-controls.tsx";
-import { space } from '@nyc-tron/core/tokens';
+import { space } from '../../../tokens.ts';
 
 /**
  * Controlled freeze-panes and split-view commands. Frozen panes and the split

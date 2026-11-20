@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Platform, Pressable, View, type PressableProps } from "react-native";
 import { joinClasses } from "./styles.ts";
-import { size as sizeToken } from "@nyc-tron/core/tokens";
+import { size as sizeToken } from "../tokens.ts";
 
 export type IconButtonVariant="primary"|"secondary"|"outline"|"ghost"|"danger";
 export interface IconButtonProps extends Omit<PressableProps,"children"|"disabled"|"style"> {

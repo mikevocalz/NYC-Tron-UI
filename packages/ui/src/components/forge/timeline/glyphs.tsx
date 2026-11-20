@@ -1,6 +1,6 @@
 import {View} from "react-native";
 import {joinClasses} from "../../styles.ts";
-import {space} from "@nyc-tron/core/tokens";
+import {space} from "../../../tokens.ts";
 
 /** Transport glyphs drawn from views (no icon dependency) so they take the text token in both themes and in forced colors. */
 export type TransportGlyph="play"|"pause"|"stop"|"start"|"end"|"previous-frame"|"next-frame";

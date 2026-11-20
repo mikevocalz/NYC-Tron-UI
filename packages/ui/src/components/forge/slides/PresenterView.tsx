@@ -3,7 +3,7 @@ import {View,Text,type ViewProps} from 'react-native';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PresenterViewProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  currentSlideLabel:string;nextSlideLabel:string|null;currentSurface:ReactNode;nextSurface:ReactNode;notes:ReactNode;aspectRatio:number;
  slideIndex:number;slideCount:number;clockLabel:string;elapsedMs:number;paused:boolean;blackout:boolean;

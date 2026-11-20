@@ -3,7 +3,7 @@ import {PanControl,type PanControlProps} from './PanControl.tsx';
 import {SurroundPanView,type SurroundPanViewProps} from './SurroundPanView.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface StereoPanAndBalanceProps extends Omit<PanControlProps,'onCommit'>,ScopedControlProps {onCommit:(pan:number,signal?:AbortSignal)=>void|Promise<unknown>}
 export type PanAndBalanceControlProps=StereoPanAndBalanceProps|({mode:'surround';surround:SurroundPanViewProps}&ScopedControlProps);
 export function PanAndBalanceControl(props:PanAndBalanceControlProps){return props.mode==='surround'?<SurroundPanView {...props.surround} {...(props.scope?{scope:props.scope}:{})} {...(props.revision===undefined?{}:{revision:props.revision})} {...(props.disabledReason?{disabledReason:props.disabledReason}:{})}/>:<StereoPan {...props}/>;}

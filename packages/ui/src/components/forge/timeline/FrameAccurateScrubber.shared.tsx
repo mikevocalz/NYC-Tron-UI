@@ -4,7 +4,7 @@ import type {NativeSeekBarProps} from '../NativeSeekBar.types.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {assertFrameRate,clampFrame,type FrameRate} from '../timebase.ts';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface FrameSeekRequest {frame:number;timeUs:number;exact:boolean;frameRate:FrameRate}
 export interface FrameSeekResult {requestedFrame:number;presentedFrame:number;presentationTimeUs:number;timing:'presentation'|'seek-target'}
 export interface FrameAccurateScrubberProps extends Omit<NativeSeekBarProps,'onCommit'|'onSeek'|'onPreview'> {

@@ -5,7 +5,7 @@ import {useStore} from 'zustand';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface LicensedSoundEffect {id:string;label:string;category:string;durationSeconds:number;licenseLabel:string;attribution?:string;insertAllowed:boolean;unavailableReason?:string}
 export interface SoundEffectsLibraryProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  sounds:readonly LicensedSoundEffect[];status:'loading'|'ready'|'error';error?:string;previewingId:string|null;

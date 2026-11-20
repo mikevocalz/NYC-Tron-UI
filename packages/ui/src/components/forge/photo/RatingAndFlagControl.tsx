@@ -3,7 +3,7 @@ import {Select} from '../../Select.tsx';
 import {SegmentedControl} from '../../SegmentedControl.tsx';
 import {joinClasses} from '../../styles.ts';
 import {validatePhotoRating,type PhotoRating} from './photo-adjustments.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export type {PhotoRating} from './photo-adjustments.ts';
 export interface RatingAndFlagControlProps extends Omit<ViewProps,'children'> {readonly value:PhotoRating;readonly onCommit:(value:PhotoRating)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}
 /** Independent star, named color-label and mutually exclusive pick/reject fields. */

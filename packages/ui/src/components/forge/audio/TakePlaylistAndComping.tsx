@@ -7,7 +7,7 @@ import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface AudioTake {id:string;label:string;lengthSamples:number;peaks:WaveformLaneProps['peaks'];muted:boolean}
 export interface CompRegion {id:string;takeId:string;startSample:number;endSample:number}
 export interface TakePlaylistAndCompingProps extends Omit<ViewProps,'children'>,ScopedControlProps {

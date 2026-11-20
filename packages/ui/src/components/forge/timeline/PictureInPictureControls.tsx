@@ -2,7 +2,7 @@ import {Text,View,type ViewProps} from 'react-native';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PictureInPictureControlsProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  supported:boolean;unsupportedReason?:string;active:boolean;backgrounded:boolean;
  onEnter:(signal?:AbortSignal)=>void|Promise<unknown>;onExit:(signal?:AbortSignal)=>void|Promise<unknown>;unstyled?:boolean;

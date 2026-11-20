@@ -9,7 +9,7 @@ import {officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
 import {SlideObjectView} from "./SlideThumbnail.tsx";
 import {SLIDE_SNAP_POINTS,fitScale,nudge,objectLabel,resizeFromCorner,snapRect,stepRotation,type SnapGuide} from "./canvas-model.ts";
 import {SLIDE_DEFAULT_SIZE,rgbaCss,type SlideObject,type SlideSize,type SlideSummary} from "./slide-model.ts";
-import {space,radius} from '@nyc-tron/core/tokens';
+import {space,radius} from '../../../tokens.ts';
 
 /** Props for {@linkcode SlideCanvas}. Every edit is reported once, on release or commit; the slide is controlled. */
 export interface SlideCanvasProps extends Omit<ViewProps,"children">,ScopedControlProps {

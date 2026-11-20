@@ -6,7 +6,7 @@ import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {LiveRecordingWaveform,type LiveRecordingWaveformProps} from './LiveRecordingWaveform.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface VoiceoverTake {id:string;label:string;durationSamples:number;saved:boolean}
 export interface VoiceoverCountdownAndTakeBinProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  status:'idle'|'countdown'|'recording'|'saving'|'error';countdownRemainingMs:number|null;

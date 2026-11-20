@@ -4,7 +4,7 @@ import {FormulaReferenceText} from './FormulaReferenceText.tsx';
 import {colorReferences,type ColoredReference} from './reference-colors.ts';
 import {Button} from '../../Button.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface ReferenceColorizerProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  formula:string;sheetName?:string;onHighlight:(reference:ColoredReference)=>void;
  renderRangeHighlight:(reference:ColoredReference)=>ReactNode;unstyled?:boolean;

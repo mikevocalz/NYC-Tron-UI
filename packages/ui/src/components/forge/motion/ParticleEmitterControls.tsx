@@ -4,7 +4,7 @@ import {UnitInput} from '../../shell/UnitInput.tsx';
 import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {MotionVectorFields} from './MotionVectorFields.tsx';
 import {validateMotionParticles,type MotionParticleEmitter} from './motion-settings.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {MotionParticleEmitter} from './motion-settings.ts';
 export interface ParticleEmitterControlsProps extends Omit<ViewProps,'children'> {readonly value:MotionParticleEmitter;readonly textures:readonly {readonly id:string;readonly label:string}[];readonly onCommit:(value:MotionParticleEmitter)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}
 /** Deterministic emitter settings; the compositor owns particle simulation and texture resources. */

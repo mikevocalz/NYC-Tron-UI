@@ -12,7 +12,7 @@ import {joinClasses} from '../../styles.ts';
 import {assertFrameRate,type FrameRate} from '../timebase.ts';
 import {removeMotionKeys,type MotionPropertyCurve,type MotionKeySelection} from './motion-curves.ts';
 import {motionSelectionKey,validateMotionTimeline,moveMotionSelection} from './motion-timeline.ts';
-import {space,border} from '@nyc-tron/core/tokens';
+import {space,border} from '../../../tokens.ts';
 export type {MotionPropertyCurve,MotionKeyframe,MotionKeySelection} from './motion-curves.ts';
 export interface MotionKeyframeTimelineProps extends Omit<ViewProps,'children'> {
  readonly scope:string;readonly revision:string;readonly curves:readonly MotionPropertyCurve[];readonly duration:number;

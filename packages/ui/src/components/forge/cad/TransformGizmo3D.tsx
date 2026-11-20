@@ -6,7 +6,7 @@ import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space as spaceToken} from '@nyc-tron/core/tokens';
+import {space as spaceToken} from '../../../tokens.ts';
 export interface TransformGizmo3DProps extends Omit<ViewProps,'children'>,ScopedControlProps {objectId:string;value:MotionTransform3D;mode:'translate'|'rotate'|'scale';axis:'x'|'y'|'z'|'xy'|'xz'|'yz'|'free';space:'local'|'world';projectedHandle:EditorPoint2D;cameraRevision:string|number;renderPreview:(point:EditorPoint2D)=>ReactNode;onOptions:(options:{mode:TransformGizmo3DProps['mode'];axis:TransformGizmo3DProps['axis'];space:'local'|'world'},signal?:AbortSignal)=>unknown;onProjectedDrag:(request:{point:EditorPoint2D;mode:TransformGizmo3DProps['mode'];axis:TransformGizmo3DProps['axis'];space:'local'|'world';cameraRevision:string|number},signal?:AbortSignal)=>unknown;onCommit:(value:MotionTransform3D,signal?:AbortSignal)=>unknown;unstyled?:boolean}
 export function TransformGizmo3D({scope='transform-gizmo',revision=0,...props}:TransformGizmo3DProps){const {objectId,value,mode,axis,space,projectedHandle,cameraRevision,renderPreview,onOptions:_options,onProjectedDrag:_drag,onCommit:_commit,unstyled=false,disabledReason,style,...rest}=props;
  const owner=useEditorBoundary([JSON.stringify([...controlIdentity(scope,revision),objectId,mode,axis,space,cameraRevision,disabledReason])]),guard=useScopedControl(owner,props,disabledReason!==undefined),off=guard.pending||disabledReason!==undefined;

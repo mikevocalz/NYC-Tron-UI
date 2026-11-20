@@ -7,7 +7,7 @@ import type {NodeGraphMutation} from '../motion/NodeGraphEditor.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface NodeGraphCanvasProps extends Omit<ViewProps,'children'>,ScopedControlProps {nodes:PatchGraphProps['nodes'];edges:PatchGraphProps['edges'];selectedNodeId:string|null;viewport:CanvasViewport;canvasSize:{width:number;height:number};policy?:NodeGraphPolicy;onSelectNode:(id:string)=>void;onMutation:(mutation:NodeGraphMutation,signal?:AbortSignal)=>unknown;onViewportCommit:(viewport:CanvasViewport)=>void;
  /** Optional native/GPU renderer adapter for the same validated graph contract. */
  renderGraph?:(props:PatchGraphProps)=>ReactNode;unstyled?:boolean}

@@ -26,7 +26,7 @@ import {
   INSERT_KINDS, INSERT_KIND_LABELS, MAX_INSERTS, addBlockedReason, describeInsert, moveTarget,
   type InsertKind, type InsertSlot,
 } from "./inserts.ts";
-import { space, radius, border, opacity } from '@nyc-tron/core/tokens';
+import { space, radius, border, opacity } from '../../../tokens.ts';
 
 const HIT = 44;
 

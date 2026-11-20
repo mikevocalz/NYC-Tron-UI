@@ -3,7 +3,7 @@ import {Select} from '../../Select.tsx';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface AudioDeviceChoice {id:string;label:string;kind:'input'|'output';channels:readonly {id:string;label:string}[];sampleRates:readonly number[];unavailableReason?:string}
 export interface AudioDeviceSelection {inputId:string|null;outputId:string|null;channelIds:readonly string[];sampleRate:number}
 export interface DeviceAndChannelPickerProps extends Omit<ViewProps,'children'>,ScopedControlProps {

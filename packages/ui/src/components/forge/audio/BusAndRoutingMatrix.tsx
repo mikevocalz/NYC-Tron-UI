@@ -29,7 +29,7 @@ import {
   sendLabel, sendLevel, stepSendLevel,
   type RouteId, type RoutingBus, type RoutingSource,
 } from "./routing.ts";
-import { space, radius, opacity } from '@nyc-tron/core/tokens';
+import { space, radius, opacity } from '../../../tokens.ts';
 
 const HIT = 44;
 const SLOP = 4;

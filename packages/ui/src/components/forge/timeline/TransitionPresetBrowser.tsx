@@ -23,7 +23,7 @@ import {
   TRANSITION_KINDS,filterTransitionKinds,transitionDiagram,type TransitionKindInfo,
 } from "./transition-presets.ts";
 import type {TransitionTarget} from "./transitions.ts";
-import {space,radius,border,size} from '@nyc-tron/core/tokens';
+import {space,radius,border,size} from '../../../tokens.ts';
 import {tokens} from './TransitionPresetBrowser.tokens.ts';
 
 /** The cut the browser applies to, as the host resolved it. */

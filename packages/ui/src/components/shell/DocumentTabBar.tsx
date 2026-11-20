@@ -3,7 +3,7 @@ import {I18nManager,Platform,Pressable,ScrollView,Text,View,type ViewProps} from
 import {joinClasses} from "../styles.ts";
 import {nodeIsRTL,rovingTarget,shellKey} from "./shell-keys.ts";
 import {documentTabLabel,validateDocumentTabs,type DocumentTab} from "./document-tabs-model.ts";
-import {space,radius,border} from "@nyc-tron/core/tokens";
+import {space,radius,border} from "../../tokens.ts";
 
 export type {DocumentTab} from "./document-tabs-model.ts";
 export {activeAfterClose,moveDocument} from "./document-tabs-model.ts";

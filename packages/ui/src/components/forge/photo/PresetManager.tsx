@@ -8,7 +8,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useOwnedAction} from '../../shell/useOwnedAction.ts';
 import {joinClasses} from '../../styles.ts';
 import {parsePhotoPreset,serializePhotoPreset,validatePhotoPresets,type PhotoPreset} from './photo-presets.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export type {PhotoPreset} from './photo-presets.ts';
 export interface PresetManagerProps extends Omit<ViewProps,'children'> {
  readonly scope:string;readonly presets:readonly PhotoPreset[];readonly selectedId:string|null;readonly onSelect:(id:string)=>void;

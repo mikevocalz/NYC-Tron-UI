@@ -14,7 +14,7 @@ import { Pressable, Text, View, type KeyDownEvent, type ViewProps } from "react-
 import { joinClasses } from "../../styles.ts";
 import { MAX_MIDI_CHANNEL, channelLabel, isMidiChannel } from "./note-grid.ts";
 import type { MIDIPianoRollProps } from "./MIDIPianoRoll.tsx";
-import { space, opacity } from "@nyc-tron/core/tokens";
+import { space, opacity } from "../../../tokens.ts";
 
 const HIT = 44;
 

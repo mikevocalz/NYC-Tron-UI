@@ -4,7 +4,7 @@ import {LiveRecordingWaveform,type LiveRecordingWaveformProps} from '../audio/Li
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PDFVoiceNoteArtifact {id:string;label:string;durationSamples:number;sampleRate:number;mimeType:string;bytes:number}
 export interface PDFVoiceNoteAttachmentProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  pageId:string;anchor:{x:number;y:number};transport:Omit<NativeAudioTransportProps,'scope'|'revision'>;waveform?:LiveRecordingWaveformProps;

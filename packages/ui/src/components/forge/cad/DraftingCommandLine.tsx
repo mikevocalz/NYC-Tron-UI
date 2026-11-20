@@ -5,7 +5,7 @@ import {useStore} from 'zustand';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface DraftingCommandLineProps extends Omit<ViewProps,'children'>,ScopedControlProps {prompt:string;history:readonly {id:string;command:string;output:string;kind:'result'|'error'|'info'}[];completions:readonly {id:string;label:string;replacement:string}[];onInput:(text:string)=>void;onExecute:(command:string,signal?:AbortSignal)=>unknown;onCancel:()=>unknown;busy:boolean;unstyled?:boolean}
 export function DraftingCommandLine({scope='drafting-command',revision=0,...props}:DraftingCommandLineProps){const {prompt,history,completions,onInput:_input,onExecute:_execute,onCancel,busy,unstyled=false,disabledReason,style,...rest}=props;
  if(history.length>10000||completions.length>256||new Set(history.map(h=>h.id)).size!==history.length||history.some(h=>h.command.length>8192||h.output.length>65536)||completions.some(c=>c.replacement.length>8192))throw new RangeError('Invalid command history');const owner=JSON.stringify([...controlIdentity(scope,revision),disabledReason]),guard=useScopedControl(owner,props,disabledReason!==undefined||busy);

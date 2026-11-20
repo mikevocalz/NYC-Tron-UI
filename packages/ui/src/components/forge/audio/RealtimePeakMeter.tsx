@@ -7,7 +7,7 @@ import {LevelMeter} from './LevelMeter.tsx';
 import {createPeakHold,type PeakHoldOptions} from './meter-ballistics.ts';
 import {formatDb} from './level.ts';
 import {controlIdentity} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface RealtimePeakMeasurement {timeMs:number;samplePeak:number;truePeak?:number;rms?:number}
 export interface RealtimePeakMeterProps extends Omit<ViewProps,'children'>,PeakHoldOptions {
  scope?:string;revision?:string|number;measurement:RealtimePeakMeasurement|null;

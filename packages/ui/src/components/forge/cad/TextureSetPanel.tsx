@@ -3,7 +3,7 @@ import {FlatList,View,type ViewProps} from 'react-native';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface TextureSet {id:string;label:string;channels:readonly {id:string;label:string;semantic:'base-color'|'roughness'|'metallic'|'normal'|'height'|'emissive'|'occlusion'|'custom';visible:boolean;textureId:string|null;unavailableReason?:string}[]}
 export interface TextureSetPanelProps extends Omit<ViewProps,'children'>,ScopedControlProps {sets:readonly TextureSet[];selectedSetId:string|null;selectedChannelId:string|null;onSelect:(setId:string,channelId:string|null)=>void;onVisibility:(setId:string,channelId:string,visible:boolean,signal?:AbortSignal)=>unknown;onReplace:(setId:string,channelId:string,signal?:AbortSignal)=>unknown;renderChannelPreview:(setId:string,channelId:string)=>ReactNode;unstyled?:boolean}
 export function TextureSetPanel({scope='texture-sets',revision=0,...props}:TextureSetPanelProps){const {sets,selectedSetId,selectedChannelId,onSelect:_select,onVisibility:_visible,onReplace:_replace,renderChannelPreview,unstyled=false,disabledReason,style,...rest}=props;

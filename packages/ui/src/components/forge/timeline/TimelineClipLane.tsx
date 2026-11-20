@@ -24,7 +24,7 @@ import {
 } from "./trim-modes.ts";
 import {positionToSeconds} from "./time.ts";
 import {frameToX,scrollBy,visibleRange,zoomAt,type TimelineViewport} from "./viewport.ts";
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 
 /**
  * What a press or drag on a clip does. `razor` splits at the pressed frame

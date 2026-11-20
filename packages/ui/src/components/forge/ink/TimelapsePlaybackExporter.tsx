@@ -8,7 +8,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {controlIdentity,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useOwnedAction} from '../../shell/useOwnedAction.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface TimelapseExportSettings {format:'mp4'|'webm';width:number;height:number;fps:number}
 export interface TimelapseArtifact {uri:string;bytes:number;mime:'video/mp4'|'video/webm';width:number;height:number;durationMs:number}
 export interface TimelapseProgress {completedFrames:number;totalFrames:number}

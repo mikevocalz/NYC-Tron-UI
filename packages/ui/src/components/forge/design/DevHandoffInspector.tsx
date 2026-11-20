@@ -3,7 +3,7 @@ import type {ReactNode} from 'react';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface DevHandoffInspectorProps extends Omit<ViewProps,'children'>,ScopedControlProps {objectId:string;measurements:readonly {id:string;label:string;value:string;unit:string}[];typography:readonly {id:string;label:string;value:string}[];assets:readonly {id:string;label:string;format:string;available:boolean}[];snippets:readonly {id:string;language:string;code:string;sourceRevision:string|number}[];renderMeasurements:()=>ReactNode;onCopy:(text:string,signal?:AbortSignal)=>unknown;onExportAsset:(id:string,signal?:AbortSignal)=>unknown;unstyled?:boolean}
 export function DevHandoffInspector({scope='dev-handoff',revision=0,...props}:DevHandoffInspectorProps){const {objectId,measurements,typography,assets,snippets,renderMeasurements,onCopy:_copy,onExportAsset:_export,unstyled=false,disabledReason,style,...rest}=props;
  if(!objectId.trim()||measurements.length>512||typography.length>128||assets.length>4096||snippets.length>64||snippets.some(s=>s.code.length>1048576))throw new RangeError('Invalid handoff payload');const owner=JSON.stringify([...controlIdentity(scope,revision),objectId,disabledReason]),guard=useScopedControl(owner,props,disabledReason!==undefined),off=guard.pending||disabledReason!==undefined;

@@ -8,7 +8,7 @@ import {
   type WindowCommandResult, type WindowControlDescriptor, type WindowControlLabels,
 } from "@nyc-tron/core/window-chrome";
 import { joinClasses } from "../styles.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../tokens.ts";
 
 /** Bar height and minimum hit height, in logical points. */
 export const TITLE_BAR_HEIGHT = 44;

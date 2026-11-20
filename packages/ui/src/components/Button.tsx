@@ -1,7 +1,7 @@
 import type { ReactNode,Ref,ComponentRef } from "react";
 import { ActivityIndicator, Pressable, Text, View, type PressableProps } from "react-native";
 import { joinClasses } from "./styles.ts";
-import { size as sizeToken } from "@nyc-tron/core/tokens";
+import { size as sizeToken } from "../tokens.ts";
 
 /**
  * Brand-neutral accessible press control. Native Chrome/Fluent/SwiftUI

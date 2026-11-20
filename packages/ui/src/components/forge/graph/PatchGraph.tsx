@@ -9,7 +9,7 @@ import {createCanvasResponder} from "../../gestures/canvas-responder.ts";
 import {ErrorMessage} from "../../feedback/ErrorMessage.tsx";
 import {createGraphRequests,currentGraphOutput,graphInteractionBoundary,graphDragPoint,graphDisplayedNodes} from "./patch-interaction-model.ts";
 import {joinClasses} from "../../styles.ts";
-import {space,radius,font,border,size} from "@nyc-tron/core/tokens";
+import {space,radius,font,border,size} from "../../../tokens.ts";
 
 type Local={positions:Readonly<Record<string,GraphPoint>>;output:GraphSelection|null;error:string|null};
 export interface PatchGraphProps extends Omit<ViewProps,"children">{

@@ -21,7 +21,7 @@ import {
   formatDbfs, formatLufs, formatSeconds, formatSigned, historySeconds, lufsToFraction, momentaryBars,
   peakSeverity, targetDelta, type LoudnessTarget,
 } from "./loudness.ts";
-import { space, radius, font } from '@nyc-tron/core/tokens';
+import { space, radius, font } from '../../../tokens.ts';
 import { tokens } from './LoudnessMeter.tokens.ts';
 
 /** Measurement state of a {@linkcode LoudnessMeter}. */

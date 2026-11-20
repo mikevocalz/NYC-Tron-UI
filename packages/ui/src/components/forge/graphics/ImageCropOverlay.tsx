@@ -8,7 +8,7 @@ import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {moveCrop,resizeCrop,resizeCropWithAspect,type CropRect,type CropCorner,validateCrop} from "./crop.ts";
 import {joinClasses} from "../../styles.ts";
-import {font,border,opacity} from "@nyc-tron/core/tokens";
+import {font,border,opacity} from "../../../tokens.ts";
 
 export interface ImageCropOverlayProps extends Omit<ViewProps,"children">{
  scope?:string;revision?:string|number;disabled?:boolean;

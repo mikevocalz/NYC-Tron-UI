@@ -7,7 +7,7 @@ import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {createWaveformCache,sharedWaveformCache,mediaProviderId} from './waveform-cache.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface AudioClipWaveformProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  sourceId:string;sourceRevision:number;range:WaveformRange;columns?:number;height?:number;position?:number;
  /** Real decoded min/max peaks for the requested source interval. */

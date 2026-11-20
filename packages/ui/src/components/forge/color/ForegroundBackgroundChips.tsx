@@ -3,7 +3,7 @@ import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
 import {rgbaToHex} from "../color.ts";
 import {DEFAULT_COLOR_PAIR,sameColorPair,swapColorPair,type ColorPair,type ColorPairSlot} from "./color-pair.ts";
-import {space,size} from "@nyc-tron/core/tokens";
+import {space,size} from "../../../tokens.ts";
 
 /** Props for {@linkcode ForegroundBackgroundChips}. */
 export interface ForegroundBackgroundChipsProps extends Omit<ViewProps,"children"> {

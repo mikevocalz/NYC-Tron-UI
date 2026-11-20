@@ -4,7 +4,7 @@ import {Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {ToolButton,officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
 import {ANNOTATION_TOOL_INFO,orderTools,toolForKey,type AnnotationTool} from "./annotation-model.ts";
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 
 /** Props for {@linkcode AnnotationToolbar}. */
 export interface AnnotationToolbarProps extends Omit<ViewProps,"children">,ScopedControlProps {

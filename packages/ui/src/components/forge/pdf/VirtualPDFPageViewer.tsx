@@ -8,7 +8,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {validatePDFPages,type PDFPageDescriptor,type PDFPageLayout} from './pdf-page-model.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PDFPageSurfaceContext {width:number;height:number;scale:number;rotation:0|90|180|270;active:boolean;scope:string}
 export interface VirtualPDFPageViewerProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  pages:readonly PDFPageDescriptor[];currentPageId:string|null;layout:PDFPageLayout;zoom:number;viewportHeight?:number;readingDirection?:'ltr'|'rtl';

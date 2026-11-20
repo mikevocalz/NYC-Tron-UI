@@ -11,7 +11,7 @@ import {shellKey} from "./shell-keys.ts";
 import {angleAround,applySliderKey,knobAngle,sliderKeyAction,valueFromAngle,valueFromDrag} from "./slider-model.ts";
 import {UnitInput} from "./UnitInput.tsx";
 import type {UnitContext} from "./unit-expression.ts";
-import {space,border,opacity} from "@nyc-tron/core/tokens";
+import {space,border,opacity} from "../../tokens.ts";
 
 /**
  * How pointer travel maps to a {@linkcode RotaryKnob} value. `relative`:

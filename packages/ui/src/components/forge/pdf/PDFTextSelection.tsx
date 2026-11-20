@@ -6,7 +6,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {validatePDFRect,type PDFRect} from './pdf-page-model.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PDFTextSelectionProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  surface:ReactNode;pageId:string;selection:{text:string;start:number;end:number;rects:readonly PDFRect[];offsetUnit:'utf16'|'unicode-scalar'}|null;
  textLength:number;canCopy:boolean;copyRestriction?:string;scale:number;onCopy:(text:string,signal?:AbortSignal)=>unknown;

@@ -8,7 +8,7 @@ import {ToneAndPresence} from './ToneAndPresence.tsx';
 import {EightBandColorMixer} from './EightBandColorMixer.tsx';
 import {LensCorrectionPanel,type LensProfile} from './LensCorrectionPanel.tsx';
 import {parsePhotoDevelop,serializePhotoDevelop,validatePhotoDevelop,type PhotoDevelopSettings} from './photo-adjustments.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {PhotoDevelopSettings} from './photo-adjustments.ts';
 export interface RAWDevelopPanelProps extends Omit<ViewProps,'children'> {
  readonly photoId:string;

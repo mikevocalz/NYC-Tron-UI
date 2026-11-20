@@ -11,7 +11,7 @@ import {nodeIsRTL,shellKey} from "./shell-keys.ts";
 import {applySliderKey,fractionOf,sliderKeyAction,valueAtOffset} from "./slider-model.ts";
 import {UnitInput} from "./UnitInput.tsx";
 import type {UnitContext} from "./unit-expression.ts";
-import {space,border,opacity,size} from "@nyc-tron/core/tokens";
+import {space,border,opacity,size} from "../../tokens.ts";
 import {tokens} from "./SliderField.tokens.ts";
 
 /** Props for {@linkcode SliderField}. */

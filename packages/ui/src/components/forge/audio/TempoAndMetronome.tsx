@@ -11,7 +11,7 @@ import {
   MAX_BPM, MAX_NUMERATOR, MIN_BPM, TAP_RESET_MS, TIME_SIG_DENOMINATORS,
   addTap, clampBpm, formatTimeSignature, isValidTimeSignature, tapTempo, type TimeSignature,
 } from "./tempo.ts";
-import { space, radius, opacity } from '@nyc-tron/core/tokens';
+import { space, radius, opacity } from '../../../tokens.ts';
 
 
 export interface TempoLabels {

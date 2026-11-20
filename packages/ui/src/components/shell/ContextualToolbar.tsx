@@ -7,7 +7,7 @@ import {joinClasses} from '../styles.ts';
 import {webToggleProps} from '../forge/toggle-a11y.ts';
 import {MenuButton} from './MenuButton.tsx';
 import {itemsForSelection,splitOverflow,validateToolbarItems,overflowDescription,type ToolbarItemSpec} from './contextual-toolbar-model.ts';
-import {size} from '@nyc-tron/core/tokens';
+import {size} from '../../tokens.ts';
 
 /** An action shown by {@linkcode ContextualToolbar}. */
 export interface ContextualToolbarItem extends ToolbarItemSpec {readonly icon?:ReactNode;}

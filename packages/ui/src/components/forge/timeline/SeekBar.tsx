@@ -8,7 +8,7 @@ import {formatTimecode,type FrameRate} from "../timebase.ts";
 import type {FrameRange} from "./viewport.ts";
 import {frameForKey} from "./frame-keys.ts";
 import {useFrameScrub} from "./useFrameScrub.ts";
-import {opacity} from '@nyc-tron/core/tokens';
+import {opacity} from '../../../tokens.ts';
 
 /** Props for {@linkcode SeekBar}. */
 export interface SeekBarProps extends Omit<ViewProps,"children">,ScopedControlProps {

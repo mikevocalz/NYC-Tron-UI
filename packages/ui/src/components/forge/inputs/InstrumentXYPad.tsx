@@ -5,7 +5,7 @@ import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {pointFromDrag,clamp,type Point2D} from "./precision.ts";
 import {joinClasses} from "../../styles.ts";
-import {space,radius,border,opacity,size as sizeToken} from "@nyc-tron/core/tokens";
+import {space,radius,border,opacity,size as sizeToken} from "../../../tokens.ts";
 
 type Local={width:number;height:number;active:boolean;preview:Point2D};
 export interface InstrumentXYPadProps extends Omit<ViewProps,"children"> {

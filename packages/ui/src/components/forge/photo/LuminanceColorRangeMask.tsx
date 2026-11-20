@@ -11,7 +11,7 @@ import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {joinClasses} from '../../styles.ts';
 import type {ProfileColor} from '../color/color-management.ts';
 import {validatePhotoRange,validatePhotoImageSize,type PhotoRangeMask,type PhotoImageSize,type PhotoMaskCombine} from './photo-masks.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {PhotoRangeMask} from './photo-masks.ts';
 export interface PhotoRangeSampleRequest {readonly photoId:string;readonly expectedRevision:string;readonly x:number;readonly y:number}
 export interface LuminanceColorRangeMaskProps extends Omit<ViewProps,'children'> {

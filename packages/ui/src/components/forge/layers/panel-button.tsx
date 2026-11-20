@@ -1,7 +1,7 @@
 import type {ReactNode} from "react";
 import {Pressable,Text,View} from "react-native";
 import {joinClasses} from "../../styles.ts";
-import {space,radius,leading,border,opacity,size} from "@nyc-tron/core/tokens";
+import {space,radius,leading,border,opacity,size} from "../../../tokens.ts";
 
 /**
  * Internal 44pt button shared by the layer panels. A control that cannot run

@@ -7,7 +7,7 @@ import {joinClasses} from '../../styles.ts';
 import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {MotionVectorFields} from './MotionVectorFields.tsx';
 import {validateMotionCamera,validateMotionLight,type MotionCamera,type MotionLight} from './motion-settings.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {MotionCamera,MotionLight} from './motion-settings.ts';
 export interface CameraAndLightControlsProps extends Omit<ViewProps,'children'> {readonly camera:MotionCamera;readonly light:MotionLight;readonly onCameraCommit:(value:MotionCamera)=>void;readonly onLightCommit:(value:MotionLight)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}
 /** Lens/view/depth and lighting values, independent from native app window dimensions. */

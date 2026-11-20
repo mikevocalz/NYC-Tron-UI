@@ -3,7 +3,7 @@ import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
 import {rgbaToHex} from "../color.ts";
 import {guideRect,safeAreas,type OverlayRect,type SafeAreaSpec} from "./safe-area.ts";
-import {border,opacity} from "@nyc-tron/core/tokens";
+import {border,opacity} from "../../../tokens.ts";
 
 // A letterbox matte is black by definition, in any theme; it is a picture value, not a UI color.
 const MATTE=rgbaToHex({r:0,g:0,b:0,alpha:1},false);

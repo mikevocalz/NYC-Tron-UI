@@ -8,7 +8,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {validatePDFRect,type PDFRect} from './pdf-page-model.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PDFRedactionMark {id:string;pageId:string;pageLabel:string;rects:readonly PDFRect[];reason:string}
 export interface RedactionReviewToolProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  marks:readonly PDFRedactionMark[];planRevision:string|number;selectedId:string|null;preview:ReactNode;

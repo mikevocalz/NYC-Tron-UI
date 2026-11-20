@@ -9,7 +9,7 @@ import {createValueGesture} from "../../gestures/value-gesture.ts";
 import {assertHsv,hsvToRgb,rgbaToHex,wrapHue,type HsvColor} from "../color.ts";
 import {createRingDrag,hueToRingPoint,RING_INNER_FRACTION} from "./wheel-geometry.ts";
 import {HueRingLayer} from "./wheel-layers.tsx";
-import {border,opacity} from "@nyc-tron/core/tokens";
+import {border,opacity} from "../../../tokens.ts";
 
 /** Props for {@linkcode ColorWheel}. */
 export interface ColorWheelProps extends Omit<ViewProps,"children"> {

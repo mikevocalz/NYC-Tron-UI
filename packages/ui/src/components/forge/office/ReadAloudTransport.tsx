@@ -5,7 +5,7 @@ import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {OFFICE_TOUCH_TARGET,PauseGlyph,PlayGlyph,SkipGlyph,ToolButton,officeKey,type OfficeKeyEvent} from "./office-controls.tsx";
 import {clampRate,formatRate,readAloudPosition,stepRate,wordSpans,type ReadAloudSentence} from "./read-aloud-model.ts";
-import {space,font,opacity} from '@nyc-tron/core/tokens';
+import {space,font,opacity} from '../../../tokens.ts';
 import {tokens} from './ReadAloudTransport.tokens.ts';
 
 /**

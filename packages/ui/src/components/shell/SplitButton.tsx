@@ -4,7 +4,7 @@ import type {CommandMenuItem} from "../overlays/CommandPopover.tsx";
 import type {Rect2D} from "../overlays/popover-position.ts";
 import {joinClasses} from "../styles.ts";
 import {MenuButton} from "./MenuButton.tsx";
-import {space,border,opacity} from "@nyc-tron/core/tokens";
+import {space,border,opacity} from "../../tokens.ts";
 
 /** Props for {@linkcode SplitButton}. */
 export interface SplitButtonProps extends Omit<ViewProps,"children"> {

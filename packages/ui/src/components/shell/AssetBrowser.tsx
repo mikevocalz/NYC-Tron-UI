@@ -10,7 +10,7 @@ import { shellKey } from "./shell-keys.ts";
 import { useOwnedAction } from "./useOwnedAction.ts";
 import { joinClasses } from "../styles.ts";
 import { filterAssets, selectAsset, formatAssetBytes, assetDisplayName, type AssetEntry, type AssetLocation, type AssetRequest, type AssetSort } from "./asset-browser-model.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../tokens.ts";
 export type { AssetEntry, AssetLocation, AssetRequest, AssetSort } from "./asset-browser-model.ts";
 
 export interface AssetBrowserProps extends Omit<ViewProps, "children"> {

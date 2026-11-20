@@ -1,7 +1,7 @@
 import {View,Text} from 'react-native';
 import type {ReactNode} from 'react';
 import {PropertyInspector,type PropertyInspectorProps} from '../inputs/PropertyInspector.tsx';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface TextFrame {id:string;label:string;x:number;y:number;width:number;height:number;anchor:'page'|'paragraph'|'character';wrap:'inline'|'square'|'tight'|'through'|'top-bottom'|'behind'|'front';wrapGap:number;nextId:string|null;oversetCharacters:number}
 export interface TextWrapAndFramesProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {
  frames:readonly TextFrame[];selectedId:string|null;renderFrame:(id:string)=>ReactNode;onCommit:(id:string,value:TextFrame,signal?:AbortSignal)=>unknown;

@@ -1,5 +1,5 @@
 import { View, type ViewProps } from "react-native";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../tokens.ts";
 
 export interface ContentFrameProps extends ViewProps {
   /** App-chosen reading/form/media width in logical layout units. */

@@ -6,7 +6,7 @@ import {PDFThumbnailSidebar,type PDFThumbnailSidebarProps} from './PDFThumbnailS
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PageReorderOrganizerProps extends PDFThumbnailSidebarProps {
  onDuplicate:(ids:readonly string[],signal?:AbortSignal)=>unknown;onDelete:(ids:readonly string[],signal?:AbortSignal)=>unknown;onRotate:(ids:readonly string[],degrees:90|-90,signal?:AbortSignal)=>unknown;
 }

@@ -7,7 +7,7 @@ import {nodeIsRTL,shellKey} from '../../shell/shell-keys.ts';
 import {joinClasses} from '../../styles.ts';
 import {validatePresets} from '../../shell/preset-model.ts';
 import {validatePhotoTargets} from './photo-presets.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface FilmstripPreset {readonly id:string;readonly name:string;readonly preview:ReactNode;readonly favorite:boolean}
 export interface PresetFilmstripProps extends Omit<ViewProps,'children'> {
  readonly scope:string;readonly presets:readonly FilmstripPreset[];readonly selectedId:string|null;readonly photoIds:readonly string[];

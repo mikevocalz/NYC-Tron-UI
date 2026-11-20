@@ -3,7 +3,7 @@ import {RenderQueuePanel,type RenderQueuePanelProps} from '../motion/RenderQueue
 import {Select} from '../../Select.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface VideoExportOutput {width:number;height:number;codecId:string}
 export interface VideoExportCodec {id:string;label:string;maxWidth:number;maxHeight:number;widthMultiple:number;heightMultiple:number;unavailableReason?:string}
 export interface ExportMonitorProps extends Omit<RenderQueuePanelProps,'onEnqueue'> {

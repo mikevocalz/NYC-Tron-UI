@@ -4,7 +4,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {InkStrokePreview,type InkStrokePreviewProps} from './InkStrokePreview.tsx';
 import {stabilizePreview,validateStabilization,type BrushStabilization} from './brush-model.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface BrushStabilizationPreviewProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  value:BrushStabilization;onCommit:(value:BrushStabilization,signal?:AbortSignal)=>void|Promise<unknown>;
  pad:Omit<InkStrokePreviewProps,'scope'|'revision'|'filterSamples'>;unstyled?:boolean;

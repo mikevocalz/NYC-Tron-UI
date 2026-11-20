@@ -2,7 +2,7 @@ import { View, type ViewProps } from "react-native";
 import { Select } from "../../Select.tsx";
 import { UnitInput } from "../../shell/UnitInput.tsx";
 import { validatePrintColor, type PrintColor, type ColorConversionPolicy } from "./color-management.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../../tokens.ts";
 export type { PrintColor } from "./color-management.ts";
 /** Controlled, profile-preserving CMYK/Lab editor; every field acceptance commits one change. */
 export interface PrintColorChannelsProps extends Omit<ViewProps, "children"> {

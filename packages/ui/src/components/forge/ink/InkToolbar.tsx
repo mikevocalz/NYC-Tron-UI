@@ -9,7 +9,7 @@ import {
  type InkAvailability,type InkCommandOutcome,type InkKeyEvent,type InkPressure,type InkSize,type InkSwatch,
  type InkTool,type InkToolOption,
 } from "./ink-model.ts";
-import {space,radius,font,border,opacity as opacityToken} from "@nyc-tron/core/tokens";
+import {space,radius,font,border,opacity as opacityToken} from "../../../tokens.ts";
 import {tokens} from "./InkToolbar.tokens.ts";
 
 /** Icon slots an {@linkcode InkToolbar} host can fill. Missing slots fall back to text labels. */

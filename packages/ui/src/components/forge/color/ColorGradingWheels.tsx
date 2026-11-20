@@ -4,7 +4,7 @@ import { SliderField } from "../../shell/SliderField.tsx";
 import { ColorDiscPicker } from "./ColorDiscPicker.tsx";
 import { joinClasses } from "../../styles.ts";
 import { validateGrade,type ColorGrade } from "./color-adjustments.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../../tokens.ts";
 export type { ColorGrade } from "./color-adjustments.ts";
 /** Three controlled grading ranges with preview and transaction boundaries. */
 export interface ColorGradingWheelsProps extends Omit<ViewProps,"children"> {

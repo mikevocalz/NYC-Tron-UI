@@ -16,7 +16,7 @@ import {
   fitRange,frameToX,minimapScroll,minimapWindow,scrollBy,visibleFrames,zoomAt,
   type FrameRange,type TimelineViewport,
 } from "./viewport.ts";
-import {space,opacity} from '@nyc-tron/core/tokens';
+import {space,opacity} from '../../../tokens.ts';
 
 /** Props for {@linkcode TimelineZoomAndScroll}. */
 export interface TimelineZoomAndScrollProps extends Omit<ViewProps,"children">,ScopedControlProps {

@@ -6,7 +6,7 @@ import {useLocalStore} from "../../useLocalStore.ts";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {rgbaToHex} from "../color.ts";
 import {filterSwatchGroups,swatchColumns,swatchGridMove,swatchKey,type Swatch,type SwatchGroup,type SwatchGroupKind} from "./swatches.ts";
-import {space,size} from "@nyc-tron/core/tokens";
+import {space,size} from "../../../tokens.ts";
 
 /** Props for {@linkcode SwatchGrid}. */
 export interface SwatchGridProps extends Omit<ViewProps,"children"> {

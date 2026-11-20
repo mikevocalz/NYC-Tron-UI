@@ -11,7 +11,7 @@ import { rgbToHsv,hsvToRgb } from "../color.ts";
 import {validateGradientOptions,sampleGradient,changeGradientType,rotateGradient,type GradientOptions} from "./gradient-options.ts";
 import { addStop,moveStop,removeStop,validateGradient,addStopAvailability,removeStopAvailability } from "../vector/gradient-handles-model.ts";
 import type { GradientPaint } from "../vector/vector-types.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../../tokens.ts";
 /** Gradient stop selection and paint commit are owned by the consuming document. */
 export interface GradientStopEditorProps extends Omit<ViewProps,"children"> {
  readonly value:GradientPaint;

@@ -1,7 +1,7 @@
 import { View, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
 import { sparklineGeometry, type SparklineAxisMin, type SparklineKind, type SparklineMarkTone } from "./sparkline-model.ts";
-import { radius } from "@nyc-tron/core/tokens";
+import { radius } from "../../../tokens.ts";
 
 /**
  * An in-cell chart drawn with plain views, so it renders inside any grid cell

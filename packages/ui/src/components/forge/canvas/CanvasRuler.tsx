@@ -12,7 +12,7 @@ import {
   guideKeyCommand,guidePositionAt,isOverOwnRuler,rulerTicks,validateGuides,
   type CanvasGuide,type NewCanvasGuide,type RulerUnit,
 } from "./ruler-model.ts";
-import {space,font,opacity} from "@nyc-tron/core/tokens";
+import {space,font,opacity} from "../../../tokens.ts";
 import {tokens} from "./CanvasRuler.tokens.ts";
 
 /** A guide being dragged: a new one out of a ruler, or an existing one by `id`. */

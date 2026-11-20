@@ -1,6 +1,6 @@
 import {View,Text} from 'react-native';
 import {PropertyInspector,type PropertyInspectorProps} from '../inputs/PropertyInspector.tsx';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface CellFormat {numberFormat:'general'|'number'|'currency'|'percentage'|'date'|'time'|'custom';decimals:number;currency:string;locale:string;customPattern:string;horizontal:'start'|'center'|'end'|'justify';vertical:'top'|'middle'|'bottom';wrap:boolean;borderStyle:'none'|'solid'|'dashed';borderWidth:number;borderColor:string;fill:string;textColor:string}
 export interface CellFormatInspectorProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {value:CellFormat;colors:readonly {id:string;label:string}[];formattedPreview:string;onCommit:(value:CellFormat,signal?:AbortSignal)=>unknown}
 export function CellFormatInspector({value,colors,formattedPreview,onCommit,...props}:CellFormatInspectorProps){return <View style={{gap:space[2]}}><PropertyInspector {...props} label="Cell formatting" fields={[

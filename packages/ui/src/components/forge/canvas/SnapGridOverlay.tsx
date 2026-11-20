@@ -2,7 +2,7 @@ import {View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {docToScreen,validateViewport,type CanvasViewport} from "./canvas-viewport.ts";
 import {gridLines,validateSnapHit,type GridSettings,type SnapHit} from "./snap-grid-model.ts";
-import {radius,opacity} from "@nyc-tron/core/tokens";
+import {radius,opacity} from "../../../tokens.ts";
 
 /** Props for {@linkcode SnapGridOverlay}. */
 export interface SnapGridOverlayProps extends Omit<ViewProps,"children"> {

@@ -10,7 +10,7 @@ import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {assertFaderRange,clampGain,dbToGain,dragToGain,FADER_RANGES,formatDb,gainToPosition,stepGain,type FaderRange} from './level.ts';
-import {space,opacity} from '@nyc-tron/core/tokens';
+import {space,opacity} from '../../../tokens.ts';
 export interface NativeVerticalFaderProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  targetSize?:number;labels?:LevelFaderLabels;
  value:number;label:string;range?:FaderRange;length?:number;stepDb?:number;className?:string;

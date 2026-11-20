@@ -6,7 +6,7 @@ import {useOwnedAction} from '../../shell/useOwnedAction.ts';
 import {joinClasses} from '../../styles.ts';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {defaultAlphaModes,layerBlendProblem,layerOpacityFromPercent,validateLayerBlend,type LayerAlphaMode,type LayerAlphaOption,type LayerBlendMode,type LayerBlendSpace,type LayerBlendValue} from './layer-blend-model.ts';
-import {space as spaceToken} from '@nyc-tron/core/tokens';
+import {space as spaceToken} from '../../../tokens.ts';
 export type {LayerAlphaMode,LayerAlphaOption,LayerBlendMode,LayerBlendSpace,LayerBlendValue} from './layer-blend-model.ts';
 export {defaultAlphaModes} from './layer-blend-model.ts';
 export interface LayerBlendAndOpacityProps extends Omit<ViewProps,'children'> {

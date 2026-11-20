@@ -10,7 +10,7 @@ import {dragTargetIndex} from "../layers/layer-model.ts";
 import {OFFICE_TOUCH_TARGET,PlusGlyph,officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
 import {SlideThumbnail} from "./SlideThumbnail.tsx";
 import {SLIDE_DEFAULT_SIZE,slideLabel,type SlideObject,type SlideSize,type SlideSummary} from "./slide-model.ts";
-import {space,radius,font} from '@nyc-tron/core/tokens';
+import {space,radius,font} from '../../../tokens.ts';
 import {tokens} from './SlideFilmstrip.tokens.ts';
 
 /** Props for {@linkcode SlideFilmstrip}. Each action renders only when its callback is passed. */

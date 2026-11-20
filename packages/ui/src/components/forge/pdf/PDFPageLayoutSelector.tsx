@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import type {PDFPageLayout} from './pdf-page-model.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PDFPageLayoutSelectorProps extends ScopedControlProps {value:PDFPageLayout;onChange:(layout:PDFPageLayout,signal?:AbortSignal)=>unknown;unstyled?:boolean}
 export function PDFPageLayoutSelector({scope='pdf-page-layout',revision=0,...props}:PDFPageLayoutSelectorProps){
  const owner=JSON.stringify([...controlIdentity(scope,revision),props.disabledReason]),guard=useScopedControl(owner,props,props.disabledReason!==undefined);

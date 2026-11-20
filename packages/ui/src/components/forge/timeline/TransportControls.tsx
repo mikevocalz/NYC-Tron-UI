@@ -4,7 +4,7 @@ import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {Glyph,type TransportGlyph} from "./glyphs.tsx";
-import {space,opacity,size} from '@nyc-tron/core/tokens';
+import {space,opacity,size} from '../../../tokens.ts';
 
 /** Props for {@linkcode TransportControls}. */
 export interface TransportControlsProps extends Omit<ViewProps,"children">,ScopedControlProps {

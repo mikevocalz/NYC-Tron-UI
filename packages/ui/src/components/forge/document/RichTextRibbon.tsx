@@ -5,7 +5,7 @@ import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {OFFICE_TOUCH_TARGET,ToolButton} from "../office/office-controls.tsx";
 import {TEXT_CASE_LABELS,stepFontSize,type InlineToggle,type RibbonState,type SharedValue,type TextCase} from "./ribbon-model.ts";
-import {space,radius,font,border,opacity,size as sizeToken} from '@nyc-tron/core/tokens';
+import {space,radius,font,border,opacity,size as sizeToken} from '../../../tokens.ts';
 
 /** A color the ribbon offers. `value` is document data (the engine's color string), not a theme token. */
 export interface RibbonColor {

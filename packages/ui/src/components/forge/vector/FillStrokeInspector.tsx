@@ -18,7 +18,7 @@ import {
   type FillRule,type LineCap,type LineJoin,type Paint,type PaintOrder,type Rgba,type Stroke,
 } from "./vector-types.ts";
 import {GroupLabel,NoticeLine,VECTOR_TOUCH_TARGET,VectorButton} from "./vector-controls.tsx";
-import {space,radius,font} from '@nyc-tron/core/tokens';
+import {space,radius,font} from '../../../tokens.ts';
 
 /** A color the host offers as a swatch. */
 export interface PaintSwatch {

@@ -6,7 +6,7 @@ import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {parsePDFPageRange} from './pdf-page-model.ts';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface PDFSourceDocument {id:string;label:string;pageCount:number;unavailableReason?:string}
 export interface ExtractMergeSplitDialogProps extends ScopedControlProps {
  open:boolean;mode:'extract'|'merge'|'split';sources:readonly PDFSourceDocument[];selectedSourceId:string|null;

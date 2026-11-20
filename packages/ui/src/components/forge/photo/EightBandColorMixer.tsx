@@ -2,7 +2,7 @@ import {View,Text,type ViewProps} from 'react-native';
 import {UnitInput} from '../../shell/UnitInput.tsx';
 import {joinClasses} from '../../styles.ts';
 import {PHOTO_BANDS,validateEightBand,type EightBandSettings} from './photo-adjustments.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {EightBandSettings,PhotoBand,BandAdjustment} from './photo-adjustments.ts';
 export interface EightBandColorMixerProps extends Omit<ViewProps,'children'> {readonly value:EightBandSettings;readonly onCommit:(value:EightBandSettings)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}
 /** Eight explicit color ranges; edits retain every other band's exact values. */

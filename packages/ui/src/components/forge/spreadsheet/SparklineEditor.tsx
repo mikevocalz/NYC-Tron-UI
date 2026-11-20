@@ -9,7 +9,7 @@ import { parseA1Range } from "./chart-model.ts";
 import { PanelCheckbox, PanelChoices, PanelField, PanelHeading } from "./panel-controls.tsx";
 import { Sparkline } from "./Sparkline.tsx";
 import { SPARKLINE_KINDS, sparklineSpecProblem, type SparklineKind, type SparklineSpec } from "./sparkline-model.ts";
-import { space, font } from '@nyc-tron/core/tokens';
+import { space, font } from '../../../tokens.ts';
 
 /**
  * Controlled sparkline editor: type, data range, target cell, high/low and

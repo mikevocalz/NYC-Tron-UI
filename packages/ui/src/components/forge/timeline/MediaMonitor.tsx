@@ -9,7 +9,7 @@ import {TimecodeDisplay} from './TimecodeDisplay.tsx';
 import {SeekBar} from './SeekBar.tsx';
 import {SafeAreaOverlay,type SafeAreaOverlayProps} from './SafeAreaOverlay.tsx';
 import {setMark,type InOutRange} from './edits.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface MediaMonitorProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  kind:'source'|'program';sourceId:string|null;label:string;frame:number;durationFrames:number;rate:FrameRate;playing:boolean;
  /** Last decoded frame actually presented, separate from the requested/clock frame. */

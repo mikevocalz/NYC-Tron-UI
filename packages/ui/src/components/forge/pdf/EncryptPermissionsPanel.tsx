@@ -5,7 +5,7 @@ import {useStore} from 'zustand';
 import {Select} from '../../Select.tsx';
 import {Button} from '../../Button.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface PDFEncryptionRequest {userPassword:string;ownerPassword:string;algorithmId:string;permissions:Readonly<Record<string,boolean>>}
 export interface EncryptPermissionsPanelProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  algorithms:readonly {id:string;label:string;readerCompatibility:string;unavailableReason?:string}[];algorithmId:string;

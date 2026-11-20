@@ -4,7 +4,7 @@ import {SegmentedControl} from '../../SegmentedControl.tsx';
 import {WaveformLane} from '../WaveformLane.tsx';
 import {normalizePeak,type WaveformPeak} from '../waveform.ts';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface AudioWaveformChannel {id:string;label:string;peaks:readonly WaveformPeak[];rms?:readonly number[]}
 export interface StereoMultichannelWaveformProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  channels:readonly AudioWaveformChannel[];mode:'peak'|'rms';onModeChange:(mode:'peak'|'rms')=>void;

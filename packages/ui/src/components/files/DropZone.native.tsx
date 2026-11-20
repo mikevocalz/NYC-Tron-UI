@@ -6,7 +6,7 @@ import { useStore } from "zustand";
 import { acceptsFile } from "./drop-model.ts";
 import { DropZoneCopy, dropZoneClasses } from "./DropZone.shared.tsx";
 import type { DropZoneProps } from "./DropZone.types.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../tokens.ts";
 
 export type { DropAsset, DropAssets, DropZoneProps } from "./DropZone.types.ts";
 

@@ -5,7 +5,7 @@ import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PDFCompareOverlayProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  leftDocumentId:string;rightDocumentId:string;beforeSurface:ReactNode;afterSurface:ReactNode;differenceSurface?:ReactNode;aspectRatio:number;
  mode:'overlay'|'side-by-side'|'difference';opacity:number;changes:readonly {id:string;pageLabel:string;kind:'insert'|'delete'|'change';before:string;after:string}[];

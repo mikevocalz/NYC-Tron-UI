@@ -5,7 +5,7 @@ import {Button} from '../../Button.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface AudioProcessParameter {id:string;label:string;value:number;min:number;max:number;step:number;unit?:string}
 export interface AudioProcessingPanelProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  label:string;parameters:readonly AudioProcessParameter[];

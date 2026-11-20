@@ -2,7 +2,7 @@ import {Text,View,type ViewProps} from 'react-native';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface RecordingArmButtonProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  trackId:string;label:string;armed:boolean;recording:boolean;error?:string;onArmChange:(trackId:string,armed:boolean,signal?:AbortSignal)=>void|Promise<unknown>;unstyled?:boolean;
 }

@@ -3,7 +3,7 @@ import {Select} from '../../Select.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {assertFrameRate,type FrameRate} from '../timebase.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface VideoQualityInspectorProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  media:{width:number;height:number;bitDepth:number;frameRate:FrameRate;codec:string;colorSpace:string;bitrate?:number};
  preview:{supported:boolean;reason?:string};profileId:string;

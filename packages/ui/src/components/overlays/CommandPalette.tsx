@@ -10,7 +10,7 @@ import {cycleFocusTarget} from "./focus-cycle.ts";
 import {useRestoreFocus} from "./focus-restore.ts";
 import {filterCommands,nextActiveCommand,reconcileActiveCommand,validateCommands,
  type PaletteCommand} from "./command-filter.ts";
-import {space,font,opacity} from "@nyc-tron/core/tokens";
+import {space,font,opacity} from "../../tokens.ts";
 import {tokens} from "./CommandPalette.tokens.ts";
 export type {PaletteCommand} from "./command-filter.ts";
 

@@ -12,7 +12,7 @@ import {
   type ChartCellValues, type SheetChartData, type SheetChartKind, type SheetChartSpec,
 } from "./chart-model.ts";
 import { PanelCheckbox, PanelChoices, PanelField, PanelHeading } from "./panel-controls.tsx";
-import { space, radius } from '@nyc-tron/core/tokens';
+import { space, radius } from '../../../tokens.ts';
 
 /**
  * Controlled chart builder: type gallery, data range, series orientation,

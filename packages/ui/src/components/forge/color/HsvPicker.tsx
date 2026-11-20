@@ -8,7 +8,7 @@ import {ColorChannels} from "../ColorChannels.tsx";
 import {assertHsv,hsvToRgb,rgbaEditToHsv,rgbaToHex,wrapHue,type HsvColor} from "../color.ts";
 import {clamp} from "../inputs/precision.ts";
 import {createFieldGesture} from "./fieldGesture.ts";
-import {space,radius,border,opacity,size as sizeToken} from "@nyc-tron/core/tokens";
+import {space,radius,border,opacity,size as sizeToken} from "../../../tokens.ts";
 
 /** Props for {@linkcode HsvPicker}. */
 export interface HsvPickerProps extends Omit<ViewProps,"children"> {

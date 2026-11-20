@@ -9,7 +9,7 @@ import {shellKey} from '../../shell/shell-keys.ts';
 import {joinClasses} from '../../styles.ts';
 import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {combineObjectSelection,pickSelectionObject,selectionGroupState,sharedSelectionProperty,validateSelectableObjects,type ObjectSelection,type ObjectSelectionMode,type SelectableObject,type SharedValue} from './multi-selection-model.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export type {ObjectSelection,SelectableObject,SharedValue} from './multi-selection-model.ts';
 export type SharedPropertyDefinition={readonly key:string;readonly label:string;readonly readOnly?:boolean}&(
  {readonly type:'number';readonly min:number;readonly max:number;readonly step:number}|

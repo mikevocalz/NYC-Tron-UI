@@ -19,7 +19,7 @@ import { useStore } from "zustand";
 import { joinClasses } from "../../styles.ts";
 import { useStatusAnnouncement } from "../announce.ts";
 import { INSERT_KIND_LABELS, filterPresets, type InsertKind, type InsertPreset } from "./inserts.ts";
-import { space, radius, font, border, opacity, size } from '@nyc-tron/core/tokens';
+import { space, radius, font, border, opacity, size } from '../../../tokens.ts';
 
 const HIT = 44;
 

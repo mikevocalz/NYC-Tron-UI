@@ -3,7 +3,7 @@ import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
 import {alphaPercent,assertHsv,hsvToRgb,parseHexColor,rgbaEditToHsv,rgbaToHex,type HsvColor} from "../color.ts";
 import {CHANNEL_MODELS,channelFields,parseChannel,parseOpacityPercent,readChannels,writeChannel,type ChannelModel} from "./channel-fields.ts";
-import {space,size} from "@nyc-tron/core/tokens";
+import {space,size} from "../../../tokens.ts";
 
 /** Props for {@linkcode ColorChannelFields}. */
 export interface ColorChannelFieldsProps extends Omit<ViewProps,"children"> {

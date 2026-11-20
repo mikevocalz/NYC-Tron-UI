@@ -5,7 +5,7 @@ import type {RasterPixels} from '../layers/layer-thumbnail-model.ts';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {frameToX,visibleRange,type TimelineViewport} from './viewport.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface VideoFilmstripProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  sourceId:string;sourceRevision:number;durationFrames:number;viewport:TimelineViewport;height?:number;tileWidth?:number;
  /** Decode this source frame; max bounds the returned raster edge. */

@@ -4,7 +4,7 @@ import {Button} from '../../Button.tsx';
 import {Select} from '../../Select.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PrototypePreviewPlayerProps extends Omit<ViewProps,'children'>,ScopedControlProps {surface:ReactNode;screens:readonly {id:string;label:string}[];currentScreenId:string;entryId:string;status:'stopped'|'playing'|'paused'|'transitioning'|'error';transitionProgress:number;canBack:boolean;onAction:(action:'play'|'pause'|'restart'|'back'|'stop',signal?:AbortSignal)=>unknown;onNavigate:(id:string,signal?:AbortSignal)=>unknown;error?:string;unstyled?:boolean}
 /** Surface and transition clock come from the actual prototype runtime; no UI timer simulates execution. */
 export function PrototypePreviewPlayer({scope='prototype-preview',revision=0,...props}:PrototypePreviewPlayerProps){

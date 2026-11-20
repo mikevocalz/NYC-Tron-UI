@@ -1,7 +1,7 @@
 import { View, type ViewProps } from "react-native";
 import { UnitInput } from "../../shell/UnitInput.tsx";
 import { validateLevels, type ColorLevels } from "./color-adjustments.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../../tokens.ts";
 export type { ColorLevels } from "./color-adjustments.ts";
 /** Controlled per-channel levels; select the channel in the consuming app. */
 export interface LevelsEditorProps extends Omit<ViewProps,"children"> {

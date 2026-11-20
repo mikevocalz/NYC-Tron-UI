@@ -8,7 +8,7 @@ import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from './useScopedControl.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export type PropertyValue=number|string|boolean;
 export type InspectorProperty={id:string;label:string;disabledReason?:string}&(
  {kind:'number';value:number;min:number;max:number;step:number;unit?:string;integer?:boolean}|

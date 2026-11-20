@@ -3,7 +3,7 @@ import {EffectStackAndInspector,type EffectStackAndInspectorProps} from '../moti
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface AudioEffectsPresetPanelProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  stack:Omit<EffectStackAndInspectorProps,'scope'|'revision'|'disabled'|'unstyled'>;bypassed:boolean;
  previewStatus:'idle'|'rendering'|'ready'|'error';previewError?:string;onRenderPreview:(signal?:AbortSignal)=>unknown;onCancelPreview:()=>void;

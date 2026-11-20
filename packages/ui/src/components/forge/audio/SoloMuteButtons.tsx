@@ -6,7 +6,7 @@ import { Platform, Pressable, Text, View, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
 import { webToggleProps } from "../toggle-a11y.ts";
 import type { Audibility, audibility } from "./mixer.ts";
-import { space, border, opacity } from '@nyc-tron/core/tokens';
+import { space, border, opacity } from '../../../tokens.ts';
 
 
 export interface SoloMuteLabels {

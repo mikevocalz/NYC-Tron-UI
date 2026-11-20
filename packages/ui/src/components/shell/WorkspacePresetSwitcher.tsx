@@ -12,7 +12,7 @@ import {
   PRESET_NAME_MAX,copyName,presetActions,presetNameMessage,presetNameProblem,validatePresetList,
   type WorkspacePreset,
 } from "./workspace-preset-model.ts";
-import {space,radius,border} from "@nyc-tron/core/tokens";
+import {space,radius,border} from "../../tokens.ts";
 
 export type {WorkspacePreset} from "./workspace-preset-model.ts";
 

@@ -9,7 +9,7 @@ import {Button} from "../../Button.tsx";
 import type {FrameRate} from "../timebase.ts";
 import {splitEdit,type TimelineEdit,type TimelineTrack} from "./edits.ts";
 import type {TimelineTool} from "./TimelineClipLane.tsx";
-import {space,opacity,size} from '@nyc-tron/core/tokens';
+import {space,opacity,size} from '../../../tokens.ts';
 
 /** Props for {@linkcode RazorSplitTool}. */
 export interface RazorSplitToolProps extends Omit<ViewProps,"children">,ScopedControlProps {

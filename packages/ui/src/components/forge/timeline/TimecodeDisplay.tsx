@@ -5,7 +5,7 @@ import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
 import type {FrameRate} from "../timebase.ts";
 import {formatTime,parseTime,supportsDropFrame,type TimeFormat} from "./time.ts";
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 
 /** Props for {@linkcode TimecodeDisplay}. */
 export interface TimecodeDisplayProps extends Omit<ViewProps,"children">,ScopedControlProps {

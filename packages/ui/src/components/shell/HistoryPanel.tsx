@@ -4,7 +4,7 @@ import { ErrorMessage } from "../feedback/ErrorMessage.tsx";
 import { joinClasses } from "../styles.ts";
 import { validateHistory, type HistoryEntry, type HistoryJump } from "./history-model.ts";
 import { useOwnedAction } from "./useOwnedAction.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../tokens.ts";
 export type { HistoryEntry, HistoryJump } from "./history-model.ts";
 
 export interface HistoryPanelProps extends Omit<ViewProps, "children"> {

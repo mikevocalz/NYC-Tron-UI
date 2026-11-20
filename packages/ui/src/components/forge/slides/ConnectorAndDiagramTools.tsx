@@ -8,7 +8,7 @@ import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface DiagramTarget {id:string;label:string;anchors:readonly {id:string;label:string;x:number;y:number}[]}
 export interface DiagramConnector {id:string;label:string;sourceObjectId:string;sourceAnchorId:string;targetObjectId:string;targetAnchorId:string;style:'straight'|'elbow';arrows:'none'|'end'|'both'}
 export interface ConnectorAndDiagramToolsProps extends Omit<ViewProps,'children'>,ScopedControlProps {

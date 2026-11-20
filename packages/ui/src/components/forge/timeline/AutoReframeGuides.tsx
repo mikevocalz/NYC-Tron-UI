@@ -4,7 +4,7 @@ import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {GuidedCropAndStraighten,type GuidedCropAndStraightenProps} from '../canvas/GuidedCropAndStraighten.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface AutoReframeGuidesProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  frame:number;manual:boolean;onManualChange:(manual:boolean)=>void;
  crop:Omit<GuidedCropAndStraightenProps,'scope'|'revision'|'disabledReason'>;

@@ -31,7 +31,7 @@ import {
   eqHandlePosition, eqResponseSegments, formatFreq, formatGain, formatQ, isPassBand, stepBand,
   type EqBand, type EqBandEdit, type EqPlot, type EqResponsePoint,
 } from "./eq-graph.ts";
-import { space, font, leading, border, opacity } from '@nyc-tron/core/tokens';
+import { space, font, leading, border, opacity } from '../../../tokens.ts';
 
 /** Minimum hit size (iOS 44pt / Android 48dp floor). */
 const HIT = 44;

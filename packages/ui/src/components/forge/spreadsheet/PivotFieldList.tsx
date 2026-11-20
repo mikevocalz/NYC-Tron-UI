@@ -9,7 +9,7 @@ import {Button} from '../../Button.tsx';
 import {Select} from '../../Select.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export type PivotZone='rows'|'columns'|'values'|'filters';
 export interface PivotAssignment {id:string;fieldId:string;zone:PivotZone;aggregate:'sum'|'count'|'average'|'min'|'max'}
 export interface PivotFieldListProps extends Omit<ViewProps,'children'>,ScopedControlProps {

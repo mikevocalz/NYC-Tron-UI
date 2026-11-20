@@ -5,7 +5,7 @@ import {useStore} from 'zustand';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface DictationSessionPanelProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  status:'idle'|'listening'|'processing'|'review'|'error';permission:'unknown'|'granted'|'denied';offline:boolean;supportsOffline:boolean;
  transcript:string;interimText:string;error?:string;canUndo:boolean;

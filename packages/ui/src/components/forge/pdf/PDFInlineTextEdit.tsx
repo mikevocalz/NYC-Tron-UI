@@ -10,7 +10,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {validatePDFRect,type PDFRect} from './pdf-page-model.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PDFTextRun {id:string;text:string;fontFamily:string;fontSize:number;rect:PDFRect;editable:boolean;limitation?:string}
 export interface PDFInlineTextEditProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  pageId:string;surface:ReactNode;activeRun:PDFTextRun|null;layoutMode:'preserve-bounds'|'reflow-box';availableLayoutModes:readonly ('preserve-bounds'|'reflow-box')[];

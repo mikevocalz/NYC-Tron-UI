@@ -32,7 +32,7 @@ import {
   formatThreshold, levelToOffset, stepRatio, unitySegment,
   type DynamicsCurvePoint, type DynamicsParams,
 } from "./dynamics-graph.ts";
-import { space, font, leading, opacity as opacityToken } from '@nyc-tron/core/tokens';
+import { space, font, leading, opacity as opacityToken } from '../../../tokens.ts';
 import { tokens } from './DynamicsTransferGraph.tokens.ts';
 
 /** Minimum hit size (iOS 44pt / Android 48dp floor). */

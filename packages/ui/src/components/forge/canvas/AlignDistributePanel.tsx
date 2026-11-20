@@ -13,7 +13,7 @@ import {
   type AlignCommand,type AlignEdge,type AlignItem,type AlignReferenceKind,type ArrangeAction,type Availability,
   type DistributeAxis,type DistributeCommand,type DistributeMode,type MoveLayerCommand,type StackPosition,
 } from "./align-distribute-model.ts";
-import {space,radius,opacity,size} from '@nyc-tron/core/tokens';
+import {space,radius,opacity,size} from '../../../tokens.ts';
 
 /** Props for {@linkcode AlignDistributePanel}. Every value is owned by the host. */
 export interface AlignDistributePanelProps extends Omit<ViewProps,"children">,ScopedControlProps {

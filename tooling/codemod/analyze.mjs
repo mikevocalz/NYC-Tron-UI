@@ -5,7 +5,7 @@ import { createRequire } from "node:module";
 import { basename, dirname, join, posix } from "node:path";
 import { readFileSync } from "node:fs";
 import {
-  FAMILY_OF_CATEGORY, EXPORT_ORDER, keyOfTokenName, normalizeColor, propertyCategories, readModel,
+  FAMILY_OF_CATEGORY, EXPORT_ORDER, LOCAL_TOKEN_PACKAGES, keyOfTokenName, normalizeColor, propertyCategories, readModel,
   referenceText, root, scopedKey, sharedTable,
 } from "./token-model.mjs";
 
@@ -20,7 +20,7 @@ export function loadTsMorph() {
 export function listSourceFiles(cwd = root) {
   const out = execFileSync("git", ["ls-files", "packages"], { cwd, encoding: "utf8", maxBuffer: 1 << 28 }).split("\n");
   return out.filter((f) => /^packages\/[^/]+\/src\/.+\.(ts|tsx)$/.test(f))
-    .filter((f) => !/(\.d\.ts$|\.test\.|\.spec\.|\/tests?\/|\/generated\/|\/node_modules\/|\/dist\/|\.tokens\.ts$|^packages\/core\/src\/tokens\.ts$)/.test(f));
+    .filter((f) => !/(\.d\.ts$|\.test\.|\.spec\.|\/tests?\/|\/generated\/|\/node_modules\/|\/dist\/|\.tokens\.ts$|^packages\/[^/]+\/src\/tokens\.ts$)/.test(f));
 }
 
 const TOKEN_MODULE_SPECIFIER = "@nyc-tron/core/tokens";
@@ -314,6 +314,14 @@ export function createAnalyzer({ cwd = root } = {}) {
     return shortcuts;
   }
 
+  /** Module specifier for the shared tokens: a relative path to the package's own copy, or the core subpath. */
+  function tokenSpecifier(file) {
+    const pkg = file.split("/")[1];
+    if (!LOCAL_TOKEN_PACKAGES.includes(pkg)) return TOKEN_MODULE_SPECIFIER;
+    let rel = posix.relative(dirname(file), `packages/${pkg}/src/tokens.ts`);
+    if (!rel.startsWith(".")) rel = "./" + rel;
+    return relativeExtension(file) ? rel : rel.replace(/\.ts$/, "");
+  }
   /** Turns `pending` into text edits. Returns {text, scoped:Map<key,value>, imports}. */
   function applyRewrite(file, text, a) {
     const { sf, pending } = a;
@@ -347,7 +355,7 @@ export function createAnalyzer({ cwd = root } = {}) {
     const braces = (list) => (spaced ? `{ ${list.join(", ")} }` : `{${list.join(",")}}`);
     const lines = [];
     const fams = EXPORT_ORDER.filter((f) => sharedFamilies.includes(f));
-    if (fams.length) lines.push(`import ${braces(fams.map(spec))} from ${q}${TOKEN_MODULE_SPECIFIER}${q}${semi}`);
+    if (fams.length) lines.push(`import ${braces(fams.map(spec))} from ${q}${tokenSpecifier(file)}${q}${semi}`);
     if (needScoped) {
       const sib = "./" + basename(tokensSiblingPath(file));
       const ext = relativeExtension(file);
@@ -384,5 +392,5 @@ export function createAnalyzer({ cwd = root } = {}) {
     return r;
   }
 
-  return { tsm, project, analyze, applyRewrite, tokensSiblingPath, relativeExtension, withCore, shared, map, tokensJson, onScale, forget: (f) => { const s = project.getSourceFile("/" + f); if (s) project.removeSourceFile(s); } };
+  return { tsm, project, analyze, applyRewrite, tokenSpecifier, tokensSiblingPath, relativeExtension, withCore, shared, map, tokensJson, onScale, forget: (f) => { const s = project.getSourceFile("/" + f); if (s) project.removeSourceFile(s); } };
 }

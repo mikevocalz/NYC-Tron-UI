@@ -9,7 +9,7 @@ import {ErrorMessage} from "../../feedback/ErrorMessage.tsx";
 import {useOwnedAction} from "../../shell/useOwnedAction.ts";
 import {joinClasses} from "../../styles.ts";
 import {assertRgba,rgbaToHex,type RgbaColor} from "../color.ts";
-import {space} from "@nyc-tron/core/tokens";
+import {space} from "../../../tokens.ts";
 /** Exact document/revision/pixel selection sent to the host's document sampler. */
 export interface EyedropperRequest {readonly documentId:string;readonly revision:string;readonly sourceId:string;readonly x:number;readonly y:number;readonly radius:number}
 /** Profile-preserving sampled channels plus a separate display-only sRGB preview. */

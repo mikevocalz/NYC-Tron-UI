@@ -3,7 +3,7 @@ import {Text,View,type ViewProps} from 'react-native';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface MulticamAngle {id:string;label:string;offsetFrames:number;presentedFrame?:number;status:'loading'|'ready'|'error';error?:string;surface:ReactNode}
 export interface MulticamAngleViewerProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  angles:readonly MulticamAngle[];selectedId?:string;frame:number;maxDriftFrames?:number;

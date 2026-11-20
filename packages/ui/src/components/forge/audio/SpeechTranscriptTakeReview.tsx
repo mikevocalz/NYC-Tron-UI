@@ -5,7 +5,7 @@ import {AutoCaptionTranscriptTimeline,type AutoCaptionTranscriptTimelineProps} f
 import {CaptionWordTimingHandles,type CaptionWordTimingHandlesProps} from '../timeline/CaptionWordTimingHandles.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface SpeechTranscriptTakeReviewProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  takes:readonly {id:string;label:string}[];takeId:string|null;onTakeChange:(id:string,signal?:AbortSignal)=>unknown;
  transcript:AutoCaptionTranscriptTimelineProps;timing:CaptionWordTimingHandlesProps;unstyled?:boolean;

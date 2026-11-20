@@ -6,7 +6,7 @@ import {InspectorPanelContext} from "./inspector-context.ts";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {matchingRowCount,matchSummary,selectionHeading,type InspectorRegistryState,type InspectorSelection} from "./inspector-model.ts";
 import {InspectorSearch} from "./InspectorSearch.tsx";
-import {space,size} from "@nyc-tron/core/tokens";
+import {space,size} from "../../tokens.ts";
 
 export type {InspectorSelection} from "./inspector-model.ts";
 

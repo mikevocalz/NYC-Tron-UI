@@ -3,7 +3,7 @@ import {UnitInput} from '../../shell/UnitInput.tsx';
 import {Button} from '../../Button.tsx';
 import {MotionVectorFields} from './MotionVectorFields.tsx';
 import {defaultMotionTransform,validateMotionTransform,type MotionTransform3D} from './motion-settings.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {MotionTransform3D,MotionVector3} from './motion-settings.ts';
 export interface Transform3DInspectorProps extends Omit<ViewProps,'children'> {readonly value:MotionTransform3D;readonly onCommit:(value:MotionTransform3D)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}
 /** Controlled scene/document transform; rotations retain complete turns. */

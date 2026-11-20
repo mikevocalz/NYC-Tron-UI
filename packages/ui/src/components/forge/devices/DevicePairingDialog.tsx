@@ -6,7 +6,7 @@ import { useStatusAnnouncement } from "../announce.ts";
 import {
   presentPairing, signalLabel, type PairingAction, type PairingDevice, type PairingState,
 } from "./pairing-model.ts";
-import { space, scrim } from "@nyc-tron/core/tokens";
+import { space, scrim } from "../../../tokens.ts";
 
 /**
  * Coarse phase handed to {@linkcode DevicePairingDialogProps.renderStatusArt}.

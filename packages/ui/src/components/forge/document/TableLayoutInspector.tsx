@@ -3,7 +3,7 @@ import {PropertyInspector,type PropertyInspectorProps} from '../inputs/PropertyI
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface TableCellLayout {rowSpan:number;columnSpan:number;horizontal:'start'|'center'|'end'|'justify';vertical:'top'|'middle'|'bottom';padding:number;borderWidth:number;borderStyle:'none'|'solid'|'dashed';borderColor:string;fill:string}
 export interface TableLayoutInspectorProps extends Omit<PropertyInspectorProps,'label'|'fields'|'onCommit'> {
  value:TableCellLayout;colors:readonly {id:string;label:string}[];canMerge:boolean;canSplit:boolean;

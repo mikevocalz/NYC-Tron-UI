@@ -7,7 +7,7 @@ import {Select} from '../../Select.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface ViewportCameraGesture {kind:'orbit'|'pan'|'zoom';phase:'begin'|'update'|'end'|'cancel';x:number;y:number;scale:number;viewport:{width:number;height:number}}
 export interface Native3DViewportProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  surface:ReactNode;interaction:'orbit'|'pan'|'select';onInteractionChange:(mode:'orbit'|'pan'|'select')=>void;

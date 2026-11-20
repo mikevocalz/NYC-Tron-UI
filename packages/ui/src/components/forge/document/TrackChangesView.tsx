@@ -2,7 +2,7 @@ import {FlatList,View,Text,type ViewProps} from 'react-native';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface DocumentChange {id:string;kind:'insert'|'delete'|'format';author:string;timeLabel:string;before:string;after:string;locationLabel:string;canReview:boolean}
 export interface TrackChangesViewProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  changes:readonly DocumentChange[];selectedId:string|null;tracking:boolean;filter:'all'|'insert'|'delete'|'format';

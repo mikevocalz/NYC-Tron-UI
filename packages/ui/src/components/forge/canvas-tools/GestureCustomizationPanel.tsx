@@ -31,7 +31,7 @@ import {
  keepGestureFor,sameGestureMap,saveProblem,usesHeldGesture,validateGestureCatalog,validateGestureMap,
  type GestureDefinition,type GestureMap,type QuickActionDefinition,
 } from "./gesture-map-model.ts";
-import {space} from "@nyc-tron/core/tokens";
+import {space} from "../../../tokens.ts";
 
 /** Props for {@linkcode GestureCustomizationPanel}. */
 export interface GestureCustomizationPanelProps extends Omit<ViewProps,"children">,ScopedControlProps {

@@ -4,7 +4,7 @@ import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {OFFICE_TOUCH_TARGET,ToolButton,officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
 import {LIST_FORMATS,canIndent,defaultLevelFormats,canOutdent,formatLabel,listMarker,listPreviewMarkers,type ListFormat,type ListKind} from "./list-model.ts";
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 
 export {BULLETS_NUMBERING_CAPABILITIES} from "./list-model.ts";
 

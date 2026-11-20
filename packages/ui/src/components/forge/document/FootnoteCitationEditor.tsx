@@ -7,7 +7,7 @@ import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface CitationSource {id:string;title:string;author:string;year:string;formattedCitation:string}
 export interface FootnoteCitationEditorProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  sources:readonly CitationSource[];notes:readonly {id:string;numberLabel:string;text:string;kind:'footnote'|'endnote'}[];

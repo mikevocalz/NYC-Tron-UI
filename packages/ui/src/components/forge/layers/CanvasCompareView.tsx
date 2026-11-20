@@ -13,7 +13,7 @@ import {
   COMPARE_MODES,REFERENCE_SCALE,compareFrame,compareReason,normalizeFraction,resolveCompareSource,sideBySideDirection,
   splitFromDrag,splitFromKey,splitValueText,type CompareImage,type CompareMode,type CompareSource,
 } from "./compare-model.ts";
-import {space,radius,elevation} from '@nyc-tron/core/tokens';
+import {space,radius,elevation} from '../../../tokens.ts';
 
 /** Props for {@linkcode CanvasCompareView}. Mode, split and opacity are host state. */
 export interface CanvasCompareViewProps extends Omit<ViewProps,"children">,ScopedControlProps {

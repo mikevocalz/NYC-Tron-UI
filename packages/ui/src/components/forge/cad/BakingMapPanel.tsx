@@ -4,7 +4,7 @@ import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface BakeSettings {resolution:number;samples:number;cageDistance:number;normalSpace:'tangent'|'object';padding:number}
 export interface BakingMapPanelProps extends Omit<ViewProps,'children'>,ScopedControlProps {maps:readonly {id:string;label:string;kind:'ao'|'curvature'|'thickness'|'normal'|'position'|'custom';selected:boolean;unavailableReason?:string}[];settings:BakeSettings;maxResolution:number;status:'idle'|'running'|'complete'|'error';progress:number;outputs:readonly {id:string;mapId:string;label:string;width:number;height:number}[];onSettings:(value:BakeSettings,signal?:AbortSignal)=>unknown;onMapChange:(id:string,selected:boolean)=>void;onBake:(mapIds:readonly string[],settings:BakeSettings,signal?:AbortSignal)=>unknown;onCancel:()=>unknown;onReveal:(id:string)=>void;renderOutput:(id:string)=>ReactNode;unstyled?:boolean}
 export function BakingMapPanel({scope='baking-maps',revision=0,...props}:BakingMapPanelProps){const {maps,settings,maxResolution,status,progress,outputs,onSettings:_settings,onMapChange:_map,onBake:_bake,onCancel,onReveal:_reveal,renderOutput,unstyled=false,disabledReason,style,...rest}=props;

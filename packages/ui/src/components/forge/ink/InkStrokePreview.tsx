@@ -11,7 +11,7 @@ import {controlIdentity,useScopedControl,type ScopedControlProps} from '../input
 import {createFrameThrottle,type FrameThrottle} from '../frame-throttle.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {MAX_INK_PREVIEW_SAMPLES,validateInkSamples,type InkSample} from './brush-model.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface InkStrokePreviewProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  width:number;height:number;strokeWidth:number;inkColor:string;
  /** External/native-adapter samples. Omit for the local test pad. */

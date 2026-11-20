@@ -18,7 +18,7 @@ import {
   type TimelineCut,type TimelineTransition,type TransitionRequest,
 } from "./transitions.ts";
 import {frameToX,type TimelineViewport} from "./viewport.ts";
-import {space,radius,opacity} from '@nyc-tron/core/tokens';
+import {space,radius,opacity} from '../../../tokens.ts';
 
 /** Props for {@linkcode TransitionHandles}. */
 export interface TransitionHandlesProps extends Omit<ViewProps,"children">,ScopedControlProps {

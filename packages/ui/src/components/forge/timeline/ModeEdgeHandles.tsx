@@ -9,7 +9,7 @@ import type {RippleScope,TimelineClip,TimelineEdit,TimelineTrack} from "./edits.
 import {
   rippleTrimEdit,rippleTrimPreview,rollEdit,rollPair,rollPreview,type TrimModePreview,
 } from "./trim-modes.ts";
-import {space,radius} from "@nyc-tron/core/tokens";
+import {space,radius} from "../../../tokens.ts";
 
 /** Props for {@linkcode ModeEdgeHandles}. */
 export interface ModeEdgeHandlesProps {

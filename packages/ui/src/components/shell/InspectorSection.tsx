@@ -5,7 +5,7 @@ import {createStore} from "zustand/vanilla";
 import {joinClasses} from "../styles.ts";
 import {InspectorPanelContext,InspectorSectionContext} from "./inspector-context.ts";
 import {matchingRowCount} from "./inspector-model.ts";
-import {space,border,opacity,size} from "@nyc-tron/core/tokens";
+import {space,border,opacity,size} from "../../tokens.ts";
 
 /** Props for {@linkcode InspectorSection}. */
 export interface InspectorSectionProps extends Omit<ViewProps,"children"> {

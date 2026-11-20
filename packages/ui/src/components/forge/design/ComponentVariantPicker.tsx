@@ -3,7 +3,7 @@ import {PropertyInspector,type InspectorProperty} from '../inputs/PropertyInspec
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface ComponentVariantPickerProps extends Omit<ViewProps,'children'>,ScopedControlProps {componentId:string;properties:readonly Extract<InspectorProperty,{kind:'choice'}>[];overrides:readonly InspectorProperty[];onPropertyChange:(id:string,value:string,signal?:AbortSignal)=>unknown;onOverride:(id:string,value:string|number|boolean,signal?:AbortSignal)=>unknown;onReset:(signal?:AbortSignal)=>unknown;unstyled?:boolean}
 export function ComponentVariantPicker({scope='component-variant',revision=0,...props}:ComponentVariantPickerProps){
  const {componentId,properties,overrides,onPropertyChange:_property,onOverride:_override,onReset:_reset,unstyled=false,disabledReason,style,...rest}=props;if(!componentId.trim())throw new RangeError('Component identity is required');

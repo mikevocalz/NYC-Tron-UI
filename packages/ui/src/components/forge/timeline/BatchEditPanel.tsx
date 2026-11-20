@@ -17,7 +17,7 @@ import type {RippleScope,TimelineTrack} from "./edits.ts";
 import {
   SPEED_RANGE,batchRemove,batchRippleDelete,batchShift,batchSpeed,selectedClips,type BatchEdit,type BatchResult,
 } from "./batch.ts";
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 
 /** Props for {@linkcode BatchEditPanel}. */
 export interface BatchEditPanelProps extends Omit<ViewProps,"children">,ScopedControlProps {

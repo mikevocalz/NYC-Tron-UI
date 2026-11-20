@@ -13,7 +13,7 @@ import {Button} from "../../Button.tsx";
 import {SegmentedControl} from "../../SegmentedControl.tsx";
 import {rippleDeleteEdit,type MoveMode,type RippleScope,type TimelineEdit,type TimelineTrack} from "./edits.ts";
 import {TRIM_MODE_PROBLEM_TEXT,rippleDeletePreview} from "./trim-modes.ts";
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 
 /** Props for {@linkcode DragReorderAndRipple}. */
 export interface DragReorderAndRippleProps extends Omit<ViewProps,"children">,ScopedControlProps {

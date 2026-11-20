@@ -1,6 +1,6 @@
 import {Pressable,Text,View} from "react-native";
 import {joinClasses} from "../../styles.ts";
-import {space,radius,opacity,size} from "@nyc-tron/core/tokens";
+import {space,radius,opacity,size} from "../../../tokens.ts";
 import {tokens} from "./switch-row.tokens.ts";
 
 /** Props for {@linkcode SwitchRow}. */

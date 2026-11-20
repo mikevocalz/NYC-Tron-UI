@@ -10,7 +10,7 @@ import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
 import { joinClasses } from "../styles.ts";
 import { dataTableLayout, tableContentWidth, type DataTableLayout } from "./table-layout.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../tokens.ts";
 
 /** TanStack owns row/column logic; NYC-Tron owns actual RN rendering. */
 const features = tableFeatures({

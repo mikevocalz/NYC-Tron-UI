@@ -6,7 +6,7 @@ import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface MorphMatch {sourceId:string;targetId:string|null}
 export interface MorphPreviewProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  sources:readonly {id:string;label:string}[];targets:readonly {id:string;label:string}[];matches:readonly MorphMatch[];

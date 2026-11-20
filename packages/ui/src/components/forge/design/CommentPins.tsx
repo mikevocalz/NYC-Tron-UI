@@ -2,7 +2,7 @@ import {View,type ViewProps} from 'react-native';
 import {CommentsThreadPanel,type CommentsThreadPanelProps} from '../pdf/CommentsThreadPanel.tsx';
 import {Button} from '../../Button.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface CommentPinsProps extends Omit<ViewProps,'children'>,ScopedControlProps {pins:readonly {threadId:string;x:number;y:number;label:string}[];viewport:{width:number;height:number};comments:Omit<CommentsThreadPanelProps,'scope'|'revision'|'groupBy'>;unstyled?:boolean}
 /** Pins and the shared thread panel reference the same authoritative thread IDs. */
 export function CommentPins({scope='design-comment-pins',revision=0,...props}:CommentPinsProps){const {pins,viewport,comments,unstyled=false,disabledReason,style,...rest}=props;

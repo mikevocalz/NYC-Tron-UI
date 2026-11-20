@@ -14,7 +14,7 @@ import {
   midiGridLines, pitchName, usesSeveralChannels, visiblePitches, type MidiNote, type NoteGrid,
 } from "./note-grid.ts";
 import { MidiChannelPicker } from "./MidiChannelPicker.tsx";
-import { space, radius, opacity } from '@nyc-tron/core/tokens';
+import { space, radius, opacity } from '../../../tokens.ts';
 
 const HIT = 44;
 /** Width of the keyboard column; a {@linkcode MIDIVelocityLane} below insets by it. */

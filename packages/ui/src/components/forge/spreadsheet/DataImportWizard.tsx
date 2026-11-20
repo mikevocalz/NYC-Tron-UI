@@ -5,7 +5,7 @@ import {Select} from '../../Select.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface ImportSettings {format:'csv'|'tsv'|'xlsx';encoding:'utf-8'|'utf-16'|'windows-1252';delimiter:string;headers:boolean;worksheetId:string;decimalSeparator:'.'|','}
 export interface ImportColumn {id:string;label:string;targetId:string|null;conversion:'text'|'number'|'date'|'boolean'|'skip'}
 export interface DataImportWizardProps extends Omit<ViewProps,'children'>,ScopedControlProps {

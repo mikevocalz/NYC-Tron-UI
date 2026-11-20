@@ -5,7 +5,7 @@ import {useStore} from 'zustand';
 import {Button} from '../../Button.tsx';
 import {joinClasses} from '../../styles.ts';
 import {togglePhotoSelection,validatePhotoCatalog,type PhotoCatalogItem} from './photo-catalog.ts';
-import {space,border} from '@nyc-tron/core/tokens';
+import {space,border} from '../../../tokens.ts';
 export type {PhotoCatalogItem} from './photo-catalog.ts';
 export interface PhotoLibraryGridProps extends Omit<ViewProps,'children'> {
  readonly photos:readonly PhotoCatalogItem[];readonly selectedIds:readonly string[];

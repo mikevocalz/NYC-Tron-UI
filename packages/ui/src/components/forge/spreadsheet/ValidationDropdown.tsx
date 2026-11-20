@@ -6,7 +6,7 @@ import {Select} from '../../Select.tsx';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface ValidationDropdownProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  value:string;choices:readonly {value:string;label:string}[];allowOther:boolean;allowBlank:boolean;
  validation:{status:'valid'|'invalid'|'checking';message?:string};onCommit:(value:string,signal?:AbortSignal)=>unknown;unstyled?:boolean;

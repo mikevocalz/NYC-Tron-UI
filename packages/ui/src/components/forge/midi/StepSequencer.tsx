@@ -5,7 +5,7 @@ import { Pressable, ScrollView, Text, View, type KeyDownEvent, type ViewProps } 
 import { joinClasses } from "../../styles.ts";
 import { webToggleProps } from "../toggle-a11y.ts";
 import { stepCells, type MidiNote, type StepLane } from "./note-grid.ts";
-import { space, radius, opacity } from '@nyc-tron/core/tokens';
+import { space, radius, opacity } from '../../../tokens.ts';
 
 const HIT = 44;
 const NAME_COLUMN = 72;

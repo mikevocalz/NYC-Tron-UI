@@ -5,7 +5,7 @@ import {useStore} from "zustand";
 import {joinClasses} from "../styles.ts";
 import {InspectorPanelContext,InspectorSectionContext} from "./inspector-context.ts";
 import {matchesQuery,registerRow} from "./inspector-model.ts";
-import {space,radius,border,size} from "@nyc-tron/core/tokens";
+import {space,radius,border,size} from "../../tokens.ts";
 
 /** What a {@linkcode PropertyRow} tells its editor. */
 export interface PropertyEditorState {

@@ -5,7 +5,7 @@ import {useStore} from 'zustand';
 import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {space,size as sizeToken} from '@nyc-tron/core/tokens';
+import {space,size as sizeToken} from '../../../tokens.ts';
 export interface DocumentTextSelection {start:number;end:number}
 export interface TextSelectionAndCaretProps extends ScopedControlProps {
  /** Native buffer seed. Change contentRevision to replace external content intentionally. */

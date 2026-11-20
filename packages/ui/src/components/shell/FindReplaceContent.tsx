@@ -8,7 +8,7 @@ import { SettingSwitch } from "../forge/canvas/SettingSwitch.tsx";
 import { joinClasses } from "../styles.ts";
 import { useOwnedAction } from "./useOwnedAction.ts";
 import { validateFindResponse, type FindDocument, type FindQuery, type FindResponse, type FindMatch, type ReplaceRequest } from "./find-replace-model.ts";
-import { space, size } from "@nyc-tron/core/tokens";
+import { space, size } from "../../tokens.ts";
 export type { FindDocument, FindQuery, FindResponse, FindMatch, ReplaceRequest } from "./find-replace-model.ts";
 
 export interface FindReplaceContentProps {

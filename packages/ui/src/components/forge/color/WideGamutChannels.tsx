@@ -1,7 +1,7 @@
 import { View, type ViewProps } from "react-native";
 import { UnitInput } from "../../shell/UnitInput.tsx";
 import { validateColorChannels, type WideGamutColor } from "./color-management.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../../tokens.ts";
 export type { WideGamutColor } from "./color-management.ts";
 /** Floating channel editor retaining profile identity and out-of-display-range values. */
 export interface WideGamutChannelsProps extends Omit<ViewProps, "children"> {

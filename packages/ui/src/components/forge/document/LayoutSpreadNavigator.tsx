@@ -4,7 +4,7 @@ import {Button} from '../../Button.tsx';
 import {Select} from '../../Select.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface DocumentSpreadPage {id:string;label:string;masterId:string|null;oversetCharacters:number}
 export interface LayoutSpreadNavigatorProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  pages:readonly DocumentSpreadPage[];masters:readonly {id:string;label:string}[];selectedId:string|null;facingPages:boolean;firstPageOnRight:boolean;

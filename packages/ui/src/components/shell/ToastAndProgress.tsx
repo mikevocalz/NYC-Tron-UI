@@ -7,7 +7,7 @@ import { ErrorMessage } from "../feedback/ErrorMessage.tsx";
 import { joinClasses } from "../styles.ts";
 import { useOwnedAction } from "./useOwnedAction.ts";
 import { validateFeedback, jobActionLabel, type ProgressJob, type JobAction, type ToastMessage } from "./progress-model.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../tokens.ts";
 export type { ProgressJob, JobAction, ToastMessage } from "./progress-model.ts";
 
 export interface ToastAndProgressProps extends Omit<ViewProps, "children"> {

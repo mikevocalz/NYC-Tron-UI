@@ -9,7 +9,7 @@ import {
   SHEET_TAB_TONES, sheetNameError, sheetTabKeyTarget, sheetTabMoveIndex,
   type SheetTab, type SheetTabTone,
 } from "./sheet-tabs-model.ts";
-import { space, radius, border, size } from '@nyc-tron/core/tokens';
+import { space, radius, border, size } from '../../../tokens.ts';
 
 /**
  * Controlled worksheet tab strip. The app owns the workbook (for Forge, the

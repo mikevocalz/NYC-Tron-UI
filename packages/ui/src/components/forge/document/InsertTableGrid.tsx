@@ -8,7 +8,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface InsertTableGridProps extends Omit<ViewProps,'children'>,ScopedControlProps {maxRows?:number;maxColumns?:number;onInsert:(rows:number,columns:number,signal?:AbortSignal)=>unknown;unstyled?:boolean}
 /** Native touch selection plus numeric insertion for larger tables and keyboard/accessibility use. */
 export function InsertTableGrid({scope='insert-table',revision=0,...props}:InsertTableGridProps){

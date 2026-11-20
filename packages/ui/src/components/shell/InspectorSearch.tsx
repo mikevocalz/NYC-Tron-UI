@@ -2,7 +2,7 @@ import {useLayoutEffect,useRef} from "react";
 import {Pressable,Text,TextInput,View,type ViewProps} from "react-native";
 import {joinClasses} from "../styles.ts";
 import {shellKey} from "./shell-keys.ts";
-import {space,radius,border,size} from "@nyc-tron/core/tokens";
+import {space,radius,border,size} from "../../tokens.ts";
 
 export {matchesQuery} from "./inspector-model.ts";
 

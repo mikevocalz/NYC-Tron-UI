@@ -7,7 +7,7 @@ import {Button} from "../../Button.tsx";
 import {useLocalStore} from "../../useLocalStore.ts";
 import {OFFICE_TOUCH_TARGET,ToolButton} from "../office/office-controls.tsx";
 import {groupThreads,resolveReply,threadCounts,threadLabel,type CommentEntry,type CommentFilter,type CommentThread} from "./comments-model.ts";
-import {space,opacity} from '@nyc-tron/core/tokens';
+import {space,opacity} from '../../../tokens.ts';
 import {tokens} from './CommentsThreadPanel.tokens.ts';
 
 /** Props for {@linkcode CommentsThreadPanel}. Each action renders only when its callback is passed. */

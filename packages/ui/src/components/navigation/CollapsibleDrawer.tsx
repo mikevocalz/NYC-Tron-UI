@@ -4,7 +4,7 @@ import {
 } from "react-native";
 import { drawerGeometry, type DrawerMode } from "./drawer-model.ts";
 import { joinClasses } from "../styles.ts";
-import { space, scrim } from "@nyc-tron/core/tokens";
+import { space, scrim } from "../../tokens.ts";
 import { tokens } from "./CollapsibleDrawer.tokens.ts";
 
 export interface DrawerDestination {

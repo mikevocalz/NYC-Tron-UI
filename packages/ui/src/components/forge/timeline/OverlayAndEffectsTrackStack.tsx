@@ -21,7 +21,7 @@ import {TrackHeaders,type TrackFlag} from "./TrackHeaders.tsx";
 import {TimelineClipLane,type TimelineClipLaneProps} from "./TimelineClipLane.tsx";
 import {stackMoveTarget,stackOrder} from "./track-stack.ts";
 import type {TrackKind} from "./edits.ts";
-import {space,opacity,size} from '@nyc-tron/core/tokens';
+import {space,opacity,size} from '../../../tokens.ts';
 
 /** Props for {@linkcode OverlayAndEffectsTrackStack}. */
 export interface OverlayAndEffectsTrackStackProps extends Omit<TimelineClipLaneProps,"tracks"> {

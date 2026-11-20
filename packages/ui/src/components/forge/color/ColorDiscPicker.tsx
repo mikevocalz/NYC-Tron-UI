@@ -9,7 +9,7 @@ import {assertHsv,hsvToRgb,rgbaToHex,wrapHue,type HsvColor} from "../color.ts";
 import {ChannelTrack} from "./ChannelTrack.tsx";
 import {discPointToHsv,hsvToDiscPoint} from "./wheel-geometry.ts";
 import {HueSaturationDiscLayer} from "./wheel-layers.tsx";
-import {border,opacity} from "@nyc-tron/core/tokens";
+import {border,opacity} from "../../../tokens.ts";
 
 /** Props for {@linkcode ColorDiscPicker}. */
 export interface ColorDiscPickerProps extends Omit<ViewProps,"children"> {

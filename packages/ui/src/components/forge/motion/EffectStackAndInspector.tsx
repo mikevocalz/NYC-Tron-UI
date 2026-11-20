@@ -11,7 +11,7 @@ import {useLocalStore} from '../../useLocalStore.ts';
 import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {joinClasses} from '../../styles.ts';
 import {moveMotionEffect,validateMotionEffects,validateEffectChoices,validateEffectParameterValue,type MotionEffect,type MotionEffectMutation,type EffectParameterValue} from './motion-effects.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {MotionEffect,MotionEffectMutation,EffectParameter,EffectParameterValue} from './motion-effects.ts';
 export interface EffectStackAndInspectorProps extends Omit<ViewProps,'children'> {
  readonly scope:string;readonly revision:string|number;readonly effects:readonly MotionEffect[];readonly selectedId:string|null;readonly onSelect:(id:string)=>void;

@@ -3,7 +3,7 @@ import {SegmentedControl} from "../../SegmentedControl.tsx";
 import {joinClasses} from "../../styles.ts";
 import {LiveHistogram,type LiveHistogramProps} from "./LiveHistogram.tsx";
 import {poolScope,bounded,type ScopeSample} from "./color-adjustments.ts";
-import {space} from "@nyc-tron/core/tokens";
+import {space} from "../../../tokens.ts";
 export type {ScopeSample} from "./color-adjustments.ts";
 /** Frame-tagged engine measurements; a missing frame is different from a measured empty scope. */
 export interface VideoScopesPanelProps extends Omit<ViewProps,'children'> {

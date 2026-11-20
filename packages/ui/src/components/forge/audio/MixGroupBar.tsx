@@ -15,7 +15,7 @@ import {audioTargetSize,audioCopy} from './audio-chrome.ts';
 import { Platform, Pressable, Text, View, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
 import type { MixGroup, mixGroups } from "./mix-groups.ts";
-import { space, border, opacity } from '@nyc-tron/core/tokens';
+import { space, border, opacity } from '../../../tokens.ts';
 
 
 export interface MixGroupLabels {

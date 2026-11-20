@@ -6,7 +6,7 @@ import {Select} from '../../Select.tsx';
 import {ChartBuilder,type ChartBuilderProps} from '../spreadsheet/ChartBuilder.tsx';
 import {VirtualSpreadsheetGrid,type VirtualSpreadsheetGridProps} from '../spreadsheet/VirtualSpreadsheetGrid.tsx';
 import {TableLayoutInspector,type TableLayoutInspectorProps} from '../document/TableLayoutInspector.tsx';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface ChartAndTableEditorProps extends Omit<ViewProps,'children'> {
  chart?:ChartBuilderProps;table?:{grid:VirtualSpreadsheetGridProps;layout:TableLayoutInspectorProps};unstyled?:boolean;
 }

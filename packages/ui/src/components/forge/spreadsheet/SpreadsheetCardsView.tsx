@@ -17,7 +17,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import type {SheetRange} from '../sheet-window.ts';
 import {sheetCardAt,CARD_PREVIEW_FIELDS,type CardCellValues} from './cards-model.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface SpreadsheetCardsViewProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  name:string;table:SheetRange;cells:CardCellValues;openCard:number|undefined;onOpenCardChange:(index:number|undefined)=>void;
  onCommitField?:(address:string,raw:string)=>unknown;onClose?:()=>void;hasMore?:boolean;onLoadMore?:(signal?:AbortSignal)=>unknown;

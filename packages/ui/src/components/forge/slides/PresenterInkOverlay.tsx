@@ -10,7 +10,7 @@ import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import type {InkSize} from '../ink/ink-model.ts';
 import {INK_SIZES} from '../ink/ink-model.ts';
 import {appendPoint,createStrokeIdFactory,normalizePoint,resolvePresenterInkKey,strokeSegments,strokesUnderEraser,validatePresenterStrokes,presenterModeStatus,HIGHLIGHTER_OPACITY,LASER_TRAIL_MS,type PresenterInkMode,type PresenterInkPoint,type PresenterInkStroke} from './presenter-ink-model.ts';
-import {radius} from '@nyc-tron/core/tokens';
+import {radius} from '../../../tokens.ts';
 export interface PresenterInkFrame {strokes:readonly PresenterInkStroke[];laser:PresenterInkPoint|undefined;width:number;height:number;frame:number}
 export interface PresenterInkOverlayProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  mode:PresenterInkMode;color:string;size:InkSize;strokes:readonly PresenterInkStroke[];

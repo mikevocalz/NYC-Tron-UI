@@ -13,7 +13,7 @@ import { joinClasses } from "../../styles.ts";
 import { validateNamedColor, type NamedColor } from "./color-management.ts";
 import { ColorChannelFields } from "./ColorChannelFields.tsx";
 import { rgbToHsv, hsvToRgb } from "../color.ts";
-import { space, size } from "@nyc-tron/core/tokens";
+import { space, size } from "../../../tokens.ts";
 export type { NamedColor } from "./color-management.ts";
 /** Controlled definition and explicit commit boundary for SpotAndGlobalColorEditor. */
 export interface SpotAndGlobalColorEditorProps extends Omit<ViewProps, "children"> {

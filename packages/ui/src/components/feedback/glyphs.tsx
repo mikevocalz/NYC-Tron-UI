@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { joinClasses } from "../styles.ts";
-import { space, radius, border } from "@nyc-tron/core/tokens";
+import { space, radius, border } from "../../tokens.ts";
 
 /**
  * Status and close marks drawn with views, so they need no icon font, survive

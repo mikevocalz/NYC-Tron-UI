@@ -12,7 +12,7 @@ import { MixGroupBar, type MixGroupBarProps } from "./MixGroupBar.tsx";
 import { FADER_RANGES, type FaderRange } from "./level.ts";
 import { mixGroups } from "./mix-groups.ts";
 import { audibility, type MixerChannel } from "./mixer.ts";
-import { space } from '@nyc-tron/core/tokens';
+import { space } from '../../../tokens.ts';
 
 type Id = MixerChannel["id"];
 

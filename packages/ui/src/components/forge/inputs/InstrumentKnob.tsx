@@ -5,7 +5,7 @@ import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {clamp,scrubValue,snapValue,gestureToAngle,type RangeConfig} from "./precision.ts";
 import {joinClasses} from "../../styles.ts";
-import {space,radius,border,opacity,size as sizeToken} from "@nyc-tron/core/tokens";
+import {space,radius,border,opacity,size as sizeToken} from "../../../tokens.ts";
 
 type Local={preview:number;draft:string;editing:boolean;active:boolean};
 export interface InstrumentKnobProps extends Omit<ViewProps,"children">,RangeConfig {

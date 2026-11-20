@@ -11,7 +11,7 @@ import {setMark,type InOutRange} from "./edits.ts";
 import {frameForKey} from "./frame-keys.ts";
 import {frameToX,xToFrame,type TimelineViewport} from "./viewport.ts";
 import {useFrameScrub} from "./useFrameScrub.ts";
-import {space,radius} from '@nyc-tron/core/tokens';
+import {space,radius} from '../../../tokens.ts';
 
 /** Props for {@linkcode InOutRangeHandles}. */
 export interface InOutRangeHandlesProps extends Omit<ViewProps,"children">,ScopedControlProps {

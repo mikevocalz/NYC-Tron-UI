@@ -12,7 +12,7 @@ import {PatchGraph} from '../graph/PatchGraph.tsx';
 import type {GraphNode,GraphEdge,GraphEndpoint,GraphPoint} from '../graph/model.ts';
 import {validateEffectChoices} from './motion-effects.ts';
 import {validateMotionNodeGraph,validateMotionConnection,motionGraphCanvasSize,type NodeGraphPolicy} from './motion-node-graph.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {GraphNode,GraphEdge,GraphPort,GraphEndpoint,GraphPoint} from '../graph/model.ts';
 export type {NodeGraphPolicy} from './motion-node-graph.ts';
 export type NodeGraphMutation={readonly type:'move';readonly nodeId:string;readonly point:GraphPoint}|{readonly type:'connect';readonly from:GraphEndpoint;readonly to:GraphEndpoint}|{readonly type:'disconnect';readonly edgeId:string}|{readonly type:'remove';readonly nodeId:string}|{readonly type:'add';readonly typeId:string};

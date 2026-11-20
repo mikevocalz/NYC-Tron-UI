@@ -4,7 +4,7 @@ import {Button} from '../../Button.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface LatencyCalibrationPanelProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  deviceLabel:string;sampleRate:number;bufferSizes:readonly number[];bufferSamples:number;offsetSamples:number;
  measurement:{roundTripSamples:number;driftPpm:number;confidence:number;measuredAt:string}|null;

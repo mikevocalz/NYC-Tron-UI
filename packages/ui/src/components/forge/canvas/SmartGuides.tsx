@@ -3,7 +3,7 @@ import {joinClasses} from "../../styles.ts";
 import {docToScreen,validateViewport,type CanvasViewport} from "./canvas-viewport.ts";
 import {formatRulerNumber} from "./ruler-model.ts";
 import {smartGuideSummary,validateSmartGuideResult,type SmartGuideResult} from "./smart-guides-model.ts";
-import {space,font,leading} from "@nyc-tron/core/tokens";
+import {space,font,leading} from "../../../tokens.ts";
 
 /** Props for {@linkcode SmartGuides}. */
 export interface SmartGuidesProps extends Omit<ViewProps,"children"> {

@@ -8,7 +8,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {parseA1Range} from './chart-model.ts';
 import type {SheetRange} from '../sheet-window.ts';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
-import {space,size} from '@nyc-tron/core/tokens';
+import {space,size} from '../../../tokens.ts';
 export interface NameBoxProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  selectionLabel:string;rowCount:number;columnCount:number;names:readonly {id:string;label:string;range:SheetRange}[];
  onNavigate:(range:SheetRange,signal?:AbortSignal)=>unknown;unstyled?:boolean;

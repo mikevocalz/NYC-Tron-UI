@@ -5,7 +5,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {parseA1Range} from './chart-model.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface ConditionalRule {id:string;label:string;range:string;kind:'comparison'|'formula'|'color-scale'|'icon-set'|'data-bar';enabled:boolean;stopIfTrue:boolean;operator:'equal'|'greater'|'less'|'between';operand:string;upperOperand:string;minimum:number;midpoint:number;maximum:number;styleId:string}
 export interface ConditionalFormatRulesProps extends ScopedControlProps {
  rules:readonly ConditionalRule[];selectedId:string|null;styles:readonly {id:string;label:string}[];

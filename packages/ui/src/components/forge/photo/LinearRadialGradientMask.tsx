@@ -8,7 +8,7 @@ import {GradientOnCanvasHandles} from '../vector/GradientOnCanvasHandles.tsx';
 import type {GradientPaint} from '../vector/vector-types.ts';
 import {rasterToImage} from '../layers/layer-thumbnail-model.ts';
 import {validatePhotoGradient,photoGradientCoverage,type PhotoGradientMask,type PhotoImageSize,type PhotoMaskCombine} from './photo-masks.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {PhotoGradientMask,PhotoGradientGeometry} from './photo-masks.ts';
 export interface LinearRadialGradientMaskProps extends Omit<ViewProps,'children'> {
  /** Photo identity and revision. Changing scope abandons an in-progress geometry edit. */

@@ -103,3 +103,8 @@ export const PROPERTY_FAMILIES = {
 };
 
 export function normalizeColor(text) { return text.replace(/\s+/g, ""); }
+
+// Packages that must not import @nyc-tron/core at runtime (decision 42) read their own generated copy.
+// The copy sits at packages/<pkg>/src/tokens.ts and is imported relatively. Others use the core subpath.
+export const LOCAL_TOKEN_PACKAGES = ["ui"];
+export const TOKEN_COPIES = ["packages/core/src/tokens.ts", ...LOCAL_TOKEN_PACKAGES.map((p) => `packages/${p}/src/tokens.ts`)];

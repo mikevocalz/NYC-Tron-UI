@@ -1,7 +1,7 @@
 import {View,type ViewProps} from 'react-native';
 import {UnitInput} from '../../shell/UnitInput.tsx';
 import {EXPOSURE_FIELDS,validateExposure,type ExposureSettings} from './photo-adjustments.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export type {ExposureSettings} from './photo-adjustments.ts';
 export interface ExposureAndWhiteBalanceProps extends Omit<ViewProps,'children'> {readonly value:ExposureSettings;readonly onCommit:(value:ExposureSettings)=>void;readonly disabled?:boolean;readonly unstyled?:boolean}
 /** Controlled non-destructive exposure settings. The host owns the image transform. */

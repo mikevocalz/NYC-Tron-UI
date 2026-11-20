@@ -9,7 +9,7 @@ import {createValueGesture} from "../../gestures/value-gesture.ts";
 import {keyboardKey} from "../../gestures/drag-transport.ts";
 import {joinClasses} from "../../styles.ts";
 import {bounded} from "./color-adjustments.ts";
-import {space,radius,border} from "@nyc-tron/core/tokens";
+import {space,radius,border} from "../../../tokens.ts";
 /** Standalone saturation/value field; hue and alpha remain with the host. */
 export interface SVColorFieldProps extends Omit<ViewProps,'children'> {readonly value:HsvColor;readonly onPreview?:(value:HsvColor)=>void;readonly onCommit:(value:HsvColor)=>void;readonly height?:number;readonly disabled?:boolean;readonly unstyled?:boolean}
 type Local={width:number;preview:HsvColor|null};

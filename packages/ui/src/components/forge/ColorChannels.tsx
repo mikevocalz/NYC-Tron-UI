@@ -2,7 +2,7 @@ import { Host,Slider } from "@expo/ui";
 import { Text,View,type ViewProps } from "react-native";
 import { joinClasses } from "../styles.ts";
 import { alphaPercent,assertRgba,rgbaToHex,type RgbaColor } from "./color.ts";
-import { space } from "@nyc-tron/core/tokens";
+import { space } from "../../tokens.ts";
 export interface ColorChannelsProps extends Omit<ViewProps,"children"> {
  readonly value:RgbaColor;
  readonly onValueChange:(value:RgbaColor)=>void;

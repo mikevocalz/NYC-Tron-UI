@@ -9,7 +9,7 @@ import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface ParagraphRulerValue {leftIndent:number;rightIndent:number;firstLine:number;columns:number;columnGap:number;tabs:readonly {id:string;position:number;alignment:'left'|'right'|'center'|'decimal'}[]}
 export interface ParagraphRulerProps extends Omit<ViewProps,'children'>,ScopedControlProps {textWidth:number;value:ParagraphRulerValue;onCommit:(value:ParagraphRulerValue,signal?:AbortSignal)=>unknown;onAddTab:(signal?:AbortSignal)=>unknown;unstyled?:boolean}
 function validate(value:ParagraphRulerValue,width:number){if(!Number.isFinite(width)||width<=0||width>14400||![value.leftIndent,value.rightIndent,value.firstLine,value.columnGap].every(Number.isFinite)||value.leftIndent<0||value.rightIndent<0||value.leftIndent+value.rightIndent>=width||value.firstLine< -value.leftIndent||value.firstLine>width-value.leftIndent-value.rightIndent||!Number.isInteger(value.columns)||value.columns<1||value.columns>32||value.columnGap<0||(value.columns-1)*value.columnGap>=width-value.leftIndent-value.rightIndent||value.tabs.length>64||new Set(value.tabs.map(t=>t.id)).size!==value.tabs.length||value.tabs.some(t=>!t.id.trim()||t.id.length>256||!Number.isFinite(t.position)||t.position<0||t.position>width||!['left','right','center','decimal'].includes(t.alignment)))throw new RangeError('Invalid paragraph ruler');}

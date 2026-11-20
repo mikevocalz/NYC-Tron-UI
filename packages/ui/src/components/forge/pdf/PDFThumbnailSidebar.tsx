@@ -11,7 +11,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
 import {validatePDFPages,type PDFPageDescriptor} from './pdf-page-model.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface PDFThumbnailSidebarProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  pages:readonly PDFPageDescriptor[];selectedIds:readonly string[];groups?:readonly {id:string;label:string}[];viewportHeight?:number;
  renderThumbnail:(page:PDFPageDescriptor,size:{width:number;height:number})=>ReactNode;

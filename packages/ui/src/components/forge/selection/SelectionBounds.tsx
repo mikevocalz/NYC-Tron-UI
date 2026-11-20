@@ -11,7 +11,7 @@ import {snapRotation} from '../canvas/transform-origin-model.ts';
 import {CanvasGestureRelations} from '../canvas/canvas-gesture-relations.ts';
 import {SelectionOutline} from './SelectionOutline.tsx';
 import {RESIZE_HANDLES,editSelectionFrame,selectionFrameCorners,selectionHandlePoint,selectionResizeDirection,stepSelectionFrame,validateSelectionFrame,type SelectionEditLimits,type SelectionFrame,type SelectionHandle} from './selection-bounds-model.ts';
-import {font,opacity} from '@nyc-tron/core/tokens';
+import {font,opacity} from '../../../tokens.ts';
 export type {SelectionFrame,SelectionHandle} from './selection-bounds-model.ts';
 export interface SelectionBoundsProps extends Omit<ViewProps,'children'> {
  scope:string;revision?:string|number;frame:SelectionFrame;viewport:CanvasViewport;

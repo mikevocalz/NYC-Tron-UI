@@ -5,7 +5,7 @@ import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
 import {OFFICE_TOUCH_TARGET,SkipGlyph,ToolButton,officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
 import {groupHitsByPage,searchSummary,stepHit,type PdfSearchHit} from "./search-model.ts";
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 import {tokens} from './TextSearchResults.tokens.ts';
 
 /** Search progress reported by the host while it walks the pages. */

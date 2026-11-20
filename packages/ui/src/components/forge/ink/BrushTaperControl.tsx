@@ -6,7 +6,7 @@ import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {validateBrushTaper,type BrushTaper,type BrushTaperSettings} from './brush-model.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface BrushTaperControlProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  value:BrushTaperSettings;input:'pen'|'touch';onInputChange:(input:'pen'|'touch')=>void;
  onCommit:(settings:BrushTaperSettings,signal?:AbortSignal)=>void|Promise<unknown>;

@@ -1,6 +1,6 @@
 import {Pressable,Text,View} from "react-native";
 import {joinClasses} from "../../styles.ts";
-import {space,radius,opacity,size} from "@nyc-tron/core/tokens";
+import {space,radius,opacity,size} from "../../../tokens.ts";
 
 /**
  * Labeled on/off row shared by the canvas settings panels: a 44pt switch with

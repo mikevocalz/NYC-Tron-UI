@@ -15,7 +15,7 @@ import {
   slideEdit,slidePreview,slipEdit,slipPreview,type TrimModePreview,
 } from "./trim-modes.ts";
 import type {TimelineTool} from "./TimelineClipLane.tsx";
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 
 /** Props for {@linkcode RollSlipSlideControls}. */
 export interface RollSlipSlideControlsProps extends Omit<ViewProps,"children">,ScopedControlProps {

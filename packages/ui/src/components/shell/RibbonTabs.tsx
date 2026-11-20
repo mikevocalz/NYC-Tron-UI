@@ -6,7 +6,7 @@ import {MenuButton} from "./MenuButton.tsx";
 import {SplitButton} from "./SplitButton.tsx";
 import {nodeIsRTL,rovingTarget,shellKey} from "./shell-keys.ts";
 import {inlineGalleryItems,ribbonTabLabel,validateRibbon,type RibbonCommand,type RibbonGallery,type RibbonTab} from "./ribbon-model.ts";
-import {space,border} from "@nyc-tron/core/tokens";
+import {space,border} from "../../tokens.ts";
 
 export type {RibbonButton,RibbonCommand,RibbonGallery,RibbonGalleryItem,RibbonGroup,RibbonSplit,RibbonTab} from "./ribbon-model.ts";
 

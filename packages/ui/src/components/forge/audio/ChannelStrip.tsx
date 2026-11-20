@@ -8,7 +8,7 @@ import { SoloMuteButtons, type SoloMuteButtonsProps } from "./SoloMuteButtons.ts
 import { FADER_RANGES, gainToDb, type FaderRange } from "./level.ts";
 import type { MeterBand } from "./level-meter.ts";
 import { describeAudibility, type Audibility, type MixerChannel } from "./mixer.ts";
-import { space } from '@nyc-tron/core/tokens';
+import { space } from '../../../tokens.ts';
 import { tokens } from './ChannelStrip.tokens.ts';
 
 /**

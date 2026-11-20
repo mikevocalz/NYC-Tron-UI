@@ -30,7 +30,7 @@ import {useLocalPointer} from "../../gestures/useLocalPointer.ts";
 import {createValueGesture} from "../../gestures/value-gesture.ts";
 import {formatTimecode,type FrameRate} from "../timebase.ts";
 import {clipEnd,trimEdit,trimPreview,type EditPreview,type TimelineClip,type TimelineEdit,type TimelineTrack} from "./edits.ts";
-import {radius} from '@nyc-tron/core/tokens';
+import {radius} from '../../../tokens.ts';
 
 /** Props for {@linkcode ClipTrimHandles}. */
 export interface ClipTrimHandlesProps extends ScopedControlProps {

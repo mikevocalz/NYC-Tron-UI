@@ -5,7 +5,7 @@ import {useStore} from "zustand";
 import {joinClasses} from "../styles.ts";
 import {nodeIsRTL,shellKey} from "./shell-keys.ts";
 import {filterPresets,galleryColumns,gridFocusTarget,validatePresets,type PresetFilter} from "./preset-model.ts";
-import {space,radius,border} from "@nyc-tron/core/tokens";
+import {space,radius,border} from "../../tokens.ts";
 import {tokens} from "./PresetGallery.tokens.ts";
 
 export type {PresetFilter} from "./preset-model.ts";

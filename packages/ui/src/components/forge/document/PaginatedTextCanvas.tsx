@@ -4,7 +4,7 @@ import {TextSelectionAndCaret,type DocumentTextSelection} from './TextSelectionA
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
-import {space} from '@nyc-tron/core/tokens';
+import {space} from '../../../tokens.ts';
 export interface TextCanvasPage {id:string;label:string;width:number;height:number;marginTop:number;marginBottom:number;marginLeft:number;marginRight:number;text:string;contentRevision:string|number;oversetCharacters:number}
 export interface PageEditorContext {readOnly:boolean;selection:DocumentTextSelection;onTextChange:(text:string)=>void;onSelectionChange:(selection:DocumentTextSelection)=>void;onFocus:()=>void;onMeasuredContent:(size:{width:number;height:number})=>void}
 type PageEditorBackend={mode:'plain-text';renderRichEditor?:never}|{mode:'native-rich-text';renderRichEditor:(page:TextCanvasPage,context:PageEditorContext)=>ReactNode};
