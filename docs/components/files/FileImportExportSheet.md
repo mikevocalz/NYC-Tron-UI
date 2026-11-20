@@ -23,13 +23,22 @@ Controlled file transfer form with the existing native picker transport.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/files/FileImportExportSheet.native.tsx,packages/ui/src/components/files/FileImportExportSheet.shared.tsx,packages/ui/src/components/files/FileImportExportSheet.web.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FileImportExportSheet } from "@nyc-tron/ui/components/files/FileImportExportSheet";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/TextField, @nyc-tron/files/FilePicker
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/files/FileImportExportSheet
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { FileImportExportSheet } from "@/components/nyc-tron/ui/components/files/FileImportExportSheet";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { FileImportExportSheet } from "@nyc-tron/ui/components/files/FileImportExportSheet";`
 <!-- generated:end install -->
 
 ## Props

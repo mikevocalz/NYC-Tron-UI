@@ -23,13 +23,22 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/transform-origin-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { ANCHOR_SNAP_RADIUS, ORIGIN_ANCHORS, ORIGIN_ANCHOR_LABELS, ORIGIN_PAGE_STEP, ORIGIN_STEP, ROTATION_SNAP_STEP, anchorPoint, contentToDoc } from "@nyc-tron/ui/components/forge/canvas/transform-origin-model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/canvas/transform-origin-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ANCHOR_SNAP_RADIUS, ORIGIN_ANCHORS, ORIGIN_ANCHOR_LABELS, ORIGIN_PAGE_STEP, ORIGIN_STEP, ROTATION_SNAP_STEP, anchorPoint, contentToDoc } from "@/components/nyc-tron/ui/components/forge/canvas/transform-origin-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ANCHOR_SNAP_RADIUS, ORIGIN_ANCHORS, ORIGIN_ANCHOR_LABELS, ORIGIN_PAGE_STEP, ORIGIN_STEP, ROTATION_SNAP_STEP, anchorPoint, contentToDoc } from "@nyc-tron/ui/components/forge/canvas/transform-origin-model";`
 <!-- generated:end install -->
 
 ## Props

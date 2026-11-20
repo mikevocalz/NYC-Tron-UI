@@ -23,13 +23,22 @@ Canonical shell name for the shared precision scrubber.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/NumericScrubField.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { NumericScrubField } from "@nyc-tron/ui/components/shell/NumericScrubField";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PrecisionScrubber
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/NumericScrubField
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { NumericScrubField } from "@/components/nyc-tron/ui/components/shell/NumericScrubField";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { NumericScrubField } from "@nyc-tron/ui/components/shell/NumericScrubField";`
 <!-- generated:end install -->
 
 ## Props

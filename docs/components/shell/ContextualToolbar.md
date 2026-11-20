@@ -20,13 +20,22 @@ Toolbar whose items filter by selection kind and overflow into a More menu by pr
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { ContextualToolbar } from "@nyc-tron/ui/components/shell/ContextualToolbar";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/Toolbar, @nyc-tron/shell/MenuButton
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/ContextualToolbar
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ContextualToolbar } from "@/components/nyc-tron/ui/components/shell/ContextualToolbar";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ContextualToolbar } from "@nyc-tron/ui/components/shell/ContextualToolbar";`
 
 ### Dependencies
 
@@ -132,7 +141,7 @@ none in source. Export conditions: `types`, `react-native`, `default`, same file
 
 ```tsx example=ContextualToolbar
 import {Text} from "react-native";
-import {ContextualToolbar, type ContextualToolbarItem} from "@nyc-tron/ui/components/shell/ContextualToolbar";
+import {ContextualToolbar, type ContextualToolbarItem} from "@/components/nyc-tron/ui/components/shell/ContextualToolbar";
 
 const items: readonly ContextualToolbarItem[] = [
   {id: "bold", label: "Bold", priority: 2, appliesTo: ["text"], pressed: true, icon: <Text>B</Text>},

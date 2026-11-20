@@ -20,13 +20,22 @@ Width-capped container that aligns its content to the start, center or end of th
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { ContentFrame } from "@nyc-tron/ui/components/layout/ContentFrame";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/layout/ContentFrame
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ContentFrame } from "@/components/nyc-tron/ui/components/layout/ContentFrame";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ContentFrame } from "@nyc-tron/ui/components/layout/ContentFrame";`
 
 ### Dependencies
 
@@ -101,7 +110,7 @@ none in source
 
 ```tsx example=ContentFrame
 import { Text } from "react-native";
-import { ContentFrame } from "@nyc-tron/ui/components/layout/ContentFrame";
+import { ContentFrame } from "@/components/nyc-tron/ui/components/layout/ContentFrame";
 
 export const Example = () => (
   <ContentFrame maxWidth={720} align="start" testID="reading-frame">

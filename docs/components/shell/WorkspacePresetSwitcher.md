@@ -20,13 +20,22 @@ Menu to switch, save, rename, duplicate, reset and delete workspace layout prese
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { WorkspacePresetSwitcher } from "@nyc-tron/ui/components/shell/WorkspacePresetSwitcher";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/TextField, @nyc-tron/shell/MenuButton
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/WorkspacePresetSwitcher
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { WorkspacePresetSwitcher } from "@/components/nyc-tron/ui/components/shell/WorkspacePresetSwitcher";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { WorkspacePresetSwitcher } from "@nyc-tron/ui/components/shell/WorkspacePresetSwitcher";`
 
 ### Dependencies
 
@@ -119,7 +128,7 @@ Throws `RangeError("Invalid workspace preset scope")` for a bad scope or revisio
 ## Example
 
 ```tsx example=WorkspacePresetSwitcher
-import {WorkspacePresetSwitcher} from "@nyc-tron/ui/components/shell/WorkspacePresetSwitcher";
+import {WorkspacePresetSwitcher} from "@/components/nyc-tron/ui/components/shell/WorkspacePresetSwitcher";
 export const Example = () => <WorkspacePresetSwitcher scope="doc-1" activeId="edit"
   presets={[{id:"edit",name:"Edit",builtIn:true,modified:true},{id:"mine",name:"My layout",builtIn:false,modified:false}]}
   onSelect={()=>{}} onSaveAs={()=>{}} onRename={()=>{}} onDuplicate={()=>{}} onDelete={()=>{}} onReset={()=>{}}/>;

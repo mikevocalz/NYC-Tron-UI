@@ -23,13 +23,22 @@ Controlled frame math from Nitro Forge media-ui PR #25.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timebase.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { FRAME_RATES, assertFrameRate, clampFrame, formatTimecode, frameToPosition, framesToSeconds, positionToFrame, secondsToFrame } from "@nyc-tron/ui/components/forge/timebase";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/timebase
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { FRAME_RATES, assertFrameRate, clampFrame, formatTimecode, frameToPosition, framesToSeconds, positionToFrame, secondsToFrame } from "@/components/nyc-tron/ui/components/forge/timebase";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { FRAME_RATES, assertFrameRate, clampFrame, formatTimecode, frameToPosition, framesToSeconds, positionToFrame, secondsToFrame } from "@nyc-tron/ui/components/forge/timebase";`
 <!-- generated:end install -->
 
 ## Props

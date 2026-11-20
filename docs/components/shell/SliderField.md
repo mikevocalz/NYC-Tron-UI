@@ -20,13 +20,22 @@ Single-thumb slider with number field, step, detents, units and reset to default
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { SliderField } from "@nyc-tron/ui/components/shell/SliderField";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/SliderField
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { SliderField } from "@/components/nyc-tron/ui/components/shell/SliderField";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { SliderField } from "@nyc-tron/ui/components/shell/SliderField";`
 
 ### Dependencies
 
@@ -123,7 +132,7 @@ none in source.
 
 ```tsx example=SliderField
 import {useState} from "react";
-import {SliderField} from "@nyc-tron/ui/components/shell/SliderField";
+import {SliderField} from "@/components/nyc-tron/ui/components/shell/SliderField";
 
 export const Example=()=>{
   const [value,setValue]=useState(50);

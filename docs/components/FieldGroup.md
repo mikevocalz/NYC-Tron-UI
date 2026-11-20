@@ -20,13 +20,22 @@ Form layout wrapper with titled sections and footer text, exposed as FieldGroup.
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { FieldGroup } from "@nyc-tron/ui/components/FieldGroup";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/FieldGroup
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { FieldGroup } from "@/components/nyc-tron/ui/components/FieldGroup";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { FieldGroup } from "@nyc-tron/ui/components/FieldGroup";`
 
 ### Dependencies
 
@@ -101,8 +110,8 @@ none in source.
 
 ```tsx example=FieldGroup
 import { useState } from "react";
-import { FieldGroup } from "@nyc-tron/ui/components/FieldGroup";
-import { TextField } from "@nyc-tron/ui/components/TextField";
+import { FieldGroup } from "@/components/nyc-tron/ui/components/FieldGroup";
+import { TextField } from "@/components/nyc-tron/ui/components/TextField";
 
 export function DocumentDetails() {
   const [title, setTitle] = useState("");

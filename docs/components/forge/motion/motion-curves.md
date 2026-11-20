@@ -23,13 +23,22 @@ Original bounded scalar animation math.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/motion-curves.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { MOTION_MAX_TIME, MOTION_TIME_EPSILON, evaluateMotionCurve, evaluateMotionVelocity, insertMotionKey, motionSegmentControls, moveMotionKeys, removeMotionKeys } from "@nyc-tron/ui/components/forge/motion/motion-curves";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/motion/motion-curves
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { MOTION_MAX_TIME, MOTION_TIME_EPSILON, evaluateMotionCurve, evaluateMotionVelocity, insertMotionKey, motionSegmentControls, moveMotionKeys, removeMotionKeys } from "@/components/nyc-tron/ui/components/forge/motion/motion-curves";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { MOTION_MAX_TIME, MOTION_TIME_EPSILON, evaluateMotionCurve, evaluateMotionVelocity, insertMotionKey, motionSegmentControls, moveMotionKeys, removeMotionKeys } from "@nyc-tron/ui/components/forge/motion/motion-curves";`
 <!-- generated:end install -->
 
 ## Props

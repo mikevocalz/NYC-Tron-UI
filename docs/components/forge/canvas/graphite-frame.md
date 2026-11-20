@@ -23,13 +23,22 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/graphite-frame.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { submitCanvasFrame } from "@nyc-tron/ui/components/forge/canvas/graphite-frame";`
 - Peers: react, react-native, react-native-skia
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/canvas/graphite-frame
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { submitCanvasFrame } from "@/components/nyc-tron/ui/components/forge/canvas/graphite-frame";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { submitCanvasFrame } from "@nyc-tron/ui/components/forge/canvas/graphite-frame";`
 <!-- generated:end install -->
 
 ## Props

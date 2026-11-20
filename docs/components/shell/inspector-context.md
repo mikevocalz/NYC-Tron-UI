@@ -23,13 +23,22 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/inspector-context.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { InspectorPanelContext, InspectorSectionContext } from "@nyc-tron/ui/components/shell/inspector-context";`
 - Peers: react, react-native, zustand
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/inspector-context
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { InspectorPanelContext, InspectorSectionContext } from "@/components/nyc-tron/ui/components/shell/inspector-context";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { InspectorPanelContext, InspectorSectionContext } from "@nyc-tron/ui/components/shell/inspector-context";`
 <!-- generated:end install -->
 
 ## Props

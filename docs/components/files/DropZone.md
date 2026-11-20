@@ -23,13 +23,22 @@ iOS and Android drop target over expo-drag-drop-content-view (optional peer, nee
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/files/DropZone.native.tsx,packages/ui/src/components/files/DropZone.shared.tsx,packages/ui/src/components/files/DropZone.types.ts,packages/ui/src/components/files/DropZone.web.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { DropZone } from "@nyc-tron/ui/components/files/DropZone";`
 - Peers: expo-drag-drop-content-view, react, react-native, zustand
 - Requires: @nyc-tron/files/FilePicker
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/files/DropZone
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { DropZone } from "@/components/nyc-tron/ui/components/files/DropZone";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { DropZone } from "@nyc-tron/ui/components/files/DropZone";`
 <!-- generated:end install -->
 
 ## Props
@@ -83,7 +92,7 @@ none
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=DropZone
-import { DropZone } from "@nyc-tron/ui/components/files/DropZone";
+import { DropZone } from "@/components/nyc-tron/ui/components/files/DropZone";
 
 export function Example() {
   return <DropZone />;

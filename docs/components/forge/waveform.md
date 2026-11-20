@@ -23,13 +23,22 @@ Display-only min/max extrema math adapted from the user's Nitro Forge draft medi
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/waveform.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { FULL_RANGE, assertWaveformRange, normalizePeak, peaksToBars, rangePosition, resamplePeaks, scrollRange, slicePeaks } from "@nyc-tron/ui/components/forge/waveform";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/waveform
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { FULL_RANGE, assertWaveformRange, normalizePeak, peaksToBars, rangePosition, resamplePeaks, scrollRange, slicePeaks } from "@/components/nyc-tron/ui/components/forge/waveform";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { FULL_RANGE, assertWaveformRange, normalizePeak, peaksToBars, rangePosition, resamplePeaks, scrollRange, slicePeaks } from "@nyc-tron/ui/components/forge/waveform";`
 <!-- generated:end install -->
 
 ## Props

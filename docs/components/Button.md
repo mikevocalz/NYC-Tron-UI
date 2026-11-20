@@ -20,13 +20,22 @@ Pressable text button with primary, secondary, ghost and danger variants, loadin
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Button } from "@nyc-tron/ui/components/Button";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/Button
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { Button } from "@/components/nyc-tron/ui/components/Button";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { Button } from "@nyc-tron/ui/components/Button";`
 
 ### Dependencies
 
@@ -131,7 +140,7 @@ none in source. The package.json export entry has `types`, `react-native` and `d
 
 ```tsx example=Button
 import { Text } from "react-native";
-import { Button } from "@nyc-tron/ui/components/Button";
+import { Button } from "@/components/nyc-tron/ui/components/Button";
 
 export function SaveRow({ saving, onSave }: { saving: boolean; onSave: () => void }) {
   return (

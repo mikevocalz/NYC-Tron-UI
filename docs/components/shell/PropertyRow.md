@@ -20,13 +20,22 @@ Row for one inspector property: label and editor, with mixed-value badge, overri
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { PropertyRow } from "@nyc-tron/ui/components/shell/PropertyRow";`
 - Peers: react, react-native, zustand
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/PropertyRow
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { PropertyRow } from "@/components/nyc-tron/ui/components/shell/PropertyRow";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { PropertyRow } from "@nyc-tron/ui/components/shell/PropertyRow";`
 
 ### Dependencies
 
@@ -105,7 +114,7 @@ none in source.
 
 ```tsx example=PropertyRow
 import {Text} from "react-native";
-import {PropertyRow} from "@nyc-tron/ui/components/shell/PropertyRow";
+import {PropertyRow} from "@/components/nyc-tron/ui/components/shell/PropertyRow";
 
 export const Example=()=><PropertyRow label="Opacity" override="overridden" onRevert={()=>{}} keywords={["alpha"]}>
   {state=><Text accessibilityLabel={state.editorLabel}>{state.mixed?"Mixed":"80%"}</Text>}

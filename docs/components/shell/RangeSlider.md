@@ -20,13 +20,22 @@ Two-thumb slider that selects a min and max value, with step, detents, minimum g
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { RangeSlider } from "@nyc-tron/ui/components/shell/RangeSlider";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/RangeSlider
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { RangeSlider } from "@/components/nyc-tron/ui/components/shell/RangeSlider";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { RangeSlider } from "@nyc-tron/ui/components/shell/RangeSlider";`
 
 ### Dependencies
 
@@ -125,7 +134,7 @@ none in source.
 
 ```tsx example=RangeSlider
 import {useState} from "react";
-import {RangeSlider,type RangeValue} from "@nyc-tron/ui/components/shell/RangeSlider";
+import {RangeSlider,type RangeValue} from "@/components/nyc-tron/ui/components/shell/RangeSlider";
 
 export const Example=()=>{
   const [value,setValue]=useState<RangeValue>([20,80]);

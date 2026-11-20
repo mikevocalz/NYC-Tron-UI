@@ -20,13 +20,22 @@ Static container View with raised, sunken or transparent surface and optional pa
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Card } from "@nyc-tron/ui/components/Card";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/Card
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { Card } from "@/components/nyc-tron/ui/components/Card";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { Card } from "@nyc-tron/ui/components/Card";`
 
 ### Dependencies
 
@@ -97,7 +106,7 @@ none in source.
 
 ```tsx example=Card
 import { Text } from "react-native";
-import { Card } from "@nyc-tron/ui/components/Card";
+import { Card } from "@/components/nyc-tron/ui/components/Card";
 
 export function Summary() {
   return (

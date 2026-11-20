@@ -20,13 +20,22 @@ Inline error text with a danger glyph, announced as an alert; renders nothing wh
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { ErrorMessage } from "@nyc-tron/ui/components/feedback/ErrorMessage";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/feedback/ErrorMessage
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ErrorMessage } from "@/components/nyc-tron/ui/components/feedback/ErrorMessage";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ErrorMessage } from "@nyc-tron/ui/components/feedback/ErrorMessage";`
 
 ### Dependencies
 
@@ -91,7 +100,7 @@ none in source.
 ## Example
 
 ```tsx example=ErrorMessage
-import { ErrorMessage } from "@nyc-tron/ui/components/feedback/ErrorMessage";
+import { ErrorMessage } from "@/components/nyc-tron/ui/components/feedback/ErrorMessage";
 
 export function FormError({ message }: { message?: string }) {
   return <ErrorMessage message={message} surface="page" />;

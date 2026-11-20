@@ -23,13 +23,22 @@ Pure input math.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/inputs/precision.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { SCRUB_DETENT_PIXELS, SCRUB_MODE_THRESHOLD_PX, advancePrecisionGesture, assertRange, beginPrecisionGesture, clamp, formatStepValue, gestureToAngle } from "@nyc-tron/ui/components/forge/inputs/precision";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/inputs/precision
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { SCRUB_DETENT_PIXELS, SCRUB_MODE_THRESHOLD_PX, advancePrecisionGesture, assertRange, beginPrecisionGesture, clamp, formatStepValue, gestureToAngle } from "@/components/nyc-tron/ui/components/forge/inputs/precision";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { SCRUB_DETENT_PIXELS, SCRUB_MODE_THRESHOLD_PX, advancePrecisionGesture, assertRange, beginPrecisionGesture, clamp, formatStepValue, gestureToAngle } from "@nyc-tron/ui/components/forge/inputs/precision";`
 <!-- generated:end install -->
 
 ## Props

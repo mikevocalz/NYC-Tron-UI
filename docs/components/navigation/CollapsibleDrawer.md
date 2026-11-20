@@ -20,13 +20,22 @@ Side navigation drawer menu in expanded, compact or minimal mode, with overlay a
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { CollapsibleDrawer } from "@nyc-tron/ui/components/navigation/CollapsibleDrawer";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/navigation/CollapsibleDrawer
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { CollapsibleDrawer } from "@/components/nyc-tron/ui/components/navigation/CollapsibleDrawer";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { CollapsibleDrawer } from "@nyc-tron/ui/components/navigation/CollapsibleDrawer";`
 
 ### Dependencies
 
@@ -126,7 +135,7 @@ none in source. Pane width and display switch without animation.
 ```tsx example=CollapsibleDrawer
 import { useState } from "react";
 import { Text } from "react-native";
-import { CollapsibleDrawer } from "@nyc-tron/ui/components/navigation/CollapsibleDrawer";
+import { CollapsibleDrawer } from "@/components/nyc-tron/ui/components/navigation/CollapsibleDrawer";
 
 export const Example = () => {
   const [open, setOpen] = useState(false);

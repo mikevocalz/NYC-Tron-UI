@@ -20,13 +20,22 @@ Number field that parses and formats typed units from a UnitContext, with unit m
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { UnitInput } from "@nyc-tron/ui/components/shell/UnitInput";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/shell/MenuButton
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/UnitInput
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { UnitInput } from "@/components/nyc-tron/ui/components/shell/UnitInput";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { UnitInput } from "@nyc-tron/ui/components/shell/UnitInput";`
 
 ### Dependencies
 
@@ -115,7 +124,7 @@ none in source.
 ## Example
 
 ```tsx example=UnitInput
-import {UnitInput} from "@nyc-tron/ui/components/shell/UnitInput";
+import {UnitInput} from "@/components/nyc-tron/ui/components/shell/UnitInput";
 export const Example = () => <UnitInput label="Width" scope="layer-1.width" value={192}
   context={{dimension:"length",unit:"mm",pixelsPerInch:96}} units={["px","mm","in"]}
   onUnitChange={()=>{}} onCommit={()=>{}} min={0} max={4096} step={1}/>;

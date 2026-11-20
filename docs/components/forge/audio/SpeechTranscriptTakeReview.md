@@ -23,13 +23,22 @@ Take selection plus shared ASR speaker/text correction and real word-boundary ed
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/SpeechTranscriptTakeReview.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SpeechTranscriptTakeReview } from "@nyc-tron/ui/components/forge/audio/SpeechTranscriptTakeReview";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/AutoCaptionTranscriptTimeline, @nyc-tron/forge/timeline/CaptionWordTimingHandles
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/audio/SpeechTranscriptTakeReview
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { SpeechTranscriptTakeReview } from "@/components/nyc-tron/ui/components/forge/audio/SpeechTranscriptTakeReview";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { SpeechTranscriptTakeReview } from "@nyc-tron/ui/components/forge/audio/SpeechTranscriptTakeReview";`
 <!-- generated:end install -->
 
 ## Props

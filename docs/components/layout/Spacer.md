@@ -20,13 +20,22 @@ Empty View with a fixed length from the space scale, or flex to fill free space 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Spacer } from "@nyc-tron/ui/components/layout/Spacer";`
 - Peers: react, react-native
 - Requires: @nyc-tron/layout/Stack
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/layout/Spacer
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { Spacer } from "@/components/nyc-tron/ui/components/layout/Spacer";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { Spacer } from "@nyc-tron/ui/components/layout/Spacer";`
 
 ### Dependencies
 
@@ -88,8 +97,8 @@ none in source
 
 ```tsx example=Spacer
 import { Text } from "react-native";
-import { Row } from "@nyc-tron/ui/components/layout/Row";
-import { Spacer } from "@nyc-tron/ui/components/layout/Spacer";
+import { Row } from "@/components/nyc-tron/ui/components/layout/Row";
+import { Spacer } from "@/components/nyc-tron/ui/components/layout/Spacer";
 
 export const Example = () => (
   <Row align="center">

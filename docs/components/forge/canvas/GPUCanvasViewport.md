@@ -23,13 +23,22 @@ Actual Skia 3 Graphite surface.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/GPUCanvasViewport.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { GPUCanvasViewport } from "@nyc-tron/ui/components/forge/canvas/GPUCanvasViewport";`
 - Peers: react, react-native, react-native-skia, zustand
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/canvas/GPUCanvasViewport
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { GPUCanvasViewport } from "@/components/nyc-tron/ui/components/forge/canvas/GPUCanvasViewport";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { GPUCanvasViewport } from "@nyc-tron/ui/components/forge/canvas/GPUCanvasViewport";`
 <!-- generated:end install -->
 
 ## Props

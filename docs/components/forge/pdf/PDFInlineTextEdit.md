@@ -23,13 +23,22 @@ Actual native PDF hit tests/font admission and save acknowledgement; edits never
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/pdf/PDFInlineTextEdit.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PDFInlineTextEdit } from "@nyc-tron/ui/components/forge/pdf/PDFInlineTextEdit";`
 - Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/pdf/PDFInlineTextEdit
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { PDFInlineTextEdit } from "@/components/nyc-tron/ui/components/forge/pdf/PDFInlineTextEdit";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { PDFInlineTextEdit } from "@nyc-tron/ui/components/forge/pdf/PDFInlineTextEdit";`
 <!-- generated:end install -->
 
 ## Props

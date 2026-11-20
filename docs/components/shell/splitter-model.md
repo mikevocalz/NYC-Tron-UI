@@ -23,13 +23,22 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/splitter-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { hingeBands, mirrorBands, resolveSplit, sizeForEdge, startSizeFor, stepSplit } from "@nyc-tron/ui/components/shell/splitter-model";`
 - Peers: @nyc-tron/core, react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/splitter-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { hingeBands, mirrorBands, resolveSplit, sizeForEdge, startSizeFor, stepSplit } from "@/components/nyc-tron/ui/components/shell/splitter-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { hingeBands, mirrorBands, resolveSplit, sizeForEdge, startSizeFor, stepSplit } from "@nyc-tron/ui/components/shell/splitter-model";`
 <!-- generated:end install -->
 
 ## Props

@@ -20,13 +20,22 @@ Empty-list placeholder with heading title, description, icon or illustration, an
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { EmptyState } from "@nyc-tron/ui/components/feedback/EmptyState";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Button
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/feedback/EmptyState
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { EmptyState } from "@/components/nyc-tron/ui/components/feedback/EmptyState";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { EmptyState } from "@nyc-tron/ui/components/feedback/EmptyState";`
 
 ### Dependencies
 
@@ -102,7 +111,7 @@ none in source.
 ## Example
 
 ```tsx example=EmptyState
-import { EmptyState } from "@nyc-tron/ui/components/feedback/EmptyState";
+import { EmptyState } from "@/components/nyc-tron/ui/components/feedback/EmptyState";
 
 export function NoLayers({ add }: { add: () => void }) {
   return (

@@ -23,13 +23,22 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/ruler-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { DEFAULT_DPI, RULER_GUIDE_PAGE_STEP, RULER_GUIDE_STEP, RULER_MAX_TICKS, RULER_MIN_LABEL_SPACING, RULER_MIN_TICK_SPACING, RULER_THICKNESS, RULER_TOUCH_BAND } from "@nyc-tron/ui/components/forge/canvas/ruler-model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/canvas/ruler-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { DEFAULT_DPI, RULER_GUIDE_PAGE_STEP, RULER_GUIDE_STEP, RULER_MAX_TICKS, RULER_MIN_LABEL_SPACING, RULER_MIN_TICK_SPACING, RULER_THICKNESS, RULER_TOUCH_BAND } from "@/components/nyc-tron/ui/components/forge/canvas/ruler-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { DEFAULT_DPI, RULER_GUIDE_PAGE_STEP, RULER_GUIDE_STEP, RULER_MAX_TICKS, RULER_MIN_LABEL_SPACING, RULER_MIN_TICK_SPACING, RULER_THICKNESS, RULER_TOUCH_BAND } from "@nyc-tron/ui/components/forge/canvas/ruler-model";`
 <!-- generated:end install -->
 
 ## Props

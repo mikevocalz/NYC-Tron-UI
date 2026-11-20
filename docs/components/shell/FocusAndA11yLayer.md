@@ -20,13 +20,22 @@ Provider exposing reduce-motion, screen-reader, high-contrast and input-modality
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { FocusAndA11yLayer } from "@nyc-tron/ui/components/shell/FocusAndA11yLayer";`
 - Peers: react, react-native, zustand
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/FocusAndA11yLayer
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { FocusAndA11yLayer } from "@/components/nyc-tron/ui/components/shell/FocusAndA11yLayer";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { FocusAndA11yLayer } from "@nyc-tron/ui/components/shell/FocusAndA11yLayer";`
 
 ### Dependencies
 
@@ -96,7 +105,7 @@ none in source. It supplies `motionDuration` and the `reduceMotion` flag for oth
 
 ```tsx example=FocusAndA11yLayer
 import {Pressable, Text} from "react-native";
-import {FocusAndA11yLayer, motionDuration, useA11yPreferences, useAnnounce} from "@nyc-tron/ui/components/shell/FocusAndA11yLayer";
+import {FocusAndA11yLayer, motionDuration, useA11yPreferences, useAnnounce} from "@/components/nyc-tron/ui/components/shell/FocusAndA11yLayer";
 
 function SaveButton() {
   const announce = useAnnounce();

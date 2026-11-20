@@ -23,13 +23,22 @@ Analytic velocity samples plus editable temporal influence and in/out slopes.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/motion/KeyframeSpeedGraph.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { KeyframeSpeedGraph } from "@nyc-tron/ui/components/forge/motion/KeyframeSpeedGraph";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/motion/KeyframeSpeedGraph
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { KeyframeSpeedGraph } from "@/components/nyc-tron/ui/components/forge/motion/KeyframeSpeedGraph";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { KeyframeSpeedGraph } from "@nyc-tron/ui/components/forge/motion/KeyframeSpeedGraph";`
 <!-- generated:end install -->
 
 ## Props

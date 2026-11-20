@@ -20,13 +20,22 @@ Search field with clear button and live-region match summary for inspector panel
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { InspectorSearch } from "@nyc-tron/ui/components/shell/InspectorSearch";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/InspectorSearch
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { InspectorSearch } from "@/components/nyc-tron/ui/components/shell/InspectorSearch";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { InspectorSearch } from "@nyc-tron/ui/components/shell/InspectorSearch";`
 
 ### Dependencies
 
@@ -113,7 +122,7 @@ none in source. `role="searchbox"` is passed on the `TextInput`. Export conditio
 
 ```tsx example=InspectorSearch
 import {useState} from "react";
-import {InspectorSearch, matchesQuery} from "@nyc-tron/ui/components/shell/InspectorSearch";
+import {InspectorSearch, matchesQuery} from "@/components/nyc-tron/ui/components/shell/InspectorSearch";
 
 const names = ["Opacity", "Blend mode", "Position"];
 

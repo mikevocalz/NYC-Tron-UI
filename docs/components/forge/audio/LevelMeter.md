@@ -23,13 +23,22 @@ Display-only input meter.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LevelMeter.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LevelMeter } from "@nyc-tron/ui/components/forge/audio/LevelMeter";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/audio/LevelMeter
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { LevelMeter } from "@/components/nyc-tron/ui/components/forge/audio/LevelMeter";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { LevelMeter } from "@nyc-tron/ui/components/forge/audio/LevelMeter";`
 <!-- generated:end install -->
 
 ## Props
@@ -75,7 +84,7 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=LevelMeter
-import { LevelMeter } from "@nyc-tron/ui/components/forge/audio/LevelMeter";
+import { LevelMeter } from "@/components/nyc-tron/ui/components/forge/audio/LevelMeter";
 
 export function Example() {
   return <LevelMeter level={0} />;

@@ -23,13 +23,22 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/TextSelectionAndCaret.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TextSelectionAndCaret } from "@nyc-tron/ui/components/forge/document/TextSelectionAndCaret";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/document/TextSelectionAndCaret
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { TextSelectionAndCaret } from "@/components/nyc-tron/ui/components/forge/document/TextSelectionAndCaret";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { TextSelectionAndCaret } from "@nyc-tron/ui/components/forge/document/TextSelectionAndCaret";`
 <!-- generated:end install -->
 
 ## Props

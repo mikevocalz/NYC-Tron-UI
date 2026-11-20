@@ -23,13 +23,22 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/TypographyInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TypographyInspector } from "@nyc-tron/ui/components/forge/document/TypographyInspector";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/inputs/PropertyInspector
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/document/TypographyInspector
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { TypographyInspector } from "@/components/nyc-tron/ui/components/forge/document/TypographyInspector";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { TypographyInspector } from "@nyc-tron/ui/components/forge/document/TypographyInspector";`
 <!-- generated:end install -->
 
 ## Props

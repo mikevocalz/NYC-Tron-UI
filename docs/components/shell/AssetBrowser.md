@@ -20,13 +20,22 @@ Asset list with breadcrumb path, search, sort, single or multiple selection and 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { AssetBrowser } from "@nyc-tron/ui/components/shell/AssetBrowser";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/InspectorSearch
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/AssetBrowser
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { AssetBrowser } from "@/components/nyc-tron/ui/components/shell/AssetBrowser";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { AssetBrowser } from "@nyc-tron/ui/components/shell/AssetBrowser";`
 
 ### Dependencies
 
@@ -136,7 +145,7 @@ none in source. `scrollToOffset` and `scrollToIndex` use `animated:false`.
 
 ```tsx example=AssetBrowser
 import {useState} from "react";
-import {AssetBrowser, type AssetEntry, type AssetLocation} from "@nyc-tron/ui/components/shell/AssetBrowser";
+import {AssetBrowser, type AssetEntry, type AssetLocation} from "@/components/nyc-tron/ui/components/shell/AssetBrowser";
 
 const entries: readonly AssetEntry[] = [
   {id: "f1", name: "Textures", kind: "folder"},

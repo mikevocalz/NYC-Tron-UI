@@ -23,13 +23,22 @@ Platform-free rules shared by the web and native DropZone and FilePicker: `accep
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/files/drop-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { acceptsFile, dragDepth, matchesAccept, matchesMime, parseAccept } from "@nyc-tron/ui/components/files/drop-model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/files/drop-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { acceptsFile, dragDepth, matchesAccept, matchesMime, parseAccept } from "@/components/nyc-tron/ui/components/files/drop-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { acceptsFile, dragDepth, matchesAccept, matchesMime, parseAccept } from "@nyc-tron/ui/components/files/drop-model";`
 <!-- generated:end install -->
 
 ## Props

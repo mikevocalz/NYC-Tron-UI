@@ -23,13 +23,22 @@ Preview values are supplied by the selected recipient's admitted data source.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/MailMergeFieldPicker.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MailMergeFieldPicker } from "@nyc-tron/ui/components/forge/document/MailMergeFieldPicker";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/document/MailMergeFieldPicker
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { MailMergeFieldPicker } from "@/components/nyc-tron/ui/components/forge/document/MailMergeFieldPicker";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { MailMergeFieldPicker } from "@nyc-tron/ui/components/forge/document/MailMergeFieldPicker";`
 <!-- generated:end install -->
 
 ## Props

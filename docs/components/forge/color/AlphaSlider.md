@@ -23,13 +23,22 @@ Controlled opacity slider (C-05): a checkerboard under a transparent-to-opaque g
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/AlphaSlider.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AlphaSlider } from "@nyc-tron/ui/components/forge/color/AlphaSlider";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/color/AlphaSlider
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { AlphaSlider } from "@/components/nyc-tron/ui/components/forge/color/AlphaSlider";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { AlphaSlider } from "@nyc-tron/ui/components/forge/color/AlphaSlider";`
 <!-- generated:end install -->
 
 ## Props

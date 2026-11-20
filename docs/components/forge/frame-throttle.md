@@ -23,13 +23,22 @@ Scheduler pair for {@linkcode createFrameThrottle}; defaults to `requestAnimatio
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/frame-throttle.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { animationFrameScheduler, createFrameThrottle } from "@nyc-tron/ui/components/forge/frame-throttle";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/frame-throttle
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { animationFrameScheduler, createFrameThrottle } from "@/components/nyc-tron/ui/components/forge/frame-throttle";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { animationFrameScheduler, createFrameThrottle } from "@nyc-tron/ui/components/forge/frame-throttle";`
 <!-- generated:end install -->
 
 ## Props

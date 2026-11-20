@@ -20,13 +20,22 @@ Text with body or caption size from the token scale, a font-size override and a 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Text } from "@nyc-tron/ui/components/layout/Text";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/layout/Text
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { Text } from "@/components/nyc-tron/ui/components/layout/Text";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { Text } from "@nyc-tron/ui/components/layout/Text";`
 
 ### Dependencies
 
@@ -124,8 +133,8 @@ none in source
 ## Example
 
 ```tsx example=LayoutText
-import { Stack } from "@nyc-tron/ui/components/layout/Stack";
-import { Text } from "@nyc-tron/ui/components/layout/Text";
+import { Stack } from "@/components/nyc-tron/ui/components/layout/Stack";
+import { Text } from "@/components/nyc-tron/ui/components/layout/Text";
 
 export const Example = () => (
   <Stack gap={1}>

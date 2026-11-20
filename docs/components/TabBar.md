@@ -20,13 +20,22 @@ Tab strip with tablist or link-navigation semantics, icons and compact density, 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { TabBar } from "@nyc-tron/ui/components/TabBar";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/TabBar
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { TabBar } from "@/components/nyc-tron/ui/components/TabBar";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { TabBar } from "@nyc-tron/ui/components/TabBar";`
 
 ### Dependencies
 
@@ -119,7 +128,7 @@ Tailwind default classes (no token): `min-w-0` x4, `gap-0` (from `gap-0.5`), `bo
 ```tsx example=TabBar
 import { useState } from "react";
 import { Text } from "react-native";
-import { TabBar } from "@nyc-tron/ui/components/TabBar";
+import { TabBar } from "@/components/nyc-tron/ui/components/TabBar";
 
 export function PaneTabs() {
   const [active, setActive] = useState("layers");

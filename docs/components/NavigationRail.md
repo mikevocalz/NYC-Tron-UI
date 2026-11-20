@@ -20,13 +20,22 @@ Vertical rail of icon and label destinations with selected state and a collapsed
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { NavigationRail, NavigationShell } from "@nyc-tron/ui/components/NavigationRail";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/NavigationRail
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { NavigationRail, NavigationShell } from "@/components/nyc-tron/ui/components/NavigationRail";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { NavigationRail, NavigationShell } from "@nyc-tron/ui/components/NavigationRail";`
 
 ### Dependencies
 
@@ -124,7 +133,7 @@ none in source. `NavigationShell` pins the outer row to `direction:"ltr"` so RTL
 ```tsx example=NavigationRail
 import { useState } from "react";
 import { Text } from "react-native";
-import { NavigationRail, NavigationShell } from "@nyc-tron/ui/components/NavigationRail";
+import { NavigationRail, NavigationShell } from "@/components/nyc-tron/ui/components/NavigationRail";
 
 export function AppShell() {
   const [id, setId] = useState<string | null>("home");

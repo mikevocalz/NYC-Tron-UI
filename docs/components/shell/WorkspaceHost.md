@@ -20,13 +20,22 @@ Workspace shell with mode tabs, per-mode dock layouts and Ctrl or Cmd+1..9 short
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { WorkspaceHost } from "@nyc-tron/ui/components/shell/WorkspaceHost";`
 - Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/shell/AdaptiveDock
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/WorkspaceHost
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { WorkspaceHost } from "@/components/nyc-tron/ui/components/shell/WorkspaceHost";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { WorkspaceHost } from "@nyc-tron/ui/components/shell/WorkspaceHost";`
 
 ### Dependencies
 
@@ -131,7 +140,7 @@ none in source.
 
 ```tsx example=WorkspaceHost
 import {Text} from "react-native";
-import {WorkspaceHost,type DockLayout,type DockPanel} from "@nyc-tron/ui/components/shell/WorkspaceHost";
+import {WorkspaceHost,type DockLayout,type DockPanel} from "@/components/nyc-tron/ui/components/shell/WorkspaceHost";
 const edit:DockLayout={left:{panels:["layers"],active:"layers",size:240},floating:[]};
 const panels:readonly DockPanel[]=[{id:"layers",title:"Layers",content:<Text>Layers</Text>}];
 export const Example = () => <WorkspaceHost document={{id:"doc-1",title:"Poster",dirty:true}}

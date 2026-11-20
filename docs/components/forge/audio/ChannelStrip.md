@@ -23,13 +23,22 @@ One mixer column: routing and group line, level fader with dB readout, optional 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/ChannelStrip.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ChannelStrip } from "@nyc-tron/ui/components/forge/audio/ChannelStrip";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/audio/LevelFader, @nyc-tron/forge/audio/LevelMeter, @nyc-tron/forge/audio/PanControl, @nyc-tron/forge/audio/SoloMuteButtons
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/audio/ChannelStrip
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ChannelStrip } from "@/components/nyc-tron/ui/components/forge/audio/ChannelStrip";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ChannelStrip } from "@nyc-tron/ui/components/forge/audio/ChannelStrip";`
 <!-- generated:end install -->
 
 ## Props

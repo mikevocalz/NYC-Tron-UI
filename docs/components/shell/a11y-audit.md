@@ -23,13 +23,22 @@ A static screen-reader audit over a rendered element tree: the plain `{type, pro
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/a11y-audit.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { auditAccessibility } from "@nyc-tron/ui/components/shell/a11y-audit";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/a11y-audit
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { auditAccessibility } from "@/components/nyc-tron/ui/components/shell/a11y-audit";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { auditAccessibility } from "@nyc-tron/ui/components/shell/a11y-audit";`
 <!-- generated:end install -->
 
 ## Props

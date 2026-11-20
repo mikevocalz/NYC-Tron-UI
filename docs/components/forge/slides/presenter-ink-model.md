@@ -23,13 +23,22 @@ Pure rules for `PresenterInkOverlay` and `PresenterInkStrip` (J-14): tools, keyb
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/presenter-ink-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { ERASER_RADIUS, HIGHLIGHTER_OPACITY, HIGHLIGHTER_WIDTH_FACTOR, LASER_TRAIL_MAX, LASER_TRAIL_MS, MIN_POINT_SPACING, PRESENTER_INK_SHORTCUTS, PRESENTER_INK_TOOLS } from "@nyc-tron/ui/components/forge/slides/presenter-ink-model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/slides/presenter-ink-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ERASER_RADIUS, HIGHLIGHTER_OPACITY, HIGHLIGHTER_WIDTH_FACTOR, LASER_TRAIL_MAX, LASER_TRAIL_MS, MIN_POINT_SPACING, PRESENTER_INK_SHORTCUTS, PRESENTER_INK_TOOLS } from "@/components/nyc-tron/ui/components/forge/slides/presenter-ink-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ERASER_RADIUS, HIGHLIGHTER_OPACITY, HIGHLIGHTER_WIDTH_FACTOR, LASER_TRAIL_MAX, LASER_TRAIL_MS, MIN_POINT_SPACING, PRESENTER_INK_SHORTCUTS, PRESENTER_INK_TOOLS } from "@nyc-tron/ui/components/forge/slides/presenter-ink-model";`
 <!-- generated:end install -->
 
 ## Props

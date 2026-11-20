@@ -20,13 +20,22 @@ Tree table with expandable rows, row selection, column reorder and pinned column
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { TreeGrid } from "@nyc-tron/ui/components/data/TreeGrid";`
 - Peers: react, react-native, zustand
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/data/TreeGrid
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { TreeGrid } from "@/components/nyc-tron/ui/components/data/TreeGrid";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { TreeGrid } from "@nyc-tron/ui/components/data/TreeGrid";`
 
 ### Dependencies
 
@@ -126,7 +135,7 @@ Only a comment: rows and cells use `role` rather than `accessibilityRole` becaus
 ## Example
 
 ```tsx example=TreeGrid
-import { TreeGrid, type TreeGridColumn } from "@nyc-tron/ui/components/data/TreeGrid";
+import { TreeGrid, type TreeGridColumn } from "@/components/nyc-tron/ui/components/data/TreeGrid";
 
 const columns: TreeGridColumn[] = [
   { id: "size", title: "Size", width: 96 },

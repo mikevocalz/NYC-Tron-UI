@@ -23,13 +23,22 @@ Three-pane sheet: frozen headers and frozen rows/columns sit outside the body sc
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/SpreadsheetGrid.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SpreadsheetGrid } from "@nyc-tron/ui/components/forge/SpreadsheetGrid";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/spreadsheet/FormulaBar, @nyc-tron/gestures/PanResponderDrag
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/SpreadsheetGrid
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { SpreadsheetGrid } from "@/components/nyc-tron/ui/components/forge/SpreadsheetGrid";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { SpreadsheetGrid } from "@nyc-tron/ui/components/forge/SpreadsheetGrid";`
 <!-- generated:end install -->
 
 ## Props

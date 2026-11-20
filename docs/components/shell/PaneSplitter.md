@@ -20,13 +20,22 @@ Two-pane splitter, horizontal or vertical, resizable by drag, keys or accessibil
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { PaneSplitter } from "@nyc-tron/ui/components/shell/PaneSplitter";`
 - Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/PaneSplitter
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { PaneSplitter } from "@/components/nyc-tron/ui/components/shell/PaneSplitter";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { PaneSplitter } from "@nyc-tron/ui/components/shell/PaneSplitter";`
 
 ### Dependencies
 
@@ -126,7 +135,7 @@ none in source. A drag snaps within `DRAG_SNAP` (24) of a hinge band.
 ```tsx example=PaneSplitter
 import {useState} from "react";
 import {Text} from "react-native";
-import {PaneSplitter} from "@nyc-tron/ui/components/shell/PaneSplitter";
+import {PaneSplitter} from "@/components/nyc-tron/ui/components/shell/PaneSplitter";
 
 export const Example=()=>{
   const [size,setSize]=useState(240);

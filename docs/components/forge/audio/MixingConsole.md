@@ -23,13 +23,22 @@ Controlled channel-strip console for tracks and buses.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/MixingConsole.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MixingConsole } from "@nyc-tron/ui/components/forge/audio/MixingConsole";`
 - Peers: react, react-native
 - Requires: @nyc-tron/feedback/EmptyState, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/audio/BusAndRoutingMatrix, @nyc-tron/forge/audio/ChannelStrip, @nyc-tron/forge/audio/InsertEffectRack, @nyc-tron/forge/audio/MixGroupBar
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/audio/MixingConsole
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { MixingConsole } from "@/components/nyc-tron/ui/components/forge/audio/MixingConsole";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { MixingConsole } from "@nyc-tron/ui/components/forge/audio/MixingConsole";`
 <!-- generated:end install -->
 
 ## Props

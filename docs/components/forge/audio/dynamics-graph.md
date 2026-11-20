@@ -23,13 +23,22 @@ Plot math for {@linkcode DynamicsTransferGraph}: a square input/output plot over
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/dynamics-graph.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { DYN_GRID_DB, DYN_MAX_DB, DYN_MAX_RATIO, DYN_MIN_DB, DYN_MIN_RATIO, RATIO_STEPS, clampThreshold, curveOutputAt } from "@nyc-tron/ui/components/forge/audio/dynamics-graph";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/audio/dynamics-graph
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { DYN_GRID_DB, DYN_MAX_DB, DYN_MAX_RATIO, DYN_MIN_DB, DYN_MIN_RATIO, RATIO_STEPS, clampThreshold, curveOutputAt } from "@/components/nyc-tron/ui/components/forge/audio/dynamics-graph";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { DYN_GRID_DB, DYN_MAX_DB, DYN_MAX_RATIO, DYN_MIN_DB, DYN_MIN_RATIO, RATIO_STEPS, clampThreshold, curveOutputAt } from "@nyc-tron/ui/components/forge/audio/dynamics-graph";`
 <!-- generated:end install -->
 
 ## Props

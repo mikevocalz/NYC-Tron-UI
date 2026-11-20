@@ -20,13 +20,22 @@ Find and replace form with match navigation, replace one or all, and async searc
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { FindReplaceContent } from "@nyc-tron/ui/components/shell/FindReplaceContent";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/FindReplaceContent
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { FindReplaceContent } from "@/components/nyc-tron/ui/components/shell/FindReplaceContent";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { FindReplaceContent } from "@nyc-tron/ui/components/shell/FindReplaceContent";`
 
 ### Dependencies
 
@@ -119,7 +128,7 @@ none in source. Export conditions: `types`, `react-native`, `default`, same file
 ## Example
 
 ```tsx example=FindReplaceContent
-import {FindReplaceContent, type FindDocument, type FindQuery, type FindResponse} from "@nyc-tron/ui/components/shell/FindReplaceContent";
+import {FindReplaceContent, type FindDocument, type FindQuery, type FindResponse} from "@/components/nyc-tron/ui/components/shell/FindReplaceContent";
 
 const document: FindDocument = {id: "doc-1", revision: "r1"};
 const onFind = (query: FindQuery): FindResponse => ({

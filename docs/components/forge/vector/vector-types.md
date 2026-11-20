@@ -23,13 +23,22 @@ Engine-neutral vector contract shared by the vector-tools cluster ({@linkcode Pa
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/vector-types.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { AVAILABLE, IDENTITY_TRANSFORM, MAX_DASH_ENTRIES, MAX_GRADIENT_STOPS, MIN_GRADIENT_STOPS, MITER_LIMIT_RANGE, availabilityReason, deltaToContent } from "@nyc-tron/ui/components/forge/vector/vector-types";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/vector/vector-types
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { AVAILABLE, IDENTITY_TRANSFORM, MAX_DASH_ENTRIES, MAX_GRADIENT_STOPS, MIN_GRADIENT_STOPS, MITER_LIMIT_RANGE, availabilityReason, deltaToContent } from "@/components/nyc-tron/ui/components/forge/vector/vector-types";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { AVAILABLE, IDENTITY_TRANSFORM, MAX_DASH_ENTRIES, MAX_GRADIENT_STOPS, MIN_GRADIENT_STOPS, MITER_LIMIT_RANGE, availabilityReason, deltaToContent } from "@nyc-tron/ui/components/forge/vector/vector-types";`
 <!-- generated:end install -->
 
 ## Props

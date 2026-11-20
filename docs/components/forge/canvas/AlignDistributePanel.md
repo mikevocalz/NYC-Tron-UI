@@ -23,13 +23,22 @@ Align, distribute and arrange panel (B-25).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/AlignDistributePanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { AlignDistributePanel } from "@nyc-tron/ui/components/forge/canvas/AlignDistributePanel";`
 - Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/canvas/AlignDistributePanel
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { AlignDistributePanel } from "@/components/nyc-tron/ui/components/forge/canvas/AlignDistributePanel";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { AlignDistributePanel } from "@nyc-tron/ui/components/forge/canvas/AlignDistributePanel";`
 <!-- generated:end install -->
 
 ## Props

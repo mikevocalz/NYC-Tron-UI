@@ -23,13 +23,22 @@ Clip/unclip switch for one layer (B-13).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/ClippingMaskControls.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ClipToggle, ClipIndicator } from "@nyc-tron/ui/components/forge/layers/ClippingMaskControls";`
 - Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/layers/ClippingMaskControls
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ClipToggle, ClipIndicator } from "@/components/nyc-tron/ui/components/forge/layers/ClippingMaskControls";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ClipToggle, ClipIndicator } from "@nyc-tron/ui/components/forge/layers/ClippingMaskControls";`
 <!-- generated:end install -->
 
 ## Props

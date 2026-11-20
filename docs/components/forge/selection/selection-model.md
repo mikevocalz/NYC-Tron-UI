@@ -23,13 +23,22 @@ Engine-neutral pixel-selection contract for {@linkcode SelectionMarquee} and {@l
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/selection/selection-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { KEYBOARD_STEP, LASSO_MAX_POINTS, LASSO_MIN_SPACING, MAX_DRAWN_SEGMENTS, MAX_SELECTION_RADIUS, POLYGON_CLOSE_RADIUS, SELECTION_MODES, SELECTION_TOOLS } from "@nyc-tron/ui/components/forge/selection/selection-model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/selection/selection-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { KEYBOARD_STEP, LASSO_MAX_POINTS, LASSO_MIN_SPACING, MAX_DRAWN_SEGMENTS, MAX_SELECTION_RADIUS, POLYGON_CLOSE_RADIUS, SELECTION_MODES, SELECTION_TOOLS } from "@/components/nyc-tron/ui/components/forge/selection/selection-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { KEYBOARD_STEP, LASSO_MAX_POINTS, LASSO_MIN_SPACING, MAX_DRAWN_SEGMENTS, MAX_SELECTION_RADIUS, POLYGON_CLOSE_RADIUS, SELECTION_MODES, SELECTION_TOOLS } from "@nyc-tron/ui/components/forge/selection/selection-model";`
 <!-- generated:end install -->
 
 ## Props

@@ -23,13 +23,22 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/snap-grid-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { DEFAULT_GRID, DEFAULT_SNAP, GRID_MAX_LINES, GRID_MAX_SPACING, GRID_MAX_SUBDIVISIONS, GRID_MIN_SCREEN_SPACING, GRID_MIN_SPACING, SNAP_MAX_THRESHOLD } from "@nyc-tron/ui/components/forge/canvas/snap-grid-model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/canvas/snap-grid-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { DEFAULT_GRID, DEFAULT_SNAP, GRID_MAX_LINES, GRID_MAX_SPACING, GRID_MAX_SUBDIVISIONS, GRID_MIN_SCREEN_SPACING, GRID_MIN_SPACING, SNAP_MAX_THRESHOLD } from "@/components/nyc-tron/ui/components/forge/canvas/snap-grid-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { DEFAULT_GRID, DEFAULT_SNAP, GRID_MAX_LINES, GRID_MAX_SPACING, GRID_MAX_SUBDIVISIONS, GRID_MIN_SCREEN_SPACING, GRID_MIN_SPACING, SNAP_MAX_THRESHOLD } from "@nyc-tron/ui/components/forge/canvas/snap-grid-model";`
 <!-- generated:end install -->
 
 ## Props

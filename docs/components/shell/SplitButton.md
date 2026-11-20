@@ -20,13 +20,22 @@ Primary action button joined to a dropdown menu of command items, for React Nati
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { SplitButton } from "@nyc-tron/ui/components/shell/SplitButton";`
 - Peers: react, react-native
 - Requires: @nyc-tron/overlays/CommandPopover, @nyc-tron/shell/MenuButton
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/SplitButton
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { SplitButton } from "@/components/nyc-tron/ui/components/shell/SplitButton";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { SplitButton } from "@nyc-tron/ui/components/shell/SplitButton";`
 
 ### Dependencies
 
@@ -104,7 +113,7 @@ none in source. Platform handling is inherited from `MenuButton` (qnx and marath
 ## Example
 
 ```tsx example=SplitButton
-import {SplitButton} from "@nyc-tron/ui/components/shell/SplitButton";
+import {SplitButton} from "@/components/nyc-tron/ui/components/shell/SplitButton";
 
 export const Example=()=><SplitButton label="Export" variant="primary" onPress={()=>{}}
   items={[{id:"pdf",label:"PDF"},{id:"png",label:"PNG"}]} onSelect={id=>console.log(id)}/>;

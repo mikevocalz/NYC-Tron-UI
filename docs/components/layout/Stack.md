@@ -20,13 +20,22 @@ Vertical flex View with token-keyed gap, padding, align, justify and wrap, no ro
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Stack } from "@nyc-tron/ui/components/layout/Stack";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/layout/Stack
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { Stack } from "@/components/nyc-tron/ui/components/layout/Stack";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { Stack } from "@nyc-tron/ui/components/layout/Stack";`
 
 ### Dependencies
 
@@ -103,7 +112,7 @@ none in source
 
 ```tsx example=Stack
 import { Text } from "react-native";
-import { Stack } from "@nyc-tron/ui/components/layout/Stack";
+import { Stack } from "@/components/nyc-tron/ui/components/layout/Stack";
 
 export const Example = () => (
   <Stack gap={3} padding={4} align="stretch" testID="settings-stack">

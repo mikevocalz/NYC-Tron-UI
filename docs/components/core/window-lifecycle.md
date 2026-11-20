@@ -23,13 +23,22 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/core/package.json,packages/core/src/window-lifecycle.ts -->
 - Package: @nyc-tron/core
-- Import: `import { MAX_WINDOWS, beginDrag, cancelDrag, closeWindow, createWindowRegistry, dragOver, dropDrag, focusWindow } from "@nyc-tron/core/window-lifecycle";`
 - Peers: none
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/core/window-lifecycle
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { MAX_WINDOWS, beginDrag, cancelDrag, closeWindow, createWindowRegistry, dragOver, dropDrag, focusWindow } from "@/lib/nyc-tron/core/window-lifecycle";`
+
+### Tarball install
+
+Install @nyc-tron/core from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { MAX_WINDOWS, beginDrag, cancelDrag, closeWindow, createWindowRegistry, dragOver, dropDrag, focusWindow } from "@nyc-tron/core/window-lifecycle";`
 <!-- generated:end install -->
 
 ## Props

@@ -20,13 +20,22 @@ Wrapper that applies a named Uniwind theme scheme to its subtree, for React Nati
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { NightScope } from "@nyc-tron/ui/components/theme/NightScope";`
 - Peers: react, react-native, uniwind
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/theme/NightScope
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { NightScope } from "@/components/nyc-tron/ui/components/theme/NightScope";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { NightScope } from "@nyc-tron/ui/components/theme/NightScope";`
 
 ### Dependencies
 
@@ -84,7 +93,7 @@ Only the doc comment: on native, `ScopedTheme` resolves the theme variables for 
 
 ```tsx example=NightScope
 import { Text } from "react-native";
-import { NightScope } from "@nyc-tron/ui/components/theme/NightScope";
+import { NightScope } from "@/components/nyc-tron/ui/components/theme/NightScope";
 
 export const Example = () => (
   <NightScope scheme="dark">

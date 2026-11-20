@@ -23,13 +23,22 @@ A bounded pressure-sensitive Graphite test stroke, independent of the production
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/InkStrokePreview.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { InkStrokePreview } from "@nyc-tron/ui/components/forge/ink/InkStrokePreview";`
 - Peers: react, react-native, react-native-gesture-handler, react-native-skia, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/canvas/GPUCanvasViewport
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/ink/InkStrokePreview
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { InkStrokePreview } from "@/components/nyc-tron/ui/components/forge/ink/InkStrokePreview";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { InkStrokePreview } from "@nyc-tron/ui/components/forge/ink/InkStrokePreview";`
 <!-- generated:end install -->
 
 ## Props
@@ -74,7 +83,7 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=InkStrokePreview
-import { InkStrokePreview } from "@nyc-tron/ui/components/forge/ink/InkStrokePreview";
+import { InkStrokePreview } from "@/components/nyc-tron/ui/components/forge/ink/InkStrokePreview";
 
 export function Example() {
   return <InkStrokePreview width={0} height={0} strokeWidth={0} inkColor="" />;

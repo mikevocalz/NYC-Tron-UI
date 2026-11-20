@@ -23,13 +23,22 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/overlays/command-filter.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { filterCommands, nextActiveCommand, normalizeSearchText, reconcileActiveCommand, validateCommands } from "@nyc-tron/ui/components/overlays/command-filter";`
 - Peers: react, react-native
 - Requires: @nyc-tron/overlays/CommandPopover
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/overlays/command-filter
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { filterCommands, nextActiveCommand, normalizeSearchText, reconcileActiveCommand, validateCommands } from "@/components/nyc-tron/ui/components/overlays/command-filter";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { filterCommands, nextActiveCommand, normalizeSearchText, reconcileActiveCommand, validateCommands } from "@nyc-tron/ui/components/overlays/command-filter";`
 <!-- generated:end install -->
 
 ## Props

@@ -23,13 +23,22 @@ RGBA channels 0–255, as presentation engines store document colors.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/slide-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { SLIDE_DEFAULT_SIZE, gridColumns, gridMove, moveBlock, moveId, nextSelection, planMoves, rgbaCss } from "@nyc-tron/ui/components/forge/slides/slide-model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/slides/slide-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { SLIDE_DEFAULT_SIZE, gridColumns, gridMove, moveBlock, moveId, nextSelection, planMoves, rgbaCss } from "@/components/nyc-tron/ui/components/forge/slides/slide-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { SLIDE_DEFAULT_SIZE, gridColumns, gridMove, moveBlock, moveId, nextSelection, planMoves, rgbaCss } from "@nyc-tron/ui/components/forge/slides/slide-model";`
 <!-- generated:end install -->
 
 ## Props

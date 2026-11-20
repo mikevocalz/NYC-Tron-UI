@@ -20,13 +20,22 @@ ToolButton with checked and mixed toggle state, plus play, pause, skip, plus and
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { ToolButton, PlayGlyph, PauseGlyph, SkipGlyph, PlusGlyph, ChevronGlyph, CloseMark } from "@nyc-tron/ui/components/forge/office/office-controls";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/office/office-controls
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ToolButton, PlayGlyph, PauseGlyph, SkipGlyph, PlusGlyph, ChevronGlyph, CloseMark } from "@/components/nyc-tron/ui/components/forge/office/office-controls";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ToolButton, PlayGlyph, PauseGlyph, SkipGlyph, PlusGlyph, ChevronGlyph, CloseMark } from "@nyc-tron/ui/components/forge/office/office-controls";`
 
 ### Dependencies
 
@@ -119,7 +128,7 @@ none in source.
 
 ```tsx example=office-controls
 import {View} from "react-native";
-import {ToolButton,PlayGlyph,PauseGlyph,SkipGlyph,PlusGlyph,ChevronGlyph,CloseMark} from "@nyc-tron/ui/components/forge/office/office-controls";
+import {ToolButton,PlayGlyph,PauseGlyph,SkipGlyph,PlusGlyph,ChevronGlyph,CloseMark} from "@/components/nyc-tron/ui/components/forge/office/office-controls";
 export const Example = () => <View style={{flexDirection:"row"}}>
   <ToolButton label="Play" iconOnly checked={false} onPress={()=>{}}><PlayGlyph styled/></ToolButton>
   <ToolButton label="Pause" iconOnly><PauseGlyph styled/></ToolButton>

@@ -23,13 +23,22 @@ Mask panel for one layer (B-12).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/MaskThumbnailAndEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MaskThumbnailAndEditor } from "@nyc-tron/ui/components/forge/layers/MaskThumbnailAndEditor";`
 - Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/layers/LayerThumbnail
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/layers/MaskThumbnailAndEditor
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { MaskThumbnailAndEditor } from "@/components/nyc-tron/ui/components/forge/layers/MaskThumbnailAndEditor";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { MaskThumbnailAndEditor } from "@nyc-tron/ui/components/forge/layers/MaskThumbnailAndEditor";`
 <!-- generated:end install -->
 
 ## Props

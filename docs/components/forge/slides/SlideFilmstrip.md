@@ -23,13 +23,22 @@ Vertical slide filmstrip (J-01): numbered thumbnails drawn from the slide's obje
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideFilmstrip.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SlideFilmstrip } from "@nyc-tron/ui/components/forge/slides/SlideFilmstrip";`
 - Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls, @nyc-tron/forge/slides/SlideThumbnail
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/slides/SlideFilmstrip
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { SlideFilmstrip } from "@/components/nyc-tron/ui/components/forge/slides/SlideFilmstrip";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { SlideFilmstrip } from "@nyc-tron/ui/components/forge/slides/SlideFilmstrip";`
 <!-- generated:end install -->
 
 ## Props

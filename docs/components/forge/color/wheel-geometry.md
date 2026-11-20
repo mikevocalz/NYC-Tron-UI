@@ -23,13 +23,22 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/wheel-geometry.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { FINE_HUE_RATE, HUE_RETAIN_RADIUS, RING_INNER_FRACTION, angleDelta, createRingDrag, discPointToHsv, fromPolar, hsvToDiscPoint } from "@nyc-tron/ui/components/forge/color/wheel-geometry";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/color/wheel-geometry
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { FINE_HUE_RATE, HUE_RETAIN_RADIUS, RING_INNER_FRACTION, angleDelta, createRingDrag, discPointToHsv, fromPolar, hsvToDiscPoint } from "@/components/nyc-tron/ui/components/forge/color/wheel-geometry";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { FINE_HUE_RATE, HUE_RETAIN_RADIUS, RING_INNER_FRACTION, angleDelta, createRingDrag, discPointToHsv, fromPolar, hsvToDiscPoint } from "@nyc-tron/ui/components/forge/color/wheel-geometry";`
 <!-- generated:end install -->
 
 ## Props

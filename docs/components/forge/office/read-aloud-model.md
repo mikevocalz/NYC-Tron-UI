@@ -23,13 +23,22 @@ Slowest reading speed, as a multiple of the voice's normal rate.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/office/read-aloud-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { READ_ALOUD_MAX_RATE, READ_ALOUD_MAX_SENTENCE, READ_ALOUD_MAX_SENTENCES, READ_ALOUD_MIN_RATE, READ_ALOUD_RATES, clampRate, formatRate, readAloudPosition } from "@nyc-tron/ui/components/forge/office/read-aloud-model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/office/read-aloud-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { READ_ALOUD_MAX_RATE, READ_ALOUD_MAX_SENTENCE, READ_ALOUD_MAX_SENTENCES, READ_ALOUD_MIN_RATE, READ_ALOUD_RATES, clampRate, formatRate, readAloudPosition } from "@/components/nyc-tron/ui/components/forge/office/read-aloud-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { READ_ALOUD_MAX_RATE, READ_ALOUD_MAX_SENTENCE, READ_ALOUD_MAX_SENTENCES, READ_ALOUD_MIN_RATE, READ_ALOUD_RATES, clampRate, formatRate, readAloudPosition } from "@nyc-tron/ui/components/forge/office/read-aloud-model";`
 <!-- generated:end install -->
 
 ## Props

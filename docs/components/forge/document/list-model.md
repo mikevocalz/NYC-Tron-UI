@@ -23,13 +23,22 @@ How one list level numbers its items.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/list-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { BULLETS_NUMBERING_CAPABILITIES, LIST_FORMATS, LIST_MAX_LEVEL, LIST_PREVIEW_MARKER_MAX, canIndent, canOutdent, defaultLevelFormats, formatLabel } from "@nyc-tron/ui/components/forge/document/list-model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/document/list-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { BULLETS_NUMBERING_CAPABILITIES, LIST_FORMATS, LIST_MAX_LEVEL, LIST_PREVIEW_MARKER_MAX, canIndent, canOutdent, defaultLevelFormats, formatLabel } from "@/components/nyc-tron/ui/components/forge/document/list-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { BULLETS_NUMBERING_CAPABILITIES, LIST_FORMATS, LIST_MAX_LEVEL, LIST_PREVIEW_MARKER_MAX, canIndent, canOutdent, defaultLevelFormats, formatLabel } from "@nyc-tron/ui/components/forge/document/list-model";`
 <!-- generated:end install -->
 
 ## Props

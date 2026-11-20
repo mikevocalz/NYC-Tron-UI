@@ -23,13 +23,22 @@ Color picker dialog (C-01).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorPickerDialog.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ColorPickerDialog } from "@nyc-tron/ui/components/forge/color/ColorPickerDialog";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/forge/color/AlphaSlider, @nyc-tron/forge/color/ColorChannelFields, @nyc-tron/forge/color/HsvPicker, @nyc-tron/forge/color/SwatchGrid
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/color/ColorPickerDialog
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ColorPickerDialog } from "@/components/nyc-tron/ui/components/forge/color/ColorPickerDialog";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ColorPickerDialog } from "@nyc-tron/ui/components/forge/color/ColorPickerDialog";`
 <!-- generated:end install -->
 
 ## Props

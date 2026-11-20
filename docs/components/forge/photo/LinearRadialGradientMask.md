@@ -23,13 +23,22 @@ Actual bounded mask-coverage preview plus the shared native geometry handles.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/LinearRadialGradientMask.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LinearRadialGradientMask } from "@nyc-tron/ui/components/forge/photo/LinearRadialGradientMask";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Select, @nyc-tron/forge/vector/GradientOnCanvasHandles, @nyc-tron/shell/UnitInput
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/photo/LinearRadialGradientMask
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { LinearRadialGradientMask } from "@/components/nyc-tron/ui/components/forge/photo/LinearRadialGradientMask";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { LinearRadialGradientMask } from "@nyc-tron/ui/components/forge/photo/LinearRadialGradientMask";`
 <!-- generated:end install -->
 
 ## Props

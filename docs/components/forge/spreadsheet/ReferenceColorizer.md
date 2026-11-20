@@ -23,13 +23,22 @@ Shared licensed tokenizer/tone owner; the host places on-sheet range outlines in
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/spreadsheet/ReferenceColorizer.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ReferenceColorizer } from "@nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/forge/spreadsheet/FormulaReferenceText
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/spreadsheet/ReferenceColorizer
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ReferenceColorizer } from "@/components/nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ReferenceColorizer } from "@nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer";`
 <!-- generated:end install -->
 
 ## Props
@@ -68,10 +77,10 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=ReferenceColorizer
-import { ReferenceColorizer } from "@nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer";
+import { ReferenceColorizer } from "@/components/nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer";
 
 export function Example() {
-  return <ReferenceColorizer formula="" onHighlight={() => {}} renderRangeHighlight={() => {}} />;
+  return <ReferenceColorizer formula="" onHighlight={() => {}} renderRangeHighlight={() => null} />;
 }
 ```
 <!-- generated:end example -->

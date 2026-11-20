@@ -20,13 +20,22 @@ Inspector panel for the current selection: header, search filter and InspectorSe
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { InspectorPanel } from "@nyc-tron/ui/components/shell/InspectorPanel";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/shell/InspectorSearch
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/InspectorPanel
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { InspectorPanel } from "@/components/nyc-tron/ui/components/shell/InspectorPanel";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { InspectorPanel } from "@nyc-tron/ui/components/shell/InspectorPanel";`
 
 ### Dependencies
 
@@ -121,8 +130,8 @@ none in source. Export conditions: `types`, `react-native`, `default`, same file
 ```tsx example=InspectorPanel
 import {useState} from "react";
 import {Text} from "react-native";
-import {InspectorPanel, type InspectorSelection} from "@nyc-tron/ui/components/shell/InspectorPanel";
-import {InspectorSection} from "@nyc-tron/ui/components/shell/InspectorSection";
+import {InspectorPanel, type InspectorSelection} from "@/components/nyc-tron/ui/components/shell/InspectorPanel";
+import {InspectorSection} from "@/components/nyc-tron/ui/components/shell/InspectorSection";
 
 export function Example() {
   const [query, setQuery] = useState("");

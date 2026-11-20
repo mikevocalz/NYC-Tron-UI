@@ -23,13 +23,22 @@ Track headers (D-18): one row per track, the height of its lane.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TrackHeaders.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TrackHeaders } from "@nyc-tron/ui/components/forge/timeline/TrackHeaders";`
 - Peers: react, react-native
 - Requires: @nyc-tron/IconButton, @nyc-tron/feedback/ErrorMessage
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/timeline/TrackHeaders
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { TrackHeaders } from "@/components/nyc-tron/ui/components/forge/timeline/TrackHeaders";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { TrackHeaders } from "@nyc-tron/ui/components/forge/timeline/TrackHeaders";`
 <!-- generated:end install -->
 
 ## Props

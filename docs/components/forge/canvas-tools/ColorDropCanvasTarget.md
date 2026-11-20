@@ -23,13 +23,22 @@ ColorDrop (B-30): drag the colour chip onto the canvas to flood-fill there.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas-tools/ColorDropCanvasTarget.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ColorDropCanvasTarget } from "@nyc-tron/ui/components/forge/canvas-tools/ColorDropCanvasTarget";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/canvas-tools/ColorDropCanvasTarget
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ColorDropCanvasTarget } from "@/components/nyc-tron/ui/components/forge/canvas-tools/ColorDropCanvasTarget";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ColorDropCanvasTarget } from "@nyc-tron/ui/components/forge/canvas-tools/ColorDropCanvasTarget";`
 <!-- generated:end install -->
 
 ## Props

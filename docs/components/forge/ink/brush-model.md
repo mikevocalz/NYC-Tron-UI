@@ -23,13 +23,22 @@ Engine-neutral brush settings.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/ink/brush-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { BRUSH_DYNAMICS_FIELDS, MAX_INK_PREVIEW_SAMPLES, stabilizePreview, validateBrushDynamics, validateBrushTaper, validateInkSamples, validateStabilization } from "@nyc-tron/ui/components/forge/ink/brush-model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/ink/brush-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { BRUSH_DYNAMICS_FIELDS, MAX_INK_PREVIEW_SAMPLES, stabilizePreview, validateBrushDynamics, validateBrushTaper, validateInkSamples, validateStabilization } from "@/components/nyc-tron/ui/components/forge/ink/brush-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { BRUSH_DYNAMICS_FIELDS, MAX_INK_PREVIEW_SAMPLES, stabilizePreview, validateBrushDynamics, validateBrushTaper, validateInkSamples, validateStabilization } from "@nyc-tron/ui/components/forge/ink/brush-model";`
 <!-- generated:end install -->
 
 ## Props

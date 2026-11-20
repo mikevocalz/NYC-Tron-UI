@@ -20,13 +20,22 @@ Wrapping column row; each AdaptiveColumns.Item sets a minimum width and grow fac
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { AdaptiveColumns, AdaptiveColumn } from "@nyc-tron/ui/components/layout/AdaptiveColumns";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/layout/AdaptiveColumns
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { AdaptiveColumns, AdaptiveColumn } from "@/components/nyc-tron/ui/components/layout/AdaptiveColumns";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { AdaptiveColumns, AdaptiveColumn } from "@nyc-tron/ui/components/layout/AdaptiveColumns";`
 
 ### Dependencies
 
@@ -107,7 +116,7 @@ none in source
 
 ```tsx example=AdaptiveColumns
 import { Text } from "react-native";
-import { AdaptiveColumns } from "@nyc-tron/ui/components/layout/AdaptiveColumns";
+import { AdaptiveColumns } from "@/components/nyc-tron/ui/components/layout/AdaptiveColumns";
 
 export const Example = () => (
   <AdaptiveColumns gap={16}>

@@ -23,13 +23,22 @@ One owner for data, chart series/formatting and table cell layout across office 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ChartAndTableEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ChartAndTableEditor } from "@nyc-tron/ui/components/forge/slides/ChartAndTableEditor";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/forge/document/TableLayoutInspector, @nyc-tron/forge/spreadsheet/ChartBuilder, @nyc-tron/forge/spreadsheet/VirtualSpreadsheetGrid
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/slides/ChartAndTableEditor
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ChartAndTableEditor } from "@/components/nyc-tron/ui/components/forge/slides/ChartAndTableEditor";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ChartAndTableEditor } from "@nyc-tron/ui/components/forge/slides/ChartAndTableEditor";`
 <!-- generated:end install -->
 
 ## Props
@@ -66,7 +75,7 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=ChartAndTableEditor
-import { ChartAndTableEditor } from "@nyc-tron/ui/components/forge/slides/ChartAndTableEditor";
+import { ChartAndTableEditor } from "@/components/nyc-tron/ui/components/forge/slides/ChartAndTableEditor";
 
 export function Example() {
   return <ChartAndTableEditor />;

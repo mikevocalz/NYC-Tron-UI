@@ -23,13 +23,22 @@ Insert-chain and preset helpers for {@linkcode InsertEffectRack} and {@linkcode 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/inserts.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { INSERT_KINDS, INSERT_KIND_LABELS, MAX_INSERTS, addBlockedReason, describeInsert, filterPresets, moveTarget } from "@nyc-tron/ui/components/forge/audio/inserts";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/audio/inserts
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { INSERT_KINDS, INSERT_KIND_LABELS, MAX_INSERTS, addBlockedReason, describeInsert, filterPresets, moveTarget } from "@/components/nyc-tron/ui/components/forge/audio/inserts";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { INSERT_KINDS, INSERT_KIND_LABELS, MAX_INSERTS, addBlockedReason, describeInsert, filterPresets, moveTarget } from "@nyc-tron/ui/components/forge/audio/inserts";`
 <!-- generated:end install -->
 
 ## Props

@@ -20,13 +20,22 @@ Three-bar drag handle, 44 by 44 minimum, reporting start, move, commit and cance
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { DragGrabHandle } from "@nyc-tron/ui/components/DragGrabHandle";`
 - Peers: react, react-native
 - Requires: @nyc-tron/gestures/PanResponderDrag
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/DragGrabHandle
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { DragGrabHandle } from "@/components/nyc-tron/ui/components/DragGrabHandle";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { DragGrabHandle } from "@nyc-tron/ui/components/DragGrabHandle";`
 
 ### Dependencies
 
@@ -115,7 +124,7 @@ none in source.
 ## Example
 
 ```tsx example=DragGrabHandle
-import { DragGrabHandle } from "@nyc-tron/ui/components/DragGrabHandle";
+import { DragGrabHandle } from "@/components/nyc-tron/ui/components/DragGrabHandle";
 
 export function LayerHandle() {
   return (

@@ -23,13 +23,22 @@ Requests the host's admitted speech separation service and reversible output.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/VoiceIsolationPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { VoiceIsolationPanel } from "@nyc-tron/ui/components/forge/audio/VoiceIsolationPanel";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/audio/AudioProcessingPanel
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/audio/VoiceIsolationPanel
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { VoiceIsolationPanel } from "@/components/nyc-tron/ui/components/forge/audio/VoiceIsolationPanel";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { VoiceIsolationPanel } from "@nyc-tron/ui/components/forge/audio/VoiceIsolationPanel";`
 <!-- generated:end install -->
 
 ## Props

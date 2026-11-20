@@ -23,13 +23,22 @@ Playback speed picker (D-07): a 44pt button showing the rate that opens a list o
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/PlaybackRateMenu.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PlaybackRateMenu } from "@nyc-tron/ui/components/forge/timeline/PlaybackRateMenu";`
 - Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/timeline/PlaybackRateMenu
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { PlaybackRateMenu } from "@/components/nyc-tron/ui/components/forge/timeline/PlaybackRateMenu";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { PlaybackRateMenu } from "@nyc-tron/ui/components/forge/timeline/PlaybackRateMenu";`
 <!-- generated:end install -->
 
 ## Props
@@ -78,7 +87,7 @@ none
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=PlaybackRateMenu
-import { PlaybackRateMenu } from "@nyc-tron/ui/components/forge/timeline/PlaybackRateMenu";
+import { PlaybackRateMenu } from "@/components/nyc-tron/ui/components/forge/timeline/PlaybackRateMenu";
 
 export function Example() {
   return <PlaybackRateMenu rate={0} onRateChange={() => {}} />;

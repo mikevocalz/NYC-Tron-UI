@@ -20,13 +20,22 @@ Decorative horizontal or vertical line, one border-width step thick, border colo
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Divider } from "@nyc-tron/ui/components/layout/Divider";`
 - Peers: react, react-native
 - Requires: @nyc-tron/layout/Stack
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/layout/Divider
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { Divider } from "@/components/nyc-tron/ui/components/layout/Divider";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { Divider } from "@nyc-tron/ui/components/layout/Divider";`
 
 ### Dependencies
 
@@ -104,8 +113,8 @@ none in source
 
 ```tsx example=Divider
 import { Text } from "react-native";
-import { Stack } from "@nyc-tron/ui/components/layout/Stack";
-import { Divider } from "@nyc-tron/ui/components/layout/Divider";
+import { Stack } from "@/components/nyc-tron/ui/components/layout/Stack";
+import { Divider } from "@/components/nyc-tron/ui/components/layout/Divider";
 
 export const Example = () => (
   <Stack gap={3}>

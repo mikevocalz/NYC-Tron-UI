@@ -20,13 +20,22 @@ Sortable data table on TanStack Table that renders cards below a width threshold
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { DataTable } from "@nyc-tron/ui/components/data/DataTable";`
 - Peers: @tanstack/react-table, react, react-native, zustand
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/data/DataTable
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { DataTable } from "@/components/nyc-tron/ui/components/data/DataTable";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { DataTable } from "@nyc-tron/ui/components/data/DataTable";`
 
 ### Dependencies
 
@@ -127,7 +136,7 @@ none in source
 ## Example
 
 ```tsx example=DataTable
-import { DataTable, type TronColumnDef } from "@nyc-tron/ui/components/data/DataTable";
+import { DataTable, type TronColumnDef } from "@/components/nyc-tron/ui/components/data/DataTable";
 
 type Row = { id: string; name: string; status: string };
 const columns: TronColumnDef<Row>[] = [

@@ -23,13 +23,22 @@ On-canvas node editor for one path layer (B-21).
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/vector/PenNodeEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PenNodeEditor } from "@nyc-tron/ui/components/forge/vector/PenNodeEditor";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/vector/PenNodeEditor
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { PenNodeEditor } from "@/components/nyc-tron/ui/components/forge/vector/PenNodeEditor";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { PenNodeEditor } from "@nyc-tron/ui/components/forge/vector/PenNodeEditor";`
 <!-- generated:end install -->
 
 ## Props

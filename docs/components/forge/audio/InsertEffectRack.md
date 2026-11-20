@@ -23,13 +23,22 @@ Controlled insert chain for one track or bus.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/InsertEffectRack.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { InsertEffectRack } from "@nyc-tron/ui/components/forge/audio/InsertEffectRack";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/feedback/ErrorMessage
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/audio/InsertEffectRack
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { InsertEffectRack } from "@/components/nyc-tron/ui/components/forge/audio/InsertEffectRack";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { InsertEffectRack } from "@nyc-tron/ui/components/forge/audio/InsertEffectRack";`
 <!-- generated:end install -->
 
 ## Props

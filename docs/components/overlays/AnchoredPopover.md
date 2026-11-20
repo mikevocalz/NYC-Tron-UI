@@ -20,13 +20,22 @@ Modal popover placed against an anchor rectangle or trigger element and clamped 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { AnchoredPopover } from "@nyc-tron/ui/components/overlays/AnchoredPopover";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/overlays/AnchoredPopover
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { AnchoredPopover } from "@/components/nyc-tron/ui/components/overlays/AnchoredPopover";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { AnchoredPopover } from "@nyc-tron/ui/components/overlays/AnchoredPopover";`
 
 ### Dependencies
 
@@ -113,7 +122,7 @@ none in source (`animationType="none"`).
 ```tsx example=AnchoredPopover
 import { useState } from "react";
 import { Pressable, Text } from "react-native";
-import { AnchoredPopover } from "@nyc-tron/ui/components/overlays/AnchoredPopover";
+import { AnchoredPopover } from "@/components/nyc-tron/ui/components/overlays/AnchoredPopover";
 
 export const Example = () => {
   const [open, setOpen] = useState(false);

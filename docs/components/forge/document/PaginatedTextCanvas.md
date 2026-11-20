@@ -23,13 +23,22 @@ Host-layout pages with actual native plain text inputs or an explicit native ric
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/PaginatedTextCanvas.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PaginatedTextCanvas } from "@nyc-tron/ui/components/forge/document/PaginatedTextCanvas";`
 - Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/document/TextSelectionAndCaret
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/document/PaginatedTextCanvas
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { PaginatedTextCanvas } from "@/components/nyc-tron/ui/components/forge/document/PaginatedTextCanvas";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { PaginatedTextCanvas } from "@nyc-tron/ui/components/forge/document/PaginatedTextCanvas";`
 <!-- generated:end install -->
 
 ## Props

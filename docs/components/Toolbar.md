@@ -20,13 +20,22 @@ Header bar with title, leading slot and actions group in default or compact dens
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Toolbar } from "@nyc-tron/ui/components/Toolbar";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/Toolbar
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { Toolbar } from "@/components/nyc-tron/ui/components/Toolbar";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { Toolbar } from "@nyc-tron/ui/components/Toolbar";`
 
 ### Dependencies
 
@@ -94,8 +103,8 @@ none in source.
 
 ```tsx example=Toolbar
 import { Text } from "react-native";
-import { IconButton } from "@nyc-tron/ui/components/IconButton";
-import { Toolbar } from "@nyc-tron/ui/components/Toolbar";
+import { IconButton } from "@/components/nyc-tron/ui/components/IconButton";
+import { Toolbar } from "@/components/nyc-tron/ui/components/Toolbar";
 
 export function PaneHeader() {
   return (

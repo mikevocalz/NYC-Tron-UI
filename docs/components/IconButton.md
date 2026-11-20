@@ -20,13 +20,22 @@ Icon-only pressable button with five variants and an optional selected toggle st
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { IconButton } from "@nyc-tron/ui/components/IconButton";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/IconButton
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { IconButton } from "@/components/nyc-tron/ui/components/IconButton";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { IconButton } from "@nyc-tron/ui/components/IconButton";`
 
 ### Dependencies
 
@@ -116,7 +125,7 @@ Tailwind default classes (no token): `border` x12, `h-11`, `w-11`, `h-12`, `w-12
 ```tsx example=IconButton
 import { useState } from "react";
 import { Text } from "react-native";
-import { IconButton } from "@nyc-tron/ui/components/IconButton";
+import { IconButton } from "@/components/nyc-tron/ui/components/IconButton";
 
 export function PinToggle() {
   const [pinned, setPinned] = useState(false);

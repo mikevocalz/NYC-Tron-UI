@@ -23,13 +23,22 @@ Sticker objects retain their own ranges, transforms and shared editable motion k
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/StickerMotionLane.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { StickerMotionLane } from "@nyc-tron/ui/components/forge/timeline/StickerMotionLane";`
 - Peers: react, react-native, react-native-gesture-handler
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber, @nyc-tron/forge/motion/MotionKeyframeTimeline, @nyc-tron/forge/timeline/InOutRangeHandles, @nyc-tron/shell/MenuButton
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/timeline/StickerMotionLane
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { StickerMotionLane } from "@/components/nyc-tron/ui/components/forge/timeline/StickerMotionLane";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { StickerMotionLane } from "@nyc-tron/ui/components/forge/timeline/StickerMotionLane";`
 <!-- generated:end install -->
 
 ## Props

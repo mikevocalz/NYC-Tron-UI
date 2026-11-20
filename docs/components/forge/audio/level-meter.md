@@ -23,13 +23,22 @@ Display math for an input level meter.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/level-meter.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { METER_BANDS, METER_BAND_LABELS, METER_FLOOR_DB, createMeterAnnouncer, levelToDb, meterBand, meterFill } from "@nyc-tron/ui/components/forge/audio/level-meter";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/audio/level-meter
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { METER_BANDS, METER_BAND_LABELS, METER_FLOOR_DB, createMeterAnnouncer, levelToDb, meterBand, meterFill } from "@/components/nyc-tron/ui/components/forge/audio/level-meter";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { METER_BANDS, METER_BAND_LABELS, METER_FLOOR_DB, createMeterAnnouncer, levelToDb, meterBand, meterFill } from "@nyc-tron/ui/components/forge/audio/level-meter";`
 <!-- generated:end install -->
 
 ## Props

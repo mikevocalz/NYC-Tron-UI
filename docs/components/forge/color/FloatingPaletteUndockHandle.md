@@ -23,13 +23,22 @@ Grip that undocks, moves and re-docks a palette (B-28), built on `DragGrabHandle
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/FloatingPaletteUndockHandle.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FloatingPaletteUndockHandle } from "@nyc-tron/ui/components/forge/color/FloatingPaletteUndockHandle";`
 - Peers: react, react-native
 - Requires: @nyc-tron/DragGrabHandle, @nyc-tron/feedback/ErrorMessage, @nyc-tron/gestures/PanResponderDrag
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/color/FloatingPaletteUndockHandle
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { FloatingPaletteUndockHandle } from "@/components/nyc-tron/ui/components/forge/color/FloatingPaletteUndockHandle";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { FloatingPaletteUndockHandle } from "@nyc-tron/ui/components/forge/color/FloatingPaletteUndockHandle";`
 <!-- generated:end install -->
 
 ## Props

@@ -23,13 +23,22 @@ Two-dimensional saturation/value field with one commit on release and cancellati
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/SVColorField.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SVColorField } from "@nyc-tron/ui/components/forge/color/SVColorField";`
 - Peers: react, react-native, zustand
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/color/SVColorField
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { SVColorField } from "@/components/nyc-tron/ui/components/forge/color/SVColorField";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { SVColorField } from "@nyc-tron/ui/components/forge/color/SVColorField";`
 <!-- generated:end install -->
 
 ## Props

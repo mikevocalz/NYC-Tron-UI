@@ -23,13 +23,22 @@ Source-backed vector previews and a selected native drag handle, plus numeric/ke
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/ShapePresetGallery.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ShapePresetGallery } from "@nyc-tron/ui/components/forge/slides/ShapePresetGallery";`
 - Peers: react, react-native, react-native-gesture-handler, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/AssetPresetGallery, @nyc-tron/forge/inputs/PropertyInspector
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/slides/ShapePresetGallery
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ShapePresetGallery } from "@/components/nyc-tron/ui/components/forge/slides/ShapePresetGallery";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ShapePresetGallery } from "@nyc-tron/ui/components/forge/slides/ShapePresetGallery";`
 <!-- generated:end install -->
 
 ## Props

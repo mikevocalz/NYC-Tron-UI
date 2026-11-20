@@ -23,13 +23,22 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/workspace-preset-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { BUILT_IN_PRESET_IDS, MAX_WORKSPACE_PRESETS, PRESET_NAME_MAX, copyName, layoutsEqual, presetActions, presetNameMessage, presetNameProblem } from "@nyc-tron/ui/components/shell/workspace-preset-model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/workspace-preset-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { BUILT_IN_PRESET_IDS, MAX_WORKSPACE_PRESETS, PRESET_NAME_MAX, copyName, layoutsEqual, presetActions, presetNameMessage, presetNameProblem } from "@/components/nyc-tron/ui/components/shell/workspace-preset-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { BUILT_IN_PRESET_IDS, MAX_WORKSPACE_PRESETS, PRESET_NAME_MAX, copyName, layoutsEqual, presetActions, presetNameMessage, presetNameProblem } from "@nyc-tron/ui/components/shell/workspace-preset-model";`
 <!-- generated:end install -->
 
 ## Props

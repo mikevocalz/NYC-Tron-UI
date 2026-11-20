@@ -23,13 +23,22 @@ Renders actual decoded measurements with bounded density pooling; no synthetic s
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/VideoScopesPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { VideoScopesPanel } from "@nyc-tron/ui/components/forge/color/VideoScopesPanel";`
 - Peers: react, react-native
 - Requires: @nyc-tron/SegmentedControl, @nyc-tron/forge/color/LiveHistogram
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/color/VideoScopesPanel
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { VideoScopesPanel } from "@/components/nyc-tron/ui/components/forge/color/VideoScopesPanel";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { VideoScopesPanel } from "@nyc-tron/ui/components/forge/color/VideoScopesPanel";`
 <!-- generated:end install -->
 
 ## Props

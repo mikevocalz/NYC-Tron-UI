@@ -20,13 +20,22 @@ Anchored popover menu of command items, with disabled and danger items, for Reac
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { CommandPopover } from "@nyc-tron/ui/components/overlays/CommandPopover";`
 - Peers: @nyc-tron/core, react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/overlays/CommandPopover
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { CommandPopover } from "@/components/nyc-tron/ui/components/overlays/CommandPopover";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { CommandPopover } from "@nyc-tron/ui/components/overlays/CommandPopover";`
 
 ### Dependencies
 
@@ -118,7 +127,7 @@ none.
 
 ```tsx example=CommandPopover
 import { useState } from "react";
-import { CommandPopover } from "@nyc-tron/ui/components/overlays/CommandPopover";
+import { CommandPopover } from "@/components/nyc-tron/ui/components/overlays/CommandPopover";
 
 export const Example = () => {
   const [visible, setVisible] = useState(true);

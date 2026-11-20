@@ -23,13 +23,22 @@ Display math for {@linkcode SpectrogramView}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/spectrogram.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { SPECTROGRAM_FLOOR_DB, SPECTROGRAM_MAX_COLUMNS, SPECTROGRAM_MAX_ROWS, SPECTROGRAM_THRESHOLDS_DB, columnsForWidth, describeSpectrogram, formatHz, frequencyTicks } from "@nyc-tron/ui/components/forge/audio/spectrogram";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/audio/spectrogram
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { SPECTROGRAM_FLOOR_DB, SPECTROGRAM_MAX_COLUMNS, SPECTROGRAM_MAX_ROWS, SPECTROGRAM_THRESHOLDS_DB, columnsForWidth, describeSpectrogram, formatHz, frequencyTicks } from "@/components/nyc-tron/ui/components/forge/audio/spectrogram";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { SPECTROGRAM_FLOOR_DB, SPECTROGRAM_MAX_COLUMNS, SPECTROGRAM_MAX_ROWS, SPECTROGRAM_THRESHOLDS_DB, columnsForWidth, describeSpectrogram, formatHz, frequencyTicks } from "@nyc-tron/ui/components/forge/audio/spectrogram";`
 <!-- generated:end install -->
 
 ## Props

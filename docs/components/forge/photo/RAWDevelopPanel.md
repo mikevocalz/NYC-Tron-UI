@@ -23,13 +23,22 @@ Composes non-destructive RAW settings; does not decode RAW or simulate an image 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/RAWDevelopPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { RAWDevelopPanel } from "@nyc-tron/ui/components/forge/photo/RAWDevelopPanel";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/photo/EightBandColorMixer, @nyc-tron/forge/photo/ExposureAndWhiteBalance, @nyc-tron/forge/photo/LensCorrectionPanel, @nyc-tron/forge/photo/ToneAndPresence
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/photo/RAWDevelopPanel
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { RAWDevelopPanel } from "@/components/nyc-tron/ui/components/forge/photo/RAWDevelopPanel";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { RAWDevelopPanel } from "@nyc-tron/ui/components/forge/photo/RAWDevelopPanel";`
 <!-- generated:end install -->
 
 ## Props

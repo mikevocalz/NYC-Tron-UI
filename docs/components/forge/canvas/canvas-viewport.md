@@ -23,13 +23,22 @@ Document-to-screen mapping shared by the canvas guide controls ({@linkcode Canva
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/canvas/canvas-viewport.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { docPointToScreen, docToScreen, screenPointToDoc, screenToDoc, tidy, validateDocRect, validateViewport, visibleDocRect } from "@nyc-tron/ui/components/forge/canvas/canvas-viewport";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/canvas/canvas-viewport
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { docPointToScreen, docToScreen, screenPointToDoc, screenToDoc, tidy, validateDocRect, validateViewport, visibleDocRect } from "@/components/nyc-tron/ui/components/forge/canvas/canvas-viewport";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { docPointToScreen, docToScreen, screenPointToDoc, screenToDoc, tidy, validateDocRect, validateViewport, visibleDocRect } from "@nyc-tron/ui/components/forge/canvas/canvas-viewport";`
 <!-- generated:end install -->
 
 ## Props

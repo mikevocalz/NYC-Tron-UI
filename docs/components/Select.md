@@ -20,13 +20,22 @@ Single-select dropdown with flat or grouped options, hint and error text, for Re
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Select } from "@nyc-tron/ui/components/Select";`
 - Peers: react, react-native, zustand
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/Select
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { Select } from "@/components/nyc-tron/ui/components/Select";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { Select } from "@nyc-tron/ui/components/Select";`
 
 ### Dependencies
 
@@ -119,7 +128,7 @@ Chevron rotates via inline `transform` based on `open`; no transition or Animate
 
 ```tsx example=Select
 import { useState } from "react";
-import { Select } from "@nyc-tron/ui/components/Select";
+import { Select } from "@/components/nyc-tron/ui/components/Select";
 
 export function UnitSelect() {
   const [unit, setUnit] = useState("");

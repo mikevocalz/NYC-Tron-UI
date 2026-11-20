@@ -23,13 +23,22 @@ Actual recognition events drive interim/final text; insertion is one host undo t
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/document/DictationSessionPanel.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { DictationSessionPanel } from "@nyc-tron/ui/components/forge/document/DictationSessionPanel";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/document/DictationSessionPanel
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { DictationSessionPanel } from "@/components/nyc-tron/ui/components/forge/document/DictationSessionPanel";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { DictationSessionPanel } from "@nyc-tron/ui/components/forge/document/DictationSessionPanel";`
 <!-- generated:end install -->
 
 ## Props

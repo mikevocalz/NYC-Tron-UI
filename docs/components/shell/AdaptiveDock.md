@@ -20,13 +20,22 @@ Dockable panel layout of tabbed and floating panels; merges into one stack below
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { AdaptiveDock } from "@nyc-tron/ui/components/shell/AdaptiveDock";`
 - Peers: @nyc-tron/core, react, react-native, zustand
 - Requires: @nyc-tron/DragGrabHandle, @nyc-tron/shell/MenuButton, @nyc-tron/shell/PaneSplitter
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/AdaptiveDock
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { AdaptiveDock } from "@/components/nyc-tron/ui/components/shell/AdaptiveDock";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { AdaptiveDock } from "@nyc-tron/ui/components/shell/AdaptiveDock";`
 
 ### Dependencies
 
@@ -159,7 +168,7 @@ none in source. `ScrollView.scrollTo` is called with `animated:false` to reveal 
 ```tsx example=AdaptiveDock
 import {useState} from "react";
 import {Text} from "react-native";
-import {AdaptiveDock, type DockLayout, type DockPanel} from "@nyc-tron/ui/components/shell/AdaptiveDock";
+import {AdaptiveDock, type DockLayout, type DockPanel} from "@/components/nyc-tron/ui/components/shell/AdaptiveDock";
 
 const panels: readonly DockPanel[] = [
   {id: "layers", title: "Layers", content: <Text>Layer list</Text>},

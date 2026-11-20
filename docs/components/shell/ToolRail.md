@@ -20,13 +20,22 @@ Toolbar rail of tool buttons, vertical on the left or right edge or a row at the
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { ToolRail } from "@nyc-tron/ui/components/shell/ToolRail";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/overlays/CommandPopover
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/ToolRail
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ToolRail } from "@/components/nyc-tron/ui/components/shell/ToolRail";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ToolRail } from "@nyc-tron/ui/components/shell/ToolRail";`
 
 ### Dependencies
 
@@ -119,7 +128,7 @@ none in source.
 ## Example
 
 ```tsx example=ToolRail
-import {ToolRail} from "@nyc-tron/ui/components/shell/ToolRail";
+import {ToolRail} from "@/components/nyc-tron/ui/components/shell/ToolRail";
 import {Text} from "react-native";
 export const Example = () => <ToolRail edge="left" activeToolId="move" onSelectTool={()=>{}}
   tools={[

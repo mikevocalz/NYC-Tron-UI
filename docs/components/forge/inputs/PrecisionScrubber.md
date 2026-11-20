@@ -20,13 +20,22 @@ Drag-to-scrub number control with fine, normal and coarse modes, detents, previe
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { PrecisionScrubber } from "@nyc-tron/ui/components/forge/inputs/PrecisionScrubber";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/gestures/PanResponderDrag
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/inputs/PrecisionScrubber
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { PrecisionScrubber } from "@/components/nyc-tron/ui/components/forge/inputs/PrecisionScrubber";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { PrecisionScrubber } from "@nyc-tron/ui/components/forge/inputs/PrecisionScrubber";`
 
 ### Dependencies
 
@@ -133,7 +142,7 @@ none in source (no Animated or Reanimated; the drag recogniser is the `PanRespon
 ## Example
 
 ```tsx example=PrecisionScrubber
-import {PrecisionScrubber} from "@nyc-tron/ui/components/forge/inputs/PrecisionScrubber";
+import {PrecisionScrubber} from "@/components/nyc-tron/ui/components/forge/inputs/PrecisionScrubber";
 export const Example = () => <PrecisionScrubber label="Opacity" value={50} min={0} max={100} step={1} detents={[0,50,100]} unit="%"
   scope="layer-1.opacity" onPreview={()=>{}} onCommit={async()=>{}}/>;
 ```

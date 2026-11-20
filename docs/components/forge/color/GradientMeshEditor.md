@@ -23,13 +23,22 @@ Nonfolding mesh node editor with drag previews, exact coordinates and per-node c
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/GradientMeshEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { GradientMeshEditor } from "@nyc-tron/ui/components/forge/color/GradientMeshEditor";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/color/ColorChannelFields, @nyc-tron/gestures/PanResponderDrag, @nyc-tron/shell/UnitInput
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/color/GradientMeshEditor
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { GradientMeshEditor } from "@/components/nyc-tron/ui/components/forge/color/GradientMeshEditor";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { GradientMeshEditor } from "@nyc-tron/ui/components/forge/color/GradientMeshEditor";`
 <!-- generated:end install -->
 
 ## Props

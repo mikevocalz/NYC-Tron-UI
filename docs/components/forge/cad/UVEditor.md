@@ -23,13 +23,22 @@ The host supplies the active normalized tile and selected vertex subset; mesh se
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/cad/UVEditor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { UVEditor } from "@nyc-tron/ui/components/forge/cad/UVEditor";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PointEditor2D
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/cad/UVEditor
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { UVEditor } from "@/components/nyc-tron/ui/components/forge/cad/UVEditor";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { UVEditor } from "@nyc-tron/ui/components/forge/cad/UVEditor";`
 <!-- generated:end install -->
 
 ## Props

@@ -23,13 +23,22 @@ Canonical photo name for the existing shared comparison owner: side-by-side, dra
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/BeforeAfterCompare.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { BeforeAfterCompare } from "@nyc-tron/ui/components/forge/photo/BeforeAfterCompare";`
 - Peers: react, react-native
 - Requires: @nyc-tron/forge/layers/CanvasCompareView
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/photo/BeforeAfterCompare
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { BeforeAfterCompare } from "@/components/nyc-tron/ui/components/forge/photo/BeforeAfterCompare";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { BeforeAfterCompare } from "@nyc-tron/ui/components/forge/photo/BeforeAfterCompare";`
 <!-- generated:end install -->
 
 ## Props

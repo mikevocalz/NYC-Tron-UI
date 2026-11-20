@@ -20,13 +20,22 @@ FindReplaceContent inside an AnchoredPopover, placed by anchor rectangle or trig
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { FindReplacePopover } from "@nyc-tron/ui/components/shell/FindReplacePopover";`
 - Peers: react, react-native
 - Requires: @nyc-tron/overlays/AnchoredPopover, @nyc-tron/shell/FindReplaceContent
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/FindReplacePopover
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { FindReplacePopover } from "@/components/nyc-tron/ui/components/shell/FindReplacePopover";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { FindReplacePopover } from "@nyc-tron/ui/components/shell/FindReplacePopover";`
 
 ### Dependencies
 
@@ -106,7 +115,7 @@ none in the file. The comment says the Expo-controls entry supplies SwiftUI/Comp
 ```tsx example=FindReplacePopover
 import {useState} from "react";
 import {Pressable, Text} from "react-native";
-import {FindReplacePopover} from "@nyc-tron/ui/components/shell/FindReplacePopover";
+import {FindReplacePopover} from "@/components/nyc-tron/ui/components/shell/FindReplacePopover";
 
 export function Example() {
   const [open, setOpen] = useState(false);

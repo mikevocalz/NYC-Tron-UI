@@ -20,13 +20,22 @@ Tab strip for open documents with activate, close and reorder; keyboard shortcut
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { DocumentTabBar } from "@nyc-tron/ui/components/shell/DocumentTabBar";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/DocumentTabBar
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { DocumentTabBar } from "@/components/nyc-tron/ui/components/shell/DocumentTabBar";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { DocumentTabBar } from "@nyc-tron/ui/components/shell/DocumentTabBar";`
 
 ### Dependencies
 
@@ -126,7 +135,7 @@ none in source. The active tab is centred with `scrollTo({animated:false})`.
 
 ```tsx example=DocumentTabBar
 import {useState} from "react";
-import {DocumentTabBar, activeAfterClose, moveDocument, type DocumentTab} from "@nyc-tron/ui/components/shell/DocumentTabBar";
+import {DocumentTabBar, activeAfterClose, moveDocument, type DocumentTab} from "@/components/nyc-tron/ui/components/shell/DocumentTabBar";
 
 export function Example() {
   const [docs, setDocs] = useState<readonly DocumentTab[]>([

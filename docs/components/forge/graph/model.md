@@ -23,13 +23,22 @@ Engine-neutral graph contract.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/graph/model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { GRAPH_HEADER_HEIGHT, GRAPH_PORT_ROW_HEIGHT, compatiblePorts, cubicGraphPoints, getPortAnchor, validatePatchGraph } from "@nyc-tron/ui/components/forge/graph/model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/graph/model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { GRAPH_HEADER_HEIGHT, GRAPH_PORT_ROW_HEIGHT, compatiblePorts, cubicGraphPoints, getPortAnchor, validatePatchGraph } from "@/components/nyc-tron/ui/components/forge/graph/model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { GRAPH_HEADER_HEIGHT, GRAPH_PORT_ROW_HEIGHT, compatiblePorts, cubicGraphPoints, getPortAnchor, validatePatchGraph } from "@nyc-tron/ui/components/forge/graph/model";`
 <!-- generated:end install -->
 
 ## Props

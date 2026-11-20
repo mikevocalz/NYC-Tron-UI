@@ -15,6 +15,14 @@ Each page is raw markdown at `https://raw.githubusercontent.com/mikevocalz/NYC-T
 
 Registry install, once the CLI check passes: `npx shadcn@latest add @nyc-tron/<id>`. Find an item with `npx shadcn@latest search @nyc-tron -q "<what it does>"`. The namespace entry in `components.json` is `"@nyc-tron": "https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/r/{name}.json"`.
 
+## Imports
+The import path depends on the install. After a registry install (`npx shadcn@latest add @nyc-tron/Button`), import from `@/components/nyc-tron/ui/components/Button`; `shadcn add` rewrites the `@/components` prefix to `aliases.components` in the app's `components.json`, and core modules use `@/lib/nyc-tron/core/<name>`. After a tarball install, import from `@nyc-tron/ui/components/Button`. Each page's Install section gives both under "Registry install" and "Tarball install", and every Example uses the registry form. A registry install does not create the `@nyc-tron/ui` package, so copying a tarball import into a registry-installed app fails to resolve.
+
+```tsx
+import { Button } from "@/components/nyc-tron/ui/components/Button"; // registry install
+import { Button } from "@nyc-tron/ui/components/Button"; // tarball install
+```
+
 Rules in one paragraph: use token names, never colour or spacing literals; spacing keys are unit multiples (`space.2` is 8px, `space.1.5` is 6px) from a closed scale; render every component inside the app's theme CSS; handle default, loading, error, empty, success and offline states yourself, the library draws only what its props say.
 
 ## Layout primitives

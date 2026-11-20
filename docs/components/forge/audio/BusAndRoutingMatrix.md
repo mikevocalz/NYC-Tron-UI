@@ -23,13 +23,22 @@ Controlled routing matrix for track outputs and post-fader sends.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/BusAndRoutingMatrix.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { BusAndRoutingMatrix } from "@nyc-tron/ui/components/forge/audio/BusAndRoutingMatrix";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/Select, @nyc-tron/feedback/EmptyState, @nyc-tron/feedback/ErrorMessage
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/audio/BusAndRoutingMatrix
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { BusAndRoutingMatrix } from "@/components/nyc-tron/ui/components/forge/audio/BusAndRoutingMatrix";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { BusAndRoutingMatrix } from "@nyc-tron/ui/components/forge/audio/BusAndRoutingMatrix";`
 <!-- generated:end install -->
 
 ## Props

@@ -23,13 +23,22 @@ iOS and Android: a button that opens the OS document picker through `documentSou
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/files/FilePicker.native.tsx,packages/ui/src/components/files/FilePicker.types.ts,packages/ui/src/components/files/FilePicker.web.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { FilePicker } from "@nyc-tron/ui/components/files/FilePicker";`
 - Peers: react, react-native, zustand
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/files/FilePicker
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { FilePicker } from "@/components/nyc-tron/ui/components/files/FilePicker";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { FilePicker } from "@nyc-tron/ui/components/files/FilePicker";`
 <!-- generated:end install -->
 
 ## Props
@@ -79,7 +88,7 @@ none
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=FilePicker
-import { FilePicker } from "@nyc-tron/ui/components/files/FilePicker";
+import { FilePicker } from "@/components/nyc-tron/ui/components/files/FilePicker";
 
 export function Example() {
   return <FilePicker label="" />;

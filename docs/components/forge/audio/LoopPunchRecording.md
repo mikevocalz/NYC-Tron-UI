@@ -23,13 +23,22 @@ Sample-clock recording boundaries; the host owns rolling, looping and take alloc
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/audio/LoopPunchRecording.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { LoopPunchRecording } from "@nyc-tron/ui/components/forge/audio/LoopPunchRecording";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/inputs/PrecisionScrubber
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/audio/LoopPunchRecording
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { LoopPunchRecording } from "@/components/nyc-tron/ui/components/forge/audio/LoopPunchRecording";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { LoopPunchRecording } from "@nyc-tron/ui/components/forge/audio/LoopPunchRecording";`
 <!-- generated:end install -->
 
 ## Props

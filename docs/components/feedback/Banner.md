@@ -20,13 +20,22 @@ Inline status banner with info, success, danger or neutral tone, title, descript
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Banner } from "@nyc-tron/ui/components/feedback/Banner";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/feedback/Banner
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { Banner } from "@/components/nyc-tron/ui/components/feedback/Banner";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { Banner } from "@nyc-tron/ui/components/feedback/Banner";`
 
 ### Dependencies
 
@@ -104,8 +113,8 @@ none in source.
 ## Example
 
 ```tsx example=Banner
-import { Banner } from "@nyc-tron/ui/components/feedback/Banner";
-import { Button } from "@nyc-tron/ui/components/Button";
+import { Banner } from "@/components/nyc-tron/ui/components/feedback/Banner";
+import { Button } from "@/components/nyc-tron/ui/components/Button";
 
 export function SaveFailed({ retry, close }: { retry: () => void; close: () => void }) {
   return (

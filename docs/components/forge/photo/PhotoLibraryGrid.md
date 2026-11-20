@@ -23,13 +23,22 @@ Virtualized catalog page with host-generated thumbnails; originals are never dec
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PhotoLibraryGrid.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PhotoLibraryGrid } from "@nyc-tron/ui/components/forge/photo/PhotoLibraryGrid";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/photo/PhotoLibraryGrid
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { PhotoLibraryGrid } from "@/components/nyc-tron/ui/components/forge/photo/PhotoLibraryGrid";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { PhotoLibraryGrid } from "@nyc-tron/ui/components/forge/photo/PhotoLibraryGrid";`
 <!-- generated:end install -->
 
 ## Props

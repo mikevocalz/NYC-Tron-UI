@@ -20,13 +20,22 @@ Searchable command list in a modal, with keyboard selection and an empty-results
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { CommandPalette } from "@nyc-tron/ui/components/overlays/CommandPalette";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/TextField
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/overlays/CommandPalette
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { CommandPalette } from "@/components/nyc-tron/ui/components/overlays/CommandPalette";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { CommandPalette } from "@nyc-tron/ui/components/overlays/CommandPalette";`
 
 ### Dependencies
 
@@ -123,7 +132,7 @@ The search field has `role="combobox"`, `aria-expanded`, `aria-controls` and `ar
 
 ```tsx example=CommandPalette
 import { useState } from "react";
-import { CommandPalette, type PaletteCommand } from "@nyc-tron/ui/components/overlays/CommandPalette";
+import { CommandPalette, type PaletteCommand } from "@/components/nyc-tron/ui/components/overlays/CommandPalette";
 
 const commands: PaletteCommand[] = [
   { id: "file.save", label: "Save file", group: "File", keywords: ["write"] },

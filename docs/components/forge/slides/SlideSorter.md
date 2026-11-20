@@ -23,13 +23,22 @@ Slide sorter grid (J-02) with multiselect: a press selects one slide, Cmd/Ctrl a
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/slides/SlideSorter.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { SlideSorter } from "@nyc-tron/ui/components/forge/slides/SlideSorter";`
 - Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/office/office-controls, @nyc-tron/forge/slides/SlideThumbnail
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/slides/SlideSorter
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { SlideSorter } from "@/components/nyc-tron/ui/components/forge/slides/SlideSorter";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { SlideSorter } from "@nyc-tron/ui/components/forge/slides/SlideSorter";`
 <!-- generated:end install -->
 
 ## Props

@@ -23,13 +23,22 @@ Play/pause, stop, jump to start/end and previous/next frame (D-06), each a 44pt 
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/TransportControls.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { TransportControls } from "@nyc-tron/ui/components/forge/timeline/TransportControls";`
 - Peers: react, react-native
 - Requires: @nyc-tron/feedback/ErrorMessage
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/timeline/TransportControls
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { TransportControls } from "@/components/nyc-tron/ui/components/forge/timeline/TransportControls";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { TransportControls } from "@nyc-tron/ui/components/forge/timeline/TransportControls";`
 <!-- generated:end install -->
 
 ## Props
@@ -74,7 +83,7 @@ _Not documented._
 
 <!-- generated:begin example source=docs/api-signatures.json -->
 ```tsx example=TransportControls
-import { TransportControls } from "@nyc-tron/ui/components/forge/timeline/TransportControls";
+import { TransportControls } from "@/components/nyc-tron/ui/components/forge/timeline/TransportControls";
 
 export function Example() {
   return <TransportControls playing={false} frame={0} durationFrames={0} onPlayPause={() => {}} onStop={() => {}} onSeek={() => {}} />;

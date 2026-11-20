@@ -23,13 +23,22 @@ Hue gradient, keyboard/screen-reader adjustment and exact degree entry.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/HueSlider.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { HueSlider } from "@nyc-tron/ui/components/forge/color/HueSlider";`
 - Peers: react, react-native
 - Requires: @nyc-tron/shell/UnitInput
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/color/HueSlider
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { HueSlider } from "@/components/nyc-tron/ui/components/forge/color/HueSlider";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { HueSlider } from "@nyc-tron/ui/components/forge/color/HueSlider";`
 <!-- generated:end install -->
 
 ## Props

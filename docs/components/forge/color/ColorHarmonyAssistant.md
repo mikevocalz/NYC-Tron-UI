@@ -23,13 +23,22 @@ Harmony and contrast helper (C-18): pick a rule, see the base color and its comp
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/color/ColorHarmonyAssistant.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { ColorHarmonyAssistant } from "@nyc-tron/ui/components/forge/color/ColorHarmonyAssistant";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/color/ColorHarmonyAssistant
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { ColorHarmonyAssistant } from "@/components/nyc-tron/ui/components/forge/color/ColorHarmonyAssistant";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { ColorHarmonyAssistant } from "@nyc-tron/ui/components/forge/color/ColorHarmonyAssistant";`
 <!-- generated:end install -->
 
 ## Props

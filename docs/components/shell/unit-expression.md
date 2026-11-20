@@ -23,13 +23,22 @@ Bounded unit arithmetic for {@linkcode UnitInput}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/unit-expression.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { UNITS, UNIT_EXPRESSION_LIMITS, convertFromBase, formatUnitValue, parseUnitExpression, unitPrecision, unitScale } from "@nyc-tron/ui/components/shell/unit-expression";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/unit-expression
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { UNITS, UNIT_EXPRESSION_LIMITS, convertFromBase, formatUnitValue, parseUnitExpression, unitPrecision, unitScale } from "@/components/nyc-tron/ui/components/shell/unit-expression";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { UNITS, UNIT_EXPRESSION_LIMITS, convertFromBase, formatUnitValue, parseUnitExpression, unitPrecision, unitScale } from "@nyc-tron/ui/components/shell/unit-expression";`
 <!-- generated:end install -->
 
 ## Props

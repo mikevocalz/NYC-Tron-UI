@@ -20,13 +20,22 @@ Form built from a field list of number, choice, boolean and text properties, com
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { PropertyInspector } from "@nyc-tron/ui/components/forge/inputs/PropertyInspector";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button, @nyc-tron/Select, @nyc-tron/feedback/ErrorMessage, @nyc-tron/shell/UnitInput
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/inputs/PropertyInspector
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { PropertyInspector } from "@/components/nyc-tron/ui/components/forge/inputs/PropertyInspector";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { PropertyInspector } from "@nyc-tron/ui/components/forge/inputs/PropertyInspector";`
 
 ### Dependencies
 
@@ -118,7 +127,7 @@ none in source. package.json export conditions: `types`, `react-native`, `defaul
 ## Example
 
 ```tsx example=PropertyInspector
-import {PropertyInspector,type InspectorProperty} from "@nyc-tron/ui/components/forge/inputs/PropertyInspector";
+import {PropertyInspector,type InspectorProperty} from "@/components/nyc-tron/ui/components/forge/inputs/PropertyInspector";
 const fields:readonly InspectorProperty[]=[
   {id:"w",label:"Width",kind:"number",value:100,min:0,max:1000,step:1,unit:"px"},
   {id:"blend",label:"Blend",kind:"choice",value:"normal",choices:[{id:"normal",label:"Normal"},{id:"multiply",label:"Multiply"}]},

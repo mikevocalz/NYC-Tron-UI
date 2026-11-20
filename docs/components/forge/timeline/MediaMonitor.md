@@ -23,13 +23,22 @@ Shared monitor chrome.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/MediaMonitor.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { MediaMonitor } from "@nyc-tron/ui/components/forge/timeline/MediaMonitor";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/SafeAreaOverlay, @nyc-tron/forge/timeline/SeekBar, @nyc-tron/forge/timeline/TimecodeDisplay, @nyc-tron/forge/timeline/TransportControls
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/timeline/MediaMonitor
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { MediaMonitor } from "@/components/nyc-tron/ui/components/forge/timeline/MediaMonitor";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { MediaMonitor } from "@nyc-tron/ui/components/forge/timeline/MediaMonitor";`
 <!-- generated:end install -->
 
 ## Props

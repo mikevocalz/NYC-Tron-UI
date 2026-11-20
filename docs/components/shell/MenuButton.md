@@ -20,13 +20,22 @@ Button that opens a command popover menu; ArrowDown opens it on web, for React N
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { MenuButton } from "@nyc-tron/ui/components/shell/MenuButton";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/overlays/CommandPopover
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/MenuButton
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { MenuButton } from "@/components/nyc-tron/ui/components/shell/MenuButton";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { MenuButton } from "@nyc-tron/ui/components/shell/MenuButton";`
 
 ### Dependencies
 
@@ -105,7 +114,7 @@ none in source.
 
 ```tsx example=MenuButton
 import {Text} from "react-native";
-import {MenuButton} from "@nyc-tron/ui/components/shell/MenuButton";
+import {MenuButton} from "@/components/nyc-tron/ui/components/shell/MenuButton";
 
 export const Example=()=><MenuButton label="Panel options" items={[
   {id:"rename",label:"Rename"},

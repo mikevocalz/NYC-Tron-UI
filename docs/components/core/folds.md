@@ -23,13 +23,22 @@ Pure hinge/occlusion geometry.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/core/package.json,packages/core/src/folds.ts -->
 - Package: @nyc-tron/core
-- Import: `import { foldFeaturesFromRegions, foldLayoutFromRegions, foldLayoutsFromRegions, foldLayoutsIntersectingRow, foldPostureFromRegions, resolveTrailingInspectorLayout, resolveUsableRegions, resolveVerticalFoldPanePlan } from "@nyc-tron/core/folds";`
 - Peers: none
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/core/folds
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { foldFeaturesFromRegions, foldLayoutFromRegions, foldLayoutsFromRegions, foldLayoutsIntersectingRow, foldPostureFromRegions, resolveTrailingInspectorLayout, resolveUsableRegions, resolveVerticalFoldPanePlan } from "@/lib/nyc-tron/core/folds";`
+
+### Tarball install
+
+Install @nyc-tron/core from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { foldFeaturesFromRegions, foldLayoutFromRegions, foldLayoutsFromRegions, foldLayoutsIntersectingRow, foldPostureFromRegions, resolveTrailingInspectorLayout, resolveUsableRegions, resolveVerticalFoldPanePlan } from "@nyc-tron/core/folds";`
 <!-- generated:end install -->
 
 ## Props

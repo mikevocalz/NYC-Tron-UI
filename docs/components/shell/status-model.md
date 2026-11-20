@@ -23,13 +23,22 @@ What the document is doing right now, as shown by {@linkcode StatusBar}.
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/shell/status-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { activityAnnouncement, formatElapsed, formatZoom, progressPercent, selectionSummary, stepZoom } from "@nyc-tron/ui/components/shell/status-model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/status-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { activityAnnouncement, formatElapsed, formatZoom, progressPercent, selectionSummary, stepZoom } from "@/components/nyc-tron/ui/components/shell/status-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { activityAnnouncement, formatElapsed, formatZoom, progressPercent, selectionSummary, stepZoom } from "@nyc-tron/ui/components/shell/status-model";`
 <!-- generated:end install -->
 
 ## Props

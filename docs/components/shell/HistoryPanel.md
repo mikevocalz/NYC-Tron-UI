@@ -20,13 +20,22 @@ Undo and redo list with a cursor and jump to any entry; async jump with cancel, 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { HistoryPanel } from "@nyc-tron/ui/components/shell/HistoryPanel";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/HistoryPanel
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { HistoryPanel } from "@/components/nyc-tron/ui/components/shell/HistoryPanel";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { HistoryPanel } from "@nyc-tron/ui/components/shell/HistoryPanel";`
 
 ### Dependencies
 
@@ -119,7 +128,7 @@ none in source. Export conditions: `types`, `react-native`, `default`, same file
 
 ```tsx example=HistoryPanel
 import {useState} from "react";
-import {HistoryPanel, type HistoryEntry} from "@nyc-tron/ui/components/shell/HistoryPanel";
+import {HistoryPanel, type HistoryEntry} from "@/components/nyc-tron/ui/components/shell/HistoryPanel";
 
 const entries: readonly HistoryEntry[] = [
   {id: "e1", label: "Move layer", detail: "Harbor photo", timestampMs: 1700000000000},

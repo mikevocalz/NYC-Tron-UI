@@ -23,13 +23,22 @@ _Not documented._
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/layers/layer-thumbnail-model.ts -->
 - Package: @nyc-tron/ui
-- Import: `import { CHECKER_CELL, CHECKER_MAX_CELLS, THUMBNAIL_MAX_EDGE, checkerCells, createThumbnailCache, decodeBase64, encodeBase64, encodePng } from "@nyc-tron/ui/components/forge/layers/layer-thumbnail-model";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/layers/layer-thumbnail-model
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { CHECKER_CELL, CHECKER_MAX_CELLS, THUMBNAIL_MAX_EDGE, checkerCells, createThumbnailCache, decodeBase64, encodeBase64, encodePng } from "@/components/nyc-tron/ui/components/forge/layers/layer-thumbnail-model";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { CHECKER_CELL, CHECKER_MAX_CELLS, THUMBNAIL_MAX_EDGE, checkerCells, createThumbnailCache, decodeBase64, encodeBase64, encodePng } from "@nyc-tron/ui/components/forge/layers/layer-thumbnail-model";`
 <!-- generated:end install -->
 
 ## Props

@@ -20,13 +20,22 @@ Horizontal flex View with the same token-keyed gap, padding, align, justify and 
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { Row } from "@nyc-tron/ui/components/layout/Row";`
 - Peers: react, react-native
 - Requires: @nyc-tron/layout/Stack
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/layout/Row
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { Row } from "@/components/nyc-tron/ui/components/layout/Row";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { Row } from "@nyc-tron/ui/components/layout/Row";`
 
 ### Dependencies
 
@@ -94,7 +103,7 @@ none in source
 
 ```tsx example=Row
 import { Text } from "react-native";
-import { Row } from "@nyc-tron/ui/components/layout/Row";
+import { Row } from "@/components/nyc-tron/ui/components/layout/Row";
 
 export const Example = () => (
   <Row gap={2} align="center" justify="space-between" paddingX={3}>

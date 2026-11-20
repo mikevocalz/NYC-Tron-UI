@@ -23,13 +23,22 @@ Read-only original EXIF/provenance, with a separate host-owned editing annotatio
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/photo/PhotoMetadataInspector.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { PhotoMetadataInspector } from "@nyc-tron/ui/components/forge/photo/PhotoMetadataInspector";`
 - Peers: react, react-native, zustand
 - Requires: @nyc-tron/Button
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/photo/PhotoMetadataInspector
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { PhotoMetadataInspector } from "@/components/nyc-tron/ui/components/forge/photo/PhotoMetadataInspector";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { PhotoMetadataInspector } from "@nyc-tron/ui/components/forge/photo/PhotoMetadataInspector";`
 <!-- generated:end install -->
 
 ## Props

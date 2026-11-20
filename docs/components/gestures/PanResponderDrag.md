@@ -20,13 +20,22 @@ Single-touch drag transport on React Native PanResponder, no gesture-handler dep
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { PanResponderDrag } from "@nyc-tron/ui/components/gestures/PanResponderDrag";`
 - Peers: react, react-native
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/gestures/PanResponderDrag
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { PanResponderDrag } from "@/components/nyc-tron/ui/components/gestures/PanResponderDrag";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { PanResponderDrag } from "@nyc-tron/ui/components/gestures/PanResponderDrag";`
 
 ### Dependencies
 
@@ -98,7 +107,7 @@ none in source. The doc comment says it works on web and native without an extra
 
 ```tsx example=PanResponderDrag
 import { View } from "react-native";
-import { PanResponderDrag } from "@nyc-tron/ui/components/gestures/PanResponderDrag";
+import { PanResponderDrag } from "@/components/nyc-tron/ui/components/gestures/PanResponderDrag";
 
 export const Example = () => (
   <PanResponderDrag

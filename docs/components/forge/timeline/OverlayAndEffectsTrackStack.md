@@ -23,13 +23,22 @@ The track stack (D-31): `TrackHeaders` beside `TimelineClipLane`, with overlay t
 
 <!-- generated:begin install source=docs/api-signatures.json,packages/ui/package.json,packages/ui/src/components/forge/timeline/OverlayAndEffectsTrackStack.tsx -->
 - Package: @nyc-tron/ui
-- Import: `import { OverlayAndEffectsTrackStack } from "@nyc-tron/ui/components/forge/timeline/OverlayAndEffectsTrackStack";`
 - Peers: react, react-native
 - Requires: @nyc-tron/Button, @nyc-tron/feedback/ErrorMessage, @nyc-tron/forge/timeline/TimelineClipLane, @nyc-tron/forge/timeline/TrackHeaders
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/forge/timeline/OverlayAndEffectsTrackStack
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { OverlayAndEffectsTrackStack } from "@/components/nyc-tron/ui/components/forge/timeline/OverlayAndEffectsTrackStack";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { OverlayAndEffectsTrackStack } from "@nyc-tron/ui/components/forge/timeline/OverlayAndEffectsTrackStack";`
 <!-- generated:end install -->
 
 ## Props

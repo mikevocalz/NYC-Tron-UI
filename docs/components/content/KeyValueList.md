@@ -20,13 +20,22 @@ Label and value list that goes from one to two columns at a measured width, with
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { KeyValueList } from "@nyc-tron/ui/components/content/KeyValueList";`
 - Peers: react, react-native, zustand
 - Requires: none
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/content/KeyValueList
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { KeyValueList } from "@/components/nyc-tron/ui/components/content/KeyValueList";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { KeyValueList } from "@nyc-tron/ui/components/content/KeyValueList";`
 
 ### Dependencies
 
@@ -113,7 +122,7 @@ none in source
 ## Example
 
 ```tsx example=KeyValueList
-import { KeyValueList } from "@nyc-tron/ui/components/content/KeyValueList";
+import { KeyValueList } from "@/components/nyc-tron/ui/components/content/KeyValueList";
 
 export const Example = () => (
   <KeyValueList

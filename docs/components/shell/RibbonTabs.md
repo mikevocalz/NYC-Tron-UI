@@ -20,13 +20,22 @@ Office-style ribbon of tabs and a command panel of buttons, split buttons and ga
 ## Install
 
 - Package: @nyc-tron/ui
-- Import: `import { RibbonTabs } from "@nyc-tron/ui/components/shell/RibbonTabs";`
 - Peers: react, react-native
 - Requires: @nyc-tron/shell/MenuButton, @nyc-tron/shell/SplitButton
+
+### Registry install
 
 ```sh
 npx shadcn@latest add @nyc-tron/shell/RibbonTabs
 ```
+
+After a registry install, import from the installed path. `shadcn add` rewrites the `@/components` and `@/lib` prefixes to the aliases in the app's `components.json`.
+- Import: `import { RibbonTabs } from "@/components/nyc-tron/ui/components/shell/RibbonTabs";`
+
+### Tarball install
+
+Install @nyc-tron/ui from the release tarball (README, "Installing from a release"), then import from the package:
+- Import: `import { RibbonTabs } from "@nyc-tron/ui/components/shell/RibbonTabs";`
 
 ### Dependencies
 
@@ -118,7 +127,7 @@ none in source.
 
 ```tsx example=RibbonTabs
 import {useState} from "react";
-import {RibbonTabs,type RibbonTab} from "@nyc-tron/ui/components/shell/RibbonTabs";
+import {RibbonTabs,type RibbonTab} from "@/components/nyc-tron/ui/components/shell/RibbonTabs";
 
 const tabs:RibbonTab[]=[
   {id:"home",label:"Home",groups:[{id:"clip",label:"Clipboard",commands:[

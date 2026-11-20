@@ -35,6 +35,7 @@
   }
 }</code></pre>
 <p>Item JSON is served at <code>https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/r/{name}.json</code>, on the moving ref <code>main</code> until a release tag is cut. It resolves only after this branch is merged to main; before that, test against a local server, where <code>{name}</code> keeps its slashes (<code>shell/UnitInput</code>). Find an item with <code>npx shadcn@latest search @nyc-tron -q "context menu"</code>.</p>
+<p>After a registry install, import from the installed path, for example <code>@/components/nyc-tron/ui/components/Button</code>. <code>shadcn add</code> rewrites the <code>@/components</code> prefix to <code>aliases.components</code>. The tarball package <code>@nyc-tron/ui</code> does not exist in that app. Every component page shows both imports under "Registry install" and "Tarball install", and its example uses the registry one.</p>
 <p>Native packages cannot be added this way. A registry add copies files and cannot run pod install, gradle, CMake, nitrogen or a WinUI build. They install from the tarball and are listed in <a href="../../registry-excluded.json">registry-excluded.json</a>.</p>
 <h2 id="tarball">Release tarball</h2>
 <p>This is the install path that works today. Copied from the README, section "Installing from a release".</p>
@@ -80,7 +81,7 @@ export default function App() {
 <p>The app defines 13 colour variables and 2 radii. <a href="tokens.html">See the tokens page</a>. A missing variable does not fail the build.</p>
 <h2 id="agents">For agents</h2>
 <p>Paste this into an agent that has a terminal and a URL fetcher:</p>
-<pre><code id="agentp">Read https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/llms.txt first. It lists every page. Fetch one page at https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/&lt;id&gt;.md, where &lt;id&gt; is the registry item id (for example shell/UnitInput). Use the token names in the page front matter; never colour or spacing literals. Install with npx shadcn@latest add @nyc-tron/&lt;id&gt; once the registry check passes, otherwise use the release tarball.</code></pre>
+<pre><code id="agentp">Read https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/llms.txt first. It lists every page. Fetch one page at https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/&lt;id&gt;.md, where &lt;id&gt; is the registry item id (for example shell/UnitInput). Use the token names in the page front matter; never colour or spacing literals. Install with npx shadcn@latest add @nyc-tron/&lt;id&gt; once the registry check passes, otherwise use the release tarball. Imports differ by install: after a registry install use @/components/nyc-tron/ui/components/&lt;id&gt;, after a tarball install use @nyc-tron/ui/components/&lt;id&gt;. Examples use the registry form.</code></pre>
 <p class="actions"><button class="btn primary" type="button" data-copy-target="agentp">Copy for agent</button><a class="btn" href="../../llms.txt">llms.txt</a></p>
 </main>
 </div>
