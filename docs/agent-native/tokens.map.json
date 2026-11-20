@@ -33,72 +33,72 @@
      "files": 5
     },
     "1": {
-     "token": "space.1",
+     "token": "space.0.25",
      "occurrences": 4,
      "files": 3
     },
     "2": {
-     "token": "space.2",
+     "token": "space.0.5",
      "occurrences": 55,
      "files": 39
     },
     "3": {
-     "token": "space.3",
+     "token": "space.0.75",
      "occurrences": 12,
      "files": 11
     },
     "4": {
-     "token": "space.4",
+     "token": "space.1",
      "occurrences": 170,
      "files": 104
     },
     "6": {
-     "token": "space.6",
+     "token": "space.1.5",
      "occurrences": 195,
      "files": 109
     },
     "8": {
-     "token": "space.8",
+     "token": "space.2",
      "occurrences": 422,
      "files": 249
     },
     "10": {
-     "token": "space.10",
+     "token": "space.2.5",
      "occurrences": 51,
      "files": 38
     },
     "12": {
-     "token": "space.12",
+     "token": "space.3",
      "occurrences": 110,
      "files": 65
     },
     "14": {
-     "token": "space.14",
+     "token": "space.3.5",
      "occurrences": 7,
      "files": 7
     },
     "16": {
-     "token": "space.16",
+     "token": "space.4",
      "occurrences": 50,
      "files": 27
     },
     "-2": {
-     "token": "-space.2",
+     "token": "-space.0.5",
      "occurrences": 4,
      "files": 4
     },
     "-12": {
-     "token": "-space.12",
+     "token": "-space.3",
      "occurrences": 3,
      "files": 2
     },
     "-4": {
-     "token": "-space.4",
+     "token": "-space.1",
      "occurrences": 2,
      "files": 2
     },
     "-10": {
-     "token": "-space.10",
+     "token": "-space.2.5",
      "occurrences": 1,
      "files": 1
     }
@@ -107,7 +107,7 @@
     "5": {
      "occurrences": 1,
      "files": 1,
-     "tokenPattern": "<Component>.space.5",
+     "tokenPattern": "<Component>.space.1_25",
      "byFile": {
       "packages/ui/src/components/shell/KeyboardShortcutHUD.tsx": 1
      }
@@ -115,7 +115,7 @@
     "7": {
      "occurrences": 2,
      "files": 2,
-     "tokenPattern": "<Component>.space.7",
+     "tokenPattern": "<Component>.space.1_75",
      "byFile": {
       "packages/ui/src/components/overlays/CommandPalette.tsx": 1,
       "packages/ui/src/components/overlays/CommandPopover.tsx": 1
@@ -124,7 +124,7 @@
     "9": {
      "occurrences": 1,
      "files": 1,
-     "tokenPattern": "<Component>.space.9",
+     "tokenPattern": "<Component>.space.2_25",
      "byFile": {
       "packages/ui/src/components/forge/audio/ChannelStrip.tsx": 1
      }
@@ -132,7 +132,7 @@
     "11": {
      "occurrences": 1,
      "files": 1,
-     "tokenPattern": "<Component>.space.11",
+     "tokenPattern": "<Component>.space.2_75",
      "byFile": {
       "packages/ui/src/components/forge/inputs/PrecisionScrubber.tsx": 1
      }
@@ -140,7 +140,7 @@
     "20": {
      "occurrences": 1,
      "files": 1,
-     "tokenPattern": "<Component>.space.20",
+     "tokenPattern": "<Component>.space.5",
      "byFile": {
       "packages/ui/src/components/forge/audio/DynamicsTransferGraph.tsx": 1
      }
@@ -148,7 +148,7 @@
     "22": {
      "occurrences": 1,
      "files": 1,
-     "tokenPattern": "<Component>.space.22",
+     "tokenPattern": "<Component>.space.5_5",
      "byFile": {
       "packages/ui/src/components/shell/RangeSlider.tsx": 1
      }
@@ -156,7 +156,7 @@
     "24": {
      "occurrences": 2,
      "files": 2,
-     "tokenPattern": "<Component>.space.24",
+     "tokenPattern": "<Component>.space.6",
      "byFile": {
       "packages/expo-controls/src/components/NativeActionMenu.web.tsx": 1,
       "packages/windows-fluent/rnw-fabric/example/App.tsx": 1
@@ -165,7 +165,7 @@
     "32": {
      "occurrences": 1,
      "files": 1,
-     "tokenPattern": "<Component>.space.32",
+     "tokenPattern": "<Component>.space.8",
      "byFile": {
       "packages/ui/src/components/forge/slides/SlideFilmstrip.tsx": 1
      }
@@ -173,7 +173,7 @@
     "44": {
      "occurrences": 2,
      "files": 1,
-     "tokenPattern": "<Component>.space.44",
+     "tokenPattern": "<Component>.space.11",
      "byFile": {
       "packages/ui/src/components/data/TreeGrid.tsx": 2
      }
@@ -181,7 +181,7 @@
     "-22": {
      "occurrences": 3,
      "files": 2,
-     "tokenPattern": "<Component>.space.n22",
+     "tokenPattern": "<Component>.space.n5_5",
      "byFile": {
       "packages/ui/src/components/shell/PaneSplitter.tsx": 2,
       "packages/ui/src/components/shell/RangeSlider.tsx": 1
@@ -190,7 +190,7 @@
     "-1.5": {
      "occurrences": 1,
      "files": 1,
-     "tokenPattern": "<Component>.space.n1_5",
+     "tokenPattern": "<Component>.space.n0_375",
      "byFile": {
       "packages/ui/src/components/forge/inputs/PrecisionScrubber.tsx": 1
      }
@@ -198,7 +198,7 @@
     "1.5": {
      "occurrences": 1,
      "files": 1,
-     "tokenPattern": "<Component>.space.1_5",
+     "tokenPattern": "<Component>.space.0_375",
      "byFile": {
       "packages/ui/src/components/forge/layers/LayerThumbnail.tsx": 1
      }

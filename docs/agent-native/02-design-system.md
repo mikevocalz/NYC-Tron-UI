@@ -172,27 +172,27 @@ The seven most common values (8, 6, 4, 12, 2, 10, 16) cover 1,053 literals, 95%.
 | literal | all pkgs | ui only | files | on scale | token |
 |---:|---:|---:|---:|:---:|---|
 | -22 | 3 | 3 | 2 | no |  |
-| -12 | 3 | 3 | 2 | yes | `-space.12` |
-| -10 | 1 | 1 | 1 | yes | `-space.10` |
-| -4 | 2 | 2 | 2 | yes | `-space.4` |
-| -2 | 4 | 4 | 4 | yes | `-space.2` |
+| -12 | 3 | 3 | 2 | yes | `-space.3` |
+| -10 | 1 | 1 | 1 | yes | `-space.2.5` |
+| -4 | 2 | 2 | 2 | yes | `-space.1` |
+| -2 | 4 | 4 | 4 | yes | `-space.0.5` |
 | -1.5 | 1 | 1 | 1 | no |  |
 | 0 | 6 | 6 | 5 | yes | `space.0` |
-| 1 | 4 | 4 | 3 | yes | `space.1` |
+| 1 | 4 | 4 | 3 | yes | `space.0.25` |
 | 1.5 | 1 | 1 | 1 | no |  |
-| 2 | 55 | 55 | 39 | yes | `space.2` |
-| 3 | 12 | 12 | 11 | yes | `space.3` |
-| 4 | 170 | 167 | 104 | yes | `space.4` |
+| 2 | 55 | 55 | 39 | yes | `space.0.5` |
+| 3 | 12 | 12 | 11 | yes | `space.0.75` |
+| 4 | 170 | 167 | 104 | yes | `space.1` |
 | 5 | 1 | 1 | 1 | no |  |
-| 6 | 195 | 193 | 109 | yes | `space.6` |
+| 6 | 195 | 193 | 109 | yes | `space.1.5` |
 | 7 | 2 | 2 | 2 | no |  |
-| 8 | 422 | 415 | 249 | yes | `space.8` |
+| 8 | 422 | 415 | 249 | yes | `space.2` |
 | 9 | 1 | 1 | 1 | no |  |
-| 10 | 51 | 48 | 38 | yes | `space.10` |
+| 10 | 51 | 48 | 38 | yes | `space.2.5` |
 | 11 | 1 | 1 | 1 | no |  |
-| 12 | 110 | 103 | 65 | yes | `space.12` |
-| 14 | 7 | 7 | 7 | yes | `space.14` |
-| 16 | 50 | 45 | 27 | yes | `space.16` |
+| 12 | 110 | 103 | 65 | yes | `space.3` |
+| 14 | 7 | 7 | 7 | yes | `space.3.5` |
+| 16 | 50 | 45 | 27 | yes | `space.4` |
 | 20 | 1 | 1 | 1 | no |  |
 | 22 | 1 | 1 | 1 | no |  |
 | 24 | 2 | 0 | 2 | no |  |
@@ -296,7 +296,7 @@ Hard constraint, decision 10: no visual change. Every literal equal to a scale s
 
 ### 4.1 Rule for choosing steps
 
-A value is a step when it occurs at least 3 times in at least 2 files. Negative spacing reuses the positive step (`-space[4]`), so it is free when the positive exists. Exceptions: `radius.full` (9999, 1 use) is kept because a pill radius is a role, not a measurement.
+A value is a step when it occurs at least 3 times in at least 2 files. Negative spacing reuses the positive step (`-space[1]`), so it is free when the positive exists. Exceptions: `radius.full` (9999, 1 use) is kept because a pill radius is a role, not a measurement.
 
 The rule is one line and the script applies it, so changing the threshold regenerates everything. The trade-off between threshold and off-scale count, as `steps / literals left off scale`:
 
@@ -313,11 +313,11 @@ Reading it: spacing gives the same 17 off-scale literals at n>=3 and n>=4. Font 
 
 ### 4.2 Scale
 
-Names are the value, so `space[8]` is `8`. That makes the primitive layer an identity map on purpose: it exists so the set is closed, typed, lintable, listed in `tokens.json`, and importable by Forge. The meaning lives in the semantic roles in 4.3. A step missing from the table is a compile error, which is the enforcement.
+Spacing keys are unit multiples (decision 14): `space[n]` is `n x 4px`, so `space[2]` is 8px, `space[1.5]` is 6px, `space[0.25]` is 1px. This is Tailwind's numbering, and the unit is a single constant (`SPACE_UNIT = 4` in `build-tokens.mjs` and the future `tokens.ts`), so a density change scales the unit and the names stay true. Radius, font, leading, border and opacity keep value-based keys (`radius[4]`, `font[12]`, `opacity[45]`) and `radius.full`. The meaning lives in the semantic roles in 4.3. A step missing from the table is a compile error, which is the enforcement.
 
 | Scale | Export | Steps (px unless noted) | Literals on scale | Left off scale |
 |---|---|---|---:|---:|
-| Space | `space` | 0, 1, 2, 3, 4, 6, 8, 10, 12, 14, 16 (and negatives -2, -12, -4, -10) | 1092 | 17 |
+| Space (unit 4px) | `space` | keys 0, 0.25, 0.5, 0.75, 1, 1.5, 2, 2.5, 3, 3.5, 4 = 0, 1, 2, 3, 4, 6, 8, 10, 12, 14, 16 px (and negatives -0.5, -3, -1, -2.5 = -2, -12, -4, -10 px) | 1092 | 17 |
 | Radius | `radius` | 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14, 9999 (9999 is `radius.full`) | 122 | 9 |
 | Font size | `font` | 10, 11, 12, 13, 14, 15, 16, 17 | 66 | 8 |
 | Line height | `leading` | 14, 16 | 13 | 5 |
@@ -340,11 +340,11 @@ The codemod never emits these. They exist so a new component, or an agent, picks
 
 | Role | Maps to | Evidence |
 |---|---|---|
-| `gap.tight` / `gap.default` / `gap.loose` | `space[4]` / `space[8]` / `space[12]` | gap modes: 8 (324 of 723), 6 (156), 4 (108), 12 (50) |
-| `gap.related` | `space[6]` | second most used gap |
-| `inset.control` (horizontal) | `space[12]` | horizontal padding mode 12 (38 of 147) |
-| `inset.compact` (vertical) | `space[8]` | vertical padding mode 8 (26 of 93) |
-| `inset.panel` | `space[16]` | `padding: 16` 21 of 109, second after 8 |
+| `gap.tight` / `gap.default` / `gap.loose` | `space[1]` / `space[2]` / `space[3]` | gap modes: 8 (324 of 723), 6 (156), 4 (108), 12 (50) |
+| `gap.related` | `space[1.5]` | second most used gap |
+| `inset.control` (horizontal) | `space[3]` | horizontal padding mode 12 (38 of 147) |
+| `inset.compact` (vertical) | `space[2]` | vertical padding mode 8 (26 of 93) |
+| `inset.panel` | `space[4]` | `padding: 16` 21 of 109, second after 8 |
 | `radius.control`, `radius.card` | stay the CSS variables | consumer-defined (InFraX 4 and 6) |
 | `radius.pill` | `radius.full` | 9999 |
 | `text.caption` | `text-xs text-text-muted` | 63 uses |
@@ -367,18 +367,18 @@ Each row becomes a token scoped to the file that uses it, in a sibling `<Compone
 
 | literal | count | files | component-scoped token pattern |
 |---:|---:|---:|---|
-| -22 | 3 | 2 | `<Component>.space.n22` |
-| 7 | 2 | 2 | `<Component>.space.7` |
-| 24 | 2 | 2 | `<Component>.space.24` |
-| 44 | 2 | 1 | `<Component>.space.44` |
-| -1.5 | 1 | 1 | `<Component>.space.n1_5` |
-| 1.5 | 1 | 1 | `<Component>.space.1_5` |
-| 5 | 1 | 1 | `<Component>.space.5` |
-| 9 | 1 | 1 | `<Component>.space.9` |
-| 11 | 1 | 1 | `<Component>.space.11` |
-| 20 | 1 | 1 | `<Component>.space.20` |
-| 22 | 1 | 1 | `<Component>.space.22` |
-| 32 | 1 | 1 | `<Component>.space.32` |
+| -22 | 3 | 2 | `<Component>.space.n5_5` |
+| 7 | 2 | 2 | `<Component>.space.1_75` |
+| 24 | 2 | 2 | `<Component>.space.6` |
+| 44 | 2 | 1 | `<Component>.space.11` |
+| -1.5 | 1 | 1 | `<Component>.space.n0_375` |
+| 1.5 | 1 | 1 | `<Component>.space.0_375` |
+| 5 | 1 | 1 | `<Component>.space.1_25` |
+| 9 | 1 | 1 | `<Component>.space.2_25` |
+| 11 | 1 | 1 | `<Component>.space.2_75` |
+| 20 | 1 | 1 | `<Component>.space.5` |
+| 22 | 1 | 1 | `<Component>.space.5_5` |
+| 32 | 1 | 1 | `<Component>.space.8` |
 
 **Radius** (9 literals, 7 distinct)
 
@@ -469,12 +469,12 @@ I grepped the 556 `exports` keys in `packages/ui/package.json` for `Divider|Sepa
 Wrappers over `View` and `Text` only, in `packages/ui`, one subpath each (`AGENTS.md` per-component subpath rule). Props take token keys, not numbers, so a raw `gap={9}` fails to compile. `style` stays last, `className` and `unstyled` follow the existing conventions (`joinClasses`). No new colour, no new behaviour.
 
 ```ts
-type Space  = keyof typeof space;          // 0 | 1 | 2 | 3 | 4 | 6 | 8 | 10 | 12 | 14 | 16
+type Space  = keyof typeof space;          // 0 | 0.25 | 0.5 | 0.75 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4  (x 4px)
 type Radius = keyof typeof radius;
 type Font   = keyof typeof font;
 
 interface StackProps extends ViewProps {
-  gap?: Space;                                // default 8
+  gap?: Space;                                // default 2 (8px)
   padding?: Space; paddingX?: Space; paddingY?: Space;
   align?: "start" | "center" | "end" | "stretch";
   justify?: "start" | "center" | "end" | "between";
@@ -503,7 +503,7 @@ interface TextProps extends RNTextProps {
 
 Variant to class map, all existing classes: `body` = `text-sm text-text`, `bodyMuted` = `text-sm text-text-muted`, `caption` = `text-xs text-text-muted`, `label` = `text-sm font-semibold text-text`, `title` = `text-lg font-semibold text-text`, `error` = `text-xs text-danger`. The six combinations account for 174 of the 931 `<Text` tags in the class orders counted (other orderings exist), so adoption can start there.
 
-What this does not do: the codemod does not replace existing `<View style={{flexDirection:"row",gap:8}}>` with `<Row gap={8}>`. That edits the element tree rather than a value, so it is a separate, opt-in change per component and outside decision 10. New components use the primitives from day one, and the 556 existing subpaths migrate when a maintainer touches them.
+What this does not do: the codemod does not replace existing `<View style={{flexDirection:"row",gap:8}}>` with `<Row gap={2}>`. That edits the element tree rather than a value, so it is a separate, opt-in change per component and outside decision 10. New components use the primitives from day one, and the 556 existing subpaths migrate when a maintainer touches them.
 
 Forge consumption: `@nyc-tron/ui/components/layout/Stack` and siblings plus `@nyc-tron/core/tokens`, declared as `registryDependencies`. Forge has none of these today (decision 9).
 
@@ -527,8 +527,8 @@ A `PropertyAssignment` whose name is in the category's property set and whose in
 
 | Before | After | Import added |
 |---|---|---|
-| `gap: 8` | `gap: space[8]` | `space` from `@nyc-tron/core/tokens` |
-| `marginTop: -2` | `marginTop: -space[2]` | same |
+| `gap: 8` | `gap: space[2]` | `space` from `@nyc-tron/core/tokens` |
+| `marginTop: -2` | `marginTop: -space[0.5]` | same |
 | `borderRadius: 9999` | `borderRadius: radius.full` | `radius` |
 | `fontSize: 12` | `fontSize: font[12]` | `font` |
 | `lineHeight: 14` | `lineHeight: leading[14]` | `leading` |
@@ -537,19 +537,19 @@ A `PropertyAssignment` whose name is in the category's property set and whose in
 | `backgroundColor: "rgba(0,0,0,0.5)"` | `backgroundColor: scrim[50]` | `scrim` |
 | `boxShadow: "0 1px 3px rgba(0,0,0,0.25)"` | `boxShadow: elevation[1]` | `elevation` |
 | `minHeight: 44` | `minHeight: size.touch` | `size` |
-| `gap: 7` (off scale) | `gap: tokens.space7` | `tokens` from `./Foo.tokens` |
+| `gap: 7` (off scale) | `gap: tokens.space1_75` | `tokens` from `./Foo.tokens` |
 
 Skipped and reported, never guessed: any initializer that is not a plain number (`gap: GAP`, `gap: 8 * scale`, `marginLeft: -2 * hold`), template literals, values in `.test` files, `.d.ts`, and files outside `packages/*/src`. Tailwind class strings are left alone.
 
-Off-scale values go to `<Name>.tokens.ts` next to the source file (one per base name, so `Foo.native.tsx` and `Foo.web.tsx` share `Foo.tokens.ts`). It exports `const tokens = { space7: 7, spaceN22: -22 } as const`. The file is not in `package.json` `exports`, so the 556-subpath public surface does not change. `tooling/api-surface.mjs` and `api-signatures.mjs` run in `pnpm verify` and must show no diff, which is itself a check.
+Off-scale values go to `<Name>.tokens.ts` next to the source file (one per base name, so `Foo.native.tsx` and `Foo.web.tsx` share `Foo.tokens.ts`). It exports `const tokens = { space1_75: 7, spaceN5_5: -22 } as const`. The file is not in `package.json` `exports`, so the 556-subpath public surface does not change. `tooling/api-surface.mjs` and `api-signatures.mjs` run in `pnpm verify` and must show no diff, which is itself a check.
 
 ### 7.3 Proof of zero visual change
 
 Screenshot diffing 556 components is not feasible, so the proof is compile-time and structural, with a runtime layer where the repo already has a browser harness.
 
-1. **AST equivalence, per file, mandatory.** For each changed file the verifier loads the original from git (`git show <base>:<path>`) and the rewritten file, then constant-folds the rewritten one: every `space[8]`, `-space[2]`, `radius.full`, `scrim[50]`, `elevation[1]` and `tokens.space7` is replaced by the value in `tokens.json` or the sibling tokens file, and the token imports are dropped. The two files are then printed with a fixed formatter and compared as text. Any difference fails. This is a proof, not a sample: if the folded AST equals the original AST, the emitted style objects are identical for every render, in every state, on every platform, because the only edits were literals replaced by constants with the same value.
+1. **AST equivalence, per file, mandatory.** For each changed file the verifier loads the original from git (`git show <base>:<path>`) and the rewritten file, then constant-folds the rewritten one: every `space[2]`, `-space[0.5]`, `radius.full`, `scrim[50]`, `elevation[1]` and `tokens.space1_75` is replaced by the value in `tokens.json` or the sibling tokens file, and the token imports are dropped. The two files are then printed with a fixed formatter and compared as text. Any difference fails. This is a proof, not a sample: if the folded AST equals the original AST, the emitted style objects are identical for every render, in every state, on every platform, because the only edits were literals replaced by constants with the same value.
 2. **Resolved style snapshot.** The same check at the data level: for each rewritten node the codemod records `{file, line, property, before, after}`. The verifier evaluates `after` against the token tables and asserts `before === after` with strict equality (so `0.45 !== 0.5`, `-0 !== 0`). The record also feeds `tokens.map.json`: the per-file counts in `offScale.byFile` and the totals per literal must match the record exactly. A mismatch in either direction (a literal the map expects but the codemod missed, or the reverse) fails.
-3. **Token table integrity.** `tokens.json` entries are generated from the literal histogram, and a test asserts each table in `packages/core/src/tokens.ts` equals them (`space[8] === 8`, `opacity[45] === 0.45`, `elevation[1] === "0 1px 3px rgba(0,0,0,0.25)"`). This catches a typo in the one place a value is typed by hand.
+3. **Token table integrity.** `tokens.json` entries are generated from the literal histogram, and a test asserts each table in `packages/core/src/tokens.ts` equals them (`space[2] === 8`, `opacity[45] === 0.45`, `elevation[1] === "0 1px 3px rgba(0,0,0,0.25)"`). This catches a typo in the one place a value is typed by hand.
 4. **Runtime, where it exists.** `.github/workflows/ui-browser.yml` and `packages/ui/tests/browser/` exist. I did not read what they cover. If they mount components, add `getComputedStyle` snapshots of the touched components before and after and compare. If not, layers 1 to 3 stand alone. Do not claim runtime verification for the 556 subpaths unless layer 4 actually mounts them.
 5. **Kotlin.** The four Android constants are checked by a script that parses `TronNativeDefaults.kt` and the old call sites from git and compares ARGB values.
 
@@ -577,17 +577,25 @@ The gate scopes to `packages/` only, per decision 7. `apps/*` is not scanned.
 4. Switch `--ratchet` on with baseline 0 once the last directory lands.
 5. Native Kotlin constants and primitives (`Stack`, `Row`, `Spacer`, `Divider`, `Text`) are separate PRs. The primitives PR is independent of the codemod.
 
-## 8. Owner decisions needed
+## 8. Decisions applied
 
-1. **Scope beyond decision 10.** Decision 10 names spacing, radius and type (1,301 in `ui`). The same pass found border width (121), opacity (119), `size.touch` 44 (152), scrims and shadows (6) and Android constants (10). All value-preserving. Approve or strike each.
-2. **The step threshold.** `n>=3, f>=2` leaves 50 literals off scale in 44 file-scoped tokens. Table in 4.1 shows what stricter or looser costs. Radius at 13 steps is wide, and that is what the data gives.
-3. **Primitive names equal values (`space[8]`).** It makes the layer an identity map and relies on the semantic roles in 4.3 for meaning. Alternative is ordinal names (`space.md`) with the value in `tokens.json`, which is nicer to read and cannot be checked by eye against a literal. I recommend the identity map for the codemod and the roles for new code.
-4. **New public subpath `@nyc-tron/core/tokens`** in an `rc.2` package, plus five new `ui` subpaths for the primitives. Confirm decision 9 (the evidence supports it) and the versioning impact.
-5. **Not snapping `radius 8/12` to `radius.control/card`.** I recommend no, because InFraX sets them to 4 and 6. Confirm.
-6. **`iconColorTokens.successColor: "accent"`** where `success` exists. Possible bug, outside value preservation.
-7. **`motion.fastMs`/`standardMs` are read by nothing.** Wire them into components (behaviour change) or leave them as the future home of `duration.*`.
-8. **Later design call, deferred.** Unify disabled opacity (0.4, 0.45, 0.5, 0.52, 0.55), collapse the radius ladder, collapse 10/12/14 spacing. Each changes pixels.
-9. **Dependency.** ts-morph as a root devDependency, and a lockfile change that needs a machine with more disk than this one.
+The owner recorded decisions 12 to 19 in `decisions.md`. How each one shows up here:
+
+| Row | Decision | Applied in this document |
+|---:|---|---|
+| 12 | Extra literal categories (border width, opacity, touch target, scrims and shadows, Android constants) | BUILD. In 3.1 and 4.2 |
+| 13 | Step threshold n>=3 in f>=2 files | BUILD as proposed. 1,522 of 1,572 on a step, 50 off-scale in 44 file-scoped tokens (4.1, 4.4). Retuning waits for the owner's review of the 4.4 list |
+| 14 | Unit-multiple spacing keys | BUILD. `space[n]` is n x 4px with half steps (`space[1.5]` = 6px). Applied to `tokens.json`, `tokens.map.json`, 4.2 to 4.4, 5.2 and 7. Radius, type and colour keep their names |
+| 15 | New additive API: `@nyc-tron/core/tokens` plus Stack, Row, Spacer, Divider, Text | BUILD. Section 5. It needs a version decision from the owner, since it adds public subpaths to an `rc.2` package |
+| 19 | Codemod runs in CI | BUILD. Section 7 runs on a GitHub Actions runner, not on this laptop |
+
+Deferred, owner follow-ups:
+
+- **Row 16.** `iconColorTokens.successColor` maps to `accent` where `success` exists. Possible bug. Fixing it changes pixels.
+- **Row 17.** `motion.fastMs` and `standardMs` are read by nothing. They stay documented as unused. `duration.fast` and `duration.standard` in 4.2 alias them and wire nothing.
+- **Row 18.** Disabled opacity takes five values (0.4, 0.45, 0.5, 0.52, 0.55). All five stay as steps or scoped tokens. Unifying changes pixels.
+
+Still open, not covered by rows 12 to 19: whether `radius` literals 8 and 12 stay primitives (recommended, because InFraX sets `--radius-control` and `--radius-card` to 4 and 6), and collapsing the radius ladder or the 10/12/14 spacing steps later.
 
 ## 9. Not done and not verified
 

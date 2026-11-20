@@ -24,11 +24,16 @@ const cats = {
   borderWidth: { prefix: "border", unit: "px" },
   opacity: { prefix: "opacity", unit: "ratio" },
 };
+// Spacing keys are unit multiples (decision 14): key = px / SPACE_UNIT, so 8px is space.2 and 6px is space.1.5.
+const SPACE_UNIT = 4;
+const spaceKey = (v) => String(parseFloat(v) / SPACE_UNIT);
 const tokenName = (cat, v) => {
   const c = cats[cat];
+  if (cat === "spacing") return `space.${spaceKey(v)}`;
   const ex = EXCEPTIONS[cat]?.[v];
   return `${c.prefix}.${ex ?? v.replace(".", "_")}`;
 };
+const offPattern = (cat, c, v) => cat === "spacing" ? `<Component>.space.${v.startsWith("-") ? "n" : ""}${spaceKey(v.replace(/^-/, "")).replace(".", "_")}` : `<Component>.${c.prefix}.${v.replace("-", "n").replace(".", "_")}`;
 const pad = (s, n) => String(s).padEnd(n);
 const comp = (f) => basename(f).replace(/\.(native|web|qt|shared)?\.?(tsx|ts|mjs|js|kt)$/, "");
 const isUi = (f) => f.startsWith("packages/ui/");
@@ -81,7 +86,7 @@ for (const [cat, c] of Object.entries(cats)) {
   map.categories[cat] = {
     properties: [...new Set(all.flatMap((x) => Object.keys(x.props)))].sort(),
     total, onScale: Object.fromEntries([...stepList.map((x) => [x.value, { token: tokenName(cat, x.value), occurrences: x.n, files: x.files }]), ...negMapped.map((x) => [x.value, { token: "-" + tokenName(cat, x.value.slice(1)), occurrences: x.n, files: x.files }])]),
-    offScale: Object.fromEntries(offList.map((x) => [x.value, { occurrences: x.n, files: x.files, tokenPattern: `<Component>.${c.prefix}.${x.value.replace("-", "n").replace(".", "_")}`, byFile: Object.fromEntries(Object.entries(x.byFile).sort()) }])),
+    offScale: Object.fromEntries(offList.map((x) => [x.value, { occurrences: x.n, files: x.files, tokenPattern: offPattern(cat, c, x.value), byFile: Object.fromEntries(Object.entries(x.byFile).sort()) }])),
   };
   // markdown histogram
   const rows = [...all].sort((a, b) => parseFloat(a.value) - parseFloat(b.value));
@@ -91,7 +96,7 @@ for (const [cat, c] of Object.entries(cats)) {
     return `| ${x.value} | ${x.n} | ${uiN(x)} | ${x.files} | ${on ? "yes" : "no"} | ${on ? "`" + (neg ? "-" : "") + tokenName(cat, neg ? x.value.slice(1) : x.value) + "`" : ""} |`;
   }).join("\n");
   frag["steps_" + cat] = stepList.map((x) => x.value).join(", ") + (negMapped.length ? " (and negatives " + negMapped.map((x) => x.value).join(", ") + ")" : "");
-  frag["off_" + cat] = "| literal | count | files | component-scoped token pattern |\n|---:|---:|---:|---|\n" + [...offList].sort((a, b) => b.n - a.n).map((x) => `| ${x.value} | ${x.n} | ${x.files} | \`<Component>.${c.prefix}.${x.value.replace("-", "n").replace(".", "_")}\` |`).join("\n");
+  frag["off_" + cat] = "| literal | count | files | component-scoped token pattern |\n|---:|---:|---:|---|\n" + [...offList].sort((a, b) => b.n - a.n).map((x) => `| ${x.value} | ${x.n} | ${x.files} | \`${offPattern(cat, c, x.value)}\` |`).join("\n");
 }
 
 // ---- colour-like literals --------------------------------------------------
