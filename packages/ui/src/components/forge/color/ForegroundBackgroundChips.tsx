@@ -3,6 +3,7 @@ import {joinClasses} from "../../styles.ts";
 import {Button} from "../../Button.tsx";
 import {rgbaToHex} from "../color.ts";
 import {DEFAULT_COLOR_PAIR,sameColorPair,swapColorPair,type ColorPair,type ColorPairSlot} from "./color-pair.ts";
+import {space,size} from "@nyc-tron/core/tokens";
 
 /** Props for {@linkcode ForegroundBackgroundChips}. */
 export interface ForegroundBackgroundChipsProps extends Omit<ViewProps,"children"> {
@@ -39,7 +40,7 @@ export function ForegroundBackgroundChips({
       disabled={disabled} onPress={()=>onActiveChange(slot)} {...id(slot)}
       {...{className:joinClasses(styled&&"rounded-control border-2 focus-visible:ring-2 focus-visible:ring-focus",
         styled&&(on?"border-focus":"border-border"))}}
-      style={{flexDirection:"row",alignItems:"center",gap:8,minHeight:44,paddingHorizontal:6,paddingVertical:4}}>
+      style={{flexDirection:"row",alignItems:"center",gap:space[2],minHeight:size.touch,paddingHorizontal:space[1.5],paddingVertical:space[1]}}>
       <View {...{className:joinClasses(styled&&"rounded-control border border-border")}}
         style={{width:32,height:32,backgroundColor:rgbaToHex(value[slot])}}/>
       <Text {...{className:joinClasses(styled&&(on?"text-text font-semibold":"text-text-muted"),styled&&"text-sm")}}>{label}</Text>
@@ -47,11 +48,11 @@ export function ForegroundBackgroundChips({
   };
   return <View {...rest} {...{className:joinClasses("gap-2",className)}} style={[{flexDirection:"row",flexWrap:"wrap",alignItems:"center"},style]}
     {...(testID?{testID}:{})}>
-    <View accessibilityRole="radiogroup" accessibilityLabel="Color being edited" style={{flexDirection:"row",gap:8}}>
+    <View accessibilityRole="radiogroup" accessibilityLabel="Color being edited" style={{flexDirection:"row",gap:space[2]}}>
       {chip("foreground","Foreground")}
       {chip("background","Background")}
     </View>
-    <View style={{flexDirection:"row",gap:8}}>
+    <View style={{flexDirection:"row",gap:space[2]}}>
       <Button title="Swap" variant="secondary" disabled={disabled} accessibilityLabel="Swap foreground and background"
         onPress={()=>onCommit(swapColorPair(value))} {...id("swap")}/>
       <Button title="Reset" variant="ghost" disabled={disabled||atDefaults}

@@ -7,6 +7,7 @@ import { ErrorMessage } from "../feedback/ErrorMessage.tsx";
 import { joinClasses } from "../styles.ts";
 import { useOwnedAction } from "./useOwnedAction.ts";
 import { validateFeedback, jobActionLabel, type ProgressJob, type JobAction, type ToastMessage } from "./progress-model.ts";
+import { space } from "@nyc-tron/core/tokens";
 export type { ProgressJob, JobAction, ToastMessage } from "./progress-model.ts";
 
 export interface ToastAndProgressProps extends Omit<ViewProps, "children"> {
@@ -35,20 +36,20 @@ export function ToastAndProgress({ scope, toasts, jobs, onDismissToast, onToastA
   const rows: ({ kind: "toast"; item: ToastMessage } | { kind: "job"; item: ProgressJob })[] = [
     ...shown.map(item => ({ kind: "toast" as const, item })), ...jobs.map(item => ({ kind: "job" as const, item })),
   ];
-  return <View {...rest} style={[{ gap: 8 }, style]} {...{ className: joinClasses(className) }}>
+  return <View {...rest} style={[{ gap: space[2] }, style]} {...{ className: joinClasses(className) }}>
     <Text accessibilityRole="header" {...{ className: joinClasses(styled && "text-text font-semibold") }}>Notifications and jobs</Text>
     {toasts.length > 3 ? <Button title={expanded ? "Show recent notifications" : `Show all ${toasts.length} notifications`} onPress={() => local.current!.setState({ expanded: !expanded })} unstyled={unstyled}/> : null}
     <FlatList data={rows} keyExtractor={row => `${row.kind}:${row.item.id}`} style={{ height }} initialNumToRender={8} windowSize={5}
       ListEmptyComponent={<Text {...{ className: joinClasses(styled && "text-text-muted") }}>No notifications or jobs</Text>}
-      renderItem={({ item: row }) => row.kind === "toast" ? <View style={{ padding: 10, gap: 8 }} {...{ className: joinClasses(styled && "border-b border-border") }}>
+      renderItem={({ item: row }) => row.kind === "toast" ? <View style={{ padding: space[2.5], gap: space[2] }} {...{ className: joinClasses(styled && "border-b border-border") }}>
         <Text role={row.item.tone === "error" ? "alert" : "status"} accessibilityLiveRegion="polite" {...{ className: joinClasses(styled && "text-text font-semibold") }}>{row.item.title}</Text>
         {row.item.detail ? <Text {...{ className: joinClasses(styled && "text-text-muted") }}>{row.item.detail}</Text> : null}
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>
           {row.item.action ? <Button title={row.item.action.label} disabled={busy} unstyled={unstyled}
             onPress={() => { const choice = row.item.action!; void action.run(`toast:${row.item.id}`, signal => onToastAction!(row.item.id, choice.id, signal)); }}/> : null}
           <Button title={`Dismiss ${row.item.title}`} disabled={busy} onPress={() => onDismissToast(row.item.id)} unstyled={unstyled}/>
         </View>
-      </View> : <View style={{ padding: 10, gap: 8 }} {...{ className: joinClasses(styled && "border-b border-border") }}>
+      </View> : <View style={{ padding: space[2.5], gap: space[2] }} {...{ className: joinClasses(styled && "border-b border-border") }}>
         <Text accessibilityLiveRegion="polite" {...{ className: joinClasses(styled && "text-text font-semibold") }}>{row.item.title}: {row.item.status}</Text>
         {row.item.detail ? <Text {...{ className: joinClasses(styled && "text-text-muted") }}>{row.item.detail}</Text> : null}
         <View accessibilityRole="progressbar" accessibilityLabel={row.item.title} aria-valuemin={0} aria-valuemax={100}
@@ -60,7 +61,7 @@ export function ToastAndProgress({ scope, toasts, jobs, onDismissToast, onToastA
           </View>}
         </View>
         {row.item.status === "failed" ? <ErrorMessage message={row.item.error} unstyled={unstyled}/> : null}
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>{row.item.actions.map(choice => <Button key={choice} title={`${jobActionLabel[choice]} ${row.item.title}`} disabled={busy} unstyled={unstyled}
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[2] }}>{row.item.actions.map(choice => <Button key={choice} title={`${jobActionLabel[choice]} ${row.item.title}`} disabled={busy} unstyled={unstyled}
           onPress={() => { void action.run(`job:${row.item.id}`, signal => onJobAction!(row.item.id, choice, signal)); }}/>)}</View>
       </View>}/>
     {busy ? <Button title="Cancel pending notification or job request" onPress={action.cancel} unstyled={unstyled}/> : null}

@@ -23,6 +23,8 @@ import {
   TRANSITION_KINDS,filterTransitionKinds,transitionDiagram,type TransitionKindInfo,
 } from "./transition-presets.ts";
 import type {TransitionTarget} from "./transitions.ts";
+import {space,radius,border,size} from '@nyc-tron/core/tokens';
+import {tokens} from './TransitionPresetBrowser.tokens.ts';
 
 /** The cut the browser applies to, as the host resolved it. */
 export interface PresetBrowserCut {
@@ -58,20 +60,20 @@ function Diagram({kind,styled}:{kind:string;styled:boolean}){
   const a=joinClasses(styled&&"bg-surface-sunken border border-border");
   const b=joinClasses(styled&&"bg-primary/25 border border-primary");
   const tile=(cls:string,label:string,extra:object={})=><View {...{className:cls}}
-    style={{width:30,height:22,borderRadius:3,alignItems:"center",justifyContent:"center",...extra}}>
+    style={{width:30,height:22,borderRadius:radius[3],alignItems:"center",justifyContent:"center",...extra}}>
     <Text {...{className:joinClasses(styled&&"text-text text-xs")}}>{label}</Text>
   </View>;
   // Drawn left to right in every layout direction: the diagram is a picture of time.
   return <View aria-hidden pointerEvents="none" style={{flexDirection:"row",alignItems:"center",width:76,height:28,direction:"ltr"}}>
-    {d.shape==="overlap"?<>{tile(a,"A")}{tile(b,"B",{marginLeft:-12,opacity:0.85})}</>
+    {d.shape==="overlap"?<>{tile(a,"A")}{tile(b,"B",{marginLeft:-space[3],opacity:tokens.opacity0_85})}</>
       :d.shape==="dip"?<>{tile(a,"A")}
         <View {...{className:joinClasses(styled&&(d.through==="black"?"bg-text":"bg-surface-raised border border-text"))}}
-          style={{width:10,height:22,marginHorizontal:3,borderRadius:2}}/>{tile(b,"B")}</>
+          style={{width:10,height:22,marginHorizontal:space[0.75],borderRadius:radius[2]}}/>{tile(b,"B")}</>
       :<>{tile(a,"A")}
         <View style={{width:12,alignItems:"center",justifyContent:"center"}}>
           <View {...{className:joinClasses(styled&&(d.direction==="left"?"border-r-text":"border-l-text"))}} style={{width:0,height:0,
-            borderTopWidth:6,borderBottomWidth:6,borderTopColor:"transparent",borderBottomColor:"transparent",
-            ...(d.direction==="left"?{borderRightWidth:8}:{borderLeftWidth:8})}}/>
+            borderTopWidth:tokens.border6,borderBottomWidth:tokens.border6,borderTopColor:"transparent",borderBottomColor:"transparent",
+            ...(d.direction==="left"?{borderRightWidth:border[8]}:{borderLeftWidth:border[8]})}}/>
         </View>
         {tile(b,"B",d.shape==="push"?{borderStyle:"dashed"}:{})}</>}
   </View>;
@@ -115,37 +117,37 @@ function TransitionPresetBrowserBody({
     {kind&&renderPreview?<View accessibilityLabel="Live transition preview">{renderPreview(kind.kind,frames)}</View>:<Text {...{className:joinClasses(styled&&"text-text-muted")}}>Live transition preview not provided by this editor</Text>}
     <TextField id={(testID??"transitions")+"-search"} label="Search transitions" value={state.query}
       maxLength={128} onChangeText={query=>store.set(s=>({...s,query}))} editable={!disabled} autoCorrect={false}/>
-    <View accessibilityRole="radiogroup" accessibilityLabel="Transition" style={{gap:4}}>
+    <View accessibilityRole="radiogroup" accessibilityLabel="Transition" style={{gap:space[1]}}>
       {shown.length?shown.map(k=>{
         const on=k.kind===kind?.kind;
         return <Pressable key={k.kind} accessibilityRole="radio" aria-checked={on} accessibilityState={{checked:on,disabled}}
           disabled={disabled} onPress={()=>store.set(s=>({...s,kind:k.kind}))} {...id("kind-"+k.kind)}
           {...{className:joinClasses(styled&&"rounded-control border px-2 focus-visible:ring-2 focus-visible:ring-focus",
             styled&&(on?"border-focus bg-surface-sunken":"border-transparent"))}}
-          style={{minHeight:52,flexDirection:"row",alignItems:"center",gap:12,paddingVertical:6}}>
+          style={{minHeight:52,flexDirection:"row",alignItems:"center",gap:space[3],paddingVertical:space[1.5]}}>
           <Diagram kind={k.kind} styled={styled}/>
-          <View style={{flex:1,minWidth:0,gap:2}}>
+          <View style={{flex:1,minWidth:0,gap:space[0.5]}}>
             <Text {...{className:joinClasses(styled&&(on?"text-text font-semibold":"text-text"))}}>{k.label}</Text>
             <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>{k.description}</Text>
           </View>
           {k.kind===cut?.currentKind?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>On this cut</Text>:null}
         </Pressable>;
-      }):<Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{paddingVertical:8}}>
+      }):<Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{paddingVertical:space[2]}}>
         {cut?"No transition matches the search. Clear it to see every kind.":"No transition matches the search."}</Text>}
     </View>
-    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
+    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:space[2]}}>
       <SegmentedControl aria-label="Transition length" options={presets} value={String(frames)} disabled={disabled}
         onChange={v=>store.set(s=>({...s,frames:Number(v)}))} unstyled={unstyled} {...id("length")}/>
-      <View style={{flexDirection:"row",gap:8,direction:"ltr"}}>
+      <View style={{flexDirection:"row",gap:space[2],direction:"ltr"}}>
       <Button title="−1" variant="secondary" size="sm" accessibilityLabel="One frame shorter" disabled={disabled||frames<=1}
-        onPress={()=>store.set(s=>({...s,frames:Math.max(1,frames-1)}))} style={{minWidth:44}} {...id("shorter")}/>
+        onPress={()=>store.set(s=>({...s,frames:Math.max(1,frames-1)}))} style={{minWidth:size.touch}} {...id("shorter")}/>
       <Button title="+1" variant="secondary" size="sm" accessibilityLabel="One frame longer" disabled={disabled||(max>0&&frames>=max)}
-        onPress={()=>store.set(s=>({...s,frames:frames+1}))} style={{minWidth:44}} {...id("longer")}/>
+        onPress={()=>store.set(s=>({...s,frames:frames+1}))} style={{minWidth:size.touch}} {...id("longer")}/>
       </View>
       <Text {...id("length-tc")} {...{className:joinClasses(styled&&"text-text text-sm")}} style={{fontVariant:["tabular-nums"]}}>
         {tc(frames)}{max>0?` of up to ${tc(max)}`:""}</Text>
     </View>
-    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
+    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:space[2]}}>
       <Button title={cut?.currentKind?"Replace transition":"Apply to cut"} variant="primary" size="sm" disabled={disabled||reason!==undefined}
         accessibilityHint={reason} {...id("apply")}
         onPress={()=>{if(kind&&!reason)onApply(kind.kind,frames,framesToSeconds(frames,rate));}}/>

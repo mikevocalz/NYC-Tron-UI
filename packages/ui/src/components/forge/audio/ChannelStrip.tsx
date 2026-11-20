@@ -8,6 +8,8 @@ import { SoloMuteButtons, type SoloMuteButtonsProps } from "./SoloMuteButtons.ts
 import { FADER_RANGES, gainToDb, type FaderRange } from "./level.ts";
 import type { MeterBand } from "./level-meter.ts";
 import { describeAudibility, type Audibility, type MixerChannel } from "./mixer.ts";
+import { space } from '@nyc-tron/core/tokens';
+import { tokens } from './ChannelStrip.tokens.ts';
 
 /**
  * Meter values for one strip, linear sample peak as the Cadence `meter` op
@@ -144,17 +146,17 @@ export function ChannelStrip({
   }}
     {...{ className: joinClasses("items-center gap-2 py-2", styled && bus && "bg-surface-sunken", className) }}
     style={[{ width }, style]}>
-    {lines > 0 ? <View style={{ minHeight: lines * ROUTING_LINE, alignSelf: "stretch", paddingHorizontal: 6, justifyContent: "flex-end" }}>
+    {lines > 0 ? <View style={{ minHeight: lines * ROUTING_LINE, alignSelf: "stretch", paddingHorizontal: space[1.5], justifyContent: "flex-end" }}>
       {meta.map((line, i) => <Text key={line + i} numberOfLines={1}
         {...{ className: i === 0 && bus ? joinClasses(styled && "text-xs font-semibold text-text") : small }}
         style={{ textAlign: "center", lineHeight: ROUTING_LINE }}>{line}</Text>)}
     </View> : null}
     {/* Keep numeric entry inside its strip instead of using its intrinsic input width. */}
-    <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 4, width: "100%" }}>
+    <View style={{ flexDirection: "row", alignItems: "flex-start", gap: space[1], width: "100%" }}>
       <LevelFader targetSize={target} labels={labels?.fader} value={channel.gain} label={channel.name} range={range} length={faderLength}
         disabled={disabled} onChange={onGainChange} onCommit={onGainCommit} unstyled={unstyled}
         style={{ width: stripWidth, minWidth: 0, flexShrink: 1 }} />
-      {meter ? <View style={{ width: CHANNEL_STRIP_METER_WIDTH - 4, alignItems: "center", gap: 9, paddingTop: 12 }}>
+      {meter ? <View style={{ width: CHANNEL_STRIP_METER_WIDTH - 4, alignItems: "center", gap: tokens.space2_25, paddingTop: space[3] }}>
         <Text numberOfLines={1}
           {...{ className: joinClasses(styled && "text-xs", styled && (clipped ? "font-semibold text-danger" : "text-text-muted")) }}
           style={{ fontVariant: ["tabular-nums"] }}>{holdReadout(hold ?? 0)}</Text>

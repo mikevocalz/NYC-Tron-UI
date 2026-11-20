@@ -9,6 +9,7 @@ import {PanResponder,Pressable,Text,View,type GestureResponderEvent} from "react
 import {createCanvasResponder} from "../../gestures/canvas-responder.ts";
 import {joinClasses} from "../../styles.ts";
 import type {Point} from "./vector-types.ts";
+import {space,font,opacity as opacityToken} from "@nyc-tron/core/tokens";
 
 /** Every vector-tools control target is at least this many points square. */
 export const VECTOR_TOUCH_TARGET=44;
@@ -44,11 +45,11 @@ export function VectorButton({label,reason,onPress,onBlocked,role="button",check
     onPress={()=>{if(reason!==undefined)onBlocked(reason);else onPress();}}
     {...{className:joinClasses(styled&&"rounded-control border focus-visible:ring-2 focus-visible:ring-focus",
       styled&&(on?"border-primary bg-primary":"border-border bg-surface-raised"))}}
-    style={{minWidth:VECTOR_TOUCH_TARGET,minHeight:VECTOR_TOUCH_TARGET,paddingHorizontal:12,
-      flexDirection:"row",alignItems:"center",justifyContent:"center",gap:6,opacity:disabled?0.5:1}}>
+    style={{minWidth:VECTOR_TOUCH_TARGET,minHeight:VECTOR_TOUCH_TARGET,paddingHorizontal:space[3],
+      flexDirection:"row",alignItems:"center",justifyContent:"center",gap:space[1.5],opacity:disabled?opacityToken[50]:1}}>
     {children}
     <Text numberOfLines={1} {...{className:joinClasses(styled&&(on?"text-on-primary":"text-text"))}}
-      style={{fontSize:13,fontWeight:on?"700":"500"}}>{label}</Text>
+      style={{fontSize:font[13],fontWeight:on?"700":"500"}}>{label}</Text>
   </Pressable>;
 }
 

@@ -17,6 +17,7 @@ import {
  type DocPoint,type DocRect,type SelectRegionRequest,type SelectionKey,type SelectionMode,type SelectionShape,
  type SelectionTool,type ViewMapping,
 } from "./selection-model.ts";
+import {space,opacity} from "@nyc-tron/core/tokens";
 
 /** Props for {@linkcode SelectionMarquee}. The selection itself lives in the host's editor. */
 export interface SelectionMarqueeProps extends Omit<ViewProps,"children"> {
@@ -280,13 +281,13 @@ function SelectionMarqueeBody({
   :disabledReason??toolHint(tool));
 
  const controls=<>
-  <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>
+  <View style={{flexDirection:"row",flexWrap:"wrap",gap:space[2],alignItems:"center"}}>
    <SegmentedControl disabled={disabledReason!==undefined} aria-label="Selection tool" value={tool} unstyled={unstyled}
     options={SELECTION_TOOLS.map(t=>({value:t.tool,label:t.label}))} onChange={onToolChange}/>
    <SegmentedControl disabled={disabledReason!==undefined} aria-label="Selection mode" value={mode} unstyled={unstyled}
     options={SELECTION_MODES.map(m=>({value:m.mode,label:m.label}))} onChange={onModeChange}/>
   </View>
-  <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>
+  <View style={{flexDirection:"row",flexWrap:"wrap",gap:space[2],alignItems:"center"}}>
    <Button size="sm" variant="secondary" title="Select all" unstyled={unstyled}
     disabled={disabledReason!==undefined} onPress={()=>{cancel();onSelectAll();}}/>
    <Button size="sm" variant="secondary" title="Deselect" unstyled={unstyled}
@@ -315,7 +316,7 @@ function SelectionMarqueeBody({
    ]:[{name:"activate",label:"Start keyboard marquee"}]}
    onAccessibilityAction={e=>a11yAction(e.nativeEvent.actionName)}
    style={{width,height,position:"relative",...(Platform.OS==="web"?{cursor:disabledReason?"not-allowed":"crosshair",userSelect:"none"} as object:null),
-    opacity:disabledReason!==undefined?0.6:1}}>
+    opacity:disabledReason!==undefined?opacity[60]:1}}>
    <View pointerEvents="none" style={{position:"absolute",left:0,top:0,width,height}}>{children}</View>
    {regions.map((region,index)=><View key={index} pointerEvents="none" style={{position:'absolute',left:region.x,top:region.y,width:region.width,height:region.height,overflow:'hidden'}}><View pointerEvents="none" style={{position:'absolute',left:-region.x,top:-region.y,width,height}}>
    {selectionBounds?<MarchingAnts rect={viewRect(selectionBounds)} styled={styled} testID="selection-ants"/>:null}

@@ -10,6 +10,7 @@ import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
 import { joinClasses } from "../styles.ts";
 import { dataTableLayout, tableContentWidth, type DataTableLayout } from "./table-layout.ts";
+import { space } from "@nyc-tron/core/tokens";
 
 /** TanStack owns row/column logic; NYC-Tron owns actual RN rendering. */
 const features = tableFeatures({
@@ -133,7 +134,7 @@ export function DataTable<T extends RowData>({
         <>
           {sortingControls.length > 0 ? (
             <ScrollView horizontal style={{ flexGrow: 0, maxHeight: headerHeight + 12 }}
-              contentContainerStyle={{ alignItems: "center", gap: 8, paddingVertical: 6 }}
+              contentContainerStyle={{ alignItems: "center", gap: space[2], paddingVertical: space[1.5] }}
               accessibilityLabel="Sort records">
               {sortingControls.map(header => {
                 const current = header.column.getIsSorted();
@@ -157,7 +158,7 @@ export function DataTable<T extends RowData>({
             </ScrollView>
           ) : null}
           <FlatList data={rows} keyExtractor={row => row.id}
-            contentContainerStyle={{ gap: 10, paddingVertical: 6 }}
+            contentContainerStyle={{ gap: space[2.5], paddingVertical: space[1.5] }}
             style={{ maxHeight: Math.max(0, maxHeight - (sortingControls.length ? headerHeight + 12 : 0)) }}
             renderItem={({ item: row }) => (
               <Pressable
@@ -170,7 +171,7 @@ export function DataTable<T extends RowData>({
               </Pressable>
             )}
             ListEmptyComponent={
-              <View style={{ minHeight: rowHeight, justifyContent: "center", paddingHorizontal: 12 }}>
+              <View style={{ minHeight: rowHeight, justifyContent: "center", paddingHorizontal: space[3] }}>
                 <Text {...{ className: textClass }}>{emptyLabel}</Text>
               </View>
             }
@@ -224,7 +225,7 @@ export function DataTable<T extends RowData>({
                 </Pressable>
               )}
               ListEmptyComponent={
-                <View style={{ minHeight: rowHeight, justifyContent: "center", paddingHorizontal: 12 }}>
+                <View style={{ minHeight: rowHeight, justifyContent: "center", paddingHorizontal: space[3] }}>
                   <Text {...{ className: textClass }}>{emptyLabel}</Text>
                 </View>
               }

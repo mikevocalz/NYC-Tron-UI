@@ -30,6 +30,8 @@ import {
  referenceA11yLabel,referenceEditProblem,resizeFrame,resolveReferenceKey,stepReferenceOpacity,validateReferences,
  type BoardRect,type ReferenceEdit,type ReferenceFit,type ReferenceImage,type ReferencePatch,type ReferencePlacement,
 } from "./reference-board-model.ts";
+import {space,border,opacity,size} from "@nyc-tron/core/tokens";
+import {tokens} from "./ReferenceImageBoard.tokens.ts";
 
 /** Props for {@linkcode ReferenceImageBoard}. The reference list is host state, kept apart from the document. */
 export interface ReferenceImageBoardProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -154,7 +156,7 @@ function ReferenceImageBoardBody({
  return <View {...rest} role="group" aria-label={label} {...{className:joinClasses("gap-3",className)}} style={[{maxWidth:"100%"},style]}>
   <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
   {disabledReason||busy?<Text accessibilityLiveRegion="polite">{disabledReason??"Reference change in progress"}</Text>:null}
-  <View style={{flexDirection:"row",flexWrap:"wrap",gap:12,alignItems:"flex-start"}}>
+  <View style={{flexDirection:"row",flexWrap:"wrap",gap:space[3],alignItems:"flex-start"}}>
    <View testID="reference-board" {...{className:joinClasses("overflow-hidden",styled&&"rounded-control border border-border")}}
     style={{width,height,position:"relative"}}>
     <View pointerEvents="none" style={{position:"absolute",left:0,top:0,width,height}}>{children}</View>
@@ -181,17 +183,17 @@ function ReferenceImageBoardBody({
     })}
    </View>
    {side.length>0?<View testID="reference-side" {...{className:joinClasses("overflow-hidden",styled&&"rounded-control border border-border bg-surface-raised")}}
-    style={{width:sideWidth,maxHeight:height}}><ScrollView contentContainerStyle={{paddingVertical:2}}>
+    style={{width:sideWidth,maxHeight:height}}><ScrollView contentContainerStyle={{paddingVertical:space[0.5]}}>
     {side.map(ref=><Pressable key={ref.id} role="button" aria-label={referenceA11yLabel(ref)}
      aria-selected={ref.id===selectedId} onPress={()=>onSelect(ref.id)} {...{onKeyDown:onWindowKey(ref)}}
      {...{className:joinClasses(styled&&"rounded-control border-2 focus-visible:ring-2 focus-visible:ring-focus",
       styled&&(ref.id===selectedId?"border-accent":"border-transparent"))}}
-     style={{margin:6,height:Math.round((sideWidth-12)*0.75),overflow:"hidden",position:"relative",opacity:ref.opacity}}>
+     style={{margin:space[1.5],height:Math.round((sideWidth-12)*0.75),overflow:"hidden",position:"relative",opacity:ref.opacity}}>
      {picture(ref,sideWidth-16,Math.round((sideWidth-12)*0.75)-4)}
     </Pressable>)}
    </ScrollView></View>:null}
   </View>
-  {references.length===0?<View style={{gap:8,alignItems:"flex-start"}}>
+  {references.length===0?<View style={{gap:space[2],alignItems:"flex-start"}}>
    <Text {...{className:joinClasses(styled&&"text-text text-sm")}}>No reference images yet. Add one to keep it beside your canvas.</Text>
    <Button title="Add reference image" unstyled={unstyled} onPress={()=>onAdd()}/>
   </View>:<Inspector reference={selected} styled={styled} unstyled={unstyled}
@@ -238,7 +240,7 @@ function FloatingWindow({reference:ref,frame,selected,styled,picture,onSelect,on
   style={{position:"absolute",left:frame.x,top:frame.y,width:frame.width,height:frame.height}}>
   <View {...bar.current.panHandlers} testID={"reference-bar-"+ref.id}
    {...{className:joinClasses(styled&&"bg-surface-sunken border-b border-border")}}
-   style={{height:REFERENCE_BAR_HEIGHT,flexDirection:"row",alignItems:"center",paddingStart:12,gap:6,
+   style={{height:REFERENCE_BAR_HEIGHT,flexDirection:"row",alignItems:"center",paddingStart:space[3],gap:space[1.5],
     ...(web?{cursor:stuck?"default":"move",userSelect:"none",touchAction:"none"} as object:null)}}>
    <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}} style={{flex:1,minWidth:0}}>
     {ref.label}</Text>
@@ -246,7 +248,7 @@ function FloatingWindow({reference:ref,frame,selected,styled,picture,onSelect,on
     {ref.locked?"Locked":"Pinned"}</Text>:null}
    <Pressable role="button" aria-label={ref.locked?`Remove ${ref.label}, unavailable`:`Remove ${ref.label}`}
     onPress={onRemove} {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
-    style={{width:44,height:44,alignItems:"center",justifyContent:"center",opacity:ref.locked?0.45:1}}>
+    style={{width:44,height:44,alignItems:"center",justifyContent:"center",opacity:ref.locked?opacity[45]:1}}>
     <View pointerEvents="none" style={{width:14,height:14}}>
      <View {...{className:joinClasses(styled&&"bg-text")}} style={{position:"absolute",left:6,top:-2,width:2,height:18,transform:[{rotate:"45deg"}]}}/>
      <View {...{className:joinClasses(styled&&"bg-text")}} style={{position:"absolute",left:6,top:-2,width:2,height:18,transform:[{rotate:"-45deg"}]}}/>
@@ -259,10 +261,10 @@ function FloatingWindow({reference:ref,frame,selected,styled,picture,onSelect,on
   {/* Resize grip: drag-only (keyboard and screen readers resize with Shift+arrows). */}
   <View {...grip.current.panHandlers} testID={"reference-grip-"+ref.id}
    importantForAccessibility="no-hide-descendants" accessibilityElementsHidden
-   style={{position:"absolute",right:0,bottom:0,width:44,height:44,alignItems:"flex-end",justifyContent:"flex-end",padding:6,
+   style={{position:"absolute",right:0,bottom:0,width:44,height:44,alignItems:"flex-end",justifyContent:"flex-end",padding:space[1.5],
     ...(web?{cursor:stuck?"default":"nwse-resize",touchAction:"none"} as object:null)}}>
    <View pointerEvents="none" {...{className:joinClasses(styled&&"border-text-muted")}}
-    style={{width:12,height:12,borderRightWidth:2,borderBottomWidth:2,opacity:stuck?0.35:1}}/>
+    style={{width:12,height:12,borderRightWidth:border[2],borderBottomWidth:border[2],opacity:stuck?opacity[35]:1}}/>
   </View>
  </View>;
 }
@@ -271,7 +273,7 @@ function Inspector({reference:ref,styled,unstyled,onAdd,onRemove,onChange,onTogg
  reference:ReferenceImage|undefined;styled:boolean;unstyled:boolean;onAdd:(signal?:AbortSignal)=>void|Promise<unknown>;onRemove:()=>void;
  onChange:(edit:ReferenceEdit,patch:ReferencePatch)=>void;onToggleLock:()=>void;
 }){
- if(!ref)return <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>
+ if(!ref)return <View style={{flexDirection:"row",flexWrap:"wrap",gap:space[2],alignItems:"center"}}>
   <Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{flexShrink:1}}>Select a reference to change it.</Text>
   <Button title="Add reference image" variant="secondary" unstyled={unstyled} onPress={()=>onAdd()}/>
  </View>;
@@ -283,20 +285,20 @@ function Inspector({reference:ref,styled,unstyled,onAdd,onRemove,onChange,onTogg
  return <View role="group" aria-label={`${ref.label} settings`}
   {...{className:joinClasses("gap-2",styled&&"rounded-card border border-border bg-surface-raised p-3")}}>
   <Text role="heading" aria-level={3} numberOfLines={1} {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}}>{ref.label}</Text>
-  <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>
+  <View style={{flexDirection:"row",flexWrap:"wrap",gap:space[2],alignItems:"center"}}>
    <SegmentedControl aria-label="Placement" value={ref.placement} disabled={ref.locked} unstyled={unstyled}
     options={REFERENCE_PLACEMENTS} onChange={(placement:ReferencePlacement)=>onChange("placement",{placement})}/>
    <SegmentedControl aria-label="Fit" value={ref.fit} disabled={ref.locked} unstyled={unstyled}
     options={REFERENCE_FITS} onChange={(fit:ReferenceFit)=>onChange("fit",{fit})}/>
   </View>
-  <View style={{flexDirection:"row",alignItems:"center",gap:4}}
+  <View style={{flexDirection:"row",alignItems:"center",gap:space[1]}}
    {...{className:joinClasses(styled&&"self-start rounded-control bg-surface-sunken")}}>
    <StepButton label="Decrease opacity" text="−" styled={styled} onPress={()=>step(-1)}/>
    <View accessible accessibilityRole="adjustable" aria-label="Opacity" aria-valuetext={formatReferenceOpacity(ref.opacity)}
     aria-valuenow={Math.round(ref.opacity*100)} aria-valuemin={10} aria-valuemax={100}
     accessibilityActions={[{name:"increment",label:"Increase"},{name:"decrement",label:"Decrease"}]}
     onAccessibilityAction={e=>step(e.nativeEvent.actionName==="increment"?1:-1)}
-    style={{minWidth:96,minHeight:44,alignItems:"center",justifyContent:"center"}}>
+    style={{minWidth:96,minHeight:size.touch,alignItems:"center",justifyContent:"center"}}>
     <Text {...{className:joinClasses(styled&&"text-text text-sm")}} style={{fontVariant:["tabular-nums"]}}>
      Opacity {formatReferenceOpacity(ref.opacity)}</Text>
    </View>
@@ -307,7 +309,7 @@ function Inspector({reference:ref,styled,unstyled,onAdd,onRemove,onChange,onTogg
    disabledReason={lockedReason} onValueChange={pinned=>onChange("pin",{pinned})}/>
   <SwitchRow label="Lock" unstyled={unstyled} value={ref.locked} detail="Blocks every change until unlocked"
    onValueChange={onToggleLock}/>
-  <View style={{flexDirection:"row",flexWrap:"wrap",gap:8,alignItems:"center"}}>
+  <View style={{flexDirection:"row",flexWrap:"wrap",gap:space[2],alignItems:"center"}}>
    <Button title="Add reference image" variant="secondary" unstyled={unstyled} onPress={()=>onAdd()}/>
    <Button title="Remove" variant="danger" unstyled={unstyled} disabled={ref.locked}
     accessibilityHint={lockedReason} onPress={onRemove}/>
@@ -320,6 +322,6 @@ function StepButton({label,text,styled,onPress}:{label:string;text:string;styled
  return <Pressable role="button" aria-label={label} onPress={onPress}
   {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
   style={{width:44,height:44,alignItems:"center",justifyContent:"center"}}>
-  <Text {...{className:joinClasses(styled&&"text-text")}} style={{fontSize:18}}>{text}</Text>
+  <Text {...{className:joinClasses(styled&&"text-text")}} style={{fontSize:tokens.font18}}>{text}</Text>
  </Pressable>;
 }

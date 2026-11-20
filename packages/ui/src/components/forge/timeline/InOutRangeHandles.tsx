@@ -11,6 +11,7 @@ import {setMark,type InOutRange} from "./edits.ts";
 import {frameForKey} from "./frame-keys.ts";
 import {frameToX,xToFrame,type TimelineViewport} from "./viewport.ts";
 import {useFrameScrub} from "./useFrameScrub.ts";
+import {space,radius} from '@nyc-tron/core/tokens';
 
 /** Props for {@linkcode InOutRangeHandles}. */
 export interface InOutRangeHandlesProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -73,7 +74,7 @@ function MarkHandle({boundary,restorePreview,mark,frame,range,viewport,durationF
     }}
     style={{position:"absolute",left:shownX-HIT/2,top:0,width:HIT,height:HIT,alignItems:"center",justifyContent:"center",...NO_SELECT}}>
     <View pointerEvents="none" {...{className:joinClasses(styled&&"bg-accent")}}
-      style={{width:4,height:30,borderRadius:2}}/>
+      style={{width:4,height:30,borderRadius:radius[2]}}/>
   </View>;
 }
 
@@ -108,7 +109,7 @@ function InOutRangeHandlesBody({
   const common={boundary:useBoundary,restorePreview,range,viewport,durationFrames,rate,onPreview,onCommit,dropFrame,disabled,styled};
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}} style={style}>
     <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
-    {showCommands?<View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
+    {showCommands?<View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:space[2]}}>
       <Button title="Set in" variant="secondary" size="sm" disabled={disabled} {...id("set-in")}
         onPress={()=>onCommit(setMark(range,"in",latestPlayhead.current,durationFrames))}/>
       <Button title="Set out" variant="secondary" size="sm" disabled={disabled} {...id("set-out")}

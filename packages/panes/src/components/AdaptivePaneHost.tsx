@@ -9,6 +9,7 @@ import {
   foldFeaturesFromRegions, foldPostureFromRegions,
   type FoldFeature, type Rect, type ReservedRegion,
 } from "@nyc-tron/core/folds";
+import { scrim, size } from "@nyc-tron/core/tokens";
 
 type Size = { width: number; height: number };
 type Master = PanePlanInput["master"];
@@ -155,9 +156,9 @@ export function AdaptivePaneHost({
           // Dismissal must be inside the modal accessibility subtree.
           style={{
             position: "absolute", zIndex: 1, top: 4,
-            [closeEdge]: 4, minWidth: 44, minHeight: 44,
+            [closeEdge]: 4, minWidth: size.touch, minHeight: size.touch,
             alignItems: "center", justifyContent: "center",
-            backgroundColor: "rgba(0,0,0,0.12)",
+            backgroundColor: scrim[12],
           }}
         ><Text accessibilityElementsHidden importantForAccessibility="no-hide-descendants">×</Text></Pressable>
       ) : null}
@@ -182,7 +183,7 @@ export function AdaptivePaneHost({
           onPress={onDismissMaster}
           disabled={!onDismissMaster}
           style={{ ...rectStyle(plan.detail.rect), zIndex: 2,
-            backgroundColor: "rgba(0,0,0,0.18)" }}
+            backgroundColor: scrim[18] }}
         />
       ) : null}
       {content(master, "Master pane", masterClassName,

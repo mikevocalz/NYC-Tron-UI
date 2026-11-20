@@ -5,6 +5,7 @@ import {useStore} from "zustand";
 import {joinClasses} from "../styles.ts";
 import {InspectorPanelContext,InspectorSectionContext} from "./inspector-context.ts";
 import {matchesQuery,registerRow} from "./inspector-model.ts";
+import {space,radius,border,size} from "@nyc-tron/core/tokens";
 
 /** What a {@linkcode PropertyRow} tells its editor. */
 export interface PropertyEditorState {
@@ -75,17 +76,17 @@ export function PropertyRow({
   const indent=Math.max(0,section.depth-1)*12;
   return <View {...rest} onLayout={event=>{local.current!.setState({width:event.nativeEvent.layout.width});onLayout?.(event);}}
     {...{role:"group",className:joinClasses(className)}} accessibilityLabel={editorLabel}
-    style={[{display:match?"flex":"none",flexDirection:"row",minHeight:44,paddingHorizontal:8,paddingVertical:4},style]}>
+    style={[{display:match?"flex":"none",flexDirection:"row",minHeight:size.touch,paddingHorizontal:space[2],paddingVertical:space[1]},style]}>
     <View style={{width:4+indent}}/>
-    <View style={{flex:1,minWidth:0,flexDirection:stacked?"column":"row",alignItems:stacked?"stretch":"center",gap:stacked?4:8}}>
-    <View style={{flexDirection:"row",alignItems:"center",gap:6,width:stacked?undefined:"38%",minWidth:0}}>
+    <View style={{flex:1,minWidth:0,flexDirection:stacked?"column":"row",alignItems:stacked?"stretch":"center",gap:stacked?space[1]:space[2]}}>
+    <View style={{flexDirection:"row",alignItems:"center",gap:space[1.5],width:stacked?undefined:"38%",minWidth:0}}>
       {override==="overridden"?<View accessibilityElementsHidden importantForAccessibility="no-hide-descendants"
-        {...{className:joinClasses(styled&&"border-accent")}} style={{width:6,height:6,borderRadius:3,borderWidth:3}}/>:null}
+        {...{className:joinClasses(styled&&"border-accent")}} style={{width:6,height:6,borderRadius:radius[3],borderWidth:border[3]}}/>:null}
       <Text numberOfLines={2} {...{className:joinClasses(styled&&"text-sm",styled&&(off||override==="inherited"?"text-text-muted":"text-text"))}}
         style={{flexShrink:1,fontStyle:override==="inherited"?"italic":"normal"}}>{label}</Text>
       {mixed?<Text {...{className:joinClasses(styled&&"rounded-control border border-border text-text-muted text-xs px-1")}}>Mixed</Text>:null}
     </View>
-    <View style={{flex:1,flexDirection:"row",alignItems:"center",gap:4,minWidth:0}}>
+    <View style={{flex:1,flexDirection:"row",alignItems:"center",gap:space[1],minWidth:0}}>
       <View style={{flex:1,minWidth:0}}>{editor}</View>
       {override==="overridden"&&onRevert?<Pressable accessibilityRole="button" accessibilityLabel={"Revert "+label} disabled={off}
         onPress={revert}

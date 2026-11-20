@@ -14,6 +14,8 @@ import {
 } from "./slider-model.ts";
 import {UnitInput} from "./UnitInput.tsx";
 import type {UnitContext} from "./unit-expression.ts";
+import {space,border,opacity,size} from "@nyc-tron/core/tokens";
+import {tokens} from "./RangeSlider.tokens.ts";
 
 export type {RangeThumb,RangeValue} from "./slider-model.ts";
 
@@ -151,9 +153,9 @@ export function RangeSlider({
       onFocus={()=>store.setState({focus:thumb})}
       onBlur={()=>store.setState({focus:undefined})}
       {...{onKeyDown,focusable:!disabled,className:joinClasses(styled&&"focus-visible:outline-none")}}
-      style={{width:44,height:44,marginHorizontal:-22,alignItems:"center",justifyContent:"center",zIndex:1}}>
+      style={{width:44,height:44,marginHorizontal:tokens.spaceN5_5,alignItems:"center",justifyContent:"center",zIndex:1}}>
       <View pointerEvents="none" {...{className:joinClasses(styled&&"border-accent bg-surface-raised",styled&&focus===thumb&&"ring-2 ring-focus")}}
-        style={{width:22,height:22,borderRadius:11,borderWidth:2}}/>
+        style={{width:22,height:22,borderRadius:tokens.radius11,borderWidth:border[2]}}/>
     </View>;
   };
   const entry=(thumb:RangeThumb)=>{
@@ -164,14 +166,14 @@ export function RangeSlider({
       onCommit={next=>commitThumb(thumb,next)} style={{flex:1,minWidth:96}}/>;
   };
   return <View {...rest} accessibilityLabel={label} {...{role:"group",className:joinClasses("gap-1",className)}}
-    style={[{opacity:disabled?0.5:1},style]}>
+    style={[{opacity:disabled?opacity[50]:1},style]}>
     {!hideLabel?<Text {...{className:joinClasses(styled&&"text-text text-sm")}} style={{minHeight:24}}>{label}</Text>:null}
     <Transport disabled={disabled}
       onBegin={point=>{if(!allowed())return;pending.current=point;measure();drag.begin();}}
       onMove={(point,touches)=>{if(touches===1)drag.move(point);else drag.cancel();}}
       onRelease={()=>drag.release()}
       onCancel={()=>drag.cancel()}>
-      <View collapsable={false} style={{minHeight:44,justifyContent:"center",paddingHorizontal:22,
+      <View collapsable={false} style={{minHeight:size.touch,justifyContent:"center",paddingHorizontal:tokens.space5_5,
         ...(Platform.OS==="web"?{cursor:disabled?"default":"pointer",userSelect:"none"}:{})} as object}>
         <View ref={track} collapsable={false} onLayout={measure} style={{height:44,justifyContent:"center"}}>
           <View pointerEvents="none" {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-sunken")}}
@@ -181,16 +183,16 @@ export function RangeSlider({
             <View style={{width:`${lo*100}%`}}/>
             {thumbView("low")}
             <View pointerEvents="none" {...{className:joinClasses(styled&&"border-accent")}}
-              style={{width:`${(hi-lo)*100}%`,height:0,borderTopWidth:4}}/>
+              style={{width:`${(hi-lo)*100}%`,height:0,borderTopWidth:border[4]}}/>
             {thumbView("high")}
           </View>
         </View>
       </View>
     </Transport>
-    <View style={{flexDirection:"row",gap:8,flexWrap:"wrap"}}>
+    <View style={{flexDirection:"row",gap:space[2],flexWrap:"wrap"}}>
       {entry("low")}
       {entry("high")}
-      {unit&&!context?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{alignSelf:"flex-end",paddingBottom:12}}>{unit}</Text>:null}
+      {unit&&!context?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{alignSelf:"flex-end",paddingBottom:space[3]}}>{unit}</Text>:null}
     </View>
   </View>;
 }

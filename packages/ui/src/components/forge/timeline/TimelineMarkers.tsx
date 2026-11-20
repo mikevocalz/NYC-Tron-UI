@@ -17,6 +17,7 @@ import {formatTimecode,type FrameRate} from "../timebase.ts";
 import {framesToSeconds} from "./time.ts";
 import {adjacentMarker,moveMarker,resizeMarker,sortMarkers,type MarkerUpdate,type TimelineMarker} from "./markers.ts";
 import {frameToX,type TimelineViewport} from "./viewport.ts";
+import {space,radius} from '@nyc-tron/core/tokens';
 
 /** Props for {@linkcode TimelineMarkers}. */
 export interface TimelineMarkersProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -119,7 +120,7 @@ function Flag({m,color,snapFrames=[],snapThreshold=0,viewport,rate,durationFrame
       style={{position:"absolute",left:x-HIT/2,top:0,width:HIT,height:HIT,alignItems:"center",...NO_SELECT}}>
       {/* A pennant on a staff. */}
       <View pointerEvents="none" style={{position:"absolute",left:HIT/2-1,top:6,width:2,height:32,...(color?{backgroundColor:color}:{})}} {...{className:ink}}/>
-      <View pointerEvents="none" style={{position:"absolute",left:HIT/2+1,top:6,width:12,height:10,borderTopRightRadius:3,borderBottomRightRadius:3,...(color?{backgroundColor:color}:{})}} {...{className:ink}}/>
+      <View pointerEvents="none" style={{position:"absolute",left:HIT/2+1,top:6,width:12,height:10,borderTopRightRadius:radius[3],borderBottomRightRadius:radius[3],...(color?{backgroundColor:color}:{})}} {...{className:ink}}/>
     </View>
   </>;
 }
@@ -171,7 +172,7 @@ function TimelineMarkersBody({
   };
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}} style={style}>
     <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
-    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
+    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:space[2]}}>
       <Button title="Add marker" variant="secondary" size="sm" disabled={disabled||durationFrames<0} {...id("add")}
         accessibilityHint={`Adds a marker at ${tc(playheadFrame)}`}
         onPress={()=>{const f=Math.min(durationFrames,Math.max(0,Math.round(playheadFrame)));onAdd({frame:f,seconds:framesToSeconds(f,rate)});}}/>
@@ -190,8 +191,8 @@ function TimelineMarkersBody({
         dropFrame={dropFrame} disabled={disabled} styled={styled}/>)}
     </View>
     {selected?<View {...id("editor")} {...{className:joinClasses(styled&&"rounded-card border border-border bg-surface-raised")}}
-      style={{padding:12,gap:10}}>
-      <View style={{flexDirection:"row",flexWrap:"wrap",gap:12}}>
+      style={{padding:space[3],gap:space[2.5]}}>
+      <View style={{flexDirection:"row",flexWrap:"wrap",gap:space[3]}}>
         <TextField id={"marker-name-"+selected.id} maxLength={1024} label="Marker name" value={draft.name} editable={!disabled} style={{minWidth:160}}
           className="grow" onChangeText={name=>{dirty.current.name=true;store.set(d=>({...d,name}));}} onBlur={()=>commitText("name")} onSubmitEditing={()=>commitText("name")}
           onKeyPress={e=>{if(e.nativeEvent.key==="Escape"){dirty.current.name=false;store.set(d=>({...d,name:selected.name}));}}}/>
@@ -200,7 +201,7 @@ function TimelineMarkersBody({
           onKeyPress={e=>{if(e.nativeEvent.key==="Escape"){dirty.current.note=false;store.set(d=>({...d,note:selected.note??""}));}}}/>
       </View>
       {onColorChange?<Select label="Marker color" value={selected.colorId??""} options={[{value:"",label:"Default"},...colors.map(c=>({value:c.id,label:c.label}))]} disabled={disabled} unstyled={unstyled} onValueChange={color=>onColorChange(selected.id,color||undefined)}/>:null}
-      <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
+      <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:space[2]}}>
         <Text {...{className:joinClasses(styled&&"text-text text-sm")}} style={{fontVariant:["tabular-nums"]}}>
           {selected.durationFrames?`${tc(selected.frame)} for ${tc(selected.durationFrames)}`:`At ${tc(selected.frame)}`}
         </Text>

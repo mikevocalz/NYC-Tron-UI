@@ -4,6 +4,7 @@ import type { ReactElement } from "react";
 import type {
   HeadingProps, LinkProps, SemanticBaseProps, SemanticBlockProps, SemanticTextProps,
 } from "./types.ts";
+import { space } from "@nyc-tron/core/tokens";
 
 export { Input } from "./Input.tsx";
 export type {
@@ -34,8 +35,8 @@ const base=StyleSheet.create({
     minHeight:0,minWidth:0,position:"relative"},
   // UA margins, and link color/underline, are reset like RNW Text does; the
   // app's classes restyle them.
-  text:{margin:0},
-  link:{margin:0,color:"inherit",textDecorationLine:"none"},
+  text:{margin:space[0]},
+  link:{margin:space[0],color:"inherit",textDecorationLine:"none"},
 });
 
 function render(tag:string,{className,style,hidden,dataSet,children,...rest}:SemanticBaseProps&{style?:StyleProp<object>},

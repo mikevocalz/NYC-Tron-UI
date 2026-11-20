@@ -1,6 +1,7 @@
 import type { ReactNode,Ref,ComponentRef } from "react";
 import { ActivityIndicator, Pressable, Text, View, type PressableProps } from "react-native";
 import { joinClasses } from "./styles.ts";
+import { size as sizeToken } from "@nyc-tron/core/tokens";
 
 /**
  * Brand-neutral accessible press control. Native Chrome/Fluent/SwiftUI
@@ -56,7 +57,7 @@ export function Button({
         !unstyled&&(targetSize===undefined?sizes[size]:sizes[size].replace(/min-h-\d+/,"")),!unstyled&&selected.root,
         off&&"opacity-50",className
       )}}
-      style={state=>[{minWidth:targetSize??44,minHeight:targetSize??(size==='sm'?40:size==='lg'?48:44)},typeof style==='function'?style(state):style,targetSize===undefined?undefined:{minWidth:targetSize,minHeight:targetSize}]}
+      style={state=>[{minWidth:targetSize??sizeToken.touch,minHeight:targetSize??(size==='sm'?40:size==='lg'?48:sizeToken.touch)},typeof style==='function'?style(state):style,targetSize===undefined?undefined:{minWidth:targetSize,minHeight:targetSize}]}
       // sm draws at 40pt; slop brings the touch target to the 44pt minimum.
       hitSlop={rest.hitSlop??(size==="sm"?2:undefined)}
       disabled={off}

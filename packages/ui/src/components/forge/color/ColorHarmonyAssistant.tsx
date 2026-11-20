@@ -3,6 +3,8 @@ import {joinClasses} from "../../styles.ts";
 import {assertHsv,assertRgba,hsvToRgb,rgbaToHex,type HsvColor,type RgbaColor} from "../color.ts";
 import {compositeOver,contrastRating} from "./contrast.ts";
 import {HARMONY_KINDS,harmonyColors,type HarmonyKind} from "./harmony.ts";
+import {space,font,size} from "@nyc-tron/core/tokens";
+import {tokens} from "./ColorHarmonyAssistant.tokens.ts";
 
 /** Props for {@linkcode ColorHarmonyAssistant}. */
 export interface ColorHarmonyAssistantProps extends Omit<ViewProps,"children"> {
@@ -39,19 +41,19 @@ export function ColorHarmonyAssistant({
   const base=hsvToRgb(value);
   const baseRating=contrastRating(base,contrastBackground);
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-3",styled&&"rounded-control bg-surface-raised p-3",className)}} style={style}>
-    <View accessibilityRole="radiogroup" accessibilityLabel="Harmony rule" style={{flexDirection:"row",flexWrap:"wrap",gap:6}}>
+    <View accessibilityRole="radiogroup" accessibilityLabel="Harmony rule" style={{flexDirection:"row",flexWrap:"wrap",gap:space[1.5]}}>
       {HARMONY_KINDS.map(k=>{
         const on=k.kind===kind;
         return <Pressable key={k.kind} accessibilityRole="radio" aria-checked={on} accessibilityState={{checked:on,disabled}}
           disabled={disabled} onPress={()=>onKindChange(k.kind)}
           {...{className:joinClasses(styled&&"rounded-control border px-3 focus-visible:ring-2 focus-visible:ring-focus",
             styled&&(on?"border-focus bg-surface-sunken":"border-border"))}}
-          style={{minHeight:44,justifyContent:"center"}}>
+          style={{minHeight:size.touch,justifyContent:"center"}}>
           <Text {...{className:joinClasses(styled&&"text-sm",styled&&(on?"text-text font-semibold":"text-text-muted"))}}>{k.label}</Text>
         </Pressable>;
       })}
     </View>
-    <View style={{flexDirection:"row",flexWrap:"wrap",gap:8}}>
+    <View style={{flexDirection:"row",flexWrap:"wrap",gap:space[2]}}>
       {colors.map((c,i)=>{
         const rgb=hsvToRgb(c);
         const hex=rgbaToHex(rgb,false);
@@ -59,7 +61,7 @@ export function ColorHarmonyAssistant({
         return <Pressable key={i} accessibilityRole="button" disabled={disabled} onPress={()=>onPick(c)}
           accessibilityLabel={`${i===0?"Base color":"Use"} ${hex}, contrast ${rating.ratio} to 1, ${level(rating)}`}
           {...{className:joinClasses(styled&&"rounded-control border border-border p-1 focus-visible:ring-2 focus-visible:ring-focus")}}
-          style={{width:76,gap:4,alignItems:"stretch"}}>
+          style={{width:76,gap:space[1],alignItems:"stretch"}}>
           <View pointerEvents="none" {...{className:joinClasses(styled&&"rounded-control")}} style={{height:44,backgroundColor:rgbaToHex(compositeOver(rgb,contrastBackground),false)}}/>
           <Text {...{className:joinClasses(styled&&"text-text text-xs")}} style={{fontVariant:["tabular-nums"]}}>{hex}</Text>
           <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{fontVariant:["tabular-nums"]}}>
@@ -69,9 +71,9 @@ export function ColorHarmonyAssistant({
       })}
     </View>
     <View {...{className:joinClasses(styled&&"rounded-control border border-border")}}
-      style={{backgroundColor:background,padding:12,gap:4}}>
-      <Text style={{color:rgbaToHex(base),fontSize:24,fontWeight:"700"}}>Aa Sample heading</Text>
-      <Text style={{color:rgbaToHex(base),fontSize:15}}>Body text in the base color on this background.</Text>
+      style={{backgroundColor:background,padding:space[3],gap:space[1]}}>
+      <Text style={{color:rgbaToHex(base),fontSize:tokens.font24,fontWeight:"700"}}>Aa Sample heading</Text>
+      <Text style={{color:rgbaToHex(base),fontSize:font[15]}}>Body text in the base color on this background.</Text>
     </View>
     <Text accessibilityLiveRegion="polite" {...{className:joinClasses(styled&&"text-text text-sm")}} style={{fontVariant:["tabular-nums"]}}>
       {`Base on background: ${baseRating.ratio}:1, ${level(baseRating)}.`}

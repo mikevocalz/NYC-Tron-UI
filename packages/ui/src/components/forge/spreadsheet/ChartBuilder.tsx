@@ -12,6 +12,7 @@ import {
   type ChartCellValues, type SheetChartData, type SheetChartKind, type SheetChartSpec,
 } from "./chart-model.ts";
 import { PanelCheckbox, PanelChoices, PanelField, PanelHeading } from "./panel-controls.tsx";
+import { space, radius } from '@nyc-tron/core/tokens';
 
 /**
  * Controlled chart builder: type gallery, data range, series orientation,
@@ -48,8 +49,8 @@ const KIND_LABEL: Record<SheetChartKind, string> = { line: "Line", column: "Colu
 function KindGlyph({ kind, unstyled }: { kind: SheetChartKind; unstyled: boolean }) {
   const ink = !unstyled ? "bg-primary" : undefined;
   if (kind === "column") {
-    return <View aria-hidden style={{ width: 36, height: 24, flexDirection: "row", alignItems: "flex-end", gap: 4 }}>
-      {[10, 20, 14, 24].map((h, i) => <View key={i} {...{ className: ink }} style={{ width: 6, height: h, borderRadius: 1 }} />)}
+    return <View aria-hidden style={{ width: 36, height: 24, flexDirection: "row", alignItems: "flex-end", gap: space[1] }}>
+      {[10, 20, 14, 24].map((h, i) => <View key={i} {...{ className: ink }} style={{ width: 6, height: h, borderRadius: radius[1] }} />)}
     </View>;
   }
   if (kind === "area") {
@@ -62,7 +63,7 @@ function KindGlyph({ kind, unstyled }: { kind: SheetChartKind; unstyled: boolean
   const strokes = [{ x: 0, y: 14, len: 14, deg: -30 }, { x: 12, y: 10, len: 13, deg: 25 }, { x: 23, y: 8, len: 15, deg: -45 }];
   return <View aria-hidden style={{ width: 36, height: 24 }}>
     {strokes.map((s, i) => <View key={i} {...{ className: ink }}
-      style={{ position: "absolute", left: s.x, top: s.y, width: s.len, height: 2, borderRadius: 1, transform: [{ rotate: `${s.deg}deg` }] }} />)}
+      style={{ position: "absolute", left: s.x, top: s.y, width: s.len, height: 2, borderRadius: radius[1], transform: [{ rotate: `${s.deg}deg` }] }} />)}
   </View>;
 }
 
@@ -103,12 +104,12 @@ function ChartBuilderBody({actionError,disabledReason,disabled=false,scope='char
     (data.skippedCells ? `; ${data.skippedCells} ${data.skippedCells === 1 ? "cell has" : "cells have"} no number and ${data.skippedCells === 1 ? "is" : "are"} left out.` : ".");
 
   return <View {...props} {...{ className: joinClasses(!unstyled && "rounded-card border border-border bg-surface-raised", className) }}
-    style={[{ padding: 16, gap: 16 }, props.style]}>
+    style={[{ padding: space[4], gap: space[4] }, props.style]}>
     <PanelHeading title="Chart" unstyled={unstyled} />
     <PanelChoices disabled={disabled} label="Chart type" value={spec.kind} unstyled={unstyled}
       choices={SHEET_CHART_KINDS.map(kind => ({ value: kind, label: KIND_LABEL[kind], glyph: <KindGlyph kind={kind} unstyled={unstyled} /> }))}
       onChange={kind => set({ kind })} />
-    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12, alignItems: "flex-end" }}>
+    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[3], alignItems: "flex-end" }}>
       <PanelField disabled={disabled} label="Data range" value={spec.range} placeholder="A1:C12" unstyled={unstyled}
         hint={`Up to ${MAX_CHART_CELLS} cells on this sheet`} error={rangeError}
         onChange={range => set({ range })} />
@@ -124,7 +125,7 @@ function ChartBuilderBody({actionError,disabledReason,disabled=false,scope='char
       <PanelCheckbox disabled={disabled} unstyled={unstyled} checked={spec.hasXValues} onChange={hasXValues => set({ hasXValues })}
         label={byColumns ? "First column holds x values" : "First row holds x values"} />
     </View>
-    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 12 }}>
+    <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space[3] }}>
       <PanelField disabled={disabled} label="Title" value={spec.title ?? ""} unstyled={unstyled} autoCapitalize="sentences"
         onChange={title => set({ title })} />
       <PanelField disabled={disabled} label="X axis title" value={spec.xAxisLabel ?? ""} unstyled={unstyled} autoCapitalize="sentences"
@@ -134,7 +135,7 @@ function ChartBuilderBody({actionError,disabledReason,disabled=false,scope='char
     </View>
     {data && points > 0 && renderPreview ? <View accessibilityLabel={spec.title || `${KIND_LABEL[spec.kind]} chart preview`}
       {...{ className: joinClasses(!unstyled && "rounded-control border border-border bg-surface-sunken") }}
-      style={{ padding: 8 }}>
+      style={{ padding: space[2] }}>
       {renderPreview(spec, data)}
     </View> : null}
     <Text accessibilityLiveRegion="polite" {...{ className: muted }}>{summary}</Text>

@@ -1,5 +1,6 @@
 import { View } from "react-native";
 import { joinClasses } from "../styles.ts";
+import { space, radius, border } from "@nyc-tron/core/tokens";
 
 /**
  * Status and close marks drawn with views, so they need no icon font, survive
@@ -23,12 +24,12 @@ export function StatusGlyph({tone}:{tone:StatusTone}) {
       {...{className:joinClasses("h-[18px] w-[18px] items-center justify-center rounded-full border",FACE[tone])}}>
       {tone==="success" ? (
         // Two bars at right angles: the short stroke leads the long one.
-        <View style={{width:9,height:6,marginTop:-2,transform:[{rotate:"-45deg"}]}}
+        <View style={{width:9,height:6,marginTop:-space[0.5],transform:[{rotate:"-45deg"}]}}
           {...{className:"border-b-2 border-l-2 border-surface-raised"}}/>
       ) : (
-        <View style={{alignItems:"center",gap:2,flexDirection:tone==="danger"?"column":"column-reverse"}}>
-          <View style={{width:0,height:7,borderLeftWidth:2,borderRadius:1}} {...{className:"border-surface-raised"}}/>
-          <View style={{width:2,height:2,borderWidth:1,borderRadius:1}} {...{className:"border-surface-raised"}}/>
+        <View style={{alignItems:"center",gap:space[0.5],flexDirection:tone==="danger"?"column":"column-reverse"}}>
+          <View style={{width:0,height:7,borderLeftWidth:border[2],borderRadius:radius[1]}} {...{className:"border-surface-raised"}}/>
+          <View style={{width:2,height:2,borderWidth:border[1],borderRadius:radius[1]}} {...{className:"border-surface-raised"}}/>
         </View>
       )}
     </View>

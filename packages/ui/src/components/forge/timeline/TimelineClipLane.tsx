@@ -24,6 +24,7 @@ import {
 } from "./trim-modes.ts";
 import {positionToSeconds} from "./time.ts";
 import {frameToX,scrollBy,visibleRange,zoomAt,type TimelineViewport} from "./viewport.ts";
+import {space} from '@nyc-tron/core/tokens';
 
 /**
  * What a press or drag on a clip does. `razor` splits at the pressed frame
@@ -247,8 +248,8 @@ function ClipView(p:ClipViewProps){
         else if(a==="toggleSelect")p.onToggleSelect?.(clip.id);
       }}
       style={{position:"absolute",left,top:4,width,height,zIndex:selected?2:1,overflow:"visible",...NO_SELECT}}>
-      <View pointerEvents="none" style={{flex:1,overflow:"hidden",paddingHorizontal:6,paddingVertical:4,gap:2}}>
-        <View style={{flexDirection:"row",justifyContent:"space-between",gap:6}}>
+      <View pointerEvents="none" style={{flex:1,overflow:"hidden",paddingHorizontal:space[1.5],paddingVertical:space[1],gap:space[0.5]}}>
+        <View style={{flexDirection:"row",justifyContent:"space-between",gap:space[1.5]}}>
           <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text text-xs font-semibold")}} style={{flexShrink:1}}>{name}</Text>
           {selected&&width>96?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{fontVariant:["tabular-nums"]}}>{seconds.toFixed(1)+" s"}</Text>:null}
         </View>

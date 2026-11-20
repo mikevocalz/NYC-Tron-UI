@@ -20,6 +20,7 @@ import {
   type GradientPaint,type Point,type ViewTransform,
 } from "./vector-types.ts";
 import {CanvasKnob,LinePiece,NoticeLine,VectorButton,type CanvasKeyEvent,type DragModifiers} from "./vector-controls.tsx";
+import {space,radius,border} from '@nyc-tron/core/tokens';
 
 /** Props for {@linkcode GradientOnCanvasHandles}. The paint and stop selection are owned by the host. */
 export interface GradientOnCanvasHandlesProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -278,7 +279,7 @@ function GradientOnCanvasHandlesBody({
     const round=handle==="radius"||handle==="focal";
     return <View pointerEvents="none"
       {...{className:joinClasses(styled&&"bg-surface-raised",styled&&!accentColor&&"border-accent")}}
-      style={{width:14,height:14,borderWidth:handle==="focal"?3:2,borderRadius:round?7:2,
+      style={{width:14,height:14,borderWidth:handle==="focal"?border[3]:border[2],borderRadius:round?radius[7]:radius[2],
         ...(accentColor?{borderColor:accentColor}:null)}}/>;
   };
   return <View {...rest} {...{onKeyDown:onRootKey,className:joinClasses("gap-2",className)}}
@@ -335,15 +336,15 @@ function GradientOnCanvasHandlesBody({
           onBegin={()=>begin(target)} onMove={dragTo} onRelease={release} onCancel={cancelDrag}>
           <View pointerEvents="none"
             {...{className:joinClasses(styled&&"border-surface-raised")}}
-            style={{width:isSel?20:16,height:isSel?20:16,borderRadius:4,borderWidth:2,backgroundColor:rgbaToCss(stop.color)}}>
+            style={{width:isSel?20:16,height:isSel?20:16,borderRadius:radius[4],borderWidth:border[2],backgroundColor:rgbaToCss(stop.color)}}>
             <View {...{className:joinClasses(styled&&(isSel?"border-focus":"border-text-muted"))}}
-              style={{position:"absolute",left:-4,top:-4,right:-4,bottom:-4,borderRadius:6,borderWidth:isSel?2:1}}/>
+              style={{position:"absolute",left:-4,top:-4,right:-4,bottom:-4,borderRadius:radius[6],borderWidth:isSel?border[2]:border[1]}}/>
           </View>
         </CanvasKnob>;
       })}
     </View>
     {showCommands&&!geometryOnly?<View accessibilityRole="toolbar" aria-label="Gradient commands"
-      style={{flexDirection:"row",flexWrap:"wrap",gap:6,maxWidth:Math.max(width,320)}}>
+      style={{flexDirection:"row",flexWrap:"wrap",gap:space[1.5],maxWidth:Math.max(width,320)}}>
       <VectorButton label="Add stop" styled={styled} onBlocked={block} onPress={addBetween}
         reason={availabilityReason(addStopAvailability(shown))}/>
       <VectorButton label="Delete stop" styled={styled} onBlocked={block} onPress={()=>deleteStop(latest.current.selectedStop)}

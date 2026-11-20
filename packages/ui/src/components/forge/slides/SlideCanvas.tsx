@@ -9,6 +9,7 @@ import {officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
 import {SlideObjectView} from "./SlideThumbnail.tsx";
 import {SLIDE_SNAP_POINTS,fitScale,nudge,objectLabel,resizeFromCorner,snapRect,stepRotation,type SnapGuide} from "./canvas-model.ts";
 import {SLIDE_DEFAULT_SIZE,rgbaCss,type SlideObject,type SlideSize,type SlideSummary} from "./slide-model.ts";
+import {space,radius} from '@nyc-tron/core/tokens';
 
 /** Props for {@linkcode SlideCanvas}. Every edit is reported once, on release or commit; the slide is controlled. */
 export interface SlideCanvasProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -200,11 +201,11 @@ function SlideCanvasBody({boundary,actionError,disabledReason,disabled=false,
             onKeyPress={e=>{if(e.nativeEvent.key==="Escape")finishEditing(false);}}
             {...{className:joinClasses(styled&&"border-2 border-focus bg-surface-raised text-text")}}
             style={{position:"absolute",left:o.x*scale,top:o.y*scale,width:Math.max(o.w*scale,120),minHeight:Math.max(o.h*scale,44),
-              fontSize:Math.max(14,(o.fontSize??18)*scale),padding:4}}/>:null}
+              fontSize:Math.max(14,(o.fontSize??18)*scale),padding:space[1]}}/>:null}
           {on&&onResizeObject&&!editing?<View {...sizePan.current!.panHandlers} accessibilityElementsHidden importantForAccessibility="no-hide-descendants"
             style={{position:"absolute",left:(shown.x+shown.w)*scale-22,top:(shown.y+shown.h)*scale-22,width:44,height:44,
               alignItems:"center",justifyContent:"center"}}>
-            <View {...{className:joinClasses(styled&&"border-2 border-focus bg-surface-raised")}} style={{width:12,height:12,borderRadius:2}}/>
+            <View {...{className:joinClasses(styled&&"border-2 border-focus bg-surface-raised")}} style={{width:12,height:12,borderRadius:radius[2]}}/>
           </View>:null}
         </View>;
       })}

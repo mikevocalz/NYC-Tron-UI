@@ -3,6 +3,7 @@ import { Text, View, type LayoutChangeEvent, type ViewProps } from "react-native
 import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
 import { joinClasses } from "../styles.ts";
+import { space } from "@nyc-tron/core/tokens";
 
 export interface KeyValueItem {
   key:string;
@@ -62,7 +63,7 @@ export function KeyValueList({
         const missing=item.value===null||item.value===undefined;
         return (
           <View key={item.key} role="listitem"
-            style={{width:twoUp?"50%":"100%",paddingEnd:twoUp?16:0}}
+            style={{width:twoUp?"50%":"100%",paddingEnd:twoUp?space[4]:space[0]}}
             {...{className:joinClasses(styled&&"gap-0.5")}}>
             <Text {...{className:joinClasses(styled&&"text-xs leading-4 text-text-muted",labelClassName)}}>{item.label}</Text>
             <View {...{className:"flex-row items-center gap-2"}}>

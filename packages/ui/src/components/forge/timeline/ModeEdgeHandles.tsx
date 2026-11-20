@@ -9,6 +9,7 @@ import type {RippleScope,TimelineClip,TimelineEdit,TimelineTrack} from "./edits.
 import {
   rippleTrimEdit,rippleTrimPreview,rollEdit,rollPair,rollPreview,type TrimModePreview,
 } from "./trim-modes.ts";
+import {space,radius} from "@nyc-tron/core/tokens";
 
 /** Props for {@linkcode ModeEdgeHandles}. */
 export interface ModeEdgeHandlesProps {
@@ -95,9 +96,9 @@ function Edge({edge,...p}:ModeEdgeHandlesProps&{edge:"head"|"tail"}){
     style={{position:"absolute",top:0,height:Math.max(HIT,p.height),width:HIT,
       ...(edge==="head"?{left:-HIT/2}:{right:-HIT/2}),alignItems:"center",justifyContent:"center",zIndex:2,...NO_SELECT}}>
     {/* Roll draws a bar on both sides of the cut; ripple a bracket that opens toward the clip. */}
-    <View pointerEvents="none" style={{flexDirection:"row",gap:2,alignItems:"center",direction:"ltr"}}>
-      {p.mode==="roll"||edge==="tail"?<View {...{className:joinClasses(styled&&"bg-accent")}} style={{width:4,height:Math.max(20,p.height-12),borderRadius:2}}/>:null}
-      {p.mode==="roll"||edge==="head"?<View {...{className:joinClasses(styled&&"bg-accent")}} style={{width:4,height:Math.max(20,p.height-12),borderRadius:2}}/>:null}
+    <View pointerEvents="none" style={{flexDirection:"row",gap:space[0.5],alignItems:"center",direction:"ltr"}}>
+      {p.mode==="roll"||edge==="tail"?<View {...{className:joinClasses(styled&&"bg-accent")}} style={{width:4,height:Math.max(20,p.height-12),borderRadius:radius[2]}}/>:null}
+      {p.mode==="roll"||edge==="head"?<View {...{className:joinClasses(styled&&"bg-accent")}} style={{width:4,height:Math.max(20,p.height-12),borderRadius:radius[2]}}/>:null}
     </View>
   </View>;
 }

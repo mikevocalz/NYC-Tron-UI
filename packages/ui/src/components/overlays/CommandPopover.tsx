@@ -5,6 +5,8 @@ import {cycleFocusTarget} from "./focus-cycle.ts";
 import {useRestoreFocus} from "./focus-restore.ts";
 import {joinClasses} from "../styles.ts";
 import type { CommandMenuItem } from "@nyc-tron/core/overlays";
+import { space, font, opacity } from "@nyc-tron/core/tokens";
+import { tokens } from "./CommandPopover.tokens.ts";
 export type { CommandMenuItem } from "@nyc-tron/core/overlays";
 export interface CommandPopoverProps{
  scope?:string;
@@ -107,12 +109,12 @@ export function CommandPopover({scope="commands",visible,onDismiss,onSelect,anch
             onPress={()=>select(item.id)}
             {...{onKeyDown:(event:KeyEvent)=>onItemKey(event,item.id)}}
             {...{className:joinClasses(styled&&"border-b border-border focus-visible:bg-primary/10")}}
-            style={{minHeight:56,paddingHorizontal:12,paddingVertical:7,justifyContent:"center",
-              opacity:item.disabled?0.4:1,...(styled&&borderColor?{borderColor}:null)}}>
+            style={{minHeight:56,paddingHorizontal:space[3],paddingVertical:tokens.space1_75,justifyContent:"center",
+              opacity:item.disabled?opacity[40]:1,...(styled&&borderColor?{borderColor}:null)}}>
             <Text {...{className:joinClasses(styled&&(item.danger?"text-danger":"text-text"))}}
               style={{fontWeight:"600",...(styled&&(item.danger?dangerColor:textColor)?{color:item.danger?dangerColor:textColor}:null)}}>{item.label}</Text>
             {item.description?<Text numberOfLines={2} {...{className:joinClasses(styled&&"text-text-muted")}}
-              style={{fontSize:12,...(styled&&mutedTextColor?{color:mutedTextColor}:null)}}>{item.description}</Text>:null}
+              style={{fontSize:font[12],...(styled&&mutedTextColor?{color:mutedTextColor}:null)}}>{item.description}</Text>:null}
           </Pressable>)}
         </ScrollView>
       </View>

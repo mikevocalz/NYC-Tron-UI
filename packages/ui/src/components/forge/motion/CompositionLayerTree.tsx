@@ -5,6 +5,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {useOwnedAction} from '../../shell/useOwnedAction.ts';
 import {joinClasses} from '../../styles.ts';
 import {compositionAncestors,flattenCompositionLayers,validateCompositionLayers,type CompositionLayer,type CompositionTreeRow} from './composition-tree.ts';
+import {space,size} from '@nyc-tron/core/tokens';
 export type {CompositionLayer,CompositionLayerKind} from './composition-tree.ts';
 export interface CompositionLayerTreeProps extends Omit<ViewProps,'children'> {
  readonly scope:string;readonly revision?:string|number;readonly compositionId:string;readonly layers:readonly CompositionLayer[];readonly expandedIds:readonly string[];readonly selectedId:string|null;
@@ -21,13 +22,13 @@ export function CompositionLayerTree({scope,revision=0,compositionId,layers,expa
  useLayoutEffect(()=>{if(!reveal.current)return;const index=rows.findIndex(row=>row.layer.id===reveal.current);if(index<0)return;reveal.current=null;list.current?.scrollToIndex({index,animated:false});},[rows]);
  const expand=(id:string)=>{if(disabled)return;onExpandedChange(expandedIds.includes(id)?expandedIds.filter(value=>value!==id):[...expandedIds,id]);};
  const revealSelected=()=>{if(disabled||!selectedId||!layers.some(layer=>layer.id===selectedId))return;reveal.current=selectedId;const next=[...new Set([...expandedIds,...compositionAncestors(layers,selectedId)])];onExpandedChange(next);const index=rows.findIndex(row=>row.layer.id===selectedId);if(index>=0){reveal.current=null;list.current?.scrollToIndex({index,animated:false});}};
- return <View {...props} style={[{gap:8},props.style]}>
+ return <View {...props} style={[{gap:space[2]},props.style]}>
   <Button title="Reveal selected composition layer" disabled={disabled||!selectedId||!layers.some(layer=>layer.id===selectedId)} unstyled={unstyled} onPress={revealSelected}/>
   <FlatList ref={list} data={rows} keyExtractor={row=>row.layer.id} style={{height}} initialNumToRender={8} windowSize={5} getItemLayout={(_,index)=>({length:ROW,offset:ROW*index,index})} extraData={[selectedId,expandedIds,pending,disabled]} accessibilityLabel="Composition layer tree"
    ListEmptyComponent={<Text {...{className:joinClasses(!unstyled&&'text-text-muted')}}>This composition has no layers</Text>}
-   renderItem={({item})=>{const layer=item.layer,expanded=expandedIds.includes(layer.id);return <View style={{height:ROW,paddingLeft:Math.min(item.depth,6)*12,flexDirection:'row',alignItems:'center',gap:4}}>
+   renderItem={({item})=>{const layer=item.layer,expanded=expandedIds.includes(layer.id);return <View style={{height:ROW,paddingLeft:Math.min(item.depth,6)*12,flexDirection:'row',alignItems:'center',gap:space[1]}}>
     {layer.kind==='composition'?<Button title={expanded?'−':'+'} accessibilityLabel={`${expanded?'Collapse':'Expand'} ${layer.name}`} disabled={disabled||!item.hasChildren} unstyled={unstyled} onPress={()=>expand(layer.id)}/>:<View style={{width:44}}/>}
-    <Pressable accessibilityRole="button" accessibilityLabel={`Select ${layer.name}, ${layer.kind}, level ${item.depth+1}${layer.locked?', locked':''}`} accessibilityState={{selected:layer.id===selectedId,disabled}} disabled={disabled} onPress={()=>{if(!disabled)onSelect(layer.id);}} style={{flex:1,minWidth:44,minHeight:60,justifyContent:'center',gap:2}}>
+    <Pressable accessibilityRole="button" accessibilityLabel={`Select ${layer.name}, ${layer.kind}, level ${item.depth+1}${layer.locked?', locked':''}`} accessibilityState={{selected:layer.id===selectedId,disabled}} disabled={disabled} onPress={()=>{if(!disabled)onSelect(layer.id);}} style={{flex:1,minWidth:size.touch,minHeight:60,justifyContent:'center',gap:space[0.5]}}>
      <Text numberOfLines={2} {...{className:joinClasses(!unstyled&&'text-text')}}>{layer.name}</Text><Text numberOfLines={1} {...{className:joinClasses(!unstyled&&'text-text-muted')}}>{`${layer.kind} · ${Math.round(layer.opacity*100)}%${layer.locked?' · locked':''}`}</Text>
     </Pressable>
     <Button title={layer.visible?'Hide':'Show'} accessibilityLabel={`${layer.visible?'Hide':'Show'} ${layer.name}`} disabled={disabled||pending} unstyled={unstyled} onPress={()=>{if(!disabled&&!pending)void action.run(layer.id,signal=>onVisibilityChange(layer.id,!layer.visible,signal));}}/>

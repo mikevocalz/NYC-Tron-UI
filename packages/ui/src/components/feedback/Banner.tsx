@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Pressable, Text, View, type ViewProps } from "react-native";
 import { joinClasses } from "../styles.ts";
 import { CloseGlyph, StatusGlyph, type StatusTone } from "./glyphs.tsx";
+import { space } from "@nyc-tron/core/tokens";
 
 export type BannerTone=StatusTone;
 
@@ -65,7 +66,7 @@ export function Banner({
         <Pressable onPress={onDismiss} accessibilityRole="button" accessibilityLabel={dismissLabel}
           // Negative margins keep the 44pt target from growing the banner; the
           // cross lands centered on the title's first line.
-          style={{marginVertical:-10}}
+          style={{marginVertical:-space[2.5]}}
           {...{className:joinClasses("min-h-11 min-w-11 items-center justify-center",
             styled&&"rounded-control hover:bg-surface-sunken active:opacity-70 focus-visible:ring-2 focus-visible:ring-focus")}}>
           <CloseGlyph/>

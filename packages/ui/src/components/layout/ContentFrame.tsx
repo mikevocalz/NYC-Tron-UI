@@ -1,4 +1,5 @@
 import { View, type ViewProps } from "react-native";
+import { space } from "@nyc-tron/core/tokens";
 
 export interface ContentFrameProps extends ViewProps {
   /** App-chosen reading/form/media width in logical layout units. */
@@ -21,7 +22,7 @@ export function ContentFrame({
   }
   return <View {...rest} style={[{
     width: "100%", minWidth: 0, maxWidth, flexShrink: 1,
-    marginStart: align === "start" ? 0 : "auto",
-    marginEnd: align === "end" ? 0 : "auto",
+    marginStart: align === "start" ? space[0] : "auto",
+    marginEnd: align === "end" ? space[0] : "auto",
   }, style]}>{children}</View>;
 }

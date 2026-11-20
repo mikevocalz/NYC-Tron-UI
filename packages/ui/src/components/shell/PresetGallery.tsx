@@ -5,6 +5,8 @@ import {useStore} from "zustand";
 import {joinClasses} from "../styles.ts";
 import {nodeIsRTL,shellKey} from "./shell-keys.ts";
 import {filterPresets,galleryColumns,gridFocusTarget,validatePresets,type PresetFilter} from "./preset-model.ts";
+import {space,radius,border} from "@nyc-tron/core/tokens";
+import {tokens} from "./PresetGallery.tokens.ts";
 
 export type {PresetFilter} from "./preset-model.ts";
 
@@ -101,7 +103,7 @@ export function PresetGallery({
     </Pressable>;
   };
   return <View {...rest} {...{className:joinClasses("gap-2",className)}} style={style}>
-    {onFavoriteChange&&onFilterChange?<View style={{flexDirection:"row",gap:4}} accessibilityLabel={label+" filter"} {...{role:"group"}}>
+    {onFavoriteChange&&onFilterChange?<View style={{flexDirection:"row",gap:space[1]}} accessibilityLabel={label+" filter"} {...{role:"group"}}>
       {filterButton("all","All")}
       {filterButton("favorites","Favorites")}
     </View>:null}
@@ -120,11 +122,11 @@ export function PresetGallery({
             {...{className:joinClasses("min-h-11 gap-1",styled&&"rounded-card focus-visible:ring-2 focus-visible:ring-focus",
               styled&&(selected?"border-2 border-focus bg-primary/10":"hover:bg-surface-sunken"))}}
             // Unselected tiles draw no border (forced colors would paint a transparent one); padding keeps the size.
-            style={{padding:selected&&styled?2:4}}>
+            style={{padding:selected&&styled?space[0.5]:space[1]}}>
             <View pointerEvents="none" {...{className:joinClasses(styled&&"rounded-control bg-surface-sunken")}}
               style={{aspectRatio:4/3,overflow:"hidden",alignItems:"stretch"}}>{preset.preview}</View>
             <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-sm",styled&&(selected?"text-text font-semibold":"text-text"))}}
-              style={{paddingHorizontal:4,paddingBottom:2}}>{preset.name}</Text>
+              style={{paddingHorizontal:space[1],paddingBottom:space[0.5]}}>{preset.name}</Text>
           </Pressable>
           {onFavoriteChange?<Pressable accessibilityRole="button"
             accessibilityLabel={(preset.favorite?"Remove ":"Add ")+preset.name+(preset.favorite?" from favorites":" to favorites")}
@@ -137,7 +139,7 @@ export function PresetGallery({
         </View>;
       })}
     </View>
-    {!shown.length?<View style={{paddingVertical:16,gap:4}}>
+    {!shown.length?<View style={{paddingVertical:space[4],gap:space[1]}}>
       <Text {...{className:joinClasses(styled&&"text-text text-sm")}}>{filter==="favorites"?"No favorite presets yet.":"No presets."}</Text>
       {filter==="favorites"?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>
         Use the bookmark on a preset to keep it here.</Text>:null}
@@ -149,11 +151,11 @@ export function PresetGallery({
 function Bookmark({on,styled}:{on:boolean;styled:boolean}){
   return <View pointerEvents="none" style={{width:22,height:22,alignItems:"center",justifyContent:"center"}}>
     <View {...{className:joinClasses(styled&&"border-text bg-surface-raised")}}
-      style={{width:14,height:18,borderWidth:1.5,borderBottomWidth:0,borderTopLeftRadius:2,borderTopRightRadius:2,overflow:"hidden"}}>
-      {on?<View {...{className:joinClasses(styled&&"border-accent")}} style={{position:"absolute",left:1.5,right:1.5,top:1.5,height:0,borderTopWidth:13}}/>:null}
+      style={{width:14,height:18,borderWidth:border[1.5],borderBottomWidth:border[0],borderTopLeftRadius:radius[2],borderTopRightRadius:radius[2],overflow:"hidden"}}>
+      {on?<View {...{className:joinClasses(styled&&"border-accent")}} style={{position:"absolute",left:1.5,right:1.5,top:1.5,height:0,borderTopWidth:tokens.border13}}/>:null}
     </View>
     {/* The notch: a square turned 45 degrees, showing the surface through the ribbon's tail. */}
     <View {...{className:joinClasses(styled&&"border-text bg-surface-raised")}}
-      style={{position:"absolute",bottom:1,width:8,height:8,borderLeftWidth:1.5,borderTopWidth:1.5,transform:[{rotate:"45deg"}]}}/>
+      style={{position:"absolute",bottom:1,width:8,height:8,borderLeftWidth:border[1.5],borderTopWidth:border[1.5],transform:[{rotate:"45deg"}]}}/>
   </View>;
 }

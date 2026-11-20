@@ -18,6 +18,7 @@ import {
   colorChanged,colorDialogTitle,comparisonContrast,comparisonLabel,describeColor,dialogKeyIntent,
   draftFromRgba,draftWithAlpha,revertDraft,type DialogKeyTarget,
 } from "./color-picker-dialog-model.ts";
+import {space} from "@nyc-tron/core/tokens";
 
 /** Props for {@linkcode ColorPickerDialog}. Every color is controlled by the host. */
 export interface ColorPickerDialogProps {
@@ -145,7 +146,7 @@ export function ColorPickerDialog({
       </View>:null}
       <View pointerEvents="none" style={{position:"absolute",left:0,right:0,top:0,bottom:0,backgroundColor:rgbaToHex(hsvToRgb(color))}}/>
     </>;
-    const caption=<View style={{flexDirection:"row",justifyContent:"space-between",gap:6,paddingTop:6}}>
+    const caption=<View style={{flexDirection:"row",justifyContent:"space-between",gap:space[1.5],paddingTop:space[1.5]}}>
       <Text {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}}>{side==="original"?"Original":"New"}</Text>
       <Text {...{className:muted}} style={{fontVariant:["tabular-nums"]}}>{rgbaToHex(hsvToRgb(color),color.alpha<1)}</Text>
     </View>;
@@ -164,7 +165,7 @@ export function ColorPickerDialog({
   };
 
   return <Modal visible={visible} transparent animationType="fade" onRequestClose={cancel} statusBarTranslucent>
-    <View style={{flex:1,alignItems:"center",justifyContent:"center",padding:16}}>
+    <View style={{flex:1,alignItems:"center",justifyContent:"center",padding:space[4]}}>
       {/* The backdrop is a mouse and touch target only; Cancel and Escape are the accessible ways out. */}
       <Pressable accessible={false} importantForAccessibility="no" aria-hidden onPress={cancel} {...id("backdrop")}
         {...{className:styled?"bg-text/50":undefined}} style={{position:"absolute",left:0,right:0,top:0,bottom:0}}/>
@@ -173,10 +174,10 @@ export function ColorPickerDialog({
         {...{onKeyDown,className:joinClasses("w-full",styled&&"rounded-control border border-border bg-surface-raised",className)}}
         style={{maxWidth:440,maxHeight:"92%"}}>
         <Text accessibilityRole="header" {...{className:joinClasses("text-start",styled&&"text-lg font-semibold text-text")}}
-          style={{paddingHorizontal:16,paddingTop:16,paddingBottom:12}}>{heading}</Text>
-        <ScrollView contentContainerStyle={{paddingHorizontal:16,paddingBottom:16,gap:16}} keyboardShouldPersistTaps="handled">
-          <View style={{gap:6}}>
-            <View style={{flexDirection:"row",gap:8}} onLayout={e=>store.setState(s=>({...s,width:e.nativeEvent.layout.width}))}>
+          style={{paddingHorizontal:space[4],paddingTop:space[4],paddingBottom:space[3]}}>{heading}</Text>
+        <ScrollView contentContainerStyle={{paddingHorizontal:space[4],paddingBottom:space[4],gap:space[4]}} keyboardShouldPersistTaps="handled">
+          <View style={{gap:space[1.5]}}>
+            <View style={{flexDirection:"row",gap:space[2]}} onLayout={e=>store.setState(s=>({...s,width:e.nativeEvent.layout.width}))}>
               {half("original",original)}
               {half("new",value)}
             </View>
@@ -195,7 +196,7 @@ export function ColorPickerDialog({
             onSelect={swatch=>change(draftFromRgba(swatch.color,value))} {...id("swatches")}/>:null}
         </ScrollView>
         <View {...{className:joinClasses(styled&&"border-t border-border")}}
-          style={{flexDirection:"row",justifyContent:"flex-end",flexWrap:"wrap",gap:8,padding:12}}>
+          style={{flexDirection:"row",justifyContent:"flex-end",flexWrap:"wrap",gap:space[2],padding:space[3]}}>
           <Text accessibilityLiveRegion="polite" {...{className:muted}} style={{flex:1,minWidth:120,alignSelf:"center"}}>
             {changed?describeColor(value):"No change yet"}
           </Text>

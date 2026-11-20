@@ -11,6 +11,7 @@ import {shellKey} from "./shell-keys.ts";
 import {angleAround,applySliderKey,knobAngle,sliderKeyAction,valueFromAngle,valueFromDrag} from "./slider-model.ts";
 import {UnitInput} from "./UnitInput.tsx";
 import type {UnitContext} from "./unit-expression.ts";
+import {space,border,opacity} from "@nyc-tron/core/tokens";
 
 /**
  * How pointer travel maps to a {@linkcode RotaryKnob} value. `relative`:
@@ -138,7 +139,7 @@ export function RotaryKnob({
   const angle=knobAngle(shown,range);
   const canReset=defaultValue!==undefined&&defaultValue!==value;
   const dialSize=Math.max(44,size);
-  return <View {...rest} {...{className:joinClasses("items-center gap-1",className)}} style={[{opacity:disabled?0.5:1},style]}>
+  return <View {...rest} {...{className:joinClasses("items-center gap-1",className)}} style={[{opacity:disabled?opacity[50]:1},style]}>
     {!hideLabel?<Text {...{className:joinClasses(styled&&"text-text text-sm")}} numberOfLines={1}>{label}</Text>:null}
     <Transport disabled={disabled}
       onBegin={point=>{if(!allowed())return;gesture.current.origin=point;measure();drag.begin();}}
@@ -162,12 +163,12 @@ export function RotaryKnob({
         style={{width:dialSize,height:dialSize,borderRadius:dialSize/2,alignItems:"center",justifyContent:"center",
           ...(Platform.OS==="web"?{cursor:disabled?"default":"grab",userSelect:"none",touchAction:"none"}:{})} as object}>
         <View pointerEvents="none" style={{position:"absolute",width:dialSize,height:dialSize,transform:[{rotate:`${angle}deg`}],alignItems:"center"}}>
-          <View {...{className:joinClasses(styled&&"border-accent")}} style={{marginTop:6,width:0,height:dialSize*0.28,borderLeftWidth:3}}/>
+          <View {...{className:joinClasses(styled&&"border-accent")}} style={{marginTop:space[1.5],width:0,height:dialSize*0.28,borderLeftWidth:border[3]}}/>
         </View>
       </View>
     </Transport>
     {fine?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>Fine adjustment</Text>:null}
-    <View style={{flexDirection:"row",alignItems:"center",gap:4}}>
+    <View style={{flexDirection:"row",alignItems:"center",gap:space[1]}}>
       <UnitInput scope={boundary} label={label+" value"} hideLabel value={shown} context={context} min={min} max={max} step={step}
         precision={Math.min(100,stepDecimalPlaces(step)+1)} disabled={disabled} unstyled={unstyled}
         onCommit={next=>commit(applySliderKey(next,{kind:"step",steps:0},range))} style={{width:context?104:72}}/>

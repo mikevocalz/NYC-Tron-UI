@@ -8,6 +8,7 @@ import {useLocalPointer} from "../../gestures/useLocalPointer.ts";
 import {createValueGesture} from "../../gestures/value-gesture.ts";
 import type {RgbaColor} from "../color.ts";
 import {checkerColumns,trackSegments} from "./segments.ts";
+import {border,opacity} from "@nyc-tron/core/tokens";
 
 /** Props for {@linkcode ChannelTrack}. */
 export interface ChannelTrackProps extends Omit<ViewProps,"children"> {
@@ -115,7 +116,7 @@ export function ChannelTrack({
       if(e.nativeEvent.actionName==="increment")commitKey(value+step);
       if(e.nativeEvent.actionName==="decrement")commitKey(value-step);
     }}
-    style={[{height:44,justifyContent:"center",direction:"ltr",opacity:disabled?0.45:1,...NO_SELECT},style]}>
+    style={[{height:44,justifyContent:"center",direction:"ltr",opacity:disabled?opacity[45]:1,...NO_SELECT},style]}>
     <View pointerEvents="none" {...{className:joinClasses(styled&&"rounded-control border border-border")}}
       style={{position:"absolute",left:0,right:0,height:24,overflow:"hidden"}}>
       {cells?<View style={{position:"absolute",left:0,top:0,bottom:0,flexDirection:"row"}}>
@@ -129,10 +130,10 @@ export function ChannelTrack({
       </View>
     </View>
     {state.width>0?<View pointerEvents="none" {...{className:joinClasses(styled&&"border-text")}}
-      style={{position:"absolute",left:thumbLeft,width:THUMB,height:THUMB,borderRadius:THUMB/2,borderWidth:2,
+      style={{position:"absolute",left:thumbLeft,width:THUMB,height:THUMB,borderRadius:THUMB/2,borderWidth:border[2],
         alignItems:"center",justifyContent:"center"}}>
       <View {...{className:joinClasses(styled&&"border-surface-raised")}}
-        style={{width:THUMB-4,height:THUMB-4,borderRadius:(THUMB-4)/2,borderWidth:2,backgroundColor:thumbColor(shown)}}/>
+        style={{width:THUMB-4,height:THUMB-4,borderRadius:(THUMB-4)/2,borderWidth:border[2],backgroundColor:thumbColor(shown)}}/>
     </View>:null}
   </View>;
 }

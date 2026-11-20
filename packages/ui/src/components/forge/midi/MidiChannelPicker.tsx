@@ -14,6 +14,7 @@ import { Pressable, Text, View, type KeyDownEvent, type ViewProps } from "react-
 import { joinClasses } from "../../styles.ts";
 import { MAX_MIDI_CHANNEL, channelLabel, isMidiChannel } from "./note-grid.ts";
 import type { MIDIPianoRollProps } from "./MIDIPianoRoll.tsx";
+import { space, opacity } from "@nyc-tron/core/tokens";
 
 const HIT = 44;
 
@@ -90,7 +91,7 @@ export function MidiValueStepper({
     onAccessibilityAction={e => go(value + (e.nativeEvent.actionName === "increment" ? step : -step))}
     onKeyDown={onKeyDown}
     {...{ className: joinClasses(styled && "rounded-control focus-visible:ring-2 focus-visible:ring-focus", className) }}
-    style={[{ flexDirection: "row", alignItems: "center", gap: 4, opacity: disabled ? 0.45 : 1 }, style]}>
+    style={[{ flexDirection: "row", alignItems: "center", gap: space[1], opacity: disabled ? opacity[45] : 1 }, style]}>
     {/* The buttons are pointer targets; keyboard and screen readers use the slider itself. */}
     <Pressable accessible={false} focusable={false} disabled={disabled || value <= min} onPress={() => go(value - step)}
       {...{ className: button(value > min), "aria-hidden": true, tabIndex: -1 }} style={{ width: HIT, height: HIT }}>
@@ -130,7 +131,7 @@ export function MidiChannelPicker({
   channel, onChannelCommit, disabled = false, label = "MIDI channel", className, unstyled = false, style, ...rest
 }: MidiChannelPickerProps) {
   if (!isMidiChannel(channel)) throw new RangeError("MIDI channel must be 0..15");
-  return <View {...rest} style={[{ flexDirection: "row", alignItems: "center", gap: 6 }, style]}
+  return <View {...rest} style={[{ flexDirection: "row", alignItems: "center", gap: space[1.5] }, style]}
     {...{ className: joinClasses(className) }}>
     <Text aria-hidden {...{ className: joinClasses(!unstyled && "text-text-muted") }}>Ch</Text>
     <MidiValueStepper value={channel} min={0} max={MAX_MIDI_CHANNEL} label={label} pageStep={4}

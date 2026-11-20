@@ -7,6 +7,7 @@ import { joinClasses } from "../../styles.ts";
 import type { DragTransport } from "../../gestures/drag-transport.ts";
 import { PanResponderDrag } from "../../gestures/PanResponderDrag.tsx";
 import { dragSplitRatio, splitGeometry, SPLIT_KEY_STEP, type SplitState } from "./freeze-split-model.ts";
+import { radius } from '@nyc-tron/core/tokens';
 
 /**
  * Two panes of one sheet with a draggable divider. Each pane is whatever
@@ -119,7 +120,7 @@ function SplitSpreadsheetViewBody({boundary,disabledReason,
         // The visible bar is 12pt; hitSlop widens the grab area to 44pt.
         hitSlop={stacked ? { top: 16, bottom: 16 } : { left: 16, right: 16 }}>
         <View aria-hidden {...{ className: !unstyled ? "bg-text-muted" : undefined }}
-          style={{ borderRadius: 2, ...(stacked ? { width: 36, height: 4 } : { width: 4, height: 36 }) }} />
+          style={{ borderRadius: radius[2], ...(stacked ? { width: 36, height: 4 } : { width: 4, height: 36 }) }} />
       </View>
     </Transport>
     <View style={size1}>{total > 0 ? renderPane(1, size1) : null}</View>

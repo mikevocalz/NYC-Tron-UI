@@ -19,6 +19,7 @@ import { colorReferences, referenceEdges, REFERENCE_TONE_CLASSES } from "./sprea
 import { fillFromEdge, fillTarget, type FillPlan } from "./spreadsheet/fill-handle.ts";
 import type { DragPoint, DragTransport } from "../gestures/drag-transport.ts";
 import { PanResponderDrag } from "../gestures/PanResponderDrag.tsx";
+import { space, font } from '@nyc-tron/core/tokens';
 
 /** Only presentation data supplied by the app's TallyDocument.getRange(). */
 export interface SpreadsheetCell {
@@ -418,7 +419,7 @@ function SpreadsheetGridBody({interactionBoundary,actionError,readOnly,disabledR
         !unstyled&&referenced&&!inRange&&REFERENCE_TONE_CLASSES[refs[0]!.tone]!.fill,
         !unstyled&&inRange&&"bg-primary/10",
         !unstyled&&isFocus&&"border-2 border-focus")}}
-      style={{width:columnWidth,height:rowHeight,justifyContent:"center",paddingHorizontal:8}}>
+      style={{width:columnWidth,height:rowHeight,justifyContent:"center",paddingHorizontal:space[2]}}>
       {custom?custom.content:<Text numberOfLines={1} {...{className:textClass}}>{value}</Text>}
       {outline?<View aria-hidden pointerEvents="none" {...{className:outline}}
         style={{position:"absolute",top:0,bottom:0,start:0,end:0}}/>:null}
@@ -449,8 +450,8 @@ function SpreadsheetGridBody({interactionBoundary,actionError,readOnly,disabledR
       height:metrics.formulaBarHeight,
       flexDirection:metrics.compact?"column":"row",
       alignItems:metrics.compact?"stretch":"center",
-      gap:metrics.compact?4:8,paddingHorizontal:8,
-      paddingVertical:metrics.compact?6:0,
+      gap:metrics.compact?space[1]:space[2],paddingHorizontal:space[2],
+      paddingVertical:metrics.compact?space[1.5]:space[0],
     }}>
       <View style={{flexDirection:"row",alignItems:"center",
         justifyContent:"space-between",minWidth:metrics.compact?0:60}}>
@@ -458,7 +459,7 @@ function SpreadsheetGridBody({interactionBoundary,actionError,readOnly,disabledR
           accessibilityLabel={range?`Selected ${range.startRow===range.endRow&&range.startColumn===range.endColumn?"cell":"range"} ${selection!.anchor===focus?focus:`${selection!.anchor} to ${focus}`}`:"No cell selected"}>
           {range?(selection!.anchor===focus?focus:`${selection!.anchor}:${focus}`):""}
         </Text>
-        {metrics.compact?<Text numberOfLines={1} style={{fontSize:11}} {...{className:mutedClass}}>
+        {metrics.compact?<Text numberOfLines={1} style={{fontSize:font[11]}} {...{className:mutedClass}}>
           Swipe sideways for more columns
         </Text>:null}
       </View>

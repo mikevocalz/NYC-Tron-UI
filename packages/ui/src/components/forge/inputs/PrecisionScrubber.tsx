@@ -8,6 +8,8 @@ import {createScrubberModel,initialScrubberState,type ScrubberModel,type Scrubbe
 import {keyboardKey,type DragTransport,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {PanResponderDrag} from "../../gestures/PanResponderDrag.tsx";
 import {joinClasses} from "../../styles.ts";
+import {space,opacity} from '@nyc-tron/core/tokens';
+import {tokens} from './PrecisionScrubber.tokens.ts';
 
 /** Props for {@linkcode PrecisionScrubber}. */
 export interface PrecisionScrubberProps extends Omit<ViewProps,"children">,RangeConfig {
@@ -128,11 +130,11 @@ function PrecisionScrubberBody({
   </Pressable>;
 
   return <View {...rest} {...{className:joinClasses("gap-2",className)}}
-    style={[{opacity:disabled?0.5:1},state.active?NO_SELECT:null,style]}>
-    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",minHeight:targetSize,justifyContent:"space-between",gap:10}}>
+    style={[{opacity:disabled?opacity[50]:1},state.active?NO_SELECT:null,style]}>
+    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",minHeight:targetSize,justifyContent:"space-between",gap:space[2.5]}}>
       <Text {...{className:joinClasses(styled&&"text-text text-xs font-semibold")}} style={{flexGrow:1,flexShrink:1}}>{label}</Text>
       <View {...{className:joinClasses(styled&&"rounded-control border bg-surface-sunken",styled&&(state.editing?"border-focus":state.active?"border-accent":"border-border"))}}
-        style={{flexDirection:"row",alignItems:"center",paddingHorizontal:10,minHeight:targetSize}}>
+        style={{flexDirection:"row",alignItems:"center",paddingHorizontal:space[2.5],minHeight:targetSize}}>
         <TextInput selectTextOnFocus keyboardType="decimal-pad" returnKeyType="done" editable={!blocked}
           accessibilityLabel={copy.value}
           value={state.editing?state.draft:display}
@@ -141,11 +143,11 @@ function PrecisionScrubberBody({
           onSubmitEditing={()=>void model.applyDraft()}
           onBlur={()=>void model.applyDraft()}
           {...{className:joinClasses(styled&&"text-text font-semibold")}}
-          style={{minHeight:targetSize,width:64,textAlign:"right",fontVariant:["tabular-nums"],paddingVertical:6}}/>
-        {unit?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{paddingLeft:2}}>{unit}</Text>:null}
+          style={{minHeight:targetSize,width:64,textAlign:"right",fontVariant:["tabular-nums"],paddingVertical:space[1.5]}}/>
+        {unit?<Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}} style={{paddingLeft:space[0.5]}}>{unit}</Text>:null}
       </View>
     </View>
-    <View style={{flexDirection:"row",alignItems:"center",gap:6}}>
+    <View style={{flexDirection:"row",alignItems:"center",gap:space[1.5]}}>
       {stepButton(-1)}
       <View style={{flex:1,minWidth:0}}>
         <Transport disabled={blocked}
@@ -174,23 +176,23 @@ function PrecisionScrubberBody({
               if(event.nativeEvent.actionName==="increment")void model.nudge(1);
               if(event.nativeEvent.actionName==="decrement")void model.nudge(-1);
             }}
-            style={{minHeight:targetSize,paddingHorizontal:11,justifyContent:"center",overflow:"hidden",...NO_SELECT}}>
+            style={{minHeight:targetSize,paddingHorizontal:tokens.space2_75,justifyContent:"center",overflow:"hidden",...NO_SELECT}}>
             <View pointerEvents="none" style={{flexDirection:"row",justifyContent:"space-between",alignItems:"center",minHeight:20}}>
               {scaleTicks(state.preview,min,max).map((tick,i)=><View key={i}
                 {...{className:tick.reached?accentClass:lineClass}}
-                style={{width:1,height:tick.major?12:5,opacity:forced?1:tick.major?0.9:0.55,...(tick.reached?ink?.accent:ink?.line)}}/>)}
+                style={{width:1,height:tick.major?12:5,opacity:forced?1:tick.major?opacity[90]:opacity[55],...(tick.reached?ink?.accent:ink?.line)}}/>)}
             </View>
             <View pointerEvents="none" {...{className:lineClass}}
               style={{position:"absolute",left:11,right:11,bottom:5,height:3,...ink?.line}}>
               <View {...{className:accentClass}} style={{width:`${reached*100}%`,height:3,...ink?.accent}}/>
-              {forced?<View style={{position:"absolute",left:`${reached*100}%`,bottom:-4,width:3,height:11,marginLeft:-1.5,...ink?.accent}}/>:null}
+              {forced?<View style={{position:"absolute",left:`${reached*100}%`,bottom:-4,width:3,height:11,marginLeft:tokens.spaceN0_375,...ink?.accent}}/>:null}
             </View>
           </View>
         </Transport>
       </View>
       {stepButton(1)}
     </View>
-    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",justifyContent:"space-between",columnGap:8,rowGap:4}}>
+    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",justifyContent:"space-between",columnGap:space[2],rowGap:space[1]}}>
       <Text style={{flexShrink:1,maxWidth:"100%"}} {...{className:joinClasses(styled&&"text-xs",styled&&(state.active?"text-text":"text-text-muted"))}}>
         {state.active?copy[state.mode]:copy.idleHint}
       </Text>

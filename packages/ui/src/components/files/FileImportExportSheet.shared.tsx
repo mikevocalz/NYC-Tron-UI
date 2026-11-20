@@ -10,6 +10,7 @@ import {TextField} from '../TextField.tsx';
 import {joinClasses} from '../styles.ts';
 import type {FilePickerProps} from './FilePicker.types.ts';
 import {applyFormat,buildExportRequest,destinationLabel,exportSummary,filenameProblem,statusText,validateExportFormats,type ExportDestination,type ExportFormat,type ExportRequest,type ExportSettings,type ImportFormat,type TransferStatus} from './file-transfer-model.ts';
+import {space,opacity,size} from '@nyc-tron/core/tokens';
 
 /** Host-owned form/status and actual platform picker for {@linkcode FileImportExportSheetBody}. */
 export interface FileImportExportSheetProps {
@@ -51,10 +52,10 @@ export function FileImportExportSheetBody({importControl,importUnavailableReason
  const field=(id:string,label:string,value:string,onChangeText:(s:string)=>void)=><TextField key={id} id={`${nameId}-${id}`} label={label} value={value} editable={!working} onChangeText={onChangeText}/>;
  return <Modal visible={visible&&!!region} transparent onRequestClose={close} animationType="none">
   <View style={{flex:1}} {...{className:!unstyled?'bg-text/50':undefined}}>
-   <View style={{position:'absolute',left:region?.x??0,top:region?.y??0,width:region?.width??0,height:region?.height??0,justifyContent:'center',alignItems:'center',padding:16}}>
+   <View style={{position:'absolute',left:region?.x??0,top:region?.y??0,width:region?.width??0,height:region?.height??0,justifyContent:'center',alignItems:'center',padding:space[4]}}>
    <View accessibilityViewIsModal {...{role:'dialog','aria-modal':true,'aria-label':title??(mode==='export'?'Export file':'Import file'),className:joinClasses(!unstyled&&'bg-surface-raised border border-border rounded-card p-4 gap-3',className)}} style={{width:'100%',maxWidth:540,maxHeight:'90%'}}>
     <Text accessibilityRole="header" {...{className:!unstyled?'text-text text-lg font-semibold':undefined}}>{title??(mode==='export'?'Export file':'Import file')}</Text>
-    <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{gap:12}}>
+    <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{gap:space[3]}}>
     {mode==='export'?<>
      <ChoiceGroup label="Export format" value={settings.formatId} options={formats.map(f=>({id:f.id,label:f.label,disabled:working}))} onSelect={id=>{const format=formats.find(f=>f.id===id);if(format)change(current=>applyFormat(current,format));}} unstyled={unstyled}/>
      {format?<>
@@ -70,7 +71,7 @@ export function FileImportExportSheetBody({importControl,importUnavailableReason
     {localState.error?<Text accessibilityRole="alert" {...{className:!unstyled?"text-danger":undefined}}>{localState.error}</Text>:null}
     <Text accessibilityLiveRegion="polite" {...{className:!unstyled?(status.kind==='error'?'text-danger':'text-text-muted'):undefined}}>{statusText(status,mode,settings.filename)}</Text>
     </ScrollView>
-    <View style={{flexDirection:'row',justifyContent:'flex-end',gap:8,flexWrap:'wrap'}}>
+    <View style={{flexDirection:'row',justifyContent:'flex-end',gap:space[2],flexWrap:'wrap'}}>
      {working&&onCancel?<Button title="Cancel transfer" onPress={cancel} variant="secondary"/>:null}
      <Button title="Close" variant="secondary" onPress={close} disabled={working}/>
      {mode==='export'?<Button title="Export" disabled={working||!!problem||status.kind==='done'} onPress={exportFile}/>:null}
@@ -83,8 +84,8 @@ export function FileImportExportSheetBody({importControl,importUnavailableReason
 function ChoiceGroup({label,value,options,onSelect,unstyled,axis="horizontal"}:{label:string;value:string;options:readonly {id:string;label:string;disabled:boolean;reason?:string}[];onSelect:(id:string)=>void;unstyled:boolean;axis?:"horizontal"|"vertical"}){
  const refs=useRef<(ComponentRef<typeof Pressable>|null)[]>([]);
  const selected=options.findIndex(o=>o.id===value&&!o.disabled),stop=selected>=0?selected:options.findIndex(o=>!o.disabled);
- return <View role="radiogroup" accessibilityLabel={label} aria-orientation={axis} style={{flexDirection:axis==="horizontal"?"row":"column",flexWrap:"wrap",gap:4}}>{options.map((option,index)=><View key={option.id}>
+ return <View role="radiogroup" accessibilityLabel={label} aria-orientation={axis} style={{flexDirection:axis==="horizontal"?"row":"column",flexWrap:"wrap",gap:space[1]}}>{options.map((option,index)=><View key={option.id}>
  <Choice buttonRef={node=>{refs.current[index]=node;}} label={option.label} selected={option.id===value} disabled={option.disabled} unstyled={unstyled} onPress={()=>onSelect(option.id)} tabIndex={index===stop?0:-1} onKeyDown={event=>{if(option.disabled)return;const k=shellKey(event);if(k.altKey||k.ctrlKey||k.metaKey)return;const next=rovingTarget(index,k.key,options.map(o=>o.disabled),axis,nodeIsRTL(k.target)||I18nManager.isRTL);if(next===null)return;k.preventDefault();(refs.current[next] as unknown as {focus?:()=>void}|null)?.focus?.();onSelect(options[next]!.id);}}/>
  {option.reason?<Text {...{className:!unstyled?"text-text-muted":undefined}}>{option.reason}</Text>:null}</View>)}</View>;
 }
-function Choice({label,selected,disabled,onPress,unstyled,kind="radio",buttonRef,tabIndex,onKeyDown}:{label:string;selected:boolean;disabled:boolean;onPress:()=>void;unstyled:boolean;kind?:"radio"|"checkbox";buttonRef?:(node:ComponentRef<typeof Pressable>|null)=>void;tabIndex?:0|-1;onKeyDown?:(event:unknown)=>void}){return <Pressable ref={buttonRef} role={kind} aria-checked={selected} accessibilityState={{checked:selected,disabled}} accessibilityLabel={label} disabled={disabled} onPress={onPress} {...(Platform.OS==="web"?{tabIndex,onKeyDown:(event:unknown)=>{if(disabled)return;const k=shellKey(event);if(k.key===" "||k.key==="Enter"){k.preventDefault();onPress();return;}onKeyDown?.(event);}}:{})} style={{minHeight:44,minWidth:44,justifyContent:"center",paddingHorizontal:12,opacity:disabled?0.5:1}} {...{className:!unstyled?joinClasses("rounded-control focus-visible:ring-2 focus-visible:ring-focus",selected?"bg-primary":"bg-surface-sunken"):undefined}}><Text {...{className:!unstyled?(selected?"text-on-primary":"text-text"):undefined}}>{label}</Text></Pressable>;}
+function Choice({label,selected,disabled,onPress,unstyled,kind="radio",buttonRef,tabIndex,onKeyDown}:{label:string;selected:boolean;disabled:boolean;onPress:()=>void;unstyled:boolean;kind?:"radio"|"checkbox";buttonRef?:(node:ComponentRef<typeof Pressable>|null)=>void;tabIndex?:0|-1;onKeyDown?:(event:unknown)=>void}){return <Pressable ref={buttonRef} role={kind} aria-checked={selected} accessibilityState={{checked:selected,disabled}} accessibilityLabel={label} disabled={disabled} onPress={onPress} {...(Platform.OS==="web"?{tabIndex,onKeyDown:(event:unknown)=>{if(disabled)return;const k=shellKey(event);if(k.key===" "||k.key==="Enter"){k.preventDefault();onPress();return;}onKeyDown?.(event);}}:{})} style={{minHeight:size.touch,minWidth:size.touch,justifyContent:"center",paddingHorizontal:space[3],opacity:disabled?opacity[50]:1}} {...{className:!unstyled?joinClasses("rounded-control focus-visible:ring-2 focus-visible:ring-focus",selected?"bg-primary":"bg-surface-sunken"):undefined}}><Text {...{className:!unstyled?(selected?"text-on-primary":"text-text"):undefined}}>{label}</Text></Pressable>;}

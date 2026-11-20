@@ -7,6 +7,7 @@ import {Button} from '../../Button.tsx';
 import {PrecisionScrubber} from '../inputs/PrecisionScrubber.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {space,radius} from '@nyc-tron/core/tokens';
 export interface SurroundPosition {x:number;y:number;z:number;spread:number}
 export interface SurroundSpeaker {id:string;label:string;x:number;y:number;z:number}
 export interface SurroundPanViewProps extends Omit<ViewProps,'children'>,ScopedControlProps {
@@ -29,17 +30,17 @@ export function SurroundPanView({scope='surround-pan',revision=0,...props}:Surro
  const gesture=usePanGesture({enabled:!off,runOnJS:true,minDistance:0,maxPointers:1,onActivate:event=>{if(!guard.current())return;active.current=true;move(event.x,event.y);},onUpdate:event=>move(event.x,event.y),onTouchesDown:event=>{if(event.numberOfTouches>1)cancel();},onTouchesCancel:cancel,onDeactivate:event=>{if(event.canceled){cancel();return;}if(!active.current)return;move(event.x,event.y);active.current=false;const next=store.getState().preview;store.setState({preview:null});guard.current()?.onPreview?.(undefined);if(next)void commit(next);}});
  const shown=preview??value;
  const key=(event:{key?:string;shiftKey?:boolean;preventDefault?:()=>void})=>{if(off)return;if(event.key==='Escape'){event.preventDefault?.();cancel();return;}const d=event.shiftKey ? .01 : .05;const delta=event.key==='ArrowLeft'?[-d,0]:event.key==='ArrowRight'?[d,0]:event.key==='ArrowUp'?[0,d]:event.key==='ArrowDown'?[0,-d]:null;if(!delta)return;event.preventDefault?.();void commit({...value,x:Math.max(-1,Math.min(1,value.x+delta[0]!)),y:Math.max(-1,Math.min(1,value.y+delta[1]!))});};
- return <View {...rest} style={[{gap:8,minWidth:0},style]} accessibilityLabel="Surround pan">
+ return <View {...rest} style={[{gap:space[2],minWidth:0},style]} accessibilityLabel="Surround pan">
   <GestureDetector key={owner} gesture={gesture} touchAction="none" userSelect="none"><View collapsable={false} accessible accessibilityRole="adjustable" accessibilityLabel="Surround source position" accessibilityValue={{text:`X ${shown.x.toFixed(2)}, Y ${shown.y.toFixed(2)}, Z ${shown.z.toFixed(2)}`}}
    accessibilityActions={[{name:'increment',label:'Move right'},{name:'decrement',label:'Move left'},{name:'up',label:'Move forward'},{name:'down',label:'Move back'}]} accessibilityState={{disabled:off}}
    onAccessibilityAction={e=>{const action=e.nativeEvent.actionName;key({key:action==='increment'?'ArrowRight':action==='decrement'?'ArrowLeft':action==='up'?'ArrowUp':action==='down'?'ArrowDown':''});}} {...{onKeyDown:key,focusable:!off,className:unstyled?undefined:'bg-surface-sunken border border-border rounded-control'}} style={{width,height,position:'relative',overflow:'hidden',direction:'ltr'}}>
    <View pointerEvents="none" {...{className:unstyled?undefined:'bg-border'}} style={{position:'absolute',left:width/2,top:0,bottom:0,width:1}}/><View pointerEvents="none" {...{className:unstyled?undefined:'bg-border'}} style={{position:'absolute',top:height/2,left:0,right:0,height:1}}/>
    {speakers.map(s=><Text key={s.id} pointerEvents="none" numberOfLines={1} {...{className:unstyled?undefined:'text-text-muted'}} style={{position:'absolute',left:Math.min(width-44,Math.max(0,(s.x+1)/2*width-22)),top:Math.min(height-24,Math.max(0,(1-s.y)/2*height-12)),width:44,textAlign:'center'}}>{s.label}</Text>)}
-   <View pointerEvents="none" {...{className:unstyled?undefined:'bg-accent border border-border'}} style={{position:'absolute',left:(shown.x+1)/2*width-8,top:(1-shown.y)/2*height-8,width:16,height:16,borderRadius:8}}/>
+   <View pointerEvents="none" {...{className:unstyled?undefined:'bg-accent border border-border'}} style={{position:'absolute',left:(shown.x+1)/2*width-8,top:(1-shown.y)/2*height-8,width:16,height:16,borderRadius:radius[8]}}/>
   </View></GestureDetector>
   <PrecisionScrubber scope={scope} revision={revision} label="Source height Z" value={value.z} min={-1} max={1} step={.01} disabled={off} unstyled={unstyled} onCommit={z=>commit({...value,z})}/>
   <PrecisionScrubber scope={scope} revision={revision} label="Surround spread" value={value.spread} min={0} max={1} step={.01} disabled={off} unstyled={unstyled} onCommit={spread=>commit({...value,spread})}/>
-  <View style={{flexDirection:'row',flexWrap:'wrap',gap:8}}>{speakers.map(s=><Button key={s.id} title={'Route to '+s.label} accessibilityState={{checked:destinations.includes(s.id)}} disabled={off} unstyled={unstyled} onPress={()=>guard.run('route',(host,signal)=>{const ids=host.destinations.filter(id=>host.speakers.some(s=>s.id===id));return host.onDestinationsChange(ids.includes(s.id)?ids.filter(id=>id!==s.id):[...ids,s.id],signal);})}/>)}</View>
+  <View style={{flexDirection:'row',flexWrap:'wrap',gap:space[2]}}>{speakers.map(s=><Button key={s.id} title={'Route to '+s.label} accessibilityState={{checked:destinations.includes(s.id)}} disabled={off} unstyled={unstyled} onPress={()=>guard.run('route',(host,signal)=>{const ids=host.destinations.filter(id=>host.speakers.some(s=>s.id===id));return host.onDestinationsChange(ids.includes(s.id)?ids.filter(id=>id!==s.id):[...ids,s.id],signal);})}/>)}</View>
   <ErrorMessage message={guard.error??undefined} unstyled={unstyled}/>
  </View>;
 }

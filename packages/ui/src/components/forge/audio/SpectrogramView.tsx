@@ -19,6 +19,7 @@ import {
   SPECTROGRAM_THRESHOLDS_DB, columnsForWidth, describeSpectrogram, frequencyTicks, poolSpectrogram,
   spectrogramRuns, timeTicks, type IntensityStep,
 } from "./spectrogram.ts";
+import { space, font } from '@nyc-tron/core/tokens';
 
 /** Load state of a {@linkcode SpectrogramView}. */
 export type SpectrogramStatus = "measuring" | "ready" | "error" | "empty";
@@ -95,24 +96,24 @@ function SpectrogramViewBody({actionError,disabledReason,visibleRange={start:0,e
 
   let body;
   if (status === "measuring") {
-    body = <View style={{ gap: 8 }}>
-      <Text accessibilityLiveRegion="polite" {...{ className: muted }} style={{ fontSize: 13 }}>Analysing the spectrum of the selected range</Text>
+    body = <View style={{ gap: space[2] }}>
+      <Text accessibilityLiveRegion="polite" {...{ className: muted }} style={{ fontSize: font[13] }}>Analysing the spectrum of the selected range</Text>
       <View aria-hidden {...{ className: joinClasses(!unstyled && "rounded-control bg-surface-sunken") }} style={{ height }} />
     </View>;
   } else if (status === "error") {
-    body = <View accessibilityRole="alert"><Text selectable {...{ className: joinClasses(!unstyled && "text-text") }} style={{ fontSize: 14 }}>
+    body = <View accessibilityRole="alert"><Text selectable {...{ className: joinClasses(!unstyled && "text-text") }} style={{ fontSize: font[14] }}>
       {error ?? "The spectrum could not be analysed."}</Text></View>;
   } else if (!ready) {
-    body = <Text accessibilityLiveRegion="polite" {...{ className: muted }} style={{ fontSize: 14 }}>
+    body = <Text accessibilityLiveRegion="polite" {...{ className: muted }} style={{ fontSize: font[14] }}>
       There is no audio in this range to analyse. Select a range with audio.
     </Text>;
   } else {
-    body = <View style={{ gap: 6, direction: "ltr" }}>
+    body = <View style={{ gap: space[1.5], direction: "ltr" }}>
       <View role="img" accessibilityLabel={summary} onLayout={e => store.setState({width:e.nativeEvent.layout.width})}
         style={{ flexDirection: "row", height }}>
         <View aria-hidden style={{ width: AXIS, height }}>
           {frequencyTicks(bandsHz).map(t => <Text key={t.label} {...{ className: muted }}
-            style={{ position: "absolute", right: 8, fontSize: 11, fontVariant: ["tabular-nums"],
+            style={{ position: "absolute", right: 8, fontSize: font[11], fontVariant: ["tabular-nums"],
               top: Math.min(height - 14, Math.max(0, height * (1 - t.position) - 7)) }}>{t.label}</Text>)}
         </View>
         <View aria-hidden testID={props.testID ? props.testID + "-plot" : undefined}
@@ -124,16 +125,16 @@ function SpectrogramViewBody({actionError,disabledReason,visibleRange={start:0,e
       </View>
       <View aria-hidden style={{ marginLeft: AXIS, height: 16 }}>
         {timeTicks(duration).map((t, i, all) => <Text key={t.label} {...{ className: muted }}
-          style={{ position: "absolute", fontSize: 11, fontVariant: ["tabular-nums"],
+          style={{ position: "absolute", fontSize: font[11], fontVariant: ["tabular-nums"],
             ...(i === 0 ? { left: 0 } : i === all.length - 1 && t.position > 0.92
               ? { right: ((1 - t.position) * 100) + "%" }
               : { left: (t.position * 100) + "%", transform: [{ translateX: "-50%" }] }) }}>{t.label}</Text>)}
       </View>
-      <View aria-hidden style={{ flexDirection: "row", alignItems: "center", gap: 6, marginLeft: AXIS, flexWrap: "wrap" }}>
-        <Text {...{ className: muted }} style={{ fontSize: 11 }}>Quiet</Text>
+      <View aria-hidden style={{ flexDirection: "row", alignItems: "center", gap: space[1.5], marginLeft: AXIS, flexWrap: "wrap" }}>
+        <Text {...{ className: muted }} style={{ fontSize: font[11] }}>Quiet</Text>
         {([1, 2, 3, 4, 5] as const).map(s => <View key={s} {...{ className: joinClasses(!unstyled && STEP_CLASS[s], !unstyled && "rounded-sm") }}
           style={{ width: 16, height: 10 }} />)}
-        <Text {...{ className: muted }} style={{ fontSize: 11 }}>
+        <Text {...{ className: muted }} style={{ fontSize: font[11] }}>
           {"Loud (steps at " + SPECTROGRAM_THRESHOLDS_DB.map(d => "−" + -d).join(", ") + " dB)"}
         </Text>
       </View>
@@ -142,9 +143,9 @@ function SpectrogramViewBody({actionError,disabledReason,visibleRange={start:0,e
 
   return <View {...props} role="group" aria-label={label} aria-busy={status === "measuring" || undefined}
     {...{ className: joinClasses(!unstyled && "rounded-card border border-border bg-surface-raised", className) }}
-    style={[{ padding: 16, gap: 12 }, style]}>
-    <Text role="heading" aria-level={3} {...{ className: joinClasses(!unstyled && "text-text font-semibold") }} style={{ fontSize: 15 }}>{label}</Text>
-    {onVisibleRangeCommit?<View style={{flexDirection:'row',flexWrap:'wrap',gap:6}}>
+    style={[{ padding: space[4], gap: space[3] }, style]}>
+    <Text role="heading" aria-level={3} {...{ className: joinClasses(!unstyled && "text-text font-semibold") }} style={{ fontSize: font[15] }}>{label}</Text>
+    {onVisibleRangeCommit?<View style={{flexDirection:'row',flexWrap:'wrap',gap:space[1.5]}}>
      <Button title="Zoom into spectrum" disabled={disabledReason!==undefined||sourceFrames.length<2||span<=1/Math.max(1,sourceFrames.length)} unstyled={unstyled} onPress={()=>onVisibleRangeCommit(rangeAt(visibleRange.start+span/4,Math.max(1/Math.max(1,sourceFrames.length),span/2)))}/>
      <Button title="Zoom out of spectrum" disabled={disabledReason!==undefined||span>=1} unstyled={unstyled} onPress={()=>onVisibleRangeCommit(rangeAt(visibleRange.start-span/2,Math.min(1,span*2)))}/>
      <Button title="Earlier spectrum" disabled={disabledReason!==undefined||visibleRange.start===0} unstyled={unstyled} onPress={()=>onVisibleRangeCommit(rangeAt(visibleRange.start-span/2))}/>

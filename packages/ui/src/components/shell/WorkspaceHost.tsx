@@ -13,6 +13,7 @@ import {
   documentLabel,layoutForMode,modeAnnouncement,modeShortcutIndex,modeShortcutLabel,validateWorkspace,validateWorkspaceDocument,
   type WorkspaceDocument,type WorkspaceMode,
 } from "./workspace-model.ts";
+import {space,radius,border,size} from "@nyc-tron/core/tokens";
 
 export type {WorkspaceDocument,WorkspaceMode} from "./workspace-model.ts";
 export type {DockLayout,DockPanel};
@@ -142,9 +143,9 @@ export function WorkspaceHost({
   };
 
   const modePanels=panels.filter(p=>mode.panels.includes(p.id));
-  const title=<View style={{flexDirection:"row",alignItems:"center",gap:8,flexShrink:1,minWidth:0}}>
+  const title=<View style={{flexDirection:"row",alignItems:"center",gap:space[2],flexShrink:1,minWidth:0}}>
     {document.dirty?<View pointerEvents="none" {...{className:joinClasses(styled&&"border-accent")}}
-      style={{width:8,height:8,borderRadius:4,borderWidth:4}}/>:null}
+      style={{width:8,height:8,borderRadius:radius[4],borderWidth:border[4]}}/>:null}
     <Text accessibilityRole="header" accessibilityLabel={documentLabel(document)} numberOfLines={1}
       {...(Platform.OS==="web"?{"aria-level":1}:{})}
       {...{className:joinClasses(styled&&"text-base font-semibold text-text")}} style={{flexShrink:1}}>{document.title}</Text>
@@ -155,12 +156,12 @@ export function WorkspaceHost({
   return <View {...rest} onLayout={(event:LayoutChangeEvent)=>{store.setState({width:event.nativeEvent.layout.width});onLayout?.(event);}}
     {...{onKeyDown,className:joinClasses("min-h-0 min-w-0",className)}} style={[{flex:1,...dir},style]}>
     <View {...{className:joinClasses(styled&&"border-b border-border bg-surface-raised")}}
-      style={{paddingHorizontal:8,paddingVertical:4,gap:4}}>
-      <View style={{flexDirection:"row",alignItems:"center",gap:8,minHeight:44}}>
-        {leading?<View style={{flexDirection:"row",alignItems:"center",gap:4}}>{leading}</View>:null}
+      style={{paddingHorizontal:space[2],paddingVertical:space[1],gap:space[1]}}>
+      <View style={{flexDirection:"row",alignItems:"center",gap:space[2],minHeight:size.touch}}>
+        {leading?<View style={{flexDirection:"row",alignItems:"center",gap:space[1]}}>{leading}</View>:null}
         {title}
         {narrow?<View style={{flex:1}}/>:<View style={{flex:1,minWidth:0}}>{tabs}</View>}
-        {trailing?<View style={{flexDirection:"row",alignItems:"center",gap:4}}>{trailing}</View>:null}
+        {trailing?<View style={{flexDirection:"row",alignItems:"center",gap:space[1]}}>{trailing}</View>:null}
       </View>
       {narrow?tabs:null}
     </View>
@@ -203,7 +204,7 @@ function ModeTabs({modes,active,onPick,apple,rtl,styled,shortcuts,disabled}:Mode
     (refs.current[next] as unknown as {focus?:()=>void}|null)?.focus?.();
   };
   return <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{flexDirection:"row"}}>
-    <View accessibilityRole="tablist" accessibilityLabel="Modes" style={{flexDirection:"row",gap:2}}>
+    <View accessibilityRole="tablist" accessibilityLabel="Modes" style={{flexDirection:"row",gap:space[0.5]}}>
       {modes.map((m,i)=>{
         const selected=m.id===active;
         const shortcut=shortcuts?modeShortcutLabel(i,apple):undefined;

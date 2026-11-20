@@ -15,6 +15,7 @@ import {audioTargetSize,audioCopy} from './audio-chrome.ts';
 import { Platform, Pressable, Text, View, type ViewProps } from "react-native";
 import { joinClasses } from "../../styles.ts";
 import type { MixGroup, mixGroups } from "./mix-groups.ts";
+import { space, border, opacity } from '@nyc-tron/core/tokens';
 
 
 export interface MixGroupLabels {
@@ -85,8 +86,8 @@ export function MixGroupBar({
       onPress={() => { void (kind === "Solo" ? onGroupSoloCommit : onGroupMutedCommit)(group.name, !on); }}
       {...{ className: joinClasses(styled && "rounded-control items-center justify-center focus-visible:ring-2 focus-visible:ring-focus active:opacity-80",
         styled && (on ? fill : state === "mixed" ? "border-accent bg-surface-raised" : "border-border bg-surface-raised")) }}
-      style={{ minWidth: HIT + 8, minHeight: HIT, paddingHorizontal: 8, borderWidth: 2,
-        borderStyle: state === "mixed" ? "dashed" : "solid", opacity: disabled ? 0.45 : 1 }}>
+      style={{ minWidth: HIT + 8, minHeight: HIT, paddingHorizontal: space[2], borderWidth: border[2],
+        borderStyle: state === "mixed" ? "dashed" : "solid", opacity: disabled ? opacity[45] : 1 }}>
       <Text {...{ className: joinClasses(styled && "font-semibold", styled && (on ? onText : "text-text")) }}>{kind==="Solo"?copy.solo:copy.mute}</Text>
     </Pressable>;
   };
@@ -96,7 +97,7 @@ export function MixGroupBar({
       const count = copy.memberCount(group.memberIds.length);
       return <View key={group.name} {...{ role: "group", "aria-label": copy.groupName(group.name,count) }}
         {...{ className: joinClasses("flex-row items-center gap-2", styled && "rounded-control border border-border bg-surface-sunken") }}
-        style={{ flexWrap:"wrap", maxWidth:"100%", paddingVertical: 4, paddingStart: 10, paddingEnd: 4 }}>
+        style={{ flexWrap:"wrap", maxWidth:"100%", paddingVertical: space[1], paddingStart: space[2.5], paddingEnd: space[1] }}>
         <View style={{ minWidth: 56, maxWidth: 140 }}>
           <Text numberOfLines={1} {...{ className: joinClasses(styled && "font-semibold text-text") }}>{group.name}</Text>
           <Text numberOfLines={1} {...{ className: joinClasses(styled && "text-xs text-text-muted") }}>{count}</Text>

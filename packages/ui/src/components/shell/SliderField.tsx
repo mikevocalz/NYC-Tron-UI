@@ -11,6 +11,8 @@ import {nodeIsRTL,shellKey} from "./shell-keys.ts";
 import {applySliderKey,fractionOf,sliderKeyAction,valueAtOffset} from "./slider-model.ts";
 import {UnitInput} from "./UnitInput.tsx";
 import type {UnitContext} from "./unit-expression.ts";
+import {space,border,opacity,size} from "@nyc-tron/core/tokens";
+import {tokens} from "./SliderField.tokens.ts";
 
 /** Props for {@linkcode SliderField}. */
 export interface SliderFieldProps extends Omit<ViewProps,"children">,RangeConfig {
@@ -126,8 +128,8 @@ export function SliderField({
   };
   const text=formatStepValue(shown,step)+(unit??"");
   const canReset=defaultValue!==undefined&&defaultValue!==value;
-  return <View {...rest} {...{className:joinClasses("gap-1",className)}} style={[{opacity:disabled?0.5:1},style]}>
-    <View style={{flexDirection:"row",alignItems:"center",gap:8,minHeight:44}}>
+  return <View {...rest} {...{className:joinClasses("gap-1",className)}} style={[{opacity:disabled?opacity[50]:1},style]}>
+    <View style={{flexDirection:"row",alignItems:"center",gap:space[2],minHeight:size.touch}}>
       {hideLabel?<View style={{flex:1}}/>:<Text {...{className:joinClasses(styled&&"text-text text-sm")}} style={{flex:1}} numberOfLines={1}>{label}</Text>}
       {canReset?<Pressable accessibilityRole="button" accessibilityLabel={"Reset "+label} disabled={disabled}
         onPress={()=>commit(defaultValue!)}
@@ -158,15 +160,15 @@ export function SliderField({
         onBlur={()=>store.setState({focused:false})}
         {...{onKeyDown,focusable:!disabled,onPointerEnter:measure,
           className:joinClasses(styled&&"rounded-control focus-visible:outline-none",styled&&focused&&"ring-2 ring-focus")}}
-        style={{minHeight:44,justifyContent:"center",paddingHorizontal:14,...(Platform.OS==="web"?{cursor:disabled?"default":"pointer",userSelect:"none"}:{})} as object}>
+        style={{minHeight:size.touch,justifyContent:"center",paddingHorizontal:space[3.5],...(Platform.OS==="web"?{cursor:disabled?"default":"pointer",userSelect:"none"}:{})} as object}>
         <View pointerEvents="none" {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-sunken")}}
           style={{height:6,flexDirection:"row",alignItems:"center"}}>
           {/* The fill is a border so forced-colors mode keeps it. */}
-          <View {...{className:joinClasses(styled&&"border-accent")}} style={{width:`${fraction*100}%`,height:0,borderTopWidth:4}}/>
+          <View {...{className:joinClasses(styled&&"border-accent")}} style={{width:`${fraction*100}%`,height:0,borderTopWidth:border[4]}}/>
           {/* A zero-width wrapper centres the thumb on the fill's end in either direction. */}
           <View style={{width:0,alignItems:"center",overflow:"visible"}}>
             <View {...{className:joinClasses(styled&&"border-accent bg-surface-raised")}}
-              style={{width:22,height:22,borderRadius:11,borderWidth:2}}/>
+              style={{width:22,height:22,borderRadius:tokens.radius11,borderWidth:border[2]}}/>
           </View>
         </View>
       </View>

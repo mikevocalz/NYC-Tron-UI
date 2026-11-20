@@ -6,6 +6,7 @@ import {InspectorPanelContext} from "./inspector-context.ts";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {matchingRowCount,matchSummary,selectionHeading,type InspectorRegistryState,type InspectorSelection} from "./inspector-model.ts";
 import {InspectorSearch} from "./InspectorSearch.tsx";
+import {space,size} from "@nyc-tron/core/tokens";
 
 export type {InspectorSelection} from "./inspector-model.ts";
 
@@ -49,8 +50,8 @@ export function InspectorPanel({
   const detail=selection.kind==="single"?selection.detail:selection.kind==="multiple"?"Changes apply to every selected object.":undefined;
   return <View {...rest} accessibilityLabel={"Properties of "+selectionHeading(selection)}
     {...{role:"region",className:joinClasses(styled&&"bg-surface-raised",className)}} style={[{flex:1,minHeight:0},style]}>
-    <View {...{className:joinClasses(styled&&"border-b border-border px-3 py-2")}} style={{gap:8}}>
-      <View style={{flexDirection:"row",alignItems:"center",gap:8,minHeight:44}}>
+    <View {...{className:joinClasses(styled&&"border-b border-border px-3 py-2")}} style={{gap:space[2]}}>
+      <View style={{flexDirection:"row",alignItems:"center",gap:space[2],minHeight:size.touch}}>
         <View style={{flex:1,minWidth:0}}>
           <Text accessibilityRole="header" numberOfLines={1} {...{className:joinClasses(styled&&"text-text text-base font-semibold")}}>
             {selectionHeading(selection)}</Text>
@@ -62,10 +63,10 @@ export function InspectorPanel({
         summary={matchSummary(matches,query)} unstyled={unstyled}/>:null}
     </View>
     {selection.kind==="none"
-      ?<View style={{padding:16}}><Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}}>{emptyMessage}</Text></View>
-      :<ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" contentContainerStyle={{paddingBottom:16}}>
+      ?<View style={{padding:space[4]}}><Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}}>{emptyMessage}</Text></View>
+      :<ScrollView keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag" contentContainerStyle={{paddingBottom:space[4]}}>
         <InspectorPanelContext.Provider key={selectionScope} value={context}>{children}</InspectorPanelContext.Provider>
-        {searching&&matches===0?<View style={{padding:16,gap:4}}>
+        {searching&&matches===0?<View style={{padding:space[4],gap:space[1]}}>
           <Text {...{className:joinClasses(styled&&"text-text text-sm")}}>{`Nothing matches "${query.trim()}".`}</Text>
           <Text {...{className:joinClasses(styled&&"text-text-muted text-xs")}}>Try a shorter word, or clear the search to see every property.</Text>
         </View>:null}

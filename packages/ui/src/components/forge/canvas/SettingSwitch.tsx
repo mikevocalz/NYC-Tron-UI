@@ -1,5 +1,6 @@
 import {Pressable,Text,View} from "react-native";
 import {joinClasses} from "../../styles.ts";
+import {space,radius,opacity,size} from "@nyc-tron/core/tokens";
 
 /**
  * Labeled on/off row shared by the canvas settings panels: a 44pt switch with
@@ -11,11 +12,11 @@ export function SettingSwitch({label,on,onChange,disabled,styled,hint}:{
   return <Pressable role="switch" aria-checked={on} accessibilityRole="switch" accessibilityState={{checked:on,disabled}}
     aria-label={label} accessibilityHint={hint} disabled={disabled} onPress={()=>onChange(!on)}
     {...{className:joinClasses(styled&&"rounded-control focus-visible:ring-2 focus-visible:ring-focus")}}
-    style={{minHeight:44,flexDirection:"row",alignItems:"center",justifyContent:"space-between",gap:12,paddingHorizontal:4,opacity:disabled?0.5:1}}>
+    style={{minHeight:size.touch,flexDirection:"row",alignItems:"center",justifyContent:"space-between",gap:space[3],paddingHorizontal:space[1],opacity:disabled?opacity[50]:1}}>
     <Text {...{className:joinClasses(styled&&"text-text text-sm")}} style={{flexShrink:1}}>{label}</Text>
     <View pointerEvents="none" {...{className:joinClasses(styled&&"border",styled&&(on?"bg-primary border-primary":"bg-surface-sunken border-border"))}}
-      style={{width:40,height:24,borderRadius:12,padding:2,justifyContent:"center",alignItems:on?"flex-end":"flex-start"}}>
-      <View {...{className:joinClasses(styled&&(on?"bg-on-primary":"bg-text-muted"))}} style={{width:18,height:18,borderRadius:9}}/>
+      style={{width:40,height:24,borderRadius:radius[12],padding:space[0.5],justifyContent:"center",alignItems:on?"flex-end":"flex-start"}}>
+      <View {...{className:joinClasses(styled&&(on?"bg-on-primary":"bg-text-muted"))}} style={{width:18,height:18,borderRadius:radius[9]}}/>
     </View>
   </Pressable>;
 }

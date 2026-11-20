@@ -7,6 +7,7 @@ import {formatTimecode,type FrameRate} from "../timebase.ts";
 import {frameForKey} from "./frame-keys.ts";
 import {frameToX,xToFrame,type TimelineViewport} from "./viewport.ts";
 import {useFrameScrub} from "./useFrameScrub.ts";
+import {space,radius,opacity} from '@nyc-tron/core/tokens';
 
 /** Props for {@linkcode TimelinePlayhead}. */
 export interface TimelinePlayheadProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -81,9 +82,9 @@ function TimelinePlayheadBody({
       aria-disabled={disabled}
       accessibilityActions={[{name:"increment",label:"Next frame"},{name:"decrement",label:"Previous frame"}]}
       onAccessibilityAction={e=>{if(e.nativeEvent.actionName==="increment")step(1);if(e.nativeEvent.actionName==="decrement")step(-1);}}
-      style={{position:"absolute",left:scrub.active?shownHead:headLeft,top:0,width:HIT,height:HIT,alignItems:"center",opacity:inView?1:0.6,...NO_SELECT}}>
+      style={{position:"absolute",left:scrub.active?shownHead:headLeft,top:0,width:HIT,height:HIT,alignItems:"center",opacity:inView?1:opacity[60],...NO_SELECT}}>
       <View pointerEvents="none" {...{className:joinClasses(styled&&"bg-accent")}}
-        style={{marginTop:4,width:14,height:18,borderBottomLeftRadius:7,borderBottomRightRadius:7,borderTopLeftRadius:3,borderTopRightRadius:3}}/>
+        style={{marginTop:space[1],width:14,height:18,borderBottomLeftRadius:radius[7],borderBottomRightRadius:radius[7],borderTopLeftRadius:radius[3],borderTopRightRadius:radius[3]}}/>
     </View>
   </View>;
 }

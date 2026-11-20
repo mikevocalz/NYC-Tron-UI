@@ -4,6 +4,7 @@ import {Pressable,Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {keyboardKey,type KeyEventLike} from "../../gestures/drag-transport.ts";
 import {Glyph,type TransportGlyph} from "./glyphs.tsx";
+import {space,opacity,size} from '@nyc-tron/core/tokens';
 
 /** Props for {@linkcode TransportControls}. */
 export interface TransportControlsProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -51,7 +52,7 @@ function TransportControlsBody({
       {...(testID?{testID:testID+"-"+glyph}:{})}
       {...{className:joinClasses(styled&&"rounded-control border focus-visible:ring-2 focus-visible:ring-focus",
         styled&&(primary?"border-border bg-surface-sunken":"border-transparent"))}}
-      style={{minWidth:primary?56:44,minHeight:44,alignItems:"center",justifyContent:"center",opacity:off||disabled?0.4:1}}>
+      style={{minWidth:primary?56:size.touch,minHeight:size.touch,alignItems:"center",justifyContent:"center",opacity:off||disabled?opacity[40]:1}}>
       <Glyph name={glyph} styled={styled}/>
     </Pressable>;
   const onKeyDown=(event:KeyEventLike)=>{
@@ -78,6 +79,6 @@ function TransportControlsBody({
     {button("next-frame","Next frame",()=>seek(f+1),f>=durationFrames)}
     {button("end","Go to end",()=>seek(durationFrames),f>=durationFrames)}
     {button("stop","Stop",onStop)}
-    {disabledReason?<Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{paddingHorizontal:6}}>{disabledReason}</Text>:null}
+    {disabledReason?<Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{paddingHorizontal:space[1.5]}}>{disabledReason}</Text>:null}
   </View>;
 }

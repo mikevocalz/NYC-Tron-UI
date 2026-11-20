@@ -13,6 +13,7 @@ import {
   activatePanel,clampFloatingRect,closePanel,dockedPanelIds,dockTargetAt,movePanel,panelLocation,resizeStack,
   validateDockLayout,type DockDefaults,type DockEdge,type DockLayout,type DockTarget,
 } from "./dock-model.ts";
+import {space,radius,border,size as sizeToken} from "@nyc-tron/core/tokens";
 
 export type {DockEdge,DockLayout,DockStack,DockTarget,FloatingPanel} from "./dock-model.ts";
 
@@ -234,11 +235,11 @@ export function AdaptiveDock({
         style={{position:"absolute",left:rect.x,top:rect.y,width:rect.width,height:rect.height,overflow:"hidden",
           ...dir}}>
         <View {...{className:joinClasses(styled&&"border-b border-border")}}
-          style={{flexDirection:"row",alignItems:"center",minHeight:44,paddingHorizontal:4}}>
+          style={{flexDirection:"row",alignItems:"center",minHeight:sizeToken.touch,paddingHorizontal:space[1]}}>
           <DragGrabHandle disabled={disabled} label={"Move "+panel.title} {...dragTo(f.id)}/>
           <Pressable disabled={disabled} accessibilityRole="button" accessibilityLabel={"Bring "+panel.title+" to front"}
             onPress={()=>change(activatePanel(latest.current.layout,f.id))}
-            style={{flex:1,minHeight:44,justifyContent:"center"}}>
+            style={{flex:1,minHeight:sizeToken.touch,justifyContent:"center"}}>
             <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text text-sm font-semibold")}}>{panel.title}</Text>
           </Pressable>
           {menuFor(f.id,"floating",false)}
@@ -286,12 +287,12 @@ function StackView({ids,active,onActivate,label,titleOf,menu,children,styled,dis
   };
   return <View {...{className:joinClasses(styled&&"bg-surface-raised")}} style={{flex:1,minHeight:0,...dir}}>
     <View {...{className:joinClasses(styled&&"border-b border-border")}}
-      style={{flexDirection:"row",alignItems:"center",minHeight:44,paddingHorizontal:4,gap:2}}>
+      style={{flexDirection:"row",alignItems:"center",minHeight:sizeToken.touch,paddingHorizontal:space[1],gap:space[0.5]}}>
       {/* A narrow stack scrolls its tabs instead of wrapping them under the menu. */}
       <ScrollView ref={scroller} horizontal showsHorizontalScrollIndicator={false} style={{flex:1}}
         onLayout={e=>{viewport.current=e.nativeEvent.layout.width;reveal();}}
         contentContainerStyle={{flexDirection:"row"}}>
-      <View accessibilityRole="tablist" accessibilityLabel={label} style={{flexDirection:"row",gap:2}}>
+      <View accessibilityRole="tablist" accessibilityLabel={label} style={{flexDirection:"row",gap:space[0.5]}}>
         {ids.map((id,i)=>{
           const selected=id===active;
           return <Pressable key={id} disabled={disabled} ref={node=>{refs.current[i]=node;}} accessibilityRole="tab"
@@ -313,7 +314,7 @@ function StackView({ids,active,onActivate,label,titleOf,menu,children,styled,dis
 }
 
 function OptionsGlyph({styled}:{styled:boolean}){
-  return <View pointerEvents="none" style={{flexDirection:"row",gap:3}}>
-    {[0,1,2].map(i=><View key={i} {...{className:joinClasses(styled&&"border-text-muted")}} style={{width:4,height:4,borderRadius:2,borderWidth:2}}/>)}
+  return <View pointerEvents="none" style={{flexDirection:"row",gap:space[0.75]}}>
+    {[0,1,2].map(i=><View key={i} {...{className:joinClasses(styled&&"border-text-muted")}} style={{width:4,height:4,borderRadius:radius[2],borderWidth:border[2]}}/>)}
   </View>;
 }

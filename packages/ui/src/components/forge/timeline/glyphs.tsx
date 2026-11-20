@@ -1,5 +1,6 @@
 import {View} from "react-native";
 import {joinClasses} from "../../styles.ts";
+import {space} from "@nyc-tron/core/tokens";
 
 /** Transport glyphs drawn from views (no icon dependency) so they take the text token in both themes and in forced colors. */
 export type TransportGlyph="play"|"pause"|"stop"|"start"|"end"|"previous-frame"|"next-frame";
@@ -19,10 +20,10 @@ export function Glyph({name,styled=true}:{name:TransportGlyph;styled?:boolean}){
   const fill=joinClasses(styled&&"bg-text");
   const left=joinClasses(styled&&"border-l-text");
   const right=joinClasses(styled&&"border-r-text");
-  const row={flexDirection:"row" as const,alignItems:"center" as const,gap:1,direction:"ltr" as const};
+  const row={flexDirection:"row" as const,alignItems:"center" as const,gap:space[0.25],direction:"ltr" as const};
   switch(name){
     case "play":return triangle("right",16,left);
-    case "pause":return <View style={{...row,gap:4}}>{bar(4,15,fill)}{bar(4,15,fill)}</View>;
+    case "pause":return <View style={{...row,gap:space[1]}}>{bar(4,15,fill)}{bar(4,15,fill)}</View>;
     case "stop":return bar(13,13,fill);
     case "start":return <View style={row}>{bar(2,14,fill)}{triangle("left",14,right)}</View>;
     case "end":return <View style={row}>{triangle("right",14,left)}{bar(2,14,fill)}</View>;

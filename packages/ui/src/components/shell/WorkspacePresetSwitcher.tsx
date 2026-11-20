@@ -12,6 +12,7 @@ import {
   PRESET_NAME_MAX,copyName,presetActions,presetNameMessage,presetNameProblem,validatePresetList,
   type WorkspacePreset,
 } from "./workspace-preset-model.ts";
+import {space,radius,border} from "@nyc-tron/core/tokens";
 
 export type {WorkspacePreset} from "./workspace-preset-model.ts";
 
@@ -170,14 +171,14 @@ export function WorkspacePresetSwitcher({
       {...{className:joinClasses("flex-row gap-2 px-3",styled&&"border border-border bg-surface-raised hover:bg-surface-sunken")}}>
       <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-sm font-semibold text-text")}} style={{maxWidth:160}}>{active.name}</Text>
       {active.modified?<View pointerEvents="none" {...{className:joinClasses(styled&&"border-accent")}}
-        style={{width:8,height:8,borderRadius:4,borderWidth:4}}/>:null}
+        style={{width:8,height:8,borderRadius:radius[4],borderWidth:border[4]}}/>:null}
       <Chevron styled={styled}/>
     </MenuButton>
     {undoable?<Button disabled={disabled} title="Undo delete" variant="ghost" size="md"
       accessibilityLabel={`Undo delete of “${undoable.name}”`} onPress={()=>{const p=current();if(p?.undoable?.id===undoable.id)p.onUndoDelete?.(undoable.id);}}/>:null}
     <Modal visible={dialog!==undefined&&dialogRegion!==undefined} transparent animationType={Platform.OS==="web"?"none":"fade"} onRequestClose={close}>
       <View style={{flex:1}} {...{className:styled?"bg-text/50":undefined}}>
-        <View style={{position:"absolute",left:dialogRegion?.x??0,top:dialogRegion?.y??0,width:dialogRegion?.width??0,height:dialogRegion?.height??0,alignItems:"center",justifyContent:"center",padding:16}}>
+        <View style={{position:"absolute",left:dialogRegion?.x??0,top:dialogRegion?.y??0,width:dialogRegion?.width??0,height:dialogRegion?.height??0,alignItems:"center",justifyContent:"center",padding:space[4]}}>
         <ScrollView keyboardShouldPersistTaps="handled" style={{flexGrow:0,width:"100%",maxWidth:420,maxHeight:"100%"}} contentContainerStyle={{flexGrow:1}}>
         <View accessibilityViewIsModal {...{role:"dialog","aria-modal":true,
           "aria-label":dialog?.kind==="delete"?"Delete preset":dialog?.kind==="rename"?"Rename preset":"Save preset",
@@ -188,7 +189,7 @@ export function WorkspacePresetSwitcher({
               {`Delete “${active.name}”?`}</Text>
             <Text {...{className:joinClasses("text-start",styled&&"text-sm text-text-muted")}}>
               {onUndoDelete?"The preset and its layout are removed. You can undo this right after.":"The preset and its layout are removed for good."}</Text>
-            <View style={{flexDirection:"row",justifyContent:"flex-end",gap:8,flexWrap:"wrap"}}>
+            <View style={{flexDirection:"row",justifyContent:"flex-end",gap:space[2],flexWrap:"wrap"}}>
               <Button title="Cancel" variant="secondary" onPress={close}/>
               <Button title="Delete" variant="danger" onPress={deletePreset}/>
             </View>
@@ -200,7 +201,7 @@ export function WorkspacePresetSwitcher({
               onChangeText={draft=>{const open=store.getState().dialog;if(current()&&open?.session===named.session&&open.kind!=='delete')store.setState({dialog:{...open,draft}});}}
               {...(named.submitted&&problem?{errorText:presetNameMessage(problem,named.draft)}
                 :{helperText:`Up to ${PRESET_NAME_MAX} characters.`})}/>
-            <View style={{flexDirection:"row",justifyContent:"flex-end",gap:8,flexWrap:"wrap"}}>
+            <View style={{flexDirection:"row",justifyContent:"flex-end",gap:space[2],flexWrap:"wrap"}}>
               <Button title="Cancel" variant="secondary" onPress={close}/>
               <Button title={named.kind==="save"?"Save preset":"Rename"} onPress={submitName}/>
             </View>
@@ -216,5 +217,5 @@ export function WorkspacePresetSwitcher({
 function Chevron({styled}:{styled:boolean}){
   // Two strokes drawn as borders, so forced-colors mode keeps them.
   return <View pointerEvents="none" {...{className:joinClasses(styled&&"border-text-muted")}}
-    style={{width:8,height:8,borderRightWidth:2,borderBottomWidth:2,transform:[{rotate:"45deg"}],marginTop:-4}}/>;
+    style={{width:8,height:8,borderRightWidth:border[2],borderBottomWidth:border[2],transform:[{rotate:"45deg"}],marginTop:-space[1]}}/>;
 }

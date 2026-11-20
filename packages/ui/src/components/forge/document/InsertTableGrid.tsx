@@ -8,6 +8,7 @@ import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {PropertyInspector} from '../inputs/PropertyInspector.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {space} from '@nyc-tron/core/tokens';
 export interface InsertTableGridProps extends Omit<ViewProps,'children'>,ScopedControlProps {maxRows?:number;maxColumns?:number;onInsert:(rows:number,columns:number,signal?:AbortSignal)=>unknown;unstyled?:boolean}
 /** Native touch selection plus numeric insertion for larger tables and keyboard/accessibility use. */
 export function InsertTableGrid({scope='insert-table',revision=0,...props}:InsertTableGridProps){
@@ -19,7 +20,7 @@ export function InsertTableGrid({scope='insert-table',revision=0,...props}:Inser
  const insert=()=>guard.run('insert',(h,signal)=>{const v=store.getState();if(v.rows>(h.maxRows??1000)||v.columns>(h.maxColumns??100))throw new Error('Table size is no longer available');return h.onInsert(v.rows,v.columns,signal);});
  const pan=usePanGesture({enabled:!off,runOnJS:true,minDistance:5,maxPointers:1,onActivate:e=>{active.current=owner;startWidth.current=store.getState().width;select(e.x,e.y);},onUpdate:e=>{if(active.current===owner&&startWidth.current===store.getState().width)select(e.x,e.y);},onDeactivate:e=>{const valid=active.current===owner&&startWidth.current===store.getState().width;active.current=null;if(valid&&!e.canceled){select(e.x,e.y);void insert();}},onFinalize:()=>{active.current=null;}});
  const tap=useTapGesture({enabled:!off,runOnJS:true,maxDuration:300,maxDistance:5,onActivate:e=>{select(e.x,e.y);void insert();}}),gesture=useCompetingGestures(pan,tap);
- return <View {...rest} style={[{gap:8,minWidth:0},style]} accessibilityLabel="Insert table">
+ return <View {...rest} style={[{gap:space[2],minWidth:0},style]} accessibilityLabel="Insert table">
   <Text accessibilityLiveRegion="polite" {...{className:unstyled?undefined:'text-text'}}>{s.rows} rows by {s.columns} columns</Text>
   <GestureDetector key={owner} gesture={gesture} touchAction="none"><View collapsable={false} onLayout={e=>store.setState({width:e.nativeEvent.layout.width})} accessible={false} style={{height:rows*44}}>{Array.from({length:rows},(_,r)=><View key={r} style={{flexDirection:'row',height:44}}>{Array.from({length:columns},(_,c)=><View key={c} pointerEvents="none" {...{className:unstyled?undefined:`border border-border ${r<s.rows&&c<s.columns?'bg-accent/20':'bg-surface-raised'}`}} style={{flex:1}}/>)}</View>)}</View></GestureDetector>
   <PropertyInspector scope={owner} label="Table dimensions" unstyled={unstyled} disabledReason={off?'Table insertion unavailable':undefined} fields={[...(maxRows>1?[{id:'rows',kind:'number' as const,label:'Rows',value:Math.min(s.rows,maxRows),min:1,max:maxRows,step:1}]:[]),...(maxColumns>1?[{id:'columns',kind:'number' as const,label:'Columns',value:Math.min(s.columns,maxColumns),min:1,max:maxColumns,step:1}]:[])]} onCommit={(id,value)=>{if(typeof value==='number')store.setState({[id]:Math.round(value)});}}/>

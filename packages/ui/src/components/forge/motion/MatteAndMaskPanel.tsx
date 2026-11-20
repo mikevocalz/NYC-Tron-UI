@@ -3,6 +3,7 @@ import {Select} from '../../Select.tsx';
 import {UnitInput} from '../../shell/UnitInput.tsx';
 import {SettingSwitch} from '../canvas/SettingSwitch.tsx';
 import {validateMotionMatte,type MotionMatte} from './motion-settings.ts';
+import {space} from '@nyc-tron/core/tokens';
 export type {MotionMatte} from './motion-settings.ts';
 export interface MotionMatteSource {readonly id:string;readonly label:string;readonly unavailableReason?:string}
 export interface MatteAndMaskPanelProps extends Omit<ViewProps,'children'> {
@@ -17,7 +18,7 @@ export function MatteAndMaskPanel({layerId,value,sources,onCommit,disabled=false
  if(value.sourceId!==null&&!ids.has(value.sourceId))options.push({value:value.sourceId,label:`Unavailable source: ${value.sourceId}`,disabled:true});
  const available=value.sourceId!==null&&sources.some(source=>source.id===value.sourceId&&!source.unavailableReason&&source.id!==layerId);
  const set=(change:Partial<MotionMatte>)=>{if(disabled)return;const next={...value,...change};validateMotionMatte(next);onCommit(next);};
- return <View {...props} style={[{gap:8},props.style]}>
+ return <View {...props} style={[{gap:space[2]},props.style]}>
   <Select label="Track matte source" value={value.sourceId??''} options={options} disabled={disabled} unstyled={unstyled} onValueChange={sourceId=>set({sourceId:sourceId||null,enabled:sourceId?value.enabled:false})}/>
   <Select label="Track matte mode" value={value.mode} options={[{value:'alpha',label:'Alpha'},{value:'alpha-inverted',label:'Inverted alpha'},{value:'luma',label:'Luma'},{value:'luma-inverted',label:'Inverted luma'}]} disabled={disabled} unstyled={unstyled} onValueChange={mode=>set({mode:mode as MotionMatte['mode']})}/>
   <SettingSwitch label="Enable track matte" on={value.enabled} onChange={enabled=>set({enabled})} disabled={disabled||!available} styled={!unstyled}/>

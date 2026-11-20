@@ -12,6 +12,8 @@ import {
   guideKeyCommand,guidePositionAt,isOverOwnRuler,rulerTicks,validateGuides,
   type CanvasGuide,type NewCanvasGuide,type RulerUnit,
 } from "./ruler-model.ts";
+import {space,font,opacity} from "@nyc-tron/core/tokens";
+import {tokens} from "./CanvasRuler.tokens.ts";
 
 /** A guide being dragged: a new one out of a ruler, or an existing one by `id`. */
 export interface GuidePreview {
@@ -219,7 +221,7 @@ function Ruler({orientation,ctx,pointer}:{orientation:CanvasGuide["orientation"]
             ?{position:"absolute",left:at+3,top:1,width:52,height:12}
             :{position:"absolute",left:thickness/2-26-2,top:at+3+26-6,width:52,height:12,transform:[{rotate:"-90deg"}]}}>
             <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text-muted")}}
-              style={{fontSize:10,lineHeight:12,fontVariant:["tabular-nums"],textAlign:horizontal?"left":"right"}}>{t.label}</Text>
+              style={{fontSize:font[10],lineHeight:tokens.leading12,fontVariant:["tabular-nums"],textAlign:horizontal?"left":"right"}}>{t.label}</Text>
           </View>:null}
         </View>;
       })}
@@ -277,7 +279,7 @@ function GuideStroke({ctx,orientation,offset,removing,emphasized}:{
 }){
   const horizontal=orientation==="horizontal";
   return <View pointerEvents="none" {...{className:joinClasses(ctx.styled&&"bg-info")}}
-    style={{position:"absolute",opacity:removing?0.35:emphasized?1:0.6,
+    style={{position:"absolute",opacity:removing?opacity[35]:emphasized?1:opacity[60],
       ...(horizontal?{left:0,right:0,top:offset-(emphasized?1:0.5),height:emphasized?2:1}:{top:0,bottom:0,left:offset-(emphasized?1:0.5),width:emphasized?2:1})}}/>;
 }
 
@@ -289,7 +291,7 @@ function Readout({ctx,at,text}:{ctx:Ctx;at:LocalPoint;text:string}){
   return <View pointerEvents="none" style={{position:"absolute",left,top,width,alignItems:"flex-start"}}>
     <Text accessibilityLiveRegion="polite" numberOfLines={1}
       {...{className:joinClasses(styled&&"bg-surface-raised border border-border rounded-control text-text text-xs")}}
-      style={{paddingHorizontal:6,paddingVertical:3,fontVariant:["tabular-nums"]}}>{text}</Text>
+      style={{paddingHorizontal:space[1.5],paddingVertical:space[0.75],fontVariant:["tabular-nums"]}}>{text}</Text>
   </View>;
 }
 
@@ -326,7 +328,7 @@ function Corner({ctx}:{ctx:Ctx}){
       className:joinClasses(styled&&"bg-surface-raised border-border border-b border-r focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus")}}
       style={{width:thickness,height:thickness,alignItems:"center",justifyContent:"center"}}>
       <Text numberOfLines={1} {...{className:joinClasses(styled&&(moved?"text-accent":"text-text-muted"))}}
-        style={{fontSize:9,fontWeight:"600"}}>{unit}</Text>
+        style={{fontSize:tokens.font9,fontWeight:"600"}}>{unit}</Text>
     </View>
   </View>;
 }

@@ -5,6 +5,7 @@ import {joinClasses} from "../../styles.ts";
 import {useLocalStore} from "../../useLocalStore.ts";
 import type {FrameRate} from "../timebase.ts";
 import {formatTime,parseTime,supportsDropFrame,type TimeFormat} from "./time.ts";
+import {space,size} from '@nyc-tron/core/tokens';
 
 /** Props for {@linkcode TimecodeDisplay}. */
 export interface TimecodeDisplayProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -72,7 +73,7 @@ function TimecodeDisplayBody({disabledReason,
   };
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
   const text=joinClasses(styled&&"text-text text-lg font-semibold");
-  return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-1",className)}} style={[{flexDirection:"row",alignItems:"center",flexWrap:"wrap",gap:8},style]}>
+  return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-1",className)}} style={[{flexDirection:"row",alignItems:"center",flexWrap:"wrap",gap:space[2]},style]}>
     <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     {onCommit?<TextInput editable={disabledReason===undefined} maxLength={128} value={draft?.text??shown} onChangeText={t=>store.set({text:t})}
       onSubmitEditing={apply} onBlur={apply} selectTextOnFocus autoCorrect={false} autoCapitalize="none"
@@ -80,13 +81,13 @@ function TimecodeDisplayBody({disabledReason,
       {...id("input")}
       {...{className:joinClasses(text,styled&&"rounded-control border bg-surface-sunken px-2",
         styled&&(draft?.error?"border-danger":"border-border"))}}
-      style={{minHeight:44,minWidth:150,fontVariant:["tabular-nums"]}}/>
+      style={{minHeight:size.touch,minWidth:150,fontVariant:["tabular-nums"]}}/>
       :<Text selectable accessibilityLabel={`${label} ${shown}`} {...{className:text}} style={{fontVariant:["tabular-nums"]}}>{shown}</Text>}
     {onFormatChange?<Pressable disabled={disabledReason!==undefined} accessibilityRole="button" accessibilityLabel={`Time format: ${FORMAT_LABEL[current]}`}
       accessibilityHint="Switches to the next time format" {...id("format")}
       onPress={()=>{store.set(undefined);onFormatChange(formats[(formats.indexOf(current)+1)%formats.length]!);}}
       {...{className:joinClasses(styled&&"rounded-control border border-border px-3 focus-visible:ring-2 focus-visible:ring-focus")}}
-      style={{minHeight:44,justifyContent:"center"}}>
+      style={{minHeight:size.touch,justifyContent:"center"}}>
       <Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}}>{FORMAT_LABEL[current]+(current==="timecode"&&dropFrame?" (drop-frame)":"")}</Text>
     </Pressable>:null}
     {draft?.error?<Text accessibilityLiveRegion="polite" {...{className:joinClasses(styled&&"text-danger text-xs")}} style={{flexBasis:"100%"}}>{draft.error}</Text>:null}

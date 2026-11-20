@@ -10,6 +10,8 @@ import {cycleFocusTarget} from "./focus-cycle.ts";
 import {useRestoreFocus} from "./focus-restore.ts";
 import {filterCommands,nextActiveCommand,reconcileActiveCommand,validateCommands,
  type PaletteCommand} from "./command-filter.ts";
+import {space,font,opacity} from "@nyc-tron/core/tokens";
+import {tokens} from "./CommandPalette.tokens.ts";
 export type {PaletteCommand} from "./command-filter.ts";
 
 export interface CommandPaletteProps{
@@ -125,7 +127,7 @@ export function CommandPalette({scope="command-palette",revision=0,open,onOpenCh
       {results.length===0
        ? <Text accessibilityLiveRegion="polite" role="status"
           {...{className:joinClasses(styled&&"text-text-muted")}}
-          style={{paddingHorizontal:12,paddingVertical:16}}>{emptyText}</Text>
+          style={{paddingHorizontal:space[3],paddingVertical:space[4]}}>{emptyText}</Text>
        : results.map(command=>{
         const active=command.id===activeId;
         return <Pressable key={command.id} nativeID={optionId(command.id)} role="option"
@@ -140,15 +142,15 @@ export function CommandPalette({scope="command-palette",revision=0,open,onOpenCh
           {...{onKeyDown:(event:KeyEvent)=>onKey(event.nativeEvent as unknown as KeyData,command.id,
             ()=>{event.preventDefault();event.stopPropagation();})}}
           {...{className:joinClasses("rounded-control",styled&&(active?"bg-primary/10":"focus-visible:bg-primary/10"))}}
-          style={{minHeight:ROW_HEIGHT,paddingHorizontal:12,paddingVertical:7,justifyContent:"center",
-            opacity:command.disabled?0.4:1}}>
+          style={{minHeight:ROW_HEIGHT,paddingHorizontal:space[3],paddingVertical:tokens.space1_75,justifyContent:"center",
+            opacity:command.disabled?opacity[40]:1}}>
           <Text {...{className:joinClasses(styled&&(command.danger?"text-danger":"text-text"))}}
             style={{fontWeight:"600"}}>
            {command.group?<Text {...{className:joinClasses(styled&&"text-text-muted")}}>{command.group}  </Text>:null}
            {command.label}
           </Text>
           {command.description?<Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text-muted")}}
-            style={{fontSize:12}}>{command.description}</Text>:null}
+            style={{fontSize:font[12]}}>{command.description}</Text>:null}
          </Pressable>;
        })}
      </View>

@@ -3,6 +3,7 @@ import {Select} from '../../Select.tsx';
 import {Button} from '../../Button.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
+import {space} from '@nyc-tron/core/tokens';
 export interface AudioDeviceChoice {id:string;label:string;kind:'input'|'output';channels:readonly {id:string;label:string}[];sampleRates:readonly number[];unavailableReason?:string}
 export interface AudioDeviceSelection {inputId:string|null;outputId:string|null;channelIds:readonly string[];sampleRate:number}
 export interface DeviceAndChannelPickerProps extends Omit<ViewProps,'children'>,ScopedControlProps {
@@ -25,11 +26,11 @@ export function DeviceAndChannelPicker({scope='audio-device',revision=0,...props
   return host.onCommit(next,signal);
  });
  const options=(kind:AudioDeviceChoice['kind'])=>[{value:'',label:'System default'},...devices.filter(d=>d.kind===kind).map(d=>({value:d.id,label:d.label,disabled:d.unavailableReason!==undefined}))];
- return <View {...rest} style={[{gap:8,minWidth:0},style]} accessibilityLabel="Audio devices and channels">
+ return <View {...rest} style={[{gap:space[2],minWidth:0},style]} accessibilityLabel="Audio devices and channels">
   <Select label="Audio input device" value={value.inputId??''} options={options('input')} disabled={off} unstyled={unstyled} onValueChange={id=>chooseDevice('input',id)}/>
   <Select label="Audio output device" value={value.outputId??''} options={options('output')} disabled={off} unstyled={unstyled} onValueChange={id=>chooseDevice('output',id)}/>
   <Select label="Audio sample rate" value={String(value.sampleRate)} options={rates.map(rate=>({value:String(rate),label:rate+' Hz'}))} disabled={off||rates.length===0} unstyled={unstyled} onValueChange={rate=>commit({sampleRate:Number(rate)})}/>
-  <View style={{flexDirection:'row',flexWrap:'wrap',gap:8}}>{input?.channels.map(channel=><Button key={channel.id} title={channel.label} accessibilityState={{checked:value.channelIds.includes(channel.id)}} disabled={off} unstyled={unstyled} onPress={()=>guard.run('channel',(host,signal)=>{const ids=host.value.channelIds;return host.onCommit({...host.value,channelIds:ids.includes(channel.id)?ids.filter(id=>id!==channel.id):[...ids,channel.id]},signal);})}/>)}</View>
+  <View style={{flexDirection:'row',flexWrap:'wrap',gap:space[2]}}>{input?.channels.map(channel=><Button key={channel.id} title={channel.label} accessibilityState={{checked:value.channelIds.includes(channel.id)}} disabled={off} unstyled={unstyled} onPress={()=>guard.run('channel',(host,signal)=>{const ids=host.value.channelIds;return host.onCommit({...host.value,channelIds:ids.includes(channel.id)?ids.filter(id=>id!==channel.id):[...ids,channel.id]},signal);})}/>)}</View>
   {recording?<Text {...{className:unstyled?undefined:'text-text'}}>Stop recording before changing audio devices or sample rate.</Text>:null}
   <Button title="Refresh audio devices" variant="secondary" disabled={off} unstyled={unstyled} onPress={()=>guard.run('refresh',(host,signal)=>host.onRefresh(signal))}/>
   <ErrorMessage message={guard.error??undefined} unstyled={unstyled}/>

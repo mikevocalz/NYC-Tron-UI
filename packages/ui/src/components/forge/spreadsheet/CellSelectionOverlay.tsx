@@ -9,6 +9,7 @@ import {fillTarget,type FillPlan} from './fill-handle.ts';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl,type ScopedControlProps} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {border} from '@nyc-tron/core/tokens';
 export interface SelectionPane {id:string;x:number;y:number;width:number;height:number;startRow:number;endRow:number;startColumn:number;endColumn:number;scrollX:number;scrollY:number}
 export interface CellSelectionOverlayProps extends Omit<ViewProps,'children'>,ScopedControlProps {
  range:SheetRange;rowCount:number;columnCount:number;rowHeight:number;columnWidth:number;
@@ -31,7 +32,7 @@ export function CellSelectionOverlay({scope='cell-selection',revision=0,...props
  {panes.map(p=>{const sr=Math.max(p.startRow,shown.startRow),er=Math.min(p.endRow,shown.endRow),sc=Math.max(p.startColumn,shown.startColumn),ec=Math.min(p.endColumn,shown.endColumn);if(sr>er||sc>ec)return null;const x=(sc-p.startColumn)*columnWidth-p.scrollX,y=(sr-p.startRow)*rowHeight-p.scrollY,w=(ec-sc+1)*columnWidth,h=(er-sr+1)*rowHeight;
  const cornerX=(range.endColumn-p.startColumn+1)*columnWidth-p.scrollX,cornerY=(range.endRow-p.startRow+1)*rowHeight-p.scrollY,hasCorner=range.endRow>=p.startRow&&range.endRow<=p.endRow&&range.endColumn>=p.startColumn&&range.endColumn<=p.endColumn&&cornerX>=0&&cornerY>=0&&cornerX<=p.width&&cornerY<=p.height&&p.width>=44&&p.height>=44;
  return <View key={p.id} pointerEvents="box-none" style={{position:'absolute',left:p.x,top:p.y,width:p.width,height:p.height,overflow:'hidden'}}>
-  <View pointerEvents="none" {...{className:unstyled?undefined:'border-primary bg-primary/10'}} style={{position:'absolute',left:x,top:y,width:w,height:h,borderTopWidth:sr===shown.startRow?2:0,borderBottomWidth:er===shown.endRow?2:0,borderLeftWidth:sc===shown.startColumn?2:0,borderRightWidth:ec===shown.endColumn?2:0}}/>
+  <View pointerEvents="none" {...{className:unstyled?undefined:'border-primary bg-primary/10'}} style={{position:'absolute',left:x,top:y,width:w,height:h,borderTopWidth:sr===shown.startRow?border[2]:border[0],borderBottomWidth:er===shown.endRow?border[2]:border[0],borderLeftWidth:sc===shown.startColumn?border[2]:border[0],borderRightWidth:ec===shown.endColumn?border[2]:border[0]}}/>
   {hasCorner?<RangeHandle key={p.id} boundary={owner} label={interaction==='fill'?'Fill selected cells':'Resize cell selection'} x={Math.min(p.width-44,Math.max(0,cornerX-22))} y={Math.min(p.height-44,Math.max(0,cornerY-22))} rowHeight={rowHeight} columnWidth={columnWidth} disabled={off} unstyled={unstyled} onPreview={update} onCommit={finish} onCancel={cancel}/>:null}
  </View>;})}{panes[0]?<View pointerEvents="none" style={{position:'absolute',left:panes[0].x,top:panes[0].y,maxWidth:panes[0].width,maxHeight:panes[0].height,overflow:'hidden'}}><ErrorMessage message={guard.error??disabledReason} unstyled={unstyled}/></View>:null}</View>;
 }

@@ -12,6 +12,8 @@ import {
   hingeBands,mirrorBands,resolveSplit,sizeForEdge,startSizeFor,stepSplit,
   type HingeBand,type SplitAxis,type SplitLayout,type SplitLimits,
 } from "./splitter-model.ts";
+import {border} from "@nyc-tron/core/tokens";
+import {tokens} from "./PaneSplitter.tokens.ts";
 
 export type {SplitAxis} from "./splitter-model.ts";
 
@@ -195,8 +197,8 @@ export function PaneSplitter({
     {...{className:joinClasses(styled&&seated&&"bg-surface-sunken",dividerClassName)}}>
     <View pointerEvents="none" {...{className:line}}
       style={horizontal
-        ?{position:"absolute",top:0,bottom:0,left:"50%",width:0,borderLeftWidth:active||focused?3:1,marginLeft:active||focused?-1.5:-0.5}
-        :{position:"absolute",left:0,right:0,top:"50%",height:0,borderTopWidth:active||focused?3:1,marginTop:active||focused?-1.5:-0.5}}/>
+        ?{position:"absolute",top:0,bottom:0,left:"50%",width:0,borderLeftWidth:active||focused?border[3]:border[1],marginLeft:active||focused?tokens.spaceN0_375:tokens.spaceN0_125}
+        :{position:"absolute",left:0,right:0,top:"50%",height:0,borderTopWidth:active||focused?border[3]:border[1],marginTop:active||focused?tokens.spaceN0_375:tokens.spaceN0_125}}/>
     <Transport disabled={disabled||!layout}
       onBegin={point=>{if(current()){gesture.current.origin=point;drag.begin();}}}
       onMove={(point,touches)=>{if(current()){if(touches===1)drag.move(point);else drag.cancel();}}}
@@ -219,8 +221,8 @@ export function PaneSplitter({
         onBlur={()=>store.setState({focused:false})}
         {...{className:joinClasses(styled&&"focus-visible:outline-none")}}
         style={[{position:"absolute",...(horizontal
-          ?{top:0,bottom:0,width:44,left:"50%",marginLeft:-22}
-          :{left:0,right:0,height:44,top:"50%",marginTop:-22}),...NO_SELECT},cursorFor(axis)]}/>
+          ?{top:0,bottom:0,width:44,left:"50%",marginLeft:tokens.spaceN5_5}
+          :{left:0,right:0,height:44,top:"50%",marginTop:tokens.spaceN5_5}),...NO_SELECT},cursorFor(axis)]}/>
     </Transport>
   </View>;
   // Physical order: the start pane is on the right only for a right-to-left horizontal split.

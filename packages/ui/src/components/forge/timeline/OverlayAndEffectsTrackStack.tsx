@@ -21,6 +21,7 @@ import {TrackHeaders,type TrackFlag} from "./TrackHeaders.tsx";
 import {TimelineClipLane,type TimelineClipLaneProps} from "./TimelineClipLane.tsx";
 import {stackMoveTarget,stackOrder} from "./track-stack.ts";
 import type {TrackKind} from "./edits.ts";
+import {space,opacity,size} from '@nyc-tron/core/tokens';
 
 /** Props for {@linkcode OverlayAndEffectsTrackStack}. */
 export interface OverlayAndEffectsTrackStackProps extends Omit<TimelineClipLaneProps,"tracks"> {
@@ -87,7 +88,7 @@ function OverlayAndEffectsTrackStackBody({
     reorder,disabled,unstyled};
   return <View {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}} style={style}>
     <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
-    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8}}>
+    <View style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:space[2]}}>
       <Button title="Add video track" variant="secondary" size="sm" disabled={disabled} onPress={()=>onAddTrack("video")} {...id("add-video")}/>
       <Button title="Add overlay track" variant="secondary" size="sm" disabled={disabled} onPress={()=>onAddTrack("overlay")} {...id("add-overlay")}/>
       <Button title="Add audio track" variant="secondary" size="sm" disabled={disabled} onPress={()=>onAddTrack("audio")} {...id("add-audio")}/>
@@ -95,7 +96,7 @@ function OverlayAndEffectsTrackStackBody({
         disabled={disabled||tracks.length<2} accessibilityLabel="Reorder tracks" onPress={()=>setReorder(!reorder)} {...id("reorder")}
         {...{className:joinClasses(styled&&"rounded-control border-2 px-3 focus-visible:ring-2 focus-visible:ring-focus",
           styled&&(reorder?"border-focus bg-surface-sunken":"border-border bg-surface-raised"))}}
-        style={{minHeight:44,justifyContent:"center",opacity:disabled||tracks.length<2?0.4:1}}>
+        style={{minHeight:size.touch,justifyContent:"center",opacity:disabled||tracks.length<2?opacity[40]:1}}>
         <Text {...{className:joinClasses(styled&&(reorder?"text-text font-semibold":"text-text"))}}>{reorder?"Done reordering":"Reorder"}</Text>
       </Pressable>
     </View>
@@ -108,7 +109,7 @@ function OverlayAndEffectsTrackStackBody({
         <TimelineClipLane {...lane} tracks={shown} laneHeight={laneHeight} disabled={disabled} unstyled={unstyled} {...id("lanes")}/>
         {laneOverlay??null}
       </View>
-    </View>:<Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{paddingVertical:12}}>
+    </View>:<Text {...{className:joinClasses(styled&&"text-text-muted text-sm")}} style={{paddingVertical:space[3]}}>
       No tracks yet. Add a video or audio track to start.</Text>}
     {opened?<View {...{className:joinClasses(styled&&"rounded-control border border-border")}} style={{overflow:"hidden"}}>
       {/* The full row for the opened track; moves still follow the stack order. */}

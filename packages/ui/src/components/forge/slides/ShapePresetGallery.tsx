@@ -10,6 +10,7 @@ import {Select} from '../../Select.tsx';
 import {ErrorMessage} from '../../feedback/ErrorMessage.tsx';
 import {controlIdentity,useScopedControl} from '../inputs/useScopedControl.ts';
 import {useEditorBoundary} from '../../gestures/editor-interaction-scope.ts';
+import {space} from '@nyc-tron/core/tokens';
 export interface ShapeAdjustmentHandle {id:string;label:string;x:number;y:number;axis:'x'|'y';value:number;min:number;max:number}
 export interface ShapePresetGalleryProps extends Omit<AssetPresetGalleryProps,'label'|'selectedIds'> {
  selectedId:string|null;adjustments:readonly InspectorProperty[];handles:readonly ShapeAdjustmentHandle[];canvasAspectRatio:number;
@@ -24,7 +25,7 @@ export function ShapePresetGallery({scope='shape-presets',revision=0,...props}:S
  const local=useRef<ReturnType<typeof makeStore>|null>(null);local.current??=makeStore();const store=local.current,s=useStore(store,v=>v),active=handles.find(h=>h.id===s.activeId)??handles[0];
  useLayoutEffect(()=>{store.setState({preview:{}});},[owner]);
  const commit=(id:string,value:number|string|boolean)=>guard.run('adjustment',(h,signal)=>h.onAdjustmentCommit(id,value,signal));
- return <View style={{gap:12}}><AssetPresetGallery {...gallery} scope={scope} revision={revision} label="Vector shape presets" selectedIds={selectedId?[selectedId]:[]}/>{selectedId?<>
+ return <View style={{gap:space[3]}}><AssetPresetGallery {...gallery} scope={scope} revision={revision} label="Vector shape presets" selectedIds={selectedId?[selectedId]:[]}/>{selectedId?<>
  <View style={{aspectRatio:canvasAspectRatio,position:'relative',overflow:'hidden',minHeight:88}} onLayout={e=>store.setState({width:e.nativeEvent.layout.width,height:e.nativeEvent.layout.height})}>
  {renderAdjustmentPreview(selectedId,Object.fromEntries(handles.map(h=>[h.id,s.preview[h.id]??h.value])))}
  {active?<ShapeHandle key={owner+active.id} handle={active} width={s.width} height={s.height} disabled={off} unstyled={props.unstyled??false} onPreview={value=>{if(guard.current())store.setState({preview:{[active.id]:value}});}} onCommit={value=>{store.setState({preview:{}});return commit(active.id,value);}} onCancel={()=>store.setState({preview:{}})}/>:null}

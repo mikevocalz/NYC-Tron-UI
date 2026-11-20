@@ -4,6 +4,7 @@ import {Text,View,type ViewProps} from "react-native";
 import {joinClasses} from "../../styles.ts";
 import {ToolButton,officeKey,type OfficeKeyEvent} from "../office/office-controls.tsx";
 import {ANNOTATION_TOOL_INFO,orderTools,toolForKey,type AnnotationTool} from "./annotation-model.ts";
+import {space} from '@nyc-tron/core/tokens';
 
 /** Props for {@linkcode AnnotationToolbar}. */
 export interface AnnotationToolbarProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -53,10 +54,10 @@ function AnnotationToolbarBody({
     const tool=toolForKey(key,ordered);
     if(tool&&tool!==activeTool){(e as unknown as {preventDefault?:()=>void}).preventDefault?.();onToolChange(tool);}
   };
-  return <View {...rest} {...{onKeyDown}} {...{className:joinClasses("min-w-0",className)}} style={[{gap:6},rest.style as object]}>
+  return <View {...rest} {...{onKeyDown}} {...{className:joinClasses("min-w-0",className)}} style={[{gap:space[1.5]},rest.style as object]}>
     <View accessibilityRole="toolbar" accessibilityLabel={label}
       {...{className:joinClasses(styled&&"rounded-control border border-border bg-surface-raised")}}
-      style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:4,padding:4}}>
+      style={{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:space[1],padding:space[1]}}>
       {ordered.map(tool=>{
         const info=ANNOTATION_TOOL_INFO[tool];
         const on=tool===activeTool;
@@ -64,12 +65,12 @@ function AnnotationToolbarBody({
           accessibilityHint={tool==="select"?undefined:"Shortcut "+info.key.toUpperCase()}>
           <Text numberOfLines={1} {...{className:joinClasses(styled&&"text-text text-sm")}}
             style={{fontWeight:on?"700":"500",textDecorationLine:tool==="underline"?"underline":tool==="strike"?"line-through":"none",
-              ...(tool==="highlight"?{paddingHorizontal:3}:null)}}>
+              ...(tool==="highlight"?{paddingHorizontal:space[0.75]}:null)}}>
             {tool==="highlight"?<Text {...{className:joinClasses(styled&&"bg-accent/10")}}>{info.label}</Text>:info.label}
           </Text>
         </ToolButton>;
       })}
-      {onUndo||onRedo?<View {...{className:joinClasses(styled&&"bg-border")}} style={{width:1,alignSelf:"stretch",marginHorizontal:2}}/>:null}
+      {onUndo||onRedo?<View {...{className:joinClasses(styled&&"bg-border")}} style={{width:1,alignSelf:"stretch",marginHorizontal:space[0.5]}}/>:null}
       {onUndo?<ToolButton quiet label="Undo" disabled={!canUndo} styled={styled} onPress={onUndo}/>:null}
       {onRedo?<ToolButton quiet label="Redo" disabled={!canRedo} styled={styled} onPress={onRedo}/>:null}
     </View>

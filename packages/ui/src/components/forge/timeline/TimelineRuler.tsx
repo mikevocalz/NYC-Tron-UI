@@ -6,6 +6,7 @@ import type {FrameRate} from "../timebase.ts";
 import {rulerTicks} from "./ruler.ts";
 import {frameToX,visibleFrames,xToFrame,type TimelineViewport} from "./viewport.ts";
 import {useFrameScrub} from "./useFrameScrub.ts";
+import {space} from '@nyc-tron/core/tokens';
 
 /** A named point on the ruler. */
 export interface TimelineMark {
@@ -76,7 +77,7 @@ function TimelineRulerBody({
     {marks.map((m,i)=>{
       const x=frameToX(viewport,m.frame);
       if(x<-80||x>viewport.widthPx)return null;
-      return <View key={"m"+i} pointerEvents="none" style={{position:"absolute",left:x,top:2,flexDirection:"row",alignItems:"center",gap:3}}>
+      return <View key={"m"+i} pointerEvents="none" style={{position:"absolute",left:x,top:2,flexDirection:"row",alignItems:"center",gap:space[0.75]}}>
         <View {...{className:joinClasses(styled&&"bg-accent")}} style={{width:2,height:14}}/>
         <Text {...{className:joinClasses(styled&&"text-text text-xs")}} numberOfLines={1}>{m.label}</Text>
       </View>;

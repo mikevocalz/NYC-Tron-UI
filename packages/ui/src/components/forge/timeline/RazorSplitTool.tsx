@@ -9,6 +9,7 @@ import {Button} from "../../Button.tsx";
 import type {FrameRate} from "../timebase.ts";
 import {splitEdit,type TimelineEdit,type TimelineTrack} from "./edits.ts";
 import type {TimelineTool} from "./TimelineClipLane.tsx";
+import {space,opacity,size} from '@nyc-tron/core/tokens';
 
 /** Props for {@linkcode RazorSplitTool}. */
 export interface RazorSplitToolProps extends Omit<ViewProps,"children">,ScopedControlProps {
@@ -53,14 +54,14 @@ function RazorSplitToolBody({
   const on=tool==="razor";
   const id=(s:string)=>testID?{testID:testID+"-"+s}:{};
   return <View {...rest} {...(testID?{testID}:{})} {...{className:joinClasses("gap-2",className)}}
-    style={[{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:8},style]}>
+    style={[{flexDirection:"row",flexWrap:"wrap",alignItems:"center",gap:space[2]},style]}>
     <ErrorMessage message={actionError??undefined} unstyled={unstyled}/>
     <Pressable accessibilityRole="switch" aria-checked={on} accessibilityState={{checked:on,disabled}} disabled={disabled}
       accessibilityLabel="Razor" accessibilityHint="When on, pressing a clip splits it at that point"
       onPress={()=>onToolChange(on?"select":"razor")} {...id("toggle")}
       {...{className:joinClasses(styled&&"rounded-control border-2 px-3 focus-visible:ring-2 focus-visible:ring-focus",
         styled&&(on?"border-focus bg-surface-sunken":"border-border bg-surface-raised"))}}
-      style={{minHeight:44,justifyContent:"center",opacity:disabled?0.4:1}}>
+      style={{minHeight:size.touch,justifyContent:"center",opacity:disabled?opacity[40]:1}}>
       <Text {...{className:joinClasses(styled&&(on?"text-text font-semibold":"text-text"))}}>{on?"Razor on":"Razor"}</Text>
     </Pressable>
     <Button title="Split at playhead" variant="secondary" size="sm" disabled={disabled||!edit} {...id("split")}
