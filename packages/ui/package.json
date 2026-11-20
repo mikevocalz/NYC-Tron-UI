@@ -40,6 +40,31 @@
       "react-native": "./dist/components/layout/AdaptiveColumns.js",
       "default": "./dist/components/layout/AdaptiveColumns.js"
     },
+    "./components/layout/Stack": {
+      "types": "./dist/components/layout/Stack.d.ts",
+      "react-native": "./dist/components/layout/Stack.js",
+      "default": "./dist/components/layout/Stack.js"
+    },
+    "./components/layout/Row": {
+      "types": "./dist/components/layout/Row.d.ts",
+      "react-native": "./dist/components/layout/Row.js",
+      "default": "./dist/components/layout/Row.js"
+    },
+    "./components/layout/Spacer": {
+      "types": "./dist/components/layout/Spacer.d.ts",
+      "react-native": "./dist/components/layout/Spacer.js",
+      "default": "./dist/components/layout/Spacer.js"
+    },
+    "./components/layout/Divider": {
+      "types": "./dist/components/layout/Divider.d.ts",
+      "react-native": "./dist/components/layout/Divider.js",
+      "default": "./dist/components/layout/Divider.js"
+    },
+    "./components/layout/Text": {
+      "types": "./dist/components/layout/Text.d.ts",
+      "react-native": "./dist/components/layout/Text.js",
+      "default": "./dist/components/layout/Text.js"
+    },
     "./components/NavigationRail": {
       "types": "./dist/components/NavigationRail.d.ts",
       "react-native": "./dist/components/NavigationRail.js",

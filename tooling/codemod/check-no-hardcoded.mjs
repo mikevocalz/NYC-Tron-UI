@@ -39,7 +39,7 @@ const zeroHasToken = (cat) => map[cat]?.onScale?.["0"] !== undefined;
 export function listFiles() {
   return execFileSync("git", ["ls-files", "packages"], { cwd: root, encoding: "utf8", maxBuffer: 1 << 28 }).split("\n")
     .filter((f) => /^packages\/[^/]+\/src\/.+\.(ts|tsx)$/.test(f))
-    .filter((f) => !/(\.d\.ts$|\.test\.|\.spec\.|\/tests?\/|\/generated\/|\/node_modules\/|\/dist\/|\.tokens\.ts$|^packages\/core\/src\/tokens\.ts$)/.test(f));
+    .filter((f) => !/(\.d\.ts$|\.test\.|\.spec\.|\/tests?\/|\/generated\/|\/node_modules\/|\/dist\/|\.tokens\.ts$|^packages\/(?:core|ui)\/src\/tokens\.ts$)/.test(f));
 }
 
 /** Blanks comments, keeps strings (hex and rgba hits live in strings), keeps offsets and newlines. */
