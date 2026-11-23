@@ -17,7 +17,7 @@ for (const mode of MODES) {
     assert.equal(steps[disabled - 1], '- scrollUntilVisible:\n    element:\n      text: "^Unavailable$"\n    direction: DOWN\n    timeout: 30000\n    centerElement: true');
     assert.ok(steps.includes('- assertVisible:\n    text: ^Editor$\n    selected: true'));
     for (const [index, step] of steps.entries()) {
-      if (step.startsWith('- scrollUntilVisible:')) assert.match(step, /\n    centerElement: true$/);
+      if (step.startsWith('- scrollUntilVisible:')) assert.match(step, /id: shell-(?:result|draft)\n/.test(step) ? /\n    centerElement: false$/ : /\n    centerElement: true$/);
       if (step === '- assertVisible:\n    id: rail-result\n    text: "Selected: editor"') assert.equal(steps[index - 1], '- scrollUntilVisible:\n    element:\n      id: rail-result\n    direction: DOWN\n    timeout: 30000\n    centerElement: true');
     }
     const selected = steps.indexOf('- assertVisible:\n    text: ^Editor$\n    selected: true');
@@ -58,4 +58,15 @@ for (const mode of MODES) test(`${mode} dismisses the actual iOS Return keyboard
  assert.equal(steps[input+4],`- assertVisible:\n    id: draft-result\n    text: ${JSON.stringify('Draft: '+DRAFT)}`);
  assert.equal(steps.filter(step=>step.startsWith('- assertVisible:')).length,27);
  assert.doesNotMatch(flow,/optional:|point:|submitBehavior:|returnKeyType:/);
+});
+
+for (const mode of MODES) test(`${mode} requires full visible shell inspection without centering read-only bottom content`, () => {
+ const steps=nativeFlow(mode).split(/\n(?=- )/), scrolls=steps.filter(step=>step.startsWith('- scrollUntilVisible:'));
+ const inspections=scrolls.filter(step=>/id: shell-(?:result|draft)\n/.test(step));
+ assert.equal(inspections.length,5);
+ for(const step of inspections){assert.match(step,/direction: DOWN\n    timeout: 30000\n    centerElement: false$/);assert.doesNotMatch(step,/optional:|visibilityPercentage:/);}
+ for(const step of scrolls.filter(step=>!inspections.includes(step)))assert.match(step,/centerElement: true$/);
+ assert.equal(steps.filter(step=>step.startsWith('- assertVisible:')).length,27);
+ for(const text of ['Physical edge: left; text: LTR','Physical edge: left; text: RTL','Physical edge: right; text: RTL',DRAFT])assert.ok(nativeFlow(mode).includes(`text: ${JSON.stringify(text)}`));
+ assert.match(nativeFlow(mode),/leftOf:\n      id: shell-draft/);assert.match(nativeFlow(mode),/rightOf:\n      id: shell-draft/);
 });

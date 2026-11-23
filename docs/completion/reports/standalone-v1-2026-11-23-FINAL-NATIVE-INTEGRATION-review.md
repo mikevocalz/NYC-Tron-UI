@@ -1,18 +1,18 @@
 # Independent final native integration review
 
-PASS for draft PR88 publication with native CI pending. Publishing this reviewed draft for parallel checks does not approve merge, release/tag/package publication, acceptance promotion or owner decisions.
+PASS for draft PR88 publication with native CI pending. Publishing this reviewed draft does not approve merge, release/tag/package publication, acceptance promotion or owner decisions.
 
 Reviewer: skill_discovery, independent of implementation. Applied exact standalone engineering code-review skill knowledge-work-plugins/engineering/1.2.0/skills/code-review/SKILL.md. No code or device actions by reviewer.
 
-Verified the physical composite including copied untracked files. Relative to the prior117-test bound slice, only native-flow.mjs and native-flow.test.mjs changed. Both match the reviewed three-file keyboard freeze, as does its implementation report; the included independent keyboard review is an exact copy. All remaining previously bound implementation files are unchanged. Protected comparison against900d shows no package/version/peer/lockfile, public API snapshot or owner decision changes; window/native configuration bindings remain unchanged.
+Verified the physical composite including copied untracked files. Relative to the prior119-test bound slice, only native-flow.mjs and native-flow.test.mjs changed. Both and the new implementation report exactly match the reviewed shell-visibility freeze; its copied independent review is byte-identical. All remaining previously bound implementation files are unchanged. Protected900d comparison shows no package/version/peer/lockfile, public API snapshot or owner decision changes; prior window/native configuration bindings remain unchanged.
 
-The keyboard correction is grounded in retained native Return/keyboard-root accessibility IDs. Its iOS-only branch taps exact Return and requires keyboard disappearance; Android retains hideKeyboard, then both retain the draft-value assertion. Independent mode comparison preserves each exact27-block assertVisible multiset and adds one blocking assertNotVisible. Both generated YAML modes parsed successfully with installed Ruby/Psych. No input/app-prop workaround, coordinates, optional action or assertion waiver is introduced.
+Only three shell-result and two shell-draft read-only scrolls disable centering. All actionable/other scrolls remain centered, default full visibility is preserved, and exact values plus physical left/right assertions remain mandatory. Independently verified both mode assertion multisets remain27→27 byte-identical; generated YAML parsed with Ruby/Psych. The adjacent draft policy is preventive inference, not an observed draft failure. Actual d706 XML/AX/PNG/logs establish a fully visible correct shell result whose centering loop failed; that historical attempt is still failed.
 
-Shared180000ms driver readiness, strict60second version/600second flow caps, bounded owned diagnostics and cleanup, exact tool/archive pins, fresh drivers, actual runtime/JUnit identity and PNG/provenance gates remain intact. Independently reran final combined scope:119 tests passed, zero failures/skips, covering kitchen flow/identity/startup, AppKit archive boundaries, shared diagnostics/transport and release integration. git diff --check passed.
+Independently ran the final combined scope:121 tests passed, zero failures/skips. Coverage includes kitchen flow/identity/startup, AppKit archive boundaries, shared diagnostics/transport and release integration. git diff --check passed. Existing keyboard branches, shared180000ms driver setting, strict60second version/600second flow caps, bounded owned diagnostics/cleanup, exact pins, fresh drivers, actual JUnit identity and PNG/provenance gates remain intact.
 
-Lead reports the reviewed keyboard slice published in draft PR85 head a99c6e4b5f4ab3233a8d8b1fb1cf290936c42f70; publication status is not runtime proof. The included6b9 desktop/web and broader native reports remain historical for their explicitly bound source; they do not certify this newer keyboard candidate. Current corrected kitchen direct/root acceptance, owner labels/distribution approval and release eligibility remain pending. Superseded capture or earlier passing jobs are not promoted to new-source evidence. Full current hosted native modes and every release gate remain mandatory.
+Corrected complete native execution on the upcoming source is NOT RUN. Earlier6b9 desktop/web and broader native passes remain historical for their exact source. The d706 archive stage and its failed-iOS evidence are likewise historical; its Android success does not certify this newer flow. Upcoming source requires fresh producer metadata/receipts and cannot borrow older identical bytes as current proof. No failed/root-missing attempt, pending native check, owner labels or distribution decision is promoted by draft publication. All current release gates remain mandatory.
 
-Repository-relative SHA256 bindings follow. Canonical sorted compact-JSON mapping digest: e78b07afa4e1ba8d1fd62d65eca7ef09c26a3138c0d28566fafe5c6dfcdb7f79.
+Repository-relative SHA256 bindings follow. Canonical sorted compact-JSON mapping digest: f8850ac816b36da4c0125e40713fd73ce4d2864b2a6466bd1231eb5ca6847a3b.
 
 ```json
 {
@@ -25,6 +25,8 @@ Repository-relative SHA256 bindings follow. Canonical sorted compact-JSON mappin
   "docs/completion/reports/standalone-v1-2026-11-23-NATIVE-STARTUP-review.md": "4c5385511acbc378f06dac2caf0279ba517ca8135c3a69cc3ca20c44af1bcac2",
   "docs/completion/reports/standalone-v1-2026-11-23-NATIVE-STARTUP.md": "d31029b8ee53e3a6fde778cf5675fefc390590879ab5e5c119ed1a8bb4317581",
   "docs/completion/reports/standalone-v1-2026-11-23-SHARED-ANDROID-TRANSPORT.md": "6fb9342c0136fa93244f1a6a2919fbb5d705a368b903b68096f3630ef414bba9",
+  "docs/completion/reports/standalone-v1-2026-11-23-SHELL-VISIBILITY-review.md": "b8b6c878fd35c42e3aa5a726902b62c6d3df9317e56730b23bafb89a7a15bcf0",
+  "docs/completion/reports/standalone-v1-2026-11-23-SHELL-VISIBILITY.md": "3579112670cec16b2827e410e904ebc721847538dc01ed7b66a61dbe79686e3e",
   "examples/kitchen-sink/App.tsx": "373ad277b2f39a7fd9d7b9ac404a5ff5fe0416580af7c1274da35168cb823197",
   "examples/kitchen-sink/README.md": "4b82dc3911afd9306d18eb28b9ec44d45c925e6841a1e0b813f10d3a10143ad8",
   "examples/kitchen-sink/app.json": "f423d4481a96e664935022a562d7d06efc5e12d651e44e0257b40f2d09450ff6",
@@ -51,8 +53,8 @@ Repository-relative SHA256 bindings follow. Canonical sorted compact-JSON mappin
   "tooling/kitchen-sink/maestro-version.mjs": "6bcfc48cd18bdb8a41162d3641530a56b6fbf32e672aaa4068fec5eb8538ece6",
   "tooling/kitchen-sink/maestro-version.test.mjs": "5bd4c8dd3aaea6a25cac10da5cddfa351581a8b0912e4f8c8347682cf1069b68",
   "tooling/kitchen-sink/native-ci.test.mjs": "8ce57a035b1f6fc413fbec579ca9bff0faa96ae60f83522af79196aaedd366b7",
-  "tooling/kitchen-sink/native-flow.mjs": "e81dfdc32fd59cc85d21f77fb4414ff3446eeb67438b4a1588766a6f36564204",
-  "tooling/kitchen-sink/native-flow.test.mjs": "889b59f94c58d5f415223ac41aeb52d8534508b2ec66565ca8de29ff21fde38f",
+  "tooling/kitchen-sink/native-flow.mjs": "636b40e4bf4b4333a9a34bebf9d9c2ae2249850484ea618b59fb96c8a34a4c90",
+  "tooling/kitchen-sink/native-flow.test.mjs": "72011d6007b40e6b03d4a8edef0ada6e871a9e775f17a22dfeccd180ff210ed7",
   "tooling/kitchen-sink/native-proof.mjs": "8bb9d975bda3fbe173a22a79835d9099c5fe3a13c7ce46dfbf89628d038bc1bd",
   "tooling/kitchen-sink/prepare-consumer.mjs": "f250e9de7dfd40f7587e804a0b612e95fa858cdb5fffe616df09426db2053ee1",
   "tooling/kitchen-sink/prepare-ios.mjs": "54eb5a847242ebc798b30cd5934774bd7e3246f7052c505b9d3675a3409cc7c7",
