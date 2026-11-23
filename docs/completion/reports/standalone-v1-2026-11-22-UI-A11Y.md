@@ -73,3 +73,16 @@ This is a focused accessibility correction, not a full WCAG AA certification.
 Native compilation, native screen-reader speech, keyboard arrow-pattern
 completeness and physical-device input are not established by these three
 browser tests. The full kitchen-sink suite and CI retain their own gates.
+
+### Derived Qt map follow-up
+
+The hosted source check found the historical Qt import inventory stale after the
+TextField fix added React Native's `Platform` import. Regenerating with
+`node tooling/qt-component-coverage.mjs --write` changes only three `Platform`
+entries in `docs/qt/component-coverage.json`. No classifications, runtime
+acceptance, counts, Markdown report or public API changed. The three UI source
+files remain byte-for-byte unchanged from the reviewed accessibility fix.
+
+Validation: `node --test tooling/tests/qt-component-coverage.test.mjs
+packages/ui/tests/contracts.test.mjs` passed all 26 checks (10 Qt inventory and
+16 component contracts), with zero failures or skips.

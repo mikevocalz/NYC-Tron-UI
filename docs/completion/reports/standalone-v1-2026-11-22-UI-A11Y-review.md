@@ -9,3 +9,9 @@ Independent verification: `node --test packages/ui/tests/contracts.test.mjs` exi
 The writer added the requested decorative icon fixture and aria-hidden assertion before the independent browser rerun; that check also passed. No outstanding findings.
 
 No acceptance, owner labels, distribution record, configuration or public API was changed by this review.
+
+## Independently reviewed derived-map follow-up
+
+Compared the current Qt JSON semantically to reviewed commit `4e2e609787f54c408c7f183b798dabf59b2aee65`. Exactly three arrays gain `Platform`: component 131's sourceAudit and its qnx/marathon target React Native export lists. No classification, count, acceptance, requirement, other component or API field changes. This records the real TextField Platform import and does not claim Qt runtime validation. The report's appended follow-up states that boundary correctly.
+
+Independently ran `node --test tooling/tests/qt-component-coverage.test.mjs packages/ui/tests/contracts.test.mjs`: 26 passed, 0 failed, 0 skipped. No blocking findings. The follow-up publication must preserve the reviewed source and prior report/review content; include only the three JSON additions and the appended verification text.
