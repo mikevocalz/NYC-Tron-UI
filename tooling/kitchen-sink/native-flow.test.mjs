@@ -11,13 +11,13 @@ for (const mode of MODES) {
     // Native AX flattening must not let the later shell action satisfy this match.
     const selector = /^- tapOn:\n    text: (.+)$/.exec(steps[editorTap])[1];
     assert.deepEqual(['Editor', 'Shell Editor'].filter(text => new RegExp(selector).test(text)), ['Editor']);
-    assert.equal(steps[editorTap - 1], '- scrollUntilVisible:\n    element:\n      text: "^Editor$"\n    direction: DOWN\n    timeout: 30000\n    visibilityPercentage: 100\n    centerElement: false');
+    assert.equal(steps[editorTap - 1], '- scrollUntilVisible:\n    element:\n      text: "^Editor$"\n    direction: DOWN\n    timeout: 30000\n    visibilityPercentage: 100\n    centerElement: true');
     const disabled = steps.findIndex(step => step === '- assertVisible:\n    text: ^Unavailable$\n    enabled: false');
     assert.ok(disabled > editorTap);
     assert.equal(steps[disabled - 1], '- scrollUntilVisible:\n    element:\n      text: "^Unavailable$"\n    direction: DOWN\n    timeout: 30000\n    visibilityPercentage: 100\n    centerElement: false');
     assert.ok(steps.includes('- assertVisible:\n    text: ^Editor$\n    selected: true'));
     for (const [index, step] of steps.entries()) {
-      if (step.startsWith('- scrollUntilVisible:')) assert.match(step, /\n    visibilityPercentage: 100\n    centerElement: false$/);
+      if (step.startsWith('- scrollUntilVisible:')) assert.match(step, steps[index + 1]?.startsWith('- tapOn:') ? /\n    visibilityPercentage: 100\n    centerElement: true$/ : /\n    visibilityPercentage: 100\n    centerElement: false$/);
       if (step === '- assertVisible:\n    id: rail-result\n    text: "Selected: editor"') assert.equal(steps[index - 1], '- scrollUntilVisible:\n    element:\n      id: rail-result\n    direction: DOWN\n    timeout: 30000\n    visibilityPercentage: 100\n    centerElement: false');
     }
     const selected = steps.indexOf('- assertVisible:\n    text: ^Editor$\n    selected: true');
@@ -60,16 +60,25 @@ for (const mode of MODES) test(`${mode} dismisses the actual iOS Return keyboard
  assert.doesNotMatch(flow,/optional:|point:|submitBehavior:|returnKeyType:/);
 });
 
-for (const mode of MODES) test(`${mode} every ID and rail-text target requires 100 percent visibility without centering`, () => {
+for (const mode of MODES) test(`${mode} centers only immediate pre-tap actions and fully reveals every inspection`, () => {
  const flow=nativeFlow(mode), steps=flow.split(/\n(?=- )/), scrolls=steps.filter(step=>step.startsWith('- scrollUntilVisible:'));
- assert.ok(scrolls.some(step=>/element:\n      id:/.test(step)));
- assert.ok(scrolls.some(step=>/element:\n      text:/.test(step)));
- for(const step of scrolls) {
-  assert.match(step,/direction: (?:UP|DOWN)\n    timeout: 30000\n    visibilityPercentage: 100\n    centerElement: false$/);
+ assert.equal(scrolls.length,30);
+ let actions=0, inspections=0;
+ for (const [index,step] of steps.entries()) {
+  if(!step.startsWith('- scrollUntilVisible:'))continue;
+  const next=steps[index+1], action=next?.startsWith('- tapOn:');
+  assert.match(step,/direction: (?:UP|DOWN)\n    timeout: 30000\n    visibilityPercentage: 100\n    centerElement: (?:true|false)$/);
   assert.equal((step.match(/visibilityPercentage:/g)||[]).length,1);
   assert.equal((step.match(/centerElement:/g)||[]).length,1);
+  if(action) {
+   actions++;assert.match(step,/centerElement: true$/);
+   const id=/element:\n      id: (.+)\n/.exec(step)?.[1];
+   const text=/element:\n      text: "(.+)"\n/.exec(step)?.[1];
+   assert.equal(next,id?`- tapOn:\n    id: ${id}`:`- tapOn:\n    text: ${text}`);
+  } else { inspections++;assert.match(step,/centerElement: false$/); }
   assert.doesNotMatch(step,/optional:|point:/);
  }
+ assert.equal(actions,7);assert.equal(inspections,23);
  assert.equal(steps.filter(step=>step.startsWith('- assertVisible:')).length,27);
  for(const text of ['Physical edge: left; text: LTR','Physical edge: left; text: RTL','Physical edge: right; text: RTL',DRAFT])assert.ok(flow.includes(`text: ${JSON.stringify(text)}`));
  assert.match(flow,/leftOf:\n      id: shell-draft/);assert.match(flow,/rightOf:\n      id: shell-draft/);
