@@ -26,7 +26,7 @@ jobs:
       - run: corepack enable
       - run: corepack pnpm install --frozen-lockfile
       - run: corepack pnpm --filter @nyc-tron/core --filter @nyc-tron/ui build
-      - run: node --test tooling/kitchen-sink/proof.test.mjs
+      - run: node --test tooling/kitchen-sink/*.test.mjs
       - run: node tooling/pack-release.mjs "$RUNNER_TEMP/packs" --packages core,ui
       - name: Bind the exact tested archives
         run: |
@@ -98,6 +98,16 @@ jobs:
           CI: '1'
           EXPO_NO_TELEMETRY: '1'
       - run: node tooling/native/install-maestro.mjs "$RUNNER_TEMP/maestro"
+      - name: Require writable KVM acceleration
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          test -c /dev/kvm
+          test -r /dev/kvm
+          test -w /dev/kvm
       - name: Execute both installed import paths on an ephemeral emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -105,6 +115,9 @@ jobs:
           arch: x86_64
           target: google_apis
           disable-animations: true
+          disable-linux-hw-accel: 'false'
+          emulator-options: -no-window -no-snapshot -noaudio -no-boot-anim -gpu swiftshader_indirect -camera-back none -accel on
+          pre-emulator-launch-script: '"$ANDROID_HOME/emulator/emulator" -accel-check'
           script: |
             adb install -r "$RUNNER_TEMP/consumer/android/app/build/outputs/apk/release/app-release.apk"
             node tooling/kitchen-sink/native-proof.mjs --consumer "$RUNNER_TEMP/consumer" --platform android --device emulator-5554 --maestro "$RUNNER_TEMP/maestro/maestro/bin/maestro" --output "$RUNNER_TEMP/proof"

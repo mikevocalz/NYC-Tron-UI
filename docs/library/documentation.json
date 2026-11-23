@@ -3,7 +3,7 @@
   "verification": {
     "path": "website/generated/verification.json"
   },
-  "manifestSha256": "fe69d799340ce7d29bf7358cc1d8975b0ad1e3d0dbcb1e38a2723b822428ba20",
+  "manifestSha256": "83a8f926b34acaa150442f9533f4e6c05f7dbd926e2e905c5e313e6128614bd6",
   "ownerConfirmation": "pending",
   "source": "website/src/App.tsx",
   "componentCount": 478,

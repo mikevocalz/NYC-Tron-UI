@@ -68,6 +68,9 @@ test('native collector rejects a different version containing the expected versi
     const options = nativeHarness(directory, { version: '2.12.10' });
     assert.throws(() => proveNative(options), /exact pinned/);
     assert.equal(existsSync(join(options.output, 'android.json')), false);
+    const diagnostics = JSON.parse(readFileSync(join(options.output, 'maestro-version.json'), 'utf8'));
+    assert.equal(diagnostics.status, 0);
+    assert.equal(diagnostics.stdout.trim(), '2.12.10');
   } finally { rmSync(directory, { recursive: true, force: true }); }
 });
 test('native collector refuses an existing output containing prior screenshots', () => {

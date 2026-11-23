@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "purpose": "version CLI startup diagnostics only; not native application evidence",
+  "pinnedArchiveSha256": "54dbb0716425626604973cbb374c585ca30272375d9ce15177a1152765ddd9d7",
+  "redaction": "The original default-startup stderr user-home prefix is replaced with <user-home>; failure/status/output semantics are unchanged. Original raw log retained locally.",
+  "records": [
+    {
+      "stage": "default startup",
+      "command": "maestro --version",
+      "java": "Zulu OpenJDK17.0.21",
+      "elapsedMs": 1448,
+      "status": 1,
+      "signal": null,
+      "error": null,
+      "stdout": "Anonymous analytics enabled. To opt out, set MAESTRO_CLI_NO_ANALYTICS environment variable to any value before running Maestro.\n\n",
+      "stderr": "Exception in thread \"main\" java.nio.file.NoSuchFileException: <user-home>/.maestro/analytics.json\n\tat java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92)\n\tat java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:106)\n\tat java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:111)\n\tat java.base/sun.nio.fs.UnixFileSystemProvider.newByteChannel(UnixFileSystemProvider.java:218)\n\tat java.base/java.nio.file.spi.FileSystemProvider.newOutputStream(FileSystemProvider.java:484)\n\tat java.base/java.nio.file.Files.newOutputStream(Files.java:228)\n\tat kotlin.io.path.PathsKt__PathReadWriteKt.writeText(PathReadWrite.kt:168)\n\tat kotlin.io.path.PathsKt__PathReadWriteKt.writeText$default(PathReadWrite.kt:167)\n\tat maestro.cli.analytics.AnalyticsStateManager.saveState(AnalyticsStateManager.kt:114)\n\tat maestro.cli.analytics.AnalyticsStateManager.saveInitialState(AnalyticsStateManager.kt:107)\n\tat maestro.cli.analytics.Analytics.warnAndEnableAnalyticsIfNotDisable(Analytics.kt:78)\n\tat maestro.cli.AppKt.main(App.kt:142)\n"
+    },
+    {
+      "stage": "analytics disabled",
+      "command": "maestro --version",
+      "java": "Zulu OpenJDK17.0.21",
+      "analytics": "documented MAESTRO_CLI_NO_ANALYTICS=1",
+      "state": "task-owned Java user.home",
+      "elapsedMs": 1176,
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "╭─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮\n│                                                                                                                                         │\n│   Try out our new Analyze with Ai feature.                                                                                              │\n│                                                                                                                                         │\n│   See what's new:                                                                                                                       │\n│   > https://maestro.mobile.dev/cli/test-suites-and-reports#analyze                                                                      │\n│   Analyze command:                                                                                                                      │\n│   $ maestro test flow-file.yaml --analyze | bash                                                                                        │\n│                                                                                                                                         │\n│   To disable this notification, set MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED environment variable to \"true\" before running Maestro.   │\n│                                                                                                                                         │\n╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯\n\n2.12.1\n",
+      "stderr": ""
+    },
+    {
+      "stage": "analytics and notification disabled",
+      "command": "maestro --version",
+      "java": "Zulu OpenJDK17.0.21",
+      "settings": {
+        "MAESTRO_CLI_NO_ANALYTICS": "1",
+        "MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED": "true"
+      },
+      "state": "task-owned Java user.home",
+      "elapsedMs": 1051,
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "stdout": "2.12.1\n",
+      "stderr": ""
+    },
+    {
+      "stage": "final production helper",
+      "command": [
+        "maestro",
+        "--version"
+      ],
+      "expectedVersion": "2.12.1",
+      "elapsedMs": 1028,
+      "timeoutMs": 60000,
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "settings": {
+        "MAESTRO_CLI_NO_ANALYTICS": "1",
+        "MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED": "true"
+      },
+      "stdout": "2.12.1\n",
+      "stderr": "",
+      "truncated": false
+    }
+  ]
+}

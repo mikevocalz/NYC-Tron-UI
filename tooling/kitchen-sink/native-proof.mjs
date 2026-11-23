@@ -7,6 +7,7 @@ import { MAESTRO, requirePassedFlow } from '../native/ui-evidence.mjs';
 import { COMPONENT_CONTRACTS, MODES, importFor } from './contracts.mjs';
 import { nativeFlow } from './native-flow.mjs';
 import { sha256, verifyInstalledConsumer } from './prepare-consumer.mjs';
+import { maestroEnvironment, verifyMaestroVersion } from './maestro-version.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const files = directory => readdirSync(directory, { withFileTypes: true }).flatMap(entry => entry.isDirectory() ? files(join(directory, entry.name)) : [join(directory, entry.name)]);
@@ -15,20 +16,19 @@ const files = directory => readdirSync(directory, { withFileTypes: true }).flatM
 export function proveNative({ consumer, platform, device, maestro, output }) {
   if (!['ios', 'android'].includes(platform) || !device || !maestro) throw new Error('Native proof needs explicit platform, device and Maestro executable');
   consumer = resolve(consumer); output = resolve(output);
-  const version = spawnSync(maestro, ['--version'], { encoding: 'utf8', timeout: 60000 });
-  if (version.error || version.status !== 0 || (version.stdout ?? '').trim() !== MAESTRO.version) throw new Error('Native proof requires the exact pinned verified Maestro version');
   const candidate = verifyInstalledConsumer(consumer), stages = [];
   // Never reuse a completed or failed run's files. Each invocation owns a new
   // output directory, and each flow can supply artifacts only from its stage.
   mkdirSync(dirname(output), { recursive: true });
   mkdirSync(output);
+  verifyMaestroVersion({ maestro, output });
   for (const mode of MODES) {
     const directory = join(output, mode); mkdirSync(directory);
     const flow = join(directory, 'flow.yaml'), junit = join(directory, 'report.xml');
     writeFileSync(flow, nativeFlow(mode));
     const command = [ '--device', device, '--platform', platform, '--no-ansi', 'test', '--no-reinstall-driver', '--format', 'junit', '--output', junit,
       '--test-output-dir', join(directory, 'artifacts'), '--debug-output', join(directory, 'debug'), flow ];
-    const result = spawnSync(maestro, command, { cwd: directory, encoding: 'utf8', timeout: 600000, maxBuffer: 32 * 1024 * 1024 });
+    const result = spawnSync(maestro, command, { cwd: directory, encoding: 'utf8', timeout: 600000, maxBuffer: 32 * 1024 * 1024, env: maestroEnvironment() });
     writeFileSync(join(directory, 'maestro.log'), (result.stdout ?? '') + (result.stderr ?? '') + `\nExit code: ${result.status}\n`);
     if (result.error || result.status !== 0) throw new Error(`${platform}/${mode} flow failed: ${result.error?.message ?? result.status}`);
     const verdict = requirePassedFlow(readFileSync(junit, 'utf8'));
@@ -49,7 +49,7 @@ export function proveNative({ consumer, platform, device, maestro, output }) {
     manifestSha256: sourceFingerprint(readFileSync(join(root, 'docs/library/components.json'))), assertions, components,
     runner: { name: 'maestro', version: MAESTRO.version, command: 'node tooling/kitchen-sink/native-proof.mjs --consumer <installed-consumer> --platform ' + platform + ' --device <ephemeral-device> --maestro <pinned-maestro> --output <evidence-directory>',
       testSource, testSha256: sha256(readFileSync(join(root, testSource))), exitCode: 0, log: artifact(log), screenshots: stages.map(stage => artifact(stage.screenshot)) },
-    artifacts: [artifact(summaryPath), ...stages.flatMap(stage => [artifact(stage.report), artifact(stage.flow), artifact(`${stage.importMode}/maestro.log`)])],
+    artifacts: [artifact(summaryPath), artifact('maestro-version.json'), ...stages.flatMap(stage => [artifact(stage.report), artifact(stage.flow), artifact(`${stage.importMode}/maestro.log`)])],
     limits: ['JUnit counts are full executed flow cases; manual screen-reader speech and pixel contrast are separate reviews.', 'Dirty source is not release-candidate evidence.'] };
   writeFileSync(join(output, platform + '.json'), JSON.stringify(receipt, null, 2) + '\n');
   console.log(`Kitchen ${platform}: ${assertions.passed} actual passing JUnit flows, both import modes, five component contracts.`);

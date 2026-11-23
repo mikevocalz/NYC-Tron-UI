@@ -1,0 +1,23 @@
+✔ public aliases resolve to declarations and include private reachable props, not unused helpers (236.408292ms)
+✔ prop requiredness, prop type and return signature changes fail with unchanged export names (503.887541ms)
+✔ a type change behind an imported prop fails even when the component declaration is unchanged (230.250792ms)
+✔ declaration comments and whitespace do not require an API baseline update (249.538167ms)
+✔ unresolvable public dependencies fail instead of silently becoming an incomplete snapshot (112.655833ms)
+✔ inline import types reject a missing module, missing qualified type and missing namespace (343.094416ms)
+✔ platform export routing changes fail even when declaration symbols stay identical (228.611792ms)
+✔ installed external prop declarations and their exact package versions are tracked (469.03475ms)
+✔ an archive consumer can explicitly supply its compiler without a nested tooling install (758.141125ms)
+✔ both complete original snapshots survive exact scoped release-identity reversal (3.40425ms)
+✔ real property type still fails exact proof and unchanged API checker (1.885625ms)
+✔ public export removal still fails exact proof and unchanged API checker (0.98825ms)
+✔ external dependency version still fails exact proof and unchanged API checker (1.01225ms)
+✔ version relabel key collisions fail closed (1.31025ms)
+✔ public literal types containing a version identity cannot be relabelled away (1.247958ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3426.200542
