@@ -1,5 +1,5 @@
 import type { ComponentRef, ReactNode, Ref } from 'react';
-import { TextInput, Text, View, type TextInputProps } from 'react-native';
+import { Platform, TextInput, Text, View, type TextInputProps } from 'react-native';
 import { joinClasses } from './styles.ts';
 /** NYC-Tron semantic native text input. App colors/radii are theme-owned. */
 export interface TextFieldProps extends TextInputProps {
@@ -40,11 +40,16 @@ export function TextField({
      accessibilityLabelledBy={id+'-label'}
      accessibilityHint={errorText??helperText}
      accessibilityState={{...props.accessibilityState,disabled:!editable}}
+     aria-disabled={!editable}
+     {...(Platform.OS === 'web' ? {
+       'aria-describedby': errorText || helperText ? id+'-description' : undefined,
+       'aria-invalid': !!errorText,
+     } : {})}
      {...{className:joinClasses('flex-1 min-h-11',styled&&'text-base text-text',inputClassName)}}
     />
    </View>
-   {errorText ? <Text accessibilityRole="alert" accessibilityLiveRegion="polite" {...{className:joinClasses(styled&&'text-sm text-danger')}}>{errorText}</Text>
-   : helperText ? <Text {...{className:joinClasses(styled&&'text-sm text-text-muted')}}>{helperText}</Text> : null}
+   {errorText ? <Text nativeID={id+'-description'} accessibilityRole="alert" accessibilityLiveRegion="polite" {...{className:joinClasses(styled&&'text-sm text-danger')}}>{errorText}</Text>
+   : helperText ? <Text nativeID={id+'-description'} {...{className:joinClasses(styled&&'text-sm text-text-muted')}}>{helperText}</Text> : null}
   </View>
  );
 }
