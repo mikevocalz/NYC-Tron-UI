@@ -1,22 +1,22 @@
 # Independent final native integration review
 
-PASS for the reviewed draft composite; fresh changed-source CI is required. This review performs no publication and does not approve merge, release/tag/package publication, owner decisions or acceptance promotion.
+PASS for draft publication of this reviewed composite, with fresh changed-source CI pending. No merge, release/tag/package publication, owner decision or acceptance promotion is approved.
 
-Reviewer: skill_discovery, independent of implementation. Applied exact standalone engineering code-review skill knowledge-work-plugins/engineering/1.2.0/skills/code-review/SKILL.md. No code/device actions; only own authorized review documents were copied.
+Reviewer: skill_discovery, independent of implementation. Applied standalone engineering code-review skill knowledge-work-plugins/engineering/1.2.0/skills/code-review/SKILL.md.
 
-Verified the physical composite including copied untracked files. Relative to the preceding121-test bound slice, only native-flow.mjs and native-flow.test.mjs changed. These and the new implementation report exactly match the0510-based three-file full-visibility freeze; independent review copied to both worktrees is byte-identical. All other prior bound hashes are preserved unchanged. Protected900d comparison shows no package/version/peer/lockfile, public API snapshot or owner gate changes; existing window/native configuration bindings remain unchanged.
+Verified the physical candidate composite including authorized untracked reports. Relative to the prior121-test bound slice, only native-flow.mjs and native-flow.test.mjs implementation bindings changed. Both and the new action-visibility implementation report match the exact b58b-based three-file freeze. The independent review is identical in both publication worktrees. Every other prior bound file hash is preserved, including configuration/window, archive/provenance/version/receipt and owner guard bindings. No package/version/API/CI change is introduced by this slice.
 
-Both ID and anchored text helpers explicitly require100percent visibility and centerElementfalse for all30scrolls per mode, removing optional centering loops and per-target switches. Missing/partial targets remain failures. Independent generated comparisons preserve all27assertVisible blocks byte-for-byte and the entire remaining flow after removing only the two policy lines. Selectors, actions/order, directions, deadlines, input/keyboard, disabled/selected/value and physical-edge checks are unchanged. Both YAML modes parsed with Ruby/Psych. No tap/action was made optional and no retry/time budget was widened.
+Seven immediate pre-tap seeks per mode now request100percent visibility and centering true through coupled same-selector seek-and-tap helpers;23inspection seeks remain100percent/false. Generated modes preserve every selector, tap, direction/order, deadline and all27assertVisible blocks byte-for-byte; entire flows differ only at seven centering values. Both YAML modes parsed. No retries, optional actions or assertion waivers. Independent combined scope121tests passed, zero failed/skipped (83kitchen plus AppKit archive boundaries, native diagnostics/transport and release integration); diff --check passed.
 
-Independently ran the same combined scope:121 tests passed, zero failed/skipped, including all83kitchen tests, AppKit archive boundaries, shared diagnostics/transport and release integration. git diff --check passed. Tool/archive/version pins, shared bounded driver startup, strict version/flow caps, owned diagnostic cleanup, fresh drivers, exact executed JUnit identity and PNG/provenance gates remain intact.
+Current6291/e6ac stage has16verified archives and six eligible receipt kinds with documentation hydrated, but genuine iOS root failed Selected:editor despite direct success. Its strict output remains blocked and explicitly lacks iOS at every planning target, as well as pending owner labels. It cannot certify this changed source. Separate b58b/29cb successes remain historical and cannot fill current gaps. Fresh exact-source producer metadata and both-platform/both-mode proofs are required. The viewport-boundary explanation is qualified by post-tap AX timing; centering is a mitigation, and all state assertions remain mandatory.
 
-Complete29cb proof and its16archives/7receipts/docs remain genuine for exact source0c8488, but historical relative to this flow change. They cannot certify the new source or silently satisfy failed #85. Broader native29cb runtime passes do not by themselves complete its still-running launcher capture. No all-workflow, owner approval or release claim is inferred. Changed source must obtain fresh producer metadata and required native proofs, with all technical and owner gates unchanged.
-
-Repository-relative SHA256 bindings follow. Canonical sorted compact-JSON mapping digest: 4cf75abeb6ff44c4f7ecacf9038386fbe108daa75cbfeaadc900238a1263f226.
+Repository-relative SHA256 bindings follow. Canonical sorted compact-JSON mapping digest: 0917b1e60e325af95a524fb3d184611760ae21488c354ee29c5302f47400d3e1.
 
 ```json
 {
   ".github/workflows/kitchen-sink.yml": "b2e0699fca5f251028f3009feef1fcf6e3b4fbb271ec2e89b7a6d9d3526ed02d",
+  "docs/completion/reports/standalone-v1-2026-11-23-ACTION-VISIBILITY-review.md": "de0146bd9354fb27a7e18267936adccbcd11f44381627dc30812ec2a04022a5a",
+  "docs/completion/reports/standalone-v1-2026-11-23-ACTION-VISIBILITY.md": "9ce2a90e2ad78ee9b94f52454689eef5dca6005d7c4d009e6605504b3765f7b8",
   "docs/completion/reports/standalone-v1-2026-11-23-FULL-VISIBILITY-review.md": "205b72e6a679197f2f7616dbbc9ebe09ec5af67926f6b75d9c703f46572ed073",
   "docs/completion/reports/standalone-v1-2026-11-23-FULL-VISIBILITY.md": "d99b03ca398d74a37bb684b025c7a3376e6eb17374db89da655fc26a3b8e236a",
   "docs/completion/reports/standalone-v1-2026-11-23-IOS-KEYBOARD-FLOW-review.md": "2c60872a9e9fc8aa57ccd115d191fb2a2116dc3db67a54f332e6164fea6bd84c",
@@ -55,8 +55,8 @@ Repository-relative SHA256 bindings follow. Canonical sorted compact-JSON mappin
   "tooling/kitchen-sink/maestro-version.mjs": "6bcfc48cd18bdb8a41162d3641530a56b6fbf32e672aaa4068fec5eb8538ece6",
   "tooling/kitchen-sink/maestro-version.test.mjs": "5bd4c8dd3aaea6a25cac10da5cddfa351581a8b0912e4f8c8347682cf1069b68",
   "tooling/kitchen-sink/native-ci.test.mjs": "8ce57a035b1f6fc413fbec579ca9bff0faa96ae60f83522af79196aaedd366b7",
-  "tooling/kitchen-sink/native-flow.mjs": "21b07aeb44f88d2baa347dae6896540bb38216e4f19a32ea5e4d2417eef658aa",
-  "tooling/kitchen-sink/native-flow.test.mjs": "e7d59bbc8395a3fcfe99c786f4a6525747e7ee1563ccafe0cbe30683075fc2c6",
+  "tooling/kitchen-sink/native-flow.mjs": "f09b9017cb64db141822605c7aec47d06c64a11abe9cfaed15ec58843024cab4",
+  "tooling/kitchen-sink/native-flow.test.mjs": "52d635d4942269a955fc1306706bbdd5489e88954a23e9163aff3215533a882c",
   "tooling/kitchen-sink/native-proof.mjs": "8bb9d975bda3fbe173a22a79835d9099c5fe3a13c7ce46dfbf89628d038bc1bd",
   "tooling/kitchen-sink/prepare-consumer.mjs": "f250e9de7dfd40f7587e804a0b612e95fa858cdb5fffe616df09426db2053ee1",
   "tooling/kitchen-sink/prepare-ios.mjs": "54eb5a847242ebc798b30cd5934774bd7e3246f7052c505b9d3675a3409cc7c7",
