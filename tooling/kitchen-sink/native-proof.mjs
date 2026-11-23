@@ -41,7 +41,7 @@ export function proveNative({ consumer, platform, device, maestro, output }) {
   const components = COMPONENT_CONTRACTS.map(contract => ({ symbol: contract.symbol, status: 'passed', imports: stages.map(stage => ({ path: importFor(contract, stage.importMode), symbol: contract.symbol, rendered: true, assertedStates: contract.states })) }));
   // Counts describe executed JUnit flow cases, not an invented number of UI assertions.
   const assertions = { passed: stages.reduce((sum, stage) => sum + stage.executed, 0), failed: 0, skipped: 0 };
-  const summary = { status: 'passed', assertions, components, stages };
+  const summary = { status: 'passed', platform, evidenceKinds: [platform], assertions, components, stages };
   const summaryPath = `${platform}-results.json`; writeFileSync(join(output, summaryPath), JSON.stringify(summary, null, 2) + '\n');
   const log = `${platform}.log`; writeFileSync(join(output, log), stages.map(stage => `PASS ${platform}/${stage.importMode}: ${stage.executed} executed JUnit flow`).join('\n') + '\n');
   const testSource = 'tooling/kitchen-sink/native-flow.mjs';

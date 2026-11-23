@@ -31,6 +31,7 @@ export async function proveUnits({ consumer, tools, output }) {
   if (result.status !== 'passed' || result.assertions.failed || result.assertions.skipped || result.modes.join(',') !== MODES.join(',') || result.components.join(',') !== COMPONENT_CONTRACTS.map(c => c.symbol).join(',')) throw new Error('Incomplete unit component coverage');
   const components = COMPONENT_CONTRACTS.map(c => ({ symbol: c.symbol, status: 'passed', imports: MODES.map(mode => ({ path: importFor(c, mode), symbol: c.symbol, rendered: true, assertedStates: c.states })) }));
   result.components = components;
+  result.evidenceKinds = ['unit', 'exports'];
   const resultPath = basename(output).replace(/\.json$/, '') + '-results.json';
   writeFileSync(join(dirname(output), resultPath), JSON.stringify(result, null, 2) + '\n');
   const artifact = path => ({ path, sha256: digest(readFileSync(join(dirname(output), path))) });
@@ -50,8 +51,8 @@ export async function proveUnits({ consumer, tools, output }) {
   writeFileSync(join(dirname(output), declarationLog), (declarationResult.stdout ?? '') + (declarationResult.stderr ?? '') + `\nExit code: ${declarationResult.status}\n`);
   if (declarationResult.error || declarationResult.status !== 0) throw new Error('Installed consumer declaration check failed: ' + declarationResult.stdout + declarationResult.stderr);
   const declarationsPath = basename(output).replace(/\.json$/, '') + '-declarations-results.json';
-  writeFileSync(join(dirname(output), declarationsPath), JSON.stringify({ status: 'passed', assertions: { passed: 1, failed: 0, skipped: 0 }, exitCode: 0, components }, null, 2) + '\n');
-  writeFileSync(output.replace(/\.json$/, '') + '-declarations.json', JSON.stringify({ ...common, kind: 'declarations', runner: { ...common.runner,
+  writeFileSync(join(dirname(output), declarationsPath), JSON.stringify({ status: 'passed', evidenceKinds: ['declarations'], assertions: { passed: 1, failed: 0, skipped: 0 }, exitCode: 0, components }, null, 2) + '\n');
+  writeFileSync(output.replace(/\.json$/, '') + '-declarations.json', JSON.stringify({ ...common, kind: 'declarations', runner: { ...common.runner, name: 'typescript',
     command: 'tsc --noEmit (installed-archive consumer)', testSource: 'examples/kitchen-sink/App.tsx', testSha256: digest(readFileSync(join(root, 'examples/kitchen-sink/App.tsx'))), log: artifact(declarationLog) },
     artifacts: [artifact(declarationsPath)], assertions: { passed: 1, failed: 0, skipped: 0 } }, null, 2) + '\n');
   console.log(`Kitchen unit proof: ${result.assertions.passed} actual assertions, five components through both import modes; installed declarations passed.`);

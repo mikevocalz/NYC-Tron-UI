@@ -100,7 +100,7 @@ export async function proveWeb({ consumer, webDirectory, tools, output, channel 
     const resultsPath = basename(output).replace(/\.json$/, '') + '-results.json';
     const logPath = basename(output).replace(/\.json$/, '') + '.log';
     const components = COMPONENT_CONTRACTS.map(contract => ({ symbol: contract.symbol, status: 'passed', imports: MODES.map(mode => ({ path: importFor(contract, mode), symbol: contract.symbol, rendered: true, assertedStates: contract.states })) }));
-    const results = { status: 'passed', cases, assertions, components };
+    const results = { status: 'passed', platform: 'web', evidenceKinds: ['web', 'accessibility'], cases, assertions, components };
     writeFileSync(join(dirname(output), resultsPath), JSON.stringify(results, null, 2) + '\n');
     writeFileSync(join(dirname(output), logPath), cases.map(c => `PASS ${c.importMode} imports / ${c.appearance} / five component state contracts`).join('\n') + `\nAssertions passed: ${assertions.passed}; failed: 0; skipped: 0\n`);
     const artifact = path => ({ path, sha256: createHash('sha256').update(readFileSync(join(dirname(output), path))).digest('hex') });
