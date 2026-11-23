@@ -7,6 +7,12 @@ import { fileURLToPath } from 'node:url';
 import { isMainModule, matchesGeneratedJson, packageDirectories } from './library-components.mjs';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const json = file => JSON.parse(readFileSync(file, 'utf8'));
+const sourcePath = value => {
+  if (!value.startsWith('https://')) return value;
+  const match = /^https:\/\/github\.com\/mikevocalz\/NYC-Tron-UI\/blob\/[a-f0-9]{40}\/(packages\/[A-Za-z0-9_@+./-]+)$/.exec(value);
+  if (!match || match[1].split('/').some(part => !part || part === '.' || part === '..')) throw new Error('Invalid pinned Tron source URL');
+  return match[1];
+};
 const runtimeTargets = value => typeof value === 'string' ? /\.js$/.test(value) ? [value] : [] : value && typeof value === 'object' ? Object.values(value).flatMap(runtimeTargets) : [];
 
 export function generateCrossReference(ledger, { rootDir = root } = {}) {
@@ -24,7 +30,7 @@ export function generateCrossReference(ledger, { rootDir = root } = {}) {
   for (const [kind, list] of [['baseline', ledger.components], ['addition', ledger.additions]]) for (const row of list) {
     if (ids.has(row.id)) throw new Error('Duplicate lookup row ' + row.id);
     ids.add(row.id);
-    const imports = [...new Set(row.sourceCandidates.flatMap(source => [...(exports.get(source.replace('/src/', '/dist/').replace(/\.tsx?$/, '.js')) ?? [])]))].sort();
+    const imports = [...new Set(row.sourceCandidates.flatMap(source => [...(exports.get(sourcePath(source).replace('/src/', '/dist/').replace(/\.tsx?$/, '.js')) ?? [])]))].sort();
     if (row.libraryScope && ['implemented', 'partial'].includes(row.implementationReview) && !imports.length) throw new Error('No public import for local lookup row ' + row.id);
     rows[row.id] = { name: row.name, kind, importPaths: imports,
       ownership: row.externalImplementation ? 'external; no Tron import invented' : 'Tron source lookup',
@@ -32,6 +38,7 @@ export function generateCrossReference(ledger, { rootDir = root } = {}) {
       evidence: row.evidence ?? [] };
   }
   return { schemaVersion: 1, purpose: 'Forge row-to-import lookup only; not library scope, inventory or a release gate',
+    programHome: 'https://github.com/mikevocalz/nitro-forge/blob/5902e64d6ad01090f5e9a40f8402ec0cbcb39a71/docs/completion/library-progress.json',
     sourceLedgerDigestEncoding: 'SHA-256 of JSON.stringify(parsed ledger); not raw ledger bytes or a Git blob id',
     sourceLedgerSha256: createHash('sha256').update(JSON.stringify(ledger)).digest('hex'),
     baselineRows: ledger.components.length, addedRows: ledger.additions.length, rows };
@@ -39,7 +46,7 @@ export function generateCrossReference(ledger, { rootDir = root } = {}) {
 
 if (isMainModule(import.meta.url)) {
   const args = process.argv.slice(2);
-  let ledger = join(root, 'docs/completion/library-progress.json'), write = false;
+  let ledger = join(root, 'docs/completion/reports/2026-11-22-forge-program/docs/completion/library-progress.json'), write = false;
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--write' && !write) write = true;
     else if (args[i] === '--ledger' && args[i + 1] && !args[i + 1].startsWith('--')) ledger = resolve(args[++i]);

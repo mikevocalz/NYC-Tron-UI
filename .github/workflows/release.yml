@@ -117,7 +117,7 @@ jobs:
         run: node tooling/api-surface.mjs
       - name: Verify reachable public declarations and dependency type boundaries
         run: node tooling/api-signatures.mjs
-      - name: Verify the complete component ledger and reviewed public exports
+      - name: Verify historical handoff compatibility (temporary until T3)
         run: node tooling/verify-component-program.mjs
 
       # Fails if any package version differs from the tag, a tarball lacks

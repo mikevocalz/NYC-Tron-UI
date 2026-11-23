@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "purpose": "Forge row-to-import lookup only; not library scope, inventory or a release gate",
+  "programHome": "https://github.com/mikevocalz/nitro-forge/blob/5902e64d6ad01090f5e9a40f8402ec0cbcb39a71/docs/completion/library-progress.json",
   "sourceLedgerDigestEncoding": "SHA-256 of JSON.stringify(parsed ledger); not raw ledger bytes or a Git blob id",
   "sourceLedgerSha256": "d71f0a2f33dd96523c3a18e864cd725b0414b83b035eb86392d9883efcd486d1",
   "baselineRows": 341,

@@ -98,7 +98,7 @@ jobs:
           name: api-signatures-candidate
           path: ${{ runner.temp }}/api-signatures-candidate.json
           if-no-files-found: warn
-      - name: Verify the complete component ledger and reviewed public exports
+      - name: Verify historical handoff compatibility (temporary until T3)
         run: node tooling/verify-component-program.mjs
       - name: Pack every package and check release tarball contents
         run: node tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"

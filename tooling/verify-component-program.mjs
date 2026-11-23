@@ -1,203 +1,36 @@
+// Temporary compatibility bridge for the separately reviewed T3 transition.
+// The application program and active validator now belong to Nitro Forge.
+// This module preserves the previous release policy until T3 lands; it is
+// neither the library inventory nor permission to promote acceptance.
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync, readdirSync, realpathSync, statSync } from "node:fs";
-import { dirname, join, resolve, sep } from "node:path";
+import { readFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isMainModule } from "./library-components.mjs";
+import { validateComponentProgram as validateHistoricalProgram } from "../docs/completion/reports/2026-11-22-forge-program/tooling/verify-component-program.mjs";
+export { CANONICAL_BASELINE_SHA256, RECORDED_ADDITION_IDS, REQUIRED_PLATFORMS, parseCanonicalBaseline }
+  from "../docs/completion/reports/2026-11-22-forge-program/tooling/verify-component-program.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-export const CANONICAL_BASELINE_SHA256 = "a1fd6593a84f899dc2946e6337fde7c59897607701516b6d64732d51d44b75db";
-export const REQUIRED_PLATFORMS = Object.freeze(["ios", "android", "web", "macos", "windows", "visionos", "quest", "pico"]);
-const implementationStatuses = new Set(["pending", "partial", "implemented", "implemented-external"]);
-const acceptanceStatuses = new Set(["unverified", "accepted"]);
-const platformStatuses = new Set(["unverified", "not-run", "partial", "blocked", "failed", "passed"]);
-const ADDITION_ID = /^[A-Z]{1,3}-[0-9]{2,3}$/;
-/**
- * Rows added after the frozen 341-row baseline, by gate. The list only grows:
- * an addition stays a stable blocker until it is accepted, and removing one
- * fails validation. Each names the gate that added it and its decision record
- * under docs/completion (T2: reports/T2-WINDOW-CHROME.md).
- */
-export const RECORDED_ADDITION_IDS = Object.freeze(["W-01", "W-02", "W-03", "W-04", "W-05"]);
-const fail = message => { throw new Error("Component program: " + message); };
-const nonempty = value => typeof value === "string" && value.length > 0 && value === value.trim() && !/[\u0000-\u001f\u007f]/.test(value);
+export const LEGACY_PROGRAM_ARCHIVE = "docs/completion/reports/2026-11-22-forge-program";
+export const LEGACY_PROGRAM_LEDGER = LEGACY_PROGRAM_ARCHIVE + "/docs/completion/library-progress.json";
+const SNAPSHOT_SHA256 = "802713806e66e69e892560084397d06d8dc5f9318ae6706eef60ce13a9108bc3";
 
-function safePath(value) {
-  return nonempty(value) && /^[A-Za-z0-9_@+./-]+$/.test(value) &&
-    !value.startsWith("/") && value.split("/").every(part => part !== "" && part !== "." && part !== "..");
-}
-function stringList(value, label, required = false) {
-  if (!Array.isArray(value) || required && value.length === 0 || value.some(item => !nonempty(item))) fail(label + " must be a nonempty-string list");
-  if (new Set(value).size !== value.length) fail(label + " contains duplicates");
-  return value;
-}
-function equalSet(actual, expected) {
-  return actual.length === expected.length && new Set(actual).size === actual.length && expected.every(value => actual.includes(value));
+export function readLegacyProgramSnapshot(rootDir = root) {
+  const bytes = readFileSync(join(rootDir, LEGACY_PROGRAM_LEDGER));
+  if (createHash("sha256").update(bytes).digest("hex") !== SNAPSHOT_SHA256) throw new Error("Historical program snapshot changed");
+  return JSON.parse(bytes);
 }
 
-/** The frozen upstream TSV is checked byte-for-byte, not just by row count. */
-export function parseCanonicalBaseline(bytes) {
-  if (createHash("sha256").update(bytes).digest("hex") !== CANONICAL_BASELINE_SHA256) fail("Canonical baseline SHA256 does not match the frozen original");
-  const lines = bytes.toString().split(/\r?\n/).filter(Boolean);
-  const columns = lines.shift().split("\t");
-  const idIndex = columns.indexOf("id"), nameIndex = columns.indexOf("name");
-  if (idIndex < 0 || nameIndex < 0) fail("Canonical baseline needs id/name columns");
-  const rows = lines.map(line => { const values = line.split("\t"); return { id: values[idIndex], name: values[nameIndex] }; });
-  if (rows.length !== 341 || new Set(rows.map(row => row.id)).size !== 341) fail("Canonical baseline must contain exactly 341 unique IDs");
-  return rows;
+export function readLegacyProgramBaseline(rootDir = root) {
+  return readFileSync(join(rootDir, LEGACY_PROGRAM_ARCHIVE, "docs/completion/baseline-roster.tsv"));
 }
 
-function packageManifests(rootDir) {
-  const packages = join(rootDir, "packages");
-  if (!existsSync(packages)) return [];
-  const paths = readdirSync(packages, { withFileTypes: true }).filter(entry => entry.isDirectory())
-    .map(entry => join(packages, entry.name));
-  paths.push(join(packages, "windows-fluent/rnw-fabric"), join(packages, "macos-appkit/spark"));
-  return paths.filter(directory => existsSync(join(directory, "package.json"))).map(directory => ({
-    directory, manifest: JSON.parse(readFileSync(join(directory, "package.json"), "utf8")),
-  }));
-}
-function exportTargets(value) {
-  if (typeof value === "string") return [value];
-  return value && typeof value === "object" ? Object.values(value).flatMap(exportTargets) : [];
+export function validateComponentProgram(ledger, options = {}) {
+  return validateHistoricalProgram(ledger, { rootDir: root, ...options });
 }
 
-/**
- * Validate local ownership and explicit, pinned external ownership without
- * treating either source review as eight-platform runtime acceptance.
- * Canonical rows match the frozen baseline by ID and name. Rows added later
- * live in `additions` and pass the same per-row rules; `summary.additions`
- * counts them separately so the 341 canonical figures never change meaning.
- * Remote paths are syntactically checked here; reviewers verify their pinned
- * repository contents and record that provenance in the required report.
- */
-export function validateComponentProgram(ledger, { rootDir = root, recordedAdditions = RECORDED_ADDITION_IDS } = {}) {
-  rootDir = realpathSync(resolve(rootDir));
-  const canonical = parseCanonicalBaseline(readFileSync(join(rootDir, "docs/completion/baseline-roster.tsv")));
-  if (ledger?.schemaVersion !== 1) fail("Unknown ledger schema version");
-  if (ledger.baselineSha256 !== CANONICAL_BASELINE_SHA256) fail("Ledger baseline hash changed");
-  if (!Array.isArray(ledger.requiredPlatforms) || !equalSet(ledger.requiredPlatforms, REQUIRED_PLATFORMS)) {
-    fail("Required platform scope must retain ios, android, web, macos, windows, visionos, quest and pico");
-  }
-  if (!Array.isArray(ledger.components) || ledger.components.length !== 341) fail("The canonical scope must retain all 341 IDs");
-  const canonicalNames = new Map(canonical.map(row => [row.id, row.name]));
-  const ids = new Set(), manifests = packageManifests(rootDir);
-  const summary = { canonical: 341, localImplemented: 0, localPartial: 0, externalImplemented: 0, pending: 0, accepted: 0 };
-  const localFile = (base, path, label) => {
-    if (!safePath(path)) fail(label + " has an unsafe path: " + path);
-    const basePath = join(rootDir, base), file = join(basePath, path);
-    if (!existsSync(file) || !statSync(file).isFile()) fail(label + " has a missing file: " + path);
-    if (!realpathSync(file).startsWith(realpathSync(basePath) + sep)) fail(label + " escapes its owned directory: " + path);
-  };
-  const evidence = (paths, label, required = false) => {
-    for (const path of stringList(paths ?? [], label, required)) localFile("docs/completion", path, label);
-  };
-  const validateExternal = row => {
-    if (row.libraryScope !== false || row.sourceCandidates.length !== 0) fail(row.id + " external ownership cannot masquerade as local source");
-    const owners = row.externalImplementation?.owners;
-    if (!Array.isArray(owners) || !owners.length) fail(row.id + " needs pinned external owners");
-    evidence(row.evidence, row.id + " external evidence", true);
-    const seen = new Set();
-    for (const owner of owners) {
-      if (!owner || !/^[A-Za-z0-9][A-Za-z0-9-]*\/[A-Za-z0-9][A-Za-z0-9._-]*$/.test(owner.repository ?? "")) {
-        fail(row.id + " has an unsafe external repository");
-      }
-      if (!/^[a-f0-9]{40}$/.test(owner.revision ?? "") || /^0{40}$/.test(owner.revision)) fail(row.id + " needs a pinned external revision (40 lowercase hex characters)");
-      const identity = owner.repository.toLowerCase();
-      if (seen.has(identity)) fail(row.id + " repeats an external repository owner");
-      seen.add(identity);
-      for (const path of stringList(owner.sourcePaths, row.id + " external sourcePaths", true)) {
-        if (!safePath(path)) fail(row.id + " has an unsafe external source path: " + path);
-      }
-      for (const value of stringList(owner.publicExports, row.id + " external publicExports", true)) {
-        if (/^(?:[./]|file:|https?:)/.test(value) || value.includes("\\") || value.split("/").some(part => part === ".." || part === ".")) {
-          fail(row.id + " has an unsafe external public export: " + value);
-        }
-      }
-    }
-  };
-
-  // One rule set for canonical rows and recorded additions; only identity differs.
-  const validateRow = (row, counts) => {
-    if (!/^P\d{2}$/.test(row.phase ?? "") || !nonempty(row.requirement) || typeof row.libraryScope !== "boolean") fail("Missing scope metadata for " + row.id);
-    if (!implementationStatuses.has(row.implementationReview)) fail(row.id + " has an unknown implementation review status");
-    if (!acceptanceStatuses.has(row.acceptance)) fail(row.id + " has an unknown acceptance status");
-    stringList(row.sourceCandidates, row.id + " sourceCandidates");
-    for (const source of row.sourceCandidates) {
-      if (!source.startsWith("packages/")) fail(row.id + " has a source outside packages/");
-      localFile("packages", source.slice("packages/".length), row.id + " source candidate");
-    }
-    evidence(row.evidence, row.id + " evidence");
-    if (row.remainingLibraryWork !== undefined) stringList(row.remainingLibraryWork, row.id + " remaining library work");
-    if (["implemented", "implemented-external"].includes(row.implementationReview) && row.remainingLibraryWork?.length) fail(row.id + " still has unfinished library requirements");
-
-    if (row.externalImplementation !== undefined) {
-      if (!["pending", "implemented-external"].includes(row.implementationReview)) fail(row.id + " has external ownership on a local implementation status");
-      validateExternal(row);
-    }
-    if (row.implementationReview === "implemented-external") {
-      if (!row.externalImplementation) fail(row.id + " needs pinned external implementation metadata");
-      counts.externalImplemented++;
-    } else if (["implemented", "partial"].includes(row.implementationReview)) {
-      if (!row.libraryScope || !row.sourceCandidates.length || !row.evidence?.length) fail(row.id + " needs owned source and evidence");
-      if (row.implementationReview === "partial" && !row.remainingLibraryWork?.length) fail(row.id + " must name its remaining library work");
-      const exported = row.sourceCandidates.some(source => {
-        const dist = resolve(rootDir, source.replace("/src/", "/dist/").replace(/\.tsx?$/, ".js"));
-        return manifests.some(({ directory, manifest }) => exportTargets(manifest.exports).some(target => resolve(directory, target) === dist));
-      });
-      if (!exported) fail(row.id + " needs an independent public export");
-      if (row.implementationReview === "partial") counts.localPartial++;
-      else counts.localImplemented++;
-    } else counts.pending++;
-
-    if (row.platformEvidence !== undefined && (!row.platformEvidence || typeof row.platformEvidence !== "object" || Array.isArray(row.platformEvidence))) fail(row.id + " has invalid platform evidence");
-    for (const [platform, gate] of Object.entries(row.platformEvidence ?? {})) {
-      if (!REQUIRED_PLATFORMS.includes(platform)) fail(row.id + " has an unknown evidence platform " + platform);
-      if (!gate || !platformStatuses.has(gate.status)) fail(row.id + " has an unknown " + platform + " evidence status");
-      evidence(gate.evidence, row.id + " " + platform + " evidence", gate.status === "passed");
-    }
-    if (row.acceptance === "accepted") {
-      if (!["implemented", "implemented-external"].includes(row.implementationReview)) fail(row.id + " cannot be accepted before implementation review is complete");
-      for (const platform of REQUIRED_PLATFORMS) {
-        const gate = row.platformEvidence?.[platform];
-        if (gate?.status !== "passed" || !gate.evidence?.length) fail(row.id + " cannot be accepted without " + platform + " proof");
-      }
-      counts.accepted++;
-    }
-  };
-
-  for (const row of ledger.components) {
-    if (!row || !row.id || ids.has(row.id)) fail("Duplicate/missing ID " + row?.id);
-    if (!canonicalNames.has(row.id)) fail("Unknown/replaced canonical ID " + row.id);
-    ids.add(row.id);
-    if (row.name !== canonicalNames.get(row.id)) fail(row.id + " changed its canonical name");
-    validateRow(row, summary);
-  }
-  if (!Array.isArray(ledger.additions)) fail("The ledger needs an additions list (empty when nothing was added)");
-  const canonicalNameSet = new Set(canonicalNames.values()), additionNames = new Set();
-  const additions = { total: ledger.additions.length, localImplemented: 0, localPartial: 0, externalImplemented: 0, pending: 0, accepted: 0 };
-  for (const row of ledger.additions) {
-    if (!row || !ADDITION_ID.test(row.id ?? "")) fail("Addition IDs use a letter prefix and a two- or three-digit number: " + row?.id);
-    if (canonicalNames.has(row.id)) fail(row.id + " reuses a canonical ID; additions cannot replace or extend canonical rows");
-    if (ids.has(row.id)) fail("Duplicate addition ID " + row.id);
-    ids.add(row.id);
-    if (!nonempty(row.name) || canonicalNameSet.has(row.name) || additionNames.has(row.name)) fail(row.id + " needs a name not used by a canonical row or another addition");
-    additionNames.add(row.name);
-    if (!/^T\d+$|^F\d+$/.test(row.gate ?? "")) fail(row.id + " needs the gate that added it (for example T2)");
-    if (!nonempty(row.decision)) fail(row.id + " needs the decision record that scopes it");
-    localFile("docs/completion", row.decision, row.id + " decision");
-    validateRow(row, additions);
-  }
-  for (const id of recordedAdditions) {
-    if (!ledger.additions.some(row => row.id === id)) fail("Recorded addition " + id + " was removed; additions can be added but not dropped");
-  }
-  summary.additions = additions;
-  if ([...ids].filter(id => canonicalNames.has(id)).length !== canonical.length) fail("The canonical ID set changed");
-  return summary;
-}
-
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const ledger = JSON.parse(readFileSync(join(root, "docs/completion/library-progress.json"), "utf8"));
-  const result = validateComponentProgram(ledger);
-  console.log(`Component program: ${result.canonical} canonical IDs; ${result.localImplemented} local implementations, ${result.localPartial} partial, ${result.externalImplemented} pinned external implementations, ${result.pending} pending; ${result.accepted} accepted with all eight platform proofs.`);
-  const added = result.additions;
-  console.log(`Additions after the baseline: ${added.total} rows; ${added.localImplemented} local implementations, ${added.localPartial} partial, ${added.externalImplemented} pinned external, ${added.pending} pending; ${added.accepted} accepted with all eight platform proofs.`);
+if (isMainModule(import.meta.url)) {
+  const result = validateComponentProgram(readLegacyProgramSnapshot());
+  console.log(`Historical program compatibility check: ${result.canonical} rows and ${result.additions.total} additions; no acceptance status changed. Active ownership: Nitro Forge. Remove this release-policy bridge in T3.`);
 }

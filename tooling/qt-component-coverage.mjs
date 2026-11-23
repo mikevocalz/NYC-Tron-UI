@@ -3,7 +3,7 @@ import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "@typescript/typescript6";
-import { CANONICAL_BASELINE_SHA256, parseCanonicalBaseline } from "./verify-component-program.mjs";
+import { CANONICAL_BASELINE_SHA256, parseCanonicalBaseline, readLegacyProgramSnapshot, readLegacyProgramBaseline } from "./verify-component-program.mjs";
 import { componentProfileAssignments, qtFamilies, qtProfiles, qtReferences } from "./qt-component-profiles.mjs";
 
 const repositoryRoot = fileURLToPath(new URL("..", import.meta.url));
@@ -176,8 +176,8 @@ export function validateQtRows(components, canonical) {
 }
 
 export function buildQtCoverage({ rootDir = repositoryRoot, apiProfile } = {}) {
-  const ledger = JSON.parse(readFileSync(join(rootDir, "docs/completion/library-progress.json"), "utf8"));
-  const canonical = parseCanonicalBaseline(readFileSync(join(rootDir, "docs/completion/baseline-roster.tsv")));
+  const ledger = readLegacyProgramSnapshot(rootDir);
+  const canonical = parseCanonicalBaseline(readLegacyProgramBaseline(rootDir));
   if (ledger.baselineSha256 !== CANONICAL_BASELINE_SHA256) fail("Canonical ledger identity changed");
   apiProfile ??= JSON.parse(readFileSync(join(rootDir, "docs/qt/react-native-api.json"), "utf8"));
   if (!Array.isArray(apiProfile.exports) || !apiProfile.exports.length || new Set(apiProfile.exports).size !== apiProfile.exports.length) fail("Invalid React Native API profile");
@@ -224,7 +224,7 @@ export function buildQtCoverage({ rootDir = repositoryRoot, apiProfile } = {}) {
   }]));
   return {
     schemaVersion: 1, baselineSha256: CANONICAL_BASELINE_SHA256,
-    scope: "341 canonical capabilities. Qt counterparts are conceptual; source reachability is not render, interaction, engine, native-provider or device acceptance.",
+    scope: "Historical Forge correspondence snapshot (2026-11-22), not library inventory. Qt counterparts are conceptual; source reachability is not render, interaction, engine, native-provider or device acceptance.",
     reactNativeApiProfile: apiProfile,
     summary: {
       canonical: components.length, local: local.length, external: components.length - local.length,
