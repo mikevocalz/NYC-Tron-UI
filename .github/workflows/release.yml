@@ -71,9 +71,15 @@ jobs:
     permissions:
       contents: read
 
+  kitchen-sink:
+    name: installed-archive library evidence
+    uses: ./.github/workflows/kitchen-sink.yml
+    permissions:
+      contents: read
+
   release:
     name: build, test, pack and upload
-    needs: [ci, ui-browser, menu-browser, native-controls, release-consumers, windows-native, macos-appkit, native-feel]
+    needs: [ci, ui-browser, menu-browser, native-controls, release-consumers, windows-native, macos-appkit, native-feel, kitchen-sink]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -120,10 +126,58 @@ jobs:
       - name: Verify the standalone public component inventory
         run: node tooling/library-components.mjs
 
+      - name: Build and verify exact-source component documentation
+        run: |
+          npm --prefix website ci --ignore-scripts
+          ./website/node_modules/.bin/playwright install --with-deps chromium
+          npm --prefix website run verify
+      - name: Follow the published installation guide and run its copied example
+        run: |
+          node tooling/docs-clean-consumer.mjs --output "$RUNNER_TEMP/tron-docs-consumer"
+          node website/tests/clean-consumer.mjs "$RUNNER_TEMP/tron-docs-consumer"
+      - name: Retain actual component documentation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-component-documentation
+          path: |
+            website/dist/
+            website/generated/
+            website/test-results/
+            ${{ runner.temp }}/tron-docs-consumer/docs-consumer-proof.json
+          if-no-files-found: warn
+
       # Fails if any package version differs from the tag, a tarball lacks
       # dist/README/notices, ships src/, or keeps an export outside dist.
       - name: Pack and check every tarball
-        run: node tooling/pack-release.mjs "$RUNNER_TEMP/release" --expect-version "${{ steps.version.outputs.version }}"
+        run: node tooling/pack-release.mjs "$RUNNER_TEMP/release" --expect-version "${{ steps.version.outputs.version }}" --packages app-identity,expo-controls,geometry,hardware-keys,icons,native-charts,native-controls,native-navigation,panes,platform-services,reserved-regions,windows-fluent
+
+      - name: Download the exact tested library archives
+        uses: actions/download-artifact@v4
+        with:
+          name: kitchen-candidate-archives
+          path: ${{ runner.temp }}/tested-library/archives
+      - name: Reuse the installed core and UI archive bytes
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: node tooling/collect-library-evidence.mjs merge "$RUNNER_TEMP/tested-library/archives" "$RUNNER_TEMP/release" "$VERSION" "$GITHUB_SHA"
+      - name: Download web and unit evidence
+        uses: actions/download-artifact@v4
+        with:
+          name: kitchen-proof-web
+          path: ${{ runner.temp }}/tested-library/web
+      - name: Download installed-tarball iOS mount evidence
+        uses: actions/download-artifact@v4
+        with:
+          name: kitchen-proof-ios
+          path: ${{ runner.temp }}/tested-library/ios
+      - name: Download installed-tarball Android mount evidence
+        uses: actions/download-artifact@v4
+        with:
+          name: kitchen-proof-android
+          path: ${{ runner.temp }}/tested-library/android
+      - name: Index actual collector outputs without promoting a pass
+        run: node tooling/collect-library-evidence.mjs index "$RUNNER_TEMP/tested-library" "$RUNNER_TEMP/tested-library/evidence.json"
       - name: Install the dependency-free tarballs in a fresh project and import them
         run: node tooling/consumer-smoke.mjs "$RUNNER_TEMP/release"
 
@@ -157,13 +211,14 @@ jobs:
             ${{ runner.temp }}/release/*.tgz
             ${{ runner.temp }}/release/SHA256SUMS
             ${{ runner.temp }}/release/*-tested-package.json
+            ${{ runner.temp }}/release/library-tested-candidate.json
           if-no-files-found: error
           retention-days: 30
       - name: Require actual stable-release acceptance and owner distribution review
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ steps.version.outputs.version }}
-        run: node tooling/release-readiness.mjs --version "$VERSION" --artifacts "$RUNNER_TEMP/release" --output "$RUNNER_TEMP/release/readiness.json"
+        run: node tooling/release-readiness.mjs --version "$VERSION" --artifacts "$RUNNER_TEMP/release" --require-library --evidence "$RUNNER_TEMP/tested-library/evidence.json" --output "$RUNNER_TEMP/release/readiness.json"
       - name: Retain the readiness result, including blocked stable candidates
         if: always()
         uses: actions/upload-artifact@v4

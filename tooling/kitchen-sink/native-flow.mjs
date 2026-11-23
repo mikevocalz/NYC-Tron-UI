@@ -1,0 +1,34 @@
+import { isMainModule } from '../library-components.mjs';
+import { APP_ID, DRAFT, MODES } from './contracts.mjs';
+
+export function nativeFlow(mode) {
+  if (!MODES.includes(mode)) throw new Error('Choose direct or root imports');
+  const flow = [`appId: ${APP_ID}`, `name: Kitchen sink ${mode} imports`, '---', '- launchApp:', '    clearState: true',
+    '- extendedWaitUntil:', '    visible:', '      id: alias-result', '    timeout: 90000',
+    '- assertVisible: "10 public imports resolve to 5 component identities."'];
+  const visible = (id, text, extra = []) => flow.push('- assertVisible:', `    id: ${id}`, ...(text ? [`    text: ${JSON.stringify(text)}`] : []), ...extra.map(s => '    ' + s));
+  const scroll = (id, direction = 'DOWN') => flow.push('- scrollUntilVisible:', '    element:', `      id: ${id}`, `    direction: ${direction}`, '    timeout: 30000');
+  const tap = id => flow.push('- tapOn:', `    id: ${id}`);
+  const position = side => visible('shell-rail', undefined, [`${side}Of:`, '  id: shell-draft']);
+  tap(`imports-${mode}`); visible('imports-result', `Rendering: ${mode} imports`);
+  scroll('button-primary'); tap('button-primary'); scroll('button-result'); visible('button-result', 'Press count: 1');
+  for (const variant of ['secondary', 'ghost', 'danger', 'small']) { scroll(`button-${variant}`, 'UP'); visible(`button-${variant}`); }
+  scroll('button-disabled'); visible('button-disabled', undefined, ['enabled: false']); scroll('button-loading'); visible('button-loading', undefined, ['enabled: false']);
+  for (const surface of ['raised', 'sunken', 'transparent']) { scroll(`card-${surface}`); visible(`card-${surface}`); }
+  scroll('field-editable'); tap('field-editable'); flow.push(`- inputText: ${JSON.stringify(DRAFT)}`, '- hideKeyboard');
+  scroll('draft-result'); visible('draft-result', `Draft: ${DRAFT}`);
+  scroll('field-error'); visible('field-error'); flow.push('- assertVisible: "Enter a project name before continuing."');
+  scroll('field-disabled'); visible('field-disabled', 'Reference project', ['enabled: false']);
+  scroll('rail-demo'); flow.push('- tapOn:', '    text: Editor'); visible('rail-result', 'Selected: editor'); flow.push('- assertVisible:', '    text: Editor', '    selected: true');
+  flow.push('- assertVisible:', '    text: Unavailable', '    enabled: false');
+  scroll('rail-collapse', 'UP'); tap('rail-collapse'); visible('rail-result', 'Selected: editor');
+  scroll('shell-edge'); tap('shell-edge'); scroll('shell-result'); visible('shell-result', 'Physical edge: left; text: LTR');
+  scroll('shell-rtl', 'UP'); tap('shell-rtl'); scroll('shell-result'); visible('shell-result', 'Physical edge: left; text: RTL');
+  scroll('shell-draft'); visible('shell-draft', DRAFT); position('left');
+  scroll('shell-edge', 'UP'); tap('shell-edge'); scroll('shell-result'); visible('shell-result', 'Physical edge: right; text: RTL');
+  scroll('shell-draft'); visible('shell-draft', DRAFT);
+  position('right');
+  flow.push(`- takeScreenshot: kitchen-${mode}-retained-shell`);
+  return flow.join('\n') + '\n';
+}
+if (isMainModule(import.meta.url)) console.log(nativeFlow(process.argv[2]));

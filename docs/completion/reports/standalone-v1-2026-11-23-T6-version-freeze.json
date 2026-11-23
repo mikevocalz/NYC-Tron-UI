@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "scope": "Independent versions/peer/lock/package inventory/release-copy review; workflow and toolchain recommendation excluded due earlier workflow authorship and separate assigned reviewer",
+  "intendedParent": "23cf902718c6063826479a4dfc0e94a961db147b",
+  "files": {
+    "CHANGELOG.md": "fbd64fc6cd4239bf1e01310956074d6a40b562bd27a441db6fff702a699ec4b9",
+    "docs/completion/reports/RC3-RELEASE-CHECKLIST.md": "dba1ec659d0ae061d3aeffb9abc206d56d000a60ecf989f2369b4c92204282ad",
+    "docs/completion/reports/standalone-v1-2026-11-23-T6-local-archives.json": "3023b64110f730270e4606518f2b99c3df74c80cee2f76ba6dd63a35db540a51",
+    "docs/completion/reports/standalone-v1-2026-11-23-T6-readiness.json": "0c961bcd6e10fc39d7c0caa86288d6749da984d4b2815dce59630eecacd4ce97",
+    "docs/completion/reports/standalone-v1-2026-11-23-T6.md": "b683b32366c894169210d945fa4cc0b1bdae85d25f82a67511299a25c799895d",
+    "packages/app-identity/package.json": "399dc84bb599bb64d82b2c363282b1013b5665244eec94f008a4fd7e47892eb9",
+    "packages/core/package.json": "6440584e747b352a679e97a921545748b4557b03c2b03f9898b2dc97a61f4ca9",
+    "packages/expo-controls/package.json": "3cc05a86d923849645f52f1e360c518d07bdae9441570071ee8d20998b124d27",
+    "packages/geometry/package.json": "2f09287a70edcbe2180f12ce4357f4324d5685fb8323dd53a8790fc7e7a5f85b",
+    "packages/hardware-keys/package.json": "3c3d8aef48e70cc2e35ab11de73a5c45b6d70d6fe41ec0b3f95d709e4a81eb6e",
+    "packages/icons/package.json": "f5146e3f99a423e42d61bc79c00763a4c7a3de0b123bf4271f4cc9050a50fc6f",
+    "packages/macos-appkit/spark/package.json": "f9750d3c1e86c67b65163f0b074859f540abaa69e1ac0c5c78691b947ac3cc4b",
+    "packages/native-charts/package.json": "f0bcf1c78706e8500d2f8a88a4a61dfa0b0e0e9c4b920ca16f780da4a22ae7c0",
+    "packages/native-controls/package.json": "d0e14ea7d26d6f1b42c49ef24c79892466c75d9de3d0aa962bdf5fc40f9a6145",
+    "packages/native-navigation/package.json": "04d57b3730eb406ee07dab1cfcb8804fb9e471786eb134693d495ff681e4f08b",
+    "packages/panes/package.json": "843497489aff97e3b050ba8a82f08625a8474b521c53916dd250e37934192898",
+    "packages/platform-services/package.json": "61982e2559700efa09e148e9bb7e3390a5af5520fdfbf10d9089478dd5243389",
+    "packages/reserved-regions/package.json": "250665b752a7d5156cd366a255128fa3cc7b2d2059d8e337582b331440303d01",
+    "packages/ui/package.json": "85537af11d73ab3be818f0a0916ebbe2ac7b6a4e5e2dbebb1504cdd861cb2b07",
+    "packages/windows-fluent/package.json": "b40786ddd1265c000a5cbc63f2f3d133606adb0276526685a3e38ba3e0ff02ab",
+    "packages/windows-fluent/rnw-fabric/package.json": "2e86a683e736f10049da466513446df887a71e9876b8a810916f544644fb6928",
+    "pnpm-lock.yaml": "16982777e0b2b2328f118f114a3d42f743bfcb404728b7e6fc3bb8a1238abd39"
+  },
+  "actualArchiveChecksumManifestSha256": "2d3a362e7df9819ddfdc2dea2c40402154081b53311af82cd0b6e4105ece7277",
+  "independentReadinessReportSha256": "0c961bcd6e10fc39d7c0caa86288d6749da984d4b2815dce59630eecacd4ce97"
+}

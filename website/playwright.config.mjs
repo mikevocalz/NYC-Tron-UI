@@ -1,0 +1,2 @@
+import { defineConfig } from 'playwright/test';
+export default defineConfig({testDir:'tests/browser',timeout:120000,workers:1,use:{baseURL:process.env.DOCS_BASE_URL??'http://127.0.0.1:4173',headless:true,launchOptions:process.env.DOCS_BROWSER_EXECUTABLE?{executablePath:process.env.DOCS_BROWSER_EXECUTABLE}:{}},reporter:[['list'],['json',{outputFile:'generated/browser-results.json'}]],webServer:process.env.DOCS_EXTERNAL_SERVER?undefined:{command:'node server.mjs',url:'http://127.0.0.1:4173',reuseExistingServer:!process.env.CI}});

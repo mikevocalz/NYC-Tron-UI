@@ -1,0 +1,28 @@
+{
+  "name": "nyc-tron-documentation",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "node server.mjs",
+    "test": "node --test tests/catalog.test.mjs",
+    "test:browser": "playwright test",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-native-web": "0.21.4",
+    "zustand": "5.0.16"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.4",
+    "@types/react": "19.3.0",
+    "@typescript/typescript6": "6.0.2",
+    "axe-core": "4.11.0",
+    "esbuild": "0.28.2",
+    "playwright": "1.62.1",
+    "react-native": "0.88.1",
+    "tailwindcss": "4.3.4"
+  }
+}

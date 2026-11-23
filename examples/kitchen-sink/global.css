@@ -1,0 +1,28 @@
+@import 'tailwindcss';
+@import 'uniwind';
+@source './node_modules/@nyc-tron/ui/dist/components';
+
+/* This example owns its palette. No library or consumer theme is replaced. */
+@theme { --radius-control: 8px; --radius-card: 14px; }
+@layer theme {
+  :root {
+    @variant light {
+      --color-primary: #244e87; --color-on-primary: #ffffff;
+      --color-accent: #295f73; --color-surface: #f5f7fb;
+      --color-surface-raised: #ffffff; --color-surface-sunken: #edf1f8;
+      --color-text: #172b49; --color-text-muted: #465b76;
+      --color-border: #6d7b90; --color-focus: #244e87;
+      --color-danger: #9b2735; --color-on-danger: #ffffff;
+      --color-info: #275a93; --color-success: #246344;
+    }
+    @variant dark {
+      --color-primary: #b8d3ff; --color-on-primary: #172c4e;
+      --color-accent: #9dcedd; --color-surface: #17263b;
+      --color-surface-raised: #21354f; --color-surface-sunken: #192a42;
+      --color-text: #f2f6fc; --color-text-muted: #becbe0;
+      --color-border: #91a2b9; --color-focus: #b8d3ff;
+      --color-danger: #ffb3b9; --color-on-danger: #4d1420;
+      --color-info: #b8d3ff; --color-success: #9bddb4;
+    }
+  }
+}

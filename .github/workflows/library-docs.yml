@@ -1,0 +1,44 @@
+name: Library documentation
+on:
+  pull_request:
+    paths:
+      - 'website/**'
+      - 'tooling/library-docs.mjs'
+      - 'docs/library/**'
+      - 'docs/api-signatures*.json'
+      - 'docs/THEME_TOKENS.md'
+      - '.github/workflows/library-docs.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24.19.0'
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - run: npm --prefix website ci --ignore-scripts
+      - run: node website/node_modules/playwright/cli.js install --with-deps chromium
+      - run: npm --prefix website run verify
+      - name: Follow the installation guide in a clean Expo app
+        run: node tooling/docs-clean-consumer.mjs --output "${{ runner.temp }}/tron-docs-consumer"
+      - name: Run the exact copied example from installed release tarballs
+        run: node website/tests/clean-consumer.mjs "${{ runner.temp }}/tron-docs-consumer"
+      - name: Check the manifest-bound documentation map
+        run: git diff --exit-code -- docs/library/documentation.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: library-documentation
+          path: |
+            website/dist
+            website/generated/*.json
+            website/generated/*.log
+            website/test-results
+            ${{ runner.temp }}/tron-docs-consumer/docs-consumer-proof.json
