@@ -7,6 +7,11 @@ version per tag.
 
 ## [Unreleased]
 
+### Standalone library documentation
+
+- Added a generated component documentation site, install/theming/platform guides, contributor instructions and versioning policy. Stability labels remain proposals pending owner confirmation; no stable release or rc.3 publication is claimed.
+- Preserved public imports and historical platform evidence. No acceptance or distribution-approval status changes.
+
 ## [1.0.0-rc.2] - Unreleased
 
 Prepared for review; no tag or release has been created by this change. The
