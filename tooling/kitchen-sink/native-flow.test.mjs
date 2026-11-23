@@ -6,15 +6,18 @@ import { DRAFT, MODES } from './contracts.mjs';
 for (const mode of MODES) {
   test(`${mode} rail actions scroll to the actual accessible item rather than a clipped container`, () => {
     const steps = nativeFlow(mode).split(/\n(?=- )/);
-    const editorTap = steps.findIndex(step => step === '- tapOn:\n    text: Editor\n    childOf:\n      id: rail-demo');
+    const editorTap = steps.findIndex(step => step === '- tapOn:\n    text: ^Editor$');
     assert.ok(editorTap > 0);
-    assert.equal(steps[editorTap - 1], '- scrollUntilVisible:\n    element:\n      text: "Editor"\n      childOf:\n        id: rail-demo\n    direction: DOWN\n    timeout: 30000');
-    const disabled = steps.findIndex(step => step === '- assertVisible:\n    text: Unavailable\n    enabled: false\n    childOf:\n      id: rail-demo');
+    // Native AX flattening must not let the later shell action satisfy this match.
+    const selector = /^- tapOn:\n    text: (.+)$/.exec(steps[editorTap])[1];
+    assert.deepEqual(['Editor', 'Shell Editor'].filter(text => new RegExp(selector).test(text)), ['Editor']);
+    assert.equal(steps[editorTap - 1], '- scrollUntilVisible:\n    element:\n      text: "^Editor$"\n    direction: DOWN\n    timeout: 30000');
+    const disabled = steps.findIndex(step => step === '- assertVisible:\n    text: ^Unavailable$\n    enabled: false');
     assert.ok(disabled > editorTap);
-    assert.equal(steps[disabled - 1], '- scrollUntilVisible:\n    element:\n      text: "Unavailable"\n      childOf:\n        id: rail-demo\n    direction: DOWN\n    timeout: 30000');
-    assert.ok(steps.includes('- assertVisible:\n    text: Editor\n    selected: true\n    childOf:\n      id: rail-demo'));
+    assert.equal(steps[disabled - 1], '- scrollUntilVisible:\n    element:\n      text: "^Unavailable$"\n    direction: DOWN\n    timeout: 30000');
+    assert.ok(steps.includes('- assertVisible:\n    text: ^Editor$\n    selected: true'));
     assert.ok(steps.includes('- assertVisible:\n    id: rail-result\n    text: "Selected: editor"'));
-    assert.doesNotMatch(nativeFlow(mode), /element:\n      id: rail-demo|point:|visibilityPercentage:|optional:/);
+    assert.doesNotMatch(nativeFlow(mode), /element:\n      id: rail-demo|childOf:|point:|visibilityPercentage:|optional:/);
     // Retain the downstream state/layout checks; scrolling is not acceptance.
     for (const text of ['Physical edge: left; text: LTR', 'Physical edge: left; text: RTL', 'Physical edge: right; text: RTL', DRAFT]) {
       assert.ok(nativeFlow(mode).includes(`text: ${JSON.stringify(text)}`), text);

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { KITCHEN_IOS_RUNTIME, selectKitchenIosDevice } from './prepare-ios.mjs';
+import { KITCHEN_IOS_RUNTIME, selectKitchenIosDevice, verifyKitchenIosReady } from './prepare-ios.mjs';
 import { maestroFlowArguments } from './native-proof.mjs';
 import { nativeFlow } from './native-flow.mjs';
 
@@ -28,4 +28,28 @@ test('the kitchen workflow invokes and retains its exact target preparation', ()
   assert.doesNotMatch(workflow,/run: node tooling\/native\/prewarm-ios\.mjs/);
   assert.match(workflow,/name: kitchen-ios-target/);
   assert.match(workflow,/path: \$\{\{ runner.temp \}\}\/kitchen-ios-target\//);
+});
+test('post-boot readiness queries only the selected target and preserves its strict identity metadata', () => {
+  const selected = selectKitchenIosDevice({ devices: { [KITCHEN_IOS_RUNTIME]: [device('iPhone 17','selected-udid')] } });
+  const calls = [];
+  const verified = verifyKitchenIosReady(selected, (args, label, timeout) => { calls.push({ args, label, timeout }); return args[1] === 'getenv' ? 'selected-udid\n' : 'Device already booted, nothing to do.\n'; });
+  assert.deepEqual(calls, [
+    { args:['simctl','bootstatus','selected-udid','-b'], label:'bootstatus', timeout:420000 },
+    { args:['simctl','getenv','selected-udid','SIMULATOR_UDID'], label:'booted-device-identity', timeout:30000 },
+  ]);
+  assert.equal(verified.state,'Booted'); assert.equal(verified.name,'iPhone 17'); assert.equal(verified.runtime,KITCHEN_IOS_RUNTIME); assert.equal(verified.verification.udid,selected.udid);
+  const source = readFileSync(new URL('./prepare-ios.mjs',import.meta.url),'utf8');
+  assert.equal((source.match(/\['simctl', 'list', 'devices', 'available', '--json'\]/g) ?? []).length,1, 'Only initial selection may enumerate all runtimes');
+  assert.match(source,/const verified = verifyKitchenIosReady\(selected, run\)/);
+});
+for (const identity of ['wrong-udid\n','']) test('post-boot identity mismatch or absence cannot produce readiness metadata', () => {
+  assert.throws(() => verifyKitchenIosReady(device('iPhone 17','selected-udid'), args => args[1] === 'getenv' ? identity : ''), /identity differs/);
+});
+test('bootstatus failure aborts before the targeted identity query', () => {
+  let calls = 0;
+  assert.throws(() => verifyKitchenIosReady(device('iPhone 17','selected-udid'), () => { calls++; throw new Error('synthetic boot failure'); }), /synthetic boot failure/);
+  assert.equal(calls,1);
+});
+test('targeted identity timeout is retained as failure instead of accepted readiness', () => {
+  assert.throws(() => verifyKitchenIosReady(device('iPhone 17','selected-udid'), args => { if(args[1] === 'getenv') throw new Error('synthetic ETIMEDOUT'); return ''; }), /ETIMEDOUT/);
 });
