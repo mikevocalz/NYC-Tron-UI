@@ -1,16 +1,18 @@
 # NYC-Tron UI readiness
 
-Updated 2026-11-10 for the v1.0.0 candidate. Scope and tiers: [v1.0.0 decisions](V1_DECISIONS.md)
+Updated 2026-11-22 for the standalone v1.0.0 library scope. Scope and tiers: [v1.0.0 decisions](V1_DECISIONS.md)
 and [Support policy](SUPPORT.md).
 
 ## Current candidate
 
-The current source candidate and exact CI/runtime results are recorded in
-[candidate verification](completion/reports/V1-RELEASE-GATES.md). The complete
-341-ID inventory now has 332 local implementations plus nine pinned external
-implementations. The twelve native/service rows are included, and the earlier
-blanket deferral is superseded. Complete eight-platform acceptance and owner
-distribution review remain open; stable publication is blocked by those records.
+NYC-Tron UI is an independent UI library with general components and optional
+professional controls. The published candidate is `v1.0.0-rc.2`. Its exact
+CI/runtime results are recorded in
+[candidate verification](completion/reports/V1-RELEASE-GATES.md); each receipt
+applies to its cited commit. [D9](V1_DECISIONS.md#d9-standalone-ui-library-v1)
+defines the new scope. The library manifest, independent stable gate, program
+handoff and component docs surface are pending. The owner distribution review
+remains pending. This decision does not establish stable readiness.
 
 The following CI table is retained as historical evidence for its own commit.
 
@@ -42,8 +44,11 @@ so no run above covers them.
 
 | Gate | Status |
 | --- | --- |
-| Source implementation | All 341 canonical rows have reviewed owners: 332 local plus nine pinned external (`docs/completion/library-progress.json`) |
-| Device acceptance | 0 of 341 rows; every row is `acceptance: "unverified"` |
+| Library inventory and stability | Pending: generate from public exports and `docs/api-surface.json`; owner confirms `stable` / `preview` labels |
+| Stable component evidence | Pending: per-`stable` component exports/declarations, tests, web render, installed-tarball iOS/Android mounts, static accessibility and docs |
+| Program handoff and gate migration | Pending: move Forge's program without status changes, then replace the superseded validator in a separate reviewed PR |
+| Library docs and kitchen sink | Pending: component docs, guides, Expo kitchen-sink app, changelog, versioning policy and contributor guide |
+| Owner distribution review | Pending: owner's exact version/checksum approval comment; local status edits cannot satisfy it |
 | Core navigation / hinge / spatial contracts | Node unit tests in `ci.yml` |
 | Corner-cut and overlay-placement geometry | Node unit tests in `ci.yml` |
 | Per-component package exports | Built `dist/` ESM and declarations; every export condition checked by `tooling/verify-packages.mjs`; tarballs packed in CI |

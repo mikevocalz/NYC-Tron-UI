@@ -1,0 +1,3107 @@
+{
+  "auditedAt": "2026-11-23",
+  "method": "Read-only GitHub connector branch, pinned-file, Actions repository run, and job/log endpoints. No local tests run or repository writes.",
+  "heads": {
+    "tron": "0e09d3be8263b3dbb2eab1a78e5dd66b83b68e44",
+    "forge": "dab27e177f05a747f2a234e3892f62e2f7b8c28b"
+  },
+  "rosters": {
+    "byteIdentical": true,
+    "chars": 197781,
+    "rows": 341,
+    "header": 1,
+    "baselineSha256": "a1fd6593a84f899dc2946e6337fde7c59897607701516b6d64732d51d44b75db"
+  },
+  "schemaDifference": "Tron components use acceptance; Forge components use completion and do not have acceptance. Preserve both as separate fields during handoff. Neither ledger reports any accepted/complete row.",
+  "statusCounts": {
+    "tronAcceptance": {
+      "unverified": 341
+    },
+    "forgeCompletion": {
+      "unverified": 35,
+      "in-progress": 274,
+      "blocked": 32
+    }
+  },
+  "comparison": [
+    {
+      "id": "A-01",
+      "tronName": "WorkspaceHost",
+      "forgeName": "WorkspaceHost",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-02",
+      "tronName": "WorkspacePresetSwitcher",
+      "forgeName": "WorkspacePresetSwitcher",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-03",
+      "tronName": "AdaptiveDock",
+      "forgeName": "AdaptiveDock",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-04",
+      "tronName": "PaneSplitter",
+      "forgeName": "PaneSplitter",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-05",
+      "tronName": "DocumentTabBar",
+      "forgeName": "DocumentTabBar",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-06",
+      "tronName": "ToolRail",
+      "forgeName": "ToolRail",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-07",
+      "tronName": "ContextualToolbar",
+      "forgeName": "ContextualToolbar",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-08",
+      "tronName": "RibbonTabs",
+      "forgeName": "RibbonTabs",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-09",
+      "tronName": "InspectorPanel",
+      "forgeName": "InspectorPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-10",
+      "tronName": "InspectorSection",
+      "forgeName": "InspectorSection",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-11",
+      "tronName": "PropertyRow",
+      "forgeName": "PropertyRow",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-12",
+      "tronName": "NumericScrubField",
+      "forgeName": "NumericScrubField",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-13",
+      "tronName": "UnitInput",
+      "forgeName": "UnitInput",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-14",
+      "tronName": "SliderField",
+      "forgeName": "SliderField",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-15",
+      "tronName": "RangeSlider",
+      "forgeName": "RangeSlider",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-16",
+      "tronName": "RotaryKnob",
+      "forgeName": "RotaryKnob",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-17",
+      "tronName": "SplitButton",
+      "forgeName": "SplitButton",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-18",
+      "tronName": "CommandPalette",
+      "forgeName": "CommandPalette",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-19",
+      "tronName": "ContextMenu",
+      "forgeName": "ContextMenu",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-20",
+      "tronName": "NativePopover",
+      "forgeName": "NativePopover",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-21",
+      "tronName": "InspectorSearch",
+      "forgeName": "InspectorSearch",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-22",
+      "tronName": "AssetBrowser",
+      "forgeName": "AssetBrowser",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-23",
+      "tronName": "PresetGallery",
+      "forgeName": "PresetGallery",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-24",
+      "tronName": "HistoryPanel",
+      "forgeName": "HistoryPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-25",
+      "tronName": "StatusBar",
+      "forgeName": "StatusBar",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-26",
+      "tronName": "ToastAndProgress",
+      "forgeName": "ToastAndProgress",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-27",
+      "tronName": "KeyboardShortcutHUD",
+      "forgeName": "KeyboardShortcutHUD",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-28",
+      "tronName": "FocusAndA11yLayer",
+      "forgeName": "FocusAndA11yLayer",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-29",
+      "tronName": "FindReplacePopover",
+      "forgeName": "FindReplacePopover",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "A-30",
+      "tronName": "FileImportExportSheet",
+      "forgeName": "FileImportExportSheet",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "B-01",
+      "tronName": "GPUCanvasViewport",
+      "forgeName": "GPUCanvasViewport",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-02",
+      "tronName": "CanvasPanZoom",
+      "forgeName": "CanvasPanZoom",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-03",
+      "tronName": "CanvasRuler",
+      "forgeName": "CanvasRuler",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-04",
+      "tronName": "SnapGridOverlay",
+      "forgeName": "SnapGridOverlay",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-05",
+      "tronName": "SmartGuides",
+      "forgeName": "SmartGuides",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-06",
+      "tronName": "SelectionBounds",
+      "forgeName": "SelectionBounds",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-07",
+      "tronName": "MultiSelectionControls",
+      "forgeName": "MultiSelectionControls",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-08",
+      "tronName": "TransformOriginHandle",
+      "forgeName": "TransformOriginHandle",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-09",
+      "tronName": "LayerStack",
+      "forgeName": "LayerStack",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-10",
+      "tronName": "LayerThumbnail",
+      "forgeName": "LayerThumbnail",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-11",
+      "tronName": "LayerBlendAndOpacity",
+      "forgeName": "LayerBlendAndOpacity",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-12",
+      "tronName": "MaskThumbnailAndEditor",
+      "forgeName": "MaskThumbnailAndEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-13",
+      "tronName": "ClippingMaskControls",
+      "forgeName": "ClippingMaskControls",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-14",
+      "tronName": "ArtboardNavigator",
+      "forgeName": "ArtboardNavigator",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-15",
+      "tronName": "BrushPresetBrowser",
+      "forgeName": "BrushPresetBrowser",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-16",
+      "tronName": "BrushDynamicsInspector",
+      "forgeName": "BrushDynamicsInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-17",
+      "tronName": "InkStrokePreview",
+      "forgeName": "InkStrokePreview",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-18",
+      "tronName": "EraserModePicker",
+      "forgeName": "EraserModePicker",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-19",
+      "tronName": "SelectionMarquee",
+      "forgeName": "SelectionMarquee",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-20",
+      "tronName": "MagicSelectionControls",
+      "forgeName": "MagicSelectionControls",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-21",
+      "tronName": "PenNodeEditor",
+      "forgeName": "PenNodeEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-22",
+      "tronName": "ShapeBuilder",
+      "forgeName": "ShapeBuilder",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-23",
+      "tronName": "FillStrokeInspector",
+      "forgeName": "FillStrokeInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-24",
+      "tronName": "GradientOnCanvasHandles",
+      "forgeName": "GradientOnCanvasHandles",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-25",
+      "tronName": "AlignDistributePanel",
+      "forgeName": "AlignDistributePanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-26",
+      "tronName": "GuidedCropAndStraighten",
+      "forgeName": "GuidedCropAndStraighten",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-27",
+      "tronName": "CanvasCompareView",
+      "forgeName": "CanvasCompareView",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-28",
+      "tronName": "FloatingPaletteUndockHandle",
+      "forgeName": "FloatingPaletteUndockHandle",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-29",
+      "tronName": "BrushTaperControl",
+      "forgeName": "BrushTaperControl",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-30",
+      "tronName": "ColorDropCanvasTarget",
+      "forgeName": "ColorDropCanvasTarget",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-31",
+      "tronName": "ReferenceImageBoard",
+      "forgeName": "ReferenceImageBoard",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-32",
+      "tronName": "TimelapsePlaybackExporter",
+      "forgeName": "TimelapsePlaybackExporter",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "B-33",
+      "tronName": "BrushStabilizationPreview",
+      "forgeName": "BrushStabilizationPreview",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "B-34",
+      "tronName": "GestureCustomizationPanel",
+      "forgeName": "GestureCustomizationPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-01",
+      "tronName": "ColorPickerDialog",
+      "forgeName": "ColorPickerDialog",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-02",
+      "tronName": "SVColorField",
+      "forgeName": "SVColorField",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-03",
+      "tronName": "ColorWheel",
+      "forgeName": "ColorWheel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-04",
+      "tronName": "HueSlider",
+      "forgeName": "HueSlider",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-05",
+      "tronName": "AlphaSlider",
+      "forgeName": "AlphaSlider",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-06",
+      "tronName": "ColorChannels",
+      "forgeName": "ColorChannels",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-07",
+      "tronName": "PrintColorChannels",
+      "forgeName": "PrintColorChannels",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-08",
+      "tronName": "WideGamutChannels",
+      "forgeName": "WideGamutChannels",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "C-09",
+      "tronName": "ColorSpaceChooser",
+      "forgeName": "ColorSpaceChooser",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "C-10",
+      "tronName": "GamutWarning",
+      "forgeName": "GamutWarning",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "C-11",
+      "tronName": "EyedropperTool",
+      "forgeName": "EyedropperTool",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-12",
+      "tronName": "ForegroundBackgroundChips",
+      "forgeName": "ForegroundBackgroundChips",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-13",
+      "tronName": "SwatchGrid",
+      "forgeName": "SwatchGrid",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-14",
+      "tronName": "ThemeColorReferences",
+      "forgeName": "ThemeColorReferences",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-15",
+      "tronName": "SpotAndGlobalColorEditor",
+      "forgeName": "SpotAndGlobalColorEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-16",
+      "tronName": "GradientStopEditor",
+      "forgeName": "GradientStopEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-17",
+      "tronName": "GradientMeshEditor",
+      "forgeName": "GradientMeshEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-18",
+      "tronName": "ColorHarmonyAssistant",
+      "forgeName": "ColorHarmonyAssistant",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-19",
+      "tronName": "LiveHistogram",
+      "forgeName": "LiveHistogram",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-20",
+      "tronName": "LevelsEditor",
+      "forgeName": "LevelsEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-21",
+      "tronName": "CurvesEditor",
+      "forgeName": "CurvesEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-22",
+      "tronName": "ColorGradingWheels",
+      "forgeName": "ColorGradingWheels",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-23",
+      "tronName": "HSLSecondaryEditor",
+      "forgeName": "HSLSecondaryEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-24",
+      "tronName": "VideoScopesPanel",
+      "forgeName": "VideoScopesPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-25",
+      "tronName": "SoftProofControls",
+      "forgeName": "SoftProofControls",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "C-26",
+      "tronName": "FloatingColorPalette",
+      "forgeName": "FloatingColorPalette",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "C-27",
+      "tronName": "ColorDiscPicker",
+      "forgeName": "ColorDiscPicker",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-01",
+      "tronName": "NativeVideoPlayer",
+      "forgeName": "NativeVideoPlayer",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-02",
+      "tronName": "SourceMonitor",
+      "forgeName": "SourceMonitor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-03",
+      "tronName": "ProgramMonitor",
+      "forgeName": "ProgramMonitor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-04",
+      "tronName": "NativeSeekBar",
+      "forgeName": "NativeSeekBar",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-05",
+      "tronName": "FrameAccurateScrubber",
+      "forgeName": "FrameAccurateScrubber",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-06",
+      "tronName": "TransportControls",
+      "forgeName": "TransportControls",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-07",
+      "tronName": "PlaybackRateMenu",
+      "forgeName": "PlaybackRateMenu",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-08",
+      "tronName": "TimecodeDisplay",
+      "forgeName": "TimecodeDisplay",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-09",
+      "tronName": "JKLShuttleController",
+      "forgeName": "JKLShuttleController",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-10",
+      "tronName": "TimelineRuler",
+      "forgeName": "TimelineRuler",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-11",
+      "tronName": "TimelinePlayhead",
+      "forgeName": "TimelinePlayhead",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-12",
+      "tronName": "InOutRangeHandles",
+      "forgeName": "InOutRangeHandles",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-13",
+      "tronName": "LoopRangeBar",
+      "forgeName": "LoopRangeBar",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-14",
+      "tronName": "TimelineZoomAndScroll",
+      "forgeName": "TimelineZoomAndScroll",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-15",
+      "tronName": "TimelineClipLane",
+      "forgeName": "TimelineClipLane",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-16",
+      "tronName": "VideoFilmstrip",
+      "forgeName": "VideoFilmstrip",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-17",
+      "tronName": "AudioClipWaveform",
+      "forgeName": "AudioClipWaveform",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-18",
+      "tronName": "TrackHeaders",
+      "forgeName": "TrackHeaders",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-19",
+      "tronName": "ClipTrimHandles",
+      "forgeName": "ClipTrimHandles",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-20",
+      "tronName": "RazorSplitTool",
+      "forgeName": "RazorSplitTool",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-21",
+      "tronName": "RollSlipSlideControls",
+      "forgeName": "RollSlipSlideControls",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-22",
+      "tronName": "DragReorderAndRipple",
+      "forgeName": "DragReorderAndRipple",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-23",
+      "tronName": "TransitionHandles",
+      "forgeName": "TransitionHandles",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-24",
+      "tronName": "TimelineMarkers",
+      "forgeName": "TimelineMarkers",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-25",
+      "tronName": "SafeAreaOverlay",
+      "forgeName": "SafeAreaOverlay",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-26",
+      "tronName": "ScopesDock",
+      "forgeName": "ScopesDock",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-27",
+      "tronName": "MulticamAngleViewer",
+      "forgeName": "MulticamAngleViewer",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-28",
+      "tronName": "RenderCacheIndicator",
+      "forgeName": "RenderCacheIndicator",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-29",
+      "tronName": "ExportMonitor",
+      "forgeName": "ExportMonitor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "D-30",
+      "tronName": "PictureInPictureControls",
+      "forgeName": "PictureInPictureControls",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-31",
+      "tronName": "OverlayAndEffectsTrackStack",
+      "forgeName": "OverlayAndEffectsTrackStack",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-32",
+      "tronName": "VideoSpeedRampCurve",
+      "forgeName": "VideoSpeedRampCurve",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-33",
+      "tronName": "AutoCaptionTranscriptTimeline",
+      "forgeName": "AutoCaptionTranscriptTimeline",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "D-34",
+      "tronName": "CaptionWordTimingHandles",
+      "forgeName": "CaptionWordTimingHandles",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-35",
+      "tronName": "AutoReframeGuides",
+      "forgeName": "AutoReframeGuides",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-36",
+      "tronName": "VideoStabilizationInspector",
+      "forgeName": "VideoStabilizationInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-37",
+      "tronName": "TransitionPresetBrowser",
+      "forgeName": "TransitionPresetBrowser",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-38",
+      "tronName": "VideoEffectsBrowser",
+      "forgeName": "VideoEffectsBrowser",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-39",
+      "tronName": "MotionTrackingOverlay",
+      "forgeName": "MotionTrackingOverlay",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-40",
+      "tronName": "CoverFramePicker",
+      "forgeName": "CoverFramePicker",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-41",
+      "tronName": "BatchEditPanel",
+      "forgeName": "BatchEditPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-42",
+      "tronName": "VideoQualityInspector",
+      "forgeName": "VideoQualityInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "D-43",
+      "tronName": "StickerMotionLane",
+      "forgeName": "StickerMotionLane",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-01",
+      "tronName": "NativeAudioTransport",
+      "forgeName": "NativeAudioTransport",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-02",
+      "tronName": "WaveformLane",
+      "forgeName": "WaveformLane",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-03",
+      "tronName": "StereoMultichannelWaveform",
+      "forgeName": "StereoMultichannelWaveform",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-04",
+      "tronName": "LiveRecordingWaveform",
+      "forgeName": "LiveRecordingWaveform",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-05",
+      "tronName": "SpectrogramView",
+      "forgeName": "SpectrogramView",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-06",
+      "tronName": "RecordingArmButton",
+      "forgeName": "RecordingArmButton",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-07",
+      "tronName": "InputMonitorToggle",
+      "forgeName": "InputMonitorToggle",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-08",
+      "tronName": "DeviceAndChannelPicker",
+      "forgeName": "DeviceAndChannelPicker",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-09",
+      "tronName": "AudioClipTrimAndFade",
+      "forgeName": "AudioClipTrimAndFade",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-10",
+      "tronName": "ClipGainEnvelope",
+      "forgeName": "ClipGainEnvelope",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-11",
+      "tronName": "AutomationLane",
+      "forgeName": "AutomationLane",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-12",
+      "tronName": "AutomationModePicker",
+      "forgeName": "AutomationModePicker",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-13",
+      "tronName": "MixingConsole",
+      "forgeName": "MixingConsole",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-14",
+      "tronName": "VerticalFader",
+      "forgeName": "VerticalFader",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-15",
+      "tronName": "PanAndBalanceControl",
+      "forgeName": "PanAndBalanceControl",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-16",
+      "tronName": "RealtimePeakMeter",
+      "forgeName": "RealtimePeakMeter",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-17",
+      "tronName": "LoudnessMeter",
+      "forgeName": "LoudnessMeter",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-18",
+      "tronName": "SoloMuteButtons",
+      "forgeName": "SoloMuteButtons",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-19",
+      "tronName": "BusAndRoutingMatrix",
+      "forgeName": "BusAndRoutingMatrix",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-20",
+      "tronName": "InsertEffectRack",
+      "forgeName": "InsertEffectRack",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-21",
+      "tronName": "EQFrequencyGraph",
+      "forgeName": "EQFrequencyGraph",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-22",
+      "tronName": "DynamicsTransferGraph",
+      "forgeName": "DynamicsTransferGraph",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-23",
+      "tronName": "PluginPresetBrowser",
+      "forgeName": "PluginPresetBrowser",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-24",
+      "tronName": "MIDIPianoRoll",
+      "forgeName": "MIDIPianoRoll",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-25",
+      "tronName": "MIDIVelocityLane",
+      "forgeName": "MIDIVelocityLane",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-26",
+      "tronName": "StepSequencer",
+      "forgeName": "StepSequencer",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-27",
+      "tronName": "TempoAndMetronome",
+      "forgeName": "TempoAndMetronome",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-28",
+      "tronName": "TakePlaylistAndComping",
+      "forgeName": "TakePlaylistAndComping",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-29",
+      "tronName": "LoopPunchRecording",
+      "forgeName": "LoopPunchRecording",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-30",
+      "tronName": "SampleEditor",
+      "forgeName": "SampleEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-31",
+      "tronName": "AudioVideoSync",
+      "forgeName": "AudioVideoSync",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-32",
+      "tronName": "LatencyCalibrationPanel",
+      "forgeName": "LatencyCalibrationPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-33",
+      "tronName": "SurroundPanView",
+      "forgeName": "SurroundPanView",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-34",
+      "tronName": "VoiceIsolationPanel",
+      "forgeName": "VoiceIsolationPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-35",
+      "tronName": "BeatDetectionMarkerLane",
+      "forgeName": "BeatDetectionMarkerLane",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-36",
+      "tronName": "SoundEffectsLibrary",
+      "forgeName": "SoundEffectsLibrary",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-37",
+      "tronName": "SpeechTranscriptTakeReview",
+      "forgeName": "SpeechTranscriptTakeReview",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-38",
+      "tronName": "VoiceoverCountdownAndTakeBin",
+      "forgeName": "VoiceoverCountdownAndTakeBin",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-39",
+      "tronName": "AudioEffectsPresetPanel",
+      "forgeName": "AudioEffectsPresetPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-40",
+      "tronName": "NoiseReductionMonitor",
+      "forgeName": "NoiseReductionMonitor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "E-41",
+      "tronName": "AutoDuckEnvelopePanel",
+      "forgeName": "AutoDuckEnvelopePanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "F-01",
+      "tronName": "PhotoLibraryGrid",
+      "forgeName": "PhotoLibraryGrid",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "F-02",
+      "tronName": "CatalogFilterBar",
+      "forgeName": "CatalogFilterBar",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "F-03",
+      "tronName": "RatingAndFlagControl",
+      "forgeName": "RatingAndFlagControl",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "F-04",
+      "tronName": "RAWDevelopPanel",
+      "forgeName": "RAWDevelopPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "F-05",
+      "tronName": "ExposureAndWhiteBalance",
+      "forgeName": "ExposureAndWhiteBalance",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "F-06",
+      "tronName": "ToneAndPresence",
+      "forgeName": "ToneAndPresence",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "F-07",
+      "tronName": "EightBandColorMixer",
+      "forgeName": "EightBandColorMixer",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "F-08",
+      "tronName": "LensCorrectionPanel",
+      "forgeName": "LensCorrectionPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "F-09",
+      "tronName": "LocalMaskBrush",
+      "forgeName": "LocalMaskBrush",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "F-10",
+      "tronName": "LinearRadialGradientMask",
+      "forgeName": "LinearRadialGradientMask",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "F-11",
+      "tronName": "LuminanceColorRangeMask",
+      "forgeName": "LuminanceColorRangeMask",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "F-12",
+      "tronName": "BeforeAfterCompare",
+      "forgeName": "BeforeAfterCompare",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "F-13",
+      "tronName": "PresetFilmstrip",
+      "forgeName": "PresetFilmstrip",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "F-14",
+      "tronName": "BatchExportPanel",
+      "forgeName": "BatchExportPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "F-15",
+      "tronName": "PhotoVersionHistoryBrowser",
+      "forgeName": "PhotoVersionHistoryBrowser",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "F-16",
+      "tronName": "CleanupAndRetouchPanel",
+      "forgeName": "CleanupAndRetouchPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "F-17",
+      "tronName": "PresetManager",
+      "forgeName": "PresetManager",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "F-18",
+      "tronName": "PhotoMetadataInspector",
+      "forgeName": "PhotoMetadataInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-01",
+      "tronName": "CompositionLayerTree",
+      "forgeName": "CompositionLayerTree",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-02",
+      "tronName": "MotionKeyframeTimeline",
+      "forgeName": "MotionKeyframeTimeline",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-03",
+      "tronName": "KeyframeValueGraph",
+      "forgeName": "KeyframeValueGraph",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-04",
+      "tronName": "KeyframeSpeedGraph",
+      "forgeName": "KeyframeSpeedGraph",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-05",
+      "tronName": "EasingPresetGallery",
+      "forgeName": "EasingPresetGallery",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-06",
+      "tronName": "MotionPathEditor",
+      "forgeName": "MotionPathEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-07",
+      "tronName": "Transform3DInspector",
+      "forgeName": "Transform3DInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-08",
+      "tronName": "CameraAndLightControls",
+      "forgeName": "CameraAndLightControls",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-09",
+      "tronName": "MatteAndMaskPanel",
+      "forgeName": "MatteAndMaskPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-10",
+      "tronName": "EffectStackAndInspector",
+      "forgeName": "EffectStackAndInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-11",
+      "tronName": "ExpressionEditor",
+      "forgeName": "ExpressionEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-12",
+      "tronName": "ParticleEmitterControls",
+      "forgeName": "ParticleEmitterControls",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-13",
+      "tronName": "TimeRemapCurve",
+      "forgeName": "TimeRemapCurve",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-14",
+      "tronName": "NodeGraphEditor",
+      "forgeName": "NodeGraphEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "G-15",
+      "tronName": "RenderQueuePanel",
+      "forgeName": "RenderQueuePanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "H-01",
+      "tronName": "PaginatedTextCanvas",
+      "forgeName": "PaginatedTextCanvas",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-02",
+      "tronName": "TextSelectionAndCaret",
+      "forgeName": "TextSelectionAndCaret",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-03",
+      "tronName": "RichTextRibbon",
+      "forgeName": "RichTextRibbon",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-04",
+      "tronName": "TypographyInspector",
+      "forgeName": "TypographyInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-05",
+      "tronName": "ParagraphStylesGallery",
+      "forgeName": "ParagraphStylesGallery",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-06",
+      "tronName": "ParagraphRuler",
+      "forgeName": "ParagraphRuler",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-07",
+      "tronName": "BulletsNumberingEditor",
+      "forgeName": "BulletsNumberingEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-08",
+      "tronName": "InsertTableGrid",
+      "forgeName": "InsertTableGrid",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-09",
+      "tronName": "TableLayoutInspector",
+      "forgeName": "TableLayoutInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-10",
+      "tronName": "HeadersFootersEditor",
+      "forgeName": "HeadersFootersEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-11",
+      "tronName": "PageSetupPanel",
+      "forgeName": "PageSetupPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-12",
+      "tronName": "TextWrapAndFrames",
+      "forgeName": "TextWrapAndFrames",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-13",
+      "tronName": "CommentsAndReviewRail",
+      "forgeName": "CommentsAndReviewRail",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-14",
+      "tronName": "TrackChangesView",
+      "forgeName": "TrackChangesView",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-15",
+      "tronName": "NavigationOutline",
+      "forgeName": "NavigationOutline",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-16",
+      "tronName": "TableOfContentsEditor",
+      "forgeName": "TableOfContentsEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-17",
+      "tronName": "FootnoteCitationEditor",
+      "forgeName": "FootnoteCitationEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-18",
+      "tronName": "SpellGrammarPopover",
+      "forgeName": "SpellGrammarPopover",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "H-19",
+      "tronName": "MailMergeFieldPicker",
+      "forgeName": "MailMergeFieldPicker",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-20",
+      "tronName": "LayoutSpreadNavigator",
+      "forgeName": "LayoutSpreadNavigator",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "H-21",
+      "tronName": "DocumentReadAloudTransport",
+      "forgeName": "DocumentReadAloudTransport",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "H-22",
+      "tronName": "DictationSessionPanel",
+      "forgeName": "DictationSessionPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "I-01",
+      "tronName": "VirtualSpreadsheetGrid",
+      "forgeName": "VirtualSpreadsheetGrid",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-02",
+      "tronName": "CellSelectionOverlay",
+      "forgeName": "CellSelectionOverlay",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-03",
+      "tronName": "FormulaBar",
+      "forgeName": "FormulaBar",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-04",
+      "tronName": "NameBox",
+      "forgeName": "NameBox",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-05",
+      "tronName": "FormulaAutocomplete",
+      "forgeName": "FormulaAutocomplete",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-06",
+      "tronName": "ReferenceColorizer",
+      "forgeName": "ReferenceColorizer",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-07",
+      "tronName": "FillHandleAndAutoFill",
+      "forgeName": "FillHandleAndAutoFill",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-08",
+      "tronName": "SheetTabs",
+      "forgeName": "SheetTabs",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-09",
+      "tronName": "CellFormatInspector",
+      "forgeName": "CellFormatInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-10",
+      "tronName": "ConditionalFormatRules",
+      "forgeName": "ConditionalFormatRules",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-11",
+      "tronName": "ValidationDropdown",
+      "forgeName": "ValidationDropdown",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-12",
+      "tronName": "SortFilterHeader",
+      "forgeName": "SortFilterHeader",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-13",
+      "tronName": "ChartBuilder",
+      "forgeName": "ChartBuilder",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-14",
+      "tronName": "SparklineEditor",
+      "forgeName": "SparklineEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-15",
+      "tronName": "PivotFieldList",
+      "forgeName": "PivotFieldList",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-16",
+      "tronName": "TableStyleGallery",
+      "forgeName": "TableStyleGallery",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-17",
+      "tronName": "FreezeSplitControls",
+      "forgeName": "FreezeSplitControls",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-18",
+      "tronName": "RangeComments",
+      "forgeName": "RangeComments",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-19",
+      "tronName": "DataImportWizard",
+      "forgeName": "DataImportWizard",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-20",
+      "tronName": "SpreadsheetCardsView",
+      "forgeName": "SpreadsheetCardsView",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "I-21",
+      "tronName": "SavedSheetViewManager",
+      "forgeName": "SavedSheetViewManager",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-01",
+      "tronName": "SlideFilmstrip",
+      "forgeName": "SlideFilmstrip",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-02",
+      "tronName": "SlideSorter",
+      "forgeName": "SlideSorter",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-03",
+      "tronName": "MasterLayoutEditor",
+      "forgeName": "MasterLayoutEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-04",
+      "tronName": "ThemeAndTemplateGallery",
+      "forgeName": "ThemeAndTemplateGallery",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-05",
+      "tronName": "SlideCanvas",
+      "forgeName": "SlideCanvas",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-06",
+      "tronName": "ShapePresetGallery",
+      "forgeName": "ShapePresetGallery",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-07",
+      "tronName": "ConnectorAndDiagramTools",
+      "forgeName": "ConnectorAndDiagramTools",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-08",
+      "tronName": "TransitionPicker",
+      "forgeName": "TransitionPicker",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-09",
+      "tronName": "SlideAnimationPane",
+      "forgeName": "SlideAnimationPane",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-10",
+      "tronName": "MorphPreview",
+      "forgeName": "MorphPreview",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-11",
+      "tronName": "SlideNotesEditor",
+      "forgeName": "SlideNotesEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-12",
+      "tronName": "PresenterView",
+      "forgeName": "PresenterView",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-13",
+      "tronName": "RehearsalTimers",
+      "forgeName": "RehearsalTimers",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-14",
+      "tronName": "InkAndLaserPointer",
+      "forgeName": "InkAndLaserPointer",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-15",
+      "tronName": "MediaInsertInspector",
+      "forgeName": "MediaInsertInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "J-16",
+      "tronName": "ChartAndTableEditor",
+      "forgeName": "ChartAndTableEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-01",
+      "tronName": "VirtualPDFPageViewer",
+      "forgeName": "VirtualPDFPageViewer",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-02",
+      "tronName": "PDFThumbnailSidebar",
+      "forgeName": "PDFThumbnailSidebar",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-03",
+      "tronName": "PDFPageLayoutSelector",
+      "forgeName": "PDFPageLayoutSelector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-04",
+      "tronName": "TextSearchResults",
+      "forgeName": "TextSearchResults",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-05",
+      "tronName": "PDFTextSelection",
+      "forgeName": "PDFTextSelection",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-06",
+      "tronName": "AnnotationToolbar",
+      "forgeName": "AnnotationToolbar",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-07",
+      "tronName": "CommentsThreadPanel",
+      "forgeName": "CommentsThreadPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-08",
+      "tronName": "SignatureStampTool",
+      "forgeName": "SignatureStampTool",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-09",
+      "tronName": "PDFFormFieldEditor",
+      "forgeName": "PDFFormFieldEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-10",
+      "tronName": "PageReorderOrganizer",
+      "forgeName": "PageReorderOrganizer",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-11",
+      "tronName": "ExtractMergeSplitDialog",
+      "forgeName": "ExtractMergeSplitDialog",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-12",
+      "tronName": "BookmarkOutline",
+      "forgeName": "BookmarkOutline",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-13",
+      "tronName": "HyperlinkInspector",
+      "forgeName": "HyperlinkInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-14",
+      "tronName": "RedactionReviewTool",
+      "forgeName": "RedactionReviewTool",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-15",
+      "tronName": "EncryptPermissionsPanel",
+      "forgeName": "EncryptPermissionsPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-16",
+      "tronName": "PDFCompareOverlay",
+      "forgeName": "PDFCompareOverlay",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-17",
+      "tronName": "PrintAndExportPreview",
+      "forgeName": "PrintAndExportPreview",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-18",
+      "tronName": "PDFReadAloudTransport",
+      "forgeName": "PDFReadAloudTransport",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "K-19",
+      "tronName": "PDFVoiceNoteAttachment",
+      "forgeName": "PDFVoiceNoteAttachment",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-20",
+      "tronName": "PDFScanSession",
+      "forgeName": "PDFScanSession",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "K-21",
+      "tronName": "PDFInlineTextEdit",
+      "forgeName": "PDFInlineTextEdit",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-01",
+      "tronName": "FrameAndComponentTree",
+      "forgeName": "FrameAndComponentTree",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-02",
+      "tronName": "AutoLayoutInspector",
+      "forgeName": "AutoLayoutInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-03",
+      "tronName": "HugFillFixedSizeControls",
+      "forgeName": "HugFillFixedSizeControls",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-04",
+      "tronName": "ConstraintsPanel",
+      "forgeName": "ConstraintsPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-05",
+      "tronName": "ComponentVariantPicker",
+      "forgeName": "ComponentVariantPicker",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-06",
+      "tronName": "ReusableStylesPanel",
+      "forgeName": "ReusableStylesPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-07",
+      "tronName": "VariablesAndModes",
+      "forgeName": "VariablesAndModes",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-08",
+      "tronName": "PrototypeConnectionTool",
+      "forgeName": "PrototypeConnectionTool",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-09",
+      "tronName": "InteractionTriggerEditor",
+      "forgeName": "InteractionTriggerEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-10",
+      "tronName": "PrototypePreviewPlayer",
+      "forgeName": "PrototypePreviewPlayer",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-11",
+      "tronName": "FlowOverview",
+      "forgeName": "FlowOverview",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-12",
+      "tronName": "DevHandoffInspector",
+      "forgeName": "DevHandoffInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-13",
+      "tronName": "CollaborationPresence",
+      "forgeName": "CollaborationPresence",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-14",
+      "tronName": "CommentPins",
+      "forgeName": "CommentPins",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "L-15",
+      "tronName": "MultiExportSlices",
+      "forgeName": "MultiExportSlices",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "M-01",
+      "tronName": "Native3DViewport",
+      "forgeName": "Native3DViewport",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "M-02",
+      "tronName": "ViewCubeAndAxisGizmo",
+      "forgeName": "ViewCubeAndAxisGizmo",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "M-03",
+      "tronName": "TransformGizmo3D",
+      "forgeName": "TransformGizmo3D",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "M-04",
+      "tronName": "UVEditor",
+      "forgeName": "UVEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "M-05",
+      "tronName": "TextureSetPanel",
+      "forgeName": "TextureSetPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "M-06",
+      "tronName": "PBRMaterialInspector",
+      "forgeName": "PBRMaterialInspector",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "M-07",
+      "tronName": "TextureBrush3D",
+      "forgeName": "TextureBrush3D",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "M-08",
+      "tronName": "TextureMaskAndGenerator",
+      "forgeName": "TextureMaskAndGenerator",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "M-09",
+      "tronName": "BakingMapPanel",
+      "forgeName": "BakingMapPanel",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "M-10",
+      "tronName": "NodeGraphCanvas",
+      "forgeName": "NodeGraphCanvas",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "M-11",
+      "tronName": "NodeLibrarySearch",
+      "forgeName": "NodeLibrarySearch",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "M-12",
+      "tronName": "LiveNodeThumbnail",
+      "forgeName": "LiveNodeThumbnail",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "M-13",
+      "tronName": "DraftingCommandLine",
+      "forgeName": "DraftingCommandLine",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "M-14",
+      "tronName": "ObjectSnapsAndOrtho",
+      "forgeName": "ObjectSnapsAndOrtho",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "M-15",
+      "tronName": "DimensionsAndHatching",
+      "forgeName": "DimensionsAndHatching",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "M-16",
+      "tronName": "PaperSpaceLayout",
+      "forgeName": "PaperSpaceLayout",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "M-17",
+      "tronName": "ParametricConstraintEditor",
+      "forgeName": "ParametricConstraintEditor",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-01",
+      "tronName": "NativePointerRouter",
+      "forgeName": "NativePointerRouter",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "N-02",
+      "tronName": "PenPairingDialog",
+      "forgeName": "PenPairingDialog",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "N-03",
+      "tronName": "LogitechMuseSpatialInk",
+      "forgeName": "LogitechMuseSpatialInk",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "N-04",
+      "tronName": "PalmRejectionAndPrediction",
+      "forgeName": "PalmRejectionAndPrediction",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "unverified",
+      "nameMatches": true
+    },
+    {
+      "id": "N-05",
+      "tronName": "HapticsAndFeedback",
+      "forgeName": "HapticsAndFeedback",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-06",
+      "tronName": "VoiceOverTalkBackSupport",
+      "forgeName": "VoiceOverTalkBackSupport",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-07",
+      "tronName": "HardwareKeyboardMap",
+      "forgeName": "HardwareKeyboardMap",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-08",
+      "tronName": "SafeAreaFoldableLayout",
+      "forgeName": "SafeAreaFoldableLayout",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-09",
+      "tronName": "XRPresentationAdapter",
+      "forgeName": "XRPresentationAdapter",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "blocked",
+      "nameMatches": true
+    },
+    {
+      "id": "N-10",
+      "tronName": "OfflineCheckpointAndAutosave",
+      "forgeName": "OfflineCheckpointAndAutosave",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-11",
+      "tronName": "CollaborationAdapter",
+      "forgeName": "CollaborationAdapter",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-12",
+      "tronName": "NativeFileAndShareAdapter",
+      "forgeName": "NativeFileAndShareAdapter",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-13",
+      "tronName": "LongTaskScheduler",
+      "forgeName": "LongTaskScheduler",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-14",
+      "tronName": "MediaCache",
+      "forgeName": "MediaCache",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-15",
+      "tronName": "UndoTransactionCoordinator",
+      "forgeName": "UndoTransactionCoordinator",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-16",
+      "tronName": "NativeBinaryTransport",
+      "forgeName": "NativeBinaryTransport",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-17",
+      "tronName": "NativePlaybackLifecycle",
+      "forgeName": "NativePlaybackLifecycle",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-18",
+      "tronName": "TestAndTelemetryAdapter",
+      "forgeName": "TestAndTelemetryAdapter",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-19",
+      "tronName": "NativeMediaDecoderSurface",
+      "forgeName": "NativeMediaDecoderSurface",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-20",
+      "tronName": "AudioInterruptionRecoveryDialog",
+      "forgeName": "AudioInterruptionRecoveryDialog",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    },
+    {
+      "id": "N-21",
+      "tronName": "AccessiblePrecisionScrubControl",
+      "forgeName": "AccessiblePrecisionScrubControl",
+      "tronAcceptance": "unverified",
+      "forgeCompletion": "in-progress",
+      "nameMatches": true
+    }
+  ],
+  "ci": {
+    "tronRuns": [
+      {
+        "id": 43522767083,
+        "name": "NYC-Tron release tarballs",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43522767083",
+        "attempt": 2,
+        "headSha": "0e09d3be8263b3dbb2eab1a78e5dd66b83b68e44",
+        "created": "2026-11-13T22:52:20Z"
+      },
+      {
+        "id": 43521980727,
+        "name": "NYC-Tron rendered web overlay acceptance",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43521980727",
+        "attempt": 1,
+        "headSha": "0e09d3be8263b3dbb2eab1a78e5dd66b83b68e44",
+        "created": "2026-11-13T22:46:24Z"
+      },
+      {
+        "id": 43521980834,
+        "name": "NYC-Tron installed release consumers",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43521980834",
+        "attempt": 1,
+        "headSha": "0e09d3be8263b3dbb2eab1a78e5dd66b83b68e44",
+        "created": "2026-11-13T22:46:24Z"
+      },
+      {
+        "id": 43521980784,
+        "name": "NYC-Tron source, exports and types",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43521980784",
+        "attempt": 1,
+        "headSha": "0e09d3be8263b3dbb2eab1a78e5dd66b83b68e44",
+        "created": "2026-11-13T22:46:24Z"
+      },
+      {
+        "id": 43521980754,
+        "name": "NYC-Tron rendered web instrument acceptance",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/43521980754",
+        "attempt": 1,
+        "headSha": "0e09d3be8263b3dbb2eab1a78e5dd66b83b68e44",
+        "created": "2026-11-13T22:46:24Z"
+      }
+    ],
+    "forgeRuns": [
+      {
+        "id": 45052693964,
+        "name": "ArtCraft observed-commit intake",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/45052693964",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-22T18:01:32Z"
+      },
+      {
+        "id": 45048092807,
+        "name": "NitroForge npm and SDK release-readiness audit",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/45048092807",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-22T17:12:03Z"
+      },
+      {
+        "id": 44931825089,
+        "name": "ArtCraft observed-commit intake",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/44931825089",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-21T17:45:58Z"
+      },
+      {
+        "id": 44926686720,
+        "name": "NitroForge npm and SDK release-readiness audit",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/44926686720",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-21T16:49:44Z"
+      },
+      {
+        "id": 44796221945,
+        "name": "ArtCraft observed-commit intake",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/44796221945",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-20T18:48:22Z"
+      },
+      {
+        "id": 44787254293,
+        "name": "NitroForge npm and SDK release-readiness audit",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/44787254293",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-20T17:51:20Z"
+      },
+      {
+        "id": 44595334269,
+        "name": "ArtCraft observed-commit intake",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/44595334269",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-19T19:09:16Z"
+      },
+      {
+        "id": 44586780817,
+        "name": "NitroForge npm and SDK release-readiness audit",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/44586780817",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-19T18:20:38Z"
+      },
+      {
+        "id": 44376066900,
+        "name": "ArtCraft observed-commit intake",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/44376066900",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-18T19:01:45Z"
+      },
+      {
+        "id": 44366417387,
+        "name": "NitroForge npm and SDK release-readiness audit",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/44366417387",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-18T18:08:31Z"
+      },
+      {
+        "id": 44157850205,
+        "name": "ArtCraft observed-commit intake",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/44157850205",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-17T19:22:18Z"
+      },
+      {
+        "id": 44149906601,
+        "name": "NitroForge npm and SDK release-readiness audit",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/44149906601",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-17T18:37:44Z"
+      },
+      {
+        "id": 43956721144,
+        "name": "NitroForge npm and SDK release-readiness audit",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/43956721144",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-16T21:06:52Z"
+      },
+      {
+        "id": 43952187855,
+        "name": "ArtCraft observed-commit intake",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/43952187855",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-16T20:40:20Z"
+      },
+      {
+        "id": 43941628504,
+        "name": "NitroForge npm and SDK release-readiness audit",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/43941628504",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-16T19:39:33Z"
+      },
+      {
+        "id": 43900106431,
+        "name": "Cargo audit",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/43900106431",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-16T15:46:53Z"
+      },
+      {
+        "id": 43740815785,
+        "name": "ArtCraft observed-commit intake",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/43740815785",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-15T17:23:14Z"
+      },
+      {
+        "id": 43735334505,
+        "name": "NitroForge npm and SDK release-readiness audit",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/43735334505",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-15T16:24:51Z"
+      },
+      {
+        "id": 43617181767,
+        "name": "ArtCraft observed-commit intake",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "failure",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/43617181767",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-14T16:43:45Z"
+      },
+      {
+        "id": 43612384792,
+        "name": "NitroForge npm and SDK release-readiness audit",
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/43612384792",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-14T15:51:05Z"
+      },
+      {
+        "id": 43539176510,
+        "name": "Prism canvas/layers ops",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/43539176510",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-14T01:12:39Z"
+      },
+      {
+        "id": 43539176385,
+        "name": "Tally grid adapter (independent Rust bridge)",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/43539176385",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-14T01:12:39Z"
+      },
+      {
+        "id": 43539176368,
+        "name": "Office adapters (Pitch, Quill, Folio Rust bridge)",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/43539176368",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-14T01:12:39Z"
+      },
+      {
+        "id": 43539176356,
+        "name": "Cadence advanced component adapter",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/43539176356",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-14T01:12:39Z"
+      },
+      {
+        "id": 43539176428,
+        "name": "Splice timeline engine",
+        "event": "push",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/43539176428",
+        "attempt": 1,
+        "headSha": "dab27e177f05a747f2a234e3892f62e2f7b8c28b",
+        "created": "2026-11-14T01:12:39Z"
+      }
+    ]
+  },
+  "forgeScheduledFailure": {
+    "url": "https://github.com/mikevocalz/nitro-forge/actions/runs/45052693964",
+    "job": 137301132738,
+    "step": "Propose reviewer-only upstream observation PR",
+    "error": "GitHub Actions is not permitted to create or approve pull requests.",
+    "otherJob": "verify-observer passed"
+  },
+  "release": {
+    "tag": "v1.0.0-rc.2",
+    "archives": 16,
+    "publishedUtc": "2026-11-14T00:33:28Z",
+    "publishedNewYork": "2026-11-13",
+    "checksumFile": true
+  },
+  "recommendation": "Adopt Tron's ledger unchanged into a separate Forge library-progress.json; retain Forge components.json completion fields unchanged. Do not normalize in-progress or blocked to unverified."
+}
