@@ -13,8 +13,12 @@ export function nativeFlow(mode) {
   const position = side => flow.push('- assertVisible:', '    text: ^Shell Editor$', `    ${side}Of:`, '      id: shell-draft');
   tap(`imports-${mode}`); visible('imports-result', `Rendering: ${mode} imports`);
   scroll('button-primary'); tap('button-primary'); scroll('button-result'); visible('button-result', 'Press count: 1');
-  for (const variant of ['secondary', 'ghost', 'danger', 'small']) { scroll(`button-${variant}`, 'UP'); visible(`button-${variant}`); }
+  // The result is below the button rows. Return to their start once, then
+  // traverse forward in fixture order across wrapped phone layouts.
+  scroll('button-primary', 'UP');
+  for (const variant of ['secondary', 'ghost', 'danger']) { scroll(`button-${variant}`); visible(`button-${variant}`); }
   scroll('button-disabled'); visible('button-disabled', undefined, ['enabled: false']); scroll('button-loading'); visible('button-loading', undefined, ['enabled: false']);
+  scroll('button-small'); visible('button-small');
   for (const surface of ['raised', 'sunken', 'transparent']) { scroll(`card-${surface}`); visible(`card-${surface}`); }
   scroll('field-editable'); tap('field-editable'); flow.push(`- inputText: ${JSON.stringify(DRAFT)}`, '- hideKeyboard');
   scroll('draft-result'); visible('draft-result', `Draft: ${DRAFT}`);

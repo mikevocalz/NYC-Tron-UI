@@ -34,3 +34,17 @@ for (const mode of MODES) {
     assert.match(nativeFlow(mode), /rightOf:\n      id: shell-draft/);
   });
 }
+
+for (const mode of MODES) test(`${mode} reveals the button row once then checks every variant in forward fixture order`, () => {
+ const steps=nativeFlow(mode).split(/\n(?=- )/);
+ const count=steps.indexOf('- assertVisible:\n    id: button-result\n    text: "Press count: 1"');
+ assert.ok(count>0);
+ assert.equal(steps[count+1],'- scrollUntilVisible:\n    element:\n      id: button-primary\n    direction: UP\n    timeout: 30000\n    centerElement: true');
+ const order=['secondary','ghost','danger','disabled','loading','small'];
+ let index=count+2;
+ for(const variant of order) {
+   assert.equal(steps[index++],`- scrollUntilVisible:\n    element:\n      id: button-${variant}\n    direction: DOWN\n    timeout: 30000\n    centerElement: true`);
+   assert.equal(steps[index++],`- assertVisible:\n    id: button-${variant}`+(['disabled','loading'].includes(variant)?'\n    enabled: false':''));
+ }
+ assert.match(steps[index],/id: card-raised\n    direction: DOWN/);
+});
