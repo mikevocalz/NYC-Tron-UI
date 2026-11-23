@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "sourceRevision": "0cdebcb7358598f296e043f8ffa5c1ee62c0545e",
+  "sourceRepository": "mikevocalz/NYC-Tron-UI",
+  "status": "Historical case study. No runtime acceptance. Not a standalone release gate.",
+  "sha256": {
+    "component-coverage.json": "ff73c1858737af1931a3857957438f1b26841363aae0301d6afc283eeb12465b",
+    "component-coverage.md": "ea6dc52411359d2e7d9954a3d6bc3affcca8d368d5d1b9efd2e4caaf05a246be"
+  }
+}

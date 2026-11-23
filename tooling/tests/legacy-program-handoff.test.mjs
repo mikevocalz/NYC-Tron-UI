@@ -6,7 +6,7 @@ import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { LEGACY_PROGRAM_ARCHIVE, LEGACY_PROGRAM_LEDGER, readLegacyProgramSnapshot, validateComponentProgram } from "../verify-component-program.mjs";
+import { LEGACY_PROGRAM_ARCHIVE, LEGACY_PROGRAM_LEDGER, readLegacyProgramSnapshot, validateComponentProgram } from "../../docs/completion/reports/2026-11-22-forge-program/historical-program-reader.mjs";
 import { generateCrossReference } from "../library-cross-reference.mjs";
 
 const root = fileURLToPath(new URL("../..", import.meta.url));
@@ -41,7 +41,7 @@ test("lookup accepts the adopted ledger's pinned source links without inventing 
   assert.throws(() => generateCrossReference(adopted), /Invalid pinned Tron source URL/);
 });
 
-test("archive checkout attributes preserve frozen bytes and the bridge rejects changed historical values", t => {
+test("archive checkout attributes preserve frozen bytes and the reader rejects changed historical values", t => {
   const fixture = mkdtempSync(join(tmpdir(), "tron-archive-bytes-"));
   t.after(() => rmSync(fixture, { recursive: true, force: true }));
   writeFileSync(join(fixture, ".gitattributes"), readFileSync(join(root, ".gitattributes")));
@@ -69,7 +69,7 @@ test("archive checkout attributes preserve frozen bytes and the bridge rejects c
   assert.throws(() => readLegacyProgramSnapshot(checkout), /Historical program snapshot changed/);
 });
 
-test("bridge CLI validates through a symlink or Windows junction and rejects a tampered archive", t => {
+test("archive CLI validates through a symlink or Windows junction and rejects a tampered archive", t => {
   const fixture = mkdtempSync(join(tmpdir(), "tron-bridge-cli-"));
   t.after(() => rmSync(fixture, { recursive: true, force: true }));
   const alias = join(fixture, "live-alias");
@@ -78,13 +78,13 @@ test("bridge CLI validates through a symlink or Windows junction and rejects a t
     if (["EPERM", "EACCES", "ENOSYS"].includes(error.code)) { t.skip("filesystem does not permit test directory aliases: " + error.code); return; }
     throw error;
   }
-  const invoke = directory => spawnSync(process.execPath, [join(directory, "tooling/verify-component-program.mjs")], { encoding: "utf8", timeout: 30000 });
+  const invoke = directory => spawnSync(process.execPath, [join(directory, LEGACY_PROGRAM_ARCHIVE + "/historical-program-reader.mjs")], { encoding: "utf8", timeout: 30000 });
   const valid = invoke(alias);
   assert.equal(valid.status, 0, valid.stderr);
-  assert.match(valid.stdout, /Historical program compatibility check:/, "an alias must validate, not silently return success");
+  assert.match(valid.stdout, /Historical program archive check:/, "an alias must validate, not silently return success");
 
   const tampered = join(fixture, "tampered"), badAlias = join(fixture, "tampered-alias");
-  for (const path of ["tooling/verify-component-program.mjs", "tooling/library-components.mjs", LEGACY_PROGRAM_ARCHIVE + "/tooling/verify-component-program.mjs"]) {
+  for (const path of [LEGACY_PROGRAM_ARCHIVE + "/historical-program-reader.mjs", "tooling/library-components.mjs", LEGACY_PROGRAM_ARCHIVE + "/tooling/verify-component-program.mjs"]) {
     mkdirSync(join(tampered, path, ".."), { recursive: true });
     copyFileSync(join(root, path), join(tampered, path));
   }

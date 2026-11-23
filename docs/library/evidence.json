@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "receipts": [],
+  "note": "NOT RUN: no release candidate receipts are approved by this index. Add exact checksum-bound collector outputs after actual execution. Missing checks remain release blockers."
+}

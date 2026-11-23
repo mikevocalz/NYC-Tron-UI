@@ -3,7 +3,7 @@ import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "@typescript/typescript6";
-import { CANONICAL_BASELINE_SHA256, parseCanonicalBaseline, readLegacyProgramSnapshot, readLegacyProgramBaseline } from "./verify-component-program.mjs";
+import { CANONICAL_BASELINE_SHA256, parseCanonicalBaseline, readLegacyProgramSnapshot, readLegacyProgramBaseline } from "../docs/completion/reports/2026-11-22-forge-program/historical-program-reader.mjs";
 import { componentProfileAssignments, qtFamilies, qtProfiles, qtReferences } from "./qt-component-profiles.mjs";
 
 const repositoryRoot = fileURLToPath(new URL("..", import.meta.url));

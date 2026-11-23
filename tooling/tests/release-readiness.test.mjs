@@ -5,54 +5,15 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
-import { CANONICAL_BASELINE_SHA256, REQUIRED_PLATFORMS, parseCanonicalBaseline } from "../verify-component-program.mjs";
+import { libraryFixture } from "./fixtures/library-release.mjs";
 import { distributionApprovalStatement, releaseChannel, validateReleaseReadiness, verifyReleaseInventory } from "../release-readiness.mjs";
 
-const baseline = fileURLToPath(new URL("../../docs/completion/baseline-roster.tsv", import.meta.url));
-const canonical = parseCanonicalBaseline(readFileSync(baseline));
 const sha = bytes => createHash("sha256").update(bytes).digest("hex");
 const pendingReview = () => ({ schemaVersion: 1, repository: "mikevocalz/NYC-Tron-UI", releaseVersion: "1.0.0", status: "pending", approval: null });
 
-function fixture(t) {
-  const rootDir = mkdtempSync(join(tmpdir(), "nyc-tron-release-"));
-  t.after(() => rmSync(rootDir, { recursive: true, force: true }));
-  mkdirSync(join(rootDir, "docs/completion/reports"), { recursive: true });
-  copyFileSync(baseline, join(rootDir, "docs/completion/baseline-roster.tsv"));
-  writeFileSync(join(rootDir, "docs/completion/reports/test-proof.md"), "Test fixture only. This is not repository acceptance evidence.\n");
-  const artifacts = join(rootDir, "artifacts");
-  mkdirSync(artifacts);
-  const checksums = [];
-  for (let index = 0; index < 16; index++) {
-    const relative = index === 14 ? "windows-fluent/rnw-fabric" : index === 15 ? "macos-appkit/spark" : "example" + index;
-    const name = index === 14 ? "windows-fluent-fabric" : index === 15 ? "macos-appkit" : "example" + index;
-    const directory = join(rootDir, "packages", relative);
-    mkdirSync(join(directory, "src"), { recursive: true });
-    writeFileSync(join(directory, "package.json"), JSON.stringify({
-      name: "@nyc-tron/" + name, private: true, version: "1.0.0", exports: { "./Control": "./dist/Control.js" },
-    }));
-    writeFileSync(join(directory, "src/Control.ts"), "export function Control() {}\n");
-    const file = "nyc-tron-" + name + "-1.0.0.tgz", bytes = Buffer.from("Archive hash fixture " + index);
-    writeFileSync(join(artifacts, file), bytes);
-    checksums.push(sha(bytes) + "  " + file);
-  }
-  const checksumBytes = checksums.join("\n") + "\n";
-  writeFileSync(join(artifacts, "SHA256SUMS"), checksumBytes);
-  const ledger = {
-    schemaVersion: 1, baselineSha256: CANONICAL_BASELINE_SHA256, requiredPlatforms: [...REQUIRED_PLATFORMS],
-    components: canonical.map(({ id, name }) => ({
-      id, name, phase: "P04", requirement: "Test fixture capability.", libraryScope: true,
-      sourceCandidates: ["packages/example0/src/Control.ts"], evidence: ["reports/test-proof.md"],
-      implementationReview: "implemented", acceptance: "accepted",
-      platformEvidence: Object.fromEntries(REQUIRED_PLATFORMS.map(platform => [platform, { status: "passed", evidence: ["reports/test-proof.md"] }])),
-    })),
-    additions: ["W-01", "W-02"].map(id => ({
-      id, name: "AddedControl" + id, phase: "P04", gate: "T2", decision: "reports/test-proof.md",
-      requirement: "Test fixture added capability.", libraryScope: true,
-      sourceCandidates: ["packages/example0/src/Control.ts"], evidence: ["reports/test-proof.md"],
-      implementationReview: "implemented", acceptance: "accepted",
-      platformEvidence: Object.fromEntries(REQUIRED_PLATFORMS.map(platform => [platform, { status: "passed", evidence: ["reports/test-proof.md"] }])),
-    })),
-  };
+function fixture(t, options = {}) {
+  const f = libraryFixture(t, options), {rootDir,artifacts,manifest,evidence,documentation,source} = f;
+  const checksumBytes = readFileSync(join(artifacts,"SHA256SUMS"));
   const manifestSha256 = sha(checksumBytes);
   const review = { ...pendingReview(), status: "approved", approval: {
     reviewer: "mikevocalz", manifestSha256,
@@ -64,8 +25,8 @@ function fixture(t) {
     body: distributionApprovalStatement("1.0.0", manifestSha256),
   };
   const validate = (input = {}, loadApproval = async () => response) => validateReleaseReadiness(
-    { version: "1.0.0", ledger, review, artifacts, ...input }, { rootDir, loadApproval, recordedAdditions: ["W-01", "W-02"] });
-  return { rootDir, artifacts, ledger, review, response, validate };
+    { version: options.version ?? "1.0.0", manifest, evidence, documentation, review, artifacts, ...input }, { rootDir, loadApproval, source });
+  return { ...f, review, response, validate };
 }
 
 test("release versions distinguish stable from actual prereleases and reject malformed semver", () => {
@@ -76,39 +37,15 @@ test("release versions distinguish stable from actual prereleases and reject mal
   }
 });
 
-test("prerelease candidate packaging preserves pending acceptance and never fetches or invents owner approval", async t => {
-  const f = fixture(t);
-  for (const row of f.ledger.components) row.acceptance = "unverified";
-  const review = pendingReview(), before = JSON.stringify({ ledger: f.ledger, review });
-  const result = await f.validate({ version: "1.0.0-rc.1", artifacts: undefined, review }, async () => assert.fail("candidate must not claim owner approval"));
-  assert.equal(result.status, "candidate"); assert.equal(result.program.accepted, 0);
-  assert.equal(JSON.stringify({ ledger: f.ledger, review }), before);
+test("prerelease packaging reports library blockers without fetching or inventing owner approval", async t => {
+  const f=fixture(t),review=pendingReview(),before=JSON.stringify({manifest:f.manifest,review});
+  const result=await f.validate({version:"1.0.0-rc.1",artifacts:undefined,review},async()=>assert.fail("candidate cannot claim owner approval"));
+  assert.equal(result.status,"candidate");assert.equal(result.library.componentCount,16);
+  assert.equal(JSON.stringify({manifest:f.manifest,review}),before);
 });
 
-test("stable cannot publish with any of the 341 rows unverified or with invented platform acceptance", async t => {
-  const f = fixture(t);
-  f.ledger.components[340].acceptance = "unverified";
-  await assert.rejects(f.validate({}, async () => assert.fail("unverified scope must fail before owner lookup")), /1 of 341.*eight-platform proof/);
-  f.ledger.components[340].acceptance = "accepted";
-  delete f.ledger.components[340].platformEvidence.pico;
-  await assert.rejects(f.validate(), /cannot be accepted without pico proof/);
-});
-
-test("rows added after the baseline block stable exactly like canonical rows and cannot be dropped to pass", async t => {
-  const f = fixture(t);
-  f.ledger.additions[1].acceptance = "unverified";
-  await assert.rejects(f.validate({}, async () => assert.fail("an unverified addition must fail before owner lookup")), /1 of 2 added rows lack accepted eight-platform proof/);
-  f.ledger.additions[1].acceptance = "accepted";
-  delete f.ledger.additions[1].platformEvidence.quest;
-  await assert.rejects(f.validate(), /W-02 cannot be accepted without quest proof/);
-  const dropped = structuredClone(f.ledger);dropped.additions.pop();
-  await assert.rejects(f.validate({ ledger: dropped }), /W-02 was removed/);
-  const candidate = structuredClone(f.ledger);
-  for (const row of [...candidate.components, ...candidate.additions]) row.acceptance = "unverified";
-  const result = await f.validate({ version: "1.0.0-rc.2", ledger: candidate, review: pendingReview(), artifacts: undefined },
-    async () => assert.fail("a prerelease never claims approval"));
-  assert.equal(result.status, "candidate");
-  assert.deepEqual([result.program.accepted, result.program.additions.accepted, result.program.additions.total], [0, 0, 2]);
+test("stable requires real evidence for its own stable export instead of historic program rows", async t => {
+  const f=fixture(t);await assert.rejects(f.validate({evidence:{schemaVersion:1,receipts:[]}},async()=>assert.fail("missing evidence must fail before lookup")),/lacks exports, declarations, unit, accessibility, web, ios, android/);
 });
 
 test("stable cannot publish from pending, incomplete or locally forged distribution review", async t => {
@@ -181,16 +118,15 @@ test("an authenticated approval for prior checksums cannot authorize a later art
 });
 
 test("only complete platform acceptance and a live exact owner approval can make stable ready without mutation", async t => {
-  const f = fixture(t), before = JSON.stringify({ ledger: f.ledger, review: f.review });
+  const f = fixture(t), before = JSON.stringify({ manifest: f.manifest, review: f.review });
   let requests = 0;
   const result = await f.validate({}, async url => {
     requests++; assert.equal(url, "https://api.github.com/repos/mikevocalz/NYC-Tron-UI/issues/comments/12345");
     return f.response;
   });
   assert.equal(requests, 1); assert.equal(result.status, "ready");
-  assert.equal(result.program.accepted, 341); assert.equal(result.inventory.archiveCount, 16);
-  assert.equal(result.program.additions.accepted, result.program.additions.total);
-  assert.equal(JSON.stringify({ ledger: f.ledger, review: f.review }), before);
+  assert.equal(result.library.componentCount, 16); assert.equal(result.inventory.archiveCount, 16);
+  assert.equal(JSON.stringify({ manifest: f.manifest, review: f.review }), before);
 });
 
 test("release retains candidate archives before readiness and requires both native desktop hosts plus reference evidence", () => {
@@ -209,4 +145,13 @@ test("release retains candidate archives before readiness and requires both nati
   assert.match(workflow, /name: macos-appkit-tested-package/);
   assert.match(workflow, /merge-tested-package\.mjs[^\n]+windows-fluent-fabric/);
   assert.match(workflow, /merge-tested-package\.mjs[^\n]+macos-appkit/);
+});
+
+test('explicit prerelease library requirement blocks missing proof but never authenticates stable distribution',async t=>{
+ const f=fixture(t,{version:'1.0.0-rc.3'}),review=pendingReview();
+ const optional=await f.validate({evidence:{schemaVersion:1,receipts:[]},review},async()=>assert.fail('prerelease must not authenticate distribution'));
+ assert.equal(optional.status,'candidate');assert.equal(optional.library.status,'blocked');
+ await assert.rejects(f.validate({requireLibrary:true,evidence:{schemaVersion:1,receipts:[]},review},async()=>assert.fail('missing library proof must fail')),/required library publication checks blocked/);
+ const complete=await f.validate({requireLibrary:true,review},async()=>assert.fail('complete prerelease still does not authenticate stable approval'));
+ assert.equal(complete.status,'candidate');assert.equal(complete.library.status,'passed');assert.equal(complete.distributionReview,'pending');
 });

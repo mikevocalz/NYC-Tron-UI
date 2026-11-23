@@ -26,3 +26,7 @@ test("discovery returns forward-slash relative paths, sorted", () => {
   assert.ok(files.every((f) => !f.includes("\\") && !f.startsWith("/")));
   assert.deepEqual(files, [...files].sort());
 });
+
+ test("Qt downstream case-study verification is optional historical work", () => {
+ assert.ok(!files.includes("tooling/tests/historical/qt-component-coverage.test.mjs"));
+ });

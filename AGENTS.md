@@ -81,9 +81,9 @@ comment approving the exact version and sixteen-archive checksum binding.
 
 The former program ledger URL is now a pinned pointer to Forge. Original
 records, validator and regression tests remain under the dated completion
-report archive. The small `tooling/verify-component-program.mjs` bridge keeps
-the previous release policy intact only until the separately reviewed T3 gate
-lands; it does not restore the superseded application program as library scope.
+report archive. The standalone release gate reads `docs/library/components.json` and exact
+candidate evidence. The read-only historical reader lives inside the dated
+archive; Qt correspondence and archived program rows cannot block Tron release.
 Qt correspondence is a dated downstream case study, and the Forge import map
 is a lookup only. Do not change acceptance or owner-approval records to make
 this intermediate transition pass.
