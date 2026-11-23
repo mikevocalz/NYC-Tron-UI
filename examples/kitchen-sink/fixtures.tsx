@@ -88,10 +88,10 @@ export function NavigationRailFixture({ store }: Props) {
   return <Section title="NavigationRail" detail="The edge is explicit. This is a contained component example, not a hardware detector.">
     <Card><View {...classes('gap-4')}>
       <Button title={collapsed ? 'Expand rail labels' : 'Collapse rail labels'} testID="rail-collapse" variant="secondary" onPress={() => store.getState().setCollapsed(!collapsed)} />
-      <View {...classes('flex-row gap-4 items-start')}>
+      <View testID="rail-layout" {...classes('flex-row flex-wrap gap-4 items-start')}>
         <NavigationRail testID="rail-demo" edge="right" collapsed={collapsed} selectedId={selected} items={itemsFor(selected)} onSelectionChange={select} />
-        <View {...classes('flex-1 gap-2')}><Text testID="rail-result" accessibilityLiveRegion="polite" {...classes('text-base text-text')}>Selected: {selected}</Text>
-          <Text {...classes('text-base leading-6 text-text-muted')}>Unavailable stays disabled. Collapsing labels preserves each action's accessible name.</Text></View>
+        <View testID="rail-status" {...classes('min-w-40 flex-1 gap-2')}><Text testID="rail-result" accessibilityLiveRegion="polite" {...classes('text-base text-text')}>Selected: {selected}</Text>
+          <Text testID="rail-instructions" {...classes('text-base leading-6 text-text-muted')}>Unavailable stays disabled. Collapsing labels preserves each action's accessible name.</Text></View>
       </View>
     </View></Card>
   </Section>;

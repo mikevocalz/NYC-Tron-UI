@@ -8,6 +8,7 @@ export function nativeFlow(mode) {
     '- assertVisible: "10 public imports resolve to 5 component identities."'];
   const visible = (id, text, extra = []) => flow.push('- assertVisible:', `    id: ${id}`, ...(text ? [`    text: ${JSON.stringify(text)}`] : []), ...extra.map(s => '    ' + s));
   const scroll = (id, direction = 'DOWN') => flow.push('- scrollUntilVisible:', '    element:', `      id: ${id}`, `    direction: ${direction}`, '    timeout: 30000');
+  const scrollRailItem = text => flow.push('- scrollUntilVisible:', '    element:', `      text: ${JSON.stringify(text)}`, '      childOf:', '        id: rail-demo', '    direction: DOWN', '    timeout: 30000');
   const tap = id => flow.push('- tapOn:', `    id: ${id}`);
   const position = side => visible('shell-rail', undefined, [`${side}Of:`, '  id: shell-draft']);
   tap(`imports-${mode}`); visible('imports-result', `Rendering: ${mode} imports`);
@@ -19,8 +20,8 @@ export function nativeFlow(mode) {
   scroll('draft-result'); visible('draft-result', `Draft: ${DRAFT}`);
   scroll('field-error'); visible('field-error'); flow.push('- assertVisible: "Enter a project name before continuing."');
   scroll('field-disabled'); visible('field-disabled', 'Reference project', ['enabled: false']);
-  scroll('rail-demo'); flow.push('- tapOn:', '    text: Editor'); visible('rail-result', 'Selected: editor'); flow.push('- assertVisible:', '    text: Editor', '    selected: true');
-  flow.push('- assertVisible:', '    text: Unavailable', '    enabled: false');
+  scrollRailItem('Editor'); flow.push('- tapOn:', '    text: Editor', '    childOf:', '      id: rail-demo'); visible('rail-result', 'Selected: editor'); flow.push('- assertVisible:', '    text: Editor', '    selected: true', '    childOf:', '      id: rail-demo');
+  scrollRailItem('Unavailable'); flow.push('- assertVisible:', '    text: Unavailable', '    enabled: false', '    childOf:', '      id: rail-demo');
   scroll('rail-collapse', 'UP'); tap('rail-collapse'); visible('rail-result', 'Selected: editor');
   scroll('shell-edge'); tap('shell-edge'); scroll('shell-result'); visible('shell-result', 'Physical edge: left; text: LTR');
   scroll('shell-rtl', 'UP'); tap('shell-rtl'); scroll('shell-result'); visible('shell-result', 'Physical edge: left; text: RTL');

@@ -11,6 +11,12 @@ import { maestroEnvironment, verifyMaestroVersion } from './maestro-version.mjs'
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const files = directory => readdirSync(directory, { withFileTypes: true }).flatMap(entry => entry.isDirectory() ? files(join(directory, entry.name)) : [join(directory, entry.name)]);
+export function maestroFlowArguments({ device, platform, junit, directory, flow }) {
+  return ['--device', device, '--platform', platform, '--no-ansi', 'test',
+    // iOS gets Maestro's default fresh XCTest-driver installation each mode.
+    ...(platform === 'ios' ? [] : ['--no-reinstall-driver']), '--format', 'junit', '--output', junit,
+    '--test-output-dir', join(directory, 'artifacts'), '--debug-output', join(directory, 'debug'), flow];
+}
 /** Runs against an already installed release app. CI owns its ephemeral device lifecycle;
  * local device installation/launch and interactive QA use Argent. */
 export function proveNative({ consumer, platform, device, maestro, output }) {
@@ -26,8 +32,7 @@ export function proveNative({ consumer, platform, device, maestro, output }) {
     const directory = join(output, mode); mkdirSync(directory);
     const flow = join(directory, 'flow.yaml'), junit = join(directory, 'report.xml');
     writeFileSync(flow, nativeFlow(mode));
-    const command = [ '--device', device, '--platform', platform, '--no-ansi', 'test', '--no-reinstall-driver', '--format', 'junit', '--output', junit,
-      '--test-output-dir', join(directory, 'artifacts'), '--debug-output', join(directory, 'debug'), flow ];
+    const command = maestroFlowArguments({ device, platform, junit, directory, flow });
     const result = spawnSync(maestro, command, { cwd: directory, encoding: 'utf8', timeout: 600000, maxBuffer: 32 * 1024 * 1024, env: maestroEnvironment() });
     writeFileSync(join(directory, 'maestro.log'), (result.stdout ?? '') + (result.stderr ?? '') + `\nExit code: ${result.status}\n`);
     if (result.error || result.status !== 0) throw new Error(`${platform}/${mode} flow failed: ${result.error?.message ?? result.status}`);
