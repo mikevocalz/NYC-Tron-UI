@@ -1,22 +1,24 @@
 # Independent final native integration review
 
-PASS for draft PR88 publication with native CI pending. Publishing the reviewed draft for parallel CI does not approve merge, release/tag/package publication, acceptance promotion or owner decisions.
+PASS for draft PR88 publication with native CI pending. Publishing this reviewed draft for parallel checks does not approve merge, release/tag/package publication, acceptance promotion or owner decisions.
 
 Reviewer: skill_discovery, independent of implementation. Applied exact standalone engineering code-review skill knowledge-work-plugins/engineering/1.2.0/skills/code-review/SKILL.md. No code or device actions by reviewer.
 
-Verified the final physical composite including copied untracked files. Relative to the prior109-test bound slice, only the kitchen workflow and maestro-version implementation changed; both exactly match the final reviewed startup freeze. All five startup files and its copied independent review match. Remaining previously bound files are unchanged, including the reviewed variant-flow correction and shared diagnostics. Protected comparison against900d finds no package/version/peer/lockfile, public API snapshot, owner decision or native/window configuration changes. Existing example/window files remain equal to the prior reviewed bindings.
+Verified the physical composite including copied untracked files. Relative to the prior117-test bound slice, only native-flow.mjs and native-flow.test.mjs changed. Both match the reviewed three-file keyboard freeze, as does its implementation report; the included independent keyboard review is an exact copy. All remaining previously bound implementation files are unchanged. Protected comparison against900d shows no package/version/peer/lockfile, public API snapshot or owner decision changes; window/native configuration bindings remain unchanged.
 
-The startup addition reuses shared180000ms driver readiness, moves a strict version preflight before expensive build/boot, preserves strict postboot verification and instruments both through one bounded watcher per probe. Owned process-group cleanup and PID>1/output guards remain intact. Exact60second version/600second flow caps, tool/archive pins, all27assertion blocks per mode, fresh drivers, exact runtime/JUnit identity and real PNG/provenance gates remain mandatory. The variant traversal still retains both exact27-block assertion multisets.
+The keyboard correction is grounded in retained native Return/keyboard-root accessibility IDs. Its iOS-only branch taps exact Return and requires keyboard disappearance; Android retains hideKeyboard, then both retain the draft-value assertion. Independent mode comparison preserves each exact27-block assertVisible multiset and adds one blocking assertNotVisible. Both generated YAML modes parsed successfully with installed Ruby/Psych. No input/app-prop workaround, coordinates, optional action or assertion waiver is introduced.
 
-Independently ran the final combined scope:117 tests passed, zero failures/skips. This covers kitchen candidate/flow/identity/startup, AppKit archive boundaries, shared diagnostics/transport and release integration. git diff --check passed. The startup slice corresponds to the independently reviewed five-file freeze; lead reports it published in draft PR85 head6ddab69858a6b946aaec9b6228d53c93c8b8f739. No source verification is substituted by that lead-reported publication status.
+Shared180000ms driver readiness, strict60second version/600second flow caps, bounded owned diagnostics and cleanup, exact tool/archive pins, fresh drivers, actual runtime/JUnit identity and PNG/provenance gates remain intact. Independently reran final combined scope:119 tests passed, zero failures/skips, covering kitchen flow/identity/startup, AppKit archive boundaries, shared diagnostics/transport and release integration. git diff --check passed.
 
-The complete6b9 desktop/web and broader native reports are passive historical evidence for their explicitly bound6b9 source tree. They do not establish acceptance of this newer startup candidate. Current new-source kitchen iOS/Android results remain pending, as do owner label/distribution approvals and release eligibility. Lead will preserve valuable current work before publishing the next draft and run native checks in parallel afterward; no pending technical/owner gate is treated as passed. Full hosted native modes remain required. Previous failed attempts remain historical failures.
+Lead reports the reviewed keyboard slice published in draft PR85 head a99c6e4b5f4ab3233a8d8b1fb1cf290936c42f70; publication status is not runtime proof. The included6b9 desktop/web and broader native reports remain historical for their explicitly bound source; they do not certify this newer keyboard candidate. Current corrected kitchen direct/root acceptance, owner labels/distribution approval and release eligibility remain pending. Superseded capture or earlier passing jobs are not promoted to new-source evidence. Full current hosted native modes and every release gate remain mandatory.
 
-Repository-relative SHA256 bindings follow. Canonical sorted compact-JSON mapping digest: edc24cdaf489ff7d0dff61442cd14657396a906dd75a383daf7c44a56d7f2540.
+Repository-relative SHA256 bindings follow. Canonical sorted compact-JSON mapping digest: e78b07afa4e1ba8d1fd62d65eca7ef09c26a3138c0d28566fafe5c6dfcdb7f79.
 
 ```json
 {
   ".github/workflows/kitchen-sink.yml": "b2e0699fca5f251028f3009feef1fcf6e3b4fbb271ec2e89b7a6d9d3526ed02d",
+  "docs/completion/reports/standalone-v1-2026-11-23-IOS-KEYBOARD-FLOW-review.md": "2c60872a9e9fc8aa57ccd115d191fb2a2116dc3db67a54f332e6164fea6bd84c",
+  "docs/completion/reports/standalone-v1-2026-11-23-IOS-KEYBOARD-FLOW.md": "cf13422c87460580eb1182a61838ee847dd8b33bb37b515712613ba5b4631dea",
   "docs/completion/reports/standalone-v1-2026-11-23-IOS-VARIANT-FLOW-review.md": "7c811d8e3e076321a614340fabafa3e0c05c307476493a6f32afadc90a7138a4",
   "docs/completion/reports/standalone-v1-2026-11-23-IOS-VARIANT-FLOW.md": "f97f83a64a47f98e949caa07b0e688a44e49befba98195e5978e273d3b5f4ec4",
   "docs/completion/reports/standalone-v1-2026-11-23-NATIVE-ANDROID-900D-RETRY-inspection.md": "aaadc1bbe8759a0d98228176cf0c98e978ea3d56733bab57a9ff7df7bd36c70b",
@@ -49,8 +51,8 @@ Repository-relative SHA256 bindings follow. Canonical sorted compact-JSON mappin
   "tooling/kitchen-sink/maestro-version.mjs": "6bcfc48cd18bdb8a41162d3641530a56b6fbf32e672aaa4068fec5eb8538ece6",
   "tooling/kitchen-sink/maestro-version.test.mjs": "5bd4c8dd3aaea6a25cac10da5cddfa351581a8b0912e4f8c8347682cf1069b68",
   "tooling/kitchen-sink/native-ci.test.mjs": "8ce57a035b1f6fc413fbec579ca9bff0faa96ae60f83522af79196aaedd366b7",
-  "tooling/kitchen-sink/native-flow.mjs": "371f654b59f6f9fcc9c380591484f25e264dc6d9e6b6951228cfe7d50a045a45",
-  "tooling/kitchen-sink/native-flow.test.mjs": "9f86c2e306f66c9d64508a24d7a641887b666b81f30733df072bd3e9dc9562fe",
+  "tooling/kitchen-sink/native-flow.mjs": "e81dfdc32fd59cc85d21f77fb4414ff3446eeb67438b4a1588766a6f36564204",
+  "tooling/kitchen-sink/native-flow.test.mjs": "889b59f94c58d5f415223ac41aeb52d8534508b2ec66565ca8de29ff21fde38f",
   "tooling/kitchen-sink/native-proof.mjs": "8bb9d975bda3fbe173a22a79835d9099c5fe3a13c7ce46dfbf89628d038bc1bd",
   "tooling/kitchen-sink/prepare-consumer.mjs": "f250e9de7dfd40f7587e804a0b612e95fa858cdb5fffe616df09426db2053ee1",
   "tooling/kitchen-sink/prepare-ios.mjs": "54eb5a847242ebc798b30cd5934774bd7e3246f7052c505b9d3675a3409cc7c7",

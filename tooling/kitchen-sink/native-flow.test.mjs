@@ -48,3 +48,14 @@ for (const mode of MODES) test(`${mode} reveals the button row once then checks 
  }
  assert.match(steps[index],/id: card-raised\n    direction: DOWN/);
 });
+
+for (const mode of MODES) test(`${mode} dismisses the actual iOS Return keyboard and retains Android hideKeyboard`, () => {
+ const flow=nativeFlow(mode), steps=flow.split(/\n(?=- )/);
+ const input=steps.indexOf(`- inputText: ${JSON.stringify(DRAFT)}`);assert.ok(input>0);
+ assert.equal(steps[input+1],'- runFlow:\n    when:\n      platform: iOS\n    commands:\n      - tapOn:\n          id: ^Return$\n      - assertNotVisible:\n          id: ^UIKeyboardLayoutStar Preview$');
+ assert.equal(steps[input+2],'- runFlow:\n    when:\n      platform: Android\n    commands:\n      - hideKeyboard');
+ assert.equal(steps[input+3],'- scrollUntilVisible:\n    element:\n      id: draft-result\n    direction: DOWN\n    timeout: 30000\n    centerElement: true');
+ assert.equal(steps[input+4],`- assertVisible:\n    id: draft-result\n    text: ${JSON.stringify('Draft: '+DRAFT)}`);
+ assert.equal(steps.filter(step=>step.startsWith('- assertVisible:')).length,27);
+ assert.doesNotMatch(flow,/optional:|point:|submitBehavior:|returnKeyType:/);
+});
