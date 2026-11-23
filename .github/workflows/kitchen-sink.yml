@@ -162,6 +162,9 @@ jobs:
           name: kitchen-candidate-archives
           path: ${{ runner.temp }}/packs
       - run: node tooling/kitchen-sink/prepare-consumer.mjs --packs "$RUNNER_TEMP/packs" --destination "$RUNNER_TEMP/consumer"
+      - run: node tooling/native/install-maestro.mjs "$RUNNER_TEMP/maestro"
+      - name: Verify pinned Maestro before compiling or booting
+        run: node tooling/kitchen-sink/maestro-preflight.mjs --verify "$RUNNER_TEMP/kitchen-maestro-preflight" "$RUNNER_TEMP/maestro/maestro/bin/maestro"
       - name: Generate and compile the installed archive iOS simulator app
         working-directory: ${{ runner.temp }}/consumer
         shell: bash
@@ -176,7 +179,6 @@ jobs:
         env:
           CI: '1'
           EXPO_NO_TELEMETRY: '1'
-      - run: node tooling/native/install-maestro.mjs "$RUNNER_TEMP/maestro"
       - name: Prepare the explicitly selected iPhone simulator
         run: node tooling/kitchen-sink/prepare-ios.mjs
       - name: Execute both installed import paths on the runner simulator
@@ -198,4 +200,10 @@ jobs:
         with:
           name: kitchen-ios-target
           path: ${{ runner.temp }}/kitchen-ios-target/
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kitchen-maestro-preflight
+          path: ${{ runner.temp }}/kitchen-maestro-preflight/
           if-no-files-found: warn
