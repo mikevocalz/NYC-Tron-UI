@@ -3,7 +3,8 @@ import { appendFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { isMainModule } from '../library-components.mjs';
 
-export const KITCHEN_IOS_RUNTIME = 'com.apple.CoreSimulator.SimRuntime.iOS-27-2';
+export const KITCHEN_IOS_RUNTIME = 'com.apple.CoreSimulator.SimRuntime.iOS-27-2-iPhone19-4';
+export const KITCHEN_IOS_VERSION = '27.2';
 export const KITCHEN_IOS_DEVICE = 'iPhone Duo';
 export function selectKitchenIosDevice(inventory) {
   const candidates = (inventory.devices?.[KITCHEN_IOS_RUNTIME] ?? [])

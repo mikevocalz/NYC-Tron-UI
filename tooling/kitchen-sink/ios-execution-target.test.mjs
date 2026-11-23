@@ -38,3 +38,19 @@ for (const malformed of [
 ]) test('bounded complete pinned XML shape rejects malformed or oversized input',()=>{
  assert.throws(()=>requireKitchenIosExecutionTarget(malformed,udid));
 });
+
+test('actual 334b inventory selects the same Duo UUID as retained ef8 passing JUnit', async()=>{
+ const {selectKitchenIosDevice,KITCHEN_IOS_RUNTIME,KITCHEN_IOS_VERSION}=await import('./prepare-ios.mjs');
+ const inventory=JSON.parse(readFileSync(new URL('./fixtures/ios-334b-available-devices.json',import.meta.url),'utf8'));
+ const selected=selectKitchenIosDevice(inventory);
+ assert.equal(selected.udid,udid);
+ assert.equal(selected.runtime,'com.apple.CoreSimulator.SimRuntime.iOS-27-2-iPhone19-4');
+ assert.equal(KITCHEN_IOS_VERSION,'27.2');
+ const retained=readFileSync(new URL('./fixtures/ios-ef8-direct-report.xml',import.meta.url),'utf8');
+ const executed=requireKitchenIosExecutionTarget(retained,selected.udid);
+ assert.equal(executed.runtime,KITCHEN_IOS_RUNTIME);assert.equal(executed.version,'27.2');
+});
+for(const runtime of ['com.apple.CoreSimulator.SimRuntime.iOS-27-2','com.apple.CoreSimulator.SimRuntime.iOS-27-2-iPhone19-40','com.apple.CoreSimulator.SimRuntime.iOS-27-20-iPhone19-4']) test('generic or prefix runtime lookalike cannot select the Duo '+runtime, async()=>{
+ const {selectKitchenIosDevice}=await import('./prepare-ios.mjs');
+ assert.throws(()=>selectKitchenIosDevice({devices:{[runtime]:[{name:'iPhone Duo',udid,isAvailable:true,state:'Booted'}]}}),/no alternate-device or runtime fallback/);
+});

@@ -1,4 +1,4 @@
-import { KITCHEN_IOS_DEVICE, KITCHEN_IOS_RUNTIME } from './prepare-ios.mjs';
+import { KITCHEN_IOS_DEVICE, KITCHEN_IOS_RUNTIME, KITCHEN_IOS_VERSION } from './prepare-ios.mjs';
 
 // Parse only the pinned CLI's simple JUnit suite start tag. Unsupported XML
 // constructs fail closed instead of being interpreted as device evidence.
@@ -22,8 +22,7 @@ export function requireKitchenIosExecutionTarget(xml, udid) {
   const values = parseAttributes(document[1]);
   const testcase = parseAttributes(document[2]);
   if (testcase.get('status') !== 'SUCCESS') throw new Error('iOS target identity requires an actual successful testcase');
-  const runtime = KITCHEN_IOS_RUNTIME.replace('com.apple.CoreSimulator.SimRuntime.iOS-', '').replaceAll('-', '.');
-  const expected = `${KITCHEN_IOS_DEVICE} - iOS ${runtime} - ${udid}`;
+  const expected = `${KITCHEN_IOS_DEVICE} - iOS ${KITCHEN_IOS_VERSION} - ${udid}`;
   if (values.get('device') !== expected) throw new Error('Executed iOS JUnit device differs from the exact selected model/runtime/UDID');
-  return { name: KITCHEN_IOS_DEVICE, runtime: KITCHEN_IOS_RUNTIME, udid, observedDevice: values.get('device'), method: 'actual Maestro JUnit suite device' };
+  return { name: KITCHEN_IOS_DEVICE, runtime: KITCHEN_IOS_RUNTIME, version: KITCHEN_IOS_VERSION, udid, observedDevice: values.get('device'), method: 'actual Maestro JUnit suite device' };
 }

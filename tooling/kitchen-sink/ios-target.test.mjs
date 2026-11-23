@@ -11,7 +11,7 @@ test('explicit Duo on 27.2 wins over other booted runtimes', () => {
   assert.equal(selected.udid,'exact'); assert.equal(selected.runtime,KITCHEN_IOS_RUNTIME);
 });
 test('the runtime and device pins match the documented measured target', () => {
-  assert.equal(KITCHEN_IOS_RUNTIME,'com.apple.CoreSimulator.SimRuntime.iOS-27-2');
+  assert.equal(KITCHEN_IOS_RUNTIME,'com.apple.CoreSimulator.SimRuntime.iOS-27-2-iPhone19-4');
   assert.equal(KITCHEN_IOS_DEVICE,'iPhone Duo');
 });
 test('selection prefers an already booted exact target and remains deterministic', () => {
