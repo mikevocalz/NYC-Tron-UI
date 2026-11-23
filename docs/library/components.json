@@ -46,6 +46,7 @@
       }
     }
   },
+  "sourceFingerprintEncoding": "SHA-256 of UTF-8 source text with CRLF normalized to LF; not archive bytes or Git blob ids",
   "inputs": [
     {
       "path": "docs/api-signatures.json",

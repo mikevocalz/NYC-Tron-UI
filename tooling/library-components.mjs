@@ -1,14 +1,27 @@
 // Inventory the reviewed declaration graph, never a downstream application's rows.
 // Existing api-surface/api-signatures gates verify that graph against live builds.
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, mkdirSync, realpathSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const json = file => JSON.parse(readFileSync(file, 'utf8'));
-const hash = value => createHash('sha256').update(value).digest('hex');
+// Git can check text out as CRLF on Windows. These fingerprints describe
+// reviewed source text, not archive bytes or Git blob identities.
+export const normalizedSourceText = value => value.toString('utf8').replace(/\r\n/g, '\n');
+export const sourceFingerprint = value => createHash('sha256').update(normalizedSourceText(value), 'utf8').digest('hex');
+export const matchesGeneratedJson = (bytes, actual) => normalizedSourceText(bytes) === JSON.stringify(actual, null, 2) + '\n';
+export function isMainModule(moduleUrl, entry = process.argv[1]) {
+  if (!entry) return false;
+  try { return realpathSync(resolve(entry)) === realpathSync(fileURLToPath(moduleUrl)); }
+  catch (error) {
+    // Imports from stdin/eval can have a non-file argv[1], such as "-".
+    if (error.code === 'ENOENT' || error.code === 'ENOTDIR') return false;
+    throw error;
+  }
+}
 const compare = (a, b) => a < b ? -1 : a > b ? 1 : 0;
 const fail = message => { throw new Error('Library inventory: ' + message); };
 const REACT_TYPES = `
@@ -236,7 +249,8 @@ export function generateLibraryManifest({ rootDir = root, ts = loadCompiler(), s
       tier3: { platforms: ['visionos', 'quest', 'pico'], note: 'Not verified for 1.0.0. Physical hardware scenarios, including pen/palm, fold postures, screen-reader speech and multi-display, remain not verified.' },
     },
     evidenceRecords: { desktopD5: { path: 'docs/desktop-support.json', provenance: desktop.evidence, archive: desktop.ui } },
-    inputs: [...files, 'docs/api-surface.json', 'docs/desktop-support.json'].map(path => ({ path, sha256: hash(readFileSync(join(rootDir, path))) })),
+    sourceFingerprintEncoding: 'SHA-256 of UTF-8 source text with CRLF normalized to LF; not archive bytes or Git blob ids',
+    inputs: [...files, 'docs/api-surface.json', 'docs/desktop-support.json'].map(path => ({ path, sha256: sourceFingerprint(readFileSync(join(rootDir, path))) })),
     summary: { packageCount: packages.length, publicSymbolExportCount: expectedSymbols.size, componentCount: publicComponents.length, declarationIdentityCount: entries.length, proposedStable: publicComponents.filter(e => e.proposedStability === 'stable').length, proposedPreview: publicComponents.filter(e => e.proposedStability === 'preview').length, proposedStableIdentityCount: entries.filter(e => e.proposedStability === 'stable').length },
     packages: packages.sort((a, b) => compare(a.package, b.package)), components: publicComponents, exclusions: excluded };
 }
@@ -246,7 +260,7 @@ export function declarationTargets(value) {
   return [...new Set(Object.entries(value).flatMap(([key, target]) => key === 'types' && typeof target === 'string' ? [target] : declarationTargets(target)))];
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isMainModule(import.meta.url)) {
   const args = process.argv.slice(2);
   let compilerRoot = root, write = false;
   for (let i = 0; i < args.length; i++) {
@@ -257,6 +271,6 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   const actual = generateLibraryManifest({ ts: loadCompiler(compilerRoot) }), file = join(root, 'docs/library/components.json');
   const bytes = JSON.stringify(actual, null, 2) + '\n';
   if (write) { mkdirSync(dirname(file), { recursive: true }); writeFileSync(file, bytes); }
-  else if (!existsSync(file) || readFileSync(file, 'utf8') !== bytes) fail('generated components.json differs; review exports and run --write');
+  else if (!existsSync(file) || !matchesGeneratedJson(readFileSync(file), actual)) fail('generated components.json differs; review exports and run --write');
   console.log(`Library inventory: ${actual.summary.packageCount} packages; ${actual.summary.componentCount} public component exports; ${actual.summary.declarationIdentityCount} declaration identities; ${actual.summary.proposedStable} proposed stable / ${actual.summary.proposedPreview} proposed preview; owner confirmation pending.`);
 }

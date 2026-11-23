@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { packageDirectories } from './library-components.mjs';
+import { isMainModule, matchesGeneratedJson, packageDirectories } from './library-components.mjs';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const json = file => JSON.parse(readFileSync(file, 'utf8'));
 const runtimeTargets = value => typeof value === 'string' ? /\.js$/.test(value) ? [value] : [] : value && typeof value === 'object' ? Object.values(value).flatMap(runtimeTargets) : [];
@@ -32,11 +32,12 @@ export function generateCrossReference(ledger, { rootDir = root } = {}) {
       evidence: row.evidence ?? [] };
   }
   return { schemaVersion: 1, purpose: 'Forge row-to-import lookup only; not library scope, inventory or a release gate',
+    sourceLedgerDigestEncoding: 'SHA-256 of JSON.stringify(parsed ledger); not raw ledger bytes or a Git blob id',
     sourceLedgerSha256: createHash('sha256').update(JSON.stringify(ledger)).digest('hex'),
     baselineRows: ledger.components.length, addedRows: ledger.additions.length, rows };
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isMainModule(import.meta.url)) {
   const args = process.argv.slice(2);
   let ledger = join(root, 'docs/completion/library-progress.json'), write = false;
   for (let i = 0; i < args.length; i++) {
@@ -47,6 +48,6 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   const file = join(root, 'docs/library/forge-imports.json'), actual = generateCrossReference(json(ledger));
   const bytes = JSON.stringify(actual, null, 2) + '\n';
   if (write) { mkdirSync(dirname(file), { recursive: true }); writeFileSync(file, bytes); }
-  else if (!existsSync(file) || readFileSync(file, 'utf8') !== bytes) throw new Error('Cross-reference differs; review its identified source ledger before --write');
+  else if (!existsSync(file) || !matchesGeneratedJson(readFileSync(file), actual)) throw new Error('Cross-reference differs; review its identified source ledger before --write');
   console.log(`Forge import lookup: ${actual.baselineRows} baseline rows and ${actual.addedRows} added rows; no acceptance or library scope changes.`);
 }

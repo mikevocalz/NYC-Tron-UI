@@ -49,6 +49,13 @@ React classes. It fails on unresolved component candidates and ambiguous
 reference names. This classification does not replace real React types,
 declaration checks, props documentation or installed-tarball runtime tests.
 
+Source fingerprints hash UTF-8 text after normalizing CRLF line endings to LF,
+so Git's Windows checkout convention does not change the inventory. Generated
+JSON checks apply the same line-ending normalization; changed values still fail
+the drift check. These are source-text fingerprints, not release-archive
+checksums or Git blob identifiers. Archive checksums continue to cover exact
+archive bytes.
+
 ## Forge lookup
 
 [forge-imports.json](forge-imports.json) is a separate downstream row-to-import
@@ -58,6 +65,8 @@ statuses and does not determine this manifest or release readiness.
 
 `tooling/library-cross-reference.mjs --ledger <full-ledger.json> --write`
 explicitly regenerates that lookup. The source-ledger digest records its input.
+It hashes `JSON.stringify` of the parsed ledger, so LF/CRLF formatting does not
+change it; it is not a raw-file or Git blob checksum.
 Tron's tests validate the recorded import paths against local exports without
 reading a downstream ledger. T4/F1 audit the transfer and pin its provenance.
 

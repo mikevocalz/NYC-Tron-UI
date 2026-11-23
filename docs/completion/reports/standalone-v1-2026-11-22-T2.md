@@ -137,6 +137,67 @@ unknown returns, ambiguous names, added unrecorded exports, changed conditions,
 every named D5 status/result and local lookup resolution. The existing engine
 dependency-boundary assertion passes. No public source or API files changed.
 
+### Windows CRLF follow-up
+
+The initial T2 [Windows CI run 45097405986](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/45097405986)
+failed its full test job at the inventory's source-fingerprint comparison.
+The integrating lead inspected job `137440175215`: component classification
+and counts agreed, but Git's CRLF checkout changed the raw JSON source hashes.
+This is a failure of that original commit, not a Windows pass. The same run's
+Ubuntu source tests and inventory step passed, as inspected by the lead.
+
+The fix explicitly hashes UTF-8 source text with CRLF normalized to LF. The
+generated-manifest and lookup checks also normalize line endings, so checking a
+CRLF output file does not introduce another platform-only failure. The encoding
+is recorded in the manifest. Changes to declaration values, export maps or
+export conditions remain drift failures. Release-archive checksum code is
+unchanged and continues to hash actual archive bytes.
+
+The lookup's existing ledger digest already hashes `JSON.stringify` of the
+parsed ledger. Its encoding is now explicit: it is neither a raw ledger-file
+checksum nor a Git blob identifier. No acceptance status or lookup ownership
+changes in this follow-up.
+
+The new regression copies all five inventory input JSON files, all sixteen
+package manifests and both generated JSON outputs with CRLF. It requires the
+entire generated manifest to equal the LF result, validates both output checks,
+then verifies that changed declaration data still changes the fingerprint and
+fails comparison and that an added unrecorded export still throws. Parsed
+LF/CRLF ledger inputs must also produce identical lookup digests and rows.
+Combined inventory and dependency-boundary results are attached in
+[the CRLF follow-up log](standalone-v1-2026-11-22-T2-crlf-tests.log).
+All 22 tests passed locally with zero failures.
+CI on the follow-up commit is pending; local CRLF fixtures are not a claim of a
+successful Windows runner. The five target identities and all pending owner
+labels remain unchanged.
+
+### CLI alias follow-up
+
+Independent review also found that invoking either new tool through an absolute
+symlink could exit successfully without running its CLI. The entry guard
+compared the lexical argument path with Node's canonical module path. A changed
+manifest therefore went unchecked for that invocation form.
+
+Both new tools now share a realpath-aware entry guard. Missing file arguments
+from stdin/eval imports are safely treated as imports; unrelated filesystem
+errors still fail. No legacy tool is changed in this fix.
+
+The regression invokes both actual CLIs through a directory symlink on macOS/
+Linux or a directory junction on Windows. It requires nonempty validation
+output for the valid fixture, then changes each generated JSON file and
+requires the corresponding CLI to fail with its drift error. A separate stdin
+subprocess imports both tools and requires no CLI execution. The alias test is
+skipped only if that filesystem refuses directory aliases with `EPERM`,
+`EACCES` or `ENOSYS`; its skip reason is reported explicitly.
+
+Full local results are attached in
+[the CLI follow-up log](standalone-v1-2026-11-22-T2-cli-tests.log).
+All 24 tests passed locally, with zero failures and zero skips.
+Independent [follow-up review](standalone-v1-2026-11-22-T2-followup-review.md)
+passed, including 24 independently rerun tests with no failures or skips.
+New Windows CI remains pending. Component
+counts, pending owner labels and release-archive checksums are unchanged.
+
 ## Skill outputs
 
 Applied `user-research` then `design-system` from installed
