@@ -25,7 +25,7 @@ export async function proveWeb({ consumer, webDirectory, tools, output, channel 
   await new Promise((yes, no) => { server.once('error', no); server.listen(0, '127.0.0.1', yes); });
   const url = `http://127.0.0.1:${server.address().port}`;
   let browser, evidence;
-  const cases = [], screenshots = [];
+  const cases = [], screenshots = [], layoutCases = [];
   try {
     browser = await chromium.launch({ headless: true, ...(channel ? { channel } : {}) });
     for (const mode of MODES) {
@@ -55,9 +55,39 @@ export async function proveWeb({ consumer, webDirectory, tools, output, channel 
       await rail.getByRole('tab', { name: 'Editor', exact: true }).click();
       assert.equal(await rail.getByRole('tab', { name: 'Editor', exact: true }).getAttribute('aria-selected'), 'true');
       assert.equal(await rail.getByRole('tab', { name: 'Unavailable', exact: true }).isDisabled(), true);
+      const wideRail = await rail.boundingBox(), wideStatus = await page.getByTestId('rail-status').boundingBox();
+      assert.ok(wideStatus.x >= wideRail.x + wideRail.width, 'Wide container keeps the status beside the rail');
+      layoutCases.push({ importMode: mode, state: 'expanded wide', viewportWidth: 1100, rail: wideRail, status: wideStatus });
+      await page.setViewportSize({ width: 320, height: 900 });
+      const expandedRail = await rail.boundingBox(), narrowStatus = await page.getByTestId('rail-status').boundingBox();
+      const phoneContainer = await page.getByTestId('rail-layout').boundingBox();
+      assert.ok(narrowStatus.y >= expandedRail.y + expandedRail.height, 'Narrow expanded rail wraps status onto its own row');
+      assert.ok(narrowStatus.width >= 160, 'Narrow status keeps a readable minimum measure');
+      assert.ok(narrowStatus.x >= phoneContainer.x && narrowStatus.x + narrowStatus.width <= phoneContainer.x + phoneContainer.width + 1, 'Phone status remains inside the fixture container');
+      const labelLines = await page.getByTestId('rail-result').evaluate(element => { const range = document.createRange(); range.selectNodeContents(element); return new Set([...range.getClientRects()].map(rect => Math.round(rect.y))).size; });
+      assert.equal(labelLines, 1, 'Selected destination remains one readable line at 320px');
+      assert.equal(await page.getByTestId('rail-instructions').evaluate(element => element.scrollWidth > element.clientWidth + 1), false, 'Instructions do not overflow their readable measure');
+      assert.equal(await page.getByTestId('rail-result').innerText(), 'Selected: editor');
+      assert.equal(await page.getByTestId('field-editable').inputValue(), DRAFT);
+      layoutCases.push({ importMode: mode, state: 'expanded phone', viewportWidth: 320, rail: expandedRail, status: narrowStatus, labelLines });
+      const railScreenshot = `kitchen-${mode}-rail-expanded-320.png`;
+      await page.getByTestId('rail-layout').screenshot({ path: join(dirname(output), railScreenshot) }); screenshots.push(railScreenshot);
       await page.getByTestId('rail-collapse').click();
+      const collapsedStatus = await page.getByTestId('rail-status').boundingBox();
+      assert.ok(collapsedStatus.width >= 160, 'Collapsed rail retains readable status width');
+      layoutCases.push({ importMode: mode, state: 'collapsed phone', viewportWidth: 320, rail: await rail.boundingBox(), status: collapsedStatus });
       assert.equal(await rail.getByRole('tab', { name: 'Editor', exact: true }).count(), 1);
       assert.equal(await page.getByTestId('rail-result').innerText(), 'Selected: editor');
+      await page.setViewportSize({ width: 1100, height: 900 });
+      await page.getByTestId('rail-collapse').click();
+      await page.getByTestId('rail-layout').evaluate(element => { element.style.width = '248px'; });
+      const paneRail = await rail.boundingBox(), paneStatus = await page.getByTestId('rail-status').boundingBox();
+      assert.ok(paneStatus.y >= paneRail.y + paneRail.height && paneStatus.width >= 160, 'A narrow pane wraps even on a wide viewport');
+      const paneContainer = await page.getByTestId('rail-layout').boundingBox();
+      assert.ok(paneStatus.x >= paneContainer.x && paneStatus.x + paneStatus.width <= paneContainer.x + paneContainer.width + 1, 'Wide-window narrow-pane status remains inside its actual container');
+      layoutCases.push({ importMode: mode, state: 'expanded narrow pane', viewportWidth: 1100, containerWidth: 248, rail: paneRail, status: paneStatus });
+      await page.getByTestId('rail-layout').evaluate(element => { element.style.removeProperty('width'); });
+      await page.getByTestId('rail-collapse').click();
       await page.getByTestId('shell-edge').click();
       assert.equal(await page.getByTestId('shell-result').innerText(), 'Physical edge: left; text: LTR');
       const left = await page.getByTestId('shell-rail').boundingBox(), content = await page.getByTestId('shell-draft').boundingBox();
@@ -100,7 +130,7 @@ export async function proveWeb({ consumer, webDirectory, tools, output, channel 
     const resultsPath = basename(output).replace(/\.json$/, '') + '-results.json';
     const logPath = basename(output).replace(/\.json$/, '') + '.log';
     const components = COMPONENT_CONTRACTS.map(contract => ({ symbol: contract.symbol, status: 'passed', imports: MODES.map(mode => ({ path: importFor(contract, mode), symbol: contract.symbol, rendered: true, assertedStates: contract.states })) }));
-    const results = { status: 'passed', platform: 'web', evidenceKinds: ['web', 'accessibility'], cases, assertions, components };
+    const results = { status: 'passed', platform: 'web', evidenceKinds: ['web', 'accessibility'], cases, assertions, components, layoutCases };
     writeFileSync(join(dirname(output), resultsPath), JSON.stringify(results, null, 2) + '\n');
     writeFileSync(join(dirname(output), logPath), cases.map(c => `PASS ${c.importMode} imports / ${c.appearance} / five component state contracts`).join('\n') + `\nAssertions passed: ${assertions.passed}; failed: 0; skipped: 0\n`);
     const artifact = path => ({ path, sha256: createHash('sha256').update(readFileSync(join(dirname(output), path))).digest('hex') });

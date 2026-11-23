@@ -177,7 +177,8 @@ jobs:
           CI: '1'
           EXPO_NO_TELEMETRY: '1'
       - run: node tooling/native/install-maestro.mjs "$RUNNER_TEMP/maestro"
-      - run: node tooling/native/prewarm-ios.mjs
+      - name: Prepare the explicit regular iPhone and runtime
+        run: node tooling/kitchen-sink/prepare-ios.mjs
       - name: Execute both installed import paths on the runner simulator
         shell: bash
         run: |
@@ -192,3 +193,9 @@ jobs:
           name: kitchen-proof-ios
           path: ${{ runner.temp }}/proof/
           if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kitchen-ios-target
+          path: ${{ runner.temp }}/kitchen-ios-target/
+          if-no-files-found: warn
