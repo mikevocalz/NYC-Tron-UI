@@ -4,6 +4,7 @@ import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isMainModule, sourceFingerprint } from '../library-components.mjs';
 import { MAESTRO, requirePassedFlow } from '../native/ui-evidence.mjs';
+import { requireKitchenIosExecutionTarget } from './ios-execution-target.mjs';
 import { COMPONENT_CONTRACTS, MODES, importFor } from './contracts.mjs';
 import { nativeFlow } from './native-flow.mjs';
 import { sha256, verifyInstalledConsumer } from './prepare-consumer.mjs';
@@ -36,11 +37,13 @@ export function proveNative({ consumer, platform, device, maestro, output }) {
     const result = spawnSync(maestro, command, { cwd: directory, encoding: 'utf8', timeout: 600000, maxBuffer: 32 * 1024 * 1024, env: maestroEnvironment() });
     writeFileSync(join(directory, 'maestro.log'), (result.stdout ?? '') + (result.stderr ?? '') + `\nExit code: ${result.status}\n`);
     if (result.error || result.status !== 0) throw new Error(`${platform}/${mode} flow failed: ${result.error?.message ?? result.status}`);
-    const verdict = requirePassedFlow(readFileSync(junit, 'utf8'));
+    const junitText = readFileSync(junit, 'utf8');
+    const verdict = requirePassedFlow(junitText);
+    const executionTarget = platform === 'ios' ? requireKitchenIosExecutionTarget(junitText, device) : undefined;
     const images = files(directory).filter(file => file.endsWith(`kitchen-${mode}-retained-shell.png`));
     const image = images[0];
     if (images.length !== 1 || readFileSync(image).subarray(0, 8).toString('hex') !== '89504e470d0a1a0a') throw new Error('Missing or ambiguous current-stage native screenshot: ' + mode);
-    stages.push({ importMode: mode, ...verdict, flow: relative(output, flow), report: relative(output, junit), screenshot: relative(output, image) });
+    stages.push({ importMode: mode, ...verdict, ...(executionTarget ? { executionTarget } : {}), flow: relative(output, flow), report: relative(output, junit), screenshot: relative(output, image) });
   }
   const artifact = path => ({ path, sha256: sha256(readFileSync(join(output, path))) });
   const components = COMPONENT_CONTRACTS.map(contract => ({ symbol: contract.symbol, status: 'passed', imports: stages.map(stage => ({ path: importFor(contract, stage.importMode), symbol: contract.symbol, rendered: true, assertedStates: contract.states })) }));

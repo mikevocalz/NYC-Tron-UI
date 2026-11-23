@@ -75,11 +75,11 @@ export function TextFieldFixture({ store }: Props) {
     </View></Card>
   </Section>;
 }
-const itemsFor = (selected: string) => [
+const itemsFor = (selected: string, context = '') => [
   { id: 'library', label: 'Library', glyph: 'L' },
   { id: 'editor', label: 'Editor', glyph: 'E' },
   { id: 'unavailable', label: 'Unavailable', glyph: '—', disabled: true },
-].map(item => ({ ...item, icon: <Text {...classes(`text-base ${item.id === selected ? 'text-on-primary' : 'text-text'}`)}>{item.glyph}</Text> }));
+].map(item => ({ ...item, label: context + item.label, icon: <Text {...classes(`text-base ${item.id === selected ? 'text-on-primary' : 'text-text'}`)}>{item.glyph}</Text> }));
 export function NavigationRailFixture({ store }: Props) {
   const { Button, Card, NavigationRail } = useComponents(store);
   const selected = useStore(store, state => state.selectedId);
@@ -111,7 +111,7 @@ export function NavigationShellFixture({ store }: Props) {
         <Button testID="shell-rtl" title={rtl ? 'Use left-to-right text' : 'Use right-to-left text'} variant="secondary" onPress={() => store.getState().setRtl(!rtl)} />
       </View>
       <NavigationShell testID="shell-demo" edge={edge} isRTL={rtl} style={{ minHeight: 240 }}
-        rail={<NavigationRail testID="shell-rail" edge={edge} collapsed items={itemsFor(selected)} selectedId={selected} onSelectionChange={select} />}>
+        rail={<NavigationRail testID="shell-rail" edge={edge} collapsed items={itemsFor(selected, 'Shell ')} selectedId={selected} onSelectionChange={select} />}>
         <View {...classes('gap-3 p-3')}><Text {...classes('text-base font-semibold text-text')}>Retained content</Text>
           <TextField id="shell-draft" testID="shell-draft" label="Shared project name" value={draft} onChangeText={setDraft} />
           <Text testID="shell-result" {...classes('text-base text-text-muted')}>Physical edge: {edge}; text: {rtl ? 'RTL' : 'LTR'}</Text>

@@ -52,6 +52,11 @@ export async function proveWeb({ consumer, webDirectory, tools, output, channel 
       await page.getByTestId('field-error').fill('Valid project'); assert.equal(await page.getByRole('alert').count(), 0);
       assert.equal(await page.getByTestId('field-disabled').isDisabled(), true);
       const rail = page.getByTestId('rail-demo');
+      for (const label of ['Library', 'Editor', 'Unavailable']) {
+        assert.equal(await page.getByRole('tab', { name: label, exact: true }).count(), 1, 'The standalone rail has a unique accessible action');
+        assert.equal(await page.getByRole('tab', { name: `Shell ${label}`, exact: true }).count(), 1, 'Shell action names are globally unique');
+        assert.equal(await page.getByTestId('shell-rail').getByRole('tab', { name: `Shell ${label}`, exact: true }).count(), 1, 'Shell actions retain distinct names even when collapsed');
+      }
       await rail.getByRole('tab', { name: 'Editor', exact: true }).click();
       assert.equal(await rail.getByRole('tab', { name: 'Editor', exact: true }).getAttribute('aria-selected'), 'true');
       assert.equal(await rail.getByRole('tab', { name: 'Unavailable', exact: true }).isDisabled(), true);
