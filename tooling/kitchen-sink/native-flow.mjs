@@ -20,7 +20,11 @@ export function nativeFlow(mode) {
   scroll('button-disabled'); visible('button-disabled', undefined, ['enabled: false']); scroll('button-loading'); visible('button-loading', undefined, ['enabled: false']);
   scroll('button-small'); visible('button-small');
   for (const surface of ['raised', 'sunken', 'transparent']) { scroll(`card-${surface}`); visible(`card-${surface}`); }
-  scroll('field-editable'); tap('field-editable'); flow.push(`- inputText: ${JSON.stringify(DRAFT)}`, '- hideKeyboard');
+  scroll('field-editable'); tap('field-editable'); flow.push(`- inputText: ${JSON.stringify(DRAFT)}`,
+    '- runFlow:', '    when:', '      platform: iOS', '    commands:',
+    '      - tapOn:', '          id: ^Return$',
+    '      - assertNotVisible:', '          id: ^UIKeyboardLayoutStar Preview$',
+    '- runFlow:', '    when:', '      platform: Android', '    commands:', '      - hideKeyboard');
   scroll('draft-result'); visible('draft-result', `Draft: ${DRAFT}`);
   scroll('field-error'); visible('field-error'); flow.push('- assertVisible: "Enter a project name before continuing."');
   scroll('field-disabled'); visible('field-disabled', 'Reference project', ['enabled: false']);
