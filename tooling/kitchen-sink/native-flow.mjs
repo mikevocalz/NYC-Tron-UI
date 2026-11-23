@@ -7,10 +7,10 @@ export function nativeFlow(mode) {
     '- extendedWaitUntil:', '    visible:', '      id: alias-result', '    timeout: 90000',
     '- assertVisible: "10 public imports resolve to 5 component identities."'];
   const visible = (id, text, extra = []) => flow.push('- assertVisible:', `    id: ${id}`, ...(text ? [`    text: ${JSON.stringify(text)}`] : []), ...extra.map(s => '    ' + s));
-  const scroll = (id, direction = 'DOWN') => flow.push('- scrollUntilVisible:', '    element:', `      id: ${id}`, `    direction: ${direction}`, '    timeout: 30000');
-  const scrollRailItem = text => flow.push('- scrollUntilVisible:', '    element:', `      text: ${JSON.stringify(`^${text}$`)}`, '    direction: DOWN', '    timeout: 30000');
+  const scroll = (id, direction = 'DOWN') => flow.push('- scrollUntilVisible:', '    element:', `      id: ${id}`, `    direction: ${direction}`, '    timeout: 30000', '    centerElement: true');
+  const scrollRailItem = (text, direction = 'DOWN') => flow.push('- scrollUntilVisible:', '    element:', `      text: ${JSON.stringify(`^${text}$`)}`, `    direction: ${direction}`, '    timeout: 30000', '    centerElement: true');
   const tap = id => flow.push('- tapOn:', `    id: ${id}`);
-  const position = side => visible('shell-rail', undefined, [`${side}Of:`, '  id: shell-draft']);
+  const position = side => flow.push('- assertVisible:', '    text: ^Shell Editor$', `    ${side}Of:`, '      id: shell-draft');
   tap(`imports-${mode}`); visible('imports-result', `Rendering: ${mode} imports`);
   scroll('button-primary'); tap('button-primary'); scroll('button-result'); visible('button-result', 'Press count: 1');
   for (const variant of ['secondary', 'ghost', 'danger', 'small']) { scroll(`button-${variant}`, 'UP'); visible(`button-${variant}`); }
@@ -20,9 +20,9 @@ export function nativeFlow(mode) {
   scroll('draft-result'); visible('draft-result', `Draft: ${DRAFT}`);
   scroll('field-error'); visible('field-error'); flow.push('- assertVisible: "Enter a project name before continuing."');
   scroll('field-disabled'); visible('field-disabled', 'Reference project', ['enabled: false']);
-  scrollRailItem('Editor'); flow.push('- tapOn:', '    text: ^Editor$'); visible('rail-result', 'Selected: editor'); flow.push('- assertVisible:', '    text: ^Editor$', '    selected: true');
+  scrollRailItem('Editor'); flow.push('- tapOn:', '    text: ^Editor$'); scroll('rail-result'); visible('rail-result', 'Selected: editor'); scrollRailItem('Editor', 'UP'); flow.push('- assertVisible:', '    text: ^Editor$', '    selected: true');
   scrollRailItem('Unavailable'); flow.push('- assertVisible:', '    text: ^Unavailable$', '    enabled: false');
-  scroll('rail-collapse', 'UP'); tap('rail-collapse'); visible('rail-result', 'Selected: editor');
+  scroll('rail-collapse', 'UP'); tap('rail-collapse'); scroll('rail-result'); visible('rail-result', 'Selected: editor');
   scroll('shell-edge'); tap('shell-edge'); scroll('shell-result'); visible('shell-result', 'Physical edge: left; text: LTR');
   scroll('shell-rtl', 'UP'); tap('shell-rtl'); scroll('shell-result'); visible('shell-result', 'Physical edge: left; text: RTL');
   scroll('shell-draft'); visible('shell-draft', DRAFT); position('left');
