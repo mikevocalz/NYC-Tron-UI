@@ -1,0 +1,31 @@
+Running e2e test "qa-tron-android-imports-state" on emulator-5554 (29 steps)
+[1] ✓ Restart the installed archive app; expect direct imports and a fresh counter.
+[2] ✓ launch (3.3s)
+[3] ✓ await visible id=alias-result (1.0s)
+[4] ✓ idle (1.4s) ⚠ the screen settled, but a small part of it was still changing while it did — a spinner, a caret, a progress dot. If it is a loading spinner then the screen had not finished loading, and stillness cannot tell those apart: look at what is moving, and gate the next action on the element the loading produces rather than on this settle.
+[5] ✓ await id=imports-result equals "Rendering: direct imports" (0.3s)
+[6] ✓ await id=button-result equals "Press count: 0" (0.3s)
+[7] ✓ Press the enabled action; expect counter one.
+[8] ✓ tap "Try button" (1.0s)
+[9] ✓ await id=button-result equals "Press count: 1" (0.7s)
+[10] ✓ Switch to actual root imports and select Light; counter must remain one.
+[11] ✓ tap "Root imports" (1.0s)
+[12] ✓ await id=imports-result equals "Rendering: root imports" (1.0s)
+[13] ✓ await id=button-result equals "Press count: 1" (0.3s)
+[14] ✓ tap "Light" (1.0s)
+[15] ✓ await id=theme-result equals "Appearance: light" (0.3s)
+[16] ✓ Scroll to the Card and TextField fixtures; verify real component content.
+[17] ✓ scroll-to "Transparent" (3.6s)
+[18] ✓ await visible "Raised" (0.4s)
+[19] ✓ await visible "Sunken" (0.4s)
+[20] ✓ await visible "Transparent" (0.4s)
+[21] ✓ scroll-to id=field-editable (2.7s)
+[22] ✓ await visible id=field-editable (0.1s)
+[23] ✓ scroll-to id=rail-result (2.4s)
+[24] ✓ await id=rail-result equals "Selected: library" (0.1s)
+[25] ✓ Visit the native NavigationRail and NavigationShell fixtures.
+[26] ✓ scroll-to id=shell-edge (2.4s)
+[27] ✓ await visible id=shell-edge (0.1s)
+[28] ✓ scroll-to id=shell-result (2.3s)
+[29] ✓ await id=shell-result equals "Physical edge: right; text: LTR" (0.1s)
+PASS — 24 passed, 0 failed, 0 errored, 0 skipped (27.1s)
