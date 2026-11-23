@@ -116,10 +116,10 @@ jobs:
           if-no-files-found: error
   ios:
     needs: candidate
-    runs-on: macos-15
+    runs-on: xcode-27
     timeout-minutes: 90
     env:
-      DEVELOPER_DIR: /Applications/Xcode_26.2.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_27.1.app/Contents/Developer
     steps:
       - uses: actions/checkout@v4
       - name: Verify pinned iOS build toolchain
@@ -128,8 +128,8 @@ jobs:
           set -euo pipefail
           xcodebuild -version
           xcrun swift --version
-          xcodebuild -version | grep -Fx 'Xcode 26.2'
-          xcrun swift --version | grep -E 'Swift version 6\.[2-9](\.| )'
+          xcodebuild -version | grep -Fx 'Xcode 27.1'
+          xcodebuild -version | grep -Fx 'Build version 27A9275'
       - uses: actions/setup-node@v4
         with:
           node-version: '24.19.0'
