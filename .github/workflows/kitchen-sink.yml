@@ -177,7 +177,7 @@ jobs:
           CI: '1'
           EXPO_NO_TELEMETRY: '1'
       - run: node tooling/native/install-maestro.mjs "$RUNNER_TEMP/maestro"
-      - name: Prepare the explicit regular iPhone and runtime
+      - name: Prepare the SDK-matched iPhone simulator
         run: node tooling/kitchen-sink/prepare-ios.mjs
       - name: Execute both installed import paths on the runner simulator
         shell: bash

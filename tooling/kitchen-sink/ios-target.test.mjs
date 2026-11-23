@@ -1,20 +1,24 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { KITCHEN_IOS_RUNTIME, selectKitchenIosDevice, verifyKitchenIosReady } from './prepare-ios.mjs';
+import { KITCHEN_IOS_RUNTIME, KITCHEN_IOS_DEVICE, selectKitchenIosDevice, verifyKitchenIosReady } from './prepare-ios.mjs';
 import { maestroFlowArguments } from './native-proof.mjs';
 import { nativeFlow } from './native-flow.mjs';
 
 const device = (name, udid, state = 'Shutdown') => ({ name, udid, state, isAvailable: true });
-test('explicit regular iPhone on 27.0 wins over a booted Duo and newer runtime', () => {
-  const selected = selectKitchenIosDevice({ devices: { [KITCHEN_IOS_RUNTIME]: [device('iPhone 17e','near'), device('iPhone 17','exact')], 'com.apple.CoreSimulator.SimRuntime.iOS-27-2': [device('iPhone Duo','duo','Booted')] } });
+test('explicit SDK-matched Duo on 27.1 wins over booted older and newer runtimes', () => {
+  const selected = selectKitchenIosDevice({ devices: { [KITCHEN_IOS_RUNTIME]: [device('iPhone 17','near'), device('iPhone Duo','exact')], 'com.apple.CoreSimulator.SimRuntime.iOS-27-2': [device('iPhone Duo','duo','Booted')], 'com.apple.CoreSimulator.SimRuntime.iOS-27-0': [device('iPhone 17','older','Booted')] } });
   assert.equal(selected.udid,'exact'); assert.equal(selected.runtime,KITCHEN_IOS_RUNTIME);
 });
-test('selection prefers an already booted exact target and remains deterministic', () => {
-  assert.equal(selectKitchenIosDevice({ devices: { [KITCHEN_IOS_RUNTIME]: [device('iPhone 17','a'), device('iPhone 17','b','Booted')] } }).udid,'b');
+test('the runtime and device pins match the documented SDK target', () => {
+  assert.equal(KITCHEN_IOS_RUNTIME,'com.apple.CoreSimulator.SimRuntime.iOS-27-1');
+  assert.equal(KITCHEN_IOS_DEVICE,'iPhone Duo');
 });
-for (const inventory of [{ devices: {} }, { devices: { [KITCHEN_IOS_RUNTIME]: [device('iPhone Duo','duo')] } }, { devices: { [KITCHEN_IOS_RUNTIME]: [{ ...device('iPhone 17','unavailable'), isAvailable:false }] } }]) test('missing exact available runtime/device fails without a fallback', () => {
-  assert.throws(() => selectKitchenIosDevice(inventory), /no latest-runtime or Duo fallback/);
+test('selection prefers an already booted exact target and remains deterministic', () => {
+  assert.equal(selectKitchenIosDevice({ devices: { [KITCHEN_IOS_RUNTIME]: [device('iPhone Duo','a'), device('iPhone Duo','b','Booted')] } }).udid,'b');
+});
+for (const inventory of [{ devices: {} }, { devices: { 'com.apple.CoreSimulator.SimRuntime.iOS-27-2': [device('iPhone Duo','wrong-runtime','Booted')] } }, { devices: { [KITCHEN_IOS_RUNTIME]: [device('iPhone 17','wrong-device')] } }, { devices: { [KITCHEN_IOS_RUNTIME]: [{ ...device('iPhone Duo','unavailable'), isAvailable:false }] } }]) test('missing exact available runtime/device fails without a fallback', () => {
+  assert.throws(() => selectKitchenIosDevice(inventory), /no alternate-device or runtime fallback/);
 });
 test('each iOS mode uses fresh default driver installation while Android behavior is retained', () => {
   const args = { device:'synthetic', junit:'/evidence/report.xml', directory:'/evidence', flow:'/evidence/flow.yaml' };
@@ -30,26 +34,26 @@ test('the kitchen workflow invokes and retains its exact target preparation', ()
   assert.match(workflow,/path: \$\{\{ runner.temp \}\}\/kitchen-ios-target\//);
 });
 test('post-boot readiness queries only the selected target and preserves its strict identity metadata', () => {
-  const selected = selectKitchenIosDevice({ devices: { [KITCHEN_IOS_RUNTIME]: [device('iPhone 17','selected-udid')] } });
+  const selected = selectKitchenIosDevice({ devices: { [KITCHEN_IOS_RUNTIME]: [device('iPhone Duo','selected-udid')] } });
   const calls = [];
   const verified = verifyKitchenIosReady(selected, (args, label, timeout) => { calls.push({ args, label, timeout }); return args[1] === 'getenv' ? 'selected-udid\n' : 'Device already booted, nothing to do.\n'; });
   assert.deepEqual(calls, [
     { args:['simctl','bootstatus','selected-udid','-b'], label:'bootstatus', timeout:420000 },
     { args:['simctl','getenv','selected-udid','SIMULATOR_UDID'], label:'booted-device-identity', timeout:30000 },
   ]);
-  assert.equal(verified.state,'Booted'); assert.equal(verified.name,'iPhone 17'); assert.equal(verified.runtime,KITCHEN_IOS_RUNTIME); assert.equal(verified.verification.udid,selected.udid);
+  assert.equal(verified.state,'Booted'); assert.equal(verified.name,'iPhone Duo'); assert.equal(verified.runtime,KITCHEN_IOS_RUNTIME); assert.equal(verified.verification.udid,selected.udid);
   const source = readFileSync(new URL('./prepare-ios.mjs',import.meta.url),'utf8');
   assert.equal((source.match(/\['simctl', 'list', 'devices', 'available', '--json'\]/g) ?? []).length,1, 'Only initial selection may enumerate all runtimes');
   assert.match(source,/const verified = verifyKitchenIosReady\(selected, run\)/);
 });
 for (const identity of ['wrong-udid\n','']) test('post-boot identity mismatch or absence cannot produce readiness metadata', () => {
-  assert.throws(() => verifyKitchenIosReady(device('iPhone 17','selected-udid'), args => args[1] === 'getenv' ? identity : ''), /identity differs/);
+  assert.throws(() => verifyKitchenIosReady(device('iPhone Duo','selected-udid'), args => args[1] === 'getenv' ? identity : ''), /identity differs/);
 });
 test('bootstatus failure aborts before the targeted identity query', () => {
   let calls = 0;
-  assert.throws(() => verifyKitchenIosReady(device('iPhone 17','selected-udid'), () => { calls++; throw new Error('synthetic boot failure'); }), /synthetic boot failure/);
+  assert.throws(() => verifyKitchenIosReady(device('iPhone Duo','selected-udid'), () => { calls++; throw new Error('synthetic boot failure'); }), /synthetic boot failure/);
   assert.equal(calls,1);
 });
 test('targeted identity timeout is retained as failure instead of accepted readiness', () => {
-  assert.throws(() => verifyKitchenIosReady(device('iPhone 17','selected-udid'), args => { if(args[1] === 'getenv') throw new Error('synthetic ETIMEDOUT'); return ''; }), /ETIMEDOUT/);
+  assert.throws(() => verifyKitchenIosReady(device('iPhone Duo','selected-udid'), args => { if(args[1] === 'getenv') throw new Error('synthetic ETIMEDOUT'); return ''; }), /ETIMEDOUT/);
 });
