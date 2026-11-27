@@ -1,4 +1,10 @@
-// Behaviour adapted from NYC-MON packages/ui/Dialog.tsx and ConfirmDestructive.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/Dialog.tsx and
+ * packages/ui/ConfirmDestructive.tsx (MIT), mikevocalz/nyc-mon commit
+ * 5ed8cf8322c685c86dbe03f4ac7b801255d1b907. Copyright (c) 2025 Gursel Cakar,
+ * MIT. Notices: THIRD_PARTY_NOTICES.md. Modified for NYC-Tron UI (2026-11):
+ * pure dismissal, size and focus rules split out for unit tests.
+ */
 /**
  * Pure rules shared by Dialog and AlertDialog: when a close request is
  * allowed, the size scale, frame padding, animation choice and initial focus.

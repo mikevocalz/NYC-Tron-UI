@@ -1,8 +1,14 @@
-// Behaviour adapted from NYC-MON packages/ui/Dialog.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/Dialog.tsx (MIT),
+ * mikevocalz/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907.
+ * Copyright (c) 2025 Gursel Cakar, MIT. Notices: THIRD_PARTY_NOTICES.md.
+ * Modified for NYC-Tron UI (2026-11): iOS on @expo/ui's universal
+ * BottomSheet, Android on Compose BasicAlertDialog, one token-styled RN
+ * panel.
+ */
 import {useLayoutEffect,useRef} from "react";
 import {Platform,ScrollView,Text,View,useWindowDimensions} from "react-native";
-import {Host} from "@expo/ui";
-import {BottomSheet,Group,RNHostView as SwiftUIHostView} from "@expo/ui/swift-ui";
+import {BottomSheet,Host,RNHostView} from "@expo/ui";
 import {interactiveDismissDisabled} from "@expo/ui/swift-ui/modifiers";
 import {BasicAlertDialog,RNHostView as ComposeHostView} from "@expo/ui/jetpack-compose";
 import {canDismiss,composeDialogProperties,dialogMaxWidth,type DialogDismissReason} from "./dialog-model.ts";
@@ -14,13 +20,18 @@ export type {DialogProps,DialogDismissReason,DialogInsets,DialogSize} from "./Di
 const GUTTER=24;
 
 /**
- * iOS: a SwiftUI sheet (`BottomSheet` from @expo/ui, sized to its content).
- * Swipe-down closes it when `dismissible`; otherwise
- * `interactiveDismissDisabled` holds it open.
+ * iOS: @expo/ui's universal `BottomSheet` (a SwiftUI sheet sized to its
+ * content), the way NYC-MON presents its sheets. Swipe-down and a tap on the
+ * dimmed area close it when `dismissible`; otherwise the
+ * `interactiveDismissDisabled` modifier holds it open and the drag indicator
+ * is hidden. The universal sheet's own 16pt inset is turned off
+ * (`contentPadding={0}`) so the panel's token padding applies.
  *
- * Android: a Material 3 `BasicAlertDialog` from @expo/ui. Back and a tap
- * outside follow `dismissible` / `closeOnBackdrop` through
- * `DialogProperties`; Compose reports both as one request, so `onDismiss`
+ * Android: a Material 3 `BasicAlertDialog` from @expo/ui, kept instead of
+ * the universal sheet because it is a centred dialog like the web one, and
+ * Compose `DialogProperties` let back and a tap outside follow
+ * `dismissible` / `closeOnBackdrop` while the universal Android sheet cannot
+ * stop a swipe-down. Compose reports both as one request, so `onDismiss`
  * receives "back" for either.
  *
  * Both host the same RN panel (title heading, description, scrolling body,
@@ -80,13 +91,12 @@ function SystemDialog({
     </View>
   );
   if(ios){
+    const holdOpen=!canDismiss("escape",rules);
     return (
       <Host matchContents colorScheme={colorScheme}>
-        <BottomSheet isPresented={open} fitToContents
-          onIsPresentedChange={next=>{if(!next)request("escape");}}>
-          <Group modifiers={[interactiveDismissDisabled(!canDismiss("escape",rules))]}>
-            <SwiftUIHostView matchContents>{panel}</SwiftUIHostView>
-          </Group>
+        <BottomSheet isPresented={open} onDismiss={()=>request("escape")} contentPadding={0}
+          showDragIndicator={!holdOpen} modifiers={[interactiveDismissDisabled(holdOpen)]}>
+          <RNHostView matchContents>{panel}</RNHostView>
         </BottomSheet>
       </Host>
     );

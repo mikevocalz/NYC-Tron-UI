@@ -1,12 +1,15 @@
-// Behaviour adapted from NYC-MON packages/ui/Textarea.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/Textarea.tsx (MIT),
+ * mikevocalz/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907.
+ * Copyright (c) 2025 Gursel Cakar, MIT. Notices: THIRD_PARTY_NOTICES.md.
+ * Modified for NYC-Tron UI (2026-11): universal TextInput on iOS, Compose
+ * OutlinedTextField on Android, Field wiring through accessibility label and
+ * hint.
+ */
 import { useEffect, useImperativeHandle, useRef, type ComponentRef } from "react";
 import { Platform, View, type TextInput } from "react-native";
-import { Host } from "@expo/ui";
-import { TextField as SwiftUITextField, useNativeState, type TextFieldRef as SwiftUITextFieldRef } from "@expo/ui/swift-ui";
-import {
-  accessibilityHint as swiftUIHint, accessibilityLabel as swiftUILabel, disabled as swiftUIDisabled,
-  lineLimit, textFieldStyle,
-} from "@expo/ui/swift-ui/modifiers";
+import { Host, TextInput as UniversalTextInput, useNativeState, type TextInputRef } from "@expo/ui";
+import { accessibilityHint as swiftUIHint, lineLimit, textFieldStyle } from "@expo/ui/swift-ui/modifiers";
 import {
   OutlinedTextField as ComposeTextField, Text as ComposeText, type TextFieldRef as ComposeTextFieldRef,
 } from "@expo/ui/jetpack-compose";
@@ -19,21 +22,40 @@ import { resolveTextareaConfig, type TextareaProps } from "./Textarea.types.ts";
 
 export type { CounterState, TextareaProps } from "./Textarea.types.ts";
 
+/**
+ * On iOS and Android @expo/ui's universal `useNativeState` is the same
+ * function as the Compose one (`@expo/ui/jetpack-compose` re-exports it);
+ * only its declared type comes from the web build, so the Compose field
+ * takes it through this type.
+ */
+type ComposeTextFieldState=Parameters<typeof ComposeTextField>[0]["value"];
+
 function joinSentences(...parts:Array<string|undefined>):string|undefined {
   const kept=parts.map(p=>p?.trim()).filter((p):p is string=>!!p);
   return kept.length?kept.join(" "):undefined;
 }
 
 /**
- * Multi-line text input on the OS field (native fork, `@expo/ui`): SwiftUI
- * `TextField` with a vertical axis on iOS, Material 3 `OutlinedTextField`
- * on Android. Inside a {@linkcode Field} it takes the Field's label,
- * description, error, required and disabled state; the Field's kit label and
- * messages sit around the native field. Rows map to SwiftUI `lineLimit`
- * and Compose `minLines`/`maxLines`, so height follows the system font size.
+ * Multi-line text input on the OS field. Inside a {@linkcode Field} it takes
+ * the Field's label, description, error, required and disabled state; the
+ * Field's kit label and messages sit around the native field.
  *
- * iOS has no native error state: the error reaches VoiceOver through the
- * hint and the Field's visible message. Android sets Material's `isError`.
+ * iOS: @expo/ui's universal `TextInput` with `multiline`, which renders a
+ * SwiftUI `TextField` on the vertical axis. Fixed `rows` go through the
+ * universal `numberOfLines`; auto-grow adds `lineLimit(min...max)`, which
+ * the universal props cannot express. The hint (error, description, counter)
+ * is a SwiftUI `accessibilityHint` modifier. iOS has no native error state:
+ * the error reaches VoiceOver through that hint and the Field's message.
+ *
+ * Android: Material 3 `OutlinedTextField` from `@expo/ui/jetpack-compose`,
+ * not the universal `TextInput`. The universal Android field is an
+ * undecorated `BasicTextField` with equal min and max lines and no error
+ * state; the outlined field draws the outline, sets `isError` and takes
+ * separate `minLines`/`maxLines`.
+ *
+ * Rows follow the system font size on both. This fork exists because those
+ * modifiers and Compose views load native modules, so the web file
+ * (`Textarea.tsx`) cannot import them.
  */
 export function Textarea({
   rows,minRows,maxRows,maxLength,showCount=false,countThreshold,countLabel,
@@ -57,15 +79,14 @@ export function Textarea({
   },[value,text]);
   const onText=(next:string)=>{sent.current=next;counter.track(next);onChangeText?.(next);};
 
-  const swift=useRef<SwiftUITextFieldRef>(null);
+  const universal=useRef<TextInputRef>(null);
   const compose=useRef<ComposeTextFieldRef>(null);
   const focused=useRef(false);
   useImperativeHandle(ref,()=>{
-    const native=Platform.OS==="android"?compose:swift;
     return {
-      focus:()=>{void native.current?.focus();},
-      blur:()=>{void native.current?.blur();},
-      clear:()=>{void native.current?.clear();},
+      focus:()=>{void (Platform.OS==="android"?compose.current:universal.current)?.focus();},
+      blur:()=>{void (Platform.OS==="android"?compose.current:universal.current)?.blur();},
+      clear:()=>{void (Platform.OS==="android"?compose.current:universal.current)?.clear();},
       isFocused:()=>focused.current,
     } as unknown as ComponentRef<typeof TextInput>;
   },[]);
@@ -84,7 +105,7 @@ export function Textarea({
   );
 
   const native=Platform.OS==="android"
-    ? <ComposeTextField ref={compose} value={text} onValueChange={onText} onFocusChanged={onFocusChange}
+    ? <ComposeTextField ref={compose} value={text as unknown as ComposeTextFieldState} onValueChange={onText} onFocusChanged={onFocusChange}
         enabled={!off} isError={bad} singleLine={false} minLines={bounds.min} maxLines={bounds.max}
         maxLength={maxLength} autoFocus={autoFocus}
         modifiers={[
@@ -94,14 +115,14 @@ export function Textarea({
         ]}>
         {placeholder?<ComposeTextField.Placeholder><ComposeText>{placeholder}</ComposeText></ComposeTextField.Placeholder>:null}
       </ComposeTextField>
-    : <SwiftUITextField ref={swift} text={text} onTextChange={onText} onFocusChange={onFocusChange}
-        axis="vertical" placeholder={placeholder} maxLength={maxLength} autoFocus={autoFocus} testID={testID}
+    : <UniversalTextInput ref={universal} value={text} onChangeText={onText} multiline
+        numberOfLines={bounds.autoGrow?undefined:bounds.min} maxLength={maxLength} editable={!off}
+        accessibilityLabel={label} placeholder={placeholder} autoFocus={autoFocus} testID={testID}
+        onFocus={()=>onFocusChange(true)} onBlur={()=>onFocusChange(false)}
         modifiers={[
           textFieldStyle(styled?"roundedBorder":"automatic"),
-          bounds.autoGrow?lineLimit({min:bounds.min,max:bounds.max}):lineLimit(bounds.min,{reservesSpace:true}),
-          ...(label?[swiftUILabel(label)]:[]),
+          ...(bounds.autoGrow?[lineLimit({min:bounds.min,max:bounds.max})]:[]),
           ...(hint?[swiftUIHint(hint)]:[]),
-          ...(off?[swiftUIDisabled(true)]:[]),
         ]}/>;
 
   return (

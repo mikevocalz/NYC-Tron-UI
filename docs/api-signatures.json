@@ -80,6 +80,9 @@
             "DeviceFamily": [
               "@nyc-tron/core/dist/navigation.d.ts#DeviceFamily"
             ],
+            "EXPO_UI_TOKEN_MAP": [
+              "@nyc-tron/core/dist/theme.d.ts#EXPO_UI_TOKEN_MAP"
+            ],
             "FoldFeature": [
               "@nyc-tron/core/dist/folds.d.ts#FoldFeature"
             ],
@@ -205,6 +208,9 @@
             ],
             "advancedNativeCatalog": [
               "@nyc-tron/core/dist/advanced-catalog.d.ts#advancedNativeCatalog"
+            ],
+            "expoUiCssVariables": [
+              "@nyc-tron/core/dist/theme.d.ts#expoUiCssVariables"
             ],
             "foldFeaturesFromRegions": [
               "@nyc-tron/core/dist/folds.d.ts#foldFeaturesFromRegions"
@@ -596,6 +602,9 @@
             "default": "./dist/theme.js"
           },
           "symbols": {
+            "EXPO_UI_TOKEN_MAP": [
+              "@nyc-tron/core/dist/theme.d.ts#EXPO_UI_TOKEN_MAP"
+            ],
             "TRON_NATIVE_METRICS": [
               "@nyc-tron/core/dist/theme.d.ts#TRON_NATIVE_METRICS"
             ],
@@ -616,6 +625,9 @@
             ],
             "TronThemeShape": [
               "@nyc-tron/core/dist/theme.d.ts#TronThemeShape"
+            ],
+            "expoUiCssVariables": [
+              "@nyc-tron/core/dist/theme.d.ts#expoUiCssVariables"
             ],
             "themeCssVariables": [
               "@nyc-tron/core/dist/theme.d.ts#themeCssVariables"
@@ -16799,16 +16811,18 @@
       ],
       "./components/forms/Checkbox": [
         {
-          "target": "./dist/components/forms/Checkbox.web.d.ts",
+          "target": "./dist/components/forms/Checkbox.d.ts",
           "conditions": {
-            "types": "./dist/components/forms/Checkbox.web.d.ts",
-            "browser": "./dist/components/forms/Checkbox.web.js",
+            "types": "./dist/components/forms/Checkbox.d.ts",
+            "qnx": "./dist/components/forms/Checkbox.kit.js",
+            "marathon": "./dist/components/forms/Checkbox.kit.js",
+            "browser": "./dist/components/forms/Checkbox.js",
             "react-native": "./dist/components/forms/Checkbox.native.js",
-            "default": "./dist/components/forms/Checkbox.web.js"
+            "default": "./dist/components/forms/Checkbox.js"
           },
           "symbols": {
             "Checkbox": [
-              "@nyc-tron/ui/dist/components/forms/Checkbox.web.d.ts#Checkbox"
+              "@nyc-tron/ui/dist/components/forms/Checkbox.d.ts#Checkbox"
             ],
             "CheckboxProps": [
               "@nyc-tron/ui/dist/components/forms/Checkbox.types.d.ts#CheckboxProps"
@@ -16900,16 +16914,18 @@
       ],
       "./components/forms/Switch": [
         {
-          "target": "./dist/components/forms/Switch.web.d.ts",
+          "target": "./dist/components/forms/Switch.d.ts",
           "conditions": {
-            "types": "./dist/components/forms/Switch.web.d.ts",
-            "browser": "./dist/components/forms/Switch.web.js",
+            "types": "./dist/components/forms/Switch.d.ts",
+            "qnx": "./dist/components/forms/Switch.kit.js",
+            "marathon": "./dist/components/forms/Switch.kit.js",
+            "browser": "./dist/components/forms/Switch.js",
             "react-native": "./dist/components/forms/Switch.native.js",
-            "default": "./dist/components/forms/Switch.web.js"
+            "default": "./dist/components/forms/Switch.js"
           },
           "symbols": {
             "Switch": [
-              "@nyc-tron/ui/dist/components/forms/Switch.web.d.ts#Switch"
+              "@nyc-tron/ui/dist/components/forms/Switch.d.ts#Switch"
             ],
             "SwitchProps": [
               "@nyc-tron/ui/dist/components/forms/Switch.types.d.ts#SwitchProps"
@@ -16922,19 +16938,21 @@
       ],
       "./components/forms/Textarea": [
         {
-          "target": "./dist/components/forms/Textarea.web.d.ts",
+          "target": "./dist/components/forms/Textarea.d.ts",
           "conditions": {
-            "types": "./dist/components/forms/Textarea.web.d.ts",
-            "browser": "./dist/components/forms/Textarea.web.js",
+            "types": "./dist/components/forms/Textarea.d.ts",
+            "qnx": "./dist/components/forms/Textarea.kit.js",
+            "marathon": "./dist/components/forms/Textarea.kit.js",
+            "browser": "./dist/components/forms/Textarea.js",
             "react-native": "./dist/components/forms/Textarea.native.js",
-            "default": "./dist/components/forms/Textarea.web.js"
+            "default": "./dist/components/forms/Textarea.js"
           },
           "symbols": {
             "CounterState": [
               "@nyc-tron/ui/dist/components/forms/field-model.d.ts#CounterState"
             ],
             "Textarea": [
-              "@nyc-tron/ui/dist/components/forms/Textarea.web.d.ts#Textarea"
+              "@nyc-tron/ui/dist/components/forms/Textarea.d.ts#Textarea"
             ],
             "TextareaProps": [
               "@nyc-tron/ui/dist/components/forms/Textarea.types.d.ts#TextareaProps"
@@ -17397,6 +17415,27 @@
             ],
             "createPortalStore": [
               "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#createPortalStore"
+            ]
+          }
+        }
+      ],
+      "./components/overlays/Sheet": [
+        {
+          "target": "./dist/components/overlays/Sheet.d.ts",
+          "conditions": {
+            "types": "./dist/components/overlays/Sheet.d.ts",
+            "react-native": "./dist/components/overlays/Sheet.js",
+            "default": "./dist/components/overlays/Sheet.js"
+          },
+          "symbols": {
+            "Sheet": [
+              "@nyc-tron/ui/dist/components/overlays/Sheet.d.ts#Sheet"
+            ],
+            "SheetProps": [
+              "@nyc-tron/ui/dist/components/overlays/Sheet.types.d.ts#SheetProps"
+            ],
+            "SheetSnapPoint": [
+              "@nyc-tron/ui/dist/components/overlays/sheet-model.d.ts#SheetSnapPoint"
             ]
           }
         }
@@ -20025,6 +20064,14 @@
         "@nyc-tron/core/dist/spatial.d.ts#SpatialPanelSpec"
       ]
     },
+    "@nyc-tron/core/dist/theme.d.ts#EXPO_UI_TOKEN_MAP": {
+      "signatures": [
+        "export declare const EXPO_UI_TOKEN_MAP: Readonly<{\n    readonly \"--expo-ui-background\": \"surfaceSunken\";\n    readonly \"--expo-ui-foreground\": \"text\";\n    readonly \"--expo-ui-gray-200\": \"border\";\n    readonly \"--expo-ui-gray-300\": \"textMuted\";\n    readonly \"--expo-ui-gray-500\": \"textMuted\";\n    readonly \"--expo-ui-gray-900\": \"text\";\n    readonly \"--expo-ui-primary-500\": \"primary\";\n}>;"
+      ],
+      "references": [
+        "typescript@6.0.3/lib/lib.es5.d.ts#Readonly"
+      ]
+    },
     "@nyc-tron/core/dist/theme.d.ts#TRON_NATIVE_METRICS": {
       "signatures": [
         "export declare const TRON_NATIVE_METRICS: readonly [\n    \"shape.borderWidth\",\n    \"density\",\n    \"motion.fastMs\",\n    \"motion.standardMs\"\n];"
@@ -20076,6 +20123,16 @@
         "export interface TronThemeShape {\n    readonly controlRadius: number;\n    readonly cardRadius: number;\n    readonly borderWidth: number;\n    readonly surfaceRadius: number;\n}"
       ],
       "references": []
+    },
+    "@nyc-tron/core/dist/theme.d.ts#expoUiCssVariables": {
+      "signatures": [
+        "export declare function expoUiCssVariables(theme: TronTheme): Readonly<Record<string, string>>;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/theme.d.ts#TronTheme",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Readonly",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Record"
+      ]
     },
     "@nyc-tron/core/dist/theme.d.ts#themeCssVariables": {
       "signatures": [
@@ -45634,9 +45691,20 @@
         "@nyc-tron/ui/dist/components/forge/waveform.d.ts#WaveformRange"
       ]
     },
+    "@nyc-tron/ui/dist/components/forms/Checkbox.d.ts#Checkbox": {
+      "signatures": [
+        "export declare function Checkbox(props: CheckboxProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/Checkbox.types.d.ts#CheckboxProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
     "@nyc-tron/ui/dist/components/forms/Checkbox.types.d.ts#CheckboxProps": {
       "signatures": [
-        "export interface CheckboxProps extends Omit<PressableProps, \"children\" | \"disabled\" | \"onPress\" | \"style\"> {\n    ref?: Ref<ComponentRef<typeof View>>;\n    checked: CheckedState;\n    onCheckedChange: (next: boolean) => void;\n    label?: string;\n    description?: string;\n    error?: string;\n    disabled?: boolean;\n    colorScheme?: \"light\" | \"dark\";\n    style?: StyleProp<ViewStyle>;\n    className?: string;\n    rowClassName?: string;\n    boxClassName?: string;\n    markClassName?: string;\n    labelClassName?: string;\n    descriptionClassName?: string;\n    errorClassName?: string;\n    unstyled?: boolean;\n}"
+        "export interface CheckboxProps extends Omit<PressableProps, \"children\" | \"disabled\" | \"onPress\" | \"style\"> {\n    ref?: Ref<ComponentRef<typeof View>>;\n    checked: CheckedState;\n    onCheckedChange: (next: boolean) => void;\n    label?: string;\n    description?: string;\n    error?: string;\n    disabled?: boolean;\n    colorScheme?: \"light\" | \"dark\";\n    color?: ColorValue;\n    style?: StyleProp<ViewStyle>;\n    className?: string;\n    rowClassName?: string;\n    boxClassName?: string;\n    markClassName?: string;\n    labelClassName?: string;\n    descriptionClassName?: string;\n    errorClassName?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
         "@nyc-tron/ui/dist/components/forms/toggle-model.d.ts#CheckedState",
@@ -45644,20 +45712,10 @@
         "@types/react@19.3.0/index.d.ts#React.Ref",
         "react-native@0.88.1/types_generated/Libraries/Components/Pressable/Pressable.d.ts#PressableProps",
         "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View",
+        "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheet.d.ts#ColorValue",
         "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts#StyleProp",
         "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts#ViewStyle",
         "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
-      ]
-    },
-    "@nyc-tron/ui/dist/components/forms/Checkbox.web.d.ts#Checkbox": {
-      "signatures": [
-        "export declare function Checkbox({ ref, checked, onCheckedChange, label, description, error, disabled, colorScheme: _colorScheme, style, className, rowClassName, boxClassName, markClassName, labelClassName, descriptionClassName, errorClassName, unstyled, ...rest }: CheckboxProps): import(\"react\").JSX.Element;"
-      ],
-      "references": [
-        "@nyc-tron/ui/dist/components/forms/Checkbox.types.d.ts#CheckboxProps",
-        "@types/react@19.3.0/index.d.ts#$module",
-        "@types/react@19.3.0/index.d.ts#React.JSX",
-        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
       ]
     },
     "@nyc-tron/ui/dist/components/forms/Field.d.ts#Field": {
@@ -45820,9 +45878,20 @@
         "@types/react@19.3.0/index.d.ts#React.JSX.Element"
       ]
     },
+    "@nyc-tron/ui/dist/components/forms/Switch.d.ts#Switch": {
+      "signatures": [
+        "export declare function Switch({ ref, value, onValueChange, label, size, disabled, animationMs, colorScheme, color, style, className, labelClassName, unstyled, testID, accessibilityLabel, }: SwitchProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/Switch.types.d.ts#SwitchProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
     "@nyc-tron/ui/dist/components/forms/Switch.types.d.ts#SwitchProps": {
       "signatures": [
-        "export interface SwitchProps extends Omit<PressableProps, \"children\" | \"disabled\" | \"onPress\" | \"style\"> {\n    ref?: Ref<ComponentRef<typeof View>>;\n    value: boolean;\n    onValueChange: (next: boolean) => void;\n    label?: string;\n    size?: SwitchSize;\n    disabled?: boolean;\n    animationMs?: number;\n    colorScheme?: \"light\" | \"dark\";\n    style?: StyleProp<ViewStyle>;\n    className?: string;\n    trackClassName?: string;\n    thumbClassName?: string;\n    labelClassName?: string;\n    unstyled?: boolean;\n}"
+        "export interface SwitchProps extends Omit<PressableProps, \"children\" | \"disabled\" | \"onPress\" | \"style\"> {\n    ref?: Ref<ComponentRef<typeof View>>;\n    value: boolean;\n    onValueChange: (next: boolean) => void;\n    label?: string;\n    size?: SwitchSize;\n    disabled?: boolean;\n    animationMs?: number;\n    colorScheme?: \"light\" | \"dark\";\n    color?: ColorValue;\n    style?: StyleProp<ViewStyle>;\n    className?: string;\n    trackClassName?: string;\n    thumbClassName?: string;\n    labelClassName?: string;\n    unstyled?: boolean;\n}"
       ],
       "references": [
         "@nyc-tron/ui/dist/components/forms/toggle-model.d.ts#SwitchSize",
@@ -45830,17 +45899,18 @@
         "@types/react@19.3.0/index.d.ts#React.Ref",
         "react-native@0.88.1/types_generated/Libraries/Components/Pressable/Pressable.d.ts#PressableProps",
         "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View",
+        "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheet.d.ts#ColorValue",
         "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts#StyleProp",
         "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts#ViewStyle",
         "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
       ]
     },
-    "@nyc-tron/ui/dist/components/forms/Switch.web.d.ts#Switch": {
+    "@nyc-tron/ui/dist/components/forms/Textarea.d.ts#Textarea": {
       "signatures": [
-        "export declare function Switch({ ref, value, onValueChange, label, size, disabled, animationMs, colorScheme: _colorScheme, style, className, trackClassName, thumbClassName, labelClassName, unstyled, ...rest }: SwitchProps): import(\"react\").JSX.Element;"
+        "export declare function Textarea({ rows, minRows, maxRows, maxLength, showCount, countThreshold, countLabel, invalid, disabled, editable, lineHeight, inset, colorScheme, className, counterClassName, unstyled, value, defaultValue, onChangeText, onFocus, onBlur, placeholder, autoFocus, autoCapitalize, autoCorrect, keyboardType, selectTextOnFocus, placeholderTextColor, selectionColor, cursorColor, testID, accessibilityLabel, ref, }: TextareaProps): import(\"react\").JSX.Element;"
       ],
       "references": [
-        "@nyc-tron/ui/dist/components/forms/Switch.types.d.ts#SwitchProps",
+        "@nyc-tron/ui/dist/components/forms/Textarea.types.d.ts#TextareaProps",
         "@types/react@19.3.0/index.d.ts#$module",
         "@types/react@19.3.0/index.d.ts#React.JSX",
         "@types/react@19.3.0/index.d.ts#React.JSX.Element"
@@ -45857,17 +45927,6 @@
         "react-native@0.88.1/types_generated/Libraries/Components/TextInput/TextInput.d.ts#$$TextInput",
         "react-native@0.88.1/types_generated/Libraries/Components/TextInput/TextInput.flow.d.ts#TextInputProps",
         "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
-      ]
-    },
-    "@nyc-tron/ui/dist/components/forms/Textarea.web.d.ts#Textarea": {
-      "signatures": [
-        "export declare function Textarea({ rows, minRows, maxRows, maxLength, showCount, countThreshold, countLabel, invalid, disabled, editable, lineHeight, inset, colorScheme: _colorScheme, className, inputClassName, counterClassName, unstyled, value, defaultValue, onChangeText, onContentSizeChange, style, ...props }: TextareaProps): import(\"react\").JSX.Element;"
-      ],
-      "references": [
-        "@nyc-tron/ui/dist/components/forms/Textarea.types.d.ts#TextareaProps",
-        "@types/react@19.3.0/index.d.ts#$module",
-        "@types/react@19.3.0/index.d.ts#React.JSX",
-        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
       ]
     },
     "@nyc-tron/ui/dist/components/forms/choice-keys.d.ts#ChoiceAxis": {
@@ -46588,6 +46647,29 @@
         "@types/react@19.3.0/index.d.ts#React.ReactNode"
       ]
     },
+    "@nyc-tron/ui/dist/components/overlays/Sheet.d.ts#Sheet": {
+      "signatures": [
+        "export declare function Sheet({ ref, open, onOpenChange, title, children, snapPoints, dismissible, closeLabel, closeIcon, colorScheme, testID, className, headerClassName, titleClassName, closeClassName, bodyClassName, unstyled, }: SheetProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/overlays/Sheet.types.d.ts#SheetProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/overlays/Sheet.types.d.ts#SheetProps": {
+      "signatures": [
+        "export interface SheetProps {\n    ref?: Ref<ComponentRef<typeof View>>;\n    open: boolean;\n    onOpenChange: (open: boolean) => void;\n    title: string;\n    children?: ReactNode;\n    snapPoints?: readonly SheetSnapPoint[];\n    dismissible?: boolean;\n    closeLabel: string;\n    closeIcon?: ReactNode;\n    colorScheme?: \"light\" | \"dark\";\n    testID?: string;\n    className?: string;\n    headerClassName?: string;\n    titleClassName?: string;\n    closeClassName?: string;\n    bodyClassName?: string;\n    unstyled?: boolean;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/overlays/sheet-model.d.ts#SheetSnapPoint",
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.ReactNode",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View"
+      ]
+    },
     "@nyc-tron/ui/dist/components/overlays/anchored-popover-types.d.ts#PopoverAnchorProps": {
       "signatures": [
         "export interface PopoverAnchorProps extends PopoverBaseProps {\n    readonly anchor: Rect2D;\n    readonly usableRegions: readonly Rect2D[];\n    readonly trigger?: undefined;\n}"
@@ -46795,6 +46877,12 @@
       "references": [
         "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#PortalStore"
       ]
+    },
+    "@nyc-tron/ui/dist/components/overlays/sheet-model.d.ts#SheetSnapPoint": {
+      "signatures": [
+        "export type SheetSnapPoint = \"half\" | \"full\" | {\n    fraction: number;\n} | {\n    height: number;\n};"
+      ],
+      "references": []
     },
     "@nyc-tron/ui/dist/components/overlays/useTriggerAnchor.d.ts#TriggerAnchor": {
       "signatures": [
@@ -49558,6 +49646,15 @@
       "symbol": "style",
       "signatures": [
         "style?: ViewStyleProp | undefined;"
+      ]
+    },
+    "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheet.d.ts#ColorValue": {
+      "package": "react-native",
+      "version": "0.88.1",
+      "file": "types_generated/Libraries/StyleSheet/StyleSheet.d.ts",
+      "symbol": "ColorValue",
+      "signatures": [
+        "export type ColorValue = ____ColorValue_Internal;"
       ]
     },
     "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts#DimensionValue": {

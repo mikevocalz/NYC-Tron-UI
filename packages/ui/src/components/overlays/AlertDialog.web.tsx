@@ -1,4 +1,10 @@
-// Behaviour adapted from NYC-MON packages/ui/ConfirmDestructive.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/ConfirmDestructive.tsx (MIT),
+ * mikevocalz/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907.
+ * Copyright (c) 2025 Gursel Cakar, MIT. Notices: THIRD_PARTY_NOTICES.md.
+ * Modified for NYC-Tron UI (2026-11): confirm dialog built on the kit Dialog
+ * with alertdialog role and Tron Buttons.
+ */
 import {useLayoutEffect,useRef,type ComponentRef} from "react";
 import type {Pressable} from "react-native";
 import {Button} from "../Button.tsx";

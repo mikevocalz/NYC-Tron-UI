@@ -17,6 +17,21 @@ This file is a record of provenance, not legal advice or a legal sign-off.
   `packages/core/src/navigation.ts` (derived from the pinned
   `mikevocalz-foldable-layouts` skill, section 2), and the reserved-regions
   hook, override and native modules in `packages/reserved-regions`.
+  The form, overlay and feedback components in `packages/ui/src/components`,
+  adapted from NYC-MON commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907 (each
+  file's header names its source and the changes):
+  `forms/Field.tsx`, `forms/field-model.ts`, `forms/Switch.tsx`,
+  `forms/Switch.native.tsx`, `forms/Switch.kit.tsx`, `forms/Checkbox.tsx`,
+  `forms/Checkbox.native.tsx`, `forms/Checkbox.kit.tsx`, `forms/Textarea.tsx`,
+  `forms/Textarea.native.tsx`, `forms/Textarea.kit.tsx`,
+  `forms/Textarea.shared.tsx`, `forms/Textarea.types.ts`,
+  `overlays/Dialog.web.tsx`, `overlays/Dialog.native.tsx`,
+  `overlays/Dialog.types.ts`, `overlays/dialog-model.ts`,
+  `overlays/AlertDialog.web.tsx`, `overlays/AlertDialog.native.tsx`,
+  `overlays/AlertDialog.types.ts`, `overlays/Sheet.tsx`,
+  `overlays/Sheet.types.ts`, `overlays/sheet-model.ts`,
+  `feedback/ProgressBar.shared.tsx`, `feedback/progress-model.ts`,
+  `feedback/Toast.shared.tsx` and `feedback/toast-model.ts`.
   License: MIT, Copyright (c) 2025 Gursel Cakar. Text preserved verbatim in
   `licenses/NYC-MON-MIT.txt`.
 - NeonBlade UI (https://github.com/vprix21/neonblade-ui), MIT, Copyright (c)

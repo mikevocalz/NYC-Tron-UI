@@ -9,6 +9,9 @@ import { createPortalStore } from "../src/components/overlays/portal-store.ts";
 
 const pkg=JSON.parse(readFileSync(new URL("../package.json",import.meta.url),"utf8"));
 const src=p=>readFileSync(new URL("../src/components/overlays/"+p,import.meta.url),"utf8");
+/** The block-comment header of a ported file, unwrapped to one line ("" when there is none). */
+const header=text=>{const m=text.match(/^\/\*\n([\s\S]*?)\n \*\/\n/);return m?m[1].replace(/^ \* ?/gm,"").replace(/\n/g," "):"";};
+const PROVENANCE=/^Behaviour adapted from NYC-MON packages\/ui\/\S+.* \(MIT\), mikevocalz\/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907\. Copyright \(c\) 2025 Gursel Cakar, MIT\. Notices: THIRD_PARTY_NOTICES\.md\. Modified for NYC-Tron UI \(2026-11\): \S/;
 
 test("close requests: busy blocks everything, actions always close, the rest follow dismissible",()=>{
   for(const reason of ["backdrop","escape","back","action"]){
@@ -154,7 +157,7 @@ test("Dialog and AlertDialog forks: same runtime names, native forks on @expo/ui
     assert.deepEqual(valueExports(native),valueExports(web),name);
     assert.deepEqual(valueExports(web),[name]);
     assert.ok(native.includes('from "@expo/ui"'),name+" Host");
-    assert.ok(native.includes('from "@expo/ui/swift-ui"'),name+" SwiftUI");
+    assert.ok(native.includes('from "@expo/ui/swift-ui'),name+" SwiftUI");
     assert.ok(native.includes('from "@expo/ui/jetpack-compose"'),name+" Compose");
     assert.ok(!web.includes("@expo/ui"),name+" web fork stays RN-only");
     assert.ok(native.includes(`from "./${name}.web.tsx"`),name+" kit fallback for hosts without Expo UI");
@@ -162,6 +165,11 @@ test("Dialog and AlertDialog forks: same runtime names, native forks on @expo/ui
   }
   const dialogNative=src("Dialog.native.tsx");
   assert.ok(dialogNative.includes("BasicAlertDialog")&&dialogNative.includes("BottomSheet"));
+  assert.match(dialogNative,/import \{BottomSheet,Host,RNHostView\} from "@expo\/ui";/,"iOS uses the universal BottomSheet");
+  assert.ok(!/BottomSheet[^\n]*from "@expo\/ui\/swift-ui"/.test(dialogNative),"not the SwiftUI-only sheet");
+  assert.ok(dialogNative.includes("contentPadding={0}"),"the panel's token padding, not the sheet's 16pt inset");
+  assert.ok(dialogNative.includes("modifiers={[interactiveDismissDisabled(holdOpen)]}"));
+  assert.ok(dialogNative.includes("showDragIndicator={!holdOpen}"));
   assert.ok(dialogNative.includes("interactiveDismissDisabled"),"iOS sheet holds when not dismissible");
   assert.ok(dialogNative.includes("composeDialogProperties"),"Android back/outside follow the rules");
   const alertNative=src("AlertDialog.native.tsx");
@@ -172,7 +180,11 @@ test("Dialog and AlertDialog forks: same runtime names, native forks on @expo/ui
 
 test("kit Dialog source contract: modal semantics, keyboard, focus, tokens",()=>{
   const web=src("Dialog.web.tsx");
-  assert.match(web,/^\/\/ Behaviour adapted from NYC-MON packages\/ui\/Dialog\.tsx \(MIT\)\./);
+  for(const file of ["Dialog.web.tsx","Dialog.native.tsx","Dialog.types.ts","dialog-model.ts",
+    "AlertDialog.web.tsx","AlertDialog.native.tsx","AlertDialog.types.ts"]){
+    assert.match(header(src(file)),PROVENANCE,file+" provenance names source, upstream commit, copyright and changes");
+  }
+  assert.match(header(web),/^Behaviour adapted from NYC-MON packages\/ui\/Dialog\.tsx \(MIT\)/);
   for(const needle of ["role={role}","aria-modal","aria-labelledby={titleId}","accessibilityViewIsModal",
     'accessibilityRole="header"',"accessibilityState={{busy}}","onAccessibilityEscape","onRequestClose={onRequestClose}",
     'data.key==="Escape"','data.key!=="Tab"',"cycleFocusIndex(","useRestoreFocus(open)","TABBABLE_SELECTOR",

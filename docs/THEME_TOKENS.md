@@ -112,6 +112,68 @@ appearances, which is fine for dividers but below the 3:1 WCAG 1.4.11 asks
 for when a border is the only visible edge of an input; raise it in your
 palette if you rely on borders alone to show a text field.
 
+## Expo UI universal components on web
+
+On web, `Switch`, `Checkbox`, `Textarea` and `Sheet` render @expo/ui's
+universal components, which do not read the `--color-*` tokens. They read
+`--expo-ui-*` variables that their `Host` declares in its own stylesheet, with
+fixed light and dark values. These are the variables the four components use,
+and the Tron token each one takes:
+
+| `--expo-ui-*` variable | Read by | Tron token |
+| --- | --- | --- |
+| `--expo-ui-primary-500` | Switch track (on), Checkbox box (checked), TextInput focus border | `--color-primary` (`primary`) |
+| `--expo-ui-gray-300` | Switch track (off), Checkbox border (unchecked) | `--color-text-muted` (`textMuted`) |
+| `--expo-ui-gray-200` | TextInput border | `--color-border` (`border`) |
+| `--expo-ui-gray-500` | TextInput placeholder | `--color-text-muted` (`textMuted`) |
+| `--expo-ui-gray-900` | TextInput text | `--color-text` (`text`) |
+| `--expo-ui-background` | TextInput fill, Checkbox box (unchecked) | `--color-surface-sunken` (`surfaceSunken`) |
+| `--expo-ui-foreground` | Switch and Checkbox built-in label text | `--color-text` (`text`) |
+
+NYC-Tron's components set these on their own `Host` element, so they follow
+the app's tokens with no extra CSS (`expoUiWebHostStyle` in
+`packages/ui/src/components/expo-ui-web-model.ts`). When an app passes an
+explicit `color` to `Switch` or `Checkbox`, that color becomes the Host's
+`seedColor` and replaces `--color-primary` for that control.
+
+An app that renders @expo/ui's universal components itself can map them in
+its global stylesheet. Each value is a Tron variable, so the one block follows
+the app's light and dark tokens. `!important` is needed because the Host's
+stylesheet loads after the app's and writes the primary scale inline; the `*`
+rule also overrides any `seedColor` the app sets.
+
+```css
+:root,
+[data-theme] {
+  --expo-ui-background: var(--color-surface-sunken) !important;
+  --expo-ui-foreground: var(--color-text) !important;
+  --expo-ui-gray-200: var(--color-border) !important;
+  --expo-ui-gray-300: var(--color-text-muted) !important;
+  --expo-ui-gray-500: var(--color-text-muted) !important;
+  --expo-ui-gray-900: var(--color-text) !important;
+}
+
+* {
+  --expo-ui-primary-500: var(--color-primary) !important;
+}
+```
+
+`expoUiCssVariables(theme)` in `@nyc-tron/core/theme` returns the same map
+with a validated theme's literal colors, for a host element that cannot use
+the CSS variables.
+
+The universal `BottomSheet` reads none of these variables. Its web panel is
+white, or black in dark mode, and its grabber is drawn for a light panel.
+`Sheet` passes `containerColor="var(--color-surface-raised)"` so the panel
+takes the app's surface; the grabber color does not follow it and can be
+faint on a dark surface. On iOS and Android the sheet chrome is the
+platform's, and Tron's content inside it is token styled.
+
+Known limit: the Switch thumb and the Checkbox check mark are white. With a
+light `primary` (the reference dark value is `#7aa7ff`) they are low
+contrast; pass a darker `color` or a darker dark-mode `primary` if that
+matters for your palette.
+
 ## Decision records
 
 **2026-11-04: align `TronTheme` keys with the class tokens (BUILD).**
@@ -141,3 +203,14 @@ uncolored. Reference values are 6.45:1 (info) and 5.38:1 (success) on
 text colors, though the components only use them for borders and marks.
 
 Recovery phase 5 consumers: WorkspaceHost, WorkspacePresetSwitcher, ContextualToolbar, FileImportExportSheet, ColorPickerDialog and presenter ink chrome use the existing surface/text/primary/accent/border/danger/focus tokens. Presenter stroke colors are document/session values supplied by the app; they are not theme defaults. No new global tokens were added.
+
+**2026-11-27: map @expo/ui's web variables onto the Tron tokens (BUILD).**
+Switch, Checkbox, Textarea and the new Sheet render @expo/ui's universal
+components on web, as NYC-MON does, instead of NYC-Tron's own web forks.
+Those components color themselves from `--expo-ui-*` variables with fixed
+values, so a Tron theme would not reach them. Each component writes the
+mapping in "Expo UI universal components on web" onto its own Host, the same
+mapping is published as CSS for apps that use @expo/ui directly and as
+`EXPO_UI_TOKEN_MAP` / `expoUiCssVariables` in core, and
+`packages/core/tests/expo-ui-theme.test.mjs` fails if the CSS block and the
+map disagree. No new Tron tokens were added.

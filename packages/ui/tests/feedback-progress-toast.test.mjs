@@ -342,9 +342,15 @@ test("feedback files use only react, react-native, @expo/ui and local modules",(
     assert.ok(!/\b(?:pl|pr)-\d/.test(text),`${file}: use logical ps-/pe-`);
   }
   for(const model of ["progress-model.ts","toast-model.ts"])assert.ok(!/from\s+"react/.test(src(model)),`${model} stays pure`);
-  assert.match(src("progress-model.ts"),/^\/\/ Behaviour adapted from NYC-MON packages\/ui\/progress\/progress-model\.ts \(MIT\)\./);
-  assert.match(src("ProgressBar.shared.tsx"),/^\/\/ Behaviour adapted from NYC-MON packages\/ui\/progress\/ProgressBar\.tsx \(MIT\)\./);
-  assert.match(src("Toast.shared.tsx"),/^\/\/ Behaviour adapted from NYC-MON packages\/ui\/Toast\.tsx and ToastCard\.tsx \(MIT\)\./);
+  // Block-comment provenance header, unwrapped to one line.
+  const header=text=>{const m=text.match(/^\/\*\n([\s\S]*?)\n \*\/\n/);return m?m[1].replace(/^ \* ?/gm,"").replace(/\n/g," "):"";};
+  const upstream=/ \(MIT\), mikevocalz\/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907\. Copyright \(c\) 2025 Gursel Cakar, MIT\. Notices: THIRD_PARTY_NOTICES\.md\. Modified for NYC-Tron UI \(2026-11\): \S/;
+  for(const [file,source] of [["progress-model.ts","packages/ui/progress/progress-model.ts"],["ProgressBar.shared.tsx","packages/ui/progress/ProgressBar.tsx"],
+    ["Toast.shared.tsx","packages/ui/Toast.tsx and packages/ui/ToastCard.tsx"],["toast-model.ts","packages/ui/Toast.tsx and packages/ui/ToastCard.tsx"]]){
+    const h=header(src(file));
+    assert.ok(h.startsWith("Behaviour adapted from NYC-MON "+source),`${file} names its source`);
+    assert.match(h,upstream,`${file} names the upstream commit, copyright and changes`);
+  }
 });
 
 test("progress semantics: progressbar role, busy state, value, label in words",()=>{

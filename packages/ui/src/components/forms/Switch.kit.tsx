@@ -1,4 +1,10 @@
-// Behaviour adapted from NYC-MON packages/ui/cards/NeonSwitch.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/cards/NeonSwitch.tsx (MIT),
+ * mikevocalz/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907.
+ * Copyright (c) 2025 Gursel Cakar, MIT. Notices: THIRD_PARTY_NOTICES.md.
+ * Modified for NYC-Tron UI (2026-11): plain token-styled switch for hosts
+ * without Expo UI (QNX, Marathon); NYC-MON neon styling removed.
+ */
 import { useEffect, useState } from "react";
 import {
   AccessibilityInfo, Animated, Easing, Platform, Pressable, Text, View,
@@ -32,9 +38,12 @@ function useReduceMotion():boolean{
  * with the `switch` role and `checked` state. On web Space and Enter toggle.
  * The thumb's position is set with `marginStart`, so it mirrors in RTL and
  * on/off is shown by position as well as by the track fill.
+ *
+ * Kit implementation for hosts without Expo UI (QNX, Marathon); web, iOS and
+ * Android use @expo/ui's universal Switch (`Switch.tsx`, `Switch.native.tsx`).
  */
 export function Switch({
-  ref,value,onValueChange,label,size="md",disabled=false,animationMs=150,colorScheme:_colorScheme,style,
+  ref,value,onValueChange,label,size="md",disabled=false,animationMs=150,colorScheme:_colorScheme,color:_color,style,
   className,trackClassName,thumbClassName,labelClassName,unstyled=false,...rest
 }:SwitchProps){
   const name=requireName("Switch",label,rest.accessibilityLabel);

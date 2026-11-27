@@ -592,6 +592,7 @@
     "./components/overlays/CommandPopover",
     "./components/overlays/Dialog",
     "./components/overlays/Portal",
+    "./components/overlays/Sheet",
     "./components/overlays/anchored-popover-types",
     "./components/overlays/command-filter",
     "./components/overlays/focus-cycle",

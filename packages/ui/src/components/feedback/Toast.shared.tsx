@@ -1,4 +1,11 @@
-// Behaviour adapted from NYC-MON packages/ui/Toast.tsx and ToastCard.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/Toast.tsx and
+ * packages/ui/ToastCard.tsx (MIT), mikevocalz/nyc-mon commit
+ * 5ed8cf8322c685c86dbe03f4ac7b801255d1b907. Copyright (c) 2025 Gursel Cakar,
+ * MIT. Notices: THIRD_PARTY_NOTICES.md. Modified for NYC-Tron UI (2026-11):
+ * Tron token classes and the shared toast card; queue rules moved to
+ * toast-model.ts.
+ */
 import { createContext, useContext, useEffect, useMemo, useRef, useSyncExternalStore, type ComponentType, type ReactNode } from "react";
 import { AccessibilityInfo, Animated, Easing, Platform, Pressable, Text, View, type ViewProps } from "react-native";
 import { Button } from "../Button.tsx";

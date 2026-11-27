@@ -1,4 +1,10 @@
-// Behaviour adapted from NYC-MON packages/ui/Dialog.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/Dialog.tsx (MIT),
+ * mikevocalz/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907.
+ * Copyright (c) 2025 Gursel Cakar, MIT. Notices: THIRD_PARTY_NOTICES.md.
+ * Modified for NYC-Tron UI (2026-11): RN Modal centred dialog with Tron
+ * tokens, focus trap and restore, Escape and backdrop rules, reduced motion.
+ */
 import {useId,useLayoutEffect,useRef,useSyncExternalStore,type ComponentRef} from "react";
 import {AccessibilityInfo,Modal,Platform,Pressable,ScrollView,Text,View,type ViewProps} from "react-native";
 import {cycleFocusIndex} from "./focus-cycle.ts";

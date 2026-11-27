@@ -1,4 +1,10 @@
-// Behaviour adapted from NYC-MON packages/ui/Textarea.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/Textarea.tsx (MIT),
+ * mikevocalz/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907.
+ * Copyright (c) 2025 Gursel Cakar, MIT. Notices: THIRD_PARTY_NOTICES.md.
+ * Modified for NYC-Tron UI (2026-11): React Native TextInput for hosts
+ * without Expo UI (QNX, Marathon) with Field wiring, auto-grow and counter.
+ */
 import { useState } from "react";
 import { TextInput, View, useWindowDimensions, type TextInputContentSizeChangeEvent } from "react-native";
 import { joinClasses } from "../styles.ts";
@@ -10,8 +16,8 @@ import { resolveTextareaConfig, type TextareaProps } from "./Textarea.types.ts";
 export type { CounterState, TextareaProps } from "./Textarea.types.ts";
 
 /**
- * Multi-line text input (web fork: React Native Web `TextInput`, a real
- * `<textarea>`). Inside a {@linkcode Field} it takes the Field's label,
+ * Multi-line text input on a React Native `TextInput` (kit implementation
+ * for hosts without Expo UI: QNX, Marathon). Inside a {@linkcode Field} it takes the Field's label,
  * description, error, required and disabled state; on its own, give it an
  * `accessibilityLabel`. Height is measured in rows and follows the system
  * font size; with `minRows`/`maxRows` it grows with its content.

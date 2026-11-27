@@ -1,4 +1,10 @@
-// Behaviour adapted from NYC-MON packages/ui/progress/progress-model.ts (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/progress/progress-model.ts
+ * (MIT), mikevocalz/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907.
+ * Copyright (c) 2025 Gursel Cakar, MIT. Notices: THIRD_PARTY_NOTICES.md.
+ * Modified for NYC-Tron UI (2026-11):
+ * pure range, fraction and accessibility rules split out for unit tests.
+ */
 
 /**
  * Pure logic for Spinner and ProgressBar. No React or React Native import, so

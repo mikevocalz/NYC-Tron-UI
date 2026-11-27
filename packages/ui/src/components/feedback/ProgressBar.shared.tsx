@@ -1,4 +1,11 @@
-// Behaviour adapted from NYC-MON packages/ui/progress/ProgressBar.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/progress/ProgressBar.tsx (MIT),
+ * mikevocalz/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907.
+ * Copyright (c) 2025 Gursel Cakar, MIT. Notices: THIRD_PARTY_NOTICES.md.
+ * Modified for NYC-Tron UI (2026-11): Tron token classes, determinate and
+ * indeterminate bars with progressbar semantics and reduced motion; no
+ * NYC-MON theme or icons.
+ */
 import { useEffect, useRef, useSyncExternalStore } from "react";
 import { AccessibilityInfo, Animated, Easing, Text, View } from "react-native";
 import { joinClasses } from "../styles.ts";

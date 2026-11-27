@@ -101,3 +101,29 @@ export function themeCssVariables(theme:TronTheme):Readonly<Record<string,string
   out[TRON_THEME_TOKENS.shape.cardRadius]=theme.shape.cardRadius+"px";
   return Object.freeze(out);
 }
+
+/**
+ * The `--expo-ui-*` variables that @expo/ui's universal Switch, Checkbox,
+ * TextInput and BottomSheet read on web, and the Tron color key each one
+ * takes (docs/THEME_TOKENS.md, "Expo UI universal components on web").
+ */
+export const EXPO_UI_TOKEN_MAP=Object.freeze({
+  "--expo-ui-background":"surfaceSunken",
+  "--expo-ui-foreground":"text",
+  "--expo-ui-gray-200":"border",
+  "--expo-ui-gray-300":"textMuted",
+  "--expo-ui-gray-500":"textMuted",
+  "--expo-ui-gray-900":"text",
+  "--expo-ui-primary-500":"primary",
+} as const satisfies Record<`--expo-ui-${string}`,keyof TronThemeColors>);
+
+/**
+ * CSS custom properties that theme @expo/ui's universal web components with
+ * a validated theme's own colors, for a host element or a stylesheet that
+ * NYC-Tron components do not already cover.
+ */
+export function expoUiCssVariables(theme:TronTheme):Readonly<Record<string,string>> {
+  const out:Record<string,string>={};
+  for(const [variable,key] of Object.entries(EXPO_UI_TOKEN_MAP))out[variable]=theme.colors[key];
+  return Object.freeze(out);
+}

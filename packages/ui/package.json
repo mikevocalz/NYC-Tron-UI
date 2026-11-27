@@ -460,16 +460,20 @@
       "default": "./dist/components/feedback/Toast.web.js"
     },
     "./components/forms/Switch": {
-      "types": "./dist/components/forms/Switch.web.d.ts",
-      "browser": "./dist/components/forms/Switch.web.js",
+      "types": "./dist/components/forms/Switch.d.ts",
+      "qnx": "./dist/components/forms/Switch.kit.js",
+      "marathon": "./dist/components/forms/Switch.kit.js",
+      "browser": "./dist/components/forms/Switch.js",
       "react-native": "./dist/components/forms/Switch.native.js",
-      "default": "./dist/components/forms/Switch.web.js"
+      "default": "./dist/components/forms/Switch.js"
     },
     "./components/forms/Checkbox": {
-      "types": "./dist/components/forms/Checkbox.web.d.ts",
-      "browser": "./dist/components/forms/Checkbox.web.js",
+      "types": "./dist/components/forms/Checkbox.d.ts",
+      "qnx": "./dist/components/forms/Checkbox.kit.js",
+      "marathon": "./dist/components/forms/Checkbox.kit.js",
+      "browser": "./dist/components/forms/Checkbox.js",
       "react-native": "./dist/components/forms/Checkbox.native.js",
-      "default": "./dist/components/forms/Checkbox.web.js"
+      "default": "./dist/components/forms/Checkbox.js"
     },
     "./components/forms/Radio": {
       "types": "./dist/components/forms/Radio.web.d.ts",
@@ -478,16 +482,23 @@
       "default": "./dist/components/forms/Radio.web.js"
     },
     "./components/forms/Textarea": {
-      "types": "./dist/components/forms/Textarea.web.d.ts",
-      "browser": "./dist/components/forms/Textarea.web.js",
+      "types": "./dist/components/forms/Textarea.d.ts",
+      "qnx": "./dist/components/forms/Textarea.kit.js",
+      "marathon": "./dist/components/forms/Textarea.kit.js",
+      "browser": "./dist/components/forms/Textarea.js",
       "react-native": "./dist/components/forms/Textarea.native.js",
-      "default": "./dist/components/forms/Textarea.web.js"
+      "default": "./dist/components/forms/Textarea.js"
     },
     "./components/overlays/Dialog": {
       "types": "./dist/components/overlays/Dialog.web.d.ts",
       "browser": "./dist/components/overlays/Dialog.web.js",
       "react-native": "./dist/components/overlays/Dialog.native.js",
       "default": "./dist/components/overlays/Dialog.web.js"
+    },
+    "./components/overlays/Sheet": {
+      "types": "./dist/components/overlays/Sheet.d.ts",
+      "react-native": "./dist/components/overlays/Sheet.js",
+      "default": "./dist/components/overlays/Sheet.js"
     },
     "./components/overlays/AlertDialog": {
       "types": "./dist/components/overlays/AlertDialog.web.d.ts",

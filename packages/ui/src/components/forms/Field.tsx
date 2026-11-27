@@ -1,4 +1,10 @@
-// Behaviour adapted from NYC-MON packages/ui/FormField.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/FormField.tsx (MIT),
+ * mikevocalz/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907.
+ * Copyright (c) 2025 Gursel Cakar, MIT. Notices: THIRD_PARTY_NOTICES.md.
+ * Modified for NYC-Tron UI (2026-11): Field context wiring ids, label,
+ * description, error and required state; Tron token classes.
+ */
 import { createContext, use, useId, useMemo, type ComponentRef, type ReactNode, type Ref } from "react";
 import { Platform, Text, View, type TextProps, type ViewProps } from "react-native";
 import { joinClasses } from "../styles.ts";

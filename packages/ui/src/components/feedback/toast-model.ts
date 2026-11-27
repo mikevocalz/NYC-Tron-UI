@@ -1,4 +1,10 @@
-// Behaviour adapted from NYC-MON packages/ui/Toast.tsx and ToastCard.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/Toast.tsx and
+ * packages/ui/ToastCard.tsx (MIT), mikevocalz/nyc-mon commit
+ * 5ed8cf8322c685c86dbe03f4ac7b801255d1b907. Copyright (c) 2025 Gursel Cakar,
+ * MIT. Notices: THIRD_PARTY_NOTICES.md. Modified for NYC-Tron UI (2026-11):
+ * pure queue, timing and validation rules split out for unit tests.
+ */
 
 /**
  * Toast queue as a plain external store, for `useSyncExternalStore`. No React

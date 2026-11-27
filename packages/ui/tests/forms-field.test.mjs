@@ -9,7 +9,11 @@ import { resolveTextareaConfig } from "../src/components/forms/Textarea.types.ts
 
 const pkg=JSON.parse(readFileSync(new URL("../package.json",import.meta.url),"utf8"));
 const src=p=>readFileSync(new URL("../src/components/forms/"+p,import.meta.url),"utf8");
-const FILES=["Field.tsx","Textarea.types.ts","Textarea.shared.tsx","Textarea.web.tsx","Textarea.native.tsx","field-model.ts"];
+const FILES=["Field.tsx","Textarea.types.ts","Textarea.shared.tsx","Textarea.tsx","Textarea.kit.tsx","Textarea.native.tsx","field-model.ts"];
+const TEXTAREAS=["Textarea.tsx","Textarea.native.tsx","Textarea.kit.tsx"];
+/** The block-comment header of a ported file, unwrapped to one line ("" when there is none). */
+const header=text=>{const m=text.match(/^\/\*\n([\s\S]*?)\n \*\/\n/);return m?m[1].replace(/^ \* ?/gm,"").replace(/\n/g," "):"";};
+const PROVENANCE=/^Behaviour adapted from NYC-MON packages\/ui\/\S+.* \(MIT\), mikevocalz\/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907\. Copyright \(c\) 2025 Gursel Cakar, MIT\. Notices: THIRD_PARTY_NOTICES\.md\. Modified for NYC-Tron UI \(2026-11\): \S/;
 
 // ---- ids and describedBy --------------------------------------------------
 
@@ -181,8 +185,8 @@ test("Label speaks the required word; HelperText reuses ErrorMessage for errors"
   assert.match(em,/accessibilityLiveRegion="polite"/);
 });
 
-test("web Textarea: multiline TextInput, auto-grow, counter, Field wiring and token styles",()=>{
-  const t=src("Textarea.web.tsx");
+test("kit Textarea: multiline TextInput, auto-grow, counter, Field wiring and token styles",()=>{
+  const t=src("Textarea.kit.tsx");
   assert.match(t,/<TextInput/);
   assert.match(t,/\bmultiline\b/);
   assert.match(t,/onContentSizeChange=/);
@@ -196,24 +200,45 @@ test("web Textarea: multiline TextInput, auto-grow, counter, Field wiring and to
   assert.match(t,/rounded-control border bg-surface-sunken/);
   assert.match(t,/bad\?"border-danger":"border-border focus:border-focus"/,"one border token at a time");
   assert.match(t,/focus:ring-focus/);
+  assert.doesNotMatch(t,/from ["']@expo\/ui/,"kit has no Expo UI dependency");
   const shared=src("Textarea.shared.tsx");
   assert.match(shared,/accessibilityLiveRegion=\{near\?"polite":"none"\}/);
   assert.match(shared,/announceForAccessibility/);
 });
 
-test("native Textarea is built on @expo/ui: SwiftUI vertical TextField and Compose OutlinedTextField",()=>{
+test("universal Textarea renders @expo/ui's TextInput on web with the Field wiring on the textarea",()=>{
+  const t=src("Textarea.tsx");
+  assert.match(t,/import \{ Host, TextInput as UniversalTextInput, useNativeState, type TextInputRef \} from "@expo\/ui";/);
+  assert.doesNotMatch(t,/@expo\/ui\/(?:swift-ui|jetpack-compose)/,"loads no native-only module");
+  assert.match(t,/<UniversalTextInput[^>]*\bmultiline\b/);
+  assert.match(t,/maxLength=\{maxLength\} editable=\{!off\}/);
+  assert.match(t,/useField\(\)/);
+  assert.match(t,/fieldControlProps\(/);
+  assert.match(t,/useWebAriaPatch\(host,"textarea",\{/);
+  for(const attr of ["id:","\"aria-labelledby\"","\"aria-describedby\"","\"aria-required\"","\"aria-invalid\"","\"aria-disabled\""])
+    assert.ok(t.includes(attr),"writes "+attr);
+  assert.match(t,/onContentSizeChange=\{bounds\.autoGrow\?/,"auto-grow from the measured content");
+  assert.match(t,/useWindowDimensions\(\)\.fontScale/,"heights follow text scaling");
+  assert.match(t,/UNIVERSAL_WEB_INSET=24/);
+  assert.match(t,/expoUiWebHostStyle\(\)/,"maps --expo-ui-* onto Tron tokens");
+  assert.match(t,/borderColor:"var\(--color-danger\)"/,"invalid border is the danger token");
+  assert.match(t,/<TextareaCounter/);
+});
+
+test("native Textarea: universal TextInput on iOS, Compose OutlinedTextField on Android",()=>{
   const n=src("Textarea.native.tsx");
-  assert.match(n,/from "@expo\/ui"/);
-  assert.match(n,/from "@expo\/ui\/swift-ui"/);
+  assert.match(n,/import \{ Host, TextInput as UniversalTextInput, useNativeState, type TextInputRef \} from "@expo\/ui";/);
+  assert.match(n,/from "@expo\/ui\/swift-ui\/modifiers"/);
   assert.match(n,/from "@expo\/ui\/jetpack-compose"/);
   assert.match(n,/<Host\b[^>]*matchContents/);
-  assert.match(n,/axis="vertical"/);
-  assert.match(n,/lineLimit\(/);
+  assert.match(n,/<UniversalTextInput[^>]*\bmultiline\b/);
+  assert.match(n,/lineLimit\(\{min:bounds\.min,max:bounds\.max\}\)/);
+  assert.match(n,/swiftUIHint\(hint\)/,"description, error and counter reach VoiceOver");
+  assert.match(n,/accessibilityLabel=\{label\}/,"label text reaches VoiceOver");
   assert.match(n,/minLines=\{bounds\.min\} maxLines=\{bounds\.max\}/);
   assert.match(n,/isError=\{bad\}/);
   assert.match(n,/enabled=\{!off\}/);
-  assert.match(n,/swiftUIDisabled\(true\)/);
-  assert.match(n,/swiftUILabel\(label\)/,"label text reaches VoiceOver");
+  assert.match(n,/editable=\{!off\}/);
   assert.match(n,/semantics\(\{contentDescription/,"label text reaches TalkBack");
 });
 
@@ -229,11 +254,11 @@ function runtimeExports(text){
   return [...names].sort();
 }
 
-test("both Textarea forks export the same runtime names",()=>{
-  const web=runtimeExports(src("Textarea.web.tsx")),native=runtimeExports(src("Textarea.native.tsx"));
-  assert.deepEqual(native,web);
-  assert.deepEqual(web,["Textarea"]);
-  for(const f of ["Textarea.web.tsx","Textarea.native.tsx"])assert.match(src(f),/export type \{[^}]*TextareaProps[^}]*\}/,f);
+test("every Textarea implementation exports the same runtime names",()=>{
+  for(const f of TEXTAREAS){
+    assert.deepEqual(runtimeExports(src(f)),["Textarea"],f);
+    assert.match(src(f),/export type \{[^}]*TextareaProps[^}]*\}/,f);
+  }
 });
 
 test("forms files stay theme neutral, Forge free and logical-direction",()=>{
@@ -244,19 +269,23 @@ test("forms files stay theme neutral, Forge free and logical-direction",()=>{
     assert.doesNotMatch(text,/\b(pl|pr|ml|mr|left|right)-\d/,f+" uses physical spacing");
     assert.doesNotMatch(text,/tailwind-variants|reanimated|solito|lucide|neon|district/,f+" kept NYC-MON styling");
     assert.doesNotMatch(text,/accessibilityRole=/,f+" needs no accessibilityRole");
-    if(f!=="field-model.ts"&&f!=="Textarea.types.ts")assert.match(text,/^\/\/ Behaviour adapted from NYC-MON/,f+" provenance");
+    assert.match(header(text),PROVENANCE,f+" provenance names source, upstream commit, copyright and changes");
   }
   assert.doesNotMatch(src("Field.tsx"),/@expo\/ui/,"Field stays kit-only");
-  assert.doesNotMatch(src("Textarea.web.tsx"),/@expo\/ui/,"web fork has no native dependency");
+  assert.doesNotMatch(src("Textarea.kit.tsx"),/from ["']@expo\/ui/,"kit has no Expo UI dependency");
 });
 
-test("package.json exposes the forms subpaths (added by the lead)",()=>{
+test("package.json exposes Field and routes Textarea to universal, native and kit builds",()=>{
   const field=pkg.exports["./components/forms/Field"];
   assert.ok(field,"./components/forms/Field");
   const ta=pkg.exports["./components/forms/Textarea"];
-  assert.ok(ta,"./components/forms/Textarea");
-  assert.match(ta["react-native"],/Textarea\.native\.js$/);
-  assert.match(ta.browser,/Textarea\.web\.js$/);
-  assert.match(ta.default,/Textarea\.web\.js$/);
-  assert.match(ta.types,/Textarea\.web\.d\.ts$/);
+  assert.deepEqual(ta,{
+    types:"./dist/components/forms/Textarea.d.ts",
+    qnx:"./dist/components/forms/Textarea.kit.js",
+    marathon:"./dist/components/forms/Textarea.kit.js",
+    browser:"./dist/components/forms/Textarea.js",
+    "react-native":"./dist/components/forms/Textarea.native.js",
+    default:"./dist/components/forms/Textarea.js",
+  });
+  assert.deepEqual(Object.keys(ta),["types","qnx","marathon","browser","react-native","default"]);
 });

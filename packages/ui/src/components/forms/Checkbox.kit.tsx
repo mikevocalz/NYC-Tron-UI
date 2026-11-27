@@ -1,4 +1,11 @@
-// Behaviour adapted from NYC-MON packages/ui/cards/NeonCheckbox.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/cards/NeonCheckbox.tsx (MIT),
+ * mikevocalz/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907.
+ * Copyright (c) 2025 Gursel Cakar, MIT. Notices: THIRD_PARTY_NOTICES.md.
+ * Modified for NYC-Tron UI (2026-11): plain token-styled checkbox for hosts
+ * without Expo UI (QNX, Marathon) and the web/iOS indeterminate fallback;
+ * NYC-MON neon styling removed.
+ */
 import { useId } from "react";
 import { Platform, Pressable, Text, View } from "react-native";
 import { joinClasses } from "../styles.ts";
@@ -17,9 +24,13 @@ const BOX=20;
  * A checkbox drawn with views (no icon font): a box with a check or a dash.
  * The whole row is one 44pt target with the `checkbox` role and checked
  * true, false or mixed. On web Space toggles; Enter is left to the form.
+ *
+ * Kit implementation for hosts without Expo UI (QNX, Marathon), and the
+ * fallback `Checkbox.tsx` (web) and `Checkbox.native.tsx` (iOS) render for
+ * the indeterminate state, which the universal Checkbox cannot show.
  */
 export function Checkbox({
-  ref,checked,onCheckedChange,label,description,error,disabled=false,colorScheme:_colorScheme,style,
+  ref,checked,onCheckedChange,label,description,error,disabled=false,colorScheme:_colorScheme,color:_color,style,
   className,rowClassName,boxClassName,markClassName,labelClassName,descriptionClassName,errorClassName,
   unstyled=false,...rest
 }:CheckboxProps){

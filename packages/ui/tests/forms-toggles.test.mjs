@@ -10,7 +10,16 @@ import { nextChoiceIndex } from "../src/components/forms/choice-keys.ts";
 const pkg=JSON.parse(readFileSync(new URL("../package.json",import.meta.url),"utf8"));
 const src=p=>readFileSync(new URL("../src/components/forms/"+p,import.meta.url),"utf8");
 const COMPONENTS=["Switch","Checkbox","Radio"];
-const FILES=[...COMPONENTS.flatMap(c=>[c+".types.ts",c+".web.tsx",c+".native.tsx"]),"toggle-model.ts"];
+/** Switch and Checkbox: universal @expo/ui file, native fork, kit. Radio keeps its web and native forks. */
+const UNIVERSAL=["Switch","Checkbox"];
+const kit=c=>UNIVERSAL.includes(c)?c+".kit.tsx":c+".web.tsx";
+const FILES=[
+  ...COMPONENTS.flatMap(c=>[c+".types.ts",kit(c),c+".native.tsx"]),
+  ...UNIVERSAL.map(c=>c+".tsx"),"toggle-model.ts",
+];
+/** The block-comment header of a ported file, unwrapped to one line ("" when there is none). */
+const header=text=>{const m=text.match(/^\/\*\n([\s\S]*?)\n \*\/\n/);return m?m[1].replace(/^ \* ?/gm,"").replace(/\n/g," "):"";};
+const PROVENANCE=/^Behaviour adapted from NYC-MON packages\/ui\/\S+.* \(MIT\), mikevocalz\/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907\. Copyright \(c\) 2025 Gursel Cakar, MIT\. Notices: THIRD_PARTY_NOTICES\.md\. Modified for NYC-Tron UI \(2026-11\): \S/;
 
 // ---- pure models ------------------------------------------------------------
 
@@ -116,8 +125,8 @@ test("radio entries follow DOM order when nodes are known, registration order ot
 
 // ---- source contracts ---------------------------------------------------------
 
-test("web forks expose role and state to assistive tech",()=>{
-  const sw=src("Switch.web.tsx"),cb=src("Checkbox.web.tsx"),r=src("Radio.web.tsx");
+test("kit implementations expose role and state to assistive tech",()=>{
+  const sw=src(kit("Switch")),cb=src(kit("Checkbox")),r=src(kit("Radio"));
   assert.match(sw,/accessibilityRole="switch"/);
   assert.match(sw,/accessibilityState=\{\{[^}]*checked:value,disabled\}\}/);
   assert.match(cb,/accessibilityRole="checkbox"/);
@@ -138,10 +147,14 @@ test("web forks expose role and state to assistive tech",()=>{
     assert.match(t,/unstyled/,f);
     assert.match(t,/focus-visible:ring-focus/,f+" visible focus");
   }
+  for(const c of UNIVERSAL){
+    assert.match(src(kit(c)),/color:_color/,c+" kit ignores the Expo UI tint");
+    assert.doesNotMatch(src(kit(c)),/from ["']@expo\/ui/,c+" kit has no Expo UI dependency");
+  }
 });
 
-test("switch thumb moves by marginStart, so RTL mirrors it, and honours reduced motion",()=>{
-  const sw=src("Switch.web.tsx");
+test("kit switch thumb moves by marginStart, so RTL mirrors it, and honours reduced motion",()=>{
+  const sw=src(kit("Switch"));
   assert.match(sw,/marginStart:anim\.interpolate/);
   assert.doesNotMatch(sw,/translateX/);
   assert.match(sw,/isReduceMotionEnabled/);
@@ -153,41 +166,66 @@ test("switch thumb moves by marginStart, so RTL mirrors it, and honours reduced 
   assert.match(sw,/bg-surface-raised/);
 });
 
-test("checkbox draws its marks with views and shows errors in words",()=>{
-  const cb=src("Checkbox.web.tsx");
+test("checkbox draws kit marks with views and shows errors in words everywhere",()=>{
+  const cb=src(kit("Checkbox"));
   assert.match(cb,/borderLeftWidth:2,borderBottomWidth:2/,"check mark");
   assert.match(cb,/borderTopWidth:2/,"dash");
   assert.match(cb,/border-danger/);
-  assert.match(cb,/\{error\}<\/Text>/,"error text is rendered, not only a color");
-  assert.match(src("Checkbox.native.tsx"),/\{error\}<\/Text>/);
+  for(const f of [kit("Checkbox"),"Checkbox.tsx","Checkbox.native.tsx"])
+    assert.match(src(f),/\{error\}<\/Text>/,f+": error text is rendered, not only a color");
+  for(const f of ["Checkbox.tsx","Checkbox.native.tsx"])assert.match(src(f),/accessibilityLiveRegion="polite"/,f);
 });
 
-test("native forks are built on @expo/ui SwiftUI and Jetpack Compose controls",()=>{
-  const sw=src("Switch.native.tsx"),cb=src("Checkbox.native.tsx"),r=src("Radio.native.tsx");
-  for(const [f,t] of [["Switch",sw],["Checkbox",cb],["Radio",r]]){
-    assert.match(t,/from "@expo\/ui"/,f+" Host");
-    assert.match(t,/from "@expo\/ui\/swift-ui"/,f);
-    assert.match(t,/from "@expo\/ui\/jetpack-compose"/,f);
-    assert.match(t,/<Host /,f);
-    assert.match(t,/layoutDirection=\{I18nManager\.isRTL/,f+" RTL reaches the native tree");
-    assert.match(t,/Platform\.OS==="android"/,f);
-    assert.doesNotMatch(src(f+".web.tsx"),/@expo\/ui/,f+" web fork has no native dependency");
+test("universal files render @expo/ui's universal controls and stay web safe",()=>{
+  for(const c of UNIVERSAL){
+    const t=src(c+".tsx");
+    assert.match(t,new RegExp(`import \\{ Host, ${c} as Universal${c} \\} from "@expo/ui";`),c);
+    assert.doesNotMatch(t,/@expo\/ui\/(?:swift-ui|jetpack-compose)/,c+" loads no native-only module");
+    assert.match(t,/<Host matchContents colorScheme=\{colorScheme\} seedColor=\{color\}/,c+" tint only from an explicit color");
+    assert.match(t,/expoUiWebHostStyle\(color!==undefined\)/,c+" maps --expo-ui-* onto Tron tokens");
+    assert.match(t,/minHeight:44,minWidth:44/,c+" 44pt target");
+    assert.match(t,/<Pressable focusable=\{false\}/,c+" label toggles without a second tab stop");
+    assert.match(t,/requireName\(/,c);
   }
-  assert.match(sw,/SwiftUIToggle/);
-  assert.match(sw,/ComposeSwitch/);
-  assert.match(sw,/toggleable\(value,toggle,\{role:"switch"/);
-  assert.match(cb,/TriStateCheckbox/);
-  assert.match(cb,/toggleable\(checked===true,toggle,\{role:"checkbox"/);
-  assert.match(cb,/accessibilityAddTraits\(\["isToggle"\]\)/);
-  assert.match(cb,/accessibilityValue\(checkedValueText\(checked\)\)/);
+  const sw=src("Switch.tsx"),cb=src("Checkbox.tsx");
+  assert.match(sw,/useWebAriaPatch\(control,'input\[role="switch"\]',\{"aria-label":name\}\)/);
+  assert.match(sw,/switchGeometry\(size\);validateDuration\(animationMs\)/,"kit props validated everywhere");
+  assert.match(cb,/useWebAriaPatch\(control,'input\[type="checkbox"\]'/);
+  assert.match(cb,/"aria-describedby":ariaValue\(/);
+  assert.match(cb,/"aria-invalid":ariaValue\(!!error\)/);
+  assert.match(cb,/if\(props\.checked==="indeterminate"\)return <KitCheckbox/,"web falls back to the kit for mixed");
+});
+
+test("native forks add names through SwiftUI and Compose modifiers on the universal controls",()=>{
+  const sw=src("Switch.native.tsx"),cb=src("Checkbox.native.tsx"),r=src("Radio.native.tsx");
+  for(const [f,t] of [["Switch",sw],["Checkbox",cb]]){
+    assert.match(t,new RegExp(`import \\{ Host, ${f} as Universal${f} \\} from "@expo/ui";`),f);
+    assert.match(t,/from "@expo\/ui\/swift-ui\/modifiers"/,f);
+    assert.match(t,/from "@expo\/ui\/jetpack-compose\/modifiers"/,f);
+    assert.match(t,/swiftUIAccessibilityLabel\(name\)/,f+" VoiceOver name");
+    assert.match(t,/labelsHidden\(\)/,f+" no second SwiftUI label");
+    assert.match(t,/semantics\(\{contentDescription:/,f+" TalkBack name");
+    assert.match(t,/importantForAccessibility="no-hide-descendants"/,f+" kit label is not read twice");
+    assert.match(t,/seedColor=\{color\}/,f+" tint only from an explicit color");
+  }
+  assert.match(cb,/TriStateCheckbox/,"Android mixed state");
+  assert.match(cb,/checkedValueText\(checked\)/);
+  assert.match(cb,/props\.checked==="indeterminate"&&Platform\.OS!=="android"\)return <KitCheckbox/,"iOS mixed falls back to the kit");
+  assert.match(r,/from "@expo\/ui\/swift-ui"/);
+  assert.match(r,/from "@expo\/ui\/jetpack-compose"/);
   assert.match(r,/RadioButton/);
   assert.match(r,/selectable\(checked,select,"radioButton"\)/);
   assert.match(r,/accessibilityAddTraits\(\["isSelected"\]\)/);
   assert.match(r,/accessibilityRole="radiogroup"/);
-  for(const t of [sw,cb,r]){
-    assert.match(t,/defaultMinSize\(\{minWidth:48,minHeight:48\}\)|defaultMinSize\(\{minHeight:48\}\)/,"48dp row");
-    assert.match(t,/frame\(\{minHeight:44/,"44pt row");
+  for(const [f,t] of [["Switch",sw],["Checkbox",cb],["Radio",r]]){
+    assert.match(t,/<Host /,f);
+    assert.match(t,/I18nManager\.isRTL/,f+" RTL reaches the native tree");
+    assert.match(t,/layoutDirection=\{/,f+" RTL reaches the native tree");
+    assert.match(t,/Platform\.OS==="android"/,f);
+    assert.match(t,/defaultMinSize\(\{minWidth:48,minHeight:48\}\)|defaultMinSize\(\{minHeight:48\}\)/,f+" 48dp row");
+    assert.match(t,/frame\(\{minHeight:44/,f+" 44pt row");
   }
+  assert.doesNotMatch(src(kit("Radio")),/from ["']@expo\/ui/,"Radio web fork has no native dependency");
 });
 
 function runtimeExports(text){
@@ -205,15 +243,18 @@ function typeExports(text){
   return [...text.matchAll(/^export type \{([^}]*)\}/gm)].flatMap(m=>m[1].split(",").map(s=>s.trim()).filter(Boolean)).sort();
 }
 
-test("both forks of each toggle export the same runtime and type names",()=>{
+test("every implementation of each toggle exports the same runtime and type names",()=>{
   const expected={Switch:["Switch"],Checkbox:["Checkbox"],Radio:["Radio","RadioGroup","RadioGroupItem"]};
   for(const c of COMPONENTS){
-    const web=src(c+".web.tsx"),native=src(c+".native.tsx");
-    assert.deepEqual(runtimeExports(web),expected[c],c+" web");
-    assert.deepEqual(runtimeExports(native),runtimeExports(web),c+" native matches web");
-    assert.deepEqual(typeExports(native),typeExports(web),c+" types");
-    assert.match(web,new RegExp(`from "\\./${c}\\.types\\.ts"`),c+" web uses the shared types");
-    assert.match(native,new RegExp(`from "\\./${c}\\.types\\.ts"`),c+" native uses the shared types");
+    const files=[kit(c),c+".native.tsx",...(UNIVERSAL.includes(c)?[c+".tsx"]:[])];
+    const base=src(files[0]);
+    assert.deepEqual(runtimeExports(base),expected[c],c+" "+files[0]);
+    for(const f of files){
+      const t=src(f);
+      assert.deepEqual(runtimeExports(t),expected[c],f);
+      assert.deepEqual(typeExports(t),typeExports(base),f+" types");
+      assert.match(t,new RegExp(`from "\\./${c}\\.types\\.ts"`),f+" uses the shared types");
+    }
   }
 });
 
@@ -225,19 +266,27 @@ test("toggle files stay theme neutral, Forge free and logical-direction",()=>{
     assert.doesNotMatch(text,/\b(pl|pr|ml|mr)-\d/,f+" uses physical spacing");
     assert.doesNotMatch(text,/from ["'](?:tailwind-variants|react-native-reanimated|solito|lucide[^"']*|\.\.?\/tw)["']/,f+" kept an NYC-MON dependency");
   }
-  for(const f of ["Switch.web.tsx","Checkbox.web.tsx","Switch.native.tsx","Checkbox.native.tsx"]){
-    assert.match(src(f),/^\/\/ Behaviour adapted from NYC-MON packages\/ui\/[\w/.]+ \(MIT\)\./,f+" provenance");
+  for(const c of UNIVERSAL)for(const f of [c+".tsx",c+".native.tsx",kit(c)]){
+    assert.match(header(src(f)),PROVENANCE,f+" provenance names source, upstream commit, copyright and changes");
   }
   assert.doesNotMatch(src("Radio.web.tsx"),/NYC-MON/,"Radio is built fresh");
 });
 
-test("package.json exposes the toggle subpaths with platform forks (added by the lead)",()=>{
-  for(const c of COMPONENTS){
+test("package.json routes Switch and Checkbox to universal, native and kit builds",()=>{
+  for(const c of UNIVERSAL){
     const e=pkg.exports["./components/forms/"+c];
     assert.ok(e,"./components/forms/"+c);
-    assert.match(e["react-native"],new RegExp(c+"\\.native\\.js$"));
-    assert.match(e.browser,new RegExp(c+"\\.web\\.js$"));
-    assert.match(e.default,new RegExp(c+"\\.web\\.js$"));
-    assert.match(e.types,new RegExp(c+"\\.web\\.d\\.ts$"));
+    assert.deepEqual(Object.keys(e),["types","qnx","marathon","browser","react-native","default"],c+" condition order");
+    assert.equal(e.types,`./dist/components/forms/${c}.d.ts`);
+    assert.equal(e.qnx,`./dist/components/forms/${c}.kit.js`);
+    assert.equal(e.marathon,`./dist/components/forms/${c}.kit.js`);
+    assert.equal(e.browser,`./dist/components/forms/${c}.js`);
+    assert.equal(e["react-native"],`./dist/components/forms/${c}.native.js`);
+    assert.equal(e.default,`./dist/components/forms/${c}.js`);
   }
+  const r=pkg.exports["./components/forms/Radio"];
+  assert.match(r["react-native"],/Radio\.native\.js$/);
+  assert.match(r.browser,/Radio\.web\.js$/);
+  assert.match(r.default,/Radio\.web\.js$/);
+  assert.match(r.types,/Radio\.web\.d\.ts$/);
 });

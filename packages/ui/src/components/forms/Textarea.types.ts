@@ -1,4 +1,10 @@
-// Behaviour adapted from NYC-MON packages/ui/Textarea.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/Textarea.tsx (MIT),
+ * mikevocalz/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907.
+ * Copyright (c) 2025 Gursel Cakar, MIT. Notices: THIRD_PARTY_NOTICES.md.
+ * Modified for NYC-Tron UI (2026-11): one prop surface for the three
+ * implementations; row and length validation.
+ */
 import type { ComponentRef, Ref } from "react";
 import type { TextInput, TextInputProps } from "react-native";
 import { defaultCountThreshold, resolveRows, type CounterState, type RowBounds } from "./field-model.ts";
@@ -6,11 +12,20 @@ import { defaultCountThreshold, resolveRows, type CounterState, type RowBounds }
 export type { CounterState } from "./field-model.ts";
 
 /**
- * Props for {@linkcode Textarea}. Both forks share this surface. The web fork
- * (React Native Web / kit TextInput) honors every prop. The native fork
- * (`@expo/ui`: SwiftUI `TextField` with a vertical axis on iOS, Material 3
- * `OutlinedTextField` on Android) honors the props marked "both"; other
- * TextInput props are ignored there.
+ * Props for {@linkcode Textarea}. Three implementations share this surface:
+ *
+ * - `Textarea.tsx` (web and the default condition): @expo/ui's universal
+ *   `TextInput` with `multiline`. Honors the props marked "both" plus the
+ *   universal props it forwards (placeholder, autoFocus, autoCapitalize,
+ *   autoCorrect, keyboardType, selectTextOnFocus, placeholderTextColor,
+ *   selectionColor, cursorColor, testID).
+ * - `Textarea.native.tsx`: iOS on the universal `TextInput` (SwiftUI
+ *   `TextField`, vertical axis), Android on Material 3 `OutlinedTextField`.
+ *   Honors the props marked "both" plus placeholder, autoFocus and testID.
+ * - `Textarea.kit.tsx` (QNX, Marathon and other hosts without Expo UI): a
+ *   React Native `TextInput` that honors every prop.
+ *
+ * Other TextInput props reach the kit only.
  */
 export interface TextareaProps extends Omit<TextInputProps,"multiline"|"numberOfLines"> {
   /** Both. Fixed visible rows. Cannot be combined with `minRows`/`maxRows`. @default 4 */
@@ -34,22 +49,25 @@ export interface TextareaProps extends Omit<TextInputProps,"multiline"|"numberOf
   invalid?:boolean;
   /** Both. Same as `editable={false}`. Inside a Field this follows the Field. */
   disabled?:boolean;
-  /** Web. Line height the row math assumes, before font scaling. Match the app's text class. @default 24 */
+  /** Web and kit. Line height the row math assumes, before font scaling. Match the app's text class. @default 24 */
   lineHeight?:number;
-  /** Web. Block-axis padding plus border, for the row math. @default 18 (styled), 0 (unstyled) */
+  /**
+   * Web and kit. Block-axis padding plus border, for the row math.
+   * @default 24 on the universal web field; 18 on the styled kit, 0 unstyled
+   */
   inset?:number;
-  /** Native. SwiftUI / Compose color scheme for the native host. Defaults to the system's. */
+  /** Expo UI. Color scheme for the `Host` subtree. Defaults to the system's. */
   colorScheme?:"light"|"dark";
-  /** Both. Root container class (on native, the RN wrapper around the native field and counter). */
+  /** Both. Root container class (the RN wrapper around the field and counter). */
   className?:string;
-  /** Web. Class for the TextInput. */
+  /** Kit only. Class for the TextInput; the Expo UI fields take no class. */
   inputClassName?:string;
   /** Both. Class for the counter text (the counter is kit Text on both forks). */
   counterClassName?:string;
-  /** Both. No default visual classes on the kit parts; native fields keep the OS look. */
+  /** Both. No default visual classes on the kit parts; Expo UI fields keep their own look (iOS drops the rounded border). */
   unstyled?:boolean;
   /**
-   * Web: the TextInput. Native: a handle with `focus`, `blur`, `clear` and
+   * Kit: the TextInput. Expo UI: a handle with `focus`, `blur`, `clear` and
    * `isFocused` only.
    */
   ref?:Ref<ComponentRef<typeof TextInput>>;

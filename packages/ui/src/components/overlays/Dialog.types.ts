@@ -1,4 +1,10 @@
-// Behaviour adapted from NYC-MON packages/ui/Dialog.tsx (MIT).
+/*
+ * Behaviour adapted from NYC-MON packages/ui/Dialog.tsx (MIT),
+ * mikevocalz/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907.
+ * Copyright (c) 2025 Gursel Cakar, MIT. Notices: THIRD_PARTY_NOTICES.md.
+ * Modified for NYC-Tron UI (2026-11): prop surface shared by the web and
+ * native Dialog.
+ */
 import type {ComponentRef,ReactNode,Ref,RefObject} from "react";
 import type {View} from "react-native";
 import type {DialogDismissReason,DialogInsets,DialogSize} from "./dialog-model.ts";
@@ -7,8 +13,10 @@ export type {DialogDismissReason,DialogInsets,DialogSize} from "./dialog-model.t
 /**
  * Props for `Dialog`, shared by both forks. Web (`Dialog.web.tsx`, also the
  * fallback on hosts without Expo UI) draws an RN `Modal` with the app's
- * tokens. iOS presents a SwiftUI sheet and Android a Compose
- * `BasicAlertDialog` (`Dialog.native.tsx`), both hosting the same RN panel.
+ * tokens. iOS presents @expo/ui's universal `BottomSheet` (a SwiftUI sheet)
+ * and Android a Compose `BasicAlertDialog` (`Dialog.native.tsx`), both
+ * hosting the same RN panel. For a bottom sheet on every platform, use
+ * `Sheet`.
  * Props marked "web" are ignored by the iOS and Android forks.
  */
 export interface DialogProps {
