@@ -26,11 +26,11 @@ export type {AlertDialogProps,AlertDialogTone} from "./AlertDialog.types.ts";
  * disabled and back and tap-outside are blocked.
  *
  * The kit dialog from `AlertDialog.web.tsx` draws instead when `children` are
- * passed, on iOS when `closeOnConfirm` is false, and on hosts without Expo UI
+ * passed, on iOS when `closeOnConfirm` is false or `busy` is true, and on hosts without Expo UI
  * (see `prefersSystemAlert`). Not yet validated on a device in this repository.
  */
 export function AlertDialog(props:AlertDialogProps){
-  if(!prefersSystemAlert(Platform.OS,{hasChildren:props.children!=null&&props.children!==false,closeOnConfirm:props.closeOnConfirm}))
+  if(!prefersSystemAlert(Platform.OS,{hasChildren:props.children!=null&&props.children!==false,closeOnConfirm:props.closeOnConfirm,busy:props.busy}))
     return <KitAlertDialog {...props}/>;
   if(typeof props.confirmLabel!=="string"||props.confirmLabel.trim()==="")
     throw new RangeError("AlertDialog needs a confirmLabel that names the action");

@@ -14,7 +14,7 @@ the caller passes one; otherwise the token applies.
 | `TronTheme` key | Variable | Utilities | Used by |
 | --- | --- | --- | --- |
 | `primary` | `--color-primary` | `bg-primary`, `bg-primary/10`, `border-primary`, `text-primary` | Button (primary), Switch track (on), Checkbox and Radio checked fill, ProgressBar fill, NavigationRail selected item, SegmentedControl/TabBar active item, Select chosen option, ListItem and IconButton selected tint, SpreadsheetGrid selected range and fill handle, TreeGrid selected rows; reference tones 1 and 5, sparkline marks, spreadsheet panel checkboxes and selected chips; InkToolbar selected tool and pressure switch; mute on, selected/dragged MIDI note and velocity bar, accented step, chosen beat unit, tap tempo while tapping, downbeat dot |
-| `onPrimary` | `--color-on-primary` | `text-on-primary`, `bg-on-primary`, `border-on-primary` | Text on `primary`; Checkbox check and dash marks, Switch thumb ring when on (web forks); InkToolbar selected tool label; MIDI note end grip and accent dot on `primary` |
+| `onPrimary` | `--color-on-primary` | `text-on-primary`, `bg-on-primary`, `border-on-primary` | Text on `primary`; kit Checkbox check and dash marks (`border-on-primary`) and kit Switch thumb ring when on, used only where the kit fallback draws (on web @expo/ui draws the Switch thumb and the Checkbox check itself); the web Checkbox's indeterminate dash; InkToolbar selected tool label; MIDI note end grip and accent dot on `primary` |
 | `surfaceRaised` | `--color-surface-raised` | `bg-surface-raised` | Card, Button (secondary), rail, tables, Forge controls, PrecisionScrubber buttons and active scale; HsvPicker thumb inner ring; LevelFader card; InkToolbar; Office cluster: toolbars, read-aloud transport, comment cards, empty slides |
 | `surfaceSunken` | `--color-surface-sunken` | `bg-surface-sunken` | Card (sunken), Select trigger, SegmentedControl well, table and tree headers, sort chips, inputs, waveform lane, XY pad, graph canvas and node title bars; HsvPicker steppers; LevelFader rail, thumb and step buttons; LevelMeter track, DevicePairingDialog device rows; InkToolbar size and opacity steppers; Office cluster: text fields, filmstrip background, list preview |
 | `border` | `--color-border` | `border-border` | Every bordered surface; InkToolbar dividers and swatch rings |
@@ -168,6 +168,10 @@ white, or black in dark mode, and its grabber is drawn for a light panel.
 takes the app's surface; the grabber color does not follow it and can be
 faint on a dark surface. On iOS and Android the sheet chrome is the
 platform's, and Tron's content inside it is token styled.
+
+The web Checkbox's indeterminate state is drawn by NYC-Tron over the
+universal box: the box takes `--expo-ui-primary-500` (so it follows the same
+primary or explicit `color`) and the dash takes `--color-on-primary`.
 
 Known limit: the Switch thumb and the Checkbox check mark are white. With a
 light `primary` (the reference dark value is `#7aa7ff`) they are low

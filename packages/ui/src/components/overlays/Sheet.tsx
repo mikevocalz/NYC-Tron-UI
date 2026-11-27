@@ -6,7 +6,7 @@
  * NYC-MON night facade, controlled `open` / `onOpenChange`, app-set snap
  * points, `dismissible`, and the web dialog named by the title.
  */
-import {useEffect,useLayoutEffect,useRef,useState,type ComponentRef} from "react";
+import {useCallback,useEffect,useImperativeHandle,useLayoutEffect,useRef,useState,type ComponentRef} from "react";
 import {Platform,Pressable,ScrollView,Text,View} from "react-native";
 import {BottomSheet,Host,RNHostView,type BottomSheetProps} from "@expo/ui";
 import {joinClasses} from "../styles.ts";
@@ -69,8 +69,15 @@ export function Sheet({
     return ()=>clearTimeout(timer);
   },[held,web]);
 
+  // The web BottomSheet renders its <dialog> one commit after it is first
+  // presented, so the content node arrives after this component's effects
+  // ran. The callback ref stores it as layout state; the re-render it causes
+  // applies the dialog name and attaches the drag listener.
   const root=useRef<ComponentRef<typeof View>|null>(null);
-  const dragged=useWebDrag(root,open&&web&&!dismissible);
+  const [node,setNode]=useState<ComponentRef<typeof View>|null>(null);
+  const setRoot=useCallback((next:ComponentRef<typeof View>|null)=>{root.current=next;setNode(next);},[]);
+  useImperativeHandle(ref,()=>node as ComponentRef<typeof View>,[node]);
+  const dragged=useWebDrag(node,open&&web&&!dismissible);
   useWebAriaPatch(root,"dialog",{"aria-label":name},"ancestor");
 
   const onDismiss=()=>{
@@ -80,11 +87,6 @@ export function Sheet({
     const swiped=dragged.current;
     dragged.current=false;
     if(!web||swiped)setHeld(true);
-  };
-  const setRoot=(node:ComponentRef<typeof View>|null)=>{
-    root.current=node;
-    if(typeof ref==="function")ref(node);
-    else if(ref)(ref as {current:ComponentRef<typeof View>|null}).current=node;
   };
 
   const surface=(
@@ -142,27 +144,47 @@ function CloseGlyph(){
  * Web: whether the latest press on the sheet content moved far enough to be
  * a drag. Read when the sheet asks to close, to tell a refused swipe (which
  * leaves the web sheet squashed) from Escape or the backdrop (which do not).
+ * A press ends on `pointerup` or `pointercancel`, so a mouse moving with no
+ * button held never counts. The flag outlives the release for one task, long
+ * enough for the sheet's own `pointerup` to ask to close, and is then
+ * cleared so a later Escape or backdrop click is not taken for a swipe.
  * Listens only; it never stops or changes an event.
  */
-function useWebDrag(root:{current:unknown},active:boolean){
+type PointerTarget={
+  addEventListener?:(t:string,f:(e:PointerEvent)=>void,o?:boolean)=>void;
+  removeEventListener?:(t:string,f:(e:PointerEvent)=>void,o?:boolean)=>void;
+};
+function useWebDrag(node:unknown,active:boolean){
   const dragged=useRef(false);
   useEffect(()=>{
     if(!active)return;
-    const node=root.current as {addEventListener?:(t:string,f:(e:PointerEvent)=>void)=>void;removeEventListener?:(t:string,f:(e:PointerEvent)=>void)=>void}|null;
-    const target=globalThis as unknown as {addEventListener?:(t:string,f:(e:PointerEvent)=>void,o?:boolean)=>void;removeEventListener?:(t:string,f:(e:PointerEvent)=>void,o?:boolean)=>void};
-    if(!node?.addEventListener||!target.addEventListener)return;
+    const el=node as PointerTarget|null;
+    const win=globalThis as unknown as PointerTarget;
+    if(!el?.addEventListener||!win.addEventListener)return;
     let start:number|null=null;
-    const down=(event:PointerEvent)=>{start=event.clientY;dragged.current=false;};
-    const move=(event:PointerEvent)=>{if(start!==null&&Math.abs(event.clientY-start)>=DRAG_PX)dragged.current=true;};
-    const up=()=>{start=null;};
-    node.addEventListener("pointerdown",down);
-    target.addEventListener("pointermove",move,true);
-    target.addEventListener("pointercancel",up,true);
-    return ()=>{
-      node.removeEventListener?.("pointerdown",down);
-      target.removeEventListener?.("pointermove",move,true);
-      target.removeEventListener?.("pointercancel",up,true);
+    let clear:ReturnType<typeof setTimeout>|undefined;
+    const down=(event:PointerEvent)=>{
+      if(clear!==undefined){clearTimeout(clear);clear=undefined;}
+      start=event.clientY;dragged.current=false;
     };
-  },[active,root]);
+    const move=(event:PointerEvent)=>{if(start!==null&&Math.abs(event.clientY-start)>=DRAG_PX)dragged.current=true;};
+    const up=()=>{
+      if(start===null)return;
+      start=null;
+      if(dragged.current)clear=setTimeout(()=>{clear=undefined;dragged.current=false;},0);
+    };
+    el.addEventListener("pointerdown",down);
+    win.addEventListener("pointermove",move,true);
+    win.addEventListener("pointerup",up,true);
+    win.addEventListener("pointercancel",up,true);
+    return ()=>{
+      if(clear!==undefined)clearTimeout(clear);
+      el.removeEventListener?.("pointerdown",down);
+      win.removeEventListener?.("pointermove",move,true);
+      win.removeEventListener?.("pointerup",up,true);
+      win.removeEventListener?.("pointercancel",up,true);
+      dragged.current=false;
+    };
+  },[active,node]);
   return dragged;
 }

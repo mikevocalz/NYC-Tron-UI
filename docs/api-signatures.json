@@ -45693,7 +45693,7 @@
     },
     "@nyc-tron/ui/dist/components/forms/Checkbox.d.ts#Checkbox": {
       "signatures": [
-        "export declare function Checkbox(props: CheckboxProps): import(\"react\").JSX.Element;"
+        "export declare function Checkbox({ ref, checked, onCheckedChange, label, description, error, disabled, colorScheme, color, style, className, rowClassName, labelClassName, descriptionClassName, errorClassName, unstyled, testID, accessibilityLabel, }: CheckboxProps): import(\"react\").JSX.Element;"
       ],
       "references": [
         "@nyc-tron/ui/dist/components/forms/Checkbox.types.d.ts#CheckboxProps",
@@ -45918,7 +45918,7 @@
     },
     "@nyc-tron/ui/dist/components/forms/Textarea.types.d.ts#TextareaProps": {
       "signatures": [
-        "export interface TextareaProps extends Omit<TextInputProps, \"multiline\" | \"numberOfLines\"> {\n    rows?: number;\n    minRows?: number;\n    maxRows?: number;\n    maxLength?: number;\n    showCount?: boolean;\n    countThreshold?: number;\n    countLabel?: (state: CounterState) => string;\n    invalid?: boolean;\n    disabled?: boolean;\n    lineHeight?: number;\n    inset?: number;\n    colorScheme?: \"light\" | \"dark\";\n    className?: string;\n    inputClassName?: string;\n    counterClassName?: string;\n    unstyled?: boolean;\n    ref?: Ref<ComponentRef<typeof TextInput>>;\n}"
+        "export interface TextareaProps extends Omit<TextInputProps, \"multiline\" | \"numberOfLines\" | \"onFocus\" | \"onBlur\"> {\n    onFocus?: (event?: Parameters<NonNullable<TextInputProps[\"onFocus\"]>>[0]) => void;\n    onBlur?: (event?: Parameters<NonNullable<TextInputProps[\"onBlur\"]>>[0]) => void;\n    rows?: number;\n    minRows?: number;\n    maxRows?: number;\n    maxLength?: number;\n    showCount?: boolean;\n    countThreshold?: number;\n    countLabel?: (state: CounterState) => string;\n    invalid?: boolean;\n    disabled?: boolean;\n    lineHeight?: number;\n    inset?: number;\n    colorScheme?: \"light\" | \"dark\";\n    className?: string;\n    inputClassName?: string;\n    counterClassName?: string;\n    unstyled?: boolean;\n    ref?: Ref<ComponentRef<typeof TextInput>>;\n}"
       ],
       "references": [
         "@nyc-tron/ui/dist/components/forms/field-model.d.ts#CounterState",
@@ -45926,7 +45926,11 @@
         "@types/react@19.3.0/index.d.ts#React.Ref",
         "react-native@0.88.1/types_generated/Libraries/Components/TextInput/TextInput.d.ts#$$TextInput",
         "react-native@0.88.1/types_generated/Libraries/Components/TextInput/TextInput.flow.d.ts#TextInputProps",
-        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+        "react-native@0.88.1/types_generated/Libraries/Components/TextInput/TextInput.flow.d.ts#onBlur",
+        "react-native@0.88.1/types_generated/Libraries/Components/TextInput/TextInput.flow.d.ts#onFocus",
+        "typescript@6.0.3/lib/lib.es5.d.ts#NonNullable",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Parameters"
       ]
     },
     "@nyc-tron/ui/dist/components/forms/choice-keys.d.ts#ChoiceAxis": {
@@ -49600,6 +49604,24 @@
       "symbol": "TextInputProps",
       "signatures": [
         "export interface TextInputProps extends Readonly<Omit<Omit<ViewProps, \"style\" | \"experimental_accessibilityOrder\">, keyof TextInputIOSProps | keyof TextInputAndroidProps | keyof TextInputBaseProps | keyof {}> & Omit<TextInputIOSProps, keyof TextInputAndroidProps | keyof TextInputBaseProps | keyof {}> & Omit<TextInputAndroidProps, keyof TextInputBaseProps | keyof {}> & Omit<TextInputBaseProps, keyof {}>> {\n}"
+      ]
+    },
+    "react-native@0.88.1/types_generated/Libraries/Components/TextInput/TextInput.flow.d.ts#onBlur": {
+      "package": "react-native",
+      "version": "0.88.1",
+      "file": "types_generated/Libraries/Components/TextInput/TextInput.flow.d.ts",
+      "symbol": "onBlur",
+      "signatures": [
+        "onBlur?: ((e: TextInputBlurEvent) => unknown) | undefined;"
+      ]
+    },
+    "react-native@0.88.1/types_generated/Libraries/Components/TextInput/TextInput.flow.d.ts#onFocus": {
+      "package": "react-native",
+      "version": "0.88.1",
+      "file": "types_generated/Libraries/Components/TextInput/TextInput.flow.d.ts",
+      "symbol": "onFocus",
+      "signatures": [
+        "onFocus?: ((e: TextInputFocusEvent) => unknown) | undefined;"
       ]
     },
     "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View": {

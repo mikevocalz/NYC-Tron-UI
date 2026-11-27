@@ -17,10 +17,12 @@ export type { CheckedState } from "./toggle-model.ts";
  * - `Checkbox.kit.tsx` (QNX, Marathon and other hosts without Expo UI): RN
  *   views with Tailwind tokens.
  *
- * The universal Checkbox is boolean only. `"indeterminate"` renders Material
- * 3 `TriStateCheckbox` on Android and the kit checkbox on web and iOS.
- * In the Expo UI forms label, description and error are kit text around the
- * control. Props marked "kit" only style the kit box; other `Pressable` props
+ * The universal Checkbox is boolean only. On web `"indeterminate"` keeps the
+ * universal input (marked mixed) with a drawn dash; Android renders Material
+ * 3 `TriStateCheckbox` for every state; iOS renders the kit checkbox while
+ * mixed. In the Expo UI forms label, description and error are kit text
+ * around the control (on Android, label and description are Compose text in
+ * the row). Props marked "kit" only style the kit box; other `Pressable` props
  * only reach the kit row.
  */
 export interface CheckboxProps extends Omit<PressableProps,"children"|"disabled"|"onPress"|"style"> {

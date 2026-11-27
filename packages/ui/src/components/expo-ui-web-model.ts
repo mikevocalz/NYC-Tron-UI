@@ -52,8 +52,14 @@ export function ariaValue(value:string|boolean|undefined|null):string|undefined{
   return trimmed?trimmed:undefined;
 }
 
-/** Attributes to set on a DOM element. `undefined` removes an attribute this patch set before. */
+/** Attributes to set on a DOM element. `undefined` restores an attribute this patch set before. */
 export type AriaPatch=Readonly<Record<string,string|undefined>>;
+
+/**
+ * Attributes a patch has written, each with the value the element had
+ * before the first write (`null` when it had none).
+ */
+export type AriaPatchOwned=Map<string,string|null>;
 
 interface AttributeTarget{
   setAttribute(name:string,value:string):void;
@@ -78,20 +84,38 @@ export function findAriaTarget(node:unknown,selector:string,where:"descendant"|"
 }
 
 /**
- * Applies `patch` to `target`. Only attributes this patch owns are removed
- * (tracked in `owned`), so attributes the element got from elsewhere, such
- * as React Native Web's own `aria-label`, are never cleared. Returns the
- * names that changed.
+ * Applies `patch` to `target`. The first write of an attribute records the
+ * value the element had (in `owned`); when the patch later leaves that
+ * attribute `undefined`, the recorded value is put back, or the attribute is
+ * removed if it had none. Attributes the patch never wrote, such as React
+ * Native Web's own `aria-label`, are never touched. Returns the names that
+ * changed.
  */
-export function applyAriaPatch(target:AttributeTarget,patch:AriaPatch,owned:Set<string>):string[]{
+export function applyAriaPatch(target:AttributeTarget,patch:AriaPatch,owned:AriaPatchOwned):string[]{
   const changed:string[]=[];
   for(const [name,value] of Object.entries(patch)){
     if(value!==undefined){
+      if(!owned.has(name))owned.set(name,target.getAttribute(name));
       if(target.getAttribute(name)!==value){target.setAttribute(name,value);changed.push(name);}
-      owned.add(name);
     }else if(owned.has(name)){
-      target.removeAttribute(name);owned.delete(name);changed.push(name);
+      const original=owned.get(name)??null;
+      owned.delete(name);
+      if(target.getAttribute(name)===original)continue;
+      if(original===null)target.removeAttribute(name);
+      else target.setAttribute(name,original);
+      changed.push(name);
     }
   }
   return changed;
+}
+
+/**
+ * Sets the DOM `indeterminate` property of a checkbox input, which has no
+ * attribute form. Returns whether the property changed; false off the DOM.
+ */
+export function applyIndeterminate(target:unknown,mixed:boolean):boolean{
+  const input=target as {indeterminate?:unknown}|null|undefined;
+  if(!input||typeof input.indeterminate!=="boolean"||input.indeterminate===mixed)return false;
+  input.indeterminate=mixed;
+  return true;
 }

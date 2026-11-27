@@ -5,14 +5,14 @@
  * Modified for NYC-Tron UI (2026-11): universal TextInput on web with Field
  * ARIA written onto the textarea, auto-grow and counter.
  */
-import { useEffect, useImperativeHandle, useRef, useState, type ComponentRef } from "react";
+import { useImperativeHandle, useLayoutEffect, useReducer, useRef, useState, type ComponentRef } from "react";
 import { Platform, View, useWindowDimensions, type TextInput, type ViewStyle } from "react-native";
 import { Host, TextInput as UniversalTextInput, useNativeState, type TextInputRef } from "@expo/ui";
 import { joinClasses } from "../styles.ts";
 import { ariaValue, expoUiWebHostStyle } from "../expo-ui-web-model.ts";
 import { useWebAriaPatch } from "../useWebAriaPatch.ts";
 import { useField } from "./Field.tsx";
-import { autoGrowHeight, fieldControlProps } from "./field-model.ts";
+import { autoGrowHeight, controlledTextPush, fieldControlProps } from "./field-model.ts";
 import { TextareaCounter, useTextareaCounter } from "./Textarea.shared.tsx";
 import { resolveTextareaConfig, type TextareaProps } from "./Textarea.types.ts";
 
@@ -68,14 +68,19 @@ export function Textarea({
     "aria-disabled":ariaValue(off),
   });
 
-  // The universal field owns its text in an observable state; a controlled
-  // `value` is pushed in only when it differs from what the field last sent.
+  // The field owns its text in an observable state. After every render the
+  // controlled `value` is pushed in when it differs from what the field last
+  // sent, which also undoes an edit the parent rejected; a controlled edit
+  // forces that render even when the parent does not re-render.
   const text=useNativeState(value??defaultValue??"");
   const sent=useRef(value??defaultValue??"");
-  useEffect(()=>{
-    if(value!==undefined&&value!==sent.current){sent.current=value;text.set(value);}
-  },[value,text]);
-  const onText=(next:string)=>{sent.current=next;counter.track(next);onChangeText?.(next);};
+  const [,recheck]=useReducer((n:number)=>n+1,0);
+  useLayoutEffect(()=>{
+    const step=controlledTextPush(value,sent.current,text.get());
+    sent.current=step.sent;
+    if(step.push!==undefined)text.set(step.push);
+  });
+  const onText=(next:string)=>{sent.current=next;counter.track(next);onChangeText?.(next);if(value!==undefined)recheck();};
 
   const universal=useRef<TextInputRef>(null);
   useImperativeHandle(ref,()=>({
@@ -92,7 +97,7 @@ export function Textarea({
   return (
     <View {...{className:joinClasses("w-full min-w-0",styled&&"gap-1",className)}}>
       <View ref={host} style={{width:"100%"}}>
-        <Host colorScheme={colorScheme} matchContents={{vertical:true}}
+        <Host colorScheme={colorScheme} matchContents={{vertical:true}} ignoreSafeArea="all"
           style={Platform.OS==="web"?{width:"100%",...expoUiWebHostStyle()} as ViewStyle:{width:"100%"}}>
           <UniversalTextInput ref={universal} value={text} onChangeText={onText} multiline
             numberOfLines={bounds.min} maxLength={maxLength} editable={!off}
@@ -100,7 +105,7 @@ export function Textarea({
             placeholder={placeholder} autoFocus={autoFocus} autoCapitalize={autoCapitalize} autoCorrect={autoCorrect}
             keyboardType={keyboardType} selectTextOnFocus={selectTextOnFocus} placeholderTextColor={placeholderTextColor}
             selectionColor={selectionColor} cursorColor={cursorColor} testID={testID}
-            onFocus={()=>(onFocus as (()=>void)|undefined)?.()} onBlur={()=>(onBlur as (()=>void)|undefined)?.()}
+            onFocus={()=>onFocus?.()} onBlur={()=>onBlur?.()}
             onContentSizeChange={bounds.autoGrow?size=>setContent(size.height):undefined}
             textStyle={{fontSize:16,lineHeight}}
             style={{

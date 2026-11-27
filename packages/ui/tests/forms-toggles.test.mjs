@@ -2,8 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import {
-  a11yChecked, checkboxSymbol, checkedValueText, documentOrder, isKeyboardPress, keyRepeat, nextCheckedState,
-  radioSymbol, radioTabStop, requireName, switchGeometry, toggleableState, toggleKeyAction, validateDuration,
+  a11yChecked, checkboxDescription, checkboxSymbol, checkedValueText, documentOrder, isKeyboardPress, keepsFocusAfterSwap,
+  keyRepeat, nextCheckedState, radioSymbol, radioTabStop, requireName, SWAP_FOCUS_WINDOW_MS, switchGeometry,
+  toggleableState, toggleKeyAction, validateDuration,
 } from "../src/components/forms/toggle-model.ts";
 import { nextChoiceIndex } from "../src/components/forms/choice-keys.ts";
 
@@ -40,6 +41,21 @@ test("native checkbox state is carried in words and symbols, not color",()=>{
   assert.deepEqual([true,false,"indeterminate"].map(toggleableState),["on","off","indeterminate"]);
   assert.equal(radioSymbol(true),"largecircle.fill.circle");
   assert.equal(radioSymbol(false),"circle");
+});
+
+test("Android checkbox description carries name, description, error and state in words",()=>{
+  assert.equal(checkboxDescription({name:"Email me",checked:true}),"Email me, Checked");
+  assert.equal(checkboxDescription({name:"Terms",description:"Required to continue",error:"Accept the terms",checked:false}),
+    "Terms, Required to continue, Accept the terms, Not checked");
+  assert.equal(checkboxDescription({name:"All files",error:" ",checked:"indeterminate"}),"All files, Partially checked","blank parts dropped");
+});
+
+test("an iOS mixed-state swap keeps focus only right after the control's own press",()=>{
+  assert.equal(keepsFocusAfterSwap(0,5000),false,"never pressed: a parent-driven swap leaves focus alone");
+  assert.equal(keepsFocusAfterSwap(1000,1000),true);
+  assert.equal(keepsFocusAfterSwap(1000,1000+SWAP_FOCUS_WINDOW_MS),true);
+  assert.equal(keepsFocusAfterSwap(1000,1001+SWAP_FOCUS_WINDOW_MS),false,"an old press does not count");
+  assert.equal(keepsFocusAfterSwap(2000,1000),false,"clock went backwards");
 });
 
 test("switch thumb travel is symmetric inside the track for both sizes",()=>{
@@ -193,7 +209,17 @@ test("universal files render @expo/ui's universal controls and stay web safe",()
   assert.match(cb,/useWebAriaPatch\(control,'input\[type="checkbox"\]'/);
   assert.match(cb,/"aria-describedby":ariaValue\(/);
   assert.match(cb,/"aria-invalid":ariaValue\(!!error\)/);
-  assert.match(cb,/if\(props\.checked==="indeterminate"\)return <KitCheckbox/,"web falls back to the kit for mixed");
+  assert.doesNotMatch(cb,/KitCheckbox/,"web keeps one tree for every state, so focus is never lost to a remount");
+  assert.match(cb,/"aria-checked":mixed\?"mixed":undefined/,"mixed reaches the input");
+  assert.match(cb,/applyIndeterminate\(findAriaTarget\(control\.current,'input\[type="checkbox"\]'\),mixed\)/);
+  assert.match(cb,/\{mixed\?<MixedMark disabled=\{disabled\}\/>:null\}/,"a dash is drawn while mixed");
+  assert.match(cb,/pointerEvents="none" aria-hidden/,"the dash neither takes clicks nor is read");
+  assert.match(cb,/backgroundColor:"var\(--expo-ui-primary-500\)"/,"box follows the Host primary or explicit color");
+  assert.match(cb,/backgroundColor:"var\(--color-on-primary\)"/);
+  for(const [f,t] of [["Switch",sw],["Checkbox",cb]]){
+    assert.match(t,/ignoreSafeArea="all"/,f+" no safe-area or keyboard padding on the web Host");
+    assert.match(t,/styled&&"rounded-control has-\[:focus-visible\]:ring-2 has-\[:focus-visible\]:ring-focus"/,f+" visible keyboard focus, styled only");
+  }
 });
 
 test("native forks add names through SwiftUI and Compose modifiers on the universal controls",()=>{
@@ -209,8 +235,13 @@ test("native forks add names through SwiftUI and Compose modifiers on the univer
     assert.match(t,/seedColor=\{color\}/,f+" tint only from an explicit color");
   }
   assert.match(cb,/TriStateCheckbox/,"Android mixed state");
-  assert.match(cb,/checkedValueText\(checked\)/);
-  assert.match(cb,/props\.checked==="indeterminate"&&Platform\.OS!=="android"\)return <KitCheckbox/,"iOS mixed falls back to the kit");
+  assert.match(cb,/if\(android\)\{\n\s*\/\/ Every state on one TriStateCheckbox/,"Android draws every state on one control, so TalkBack focus stays");
+  assert.match(cb,/semantics\(\{contentDescription:checkboxDescription\(\{name,description,error,checked\}\)\}\)/,"Android description includes the error");
+  assert.match(cb,/const kit=props\.checked==="indeterminate"&&Platform\.OS!=="android";/,"iOS mixed falls back to the kit");
+  assert.match(cb,/return kit\?<KitCheckbox \{\.\.\.own\}\/>:<NativeCheckbox \{\.\.\.own\}\/>;/);
+  assert.match(cb,/keepsFocusAfterSwap\(pressedAt\.current,Date\.now\(\)\)/,"focus follows only this control's own press");
+  assert.match(cb,/AccessibilityInfo\.setAccessibilityFocus\(tag\)/,"VoiceOver focus moves to the new control");
+  assert.match(cb,/useImperativeHandle\(props\.ref,/,"the app ref follows the mounted control");
   assert.match(r,/from "@expo\/ui\/swift-ui"/);
   assert.match(r,/from "@expo\/ui\/jetpack-compose"/);
   assert.match(r,/RadioButton/);

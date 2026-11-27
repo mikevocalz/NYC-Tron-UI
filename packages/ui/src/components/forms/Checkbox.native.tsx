@@ -2,11 +2,12 @@
  * Behaviour adapted from NYC-MON packages/ui/Checkbox.tsx (MIT),
  * mikevocalz/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907.
  * Copyright (c) 2025 Gursel Cakar, MIT. Notices: THIRD_PARTY_NOTICES.md.
- * Modified for NYC-Tron UI (2026-11): universal Checkbox with SwiftUI /
- * Compose accessibility modifiers, Compose TriStateCheckbox for
- * indeterminate on Android, kit label text.
+ * Modified for NYC-Tron UI (2026-11): universal Checkbox with SwiftUI
+ * accessibility modifiers on iOS, Compose TriStateCheckbox for every state on
+ * Android, kit label text, focus kept across the iOS mixed-state swap.
  */
-import { I18nManager, Platform, Pressable, Text, View } from "react-native";
+import { useImperativeHandle, useLayoutEffect, useRef, type ComponentRef } from "react";
+import { AccessibilityInfo, I18nManager, Platform, Pressable, Text, View, findNodeHandle } from "react-native";
 import { Host, Checkbox as UniversalCheckbox } from "@expo/ui";
 import {
   accessibilityHint as swiftUIAccessibilityHint, accessibilityLabel as swiftUIAccessibilityLabel, frame, labelsHidden,
@@ -17,38 +18,61 @@ import {
 } from "@expo/ui/jetpack-compose/modifiers";
 import { joinClasses } from "../styles.ts";
 import { Checkbox as KitCheckbox } from "./Checkbox.kit.tsx";
-import { checkedValueText, nextCheckedState, requireName, toggleableState } from "./toggle-model.ts";
+import { checkboxDescription, keepsFocusAfterSwap, nextCheckedState, requireName, toggleableState } from "./toggle-model.ts";
 import type { CheckboxProps } from "./Checkbox.types.ts";
 
 export type { CheckboxProps, CheckedState } from "./Checkbox.types.ts";
 
 /**
- * iOS and Android: @expo/ui's universal `Checkbox` for checked and
- * unchecked. It renders Material 3 `Checkbox` on Android and SwiftUI
- * `Toggle` on iOS. iOS has no checkbox control (SwiftUI's checkbox toggle
- * style is macOS only), so iOS shows a switch and VoiceOver says "switch".
+ * iOS: @expo/ui's universal `Checkbox` for checked and unchecked, which
+ * renders SwiftUI `Toggle`. iOS has no checkbox control (SwiftUI's checkbox
+ * toggle style is macOS only), so iOS shows a switch and VoiceOver says
+ * "switch". `"indeterminate"` renders the kit checkbox, which announces
+ * mixed.
+ *
+ * Android: Material 3 `TriStateCheckbox` for every state, in a clickable row
+ * whose description ends in the state ("Checked", "Not checked", "Partially
+ * checked"; Compose's tri-state semantics are not exposed by `@expo/ui`).
+ * One control for all three states, so TalkBack focus never moves when the
+ * state changes. Label and description are Compose text in the row, so the
+ * kit text classes do not apply on Android.
  *
  * This fork exists because the universal component has no name, hint or
  * mixed state, and the platform modifiers and Compose views that add them
  * load native modules, so the web file cannot import them:
  *
- * - The control gets the name through `accessibilityLabel` (SwiftUI) or
- *   `semantics(contentDescription)` (Compose, which also reads the
- *   description); iOS adds description and error as the hint. Kit label and
- *   description text sit after the control, toggle on tap, and are hidden
- *   from VoiceOver and TalkBack. At least 44pt on iOS, 48dp on Android.
- * - `"indeterminate"`: Android renders Material 3 `TriStateCheckbox` in a
- *   clickable row whose description ends in "Partially checked" (Compose's
- *   tri-state semantics are not exposed by `@expo/ui`). iOS renders the kit
- *   checkbox, which announces mixed.
+ * - iOS: the control gets the name through `accessibilityLabel` and the
+ *   description and error as the hint. Kit label and description text sit
+ *   after the control, toggle on tap, and are hidden from VoiceOver. At
+ *   least 44pt.
+ * - Android: the row's `semantics(contentDescription)` holds the name,
+ *   description, error and state. At least 48dp.
+ * - iOS swaps between the SwiftUI toggle and the kit checkbox when the state
+ *   enters or leaves `"indeterminate"`. When this control's own press caused
+ *   the swap, VoiceOver focus is moved to the new control after it mounts.
  *
  * The error is RN text under the row, announced politely.
  *
  * Requires @expo/ui native APIs on a verified Expo SDK 58 host.
  */
 export function Checkbox(props:CheckboxProps){
-  if(props.checked==="indeterminate"&&Platform.OS!=="android")return <KitCheckbox {...props}/>;
-  return <NativeCheckbox {...props}/>;
+  const kit=props.checked==="indeterminate"&&Platform.OS!=="android";
+  const node=useRef<ComponentRef<typeof View>|null>(null);
+  useImperativeHandle(props.ref,()=>node.current as ComponentRef<typeof View>,[kit]);
+  // A press here records its time; a swap within a second of it keeps focus.
+  const pressedAt=useRef(0);
+  const shownKit=useRef(kit);
+  useLayoutEffect(()=>{
+    if(shownKit.current===kit)return;
+    shownKit.current=kit;
+    if(!keepsFocusAfterSwap(pressedAt.current,Date.now()))return;
+    pressedAt.current=0;
+    const tag=findNodeHandle(node.current);
+    if(tag!=null)AccessibilityInfo.setAccessibilityFocus(tag);
+  },[kit]);
+  const report=(next:boolean)=>{pressedAt.current=Date.now();props.onCheckedChange(next);};
+  const own={...props,ref:node,onCheckedChange:report};
+  return kit?<KitCheckbox {...own}/>:<NativeCheckbox {...own}/>;
 }
 
 function NativeCheckbox({
@@ -64,11 +88,11 @@ function NativeCheckbox({
   const direction=I18nManager.isRTL?"rightToLeft":"leftToRight";
   const errorLine=error ? (
     <Text accessibilityLiveRegion="polite"
-      {...{className:joinClasses(styled&&(checked==="indeterminate"?"text-sm leading-5 text-danger":"ps-14 text-sm leading-5 text-danger"),errorClassName)}}>{error}</Text>
+      {...{className:joinClasses(styled&&(android?"text-sm leading-5 text-danger":"ps-14 text-sm leading-5 text-danger"),errorClassName)}}>{error}</Text>
   ) : null;
 
-  if(checked==="indeterminate"){
-    // Android only (iOS returned the kit above): the universal Checkbox has no mixed state.
+  if(android){
+    // Every state on one TriStateCheckbox: the universal Checkbox has no mixed state.
     return (
       <View ref={ref} style={[{minHeight:44,minWidth:44},style]} {...{className:joinClasses(styled&&"gap-1",className)}}>
         <Host colorScheme={colorScheme} seedColor={color} layoutDirection={direction}
@@ -77,7 +101,7 @@ function NativeCheckbox({
             modifiers={[
               ...(label||description?[fillMaxWidth()]:[]),defaultMinSize({minWidth:48,minHeight:48}),
               clickable(toggle),
-              semantics({contentDescription:[name,description,checkedValueText(checked)].filter(Boolean).join(", ")}),
+              semantics({contentDescription:checkboxDescription({name,description,error,checked})}),
               ...(testID?[composeTestID(testID)]:[]),
             ]}>
             {/* No onClick: the row handles input and semantics. */}
@@ -95,11 +119,9 @@ function NativeCheckbox({
     );
   }
 
-  const modifiers=android
-    ? [defaultMinSize({minWidth:48,minHeight:48}),
-       semantics({contentDescription:[name,description].filter(Boolean).join(", ")})]
-    : [frame({minHeight:44}),labelsHidden(),swiftUIAccessibilityLabel(name),
-       ...(hint?[swiftUIAccessibilityHint(hint)]:[])];
+  // iOS (Android returned the tri-state row above).
+  const modifiers=[frame({minHeight:44}),labelsHidden(),swiftUIAccessibilityLabel(name),
+    ...(hint?[swiftUIAccessibilityHint(hint)]:[])];
   return (
     <View ref={ref} style={style} {...{className:joinClasses(styled&&"gap-1",className)}}>
       <View style={{flexDirection:"row",alignItems:"flex-start"}}

@@ -64,6 +64,9 @@ test("system alert only where it can express the dialog",()=>{
   assert.equal(prefersSystemAlert("android",{hasChildren:false,closeOnConfirm:false}),true);
   assert.equal(prefersSystemAlert("ios",{hasChildren:false}),true);
   assert.equal(prefersSystemAlert("ios",{hasChildren:false,closeOnConfirm:false}),false,"SwiftUI closes on every press");
+  assert.equal(prefersSystemAlert("ios",{hasChildren:false,busy:true}),false,"a busy SwiftUI alert could not come back while open stays true");
+  assert.equal(prefersSystemAlert("ios",{hasChildren:false,busy:false}),true);
+  assert.equal(prefersSystemAlert("android",{hasChildren:false,busy:true}),true,"Compose disables its buttons while busy");
   for(const os of ["ios","android"])assert.equal(prefersSystemAlert(os,{hasChildren:true}),false,os);
   for(const os of ["web","windows","macos","qnx"])assert.equal(prefersSystemAlert(os,{hasChildren:false}),false,os);
   assert.deepEqual(composeDialogProperties({}),{dismissOnBackPress:true,dismissOnClickOutside:true});
@@ -176,6 +179,7 @@ test("Dialog and AlertDialog forks: same runtime names, native forks on @expo/ui
   assert.ok(alertNative.includes('role="cancel"'));
   assert.ok(alertNative.includes('"destructive"'));
   assert.ok(alertNative.includes("prefersSystemAlert"));
+  assert.ok(alertNative.includes("busy:props.busy"),"busy reaches the system-alert choice");
 });
 
 test("kit Dialog source contract: modal semantics, keyboard, focus, tokens",()=>{

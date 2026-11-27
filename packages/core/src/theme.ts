@@ -103,9 +103,10 @@ export function themeCssVariables(theme:TronTheme):Readonly<Record<string,string
 }
 
 /**
- * The `--expo-ui-*` variables that @expo/ui's universal Switch, Checkbox,
- * TextInput and BottomSheet read on web, and the Tron color key each one
- * takes (docs/THEME_TOKENS.md, "Expo UI universal components on web").
+ * The `--expo-ui-*` variables that @expo/ui's universal Switch, Checkbox and
+ * TextInput read on web, and the Tron color key each one takes
+ * (docs/THEME_TOKENS.md, "Expo UI universal components on web"). The
+ * universal BottomSheet reads none of them.
  */
 export const EXPO_UI_TOKEN_MAP=Object.freeze({
   "--expo-ui-background":"surfaceSunken",

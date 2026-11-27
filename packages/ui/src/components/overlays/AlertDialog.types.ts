@@ -43,7 +43,7 @@ export interface AlertDialogProps {
   onCancel?:()=>void;
   /** "danger" draws a danger confirm button (SwiftUI destructive role, Material error color) and starts focus on Cancel. @default "default" */
   tone?:AlertDialogTone;
-  /** Work is running: Confirm shows loading, Cancel is disabled and nothing closes the dialog. @default false */
+  /** Work is running: Confirm shows loading, Cancel is disabled and nothing closes the dialog. iOS shows the kit dialog while busy. @default false */
   busy?:boolean;
   /**
    * Close after Confirm. Set false to keep the dialog open while `busy`, then

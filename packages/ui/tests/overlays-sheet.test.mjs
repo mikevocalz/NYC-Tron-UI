@@ -50,6 +50,15 @@ test("Sheet wraps the universal BottomSheet on every platform with token-styled 
   assert.match(t,/if\(now\.dismissible\)\{now\.onOpenChange\(false\);return;\}/,"system closes only when dismissible");
   assert.match(t,/onPress=\{\(\)=>latest\.current\.onOpenChange\(false\)\}/,"the close button always closes");
   assert.doesNotMatch(t,/stopPropagation|preventDefault/,"the web drag tracker only listens");
+  assert.match(t,/const setRoot=useCallback\(\(next:ComponentRef<typeof View>\|null\)=>\{root\.current=next;setNode\(next\);\},\[\]\);/,
+    "the late-mounted web dialog content re-renders Sheet through the callback ref");
+  assert.match(t,/useImperativeHandle\(ref,\(\)=>node as ComponentRef<typeof View>,\[node\]\)/,"the app ref follows the content node");
+  assert.match(t,/useWebDrag\(node,open&&web&&!dismissible\)/,"drag listeners attach once the node exists");
+  assert.match(t,/\},\[active,node\]\);/);
+  for(const ev of ["pointerdown","pointermove","pointerup","pointercancel"])
+    assert.ok(t.includes(`addEventListener("${ev}"`)&&t.includes(`removeEventListener?.("${ev}"`),ev+" attached and removed");
+  assert.match(t,/const up=\(\)=>\{\n\s*if\(start===null\)return;\n\s*start=null;/,"a release ends the press, so hovering is not a drag");
+  assert.match(t,/clear=setTimeout\(\(\)=>\{clear=undefined;dragged\.current=false;\},0\)/,"the flag outlives the sheet's own pointerup only");
   assert.doesNotMatch(t,/["'`]#[0-9A-Fa-f]{3,8}["'`]/,"no hardcoded color");
   assert.doesNotMatch(t,/\b(pl|pr|ml|mr)-\d/,"logical spacing only");
   assert.doesNotMatch(t,/from\s+["'](?:@nitro-forge\/|\.\.\/forge\/)/,"Forge free");

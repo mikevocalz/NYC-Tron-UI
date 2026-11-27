@@ -80,6 +80,8 @@ export function Dialog({
   // react-native-web's Modal also answers Escape, on keyup at the document.
   // When the panel already handled that key on keydown, skip the second request.
   const escapeHandled=useRef(false);
+  // A flag left from a keydown whose keyup never reached the Modal (it closed first) must not eat the next Escape.
+  useLayoutEffect(()=>{if(open)escapeHandled.current=false;},[open]);
   const request=(reason:DialogDismissReason)=>{
     const now=latest.current;
     if(!now.open)return;

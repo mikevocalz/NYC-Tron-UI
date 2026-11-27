@@ -35,6 +35,29 @@ export function radioSymbol(checked:boolean):"largecircle.fill.circle"|"circle"{
   return checked?"largecircle.fill.circle":"circle";
 }
 
+/**
+ * Android's spoken description for the tri-state checkbox row: name,
+ * description, error and state, so the error is never shown by color alone.
+ */
+export function checkboxDescription(
+  {name,description,error,checked}:{name:string;description?:string;error?:string;checked:CheckedState},
+):string{
+  return [name,description,error,checkedValueText(checked)].map(p=>p?.trim()).filter(Boolean).join(", ");
+}
+
+/** How long after its own press a control that swaps implementation keeps screen reader focus. */
+export const SWAP_FOCUS_WINDOW_MS=1000;
+
+/**
+ * Whether a checkbox that just swapped implementation (iOS, entering or
+ * leaving the mixed state) should move screen reader focus to the new
+ * control: only when its own press, at `pressedAt`, caused the swap. A swap
+ * driven from elsewhere, such as a child row, leaves focus where it is.
+ */
+export function keepsFocusAfterSwap(pressedAt:number,now:number):boolean{
+  return pressedAt>0&&now>=pressedAt&&now-pressedAt<=SWAP_FOCUS_WINDOW_MS;
+}
+
 /** Material 3 `TriStateCheckbox` state for a checkbox value. */
 export function toggleableState(state:CheckedState):"on"|"off"|"indeterminate"{
   return state==="indeterminate"?"indeterminate":state?"on":"off";

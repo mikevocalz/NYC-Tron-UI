@@ -30,7 +30,9 @@ export type { SwitchProps, SwitchSize } from "./Switch.types.ts";
  * `aria-label`. The visible label is kit text at the start of the row; a
  * click on it toggles, and it is not a second tab stop. Track colors come
  * from the Host style that maps @expo/ui's `--expo-ui-*` variables onto the
- * app's tokens (see docs/THEME_TOKENS.md).
+ * app's tokens (see docs/THEME_TOKENS.md). Keyboard focus draws a `focus`
+ * ring around the 44pt target (styled only). The Host ignores the safe area
+ * and keyboard insets the universal web Host pads by default.
  */
 export function Switch({
   ref,value,onValueChange,label,size="md",disabled=false,animationMs=150,colorScheme,color,style,
@@ -54,8 +56,9 @@ export function Switch({
           </Text>
         </Pressable>
       ) : null}
-      <View ref={control} style={{minHeight:44,minWidth:44,justifyContent:"center",alignItems:"center",flexShrink:0}}>
-        <Host matchContents colorScheme={colorScheme} seedColor={color}
+      <View ref={control} style={{minHeight:44,minWidth:44,justifyContent:"center",alignItems:"center",flexShrink:0}}
+        {...{className:joinClasses(styled&&"rounded-control has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-focus")}}>
+        <Host matchContents colorScheme={colorScheme} seedColor={color} ignoreSafeArea="all"
           style={Platform.OS==="web"?expoUiWebHostStyle(color!==undefined) as ViewStyle:undefined}>
           <UniversalSwitch value={value} disabled={disabled} testID={testID}
             onValueChange={next=>{if(!disabled&&next!==value)onValueChange(next);}}/>

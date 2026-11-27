@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { applyAriaPatch, ariaValue, EXPO_UI_TRON_VARIABLES, expoUiWebHostStyle, findAriaTarget } from "../src/components/expo-ui-web-model.ts";
+import { applyAriaPatch, applyIndeterminate, ariaValue, EXPO_UI_TRON_VARIABLES, expoUiWebHostStyle, findAriaTarget } from "../src/components/expo-ui-web-model.ts";
 import { EXPO_UI_TOKEN_MAP, TRON_THEME_TOKENS } from "../../core/src/theme.ts";
 
 test("the Host style maps the same variables onto the same tokens as core's EXPO_UI_TOKEN_MAP",()=>{
@@ -40,13 +40,36 @@ test("findAriaTarget looks down by default, up for ancestors, and is null off th
   assert.equal(findAriaTarget({},"textarea"),null,"a native host node has no querySelector");
 });
 
-test("applyAriaPatch sets values and removes only the attributes it set",()=>{
+test("applyAriaPatch sets values, then restores or removes only the attributes it set",()=>{
   const el=fakeElement({"aria-label":"Bottom sheet","aria-describedby":"theirs"});
-  const owned=new Set();
+  const owned=new Map();
   assert.deepEqual(applyAriaPatch(el,{"aria-label":"Filters","aria-invalid":"true"},owned),["aria-label","aria-invalid"]);
   assert.equal(el.attrs.get("aria-label"),"Filters");
   assert.deepEqual(applyAriaPatch(el,{"aria-label":"Filters","aria-invalid":"true"},owned),[],"no change, no writes");
   assert.deepEqual(applyAriaPatch(el,{"aria-invalid":undefined,"aria-describedby":undefined},owned),["aria-invalid"]);
-  assert.ok(!el.attrs.has("aria-invalid"));
+  assert.ok(!el.attrs.has("aria-invalid"),"had no value before: removed");
   assert.equal(el.attrs.get("aria-describedby"),"theirs","an attribute the patch never set is left alone");
+  assert.deepEqual(applyAriaPatch(el,{"aria-label":undefined},owned),["aria-label"]);
+  assert.equal(el.attrs.get("aria-label"),"Bottom sheet","had a value before: restored, not removed");
+  assert.deepEqual(applyAriaPatch(el,{"aria-label":undefined},owned),[],"a restored attribute is no longer owned");
+});
+
+test("applyAriaPatch records the original only on the first write",()=>{
+  const el=fakeElement({"aria-checked":"false"});
+  const owned=new Map();
+  applyAriaPatch(el,{"aria-checked":"mixed"},owned);
+  applyAriaPatch(el,{"aria-checked":"true"},owned);
+  assert.equal(owned.get("aria-checked"),"false");
+  applyAriaPatch(el,{"aria-checked":undefined},owned);
+  assert.equal(el.attrs.get("aria-checked"),"false");
+});
+
+test("applyIndeterminate sets the DOM property and is a no-op off the DOM",()=>{
+  const input={indeterminate:false};
+  assert.equal(applyIndeterminate(input,true),true);
+  assert.equal(input.indeterminate,true);
+  assert.equal(applyIndeterminate(input,true),false,"unchanged");
+  assert.equal(applyIndeterminate(input,false),true);
+  assert.equal(input.indeterminate,false);
+  for(const off of [null,undefined,{},{indeterminate:"yes"}])assert.equal(applyIndeterminate(off,true),false);
 });

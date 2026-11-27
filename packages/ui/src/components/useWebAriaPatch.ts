@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, type RefObject } from "react";
 import { Platform } from "react-native";
-import { applyAriaPatch, findAriaTarget, type AriaPatch } from "./expo-ui-web-model.ts";
+import { applyAriaPatch, findAriaTarget, type AriaPatch, type AriaPatchOwned } from "./expo-ui-web-model.ts";
 
 /**
  * Web only: sets ARIA attributes on an element that an @expo/ui universal
@@ -10,15 +10,18 @@ import { applyAriaPatch, findAriaTarget, type AriaPatch } from "./expo-ui-web-mo
  * `selector` finds it below the node, or above it with `"ancestor"`.
  *
  * Runs after every render, because the universal component may replace the
- * element. Does nothing on native hosts, where the node is not a DOM element.
+ * element; a new element starts a fresh record of original values. Does
+ * nothing on native hosts, where the node is not a DOM element.
  */
 export function useWebAriaPatch(
   ref:RefObject<unknown>,selector:string,patch:AriaPatch,where:"descendant"|"ancestor"="descendant",
 ):void{
-  const owned=useRef(new Set<string>());
+  const state=useRef<{target:unknown;owned:AriaPatchOwned}>({target:null,owned:new Map()});
   useLayoutEffect(()=>{
     if(Platform.OS!=="web")return;
     const target=findAriaTarget(ref.current,selector,where);
-    if(target)applyAriaPatch(target,patch,owned.current);
+    if(!target)return;
+    if(state.current.target!==target)state.current={target,owned:new Map()};
+    applyAriaPatch(target,patch,state.current.owned);
   });
 }

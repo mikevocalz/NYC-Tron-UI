@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import {
-  autoGrowHeight, counterIsNearLimit, counterState, counterText, defaultCountThreshold, describedBy,
+  autoGrowHeight, controlledTextPush, counterIsNearLimit, counterState, counterText, defaultCountThreshold, describedBy,
   fieldControlProps, fieldHint, fieldIds, fieldLabelText, resolveRows, rowsHeight, safeId, shouldAnnounceCount,
 } from "../src/components/forms/field-model.ts";
 import { resolveTextareaConfig } from "../src/components/forms/Textarea.types.ts";
@@ -204,6 +204,30 @@ test("kit Textarea: multiline TextInput, auto-grow, counter, Field wiring and to
   const shared=src("Textarea.shared.tsx");
   assert.match(shared,/accessibilityLiveRegion=\{near\?"polite":"none"\}/);
   assert.match(shared,/announceForAccessibility/);
+});
+
+test("controlled Expo UI text: push the parent's value when it changed or rejected the edit",()=>{
+  assert.deepEqual(controlledTextPush(undefined,"abc","abcd"),{sent:"abc"},"uncontrolled: the field keeps its text");
+  assert.deepEqual(controlledTextPush("abcX","abcX","abcX"),{sent:"abcX"},"parent took the edit");
+  assert.deepEqual(controlledTextPush("abc","abc","abcd"),{sent:"abc"},"parent took 'abc'; a later keystroke already in the field stays");
+  assert.deepEqual(controlledTextPush("abc","abcX","abcX"),{sent:"abc",push:"abc"},"parent rejected the edit: the field goes back");
+  assert.deepEqual(controlledTextPush("ABC","abc","abc"),{sent:"ABC",push:"ABC"},"parent rewrote the value");
+  assert.deepEqual(controlledTextPush("","x",""),{sent:""},"field already holds it: only sent moves");
+});
+
+test("both Expo UI Textareas re-check the controlled value after every render and after each edit",()=>{
+  for(const f of ["Textarea.tsx","Textarea.native.tsx"]){
+    const t=src(f);
+    assert.match(t,/useLayoutEffect\(\(\)=>\{\n\s*const step=controlledTextPush\(value,sent\.current,text\.get\(\)\);/,f+" layout effect without deps");
+    assert.match(t,/\}\);\n\s*const onText=/,f+" the effect has no dependency list");
+    assert.match(t,/if\(step\.push!==undefined\)text\.set\(step\.push\);/,f);
+    assert.match(t,/onChangeText\?\.\(next\);if\(value!==undefined\)recheck\(\);/,f+" a rejected edit still re-renders");
+    assert.doesNotMatch(t,/as \(\(\)=>void\)\|undefined/,f+" focus handlers need no cast");
+  }
+  assert.match(src("Textarea.tsx"),/ignoreSafeArea="all"/,"no safe-area or keyboard padding on the web Host");
+  const types=src("Textarea.types.ts");
+  assert.match(types,/Omit<TextInputProps,"multiline"\|"numberOfLines"\|"onFocus"\|"onBlur">/);
+  assert.match(types,/onFocus\?:\(event\?:Parameters<NonNullable<TextInputProps\["onFocus"\]>>\[0\]\)=>void;/,"the event is optional, as the Expo UI forks pass none");
 });
 
 test("universal Textarea renders @expo/ui's TextInput on web with the Field wiring on the textarea",()=>{

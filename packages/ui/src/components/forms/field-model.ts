@@ -257,3 +257,17 @@ export function autoGrowHeight(contentHeight:number,bounds:RowBounds,metrics:Row
   const wanted=Number.isFinite(contentHeight)&&contentHeight>0?Math.ceil(contentHeight+metrics.inset):min;
   return {height:Math.min(max,Math.max(min,wanted)),scroll:wanted>max};
 }
+
+/**
+ * One step of keeping an Expo UI text field (which owns its text in an
+ * observable state) on a controlled `value`. `sent` is the text the field
+ * last reported, `current` what it holds now. The parent's `value` is pushed
+ * only when it differs from what the field sent: then the parent changed or
+ * rejected the edit. When they match, the parent took the edit and the field
+ * is left alone, because a later keystroke may already be in it. Returns the
+ * new `sent` and the text to write into the field, if any.
+ */
+export function controlledTextPush(value:string|undefined,sent:string,current:string):{sent:string;push?:string} {
+  if(value===undefined||value===sent)return {sent};
+  return value===current?{sent:value}:{sent:value,push:value};
+}

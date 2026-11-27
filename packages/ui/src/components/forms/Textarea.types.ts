@@ -27,7 +27,15 @@ export type { CounterState } from "./field-model.ts";
  *
  * Other TextInput props reach the kit only.
  */
-export interface TextareaProps extends Omit<TextInputProps,"multiline"|"numberOfLines"> {
+export interface TextareaProps extends Omit<TextInputProps,"multiline"|"numberOfLines"|"onFocus"|"onBlur"> {
+  /**
+   * Both. The field gained focus. Kit: called with the React Native focus
+   * event. Expo UI forks: the OS fields report focus without an event, so
+   * it is called with no argument.
+   */
+  onFocus?:(event?:Parameters<NonNullable<TextInputProps["onFocus"]>>[0])=>void;
+  /** Both. The field lost focus. Kit: called with the blur event. Expo UI forks: called with no argument. */
+  onBlur?:(event?:Parameters<NonNullable<TextInputProps["onBlur"]>>[0])=>void;
   /** Both. Fixed visible rows. Cannot be combined with `minRows`/`maxRows`. @default 4 */
   rows?:number;
   /** Both. Auto-grow: start at this many rows. @default 1 when only maxRows is set */

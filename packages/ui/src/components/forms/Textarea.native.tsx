@@ -6,7 +6,7 @@
  * OutlinedTextField on Android, Field wiring through accessibility label and
  * hint.
  */
-import { useEffect, useImperativeHandle, useRef, type ComponentRef } from "react";
+import { useImperativeHandle, useLayoutEffect, useReducer, useRef, type ComponentRef } from "react";
 import { Platform, View, type TextInput } from "react-native";
 import { Host, TextInput as UniversalTextInput, useNativeState, type TextInputRef } from "@expo/ui";
 import { accessibilityHint as swiftUIHint, lineLimit, textFieldStyle } from "@expo/ui/swift-ui/modifiers";
@@ -16,7 +16,7 @@ import {
 import { fillMaxWidth, semantics, testID as composeTestID } from "@expo/ui/jetpack-compose/modifiers";
 import { joinClasses } from "../styles.ts";
 import { useField } from "./Field.tsx";
-import { fieldHint, fieldLabelText } from "./field-model.ts";
+import { controlledTextPush, fieldHint, fieldLabelText } from "./field-model.ts";
 import { TextareaCounter, useTextareaCounter } from "./Textarea.shared.tsx";
 import { resolveTextareaConfig, type TextareaProps } from "./Textarea.types.ts";
 
@@ -70,14 +70,19 @@ export function Textarea({
   const bad=invalid??field?.invalid??false;
   const counter=useTextareaCounter({showCount,maxLength,threshold,countLabel,value,defaultValue});
 
-  // The native field owns its text in an observable state; a controlled
-  // `value` is pushed in only when it differs from what the field last sent.
+  // The field owns its text in an observable state. After every render the
+  // controlled `value` is pushed in when it differs from what the field last
+  // sent, which also undoes an edit the parent rejected; a controlled edit
+  // forces that render even when the parent does not re-render.
   const text=useNativeState(value??defaultValue??"");
   const sent=useRef(value??defaultValue??"");
-  useEffect(()=>{
-    if(value!==undefined&&value!==sent.current){sent.current=value;text.set(value);}
-  },[value,text]);
-  const onText=(next:string)=>{sent.current=next;counter.track(next);onChangeText?.(next);};
+  const [,recheck]=useReducer((n:number)=>n+1,0);
+  useLayoutEffect(()=>{
+    const step=controlledTextPush(value,sent.current,text.get());
+    sent.current=step.sent;
+    if(step.push!==undefined)text.set(step.push);
+  });
+  const onText=(next:string)=>{sent.current=next;counter.track(next);onChangeText?.(next);if(value!==undefined)recheck();};
 
   const universal=useRef<TextInputRef>(null);
   const compose=useRef<ComposeTextFieldRef>(null);
@@ -92,9 +97,10 @@ export function Textarea({
   },[]);
   const onFocusChange=(isFocused:boolean)=>{
     focused.current=isFocused;
-    // RN focus events carry a native event; the OS fields do not, so none is passed.
-    if(isFocused)(onFocus as (()=>void)|undefined)?.();
-    else (onBlur as (()=>void)|undefined)?.();
+    // RN focus events carry a native event; the OS fields do not, so none is
+    // passed (TextareaProps types the event as optional).
+    if(isFocused)onFocus?.();
+    else onBlur?.();
   };
 
   const label=field?.label?fieldLabelText(field.label,field.required,field.requiredText):accessibilityLabel;

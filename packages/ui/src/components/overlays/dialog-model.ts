@@ -122,12 +122,15 @@ export function alertAction(action:AlertDialogAction,{busy=false,closeOnConfirm=
 /**
  * Whether the system alert (SwiftUI `Alert`, Compose `AlertDialog`) can show
  * this AlertDialog. Custom `children` need the kit dialog. SwiftUI closes an
- * alert as soon as any button is pressed, so on iOS a dialog that stays open
- * after Confirm (`closeOnConfirm` false, to show busy) also uses the kit.
+ * alert as soon as any button is pressed and cannot present it again while
+ * `open` stays true, so on iOS a dialog that stays open after Confirm
+ * (`closeOnConfirm` false) or is `busy` uses the kit, which shows the busy
+ * state and ignores presses. Compose disables its buttons and dismissal
+ * while busy, so Android keeps the system alert.
  */
-export function prefersSystemAlert(platform:string,{hasChildren,closeOnConfirm=true}:{hasChildren:boolean;closeOnConfirm?:boolean}):boolean{
+export function prefersSystemAlert(platform:string,{hasChildren,closeOnConfirm=true,busy=false}:{hasChildren:boolean;closeOnConfirm?:boolean;busy?:boolean}):boolean{
   if(hasChildren)return false;
   if(platform==="android")return true;
-  if(platform==="ios")return closeOnConfirm;
+  if(platform==="ios")return closeOnConfirm&&!busy;
   return false;
 }
