@@ -11,7 +11,7 @@ import {
 } from "../src/components/feedback/toast-model.ts";
 
 const pkg=JSON.parse(readFileSync(new URL("../package.json",import.meta.url),"utf8"));
-const src=p=>readFileSync(new URL("../src/components/feedback/"+p,import.meta.url),"utf8");
+const src=p=>readFileSync(new URL("../src/components/feedback/"+p,import.meta.url),"utf8").replace(/\r\n/g,"\n");
 
 // ---------- progress-model (cases ported from NYC-MON progress-model.test.ts) ----------
 

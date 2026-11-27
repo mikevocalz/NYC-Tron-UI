@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { requireCloseLabel, requireSheetTitle, resolveSnapPoints } from "../src/components/overlays/sheet-model.ts";
 
 const pkg=JSON.parse(readFileSync(new URL("../package.json",import.meta.url),"utf8"));
-const src=p=>readFileSync(new URL("../src/components/overlays/"+p,import.meta.url),"utf8");
+const src=p=>readFileSync(new URL("../src/components/overlays/"+p,import.meta.url),"utf8").replace(/\r\n/g,"\n");
 const header=text=>{const m=text.match(/^\/\*\n([\s\S]*?)\n \*\/\n/);return m?m[1].replace(/^ \* ?/gm,"").replace(/\n/g," "):"";};
 const PROVENANCE=/^Behaviour adapted from NYC-MON packages\/ui\/BottomSheet\.tsx \(MIT\), mikevocalz\/nyc-mon commit 5ed8cf8322c685c86dbe03f4ac7b801255d1b907\. Copyright \(c\) 2025 Gursel Cakar, MIT\. Notices: THIRD_PARTY_NOTICES\.md\. Modified for NYC-Tron UI \(2026-11\): \S/;
 

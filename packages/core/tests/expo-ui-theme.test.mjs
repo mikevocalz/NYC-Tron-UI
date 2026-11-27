@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { validateTheme, expoUiCssVariables, EXPO_UI_TOKEN_MAP, TRON_THEME_TOKENS } from "../src/theme.ts";
 
-const doc=readFileSync(new URL("../../../docs/THEME_TOKENS.md",import.meta.url),"utf8");
+const doc=readFileSync(new URL("../../../docs/THEME_TOKENS.md",import.meta.url),"utf8").replace(/\r\n/g,"\n");
 const section=doc.slice(doc.indexOf("## Expo UI universal components on web"));
 
 const theme=validateTheme({

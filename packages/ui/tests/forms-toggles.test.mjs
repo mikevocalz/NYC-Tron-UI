@@ -9,7 +9,7 @@ import {
 import { nextChoiceIndex } from "../src/components/forms/choice-keys.ts";
 
 const pkg=JSON.parse(readFileSync(new URL("../package.json",import.meta.url),"utf8"));
-const src=p=>readFileSync(new URL("../src/components/forms/"+p,import.meta.url),"utf8");
+const src=p=>readFileSync(new URL("../src/components/forms/"+p,import.meta.url),"utf8").replace(/\r\n/g,"\n");
 const COMPONENTS=["Switch","Checkbox","Radio"];
 /** Switch and Checkbox: universal @expo/ui file, native fork, kit. Radio keeps its web and native forks. */
 const UNIVERSAL=["Switch","Checkbox"];

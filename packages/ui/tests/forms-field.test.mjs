@@ -8,7 +8,7 @@ import {
 import { resolveTextareaConfig } from "../src/components/forms/Textarea.types.ts";
 
 const pkg=JSON.parse(readFileSync(new URL("../package.json",import.meta.url),"utf8"));
-const src=p=>readFileSync(new URL("../src/components/forms/"+p,import.meta.url),"utf8");
+const src=p=>readFileSync(new URL("../src/components/forms/"+p,import.meta.url),"utf8").replace(/\r\n/g,"\n");
 const FILES=["Field.tsx","Textarea.types.ts","Textarea.shared.tsx","Textarea.tsx","Textarea.kit.tsx","Textarea.native.tsx","field-model.ts"];
 const TEXTAREAS=["Textarea.tsx","Textarea.native.tsx","Textarea.kit.tsx"];
 /** The block-comment header of a ported file, unwrapped to one line ("" when there is none). */
@@ -181,7 +181,7 @@ test("Label speaks the required word; HelperText reuses ErrorMessage for errors"
   assert.match(f,/<ErrorMessage[^>]*message=\{children\}/);
   assert.match(f,/disabled&&"opacity-50"/);
   // ErrorMessage owns the polite live region; it must stay that way.
-  const em=readFileSync(new URL("../src/components/feedback/ErrorMessage.tsx",import.meta.url),"utf8");
+  const em=readFileSync(new URL("../src/components/feedback/ErrorMessage.tsx",import.meta.url),"utf8").replace(/\r\n/g,"\n");
   assert.match(em,/accessibilityLiveRegion="polite"/);
 });
 
