@@ -3269,6 +3269,126 @@
           }
         }
       ],
+      "./components/feedback/ProgressBar": [
+        {
+          "target": "./dist/components/feedback/ProgressBar.web.d.ts",
+          "conditions": {
+            "types": "./dist/components/feedback/ProgressBar.web.d.ts",
+            "browser": "./dist/components/feedback/ProgressBar.web.js",
+            "react-native": "./dist/components/feedback/ProgressBar.native.js",
+            "default": "./dist/components/feedback/ProgressBar.web.js"
+          },
+          "symbols": {
+            "ProgressBar": [
+              "@nyc-tron/ui/dist/components/feedback/ProgressBar.web.d.ts#ProgressBar"
+            ],
+            "ProgressBarProps": [
+              "@nyc-tron/ui/dist/components/feedback/ProgressBar.types.d.ts#ProgressBarProps"
+            ],
+            "ProgressBarSize": [
+              "@nyc-tron/ui/dist/components/feedback/ProgressBar.types.d.ts#ProgressBarSize"
+            ],
+            "ProgressBarTone": [
+              "@nyc-tron/ui/dist/components/feedback/ProgressBar.types.d.ts#ProgressBarTone"
+            ],
+            "ProgressValueContext": [
+              "@nyc-tron/ui/dist/components/feedback/progress-model.d.ts#ProgressValueContext"
+            ]
+          }
+        }
+      ],
+      "./components/feedback/Spinner": [
+        {
+          "target": "./dist/components/feedback/Spinner.web.d.ts",
+          "conditions": {
+            "types": "./dist/components/feedback/Spinner.web.d.ts",
+            "browser": "./dist/components/feedback/Spinner.web.js",
+            "react-native": "./dist/components/feedback/Spinner.native.js",
+            "default": "./dist/components/feedback/Spinner.web.js"
+          },
+          "symbols": {
+            "Spinner": [
+              "@nyc-tron/ui/dist/components/feedback/Spinner.web.d.ts#Spinner"
+            ],
+            "SpinnerProps": [
+              "@nyc-tron/ui/dist/components/feedback/Spinner.types.d.ts#SpinnerProps"
+            ],
+            "SpinnerSize": [
+              "@nyc-tron/ui/dist/components/feedback/Spinner.types.d.ts#SpinnerSize"
+            ]
+          }
+        }
+      ],
+      "./components/feedback/Toast": [
+        {
+          "target": "./dist/components/feedback/Toast.web.d.ts",
+          "conditions": {
+            "types": "./dist/components/feedback/Toast.web.d.ts",
+            "browser": "./dist/components/feedback/Toast.web.js",
+            "react-native": "./dist/components/feedback/Toast.native.js",
+            "default": "./dist/components/feedback/Toast.web.js"
+          },
+          "symbols": {
+            "Toast": [
+              "@nyc-tron/ui/dist/components/feedback/Toast.shared.d.ts#Toast"
+            ],
+            "ToastAction": [
+              "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastAction"
+            ],
+            "ToastApi": [
+              "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastApi"
+            ],
+            "ToastInsets": [
+              "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastInsets"
+            ],
+            "ToastItem": [
+              "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastItem"
+            ],
+            "ToastLive": [
+              "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastLive"
+            ],
+            "ToastOptions": [
+              "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastOptions"
+            ],
+            "ToastPlacement": [
+              "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastPlacement"
+            ],
+            "ToastProps": [
+              "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastProps"
+            ],
+            "ToastProvider": [
+              "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastProvider"
+            ],
+            "ToastProviderProps": [
+              "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastProviderProps"
+            ],
+            "ToastSnapshot": [
+              "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastSnapshot"
+            ],
+            "ToastStore": [
+              "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastStore"
+            ],
+            "ToastStoreOptions": [
+              "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastStoreOptions"
+            ],
+            "ToastTone": [
+              "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastTone"
+            ],
+            "ToastViewport": [
+              "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastViewport"
+            ],
+            "ToastViewportProps": [
+              "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastViewportProps"
+            ],
+            "createToastStore": [
+              "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#createToastStore"
+            ],
+            "useToast": [
+              "@nyc-tron/ui/dist/components/feedback/Toast.shared.d.ts#useToast"
+            ]
+          }
+        }
+      ],
       "./components/files/DropZone": [
         {
           "target": "./dist/components/files/DropZone.web.d.ts",
@@ -16677,6 +16797,151 @@
           }
         }
       ],
+      "./components/forms/Checkbox": [
+        {
+          "target": "./dist/components/forms/Checkbox.web.d.ts",
+          "conditions": {
+            "types": "./dist/components/forms/Checkbox.web.d.ts",
+            "browser": "./dist/components/forms/Checkbox.web.js",
+            "react-native": "./dist/components/forms/Checkbox.native.js",
+            "default": "./dist/components/forms/Checkbox.web.js"
+          },
+          "symbols": {
+            "Checkbox": [
+              "@nyc-tron/ui/dist/components/forms/Checkbox.web.d.ts#Checkbox"
+            ],
+            "CheckboxProps": [
+              "@nyc-tron/ui/dist/components/forms/Checkbox.types.d.ts#CheckboxProps"
+            ],
+            "CheckedState": [
+              "@nyc-tron/ui/dist/components/forms/toggle-model.d.ts#CheckedState"
+            ]
+          }
+        }
+      ],
+      "./components/forms/Field": [
+        {
+          "target": "./dist/components/forms/Field.d.ts",
+          "conditions": {
+            "types": "./dist/components/forms/Field.d.ts",
+            "react-native": "./dist/components/forms/Field.js",
+            "default": "./dist/components/forms/Field.js"
+          },
+          "symbols": {
+            "Field": [
+              "@nyc-tron/ui/dist/components/forms/Field.d.ts#Field"
+            ],
+            "FieldControlProps": [
+              "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldControlProps"
+            ],
+            "FieldIds": [
+              "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldIds"
+            ],
+            "FieldProps": [
+              "@nyc-tron/ui/dist/components/forms/Field.d.ts#FieldProps"
+            ],
+            "FieldRenderProps": [
+              "@nyc-tron/ui/dist/components/forms/Field.d.ts#FieldRenderProps"
+            ],
+            "FieldState": [
+              "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldState"
+            ],
+            "HelperText": [
+              "@nyc-tron/ui/dist/components/forms/Field.d.ts#HelperText"
+            ],
+            "HelperTextProps": [
+              "@nyc-tron/ui/dist/components/forms/Field.d.ts#HelperTextProps"
+            ],
+            "Label": [
+              "@nyc-tron/ui/dist/components/forms/Field.d.ts#Label"
+            ],
+            "LabelProps": [
+              "@nyc-tron/ui/dist/components/forms/Field.d.ts#LabelProps"
+            ],
+            "useField": [
+              "@nyc-tron/ui/dist/components/forms/Field.d.ts#useField"
+            ],
+            "useFieldIds": [
+              "@nyc-tron/ui/dist/components/forms/Field.d.ts#useFieldIds"
+            ]
+          }
+        }
+      ],
+      "./components/forms/Radio": [
+        {
+          "target": "./dist/components/forms/Radio.web.d.ts",
+          "conditions": {
+            "types": "./dist/components/forms/Radio.web.d.ts",
+            "browser": "./dist/components/forms/Radio.web.js",
+            "react-native": "./dist/components/forms/Radio.native.js",
+            "default": "./dist/components/forms/Radio.web.js"
+          },
+          "symbols": {
+            "Radio": [
+              "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#Radio"
+            ],
+            "RadioGroup": [
+              "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroup"
+            ],
+            "RadioGroupItem": [
+              "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroupItem"
+            ],
+            "RadioGroupItemProps": [
+              "@nyc-tron/ui/dist/components/forms/Radio.types.d.ts#RadioGroupItemProps"
+            ],
+            "RadioGroupProps": [
+              "@nyc-tron/ui/dist/components/forms/Radio.types.d.ts#RadioGroupProps"
+            ],
+            "RadioProps": [
+              "@nyc-tron/ui/dist/components/forms/Radio.types.d.ts#RadioProps"
+            ]
+          }
+        }
+      ],
+      "./components/forms/Switch": [
+        {
+          "target": "./dist/components/forms/Switch.web.d.ts",
+          "conditions": {
+            "types": "./dist/components/forms/Switch.web.d.ts",
+            "browser": "./dist/components/forms/Switch.web.js",
+            "react-native": "./dist/components/forms/Switch.native.js",
+            "default": "./dist/components/forms/Switch.web.js"
+          },
+          "symbols": {
+            "Switch": [
+              "@nyc-tron/ui/dist/components/forms/Switch.web.d.ts#Switch"
+            ],
+            "SwitchProps": [
+              "@nyc-tron/ui/dist/components/forms/Switch.types.d.ts#SwitchProps"
+            ],
+            "SwitchSize": [
+              "@nyc-tron/ui/dist/components/forms/toggle-model.d.ts#SwitchSize"
+            ]
+          }
+        }
+      ],
+      "./components/forms/Textarea": [
+        {
+          "target": "./dist/components/forms/Textarea.web.d.ts",
+          "conditions": {
+            "types": "./dist/components/forms/Textarea.web.d.ts",
+            "browser": "./dist/components/forms/Textarea.web.js",
+            "react-native": "./dist/components/forms/Textarea.native.js",
+            "default": "./dist/components/forms/Textarea.web.js"
+          },
+          "symbols": {
+            "CounterState": [
+              "@nyc-tron/ui/dist/components/forms/field-model.d.ts#CounterState"
+            ],
+            "Textarea": [
+              "@nyc-tron/ui/dist/components/forms/Textarea.web.d.ts#Textarea"
+            ],
+            "TextareaProps": [
+              "@nyc-tron/ui/dist/components/forms/Textarea.types.d.ts#TextareaProps"
+            ]
+          }
+        }
+      ],
       "./components/forms/choice-keys": [
         {
           "target": "./dist/components/forms/choice-keys.d.ts",
@@ -16978,6 +17243,28 @@
           }
         }
       ],
+      "./components/overlays/AlertDialog": [
+        {
+          "target": "./dist/components/overlays/AlertDialog.web.d.ts",
+          "conditions": {
+            "types": "./dist/components/overlays/AlertDialog.web.d.ts",
+            "browser": "./dist/components/overlays/AlertDialog.web.js",
+            "react-native": "./dist/components/overlays/AlertDialog.native.js",
+            "default": "./dist/components/overlays/AlertDialog.web.js"
+          },
+          "symbols": {
+            "AlertDialog": [
+              "@nyc-tron/ui/dist/components/overlays/AlertDialog.web.d.ts#AlertDialog"
+            ],
+            "AlertDialogProps": [
+              "@nyc-tron/ui/dist/components/overlays/AlertDialog.types.d.ts#AlertDialogProps"
+            ],
+            "AlertDialogTone": [
+              "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#AlertDialogTone"
+            ]
+          }
+        }
+      ],
       "./components/overlays/AnchoredPopover": [
         {
           "target": "./dist/components/overlays/AnchoredPopover.d.ts",
@@ -17043,6 +17330,73 @@
             ],
             "CommandPopoverProps": [
               "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandPopoverProps"
+            ]
+          }
+        }
+      ],
+      "./components/overlays/Dialog": [
+        {
+          "target": "./dist/components/overlays/Dialog.web.d.ts",
+          "conditions": {
+            "types": "./dist/components/overlays/Dialog.web.d.ts",
+            "browser": "./dist/components/overlays/Dialog.web.js",
+            "react-native": "./dist/components/overlays/Dialog.native.js",
+            "default": "./dist/components/overlays/Dialog.web.js"
+          },
+          "symbols": {
+            "Dialog": [
+              "@nyc-tron/ui/dist/components/overlays/Dialog.web.d.ts#Dialog"
+            ],
+            "DialogDismissReason": [
+              "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#DialogDismissReason"
+            ],
+            "DialogInsets": [
+              "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#DialogInsets"
+            ],
+            "DialogProps": [
+              "@nyc-tron/ui/dist/components/overlays/Dialog.types.d.ts#DialogProps"
+            ],
+            "DialogSize": [
+              "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#DialogSize"
+            ]
+          }
+        }
+      ],
+      "./components/overlays/Portal": [
+        {
+          "target": "./dist/components/overlays/Portal.d.ts",
+          "conditions": {
+            "types": "./dist/components/overlays/Portal.d.ts",
+            "react-native": "./dist/components/overlays/Portal.js",
+            "default": "./dist/components/overlays/Portal.js"
+          },
+          "symbols": {
+            "Portal": [
+              "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#Portal"
+            ],
+            "PortalEntry": [
+              "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#PortalEntry"
+            ],
+            "PortalHost": [
+              "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalHost"
+            ],
+            "PortalHostProps": [
+              "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalHostProps"
+            ],
+            "PortalProps": [
+              "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProps"
+            ],
+            "PortalProvider": [
+              "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProvider"
+            ],
+            "PortalProviderProps": [
+              "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProviderProps"
+            ],
+            "PortalStore": [
+              "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#PortalStore"
+            ],
+            "createPortalStore": [
+              "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#createPortalStore"
             ]
           }
         }
@@ -22742,11 +23096,264 @@
         "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
       ]
     },
+    "@nyc-tron/ui/dist/components/feedback/ProgressBar.types.d.ts#ProgressBarProps": {
+      "signatures": [
+        "export interface ProgressBarProps extends Omit<ViewProps, \"children\" | \"role\" | \"accessibilityRole\" | \"accessibilityValue\"> {\n    ref?: Ref<ComponentRef<typeof View>>;\n    value?: number;\n    min?: number;\n    max?: number;\n    indeterminate?: boolean;\n    label?: string;\n    showValue?: boolean;\n    valueText?: (value: number, context: ProgressValueContext) => string;\n    busyText?: string;\n    tone?: ProgressBarTone;\n    size?: ProgressBarSize;\n    color?: string;\n    colorScheme?: \"light\" | \"dark\";\n    className?: string;\n    labelClassName?: string;\n    valueClassName?: string;\n    trackClassName?: string;\n    fillClassName?: string;\n    unstyled?: boolean;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/ProgressBar.types.d.ts#ProgressBarSize",
+        "@nyc-tron/ui/dist/components/feedback/ProgressBar.types.d.ts#ProgressBarTone",
+        "@nyc-tron/ui/dist/components/feedback/progress-model.d.ts#ProgressValueContext",
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/ProgressBar.types.d.ts#ProgressBarSize": {
+      "signatures": [
+        "export type ProgressBarSize = \"sm\" | \"md\" | \"lg\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/feedback/ProgressBar.types.d.ts#ProgressBarTone": {
+      "signatures": [
+        "export type ProgressBarTone = \"default\" | \"success\" | \"danger\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/feedback/ProgressBar.web.d.ts#ProgressBar": {
+      "signatures": [
+        "export declare function ProgressBar(props: ProgressBarProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/ProgressBar.types.d.ts#ProgressBarProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/Spinner.types.d.ts#SpinnerProps": {
+      "signatures": [
+        "export interface SpinnerProps extends Omit<ViewProps, \"children\" | \"role\" | \"accessibilityRole\"> {\n    ref?: Ref<ComponentRef<typeof View>>;\n    size?: SpinnerSize;\n    label?: string;\n    color?: string;\n    colorClassName?: string;\n    colorScheme?: \"light\" | \"dark\";\n    className?: string;\n    unstyled?: boolean;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/Spinner.types.d.ts#SpinnerSize",
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/Spinner.types.d.ts#SpinnerSize": {
+      "signatures": [
+        "export type SpinnerSize = \"sm\" | \"md\" | \"lg\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/feedback/Spinner.web.d.ts#Spinner": {
+      "signatures": [
+        "export declare function Spinner({ ref, size, label, color, colorClassName, colorScheme: _colorScheme, className, unstyled: _unstyled, style, accessibilityLabel, accessibilityState, ...rest }: SpinnerProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/Spinner.types.d.ts#SpinnerProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/Toast.shared.d.ts#Toast": {
+      "signatures": [
+        "export declare function Toast({ ref, tone, title, description, action, onDismiss, dismissLabel, live, icon, className, titleClassName, descriptionClassName, actionClassName, unstyled, ...rest }: ToastProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/Toast.shared.d.ts#useToast": {
+      "signatures": [
+        "export declare function useToast(): ToastApi;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastApi"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastApi": {
+      "signatures": [
+        "export interface ToastApi {\n    show(options: ToastOptions): string;\n    dismiss(id?: string): boolean;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastOptions"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastInsets": {
+      "signatures": [
+        "export interface ToastInsets {\n    readonly top?: number;\n    readonly bottom?: number;\n    readonly start?: number;\n    readonly end?: number;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastPlacement": {
+      "signatures": [
+        "export type ToastPlacement = \"top\" | \"bottom\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastProps": {
+      "signatures": [
+        "export interface ToastProps extends Omit<ViewProps, \"children\" | \"role\"> {\n    ref?: Ref<ComponentRef<typeof View>>;\n    tone?: ToastTone;\n    title: string;\n    description?: string;\n    action?: ToastAction;\n    onDismiss?: () => void;\n    dismissLabel?: string;\n    live?: ToastLive | \"off\";\n    icon?: ReactNode;\n    className?: string;\n    titleClassName?: string;\n    descriptionClassName?: string;\n    actionClassName?: string;\n    unstyled?: boolean;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastAction",
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastLive",
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastTone",
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.ReactNode",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastProviderProps": {
+      "signatures": [
+        "export interface ToastProviderProps {\n    children?: ReactNode;\n    store?: ToastStore;\n    maxVisible?: number;\n    maxQueued?: number;\n    defaultDuration?: number;\n    viewport?: boolean;\n    placement?: ToastPlacement;\n    insets?: ToastInsets;\n    viewportProps?: Omit<ToastViewportProps, \"placement\" | \"insets\">;\n    persistForScreenReader?: boolean;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastInsets",
+        "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastPlacement",
+        "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastViewportProps",
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastStore",
+        "@types/react@19.3.0/index.d.ts#React.ReactNode",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastViewportProps": {
+      "signatures": [
+        "export interface ToastViewportProps extends Omit<ViewProps, \"children\"> {\n    placement?: ToastPlacement;\n    insets?: ToastInsets;\n    label?: string;\n    className?: string;\n    toastClassName?: string;\n    unstyled?: boolean;\n    colorScheme?: \"light\" | \"dark\";\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastInsets",
+        "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastPlacement",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastProvider": {
+      "signatures": [
+        "export declare function ToastProvider(props: ToastProviderProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastProviderProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastViewport": {
+      "signatures": [
+        "export declare function ToastViewport(props: ToastViewportProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastViewportProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
     "@nyc-tron/ui/dist/components/feedback/glyphs.d.ts#StatusTone": {
       "signatures": [
         "export type StatusTone = \"info\" | \"success\" | \"danger\" | \"neutral\";"
       ],
       "references": []
+    },
+    "@nyc-tron/ui/dist/components/feedback/progress-model.d.ts#ProgressValueContext": {
+      "signatures": [
+        "export interface ProgressValueContext {\n    readonly min: number;\n    readonly max: number;\n    readonly fraction: number;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastAction": {
+      "signatures": [
+        "export interface ToastAction {\n    readonly label: string;\n    readonly onPress: () => void;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastItem": {
+      "signatures": [
+        "export interface ToastItem {\n    readonly id: string;\n    readonly tone: ToastTone;\n    readonly title: string;\n    readonly description?: string;\n    readonly action?: ToastAction;\n    readonly duration: number;\n    readonly live: ToastLive;\n    readonly revision: number;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastAction",
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastLive",
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastTone"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastLive": {
+      "signatures": [
+        "export type ToastLive = \"status\" | \"alert\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastOptions": {
+      "signatures": [
+        "export interface ToastOptions {\n    readonly id?: string;\n    readonly tone?: ToastTone;\n    readonly title: string;\n    readonly description?: string;\n    readonly action?: ToastAction;\n    readonly duration?: number;\n    readonly live?: ToastLive;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastAction",
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastLive",
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastTone"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastScheduler": {
+      "signatures": [
+        "export interface ToastScheduler {\n    now(): number;\n    set(run: () => void, ms: number): unknown;\n    clear(handle: unknown): void;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastSnapshot": {
+      "signatures": [
+        "export interface ToastSnapshot {\n    readonly visible: readonly ToastItem[];\n    readonly queued: number;\n    readonly paused: boolean;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastItem"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastStore": {
+      "signatures": [
+        "export interface ToastStore {\n    show(options: ToastOptions): string;\n    dismiss(id?: string): boolean;\n    pause(reason: string): void;\n    resume(reason: string): void;\n    getSnapshot(): ToastSnapshot;\n    subscribe(listener: () => void): () => void;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastOptions",
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastSnapshot"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastStoreOptions": {
+      "signatures": [
+        "export interface ToastStoreOptions {\n    readonly maxVisible?: number;\n    readonly maxQueued?: number;\n    readonly defaultDuration?: number;\n    readonly scheduler?: ToastScheduler;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastScheduler"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastTone": {
+      "signatures": [
+        "export type ToastTone = \"info\" | \"success\" | \"danger\" | \"neutral\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#createToastStore": {
+      "signatures": [
+        "export declare function createToastStore({ maxVisible, maxQueued, defaultDuration, scheduler, }?: ToastStoreOptions): ToastStore;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastStore",
+        "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastStoreOptions"
+      ]
     },
     "@nyc-tron/ui/dist/components/files/DropZone.types.d.ts#DropAsset": {
       "signatures": [
@@ -45027,6 +45634,242 @@
         "@nyc-tron/ui/dist/components/forge/waveform.d.ts#WaveformRange"
       ]
     },
+    "@nyc-tron/ui/dist/components/forms/Checkbox.types.d.ts#CheckboxProps": {
+      "signatures": [
+        "export interface CheckboxProps extends Omit<PressableProps, \"children\" | \"disabled\" | \"onPress\" | \"style\"> {\n    ref?: Ref<ComponentRef<typeof View>>;\n    checked: CheckedState;\n    onCheckedChange: (next: boolean) => void;\n    label?: string;\n    description?: string;\n    error?: string;\n    disabled?: boolean;\n    colorScheme?: \"light\" | \"dark\";\n    style?: StyleProp<ViewStyle>;\n    className?: string;\n    rowClassName?: string;\n    boxClassName?: string;\n    markClassName?: string;\n    labelClassName?: string;\n    descriptionClassName?: string;\n    errorClassName?: string;\n    unstyled?: boolean;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/toggle-model.d.ts#CheckedState",
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Components/Pressable/Pressable.d.ts#PressableProps",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View",
+        "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts#StyleProp",
+        "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts#ViewStyle",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Checkbox.web.d.ts#Checkbox": {
+      "signatures": [
+        "export declare function Checkbox({ ref, checked, onCheckedChange, label, description, error, disabled, colorScheme: _colorScheme, style, className, rowClassName, boxClassName, markClassName, labelClassName, descriptionClassName, errorClassName, unstyled, ...rest }: CheckboxProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/Checkbox.types.d.ts#CheckboxProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Field.d.ts#Field": {
+      "signatures": [
+        "export declare function Field({ label, children, description, error, required, disabled, invalid, id, requiredText, errorPrefix, className, labelClassName, descriptionClassName, errorClassName, unstyled, ...rest }: FieldProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/Field.d.ts#FieldProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Field.d.ts#FieldProps": {
+      "signatures": [
+        "export interface FieldProps extends Omit<ViewProps, \"children\"> {\n    label: string;\n    children: ReactNode | ((field: FieldRenderProps) => ReactNode);\n    description?: string;\n    error?: string;\n    required?: boolean;\n    disabled?: boolean;\n    invalid?: boolean;\n    id?: string;\n    requiredText?: string;\n    errorPrefix?: string;\n    className?: string;\n    labelClassName?: string;\n    descriptionClassName?: string;\n    errorClassName?: string;\n    unstyled?: boolean;\n    ref?: Ref<ComponentRef<typeof View>>;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/Field.d.ts#FieldRenderProps",
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.ReactNode",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Field.d.ts#FieldRenderProps": {
+      "signatures": [
+        "export interface FieldRenderProps extends FieldState {\n    controlProps: FieldControlProps;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldControlProps",
+        "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldState"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Field.d.ts#HelperText": {
+      "signatures": [
+        "export declare function HelperText({ children, tone, nativeID, testID, className, textClassName, unstyled, ref, }: HelperTextProps): import(\"react\").JSX.Element | null;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/Field.d.ts#HelperTextProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Field.d.ts#HelperTextProps": {
+      "signatures": [
+        "export interface HelperTextProps {\n    children?: string;\n    tone?: \"default\" | \"error\";\n    nativeID?: string;\n    testID?: string;\n    className?: string;\n    textClassName?: string;\n    unstyled?: boolean;\n    ref?: Ref<ComponentRef<typeof View>>;\n}"
+      ],
+      "references": [
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Field.d.ts#Label": {
+      "signatures": [
+        "export declare function Label({ children, nativeID, required, requiredText, disabled, className, requiredClassName, unstyled, accessibilityLabel, ...rest }: LabelProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/Field.d.ts#LabelProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Field.d.ts#LabelProps": {
+      "signatures": [
+        "export interface LabelProps extends Omit<TextProps, \"children\"> {\n    children: ReactNode;\n    nativeID?: string;\n    required?: boolean;\n    requiredText?: string;\n    disabled?: boolean;\n    className?: string;\n    requiredClassName?: string;\n    unstyled?: boolean;\n    ref?: Ref<ComponentRef<typeof Text>>;\n}"
+      ],
+      "references": [
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.ReactNode",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Text/Text.d.ts#$$Text",
+        "react-native@0.88.1/types_generated/Libraries/Text/TextProps.d.ts#TextProps",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Field.d.ts#useField": {
+      "signatures": [
+        "export declare function useField(): FieldState | null;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldState"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Field.d.ts#useFieldIds": {
+      "signatures": [
+        "export declare function useFieldIds(): FieldIds | null;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldIds"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Radio.types.d.ts#RadioGroupItemProps": {
+      "signatures": [
+        "export interface RadioGroupItemProps extends Omit<PressableProps, \"children\" | \"disabled\" | \"onPress\" | \"style\"> {\n    ref?: Ref<ComponentRef<typeof View>>;\n    value: string;\n    label?: string;\n    description?: string;\n    disabled?: boolean;\n    style?: StyleProp<ViewStyle>;\n    className?: string;\n    indicatorClassName?: string;\n    dotClassName?: string;\n    labelClassName?: string;\n    descriptionClassName?: string;\n    unstyled?: boolean;\n}"
+      ],
+      "references": [
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Components/Pressable/Pressable.d.ts#PressableProps",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View",
+        "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts#StyleProp",
+        "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts#ViewStyle",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Radio.types.d.ts#RadioGroupProps": {
+      "signatures": [
+        "export interface RadioGroupProps extends Omit<ViewProps, \"children\" | \"role\"> {\n    ref?: Ref<ComponentRef<typeof View>>;\n    value: string;\n    onValueChange: (value: string) => void;\n    label?: string;\n    orientation?: \"vertical\" | \"horizontal\";\n    disabled?: boolean;\n    colorScheme?: \"light\" | \"dark\";\n    children?: ReactNode;\n    className?: string;\n    labelClassName?: string;\n    itemsClassName?: string;\n    unstyled?: boolean;\n}"
+      ],
+      "references": [
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.ReactNode",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Radio.types.d.ts#RadioProps": {
+      "signatures": [
+        "export type RadioProps = RadioGroupItemProps;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/Radio.types.d.ts#RadioGroupItemProps"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#Radio": {
+      "signatures": [
+        "export declare const Radio: typeof RadioGroupItem;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroupItem"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroup": {
+      "signatures": [
+        "export declare function RadioGroup({ ref, value, onValueChange, label, orientation, disabled, colorScheme: _colorScheme, children, className, labelClassName, itemsClassName, unstyled, style, ...rest }: RadioGroupProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/Radio.types.d.ts#RadioGroupProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroupItem": {
+      "signatures": [
+        "export declare function RadioGroupItem({ ref, value, label, description, disabled, style, className, indicatorClassName, dotClassName, labelClassName, descriptionClassName, unstyled, ...rest }: RadioGroupItemProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/Radio.types.d.ts#RadioGroupItemProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Switch.types.d.ts#SwitchProps": {
+      "signatures": [
+        "export interface SwitchProps extends Omit<PressableProps, \"children\" | \"disabled\" | \"onPress\" | \"style\"> {\n    ref?: Ref<ComponentRef<typeof View>>;\n    value: boolean;\n    onValueChange: (next: boolean) => void;\n    label?: string;\n    size?: SwitchSize;\n    disabled?: boolean;\n    animationMs?: number;\n    colorScheme?: \"light\" | \"dark\";\n    style?: StyleProp<ViewStyle>;\n    className?: string;\n    trackClassName?: string;\n    thumbClassName?: string;\n    labelClassName?: string;\n    unstyled?: boolean;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/toggle-model.d.ts#SwitchSize",
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Components/Pressable/Pressable.d.ts#PressableProps",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View",
+        "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts#StyleProp",
+        "react-native@0.88.1/types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts#ViewStyle",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Switch.web.d.ts#Switch": {
+      "signatures": [
+        "export declare function Switch({ ref, value, onValueChange, label, size, disabled, animationMs, colorScheme: _colorScheme, style, className, trackClassName, thumbClassName, labelClassName, unstyled, ...rest }: SwitchProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/Switch.types.d.ts#SwitchProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Textarea.types.d.ts#TextareaProps": {
+      "signatures": [
+        "export interface TextareaProps extends Omit<TextInputProps, \"multiline\" | \"numberOfLines\"> {\n    rows?: number;\n    minRows?: number;\n    maxRows?: number;\n    maxLength?: number;\n    showCount?: boolean;\n    countThreshold?: number;\n    countLabel?: (state: CounterState) => string;\n    invalid?: boolean;\n    disabled?: boolean;\n    lineHeight?: number;\n    inset?: number;\n    colorScheme?: \"light\" | \"dark\";\n    className?: string;\n    inputClassName?: string;\n    counterClassName?: string;\n    unstyled?: boolean;\n    ref?: Ref<ComponentRef<typeof TextInput>>;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/field-model.d.ts#CounterState",
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Components/TextInput/TextInput.d.ts#$$TextInput",
+        "react-native@0.88.1/types_generated/Libraries/Components/TextInput/TextInput.flow.d.ts#TextInputProps",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/forms/Textarea.web.d.ts#Textarea": {
+      "signatures": [
+        "export declare function Textarea({ rows, minRows, maxRows, maxLength, showCount, countThreshold, countLabel, invalid, disabled, editable, lineHeight, inset, colorScheme: _colorScheme, className, inputClassName, counterClassName, unstyled, value, defaultValue, onChangeText, onContentSizeChange, style, ...props }: TextareaProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/Textarea.types.d.ts#TextareaProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
     "@nyc-tron/ui/dist/components/forms/choice-keys.d.ts#ChoiceAxis": {
       "signatures": [
         "export type ChoiceAxis = \"horizontal\" | \"vertical\" | \"both\";"
@@ -45089,6 +45932,32 @@
         "@nyc-tron/ui/dist/components/forms/choice-keys.d.ts#WebKey"
       ]
     },
+    "@nyc-tron/ui/dist/components/forms/field-model.d.ts#CounterState": {
+      "signatures": [
+        "export interface CounterState {\n    length: number;\n    max?: number;\n    remaining?: number;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldControlProps": {
+      "signatures": [
+        "export interface FieldControlProps {\n    nativeID: string;\n    accessibilityLabelledBy: string;\n    \"aria-labelledby\": string;\n    \"aria-describedby\"?: string;\n    accessibilityLabel?: string;\n    accessibilityHint?: string;\n    \"aria-required\"?: boolean;\n    \"aria-invalid\"?: boolean;\n    \"aria-disabled\"?: boolean;\n    accessibilityState: {\n        disabled: boolean;\n    };\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldIds": {
+      "signatures": [
+        "export interface FieldIds {\n    inputId: string;\n    labelId: string;\n    descriptionId?: string;\n    errorId?: string;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldState": {
+      "signatures": [
+        "export interface FieldState {\n    ids: FieldIds;\n    label?: string;\n    description?: string;\n    error?: string;\n    required: boolean;\n    disabled: boolean;\n    invalid: boolean;\n    requiredText?: string;\n    errorPrefix?: string;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldIds"
+      ]
+    },
     "@nyc-tron/ui/dist/components/forms/option-groups.d.ts#OptionGroup": {
       "signatures": [
         "export interface OptionGroup<T> {\n    readonly heading: string;\n    readonly options: readonly T[];\n}"
@@ -45110,6 +45979,18 @@
       "references": [
         "@nyc-tron/ui/dist/components/forms/option-groups.d.ts#OptionGroup"
       ]
+    },
+    "@nyc-tron/ui/dist/components/forms/toggle-model.d.ts#CheckedState": {
+      "signatures": [
+        "export type CheckedState = boolean | \"indeterminate\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/forms/toggle-model.d.ts#SwitchSize": {
+      "signatures": [
+        "export type SwitchSize = \"sm\" | \"md\";"
+      ],
+      "references": []
     },
     "@nyc-tron/ui/dist/components/gestures/GestureHandlerDrag.d.ts#GestureHandlerDrag": {
       "signatures": [
@@ -45544,6 +46425,30 @@
         "@nyc-tron/ui/dist/components/navigation/drawer-model.d.ts#DrawerGeometryInput"
       ]
     },
+    "@nyc-tron/ui/dist/components/overlays/AlertDialog.types.d.ts#AlertDialogProps": {
+      "signatures": [
+        "export interface AlertDialogProps {\n    ref?: Ref<ComponentRef<typeof View>>;\n    open: boolean;\n    onOpenChange: (open: boolean) => void;\n    title: string;\n    description?: string;\n    children?: ReactNode;\n    confirmLabel: string;\n    cancelLabel?: string;\n    onConfirm: () => void;\n    onCancel?: () => void;\n    tone?: AlertDialogTone;\n    busy?: boolean;\n    closeOnConfirm?: boolean;\n    dismissible?: boolean;\n    closeOnBackdrop?: boolean;\n    size?: DialogSize;\n    testID?: string;\n    className?: string;\n    overlayClassName?: string;\n    contentClassName?: string;\n    titleClassName?: string;\n    descriptionClassName?: string;\n    footerClassName?: string;\n    unstyled?: boolean;\n    colorScheme?: \"light\" | \"dark\";\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#AlertDialogTone",
+        "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#DialogSize",
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.ReactNode",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/overlays/AlertDialog.web.d.ts#AlertDialog": {
+      "signatures": [
+        "export declare function AlertDialog({ ref, open, onOpenChange, title, description, children, confirmLabel, cancelLabel, onConfirm, onCancel, tone, busy, closeOnConfirm, dismissible, closeOnBackdrop, size, testID, className, overlayClassName, contentClassName, titleClassName, descriptionClassName, footerClassName, unstyled, colorScheme, }: AlertDialogProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/overlays/AlertDialog.types.d.ts#AlertDialogProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
     "@nyc-tron/ui/dist/components/overlays/AnchoredPopover.d.ts#AnchoredPopover": {
       "signatures": [
         "export declare function AnchoredPopover(props: PopoverProps): import(\"react\").JSX.Element;"
@@ -45593,6 +46498,94 @@
       "references": [
         "@nyc-tron/core/dist/overlays.d.ts#CommandMenuItem",
         "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/overlays/Dialog.types.d.ts#DialogProps": {
+      "signatures": [
+        "export interface DialogProps {\n    ref?: Ref<ComponentRef<typeof View>>;\n    open: boolean;\n    onOpenChange: (open: boolean) => void;\n    title: string;\n    description?: string;\n    children?: ReactNode;\n    footer?: ReactNode;\n    dismissible?: boolean;\n    closeOnBackdrop?: boolean;\n    busy?: boolean;\n    size?: DialogSize;\n    initialFocusRef?: RefObject<{\n        focus?: () => void;\n    } | null>;\n    onDismiss?: (reason: DialogDismissReason) => void;\n    safeAreaInsets?: DialogInsets;\n    reduceMotion?: boolean;\n    backdropLabel?: string;\n    role?: \"dialog\" | \"alertdialog\";\n    testID?: string;\n    className?: string;\n    overlayClassName?: string;\n    contentClassName?: string;\n    titleClassName?: string;\n    descriptionClassName?: string;\n    bodyClassName?: string;\n    footerClassName?: string;\n    unstyled?: boolean;\n    colorScheme?: \"light\" | \"dark\";\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#DialogDismissReason",
+        "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#DialogInsets",
+        "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#DialogSize",
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.ReactNode",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "@types/react@19.3.0/index.d.ts#React.RefObject",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/overlays/Dialog.web.d.ts#Dialog": {
+      "signatures": [
+        "export declare function Dialog({ ref, open, onOpenChange, title, description, children, footer, dismissible, closeOnBackdrop, busy, size, initialFocusRef, onDismiss, safeAreaInsets, reduceMotion, backdropLabel, role, testID, className, overlayClassName, contentClassName, titleClassName, descriptionClassName, bodyClassName, footerClassName, unstyled, colorScheme: _colorScheme, }: DialogProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/overlays/Dialog.types.d.ts#DialogProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#Portal": {
+      "signatures": [
+        "export declare function Portal({ host, children }: PortalProps): import(\"react\").JSX.Element | null;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalHost": {
+      "signatures": [
+        "export declare function PortalHost({ ref, name, fill, className, unstyled: _unstyled, style, ...rest }: PortalHostProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalHostProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalHostProps": {
+      "signatures": [
+        "export interface PortalHostProps extends Omit<ViewProps, \"children\"> {\n    ref?: Ref<ComponentRef<typeof View>>;\n    name?: string;\n    fill?: boolean;\n    className?: string;\n    unstyled?: boolean;\n}"
+      ],
+      "references": [
+        "@types/react@19.3.0/index.d.ts#React.ComponentRef",
+        "@types/react@19.3.0/index.d.ts#React.Ref",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/View.d.ts#$$View",
+        "react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#ViewProps",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Omit"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProps": {
+      "signatures": [
+        "export interface PortalProps {\n    host?: string;\n    children?: ReactNode;\n}"
+      ],
+      "references": [
+        "@types/react@19.3.0/index.d.ts#React.ReactNode"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProvider": {
+      "signatures": [
+        "export declare function PortalProvider({ store, children }: PortalProviderProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProviderProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProviderProps": {
+      "signatures": [
+        "export interface PortalProviderProps {\n    store?: PortalStore<ReactNode>;\n    children?: ReactNode;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#PortalStore",
+        "@types/react@19.3.0/index.d.ts#React.ReactNode"
       ]
     },
     "@nyc-tron/ui/dist/components/overlays/anchored-popover-types.d.ts#PopoverAnchorProps": {
@@ -45712,6 +46705,30 @@
         "@nyc-tron/ui/dist/components/overlays/command-filter.d.ts#PaletteCommand"
       ]
     },
+    "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#AlertDialogTone": {
+      "signatures": [
+        "export type AlertDialogTone = \"default\" | \"danger\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#DialogDismissReason": {
+      "signatures": [
+        "export type DialogDismissReason = \"backdrop\" | \"escape\" | \"back\" | \"action\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#DialogInsets": {
+      "signatures": [
+        "export interface DialogInsets {\n    top?: number;\n    bottom?: number;\n    left?: number;\n    right?: number;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#DialogSize": {
+      "signatures": [
+        "export type DialogSize = \"sm\" | \"md\" | \"lg\";"
+      ],
+      "references": []
+    },
     "@nyc-tron/ui/dist/components/overlays/focus-cycle.d.ts#cycleFocusIndex": {
       "signatures": [
         "export declare function cycleFocusIndex(count: number, current: number, backwards: boolean): number;"
@@ -45755,6 +46772,28 @@
       ],
       "references": [
         "@nyc-tron/core/dist/overlays.d.ts#Rect2D"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#PortalEntry": {
+      "signatures": [
+        "export interface PortalEntry<Node> {\n    readonly key: string;\n    readonly node: Node;\n}"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#PortalStore": {
+      "signatures": [
+        "export interface PortalStore<Node = unknown> {\n    set(host: string, key: string, node: Node): void;\n    remove(host: string, key: string): void;\n    entries(host: string): readonly PortalEntry<Node>[];\n    registerHost(host: string): () => void;\n    hasHost(host: string): boolean;\n    isActiveHost(host: string, token: symbol): boolean;\n    hostToken(host: string, token?: symbol): {\n        token: symbol;\n        unregister: () => void;\n    };\n    subscribe(listener: () => void): () => void;\n}"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#PortalEntry"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#createPortalStore": {
+      "signatures": [
+        "export declare function createPortalStore<Node = unknown>(): PortalStore<Node>;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#PortalStore"
       ]
     },
     "@nyc-tron/ui/dist/components/overlays/useTriggerAnchor.d.ts#TriggerAnchor": {
@@ -48555,6 +49594,16 @@
       "symbol": "ViewStyle",
       "signatures": [
         "export interface ViewStyle extends Readonly<Omit<____ViewStyle_InternalCore, keyof ____ViewStyle_InternalOverrides | keyof {}> & Omit<____ViewStyle_InternalOverrides, keyof {}>> {\n}"
+      ]
+    },
+    "react-native@0.88.1/types_generated/Libraries/Text/Text.d.ts#$$Text": {
+      "package": "react-native",
+      "version": "0.88.1",
+      "file": "types_generated/Libraries/Text/Text.d.ts",
+      "symbol": "$$Text",
+      "signatures": [
+        "$$Text: typeof TextImpl",
+        "declare type $$Text = typeof $$Text;"
       ]
     },
     "react-native@0.88.1/types_generated/Libraries/Text/TextProps.d.ts#TextProps": {
