@@ -73,6 +73,20 @@ test("a clean export loads and leaves the app's handler in place", async () => {
   assert.throws(() => loadEntry(() => { throw new TypeError("plain"); }, undefined), /plain/);
 });
 
+test("a re-export that requires a missing peer when read (inline requires) reports the peer, not a TypeError", async () => {
+  const { loadEntry, readExports } = await import("../desktop-lane/load-entry.js");
+  const fatal = [];
+  // The export module evaluates cleanly. Its getter requires the module that
+  // imports the stub, which Metro reports and turns into undefined.
+  const shared = metroLike(() => { throw new Error("NYCTRON_UNRESOLVED uniwind is not resolvable in the windows lane"); });
+  const entry = { get TronThemeProvider() { return shared.require().TronThemeProvider; } };
+  shared.errorUtils.setGlobalHandler(error => fatal.push(error));
+  const original = shared.errorUtils.getGlobalHandler();
+  assert.throws(() => loadEntry(() => readExports(entry), shared.errorUtils), /NYCTRON_UNRESOLVED uniwind/);
+  assert.equal(fatal.length, 0);
+  assert.equal(shared.errorUtils.getGlobalHandler(), original);
+});
+
 test("the support list strikes stubbed peers and marks unattributed failures not verified", async () => {
   const { supportList, STATUSES } = await import("../desktop-lane/support-list.mjs");
   const cell = (build, load, components, unresolved = []) => ({ build, load, loadError: null, unresolved, components });

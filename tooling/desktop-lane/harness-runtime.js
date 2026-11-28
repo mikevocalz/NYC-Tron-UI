@@ -2,8 +2,9 @@
 // into a lane consumer next to a generated entry list. Plain JavaScript with
 // createElement so it needs no JSX transform or TypeScript in the lane.
 //
-// For each public @nyc-tron/ui export it: loads the module once, finds the
-// exported React components, mounts each one with its synthesized required props
+// For each public @nyc-tron/ui export it: loads the module once (one export
+// per commit, behind a `loading:` status), finds the exported React
+// components, mounts each one with its synthesized required props
 // (synthesize-props.mjs) inside an error
 // boundary, waits for the commit and its effects plus 60 ms, records the outcome and
 // unmounts it. Results are published as accessible views (testID plus
@@ -11,7 +12,7 @@
 // on globalThis for the web reference.
 import { Component, Suspense, createElement as h, useEffect, useReducer } from "react";
 import { Platform, Text, View } from "react-native";
-import { loadEntry } from "./load-entry.js";
+import { loadEntry, readExports } from "./load-entry.js";
 
 const CHUNK = 4000;
 const SETTLE_MS = 60;
@@ -54,14 +55,26 @@ function Fallback({ onSuspend }) {
 
 /** Shared mutable run state; the component only re-renders to advance it. */
 function createRun(entries, lane) {
-  const run = { lane, status: "loading", index: 0, jobs: [], results: [], error: null, suspended: false };
-  for (const entry of entries) {
-    const record = { s: entry.subpath, i: "ok", c: [] };
-    run.results.push(record);
-    let module;
-    try { module = loadEntry(entry.load); }
-    catch (error) { record.i = describe(error); continue; }
-    for (const [name, value] of Object.entries(module ?? {})) {
+  const run = { lane, entries, status: "loading", loadIndex: 0, index: 0, jobs: [], results: [], error: null, suspended: false };
+  if (!entries.length) run.status = "done";
+  return run;
+}
+
+/**
+ * Loads the next export and queues its components. One export per commit, so
+ * the published status names the export being evaluated: a module that never
+ * finishes evaluating stalls on its own `loading:` label instead of before
+ * the first frame.
+ */
+function loadNext(run) {
+  const entry = run.entries[run.loadIndex];
+  const record = { s: entry.subpath, i: "ok", c: [] };
+  run.results.push(record);
+  try {
+    let exported;
+    try { exported = loadEntry(() => readExports(entry.load())); }
+    catch (error) { record.i = describe(error); exported = []; }
+    for (const [name, value] of exported) {
       if (!isComponentExport(name, value)) continue;
       const result = [name, "pending"];
       record.c.push(result);
@@ -69,9 +82,13 @@ function createRun(entries, lane) {
       if (synthesized === undefined) result.push("no-props-type");
       run.jobs.push({ subpath: entry.subpath, name, Component: value, props: hydrate(synthesized ?? {}), result });
     }
+  } catch (error) {
+    // Never stall the run on one export: record it and move on.
+    if (record.i === "ok") record.i = describe(error);
+  } finally {
+    run.loadIndex += 1;
+    if (run.loadIndex >= run.entries.length) run.status = run.jobs.length ? "running" : "done";
   }
-  run.status = run.jobs.length ? "running" : "done";
-  return run;
 }
 
 function publish(run) {
@@ -106,6 +123,14 @@ export function createCoverageApp(entries, lane) {
     const [, advance] = useReducer(x => x + 1, 0);
     run ??= createRun(entries, lane);
     captureGlobalErrors(run);
+    const loading = run.status === "loading" ? run.entries[run.loadIndex] : undefined;
+    useEffect(() => {
+      if (!loading) return undefined;
+      // Load after this frame is committed and mounted, so the label above is
+      // readable while the export evaluates.
+      const timer = setTimeout(() => { loadNext(run); advance(); }, 0);
+      return () => clearTimeout(timer);
+    }, [loading]);
     const job = run.status === "running" ? run.jobs[run.index] : undefined;
     useEffect(() => {
       if (!job) return undefined;
@@ -125,9 +150,11 @@ export function createCoverageApp(entries, lane) {
       return () => { settled = true; clearTimeout(timer); };
     }, [job]);
 
-    const label = run.status === "running" && job
-      ? `running:${run.index + 1}/${run.jobs.length}:${job.subpath}#${job.name}`
-      : `done:${run.jobs.length}`;
+    const label = loading
+      ? `loading:${run.loadIndex + 1}/${run.entries.length}:${loading.subpath}`
+      : run.status === "running" && job
+        ? `running:${run.index + 1}/${run.jobs.length}:${job.subpath}#${job.name}`
+        : `done:${run.jobs.length}`;
     if (run.status === "done") {
       const chunks = publish(run);
       return h(View, { style: { flex: 1, padding: 8 } },

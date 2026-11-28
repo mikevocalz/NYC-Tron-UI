@@ -128,3 +128,41 @@ export function expoUiCssVariables(theme:TronTheme):Readonly<Record<string,strin
   for(const [variable,key] of Object.entries(EXPO_UI_TOKEN_MAP))out[variable]=theme.colors[key];
   return Object.freeze(out);
 }
+
+/**
+ * Partial changes for {@linkcode createTronTheme}. Each group is merged into
+ * the base one key at a time; an `undefined` value leaves the base value.
+ */
+export interface TronThemeOverrides {
+  readonly colors?:Partial<TronThemeColors>&Partial<TronThemeColorAliases>;
+  readonly shape?:Partial<TronThemeShape>;
+  readonly density?:TronTheme["density"];
+  readonly motion?:Partial<TronTheme["motion"]>;
+}
+
+function definedEntries<T extends object>(value:T|undefined):Record<string,unknown> {
+  return Object.fromEntries(Object.entries(value??{}).filter(([,v])=>v!==undefined));
+}
+
+/**
+ * Deep-merges `overrides` into `base` (a validated theme or theme input) and
+ * validates the result, so `createTronTheme(tronLightTheme,{colors:{primary:"#7c3aed"}})`
+ * changes one token and keeps the rest. A deprecated alias in `overrides`
+ * (`foreground`, `surfaceRadius`, ...) overrides its current key unless the
+ * current key is also given. Throws like {@linkcode validateTheme} when the
+ * merged theme is invalid.
+ */
+export function createTronTheme(base:TronTheme|TronThemeInput,overrides:TronThemeOverrides={}):TronTheme {
+  const colorChanges=definedEntries(overrides.colors);
+  for(const [current,alias] of COLOR_ALIASES){
+    if(colorChanges[alias]!==undefined&&colorChanges[current]===undefined)colorChanges[current]=colorChanges[alias];
+  }
+  const shapeChanges=definedEntries(overrides.shape);
+  if(shapeChanges.surfaceRadius!==undefined&&shapeChanges.cardRadius===undefined)shapeChanges.cardRadius=shapeChanges.surfaceRadius;
+  return validateTheme({
+    colors:{...base.colors,...colorChanges},
+    shape:{...base.shape,...shapeChanges} as TronThemeInput["shape"],
+    density:overrides.density??base.density,
+    motion:{...base.motion,...definedEntries(overrides.motion)} as TronTheme["motion"],
+  });
+}

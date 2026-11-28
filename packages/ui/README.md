@@ -33,7 +33,7 @@ and only needed by the subpaths that import them:
 | `@expo/ui` ^58 | `components/forms/Switch`, `components/forms/Checkbox`, `components/forms/Textarea`, `components/overlays/Sheet` |
 | `@tanstack/react-table` ^9 | `components/data/DataTable` |
 | `react-native-gesture-handler` >=3.3.0 <4 | `components/gestures/GestureHandlerDrag`, `components/gestures/useEditorPan` |
-| `uniwind` >=1.12.2 <2 | `components/theme/NightScope` |
+| `uniwind` >=1.12.2 <2 | `components/theme/NightScope`, `components/theme/TronThemeProvider` (scoped variables verified with 1.13.2) |
 | `expo-drag-drop-content-view` >=0.9.2 <1 | `components/files/DropZone` on iOS and Android (needs a dev or production build) |
 
 `tooling/verify-packages.mjs` prints this mapping from the compiled

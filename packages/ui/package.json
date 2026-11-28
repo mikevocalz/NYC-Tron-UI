@@ -545,6 +545,12 @@
       "react-native": "./dist/components/theme/NightScope.js",
       "default": "./dist/components/theme/NightScope.js"
     },
+    "./components/theme/TronThemeProvider": {
+      "types": "./dist/components/theme/TronThemeProvider.web.d.ts",
+      "browser": "./dist/components/theme/TronThemeProvider.web.js",
+      "react-native": "./dist/components/theme/TronThemeProvider.native.js",
+      "default": "./dist/components/theme/TronThemeProvider.web.js"
+    },
     "./components/files/DropZone": {
       "types": "./dist/components/files/DropZone.web.d.ts",
       "browser": "./dist/components/files/DropZone.web.js",

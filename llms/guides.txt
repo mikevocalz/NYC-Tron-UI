@@ -46,7 +46,7 @@ npm install --allow-remote=all \
 
 ### Render Button
 
-Copy this exact example to App.tsx. It introduces no React state. Your consuming app owns fonts, colors, radius and density. Connect the semantic tokens in the theming guide before treating this as your production styling.
+Copy this exact example to App.tsx. It introduces no React state. Fonts stay with your app. Colors, radius and density come from semantic tokens: import the optional default theme or define your own, as the theming guide shows, before treating this as your production styling.
 
 ```
 import { Button } from "@nyc-tron/ui/components/Button";
@@ -74,24 +74,46 @@ npx expo start --web
 
 ## Theming (theming)
 
-Keep the consuming app in charge of colors, fonts, radius, density and motion.
+Use the optional default theme and provider, override its tokens, or keep your app’s own tokens in charge.
 
-### Connect the existing styling path
+### How components get their colors
 
-Resolve @source from the location of your own stylesheet. The library does not load a global NYC-MON palette or replace the app theme. Native adapters map supported semantic values to platform resources; arbitrary CSS utilities are not a native-control API.
+Components never hardcode colors. Every recipe reads semantic tokens such as --color-primary and --color-surface-raised. NYC-Tron ships an optional neutral light and dark default theme and a TronThemeProvider; your app can use them, override any token, or replace them with its own. There is no NYC-MON palette in the library.
+
+### Use the default theme
+
+Resolve @source from the location of your own stylesheet. theme.css declares every token for Uniwind’s light and dark variants, so Tailwind generates the utilities the components use. Redefine a token after the import to change it. Import the file from CSS; a JavaScript import resolves to the presets module.
 
 ```
 @import "tailwindcss";
 @import "uniwind";
-@import "@acme/theme/theme-native.css";
+@import "@nyc-tron/core/theme.css";
 @source "../node_modules/@nyc-tron/ui/dist/components";
 ```
 
-### Define semantic variables
+### Wrap the app in TronThemeProvider
 
-These are example app values, not a library brand. Define light and dark values through your Tailwind/Uniwind runtime. Test every text, focus and control-boundary pair in your own palette. Missing optional tokens can leave a recipe uncolored without a build error.
+Without a theme prop the provider uses tronLightTheme or tronDarkTheme; colorScheme is "system" by default and also takes "light" or "dark". createTronTheme deep-merges your overrides into a base theme and validates the result. useTronTheme() returns the nearest provider’s theme, resolved scheme and variables, or null without a provider.
 
-The reference border in the older token guide is 1.58:1 and is unsuitable when it is the only visible input boundary. This example uses a stronger border; it is still your responsibility to verify the complete control and its states.
+The provider passes the theme to Uniwind’s ScopedVariables (an optional peer). On web it sets the tokens and the @expo/ui web variables on a wrapper element. On iOS and Android Uniwind resolves className utilities below it against the theme; native @expo/ui controls keep platform colors. It has been checked with unit and source tests, not on a device or simulator.
+
+```
+import { createTronTheme } from "@nyc-tron/core/theme";
+import { tronLightTheme } from "@nyc-tron/core/presets/tron";
+import { TronThemeProvider } from "@nyc-tron/ui/components/theme/TronThemeProvider";
+
+const brand = createTronTheme(tronLightTheme, { colors: { primary: "#6d28d9" } });
+
+export function Root({ children }) {
+  return <TronThemeProvider theme={brand}>{children}</TronThemeProvider>;
+}
+```
+
+### Or define the tokens yourself
+
+This path needs no provider and no import from the presets. These are the default light values; define light and dark values through your Tailwind/Uniwind runtime, and test every text, focus and control-boundary pair in your own palette. Missing optional tokens can leave a recipe uncolored without a build error.
+
+The default palette passes WCAG 2.1 AA: text pairs at least 4.5:1, border and focus at least 3:1 against both surfaces. The reference border in the older part of the token guide is 1.58:1 and is unsuitable when it is the only visible input boundary.
 
 ```
 @theme {
@@ -113,7 +135,7 @@ The reference border in the older token guide is 1.58:1 and is unsuitable when i
 }
 ```
 
-- Full token contract and deprecated aliases: https://github.com/mikevocalz/NYC-Tron-UI/blob/main/docs/THEME_TOKENS.md
+- Full token contract, default values and deprecated aliases: https://github.com/mikevocalz/NYC-Tron-UI/blob/main/docs/THEME_TOKENS.md
 
 ## Platform support (platform-support)
 

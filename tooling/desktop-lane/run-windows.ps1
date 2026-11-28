@@ -67,6 +67,27 @@ try {
   $run.status = "completed"; $run.finalStatus = $status
 } catch {
   $run.status = "harness-failed"; $run.error = $_.Exception.Message
+  # Say what the app looked like when it failed, so a stall is diagnosable
+  # from the job log alone (artifacts are not always reachable).
+  $diagnostics = [ordered]@{}
+  try {
+    if ($null -ne $process) {
+      $process.Refresh()
+      $diagnostics.exited = $process.HasExited
+      if (-not $process.HasExited) { $diagnostics.responding = $process.Responding; $diagnostics.windowTitle = $process.MainWindowTitle }
+    }
+    if ($null -ne $window) {
+      $names = @()
+      foreach ($element in $window.FindAll($Tree::Descendants, [System.Windows.Automation.Condition]::TrueCondition)) {
+        $names += "$($element.Current.ControlType.ProgrammaticName) id=$($element.Current.AutomationId) name=$($element.Current.Name)"
+        if ($names.Count -ge 40) { break }
+      }
+      $diagnostics.uiaDescendants = $names
+    }
+  } catch { $diagnostics.diagnosticError = $_.Exception.Message }
+  $run.diagnostics = $diagnostics
+  Write-Host "--- Windows coverage diagnostics ---"
+  Write-Host ($diagnostics | ConvertTo-Json -Depth 4)
   Save-Run
   throw
 } finally {

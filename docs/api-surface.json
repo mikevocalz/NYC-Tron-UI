@@ -10,9 +10,11 @@
     "./overlays",
     "./pane-plan",
     "./presets/infrax",
+    "./presets/tron",
     "./spatial",
     "./spatial-interactions",
     "./theme",
+    "./theme.css",
     "./window-chrome",
     "./window-lifecycle"
   ],
@@ -220,6 +222,7 @@
     "./components/shell/workspace-preset-model",
     "./components/styles",
     "./components/theme/NightScope",
+    "./components/theme/TronThemeProvider",
     "./components/useLocalStore",
     "./components/window/WindowTitleBar"
   ],

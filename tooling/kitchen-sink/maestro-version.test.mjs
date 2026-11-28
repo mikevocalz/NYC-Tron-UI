@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { chmodSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { verifyMaestroVersion } from './maestro-version.mjs';
+import { printProbeFailure, verifyMaestroVersion } from './maestro-version.mjs';
 
 function fixture(body) {
   const output = mkdtempSync(join(tmpdir(), 'tron-maestro-version-')), maestro = join(output, 'synthetic-version-cli');
@@ -39,4 +39,13 @@ test('a missing executable still leaves an actionable bounded diagnostic', () =>
   const f = fixture('');
   try { assert.throws(() => verifyMaestroVersion({ ...f, maestro: join(f.output, 'missing') }), /ENOENT/); assert.equal(f.diagnostics().error.code, 'ENOENT'); }
   finally { f.cleanup(); }
+});
+test('a failed probe prints its result and any startup thread dump to the job log', () => {
+  const f = fixture('');
+  try {
+    writeFileSync(join(f.output, 'maestro-threads.json'), JSON.stringify({ pid: 42, status: 0, error: null, stdout: '"main" waiting on lock\n', stderr: '' }));
+    let text = '';
+    printProbeFailure(f.output, { elapsedMs: 60001, timeoutMs: 60000, status: null, signal: 'SIGKILL', error: { code: 'ETIMEDOUT' }, stdout: '', stderr: 'slow start' }, chunk => { text += chunk; });
+    assert.match(text, /"elapsedMs": 60001/); assert.match(text, /slow start/); assert.match(text, /pid 42 status 0/); assert.match(text, /"main" waiting on lock/); assert.doesNotMatch(text, /jvm-discovery/);
+  } finally { f.cleanup(); }
 });

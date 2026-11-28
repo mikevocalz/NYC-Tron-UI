@@ -8,8 +8,8 @@ description: Build React Native and Expo screens with NYC-Tron UI (@nyc-tron/*).
 NYC-Tron UI is an independent UI library for React Native 0.88 and Expo SDK 58:
 iOS, Android and web, plus isolated Windows (React Native Windows 0.85) and macOS
 (Spark) adapters. Every component has its own package subpath. The consuming
-app owns the theme, fonts, density, motion and state; the library ships no
-palette. The current release is a prerelease shipped as GitHub Release
+app owns fonts, density, motion and state, and can override or replace the
+optional neutral default theme. The current release is a prerelease shipped as GitHub Release
 tarballs, not npm.
 
 ## Read first
@@ -70,11 +70,19 @@ import { Dialog } from "@nyc-tron/ui/components/overlays/Dialog";
   `bg-surface-sunken`, `border-border`, `text-text`, `text-text-muted`,
   `ring-focus`, `rounded-control`, `rounded-card`, and the optional
   `danger`, `on-danger`, `accent`, `info` and `success` tones.
-- The app defines every variable for light and dark in its own theme CSS and
-  adds an `@source` line for the installed component output (README,
+- The quickest start is the optional default theme: `@import
+  "@nyc-tron/core/theme.css";` in the app's stylesheet declares every token
+  for light and dark. Redefine a token after the import to change it, or
+  define every variable in the app's own theme CSS instead. Either way add an
+  `@source` line for the installed component output (README,
   "App-specific Tailwind v4 / Uniwind styling"). The full list is
   `docs/THEME_TOKENS.md`. A missing variable does not fail the build; the
   utility silently paints nothing, so check both appearances.
+- `TronThemeProvider` from `@nyc-tron/ui/components/theme/TronThemeProvider`
+  is optional: it applies a theme object to a subtree (Uniwind
+  `ScopedVariables` on native, CSS variables on web) and `useTronTheme()`
+  reads it. `tronLightTheme`, `tronDarkTheme` and `createTronTheme` come from
+  `@nyc-tron/core/presets/tron` and `@nyc-tron/core/theme`.
 - Customise through `className`, the documented class slots
   (`labelClassName`, `iconClassName` ...), `unstyled` where offered, and normal
   React Native styles.
