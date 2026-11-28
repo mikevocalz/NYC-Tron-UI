@@ -21,6 +21,24 @@ export function maestroFlowArguments({ device, platform, junit, directory, flow 
     ...(platform === 'ios' ? [] : ['--no-reinstall-driver']), '--format', 'junit', '--output', junit,
     '--test-output-dir', join(directory, 'artifacts'), '--debug-output', join(directory, 'debug'), flow];
 }
+const simctl = (args, timeout) => {
+  const result = spawnSync('xcrun', ['simctl', ...args], { encoding: 'utf8', timeout, maxBuffer: 4 * 1024 * 1024 });
+  if (result.error || result.status !== 0) throw new Error(`simctl ${args[0]} failed: ${result.error?.code ?? result.status} ${(result.stderr ?? '').trim()}`);
+  return result.stdout ?? '';
+};
+const simulatorState = (device, run) => Object.values(JSON.parse(run(['list', 'devices', '--json'], 90000)).devices ?? {}).flat().find(entry => entry.udid === device)?.state ?? 'missing';
+/** Maestro only drives a simulator that simctl reports as Booted. On 2026-11-28
+ * (PR 94, kitchen-sink run 46164412328) the iPhone Duo stopped being one between
+ * the app install and the first flow, and Maestro reported it "not connected".
+ * Check before every flow, wait for the boot to finish, and print what was seen. */
+export function requireBootedSimulator(device, run = simctl, write = text => process.stderr.write(text)) {
+  const before = simulatorState(device, run);
+  if (before !== 'Booted') write(`--- simulator ${device} was ${before} before the flow; waiting for bootstatus ---\n`);
+  run(['bootstatus', device, '-b'], 420000);
+  const after = before === 'Booted' ? before : simulatorState(device, run);
+  if (after !== 'Booted') throw new Error(`Simulator ${device} is ${after}, not Booted, before the flow`);
+  return { before, after };
+}
 /** Runs against an already installed release app. CI owns its ephemeral device lifecycle;
  * local device installation/launch and interactive QA use Argent. */
 export function proveNative({ consumer, platform, device, maestro, output }) {
@@ -36,6 +54,7 @@ export function proveNative({ consumer, platform, device, maestro, output }) {
     const directory = join(output, mode); mkdirSync(directory);
     const flow = join(directory, 'flow.yaml'), junit = join(directory, 'report.xml');
     writeFileSync(flow, nativeFlow(mode));
+    if (platform === 'ios') requireBootedSimulator(device);
     const command = maestroFlowArguments({ device, platform, junit, directory, flow });
     const result = spawnSync(maestro, command, { cwd: directory, encoding: 'utf8', timeout: 600000, maxBuffer: 32 * 1024 * 1024, env: maestroEnvironment() });
     const maestroLog = (result.stdout ?? '') + (result.stderr ?? '') + `\nExit code: ${result.status}\n`;
