@@ -1,13 +1,24 @@
 # Support policy
 
-Applies to v1.0.0. Source of the tiers: [v1.0.0 decisions](V1_DECISIONS.md) D3.
+Applies to the v1.0.0 library candidate. Scope: [decision D9](V1_DECISIONS.md#d9-standalone-ui-library-v1).
 
 ## Candidate scope and verified behavior
 
-The completion target retains iOS/iPadOS, Android, web, macOS, Windows,
-visionOS, Quest and PICO. These are required program targets, not a claim that
-each native adapter and device scenario has already passed. Exact candidate
-results and limits are in the [verification report](completion/reports/V1-RELEASE-GATES.md).
+NYC-Tron UI ships general components and optional professional controls.
+Support claims follow each component's measured behavior and runtime lane.
+Forge consumes this library and owns its application acceptance program.
+
+The new library gate will require iOS, Android and web evidence for components
+confirmed `stable`. macOS (Spark) and Windows (RNW) retain their measured support
+lists below. visionOS, Quest, PICO and physical-hardware scenarios are
+"not verified for 1.0.0". These are the D9 defaults for the separate gate change;
+the manifest and gate migration are pending. Existing evidence remains bounded
+by the commit and runtime in the [verification report](completion/reports/V1-RELEASE-GATES.md).
+
+`stable` will identify components covered by the v1 semver promise and library
+gate; `preview` will identify shipped components that may change in a minor
+release. The owner has not confirmed the component labels. "Not verified"
+means there is no sufficient recorded evidence for that platform or scenario.
 
 | Area | Current evidence and limits |
 |---|---|
@@ -18,11 +29,11 @@ results and limits are in the [verification report](completion/reports/V1-RELEAS
 | AppKit/macOS adapter | Independent `@nyc-tron/macos-appkit` exports wrap Spark's native AppKit controls and window owner. An isolated consumer verifies package installation, native control classes and window lifecycle. Source and controller tests remain distinct from that native result and physical input/VoiceOver acceptance. |
 | Native desktop windows | Windows and AppKit adapters drive the existing peer-free window registry with native create/close/focus/minimize/restore and display geometry. Each app owns its documents and close/drop decisions. Actual cross-window drag gestures and hardware display changes require their own evidence. |
 
-All 341 source rows are implemented by their recorded owners: 332 local and
-nine pinned external. Complete acceptance remains unverified across the eight
-required platforms. The existing overlay proof is historical evidence for its
-own targets and commits; current receipts do not certify screen-reader speech,
-physical pen/fold/headset behavior or hardware performance.
+The existing overlay proof is historical evidence for its own targets and
+commits. Current receipts do not certify screen-reader speech, physical
+pen/fold/headset behavior or hardware performance. Library acceptance evidence,
+component documentation and the owner distribution review remain release work;
+source coverage alone does not establish stable readiness.
 
 ## Three isolated runtime lanes
 

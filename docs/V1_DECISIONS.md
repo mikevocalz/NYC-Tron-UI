@@ -1,10 +1,10 @@
 # v1.0.0 decisions and release conditions
 
-Updated 2026-11-10. This is a release candidate; package versions alone do not
-mean that a v1 tag or release exists. The user approved completing all twelve
-previously deferred N rows. That direction supersedes the 2026-11-09 blanket
-scope deferral. Implementation ownership and recorded acceptance remain
-separate.
+Updated 2026-11-22. [D9](#d9-standalone-ui-library-v1) records the owner's
+standalone-library scope. D3 and D6's program-based stable boundary are retained
+as superseded history. The current published candidate is `v1.0.0-rc.2`;
+recording the new scope does not change the existing tooling or publish a new
+candidate. Each evidence record applies to its cited commit.
 
 ## D1. Distribution: GitHub Release tarballs
 
@@ -59,6 +59,10 @@ be reviewed even when stable publication is blocked. The
 documents the record and approval statement; none is submitted or inferred here.
 
 ## D3. Scope: finish the complete component program with its proper owners
+
+Superseded 2026-11-22 by [D9](#d9-standalone-ui-library-v1). The text below
+records the earlier scope and validator contract; it is no longer Tron's v1
+completion target.
 
 All 341 rows in the canonical component program are in the completion target.
 The twelve rows below are active work, rather than outside-scope deferrals:
@@ -196,6 +200,10 @@ decide (BUILD / STRIKE / DEFER). Implemented in PR #69.
 
 ## D6. Platform tiering for 1.0.0 (gate T5)
 
+The program-based scope and validator boundary below are superseded 2026-11-22
+by [D9](#d9-standalone-ui-library-v1). The earlier platform/evidence distinctions
+remain historical context; the new library gate has its own platform tiers.
+
 Decided 2026-11-12 on the repository owner's instruction to decide (BUILD / STRIKE / DEFER).
 
 1.0.0 tiers platform support. This amends the stable-gate scope in D3, which
@@ -210,7 +218,9 @@ A Tier 2 row returns to accepted status when a signed session receipt for
 that row lands. Row counts per tier are pending the T5 automated wave and are
 not recorded here.
 
-`tooling/release-readiness.mjs` still enforces the D3 boundary (all rows
+**Superseded validator paragraph:** see [D9](#d9-standalone-ui-library-v1).
+At the time of this decision, `tooling/release-readiness.mjs` still enforced
+the D3 boundary (all rows
 accepted on all eight platforms). Until it changes, the stable gate stays as
 it is. T5 must change it to enforce Tier 1 only, in a separate reviewed pull
 request. This record does not change the validator, its tests, or any row
@@ -245,3 +255,41 @@ so. `tooling/release-readiness.mjs`, `tooling/pack-release.mjs`,
 sixteen. The historical reports under `docs/completion/reports/` and
 `docs/completion/baseline-roster.tsv` still say fifteen; they are dated records
 and are left as written.
+
+## D9. Standalone UI library v1
+
+Owner direction (2026-11-22), superseding D3's scope, D6's program-based stable
+boundary and the 2026-11-10 AGENTS.md completion checkpoint:
+
+1. **NYC-Tron UI is its own product: a UI library**, in the same category as [gluestack-ui](https://gluestack.io/ui/docs), [Tamagui](https://tamagui.dev) and [React Native Paper](https://reactnativepaper.com). Its v1 is judged the way those libraries are judged.
+2. **Nitro Forge depends on NYC-Tron for its UI.** The dependency runs one way. Tron never imports, waits on, or is gated by Forge.
+3. **The 341-row component program is Forge's**, not Tron's. Tron must not carry "341 components" as its identity, its scope or its release gate.
+
+Tron's inventory is derived from package exports and `docs/api-surface.json`.
+The library manifest will distinguish general components and professional
+controls, with proposed `stable` or `preview` labels for owner confirmation.
+No public import path or export is removed, renamed or changed by this decision.
+
+The separate stable-gate change requires exports/declarations, passing unit or
+model tests, rendered web tests, installed-tarball iOS simulator and Android
+emulator mounts, static accessibility checks and a docs page for every `stable`
+component. `preview` components must be labelled in the manifest and docs.
+Default library tiers for that change are iOS/Android/web as Tier 1; the measured
+Spark macOS and RNW Windows support lists as Tier 2; visionOS, Quest, PICO and
+physical-hardware checks as Tier 3, "not verified for 1.0.0". These tiers do not
+assert new evidence or change Forge's platform requirement.
+
+Implementation is staged: T2 adds the library manifest; F1 reconciles the
+program; T4/F2 hand it to Forge without changing acceptance statuses; T3 changes
+the stable validator in its own reviewed pull request after T2/T4 merge; T5
+adds component docs, installation/theming guides, a kitchen-sink app, changelog,
+versioning policy and contributor guide. Until the separate tooling change,
+`tooling/release-readiness.mjs` still applies the superseded program check.
+This docs-only decision does not make that check pass.
+
+D1's GitHub Release tarball distribution and D2's owner approval rule remain:
+the owner's own GitHub comment must approve the exact version and SHA-256 of
+`SHA256SUMS` for sixteen archives. The distribution review remains pending.
+npm publishing, component stability labels and public path changes require
+separate owner decisions. The release candidate may advance only on inspected
+library evidence; Forge's ledger does not define Tron's release scope.

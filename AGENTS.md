@@ -65,11 +65,14 @@ NYC-Tron measurements.
 
 ## Approved v1 completion checkpoint
 
-User direction (2026-11-10): complete the v1 proposal and all twelve remaining
-native/service rows. The earlier implementation-first testing pause was
-superseded for that work. The original 341 IDs and eight required platforms
-remain intact. Follow the current [completion program](docs/completion/PROGRAM.md)
-and its [candidate evidence](docs/completion/reports/V1-RELEASE-GATES.md);
-earlier phase reports describe their own commits. Source ownership is complete,
-but stable release still requires the actual platform evidence and owner
-distribution review documented in the release conditions.
+User direction (2026-11-22): NYC-Tron UI is an independent UI library with
+general components and optional professional controls. Nitro Forge consumes
+Tron; Tron never imports, waits on, or is gated by Forge. Forge owns its
+component acceptance program. Tron's v1 scope comes from its public exports
+and its own library evidence, documentation and distribution review, as
+recorded in [D9](docs/V1_DECISIONS.md#d9-standalone-ui-library-v1).
+
+Preserve all public APIs and dated evidence. The manifest, program handoff and
+stable-gate migration land separately; this decision does not change validators
+or acceptance statuses. Stable publication still requires the owner's own
+comment approving the exact version and sixteen-archive checksum binding.
