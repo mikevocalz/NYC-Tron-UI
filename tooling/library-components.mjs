@@ -22,6 +22,10 @@ export function isMainModule(moduleUrl, entry = process.argv[1]) {
     throw error;
   }
 }
+// Tron ships general app UI only. Editor controls (the former "professional
+// controls", components/forge/*) moved to @nitro-forge/editor-controls; see
+// docs/V1_DECISIONS.md D10. A forge subpath reaching this inventory is a bug.
+export const COMPONENT_CATEGORY = 'general components';
 const compare = (a, b) => a < b ? -1 : a > b ? 1 : 0;
 const fail = message => { throw new Error('Library inventory: ' + message); };
 const REACT_TYPES = `
@@ -168,6 +172,8 @@ export function generateLibraryManifest({ rootDir = root, ts = loadCompiler(), s
       const expected = Object.keys(owner.manifest.exports).filter(p => p !== './package.json').sort(compare);
       if (JSON.stringify(expected) !== JSON.stringify(Object.keys(paths).sort(compare))) fail('export map/snapshot drift for ' + name);
       if (surface[name] && JSON.stringify(Object.keys(owner.manifest.exports).sort(compare)) !== JSON.stringify([...surface[name]].sort(compare))) fail('API surface/export map drift for ' + name);
+      const forgePaths = Object.keys(paths).filter(p => p === './components/forge' || p.startsWith('./components/forge/'));
+      if (forgePaths.length) fail('editor-control subpaths belong to @nitro-forge/editor-controls (D10): ' + name + forgePaths[0].slice(1));
       packages.push({ package: name, exportCount: expected.length, componentExposureCount: 0, snapshot: file });
       for (const [subpath, variants] of Object.entries(paths)) {
         const declaredTargets = declarationTargets(owner.manifest.exports[subpath]);
@@ -197,11 +203,10 @@ export function generateLibraryManifest({ rootDir = root, ts = loadCompiler(), s
   const stableNames = new Set(['Button', 'Card', 'NavigationRail', 'NavigationShell', 'TextField']);
   const entries = [...components.values()].map(entry => {
     entry.exposures.sort((a, b) => compare(a.importPath + '#' + a.symbol, b.importPath + '#' + b.symbol));
-    const canonical = entry.exposures.find(e => e.subpath !== '.' && !e.subpath.includes('/forge/')) ?? entry.exposures.find(e => e.subpath !== '.') ?? entry.exposures[0];
+    const canonical = entry.exposures.find(e => e.subpath !== '.') ?? entry.exposures[0];
     const stable = entry.exposures.some(e => e.package === '@nyc-tron/ui' && e.subpath === '.' && stableNames.has(e.symbol));
-    const professional = entry.exposures.every(e => e.subpath.includes('/forge/'));
     return { id: entry.id, package: canonical.package, importPath: canonical.importPath, symbol: canonical.symbol,
-      category: professional ? 'professional controls' : 'general components',
+      category: COMPONENT_CATEGORY,
       stability: null, proposedStability: stable ? 'stable' : 'preview', ownerConfirmation: 'pending',
       stabilityReason: stable ? 'Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required.' : 'Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.',
       classification: entry.classification, exposures: entry.exposures, platforms: platforms(entry.exposures, desktop),
@@ -213,7 +218,7 @@ export function generateLibraryManifest({ rootDir = root, ts = loadCompiler(), s
     const id = exposure.importPath + '#' + exposure.symbol;
     if (!publicEntries.has(id)) publicEntries.set(id, {
       id, package: exposure.package, importPath: exposure.importPath, subpath: exposure.subpath, symbol: exposure.symbol,
-      category: exposure.subpath.includes('/forge/') ? 'professional controls' : 'general components',
+      category: COMPONENT_CATEGORY,
       stability: null, proposedStability: entry.proposedStability, ownerConfirmation: 'pending', stabilityReason: entry.stabilityReason,
       declarationIdentities: [], variants: [], aliases: [], platforms: platforms([exposure], desktop), evidence: [],
     });

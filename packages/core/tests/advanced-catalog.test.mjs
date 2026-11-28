@@ -9,6 +9,8 @@ test("advanced catalog is honest, unique, and prototypes resolve to source",()=>
   assert.ok(c.platforms.length);
   if(c.stage==="prototype")assert.ok(c.sourcePath&&existsSync(resolve(".",c.sourcePath)),c.id);
   if(c.stage==="planned")assert.equal(c.sourcePath,undefined,c.id);
+  // D10: editor-control sources live in Nitro Forge, not in this repository.
+  assert.ok(!c.sourcePath?.includes("/components/forge/"),c.id);
  }
 });
 test("all upstream port candidates have explicit review classification",()=>{

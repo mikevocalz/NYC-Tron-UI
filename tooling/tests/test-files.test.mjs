@@ -11,7 +11,7 @@ test("discovery lists every package test directory, not a hand-kept subset", () 
     "packages/native-controls/tests/native-ports.test.mjs",
     "packages/native-navigation/tests/rail.test.mjs",
     "packages/windows-fluent/rnw-fabric/tests/fabric-source.test.mjs",
-    "packages/ui/tests/render/layer-stack.render.test.mjs",
+    "packages/ui/tests/render/screen-reader-audit.render.test.mjs",
     "packages/icons/tests/ownership.test.js",
   ]) {
     assert.ok(files.includes(expected), "missing " + expected);

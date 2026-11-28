@@ -32,7 +32,9 @@ jobs:
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Install Chromium
         run: npx --no-install playwright install --with-deps chromium
-      - name: Exercise instruments, NativeSeekBar, LayerStack, content, form and navigation primitives, InkToolbar, studio shell, spreadsheet, mixer, office controls and the pairing dialog in React Native Web
+      # The editor controls and their pages moved to Nitro Forge with the controls
+      # (packages/editor-controls/tests/browser there).
+      - name: Exercise PrecisionScrubber, DragGrabHandle, content, form and navigation primitives, the studio shell, workspace, overlays, window chrome, media decoding and the reference app in React Native Web
         run: npm test
       - uses: actions/upload-artifact@v4
         if: always()

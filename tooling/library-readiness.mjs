@@ -75,7 +75,7 @@ export function validateLibraryManifest(manifest, { rootDir = root } = {}) {
     const importPath = component.package + (component.subpath === '.' ? '' : component.subpath?.slice(1));
     if (!pkg || !Object.hasOwn(pkg.exports ?? {}, component.subpath) || component.importPath !== importPath || component.id !== importPath + '#' + component.symbol || ids.has(component.id)) fail('missing, duplicated or changed public component export: ' + component.id);
     ids.add(component.id);
-    if (!['general components', 'professional controls'].includes(component.category) || !['stable', 'preview'].includes(component.proposedStability) || !Array.isArray(component.variants) || !component.variants.length) fail('invalid component metadata: ' + component.id);
+    if (component.category !== 'general components' || !['stable', 'preview'].includes(component.proposedStability) || !Array.isArray(component.variants) || !component.variants.length) fail('invalid component metadata: ' + component.id);
     for (const variant of component.variants) {
       if (!snapshots.has(variant.snapshot)) snapshots.set(variant.snapshot, json(safeEvidenceFile(rootDir, variant.snapshot)));
       const snapshot = snapshots.get(variant.snapshot);

@@ -323,7 +323,7 @@ for(const os of ["qnx","marathon"]){
   test(`${os}: Qt announcements request priority without an unsupported queue`,()=>{
     const spoken=[];
     const h=harness(os,{accessibilityInfo:{announceForAccessibilityWithOptions:(text,options)=>spoken.push({text,options})}});
-    h.ui("components/forge/announce.ts").announce("Saved");
+    h.ui("components/feedback/announce.ts").announce("Saved");
     assert.equal(spoken.length,1);assert.equal(spoken[0].text,"Saved");
     assert.equal(spoken[0].options.priority,"low");assert.equal("queue" in spoken[0].options,false);
   });

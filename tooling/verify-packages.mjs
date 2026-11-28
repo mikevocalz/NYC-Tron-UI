@@ -79,29 +79,43 @@ for (const pkgName of packages) {
     if(value.browser&&!existsSync(join(dir,value.browser)))fail(id+": missing compiled "+value.browser);
     verified++;
   }
-  if(pkgName==="ui"&&
-    (!manifest.exports["./components/forge/WaveformLane"]||
-     !manifest.exports["./components/forge/NativeSeekBar"]||
-     !manifest.exports["./components/forge/ColorChannels"]||
-     !manifest.exports["./components/forge/audio/LevelFader"]||
-     !manifest.exports["./components/forge/color/HsvPicker"])) {
-    fail("Professional control subpaths must be addressable");
-  }
-  if(pkgName==="ui")for(const sub of ["data/TreeGrid","data/tree-grid","forge/SpreadsheetGrid","forge/sheet-window","forge/range-tsv","forge/formula-refs",
-    "forge/spreadsheet/SheetTabs","forge/spreadsheet/ChartBuilder","forge/spreadsheet/Sparkline","forge/spreadsheet/SparklineEditor",
-    "forge/spreadsheet/FreezeSplitControls","forge/spreadsheet/SplitSpreadsheetView","forge/spreadsheet/SpreadsheetCardsView",
-    "forge/spreadsheet/FormulaReferenceText","forge/spreadsheet/fill-handle"]){
-    if(!manifest.exports["./components/"+sub])fail("Missing data grid subpath "+sub);
-  }
-  // Office cluster (Forge J-01/J-02/J-05/J-09, H-03/H-07/H-15/H-21, K-04/K-06/K-07/K-18).
-  if(pkgName==="ui")for(const sub of ["slides/SlideFilmstrip","slides/SlideSorter","slides/SlideCanvas","slides/SlideAnimationPane",
-    "document/RichTextRibbon","document/BulletsNumberingEditor","document/NavigationOutline","document/DocumentReadAloudTransport",
-    "pdf/TextSearchResults","pdf/AnnotationToolbar","pdf/CommentsThreadPanel","pdf/PDFReadAloudTransport","office/read-aloud-model","pdf/search-model"]){
-    if(!manifest.exports["./components/forge/"+sub])fail("Missing office subpath forge/"+sub);
+  if(pkgName==="ui"){
+    // Editor controls moved to @nitro-forge/editor-controls (docs/V1_DECISIONS.md
+    // D10). Tron keeps general UI only: no forge subpath or source tree returns.
+    for(const key of Object.keys(manifest.exports??{})){
+      if(key.startsWith("./components/forge/")||key==="./components/forge")fail(id+": editor-control subpath "+key+" belongs to @nitro-forge/editor-controls (D10)");
+    }
+    if(existsSync(join(dir,"src","components","forge")))fail(id+": src/components/forge must not exist (D10)");
+    // The 20 general subpaths D10 added. Forge's editor controls build on them.
+    for(const sub of ["feedback/announce","forms/toggle-a11y","forms/SettingSwitch",
+      "gestures/canvas-gesture-relations","gestures/adjust-keys","gestures/canvas-responder",
+      "gestures/coordinate-admission","gestures/editor-interaction-scope","gestures/local-pointer",
+      "gestures/measured-drop-owner","gestures/useEditorPan","gestures/useLocalPointer","gestures/value-gesture",
+      "shell/precision","shell/precision-scrubber-model","shell/PrecisionScrubber","shell/useOwnedAction",
+      "local-store","styles","useLocalStore"]){
+      if(!manifest.exports["./components/"+sub])fail(id+": missing general subpath components/"+sub+" (D10)");
+    }
+    // General components that stay in Tron and must stay addressable.
+    for(const sub of ["data/TreeGrid","data/tree-grid","data/DataTable","shell/InspectorPanel","shell/AdaptiveDock",
+      "shell/NumericScrubField","overlays/CommandPalette","overlays/AnchoredPopover","navigation/CollapsibleDrawer",
+      "files/DropZone","forms/Switch","window/WindowTitleBar"]){
+      if(!manifest.exports["./components/"+sub])fail(id+": missing general subpath components/"+sub);
+    }
   }
   const runtimeDeps={...manifest.dependencies,...manifest.optionalDependencies};
-  for(const bad of ["@acme/theme","@nitro-forge/ignition","@nitro-forge/prism","@nitro-forge/cadence","@nitro-forge/icons"]) {
-    if(bad in runtimeDeps||bad in (manifest.peerDependencies??{}))fail(id+": forbidden UI dependency "+bad);
+  const allDeps={...runtimeDeps,...manifest.peerDependencies,...manifest.devDependencies};
+  for(const bad of Object.keys(allDeps)){
+    if(bad==="@acme/theme"||bad.startsWith("@nitro-forge/"))fail(id+": forbidden UI dependency "+bad);
+  }
+  // Tron never imports Forge (AGENTS.md rule 1). Scan every source file,
+  // tests included, so a stray import cannot hide outside dist.
+  const sourceWalk=d=>existsSync(d)?readdirSync(d,{withFileTypes:true}).flatMap(e=>
+    e.name==="node_modules"||e.name==="dist"?[]:
+    e.isDirectory()?sourceWalk(join(d,e.name)):/\.(c|m)?(j|t)sx?$/.test(e.name)?[join(d,e.name)]:[]):[];
+  for(const file of [...sourceWalk(join(dir,"src")),...sourceWalk(join(dir,"tests"))]){
+    for(const spec of importSpecifiers(readFileSync(file,"utf8"))){
+      if(spec.startsWith("@nitro-forge/"))fail(id+": "+file+" imports "+spec+"; Tron must not import Forge");
+    }
   }
   // A tarball installed by URL cannot resolve a sibling from the registry
   // (@nyc-tron/* is not on npm), so siblings must be peers the app installs.

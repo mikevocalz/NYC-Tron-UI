@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {createScrubberModel,initialScrubberState} from '../src/components/forge/inputs/precision-scrubber-model.ts';
+import {createScrubberModel,initialScrubberState} from '../src/components/shell/precision-scrubber-model.ts';
 function fixture(){let props={value:10,min:0,max:100,step:1,onCommit:()=>{}};let state=initialScrubberState(10,1);const store={getState:()=>state,setState:p=>{state={...state,...p};}};const model=createScrubberModel(store,()=>props);return {store,model,set:p=>{props={...props,...p};}};}
 const point=(x,y=0)=>({x,y});
 test('source replacement restores original preview callback/value and consumes old release/draft handlers',()=>{
@@ -33,7 +33,7 @@ test('preview callback replacement during a gesture restores its original host',
  f.set({onPreview:v=>replacement.push(v),value:20});a.cancel();assert.deepEqual(old,[11,10]);assert.deepEqual(replacement,[]);
 });
 test('native body and input are retained across boundary changes',()=>{
- const source=readFileSync(new URL('../src/components/forge/inputs/PrecisionScrubber.tsx',import.meta.url),'utf8');
+ const source=readFileSync(new URL('../src/components/shell/PrecisionScrubber.tsx',import.meta.url),'utf8');
  assert.doesNotMatch(source,/<PrecisionScrubberBody\s+key=/);assert.match(source,/controller.admit\(boundary\)/);assert.match(source,/controller.scoped\(boundary\)/);assert.match(source,/useEditorBoundary\(\[signature\]\)/);
 });
 

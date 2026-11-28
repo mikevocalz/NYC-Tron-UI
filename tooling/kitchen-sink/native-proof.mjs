@@ -35,8 +35,14 @@ export function proveNative({ consumer, platform, device, maestro, output }) {
     writeFileSync(flow, nativeFlow(mode));
     const command = maestroFlowArguments({ device, platform, junit, directory, flow });
     const result = spawnSync(maestro, command, { cwd: directory, encoding: 'utf8', timeout: 600000, maxBuffer: 32 * 1024 * 1024, env: maestroEnvironment() });
-    writeFileSync(join(directory, 'maestro.log'), (result.stdout ?? '') + (result.stderr ?? '') + `\nExit code: ${result.status}\n`);
-    if (result.error || result.status !== 0) throw new Error(`${platform}/${mode} flow failed: ${result.error?.message ?? result.status}`);
+    const maestroLog = (result.stdout ?? '') + (result.stderr ?? '') + `\nExit code: ${result.status}\n`;
+    writeFileSync(join(directory, 'maestro.log'), maestroLog);
+    if (result.error || result.status !== 0) {
+      // The log is also in the uploaded proof artifact; print its end so the
+      // failing step is readable from the job log alone.
+      process.stderr.write(`--- ${platform}/${mode} maestro.log (last 80 lines) ---\n` + maestroLog.split('\n').slice(-80).join('\n') + '\n');
+      throw new Error(`${platform}/${mode} flow failed: ${result.error?.message ?? result.status}`);
+    }
     const junitText = readFileSync(junit, 'utf8');
     const verdict = requirePassedFlow(junitText);
     const executionTarget = platform === 'ios' ? requireKitchenIosExecutionTarget(junitText, device) : undefined;

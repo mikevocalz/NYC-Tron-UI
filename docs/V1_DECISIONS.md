@@ -293,3 +293,73 @@ the owner's own GitHub comment must approve the exact version and SHA-256 of
 npm publishing, component stability labels and public path changes require
 separate owner decisions. The release candidate may advance only on inspected
 library evidence; Forge's ledger does not define Tron's release scope.
+
+## D10. Editor controls move to Nitro Forge
+
+Owner direction (2026-11-27 and 2026-11-28), in the owner's words: "forge has nothing
+to do with this library but consumes its UI! NYC Tron doesn't need forge but
+forge needs its UI". Asked where the editor controls should live, the owner chose Nitro
+Forge over a new `@nyc-tron/pro` package.
+
+1. **`@nyc-tron/ui` ships general app UI only.** The 453
+   `@nyc-tron/ui/components/forge/*` subpaths and their source tree
+   (`packages/ui/src/components/forge`) are removed.
+2. **Nitro Forge owns the editor controls** in
+   [`@nitro-forge/editor-controls`](https://github.com/mikevocalz/nitro-forge/tree/master/packages/editor-controls),
+   MIT-licensed because the code is Tron's MIT code, with its provenance and
+   third-party notices. That package imports Tron's general UI; Tron never
+   imports `@nitro-forge/*`.
+3. **This supersedes D9's "No public import path or export is removed" for
+   those 453 subpaths only.** Every other public import path is unchanged.
+
+Import mapping:
+
+| Old import | New import |
+| --- | --- |
+| `@nyc-tron/ui/components/forge/<path>` | `@nitro-forge/editor-controls/<path>` (450 subpaths) |
+| `@nyc-tron/ui/components/forge/inputs/precision` | `@nyc-tron/ui/components/shell/precision` |
+| `@nyc-tron/ui/components/forge/inputs/precision-scrubber-model` | `@nyc-tron/ui/components/shell/precision-scrubber-model` |
+| `@nyc-tron/ui/components/forge/inputs/PrecisionScrubber` | `@nyc-tron/ui/components/shell/PrecisionScrubber` |
+
+[`docs/library/editor-controls-migration.json`](library/editor-controls-migration.json)
+lists every removed subpath with its replacement, frozen from revision
+`5a1ea4db5149ec4fa93aa0ea26c2a9cda409534c`.
+
+Twenty general subpaths are added to `@nyc-tron/ui`. Tron's own shell already
+used them, and the editor controls build on them:
+
+- `components/feedback/announce`
+- `components/forms/toggle-a11y`
+- `components/forms/SettingSwitch`
+- `components/gestures/canvas-gesture-relations`
+- `components/gestures/adjust-keys`
+- `components/gestures/canvas-responder`
+- `components/gestures/coordinate-admission`
+- `components/gestures/editor-interaction-scope`
+- `components/gestures/local-pointer`
+- `components/gestures/measured-drop-owner`
+- `components/gestures/useEditorPan`
+- `components/gestures/useLocalPointer`
+- `components/gestures/value-gesture`
+- `components/shell/precision`
+- `components/shell/precision-scrubber-model`
+- `components/shell/PrecisionScrubber`
+- `components/shell/useOwnedAction`
+- `components/local-store`
+- `components/styles`
+- `components/useLocalStore`
+
+The library manifest now has one category, `general components`; the
+`professional controls` category had no members left. `tooling/verify-packages.mjs`
+fails if a `./components/forge/` export or `src/components/forge` directory
+returns, if any Tron source imports `@nitro-forge/*`, or if one of the twenty
+subpaths disappears.
+
+Dated records keep what they measured. `docs/desktop-support.json` (D5, the
+rc.1 archive), `docs/qt/component-coverage.*` (revision `5a1ea4db`) and
+everything under `docs/completion/` still name the old forge paths. They are
+not rewritten.
+
+The change is breaking for anyone who imported a `components/forge/*` subpath.
+v1.0.0-rc.2 still contains those subpaths; the next candidate does not. D1's
+distribution, D2's owner approval rule and D9's stable gate are unchanged.

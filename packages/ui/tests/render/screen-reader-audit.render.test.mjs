@@ -14,6 +14,7 @@ import {auditAccessibility} from "../../src/components/shell/a11y-audit.ts";
 // components (UnitInput, drag transports) expand into their real host props.
 // This is a static check of
 // what VoiceOver/TalkBack would read, not a run with the screen reader on.
+// The editor controls' audit moved with them to @nitro-forge/editor-controls.
 const src=resolve(dirname(fileURLToPath(import.meta.url)),"../../src/components");
 
 function loader(os="ios"){
@@ -79,19 +80,12 @@ const controls=[
   ["shell/SliderField.tsx","SliderField",{label:"Opacity",value:40,min:0,max:100,step:1,onPreview:noop,onCommit:noop,defaultValue:100}],
   ["shell/RangeSlider.tsx","RangeSlider",{label:"Frequency band",value:[200,2000],min:20,max:20000,step:1,onPreview:noop,onCommit:noop}],
   ["shell/RotaryKnob.tsx","RotaryKnob",{label:"Pan",value:0,min:-100,max:100,step:1,onPreview:noop,onCommit:noop,defaultValue:0}],
-  ["forge/inputs/InstrumentKnob.tsx","InstrumentKnob",{label:"Cutoff",value:0.5,min:0,max:1,step:0.01,onPreview:noop,onCommit:noop}],
-  ["forge/inputs/InstrumentXYPad.tsx","InstrumentXYPad",{label:"Filter",x:0.5,y:0.5,onPreview:noop,onCommit:noop}],
-  ["forge/inputs/PrecisionScrubber.tsx","PrecisionScrubber",{label:"Exposure",value:0,min:-5,max:5,step:0.1,onPreview:noop,onCommit:noop}],
+  ["shell/PrecisionScrubber.tsx","PrecisionScrubber",{label:"Exposure",value:0,min:-5,max:5,step:0.1,onPreview:noop,onCommit:noop}],
   ["shell/PaneSplitter.tsx","PaneSplitter",{axis:"horizontal",start:"A",end:"B",size:300,onPreview:noop,onCommit:noop,label:"Resize panels",container:{x:0,y:0,width:800,height:600}},
     // Panes render once the host has measured itself.
     tree=>tree.props.onLayout({nativeEvent:{layout:{x:0,y:0,width:800,height:600}}})],
-  ["forge/audio/LevelFader.tsx","LevelFader",{label:"Track 1 volume",value:0,onChange:noop,onCommit:noop}],
-  ["forge/graphics/ImageCropOverlay.tsx","ImageCropOverlay",{rect:{x:0.1,y:0.1,width:0.5,height:0.5},width:320,height:240,onPreview:noop,onCommit:noop}],
-  ["forge/layers/LayerStack.tsx","LayerStack",{layers:[{id:"a",name:"Background",visible:true,opacity:1,kind:"raster"},{id:"b",name:"Ink",visible:false,opacity:0.5,kind:"vector"}],
-    selectedId:"a",onSelect:noop,onToggleVisible:noop,onOpacityPreview:noop,onOpacityCommit:noop,onMove:noop,onRemove:noop}],
   ["shell/DocumentTabBar.tsx","DocumentTabBar",{documents:[{id:"a",title:"Poster.nfd",dirty:true},{id:"b",title:"Logo.nfd"}],activeId:"a",onActivate:noop,onClose:noop,onReorder:noop}],
   ["Button.tsx","Button",{title:"Export",onPress:noop}],
-  ["forge/WaveformLane.tsx","WaveformLane",{peaks:[{min:-0.1,max:0.1},{min:-0.5,max:0.5},{min:-0.9,max:0.9}],position:0.25,onSeekNormalized:noop}],
 ];
 
 for(const [file,name,props,prime] of controls){
@@ -135,14 +129,14 @@ test("PrecisionScrubber passes only whole-number range values to native hosts",(
   };
   const fractional={label:"Hold delay",unit:" s",value:0.5,min:0.1,max:10,step:0.05,onPreview:noop,onCommit:noop};
   for(const os of ["windows","macos","ios","android"]){
-    const host=adjustable(loader(os)("forge/inputs/PrecisionScrubber.tsx","PrecisionScrubber",fractional));
+    const host=adjustable(loader(os)("shell/PrecisionScrubber.tsx","PrecisionScrubber",fractional));
     assert.ok(host,`${os}: no adjustable host`);
     for(const key of ["aria-valuemin","aria-valuemax","aria-valuenow"])assert.equal(host.props[key],undefined,`${os}: ${key}`);
     assert.match(host.props["aria-valuetext"],/0\.5/,`${os}: the exact value stays readable`);
     assert.deepEqual(auditAccessibility(host),[]);
   }
-  const whole=adjustable(loader("windows")("forge/inputs/PrecisionScrubber.tsx","PrecisionScrubber",{...fractional,unit:undefined,value:40,min:0,max:100,step:1}));
+  const whole=adjustable(loader("windows")("shell/PrecisionScrubber.tsx","PrecisionScrubber",{...fractional,unit:undefined,value:40,min:0,max:100,step:1}));
   assert.deepEqual([whole.props["aria-valuemin"],whole.props["aria-valuemax"],whole.props["aria-valuenow"]],[0,100,40]);
-  const web=adjustable(loader("web")("forge/inputs/PrecisionScrubber.tsx","PrecisionScrubber",fractional));
+  const web=adjustable(loader("web")("shell/PrecisionScrubber.tsx","PrecisionScrubber",fractional));
   assert.deepEqual([web.props["aria-valuemin"],web.props["aria-valuemax"],web.props["aria-valuenow"]],[0.1,10,0.5]);
 });

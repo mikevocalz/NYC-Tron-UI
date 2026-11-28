@@ -49,8 +49,12 @@ import { DataTable } from "@nyc-tron/ui/components/data/DataTable";
 
 ## Tally: retain an editable spreadsheet at phone width
 
-`@nyc-tron/ui/components/forge/SpreadsheetGrid` and
-`@nyc-tron/ui/components/forge/sheet-window`
+`@nitro-forge/editor-controls/SpreadsheetGrid` and
+`@nitro-forge/editor-controls/sheet-window`
+
+These moved from `@nyc-tron/ui/components/forge/` to Nitro Forge in
+[D10](V1_DECISIONS.md#d10-editor-controls-move-to-nitro-forge); the code is
+unchanged. `DataTable` above stays in Tron.
 
 - The spreadsheet **never converts to record cards**, because row numbers,
   column letters, formula references and A1 selection would lose meaning.
@@ -97,7 +101,7 @@ import { DataTable } from "@nyc-tron/ui/components/data/DataTable";
   NOT RUN; the checks above are unit and source tests.
 
 ```tsx
-import { SpreadsheetGrid } from "@nyc-tron/ui/components/forge/SpreadsheetGrid";
+import { SpreadsheetGrid } from "@nitro-forge/editor-controls/SpreadsheetGrid";
 
 <SpreadsheetGrid
   sheetId={activeSheetId}

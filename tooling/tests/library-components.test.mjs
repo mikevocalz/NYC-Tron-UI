@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { declarationClassifier, generateLibraryManifest, isMainModule, loadCompiler, matchesGeneratedJson, packageDirectories, sourceFingerprint } from '../library-components.mjs';
-import { generateCrossReference } from '../library-cross-reference.mjs';
+import { generateCrossReference, movedImports } from '../library-cross-reference.mjs';
 const root = resolve(fileURLToPath(new URL('../..', import.meta.url)));
 const ts = loadCompiler(process.env.TRON_TEST_COMPILER_ROOT ?? root);
 const json = file => JSON.parse(readFileSync(join(root, file), 'utf8'));
@@ -17,21 +17,35 @@ test('every current component export is inventoried across workspace and desktop
   assert.equal(m.summary.packageCount, 16);
   assert.equal(m.summary.componentCount, m.components.length);
   assert.equal(new Set(m.components.map(e => e.id)).size, m.components.length);
-  assert.ok(m.components.length > 400, 'a missing React recognizer must not produce a vacuous pass');
+  // 163 after D10 moved the editor controls to Nitro Forge; a broken React
+  // recognizer would drop far below this floor.
+  assert.ok(m.components.length > 150, 'a missing React recognizer must not produce a vacuous pass');
+  assert.ok(m.components.every(e => e.category === 'general components'), 'Tron ships general components only (D10)');
+  assert.ok(m.components.every(e => !e.importPath.includes('/components/forge/')), 'editor controls belong to @nitro-forge/editor-controls (D10)');
   assert.equal(m.components.filter(e => e.proposedStability === 'stable').length, 10);
   assert.equal(m.summary.proposedStableIdentityCount, 5);
   assert.ok(m.components.every(e => e.stability === null && e.ownerConfirmation === 'pending'));
   for (const name of ['FieldGroup', 'AdaptiveColumns']) assert.ok(m.components.some(e => e.symbol === name));
-  for (const [a, b] of [['NumericScrubField', 'PrecisionScrubber'], ['BeforeAfterCompare', 'CanvasCompareView']]) {
+  for (const [a, b] of [['NumericScrubField', 'PrecisionScrubber'], ['TronIcon', 'ForgeIcon']]) {
     const aa = m.components.find(e => e.symbol === a), bb = m.components.find(e => e.symbol === b);
     assert.deepEqual(aa.declarationIdentities, bb.declarationIdentities);
     assert.ok(aa.aliases.includes(bb.id));
   }
   for (const name of ['@nyc-tron/macos-appkit', '@nyc-tron/windows-fluent-fabric']) assert.ok(m.components.some(e => e.package === name));
-  const desktop = json('docs/desktop-support.json');
+  // docs/desktop-support.json is the dated D5 measurement of the rc.1 archive.
+  // Its rows for editor controls stay as recorded; those subpaths left Tron in
+  // D10, so they must be absent from the inventory and listed in the migration record.
+  const desktop = json('docs/desktop-support.json'), migration = json('docs/library/editor-controls-migration.json');
+  let movedMeasurements = 0;
   for (const platform of ['macos', 'windows']) for (const status of ['supported', 'struck', 'notVerified']) for (const original of desktop.lanes[platform][status]) {
     const key = typeof original === 'string' ? original : original.component;
     const id = '@nyc-tron/ui' + (key.startsWith('.#') ? key.slice(1) : key.slice(1));
+    if (key.startsWith('./components/forge/')) {
+      assert.ok(Object.hasOwn(migration.subpaths, key.slice(0, key.indexOf('#'))), 'measured editor control missing from the migration record: ' + key);
+      assert.equal(m.components.find(e => e.id === id), undefined, 'moved editor control is still inventoried: ' + id);
+      movedMeasurements++;
+      continue;
+    }
     const entry = m.components.find(e => e.id === id);
     assert.ok(entry, 'measured export missing from inventory: ' + id);
     assert.equal(entry.platforms[platform].status, status === 'notVerified' ? 'not verified' : status);
@@ -39,6 +53,7 @@ test('every current component export is inventoried across workspace and desktop
     assert.ok(measurement, 'measurement provenance was dropped: ' + id);
     if (typeof original === 'object') assert.deepEqual(measurement.recordedResult, original);
   }
+  assert.ok(movedMeasurements > 0, 'the rc.1 record must still contain its editor-control rows');
   assert.ok(m.exclusions.some(e => e.exports.some(id => id.endsWith('#renderPopoverTrigger')) && e.reason.includes('render helper')));
   assert.deepEqual(m, json('docs/library/components.json'));
 });
@@ -118,6 +133,30 @@ test('lookup accounts for baseline and added rows independently and never fabric
   // Models are valid lookup targets too. This checks local export resolution
   // without making Tron's CI depend on the downstream ledger after handoff.
   for (const row of Object.values(recorded.rows)) for (const path of row.importPaths) assert.ok(exports.has(path), 'missing public lookup import ' + path);
+  // D10: editor-control rows name the Forge package; each Forge import comes
+  // from the frozen migration record and is not a Tron export.
+  const migration = json('docs/library/editor-controls-migration.json');
+  const replacements = new Set(Object.values(migration.subpaths).map(e => e.replacement));
+  const forgeRows = Object.values(recorded.rows).filter(row => row.forgeImportPaths);
+  assert.ok(forgeRows.length > 250, 'editor-control rows must keep a Forge import, not vanish');
+  for (const row of forgeRows) for (const path of row.forgeImportPaths) {
+    assert.ok(path.startsWith('@nitro-forge/editor-controls/') && replacements.has(path) && !exports.has(path), 'unrecorded Forge lookup import ' + path);
+    assert.match(row.ownership, /@nitro-forge\/editor-controls \(D10\)/);
+  }
+  assert.deepEqual(recorded.rows['A-12'].importPaths, ['@nyc-tron/ui/components/shell/NumericScrubField', '@nyc-tron/ui/components/shell/PrecisionScrubber']);
+  assert.equal(recorded.rows['A-12'].forgeImportPaths, undefined, 'the precision helpers stayed in Tron under components/shell');
+  const movedLedger = { components: [
+    { id: 'F-01', name: 'Moved fixture', libraryScope: true, implementationReview: 'implemented', sourceCandidates: ['packages/ui/src/components/forge/audio/LevelFader.tsx'], evidence: [] },
+    { id: 'F-02', name: 'Relocated fixture', libraryScope: true, implementationReview: 'implemented', sourceCandidates: ['packages/ui/src/components/forge/inputs/precision.ts'], evidence: [] },
+  ], additions: [] };
+  const movedLookup = generateCrossReference(movedLedger, { rootDir: root });
+  assert.deepEqual(movedLookup.rows['F-01'].importPaths, []);
+  assert.deepEqual(movedLookup.rows['F-01'].forgeImportPaths, ['@nitro-forge/editor-controls/audio/LevelFader']);
+  assert.deepEqual(movedLookup.rows['F-02'].importPaths, ['@nyc-tron/ui/components/shell/precision']);
+  const stillExported = new Map([['packages/ui/dist/components/forge/audio/LevelFader.js', new Set(['@nyc-tron/ui/components/forge/audio/LevelFader'])]]);
+  assert.throws(() => movedImports(migration, stillExported), /still a Tron export/);
+  const badReplacement = { ...migration, subpaths: { './components/forge/audio/LevelFader': { replacement: '@nitro-forge/other/LevelFader', runtimeTargets: [] } } };
+  assert.throws(() => movedImports(badReplacement, new Map()), /Unexpected replacement/);
   assert.ok(exports.has(lookup.rows['A-01'].importPaths[0]));
   const lf = JSON.stringify(ledger, null, 2) + '\n';
   assert.deepEqual(generateCrossReference(JSON.parse(lf.replace(/\n/g, '\r\n')), { rootDir: root }), lookup);

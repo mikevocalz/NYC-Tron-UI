@@ -2,15 +2,47 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { createHash } from "node:crypto";
 import { execFileSync, spawnSync } from "node:child_process";
-import { copyFileSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { copyFileSync, cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { LEGACY_PROGRAM_ARCHIVE, LEGACY_PROGRAM_LEDGER, readLegacyProgramSnapshot, validateComponentProgram } from "../../docs/completion/reports/2026-11-22-forge-program/historical-program-reader.mjs";
 import { generateCrossReference } from "../library-cross-reference.mjs";
+import { packageDirectories } from "../library-components.mjs";
 
 const root = fileURLToPath(new URL("../..", import.meta.url));
 const json = path => JSON.parse(readFileSync(join(root, path), "utf8"));
+const MOVED_PREFIX = "packages/ui/src/components/forge/";
+
+// The archived validator checks every row against the live tree. D10 moved the
+// editor-control sources to Nitro Forge, so rebuild the pre-D10 layout in a
+// fixture: live sources and manifests, plus the removed forge exports restored
+// from the frozen migration record and placeholder files at the moved paths.
+function preD10Fixture(directory) {
+  cpSync(join(root, "docs/completion"), join(directory, "docs/completion"), { recursive: true });
+  mkdirSync(join(directory, "tooling"), { recursive: true });
+  copyFileSync(join(root, "tooling/library-components.mjs"), join(directory, "tooling/library-components.mjs"));
+  const migration = json("docs/library/editor-controls-migration.json");
+  for (const directoryPath of packageDirectories(root)) {
+    const name = relative(join(root, "packages"), directoryPath).replaceAll("\\", "/"), file = join(directoryPath, "package.json");
+    if (!existsSync(file)) continue;
+    const manifest = JSON.parse(readFileSync(file, "utf8"));
+    if (name === "ui") for (const [subpath, entry] of Object.entries(migration.subpaths)) {
+      const [first, second] = entry.runtimeTargets.map(target => "./" + target.slice("packages/ui/".length));
+      manifest.exports[subpath] = second ? { "react-native": first, default: second } : { default: first };
+    }
+    mkdirSync(join(directory, "packages", name), { recursive: true });
+    writeFileSync(join(directory, "packages", name, "package.json"), JSON.stringify(manifest));
+  }
+  const moved = [];
+  const ledger = readLegacyProgramSnapshot();
+  for (const source of new Set([...ledger.components, ...ledger.additions].flatMap(row => row.sourceCandidates))) {
+    mkdirSync(join(directory, dirname(source)), { recursive: true });
+    if (existsSync(join(root, source))) copyFileSync(join(root, source), join(directory, source));
+    else { moved.push(source); writeFileSync(join(directory, source), "// Moved to @nitro-forge/editor-controls (docs/V1_DECISIONS.md D10).\n"); }
+  }
+  return moved;
+}
 
 test("old ledger links resolve to a pinned Forge home while the historical record retains all row fields", () => {
   const pointer = json("docs/completion/library-progress.json");
@@ -25,8 +57,17 @@ test("old ledger links resolve to a pinned Forge home while the historical recor
   }
   const ledger = readLegacyProgramSnapshot();
   assert.ok([...ledger.components, ...ledger.additions].every(row => row.acceptance === "unverified"));
-  assert.equal(validateComponentProgram(ledger).accepted, 0);
-  assert.equal(validateComponentProgram(ledger).additions.total, ledger.additions.length);
+  // Against the live tree the record now stops at the first moved editor control.
+  assert.throws(() => validateComponentProgram(ledger), /source candidate has a missing file: ui\/src\/components\/forge\//);
+  const fixture = mkdtempSync(join(tmpdir(), "tron-pre-d10-"));
+  try {
+    const moved = preD10Fixture(fixture);
+    assert.ok(moved.length > 250, "the moved editor-control sources must be the ones missing");
+    assert.ok(moved.every(source => source.startsWith(MOVED_PREFIX)), "only D10 editor-control sources may be missing: " + moved.find(source => !source.startsWith(MOVED_PREFIX)));
+    const result = validateComponentProgram(ledger, { rootDir: fixture });
+    assert.equal(result.accepted, 0);
+    assert.equal(result.additions.total, ledger.additions.length);
+  } finally { rmSync(fixture, { recursive: true, force: true }); }
 });
 
 test("lookup accepts the adopted ledger's pinned source links without inventing external imports", () => {
@@ -35,7 +76,7 @@ test("lookup accepts the adopted ledger's pinned source links without inventing 
   const prefix = "https://github.com/mikevocalz/NYC-Tron-UI/blob/0e09d3be8263b3dbb2eab1a78e5dd66b83b68e44/";
   for (const row of [...adopted.components, ...adopted.additions]) row.sourceCandidates = row.sourceCandidates.map(path => prefix + path);
   const local = generateCrossReference(original), remote = generateCrossReference(adopted);
-  assert.deepEqual(Object.entries(local.rows).map(([id, row]) => [id, row.importPaths]), Object.entries(remote.rows).map(([id, row]) => [id, row.importPaths]));
+  assert.deepEqual(Object.entries(local.rows).map(([id, row]) => [id, row.importPaths, row.forgeImportPaths]), Object.entries(remote.rows).map(([id, row]) => [id, row.importPaths, row.forgeImportPaths]));
   for (const row of Object.values(remote.rows).filter(row => row.ownership.startsWith("external"))) assert.deepEqual(row.importPaths, []);
   adopted.components[0].sourceCandidates[0] = prefix + "packages/../outside.ts";
   assert.throws(() => generateCrossReference(adopted), /Invalid pinned Tron source URL/);
@@ -72,8 +113,9 @@ test("archive checkout attributes preserve frozen bytes and the reader rejects c
 test("archive CLI validates through a symlink or Windows junction and rejects a tampered archive", t => {
   const fixture = mkdtempSync(join(tmpdir(), "tron-bridge-cli-"));
   t.after(() => rmSync(fixture, { recursive: true, force: true }));
-  const alias = join(fixture, "live-alias");
-  try { symlinkSync(root, alias, process.platform === "win32" ? "junction" : "dir"); }
+  const alias = join(fixture, "live-alias"), preD10 = join(fixture, "pre-d10");
+  preD10Fixture(preD10);
+  try { symlinkSync(preD10, alias, process.platform === "win32" ? "junction" : "dir"); }
   catch (error) {
     if (["EPERM", "EACCES", "ENOSYS"].includes(error.code)) { t.skip("filesystem does not permit test directory aliases: " + error.code); return; }
     throw error;

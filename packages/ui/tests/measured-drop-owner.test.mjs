@@ -1,6 +1,5 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
 import {createMeasuredDropOwner} from '../src/components/gestures/measured-drop-owner.ts';
 test('canceled and superseded begin measurements cannot overwrite the newest drag',()=>{
  const owner=createMeasuredDropOwner(),a=owner.begin('geometry1');owner.cancel(a);assert.equal(owner.record(a,'geometry1',{x:1,y:2}),false);
@@ -21,10 +20,4 @@ test('pending release callbacks are invalidated by cancel, geometry or a newer d
 });
 test('a reentrant source switch cannot revive an old consumed drop token',()=>{
  const owner=createMeasuredDropOwner(),old=owner.begin('old');assert.equal(owner.finish(old,'old'),true);const current=owner.begin('new');assert.equal(owner.cancel(old),false);assert.equal(owner.finish(old,'old'),false);assert.equal(owner.current(current,'new'),true);
-});
-test('PDF/pivot rows retain item identity and geometry cancels admission instead of remounting',()=>{
- const pdf=readFileSync(new URL('../src/components/forge/pdf/PDFThumbnailSidebar.tsx',import.meta.url),'utf8'),pivot=readFileSync(new URL('../src/components/forge/spreadsheet/PivotFieldList.tsx',import.meta.url),'utf8');
- assert.match(pdf,/<ThumbnailRow[^>]*key=\{item.id\}/);assert.doesNotMatch(pdf,/<ThumbnailRow[^>]*key=\{owner/);
- assert.match(pivot,/<PivotField key=\{item.id\}/);assert.match(pdf,/current\(token,boundary\(\)\)/);assert.match(pivot,/current\(token,expected,'drop'\)/);
- assert.doesNotMatch(pdf,/minDistance:4,maxPointers:1,activeOffsetY/,'RNGH axis offsets must not combine minDistance');
 });

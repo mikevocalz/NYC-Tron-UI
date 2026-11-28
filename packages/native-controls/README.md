@@ -19,7 +19,7 @@ Native local preview is ephemeral. onCommit fires on completed gesture or access
 
 SDK 58 supports @ExpoModule and @JS 2.0 macros, but @ExpoView and @ViewProps are not available in core. This package uses the supported view DSL registration (core View on iOS, ExpoUIView on Android) until v2 views land. This is not claimed v2 native-view macro support.
 
-iOS SwiftUI and Android Compose source is implemented; Xcode/Gradle compilation and hardware tests are not yet verified. Web/Windows/macOS/XR keep the existing NYC-Tron RN instrument controls.
+iOS SwiftUI and Android Compose source is implemented; Xcode/Gradle compilation and hardware tests are not yet verified. On web, Windows, macOS and XR use the React Native instrument controls (`InstrumentKnob`, `InstrumentXYPad`), which moved from `@nyc-tron/ui` to `@nitro-forge/editor-controls` in Nitro Forge (D10). This package does not depend on them.
 
 No raw HTML, WebView, Expo Audio or Expo Video. Source: AudioKit Controls pinned upstream commit 717ce0d6d4e18f2849d484b578e0faf13bb38077; MIT © 2022 Aurelius Prochazka.
 
@@ -27,14 +27,17 @@ Official Expo native skills used: expo-ui, expo-module, expo-native-ui, expo-mig
 
 ### Display P3 disc background
 
-`@nyc-tron/native-controls/DisplayP3DiscLayer` supplies an input-free native color-managed background for `ColorDiscPicker.renderDisc`:
+`@nyc-tron/native-controls/DisplayP3DiscLayer` is an input-free native color-managed disc background. It fits the `renderDisc` slot of `ColorDiscPicker`, which is `@nitro-forge/editor-controls/color/ColorDiscPicker` in Nitro Forge since D10 (formerly `@nyc-tron/ui/components/forge/color/ColorDiscPicker`). This package does not import the picker; an app that uses both wires them together:
 
 ```tsx
+import {ColorDiscPicker} from "@nitro-forge/editor-controls/color/ColorDiscPicker";
+import {DisplayP3DiscLayer} from "@nyc-tron/native-controls/DisplayP3DiscLayer";
+
 <ColorDiscPicker value={p3Hsv} onCommit={setP3Hsv}
   renderDisc={({size,value}) => <DisplayP3DiscLayer size={size} value={value.v}/>}/>
 ```
 
-HSV here describes Display P3 primaries. The caller must convert document colors into that display space; passing sRGB HSV does not perform a profile conversion. Native SwiftUI `Color(.displayP3, ...)` and Compose `ColorSpaces.DisplayP3` retain the profile until platform rendering. The background has no gesture or state owner, and the existing disc owns input, preview and single-release commit. Its selection center remains transparent so an sRGB thumb cannot cover the P3 color. Default library rendering remains sRGB.
+HSV here describes Display P3 primaries. The caller must convert document colors into that display space; passing sRGB HSV does not perform a profile conversion. Native SwiftUI `Color(.displayP3, ...)` and Compose `ColorSpaces.DisplayP3` retain the profile until platform rendering. The background has no gesture or state owner; the picker owns input, preview and single-release commit. Its selection center remains transparent so an sRGB thumb cannot cover the P3 color. Default library rendering remains sRGB.
 
 Android hosts must request `android:colorMode="wideColorGamut"` for their activity when appropriate; this library never changes activity, window, orientation or manifest metadata. A narrow-gamut surface receives system mapping. Simulator screenshots cannot prove physical wide-gamut output. No HDR or arbitrary ICC conversion is provided by this layer. The native acceptance consumer has a separate P3 tab.
 
@@ -44,4 +47,4 @@ Platform references: [SwiftUI Display P3](https://developer.apple.com/documentat
 
 `@nyc-tron/native-controls/NativeVideoPlayer` renders AVPlayerLayer on iOS and VideoView/MediaPlayer on Android. Pass a unique `sourceId`, URI, playback intent, volume/rate, explicit seek token/time, dimensions, label and `onStatus`. Status comes from the actual player. Keep this leaf mounted above changing pane layouts; the app's existing playback-session owner controls audio focus. Existing host file/network access policies apply.
 
-Android reports player position at millisecond precision. This surface does not certify exact presented-frame seeks; `@nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber` requires a separate exact presentation acknowledgement from the app's decoder. Source owners and observers are released on replacement/unmount. No Expo Video dependency or app/window/manifest change is introduced. New player TypeScript build and Swift syntax checks pass; native compilation/runtime acceptance remains pending user review.
+Android reports player position at millisecond precision. This surface does not certify exact presented-frame seeks; `FrameAccurateScrubber` (`@nitro-forge/editor-controls/timeline/FrameAccurateScrubber` in Nitro Forge, formerly `@nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber`) requires a separate exact presentation acknowledgement from the app's decoder. Source owners and observers are released on replacement/unmount. No Expo Video dependency or app/window/manifest change is introduced. New player TypeScript build and Swift syntax checks pass; native compilation/runtime acceptance remains pending user review.
