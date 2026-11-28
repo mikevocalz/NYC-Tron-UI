@@ -20356,6 +20356,7 @@
         "additionalDependencies": [],
         "reactNativeExports": [
           "ActivityIndicator",
+          "Platform",
           "Pressable",
           "Text",
           "TextInput",
@@ -20405,6 +20406,7 @@
           "additionalDependencies": [],
           "reactNativeExports": [
             "ActivityIndicator",
+            "Platform",
             "Pressable",
             "Text",
             "TextInput",
@@ -20453,6 +20455,7 @@
           "additionalDependencies": [],
           "reactNativeExports": [
             "ActivityIndicator",
+            "Platform",
             "Pressable",
             "Text",
             "TextInput",
