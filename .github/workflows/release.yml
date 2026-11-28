@@ -25,11 +25,11 @@ concurrency:
 
 jobs:
   # The release job needs the same gates a pull request needs: source tests,
-  # typecheck, package and API-surface checks, component ledger, pack and
+  # typecheck, package and API-surface checks, standalone export inventory, pack and
   # consumer smoke test, Windows compilation/UIA, Chromium acceptance suites,
   # reference captures/performance, installed UI/Expo consumers and native
   # compilation/runtime from those tarballs. Stable publication then requires
-  # the complete accepted ledger and the actual owner's distribution review.
+  # each confirmed stable export's exact-candidate proof and the owner's distribution review.
   ci:
     name: CI gates
     uses: ./.github/workflows/ci.yml
@@ -117,8 +117,8 @@ jobs:
         run: node tooling/api-surface.mjs
       - name: Verify reachable public declarations and dependency type boundaries
         run: node tooling/api-signatures.mjs
-      - name: Verify historical handoff compatibility (temporary until T3)
-        run: node tooling/verify-component-program.mjs
+      - name: Verify the standalone public component inventory
+        run: node tooling/library-components.mjs
 
       # Fails if any package version differs from the tag, a tarball lacks
       # dist/README/notices, ships src/, or keeps an export outside dist.

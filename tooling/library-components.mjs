@@ -241,7 +241,7 @@ export function generateLibraryManifest({ rootDir = root, ts = loadCompiler(), s
   const expectedSymbols = new Set(records.flatMap(({ snapshot }) => Object.entries(snapshot.packages).flatMap(([name, paths]) => Object.entries(paths).flatMap(([path, variants]) => variants.flatMap(v => Object.keys(v.symbols).map(symbol => name + (path === '.' ? '' : path.slice(1)) + '#' + symbol))))));
   const classifiedSymbols = new Set(publicComponents.map(e => e.id).concat(excluded.flatMap(e => e.exports)));
   if (expectedSymbols.size !== classifiedSymbols.size || [...expectedSymbols].some(id => !classifiedSymbols.has(id))) fail('public symbol classification coverage differs from exports');
-  return { schemaVersion: 1, ownerConfirmation: 'pending', status: 'proposed inventory; not a release approval',
+  const result = { schemaVersion: 1, ownerConfirmation: 'pending', status: 'proposed inventory; not a release approval',
     identity: 'one entry per public package/import-path/exported-symbol component exposure; declaration identities link aliases; conditional declarations are variants of that same entry',
     platformPolicy: {
       tier1: { platforms: ['ios', 'android', 'web'], note: 'No complete T3 evidence packet is recorded by this inventory; historical receipts are not promoted to candidate acceptance.' },
@@ -253,6 +253,43 @@ export function generateLibraryManifest({ rootDir = root, ts = loadCompiler(), s
     inputs: [...files, 'docs/api-surface.json', 'docs/desktop-support.json'].map(path => ({ path, sha256: sourceFingerprint(readFileSync(join(rootDir, path))) })),
     summary: { packageCount: packages.length, publicSymbolExportCount: expectedSymbols.size, componentCount: publicComponents.length, declarationIdentityCount: entries.length, proposedStable: publicComponents.filter(e => e.proposedStability === 'stable').length, proposedPreview: publicComponents.filter(e => e.proposedStability === 'preview').length, proposedStableIdentityCount: entries.filter(e => e.proposedStability === 'stable').length },
     packages: packages.sort((a, b) => compare(a.package, b.package)), components: publicComponents, exclusions: excluded };
+  const reviewPath = join(rootDir, 'docs/library/stability-review.json');
+  return applyStabilityReview(result, existsSync(reviewPath) ? json(reviewPath) : { schemaVersion: 1, status: 'pending', approval: null });
+}
+
+/** Bind the owner's complete label decision to this exact public component proposal. */
+export function stabilityProposalDigest(manifest) {
+  const proposal = manifest.components.map(c => ({ id: c.id, package: c.package, importPath: c.importPath,
+    symbol: c.symbol, category: c.category, proposedStability: c.proposedStability,
+    declarationIdentities: [...c.declarationIdentities].sort(),
+    variants: c.variants.map(v => ({ target: v.target, declarationIdentity: v.declarationIdentity })).sort((a, b) => compare(JSON.stringify(a), JSON.stringify(b)))
+  })).sort((a, b) => compare(a.id, b.id));
+  return sourceFingerprint(JSON.stringify(proposal));
+}
+
+export function applyStabilityReview(manifest, review) {
+  if (!review || review.schemaVersion !== 1 || !['pending', 'confirmed'].includes(review.status)) fail('invalid stability-review record');
+  if (review.status === 'pending') {
+    if (review.approval !== null) fail('pending stability review must not claim an approval');
+    return manifest;
+  }
+  const approval = review.approval;
+  if (!approval || approval.reviewer !== 'mikevocalz' || typeof approval.decision !== 'string' || !approval.decision.trim()) fail('confirmed stability review needs the owner and an explicit decision reference');
+  if (approval.proposalSha256 !== stabilityProposalDigest(manifest)) fail('stability review is for a different export/proposal list');
+  const labels = approval.labels;
+  if (!labels || typeof labels !== 'object' || Array.isArray(labels) || Object.keys(labels).length !== manifest.components.length ||
+      manifest.components.some(c => !Object.hasOwn(labels, c.id) || !['stable', 'preview'].includes(labels[c.id])) ||
+      Object.keys(labels).some(id => !manifest.components.some(c => c.id === id))) fail('stability review must label every component export exactly once');
+  if (!Object.values(labels).includes('stable')) fail('confirmed inventory must retain an explicit stable target; an all-preview label map cannot bypass the stable gate');
+  // Aliases of one public declaration cannot carry contradictory semver promises.
+  const identities = new Map();
+  for (const c of manifest.components) for (const identity of c.declarationIdentities) {
+    if (identities.has(identity) && identities.get(identity) !== labels[c.id]) fail('stability labels disagree across aliases of ' + identity);
+    identities.set(identity, labels[c.id]);
+  }
+  return { ...manifest, ownerConfirmation: 'confirmed', status: 'owner-confirmed component inventory; runtime release evidence is separate',
+    stabilityReview: { reviewer: approval.reviewer, decision: approval.decision, proposalSha256: approval.proposalSha256 },
+    components: manifest.components.map(c => ({ ...c, stability: labels[c.id], ownerConfirmation: 'confirmed' })) };
 }
 
 export function declarationTargets(value) {
@@ -272,5 +309,5 @@ if (isMainModule(import.meta.url)) {
   const bytes = JSON.stringify(actual, null, 2) + '\n';
   if (write) { mkdirSync(dirname(file), { recursive: true }); writeFileSync(file, bytes); }
   else if (!existsSync(file) || !matchesGeneratedJson(readFileSync(file), actual)) fail('generated components.json differs; review exports and run --write');
-  console.log(`Library inventory: ${actual.summary.packageCount} packages; ${actual.summary.componentCount} public component exports; ${actual.summary.declarationIdentityCount} declaration identities; ${actual.summary.proposedStable} proposed stable / ${actual.summary.proposedPreview} proposed preview; owner confirmation pending.`);
+  console.log(`Library inventory: ${actual.summary.packageCount} packages; ${actual.summary.componentCount} public component exports; ${actual.summary.declarationIdentityCount} declaration identities; ${actual.summary.proposedStable} proposed stable / ${actual.summary.proposedPreview} proposed preview; owner confirmation ${actual.ownerConfirmation}.`);
 }

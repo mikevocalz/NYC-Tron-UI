@@ -1,14 +1,15 @@
 // Single source of truth for which test files run. Every *.test.mjs / *.test.js
 // under packages/*/tests (any depth) plus the nested rnw-fabric package and the
 // tooling tests. Playwright suites (browser/) and fixtures need their own
-// runners and are skipped. Paths are repo-relative with forward slashes so the
+// runners and are skipped. Dated downstream case-study tests under historical/
+// run explicitly and do not determine the standalone library release. Paths are repo-relative with forward slashes so the
 // same list works on Linux, macOS and Windows.
 import { existsSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
-const skipDirs = new Set(["browser", "fixtures", "node_modules"]);
+const skipDirs = new Set(["browser", "fixtures", "node_modules", "historical"]);
 
 function walk(dir, out) {
   if (!existsSync(dir)) return;

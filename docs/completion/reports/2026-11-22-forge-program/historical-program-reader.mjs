@@ -1,17 +1,13 @@
-// Temporary compatibility bridge for the separately reviewed T3 transition.
-// The application program and active validator now belong to Nitro Forge.
-// This module preserves the previous release policy until T3 lands; it is
-// neither the library inventory nor permission to promote acceptance.
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { isMainModule } from "./library-components.mjs";
-import { validateComponentProgram as validateHistoricalProgram } from "../docs/completion/reports/2026-11-22-forge-program/tooling/verify-component-program.mjs";
+import { isMainModule } from "../../../../tooling/library-components.mjs";
+import { validateComponentProgram as validateHistoricalProgram } from "./tooling/verify-component-program.mjs";
 export { CANONICAL_BASELINE_SHA256, RECORDED_ADDITION_IDS, REQUIRED_PLATFORMS, parseCanonicalBaseline }
-  from "../docs/completion/reports/2026-11-22-forge-program/tooling/verify-component-program.mjs";
+  from "./tooling/verify-component-program.mjs";
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..");
 export const LEGACY_PROGRAM_ARCHIVE = "docs/completion/reports/2026-11-22-forge-program";
 export const LEGACY_PROGRAM_LEDGER = LEGACY_PROGRAM_ARCHIVE + "/docs/completion/library-progress.json";
 const SNAPSHOT_SHA256 = "802713806e66e69e892560084397d06d8dc5f9318ae6706eef60ce13a9108bc3";
@@ -32,5 +28,5 @@ export function validateComponentProgram(ledger, options = {}) {
 
 if (isMainModule(import.meta.url)) {
   const result = validateComponentProgram(readLegacyProgramSnapshot());
-  console.log(`Historical program compatibility check: ${result.canonical} rows and ${result.additions.total} additions; no acceptance status changed. Active ownership: Nitro Forge. Remove this release-policy bridge in T3.`);
+  console.log(`Historical program archive check: ${result.canonical} rows and ${result.additions.total} additions; no acceptance status changed. Active ownership: Nitro Forge. Historical case study only; not a library release gate.`);
 }

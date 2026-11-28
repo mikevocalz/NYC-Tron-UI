@@ -5,3 +5,5 @@ docs/qt/component-coverage.json linguist-generated=true
 
 # Preserve exact historical Git bytes on every checkout, including Windows.
 docs/completion/reports/2026-11-22-forge-program/** -text
+
+docs/completion/reports/2026-11-23-qt-case-study/** -text

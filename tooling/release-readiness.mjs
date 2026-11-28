@@ -3,7 +3,8 @@ import { existsSync, readFileSync, readdirSync, realpathSync, statSync, writeFil
 import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { releaseChecksums, verifyArchiveHash } from "./consumer-model.mjs";
-import { validateComponentProgram, readLegacyProgramSnapshot } from "./verify-component-program.mjs";
+import { isMainModule } from "./library-components.mjs";
+import { loadLibraryEvidence, validateLibraryReadiness } from "./library-readiness.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const RELEASE_REPOSITORY = "mikevocalz/NYC-Tron-UI";
@@ -115,43 +116,58 @@ async function loadOwnerComment(url) {
   return response.json();
 }
 
-/** Read-only gate: packaging may proceed for a prerelease, but nothing promotes ledger/review status. */
-export async function validateReleaseReadiness({ version, ledger, review, artifacts }, { rootDir = root, loadApproval = loadOwnerComment, recordedAdditions } = {}) {
+/** Read-only gate. Candidate packaging never counts as stable acceptance. */
+export async function validateReleaseReadiness({ version, manifest, review, artifacts, evidence, documentation, requireLibrary = false }, {
+  rootDir = root, loadApproval = loadOwnerComment, ...libraryOptions
+} = {}) {
   const channel = releaseChannel(version);
-  const program = validateComponentProgram(ledger, { rootDir, ...(recordedAdditions ? { recordedAdditions } : {}) });
   validateDistributionRecord(review);
   const inventory = artifacts ? verifyReleaseInventory(artifacts, version, { rootDir }) : undefined;
+  const hashes = artifacts ? [...releaseChecksums(readFileSync(join(artifacts, "SHA256SUMS"), "utf8"))] : [];
+  const library = validateLibraryReadiness({ manifest, evidence, documentation, version, artifacts: { hashes } }, { rootDir, ...libraryOptions });
   if (channel === "prerelease") {
-    return { status: "candidate", channel, version, program, distributionReview: review.status, inventory,
-      note: "Prerelease packaging does not claim stable acceptance or owner distribution approval." };
+    const blockers = [...library.blockers];
+    if (!inventory) blockers.push("the sixteen actual release archives and SHA256SUMS are required");
+    if (requireLibrary && blockers.length) {
+      const error = new Error("Release readiness: required library publication checks blocked: " + blockers.join("; "));
+      error.report = {status:"blocked",channel,version,requireLibrary,library,inventory,blockers};
+      throw error;
+    }
+    return { status: "candidate", channel, version, requireLibrary, library, distributionReview: review.status, inventory,
+      note: requireLibrary ? "Library checks passed; owner distribution approval remains a separate stable-release requirement." : "Candidate packaging is permitted; stable evidence blockers and owner decisions remain unresolved." };
   }
-  const blockers = [];
-  if (program.accepted !== program.canonical) blockers.push((program.canonical - program.accepted) + " of 341 components lack accepted eight-platform proof");
-  // Rows added after the baseline (gate T2 onward) block stable exactly like canonical rows.
-  if (program.additions.accepted !== program.additions.total) blockers.push((program.additions.total - program.additions.accepted) + " of " + program.additions.total + " added rows lack accepted eight-platform proof");
+  const blockers = [...library.blockers];
   if (review.status !== "approved") blockers.push("owner distribution review is pending");
   if (!inventory) blockers.push("the sixteen actual release archives and SHA256SUMS are required");
-  if (blockers.length) fail("stable publication blocked: " + blockers.join("; "));
+  if (blockers.length) {
+    const error = new Error("Release readiness: stable publication blocked: " + blockers.join("; "));
+    error.report = { status: "blocked", channel, version, library, inventory, blockers };
+    throw error;
+  }
   if (review.releaseVersion !== version || review.approval.manifestSha256 !== inventory.manifestSha256) fail("owner distribution approval is for different version/archive bytes");
   const response = await loadApproval(approvalLocation(review.approval.commentUrl).apiUrl);
   const approval = validateOwnerApproval(review, response, version, inventory.manifestSha256);
-  return { status: "ready", channel, version, program, inventory, approval };
+  return { status: "ready", channel, version, library, inventory, approval };
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isMainModule(import.meta.url)) {
   const args = process.argv.slice(2), options = {};
-  for (let i = 0; i < args.length; i += 2) {
+  for (let i = 0; i < args.length; i++) {
     const key = args[i];
-    if (!["--version", "--artifacts", "--output"].includes(key) || !args[i + 1] || options[key] !== undefined) fail("usage: --version <semver> [--artifacts <directory>] [--output <report.json>]");
-    options[key] = args[i + 1];
+    if (key === "--require-library") { if (options[key]) fail("duplicate --require-library"); options[key] = true; continue; }
+    if (!["--version", "--artifacts", "--output", "--evidence", "--documentation"].includes(key) || !args[i + 1] || options[key] !== undefined) fail("usage: --version <semver> [--artifacts <directory>] [--evidence <index.json>] [--documentation <index.json>] [--output <report.json>] [--require-library]");
+    options[key] = args[++i];
   }
   let result;
   try {
-    result = await validateReleaseReadiness({ version: options["--version"], artifacts: options["--artifacts"],
-      ledger: readLegacyProgramSnapshot(), review: json(join(root, "docs/completion/distribution-review.json")) });
-    console.log("Release readiness: " + result.status + " (" + result.channel + "); " + result.program.accepted + "/341 accepted; " + result.program.additions.accepted + "/" + result.program.additions.total + " added rows accepted; no acceptance or approval status changed.");
+    const docsPath = resolve(options["--documentation"] ?? join(root, "docs/library/documentation.json"));
+    result = await validateReleaseReadiness({ version: options["--version"], requireLibrary: options["--require-library"] === true, artifacts: options["--artifacts"],
+      manifest: json(join(root, "docs/library/components.json")), review: json(join(root, "docs/completion/distribution-review.json")),
+      evidence: loadLibraryEvidence(resolve(options["--evidence"] ?? join(root, "docs/library/evidence.json"))),
+      documentation: existsSync(docsPath) ? json(docsPath) : undefined });
+    console.log("Release readiness: " + result.status + " (" + result.channel + "); " + result.library.componentCount + " public component exports; owner labels " + result.library.ownerConfirmation + ". No approval status changed.");
   } catch (error) {
-    result = { status: "blocked", version: options["--version"], error: error.message };
+    result = error.report ?? { status: "blocked", version: options["--version"], error: error.message };
     console.error(error.message);
     process.exitCode = 1;
   }
