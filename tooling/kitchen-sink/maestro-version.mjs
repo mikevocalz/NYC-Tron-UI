@@ -1,5 +1,5 @@
 import { spawn, spawnSync } from 'node:child_process';
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { maestroSessionLimits } from '../native/ui-transport.mjs';
@@ -38,6 +38,19 @@ function startDiagnosticWatchdog(output) {
   return child;
 }
 
+// Artifacts are not always reachable, so a failed probe prints what it saw,
+// and the startup watchdog's JVM thread dump if it took one, to the job log.
+export function printProbeFailure(output, diagnostics, write = text => process.stderr.write(text)) {
+  write('--- maestro --version probe ---\n' + JSON.stringify({ elapsedMs: diagnostics.elapsedMs, timeoutMs: diagnostics.timeoutMs, status: diagnostics.status,
+    signal: diagnostics.signal, error: diagnostics.error, stdout: diagnostics.stdout, stderr: diagnostics.stderr }, null, 2) + '\n');
+  for (const [file, lines] of [['jvm-discovery.json', 20], ['maestro-threads.json', 200]]) {
+    let text;
+    try { text = readFileSync(join(output, file), 'utf8'); } catch { continue; }
+    if (file === 'maestro-threads.json') { try { const dump = JSON.parse(text); text = `pid ${dump.pid} status ${dump.status} error ${dump.error}\n${dump.stdout}${dump.stderr}`; } catch {} }
+    write(`--- ${file} ---\n` + text.split('\n').slice(0, lines).join('\n') + '\n');
+  }
+}
+
 /** The caller exclusively owns output. Diagnostics survive every failed probe. */
 export function verifyMaestroVersion({ maestro, output, timeoutMs = 60000 }) {
   const started = Date.now();
@@ -52,6 +65,7 @@ export function verifyMaestroVersion({ maestro, output, timeoutMs = 60000 }) {
       truncated: Buffer.byteLength(result.stdout ?? '') > DIAGNOSTIC_BYTES || Buffer.byteLength(result.stderr ?? '') > DIAGNOSTIC_BYTES };
     writeFileSync(join(output, 'maestro-version.json'), JSON.stringify(diagnostics, null, 2) + '\n');
     if (result.error || result.status !== 0 || (result.stdout ?? '').trim() !== MAESTRO.version) {
+      printProbeFailure(output, diagnostics);
       throw new Error(`Native proof requires the exact pinned verified Maestro version; observed status=${result.status}, signal=${result.signal ?? 'none'}, error=${result.error?.code ?? 'none'}. See maestro-version.json.`);
     }
     return diagnostics;
