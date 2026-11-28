@@ -12,6 +12,12 @@
 // logs it and require returns undefined, which reads as an export with no
 // components. Both lose the result. This routes reports made during the
 // require back to the caller as a thrown error.
+//
+// With Metro's inlineRequires (the RNW template turns it on) a re-export is a
+// getter that requires its source module only when read. Reading the
+// export's names is then where a missing peer's stub runs, so the caller
+// passes a load that also reads them, and a report made there wins over the
+// TypeError that the undefined require then causes.
 
 export function loadEntry(load, errorUtils = globalThis.ErrorUtils) {
   const canIntercept = !!(errorUtils && errorUtils.setGlobalHandler && errorUtils.getGlobalHandler);
@@ -24,14 +30,25 @@ export function loadEntry(load, errorUtils = globalThis.ErrorUtils) {
     });
   }
   let module;
+  let thrown;
+  let hasThrown = false;
   try {
     module = load();
+  } catch (error) {
+    thrown = error;
+    hasThrown = true;
   } finally {
     if (canIntercept) errorUtils.setGlobalHandler(previous);
   }
   if (hasReport) throw reported;
+  if (hasThrown) throw thrown;
   if (module === undefined || module === null) {
     throw new Error("NYCTRON_EMPTY_MODULE the export evaluated to no module object");
   }
   return module;
+}
+
+// Reads every export once, so it runs inside loadEntry's interception.
+export function readExports(module) {
+  return module === undefined || module === null ? module : Object.entries(module);
 }

@@ -12,7 +12,7 @@
 // on globalThis for the web reference.
 import { Component, Suspense, createElement as h, useEffect, useReducer } from "react";
 import { Platform, Text, View } from "react-native";
-import { loadEntry } from "./load-entry.js";
+import { loadEntry, readExports } from "./load-entry.js";
 
 const CHUNK = 4000;
 const SETTLE_MS = 60;
@@ -70,19 +70,25 @@ function loadNext(run) {
   const entry = run.entries[run.loadIndex];
   const record = { s: entry.subpath, i: "ok", c: [] };
   run.results.push(record);
-  let module;
-  try { module = loadEntry(entry.load); }
-  catch (error) { record.i = describe(error); module = undefined; }
-  for (const [name, value] of Object.entries(module ?? {})) {
-    if (!isComponentExport(name, value)) continue;
-    const result = [name, "pending"];
-    record.c.push(result);
-    const synthesized = entry.props?.[name];
-    if (synthesized === undefined) result.push("no-props-type");
-    run.jobs.push({ subpath: entry.subpath, name, Component: value, props: hydrate(synthesized ?? {}), result });
+  try {
+    let exported;
+    try { exported = loadEntry(() => readExports(entry.load())); }
+    catch (error) { record.i = describe(error); exported = []; }
+    for (const [name, value] of exported) {
+      if (!isComponentExport(name, value)) continue;
+      const result = [name, "pending"];
+      record.c.push(result);
+      const synthesized = entry.props?.[name];
+      if (synthesized === undefined) result.push("no-props-type");
+      run.jobs.push({ subpath: entry.subpath, name, Component: value, props: hydrate(synthesized ?? {}), result });
+    }
+  } catch (error) {
+    // Never stall the run on one export: record it and move on.
+    if (record.i === "ok") record.i = describe(error);
+  } finally {
+    run.loadIndex += 1;
+    if (run.loadIndex >= run.entries.length) run.status = run.jobs.length ? "running" : "done";
   }
-  run.loadIndex += 1;
-  if (run.loadIndex >= run.entries.length) run.status = run.jobs.length ? "running" : "done";
 }
 
 function publish(run) {
