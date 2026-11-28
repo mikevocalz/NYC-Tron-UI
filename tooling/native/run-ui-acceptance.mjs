@@ -123,7 +123,7 @@ function flow(name, labels, screenshots) {
     // default iOS close uninstalls XCTest, whose next startup can take focus.
     "--no-reinstall-driver", "--format", "junit", "--output", junit,
     "--test-output-dir", join(directory, "artifacts"), "--debug-output", join(directory, "debug"),
-    join(repo, "tooling/native/ui-flows", name + ".yaml")], { timeout: 360000, log: name + "-maestro.log" });
+    join(repo, "tooling/native/ui-flows", name + ".yaml")], { timeout: maestroSessionLimits.flowTimeoutMs, log: name + "-maestro.log" });
   const result = requirePassedFlow(readFileSync(junit, "utf8"));
   const tree = hierarchy(name);
   requireSemanticLabels(tree, labels);

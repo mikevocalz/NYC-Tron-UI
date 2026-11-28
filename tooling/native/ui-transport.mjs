@@ -62,7 +62,11 @@ export const recapConfirmationIntervalMs = 5000;
 // launching xcodebuild. The harness pins that budget and gives the hierarchy
 // process room for JVM start, runner install and the dump itself, so Maestro's
 // own "iOS driver not ready" diagnostic fires before the harness kills it.
-export const maestroSessionLimits = Object.freeze({ driverStartupMs: 180000, hierarchyTimeoutMs: 300000 });
+// 180 s was too short on the macos-26-arm64 runner: on 2026-11-28 (PR 94, run
+// 46114454418, both attempts) the driver missed it in a hierarchy session and
+// then in a flow session, on a build that changed only version strings.
+// Each flow process also gets the driver budget plus room for the flow itself.
+export const maestroSessionLimits = Object.freeze({ driverStartupMs: 300000, hierarchyTimeoutMs: 420000, flowTimeoutMs: 600000 });
 
 const isSwipe = (entry, status) => commandIs(entry, "swipeCommand", status) &&
   entry.command.swipeCommand.direction === "RIGHT" && isText(entry.command.swipeCommand.elementSelector, iosPointerStroke.surface) &&

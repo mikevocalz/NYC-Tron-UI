@@ -464,8 +464,10 @@ test("Pointer retention keeps its own directory and receipt beside Settings and 
 });
 
 test("the hierarchy capture outlives Maestro's own pinned driver startup budget", () => {
-  assert.equal(maestroSessionLimits.driverStartupMs, 180000);
+  assert.equal(maestroSessionLimits.driverStartupMs, 300000);
   // JVM start, runner install and the dump itself took up to 55 s before the driver budget began.
   assert.ok(maestroSessionLimits.hierarchyTimeoutMs >= maestroSessionLimits.driverStartupMs + 60000);
+  // A flow process starts its own driver and then runs the flow, which took up to 120 s.
+  assert.ok(maestroSessionLimits.flowTimeoutMs >= maestroSessionLimits.driverStartupMs + 180000);
   assert.deepEqual(recoverableUiFlows, ["settings", "editor", "pointer"]);
 });

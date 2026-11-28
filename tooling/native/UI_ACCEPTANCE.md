@@ -146,10 +146,11 @@ MAESTRO_BIN=/tmp/nyc-tron-maestro/maestro/bin/maestro node tooling/native/run-ui
 Each Maestro 2.12.1 CLI session starts its own XCTest runner, and `maestro
 hierarchy` is a separate session after each flow. On the macOS 26 runner a cold
 start took 24 to 96 s from `xcodebuild` to `Running tests`, and up to 149 s from
-CLI start to the first flow command. The runner pins
-`MAESTRO_DRIVER_STARTUP_TIMEOUT` to 180 s and gives each hierarchy capture 300
-s, so Maestro reports its own `iOS driver not ready` error before the harness
-stops it. The labels each hierarchy must contain are unchanged.
+CLI start to the first flow command. On 2026-11-28 the driver then missed a 180
+s budget twice in a row, once in a hierarchy session and once in a flow
+session. The runner now pins `MAESTRO_DRIVER_STARTUP_TIMEOUT` to 300 s and
+gives each hierarchy capture 420 s and each flow 600 s, so Maestro reports its
+own `iOS driver not ready` error before the harness stops it. The labels each hierarchy must contain are unchanged.
 
 The Linux workspace can verify flow parsing, source types and evidence rejection
 tests. Successful simulator execution is reported only after the native jobs

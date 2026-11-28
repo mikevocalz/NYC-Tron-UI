@@ -11,11 +11,11 @@ import { maestroSessionLimits } from '../native/ui-transport.mjs';
 test('shared bounded driver startup setting is used and recorded by exact version verification', () => {
   const output=mkdtempSync(join(tmpdir(),'tron-startup-env-'));
   const maestro=join(output,'cli');
-  writeFileSync(maestro,`#!${process.execPath}\nif(process.env.MAESTRO_DRIVER_STARTUP_TIMEOUT!=='180000')process.exit(8);console.log('2.12.1');`);chmodSync(maestro,0o755);
+  writeFileSync(maestro,`#!${process.execPath}\nif(process.env.MAESTRO_DRIVER_STARTUP_TIMEOUT!==${JSON.stringify(String(maestroSessionLimits.driverStartupMs))})process.exit(8);console.log('2.12.1');`);chmodSync(maestro,0o755);
   try {
     assert.equal(maestroEnvironment().MAESTRO_DRIVER_STARTUP_TIMEOUT,String(maestroSessionLimits.driverStartupMs));
     verifyMaestroVersion({maestro,output});
-    assert.equal(JSON.parse(readFileSync(join(output,'maestro-version.json'))).settings.MAESTRO_DRIVER_STARTUP_TIMEOUT,'180000');
+    assert.equal(JSON.parse(readFileSync(join(output,'maestro-version.json'))).settings.MAESTRO_DRIVER_STARTUP_TIMEOUT,String(maestroSessionLimits.driverStartupMs));
   } finally {rmSync(output,{recursive:true,force:true});}
 });
 
