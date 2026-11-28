@@ -8,7 +8,7 @@ import { requireKitchenIosExecutionTarget } from './ios-execution-target.mjs';
 import { COMPONENT_CONTRACTS, MODES, importFor } from './contracts.mjs';
 import { nativeFlow } from './native-flow.mjs';
 import { sha256, verifyInstalledConsumer } from './prepare-consumer.mjs';
-import { maestroEnvironment, verifyMaestroVersion } from './maestro-version.mjs';
+import { maestroEnvironment, verifyMaestroVersion, POSTBOOT_PROBE_TIMEOUT_MS } from './maestro-version.mjs';
 import { printFlowFailure } from '../native/flow-failure.mjs';
 
 export { printFlowFailure };
@@ -31,7 +31,7 @@ export function proveNative({ consumer, platform, device, maestro, output }) {
   // output directory, and each flow can supply artifacts only from its stage.
   mkdirSync(dirname(output), { recursive: true });
   mkdirSync(output);
-  verifyMaestroVersion({ maestro, output });
+  verifyMaestroVersion({ maestro, output, timeoutMs: POSTBOOT_PROBE_TIMEOUT_MS });
   for (const mode of MODES) {
     const directory = join(output, mode); mkdirSync(directory);
     const flow = join(directory, 'flow.yaml'), junit = join(directory, 'report.xml');
