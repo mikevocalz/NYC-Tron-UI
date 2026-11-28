@@ -41,6 +41,13 @@ export function proveNative({ consumer, platform, device, maestro, output }) {
       // The log is also in the uploaded proof artifact; print its end so the
       // failing step is readable from the job log alone.
       process.stderr.write(`--- ${platform}/${mode} maestro.log (last 80 lines) ---\n` + maestroLog.split('\n').slice(-80).join('\n') + '\n');
+      // Maestro's console output names only the failed flow. The JUnit
+      // failure message and its debug log say which command failed and why.
+      for (const [label, path, lines] of [['report.xml', junit, 40], ['debug maestro.log (last 60 lines)', join(directory, 'debug', 'maestro.log'), 60]]) {
+        let text;
+        try { text = readFileSync(path, 'utf8'); } catch { continue; }
+        process.stderr.write(`--- ${platform}/${mode} ${label} ---\n` + text.split('\n').slice(-lines).join('\n') + '\n');
+      }
       throw new Error(`${platform}/${mode} flow failed: ${result.error?.message ?? result.status}`);
     }
     const junitText = readFileSync(junit, 'utf8');
