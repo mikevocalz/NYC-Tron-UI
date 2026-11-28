@@ -479,6 +479,13 @@ jobs:
             if (Test-Path $source) { Copy-Item $source $out }
           }
           if (Test-Path "$env:WIN_CONSUMER\package-preparation.json") { Copy-Item "$env:WIN_CONSUMER\package-preparation.json" $out }
+          # Unresolved specifiers are replaced by throwing stubs; print them so
+          # the job log shows which peers this lane lacked.
+          $resolution = Join-Path $out "resolution.jsonl"
+          if (Test-Path $resolution) {
+            Write-Host "--- Specifiers the lane did not resolve ---"
+            Get-Content $resolution | Where-Object { $_ -match '"resolved":false' } | ForEach-Object { Write-Host $_ }
+          }
       - uses: actions/upload-artifact@v4
         if: always()
         with:
