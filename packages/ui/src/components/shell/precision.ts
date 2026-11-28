@@ -1,2 +1,2 @@
-/** Shell alias for the forge input module, so `@nyc-tron/ui/components/shell/precision` resolves on this branch as it does on main. */
+/** Alias of forge/inputs/precision, kept for the `@nyc-tron/ui/components/shell/precision` subpath. */
 export * from "../forge/inputs/precision.ts";

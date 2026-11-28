@@ -9,7 +9,7 @@
   "files": [
     {
       "path": "packages/ui/src/components/shell/precision-scrubber-model.ts",
-      "content": "/** Shell alias for the forge input module, so `@nyc-tron/ui/components/shell/precision-scrubber-model` resolves on this branch as it does on main. */\nexport * from \"@/components/nyc-tron/ui/components/forge/inputs/precision-scrubber-model\";\n",
+      "content": "/** Alias of forge/inputs/precision-scrubber-model, kept for the `@nyc-tron/ui/components/shell/precision-scrubber-model` subpath. */\nexport * from \"@/components/nyc-tron/ui/components/forge/inputs/precision-scrubber-model\";\n",
       "type": "registry:lib",
       "target": "@components/nyc-tron/ui/components/shell/precision-scrubber-model.ts"
     }

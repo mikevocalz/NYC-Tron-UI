@@ -16,7 +16,7 @@ a11yStatus: "unverified"
 ## Purpose
 
 <!-- generated:begin purpose source=packages/ui/src/components/shell/PrecisionScrubber.tsx -->
-Shell alias for the forge input module, so `@nyc-tron/ui/components/shell/PrecisionScrubber` resolves on this branch as it does on main.
+Alias of forge/inputs/PrecisionScrubber, kept for the `@nyc-tron/ui/components/shell/PrecisionScrubber` subpath.
 <!-- generated:end purpose -->
 
 ## Install

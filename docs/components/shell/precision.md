@@ -16,7 +16,7 @@ a11yStatus: "unverified"
 ## Purpose
 
 <!-- generated:begin purpose source=packages/ui/src/components/shell/precision.ts -->
-Shell alias for the forge input module, so `@nyc-tron/ui/components/shell/precision` resolves on this branch as it does on main.
+Alias of forge/inputs/precision, kept for the `@nyc-tron/ui/components/shell/precision` subpath.
 <!-- generated:end purpose -->
 
 ## Install

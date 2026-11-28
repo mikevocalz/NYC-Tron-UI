@@ -9,7 +9,7 @@
   "files": [
     {
       "path": "packages/ui/src/components/shell/precision.ts",
-      "content": "/** Shell alias for the forge input module, so `@nyc-tron/ui/components/shell/precision` resolves on this branch as it does on main. */\nexport * from \"@/components/nyc-tron/ui/components/forge/inputs/precision\";\n",
+      "content": "/** Alias of forge/inputs/precision, kept for the `@nyc-tron/ui/components/shell/precision` subpath. */\nexport * from \"@/components/nyc-tron/ui/components/forge/inputs/precision\";\n",
       "type": "registry:lib",
       "target": "@components/nyc-tron/ui/components/shell/precision.ts"
     }
