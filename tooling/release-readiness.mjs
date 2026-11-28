@@ -3,7 +3,7 @@ import { existsSync, readFileSync, readdirSync, realpathSync, statSync, writeFil
 import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { releaseChecksums, verifyArchiveHash } from "./consumer-model.mjs";
-import { validateComponentProgram } from "./verify-component-program.mjs";
+import { validateComponentProgram, readLegacyProgramSnapshot } from "./verify-component-program.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const RELEASE_REPOSITORY = "mikevocalz/NYC-Tron-UI";
@@ -148,7 +148,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   let result;
   try {
     result = await validateReleaseReadiness({ version: options["--version"], artifacts: options["--artifacts"],
-      ledger: json(join(root, "docs/completion/library-progress.json")), review: json(join(root, "docs/completion/distribution-review.json")) });
+      ledger: readLegacyProgramSnapshot(), review: json(join(root, "docs/completion/distribution-review.json")) });
     console.log("Release readiness: " + result.status + " (" + result.channel + "); " + result.program.accepted + "/341 accepted; " + result.program.additions.accepted + "/" + result.program.additions.total + " added rows accepted; no acceptance or approval status changed.");
   } catch (error) {
     result = { status: "blocked", version: options["--version"], error: error.message };

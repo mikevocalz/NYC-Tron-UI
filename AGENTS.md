@@ -76,3 +76,14 @@ Preserve all public APIs and dated evidence. The manifest, program handoff and
 stable-gate migration land separately; this decision does not change validators
 or acceptance statuses. Stable publication still requires the owner's own
 comment approving the exact version and sixteen-archive checksum binding.
+
+## Program handoff transition
+
+The former program ledger URL is now a pinned pointer to Forge. Original
+records, validator and regression tests remain under the dated completion
+report archive. The small `tooling/verify-component-program.mjs` bridge keeps
+the previous release policy intact only until the separately reviewed T3 gate
+lands; it does not restore the superseded application program as library scope.
+Qt correspondence is a dated downstream case study, and the Forge import map
+is a lookup only. Do not change acceptance or owner-approval records to make
+this intermediate transition pass.

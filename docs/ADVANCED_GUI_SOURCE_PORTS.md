@@ -2,7 +2,7 @@
 
 This change opens source-backed port workstreams and implements only the small Floating UI
 placement algorithm. It does not implement native Expo v2 overlays or certify any platform.
-The original 341 IDs remain stable. Extend existing owners instead of creating duplicate UI.
+Forge retains its original application acceptance IDs. Tron's library inventory follows its public exports under D9. Extend existing owners instead of creating duplicate UI.
 
 ## Source evidence
 

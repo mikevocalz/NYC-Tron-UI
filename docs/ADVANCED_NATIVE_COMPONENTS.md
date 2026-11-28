@@ -6,7 +6,7 @@
 - Source implementation in PR #2: InstrumentKnob, InstrumentXYPad, TreeGrid, PatchGraph, ImageCropOverlay, CommandPopover.
 - Tested pure primitives: precision math, graph validation and bezier routing, crop geometry, tree projection, hinge-safe popup placement, XR ray-sphere/plane intersection, pinch hysteresis.
 - Not done: native SwiftUI/Compose/WinUI/AppKit UI adapters, real platform device tests, Ink runtime, waveform GPU renderer, image processor, DSP ports, 3D splat renderer or XR compositor. The registry marks these PLANNED.
-- Keep the complete 341-contract Nitro Forge inventory authoritative. This is an *additive* register for previously untracked or cross-app cases, not a claim that the original list is delivered.
+- Forge owns its application acceptance inventory. This is an *additive* register for previously untracked or cross-app cases; that application program does not define Tron's library scope.
 
 ## Shared-source rules
 

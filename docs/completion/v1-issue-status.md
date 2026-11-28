@@ -1,3 +1,8 @@
+> Historical checkpoint, retained 2026-11-22. The program now belongs to
+> [Nitro Forge](https://github.com/mikevocalz/nitro-forge/blob/5902e64d6ad01090f5e9a40f8402ec0cbcb39a71/docs/completion/library-progress.json).
+> The following text records earlier decisions and commits; it does not define
+> NYC-Tron library scope. Current scope is [D9](../V1_DECISIONS.md#d9-standalone-ui-library-v1).
+
 # v1.0.0 status of issues #4, #7 and #11
 
 ## Current completion work — November 10, 2026

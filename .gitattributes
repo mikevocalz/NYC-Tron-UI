@@ -2,3 +2,6 @@
 docs/completion/baseline-roster.tsv text eol=lf
 # Review the generated Qt map in Markdown; retain the full machine-readable graph.
 docs/qt/component-coverage.json linguist-generated=true
+
+# Preserve exact historical Git bytes on every checkout, including Windows.
+docs/completion/reports/2026-11-22-forge-program/** -text
