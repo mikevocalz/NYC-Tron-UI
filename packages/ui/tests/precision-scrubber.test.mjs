@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {scrubPrecision,scrubModeFromOffset,scaleTicks,formatStepValue,scrubValue} from "../src/components/forge/inputs/precision.ts";
-import {createScrubberModel,initialScrubberState} from "../src/components/forge/inputs/precision-scrubber-model.ts";
+import {scrubPrecision,scrubModeFromOffset,scaleTicks,formatStepValue,scrubValue} from "../src/components/shell/precision.ts";
+import {createScrubberModel,initialScrubberState} from "../src/components/shell/precision-scrubber-model.ts";
 
 test("precision scrub normal/fine/coarse are absolute, deterministic and mode aware",()=>{
  const base={min:0,max:100,step:1,startValue:10,deltaPixels:80,pixelsPerStep:8};

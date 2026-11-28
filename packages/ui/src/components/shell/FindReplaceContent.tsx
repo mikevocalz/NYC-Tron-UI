@@ -4,7 +4,7 @@ import { createStore, type StoreApi } from "zustand/vanilla";
 import { useStore } from "zustand";
 import { Button } from "../Button.tsx";
 import { ErrorMessage } from "../feedback/ErrorMessage.tsx";
-import { SettingSwitch } from "../forge/canvas/SettingSwitch.tsx";
+import { SettingSwitch } from "../forms/SettingSwitch.tsx";
 import { joinClasses } from "../styles.ts";
 import { useOwnedAction } from "./useOwnedAction.ts";
 import { validateFindResponse, type FindDocument, type FindQuery, type FindResponse, type FindMatch, type ReplaceRequest } from "./find-replace-model.ts";

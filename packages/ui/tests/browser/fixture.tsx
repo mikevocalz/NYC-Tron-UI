@@ -1,6 +1,6 @@
 import {AppRegistry,ScrollView,Text,View} from "react-native";
 import {create} from "zustand";
-import {PrecisionScrubber} from "../../src/components/forge/inputs/PrecisionScrubber.tsx";
+import {PrecisionScrubber} from "../../src/components/shell/PrecisionScrubber.tsx";
 import {DragGrabHandle} from "../../src/components/DragGrabHandle.tsx";
 import {Button} from "../../src/components/Button.tsx";
 import {LayerStack} from "../../src/components/forge/layers/LayerStack.tsx";

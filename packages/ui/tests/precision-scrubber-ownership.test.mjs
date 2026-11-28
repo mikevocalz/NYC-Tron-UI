@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {createScrubberModel,initialScrubberState} from '../src/components/forge/inputs/precision-scrubber-model.ts';
+import {createScrubberModel,initialScrubberState} from '../src/components/shell/precision-scrubber-model.ts';
 function fixture(){let props={value:10,min:0,max:100,step:1,onCommit:()=>{}};let state=initialScrubberState(10,1);const store={getState:()=>state,setState:p=>{state={...state,...p};}};const model=createScrubberModel(store,()=>props);return {store,model,set:p=>{props={...props,...p};}};}
 const point=(x,y=0)=>({x,y});
 test('source replacement restores original preview callback/value and consumes old release/draft handlers',()=>{
