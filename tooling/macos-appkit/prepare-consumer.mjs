@@ -40,6 +40,7 @@ const core = JSON.parse(await readFile(join(repo, 'packages/core/package.json'),
 const sharedCore = await copySharedCore(sharedDirectory, join(destination, 'vendor'), core.version);
 const manifestFile = join(destination, 'package.json');
 let manifest = JSON.parse(await readFile(manifestFile, 'utf8'));
+manifest.dependencies['@nyc-tron/core'] = `file:vendor/${sharedCore.filename}`;
 manifest.dependencies['@nyc-tron/macos-appkit'] = 'file:adapter-source';
 await writeFile(manifestFile, JSON.stringify(manifest, null, 2) + '\n');
 run('npm', ['install', '--no-audit', '--no-fund']);

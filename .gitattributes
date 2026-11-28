@@ -7,3 +7,6 @@ docs/qt/component-coverage.json linguist-generated=true
 docs/completion/reports/2026-11-22-forge-program/** -text
 
 docs/completion/reports/2026-11-23-qt-case-study/** -text
+
+# Exact rc.2 desktop declaration bytes retained for the rc.3 provenance proof.
+docs/completion/reports/standalone-v1-2026-11-23-desktop-provenance/api-signatures-*-rc2.json -text

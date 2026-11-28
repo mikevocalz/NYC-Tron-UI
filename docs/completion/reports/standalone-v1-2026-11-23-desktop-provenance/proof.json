@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "kind": "desktop-release-provenance",
+  "from": "1.0.0-rc.2",
+  "to": "1.0.0-rc.3",
+  "allowedInternalPackages": [
+    "@nyc-tron/core",
+    "@nyc-tron/windows-fluent"
+  ],
+  "checker": "tooling/api-signatures.mjs (unchanged; no normalization)",
+  "snapshots": [
+    {
+      "lane": "windows",
+      "original": "docs/completion/reports/standalone-v1-2026-11-23-desktop-provenance/api-signatures-windows-rc2.json",
+      "candidate": "docs/api-signatures-windows.json",
+      "originalSha256": "56f953c9b3029d46f7933d3e72713274523aad92079544223f66b705dc6e5f84",
+      "candidateSha256": "bc2b17af08ce181012e79b0941b9ba2e767585721c68ece1d4d5f3b1eaa2c8c3",
+      "reversedSha256": "56f953c9b3029d46f7933d3e72713274523aad92079544223f66b705dc6e5f84",
+      "originalBytes": 56044,
+      "candidateBytes": 56044,
+      "exactOriginalByteEquality": true
+    },
+    {
+      "lane": "macos",
+      "original": "docs/completion/reports/standalone-v1-2026-11-23-desktop-provenance/api-signatures-macos-rc2.json",
+      "candidate": "docs/api-signatures-macos.json",
+      "originalSha256": "46e874ca518cd5890bb4a927c9563bc7bab2c55323a9be4195226d6e45921a29",
+      "candidateSha256": "b3fa3e331b2650dcf85c15d638971b1742edd1d152f8f0b03dd6fe93d2ff5cb5",
+      "reversedSha256": "46e874ca518cd5890bb4a927c9563bc7bab2c55323a9be4195226d6e45921a29",
+      "originalBytes": 66178,
+      "candidateBytes": 66178,
+      "exactOriginalByteEquality": true
+    }
+  ]
+}

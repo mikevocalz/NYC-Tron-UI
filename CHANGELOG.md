@@ -7,6 +7,20 @@ version per tag.
 
 ## [Unreleased]
 
+### Release candidate preparation
+
+- Prepared synchronized `1.0.0-rc.3` versions for all sixteen release packages,
+  including matching internal desktop peers. Examples retain their own versions;
+  existing consumer release pins remain unchanged until rc.3 is published.
+- Connected publication to the exact tested core/UI tarballs, installed web,
+  Android and iOS receipts, and built component documentation. The publication
+  path requires the library gate for prereleases as well as stable releases.
+  Pending stability labels, missing checks and dirty-source evidence cannot
+  authorize publication. Stable distribution still requires the owner's exact
+  sixteen-archive approval.
+- This is a release proposal, not a published release. No public import, prop
+  signature, acceptance status or owner approval changes.
+
 ### Standalone library documentation
 
 - Added a generated component documentation site, install/theming/platform guides, contributor instructions and versioning policy. Stability labels remain proposals pending owner confirmation; no stable release or rc.3 publication is claimed.
