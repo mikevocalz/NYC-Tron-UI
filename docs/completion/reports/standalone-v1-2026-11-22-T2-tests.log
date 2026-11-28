@@ -1,0 +1,29 @@
+✔ all direct component export targets are actual independent files (6.899375ms)
+✔ Forge controls never import engine packages or app-specific palettes (1.406666ms)
+✔ waveform preserves real signal extrema and bounds view work (0.738875ms)
+✔ frame math returns whole bounded frames and SMPTE display (0.221625ms)
+✔ RGBA math is document-agnostic and validates channels (0.132084ms)
+✔ Spreadsheet window virtualizes both rows and columns without allocating full sheet (0.179709ms)
+✔ data tables switch to labeled record cards in portrait and narrow split panes (0.147042ms)
+✔ Tally mobile grid keeps all spreadsheet columns, touch targets and formula input (0.200583ms)
+✔ responsive implementation measures host panes, not window screen dimensions (0.228167ms)
+✔ portrait-landscape and foldable split resize retain selected sheet region (0.192458ms)
+✔ every semantic token a component uses is documented for consumers (61.0975ms)
+✔ interactive controls keep screen-reader semantics (0.338708ms)
+✔ components take colors from theme tokens, not hardcoded hex values (16.809875ms)
+✔ every adjustable control can be adjusted by a screen reader (19.132541ms)
+✔ accessibilityRole only uses values Android's enum accepts (17.256875ms)
+✔ data grids expose grid semantics instead of per-cell buttons (0.318959ms)
+✔ every current component export is inventoried across workspace and desktop packages, without alias loss (1443.871625ms)
+✔ semantic classifier resolves compound and alias declarations and rejects unresolved component returns (132.258958ms)
+✔ ambiguous graph imports fail rather than selecting the first declaration (0.154917ms)
+✔ export and condition drift fail before any manifest is accepted (1475.473416ms)
+✔ lookup accounts for baseline and added rows independently and never fabricates external imports (10.409458ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3334.73175
