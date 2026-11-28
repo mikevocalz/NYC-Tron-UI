@@ -10,7 +10,7 @@ Install one component, connect your theme and read the evidence for your target 
 
 NYC-Tron is an independent UI library for React Native and Expo. It ships general app components. Import only the pieces you need. Editor controls such as faders, timelines and color pickers live in Nitro Forge’s @nitro-forge/editor-controls, which builds on Tron.
 
-The current release is v1.0.0-rc.2. The new stable/preview list is a proposal awaiting owner confirmation. A passing install or source check does not certify every component on every platform.
+The current release is v1.0.0-rc.2. The stable/preview list follows the confirmed manifest. A passing install or source check does not certify every component on every platform.
 
 - Installation: the "installation" guide in llms/guides.txt
 - Browse components: the component index in llms.txt
@@ -199,7 +199,7 @@ Define the public contract before making a stability promise.
 
 A confirmed stable API is covered by Semantic Versioning: compatible fixes are patches; compatible additions are minors; removals, renames, incompatible types or behavior require a major. Broader support claims require their own evidence.
 
-Stable labels are not yet confirmed in the current proposed manifest. A label alone cannot satisfy release evidence.
+Stable labels follow the owner-confirmed manifest. A label alone cannot satisfy release evidence.
 
 ### Preview components
 

@@ -12,7 +12,7 @@ import { AnchoredInspector } from "@nyc-tron/macos-appkit/anchored-inspector";
 
 - Id: `@nyc-tron/macos-appkit/anchored-inspector#AnchoredInspector`
 - Package: `@nyc-tron/macos-appkit`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -63,7 +63,7 @@ import { Button } from "@nyc-tron/macos-appkit/button";
 
 - Id: `@nyc-tron/macos-appkit/button#Button`
 - Package: `@nyc-tron/macos-appkit`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -99,7 +99,7 @@ import { DragDropView } from "@nyc-tron/macos-appkit/drag-drop";
 
 - Id: `@nyc-tron/macos-appkit/drag-drop#DragDropView`
 - Package: `@nyc-tron/macos-appkit`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -143,7 +143,7 @@ import { Popover } from "@nyc-tron/macos-appkit/popover";
 
 - Id: `@nyc-tron/macos-appkit/popover#Popover`
 - Package: `@nyc-tron/macos-appkit`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -194,7 +194,7 @@ import { SegmentedControl } from "@nyc-tron/macos-appkit/segmented-control";
 
 - Id: `@nyc-tron/macos-appkit/segmented-control#SegmentedControl`
 - Package: `@nyc-tron/macos-appkit`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -229,7 +229,7 @@ import { Select } from "@nyc-tron/macos-appkit/select";
 
 - Id: `@nyc-tron/macos-appkit/select#Select`
 - Package: `@nyc-tron/macos-appkit`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -265,7 +265,7 @@ import { Sidebar } from "@nyc-tron/macos-appkit/sidebar";
 
 - Id: `@nyc-tron/macos-appkit/sidebar#Sidebar`
 - Package: `@nyc-tron/macos-appkit`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -302,7 +302,7 @@ import { SidebarItem } from "@nyc-tron/macos-appkit/sidebar";
 
 - Id: `@nyc-tron/macos-appkit/sidebar#SidebarItem`
 - Package: `@nyc-tron/macos-appkit`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -341,7 +341,7 @@ import { SplitView } from "@nyc-tron/macos-appkit/split-view";
 
 - Id: `@nyc-tron/macos-appkit/split-view#SplitView`
 - Package: `@nyc-tron/macos-appkit`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -392,7 +392,7 @@ import { TextField } from "@nyc-tron/macos-appkit/text-field";
 
 - Id: `@nyc-tron/macos-appkit/text-field#TextField`
 - Package: `@nyc-tron/macos-appkit`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -429,7 +429,7 @@ import { Tooltip } from "@nyc-tron/macos-appkit/tooltip";
 
 - Id: `@nyc-tron/macos-appkit/tooltip#Tooltip`
 - Package: `@nyc-tron/macos-appkit`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:

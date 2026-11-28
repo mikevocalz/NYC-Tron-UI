@@ -12,7 +12,7 @@ import { ArcKnob } from "@nyc-tron/native-controls/ArcKnob";
 
 - Id: `@nyc-tron/native-controls/ArcKnob#ArcKnob`
 - Package: `@nyc-tron/native-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/native-controls#ArcKnob` (package root barrel; use the subpath import above)
 
@@ -65,7 +65,7 @@ import { DisplayP3DiscLayer } from "@nyc-tron/native-controls/DisplayP3DiscLayer
 
 - Id: `@nyc-tron/native-controls/DisplayP3DiscLayer#DisplayP3DiscLayer`
 - Package: `@nyc-tron/native-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/native-controls#DisplayP3DiscLayer` (package root barrel; use the subpath import above)
 
@@ -103,7 +103,7 @@ import { NativePointerInput } from "@nyc-tron/native-controls/NativePointerInput
 
 - Id: `@nyc-tron/native-controls/NativePointerInput#NativePointerInput`
 - Package: `@nyc-tron/native-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -146,7 +146,7 @@ import { NativeVideoPlayer } from "@nyc-tron/native-controls/NativeVideoPlayer";
 
 - Id: `@nyc-tron/native-controls/NativeVideoPlayer#NativeVideoPlayer`
 - Package: `@nyc-tron/native-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -198,7 +198,7 @@ import { XYPad } from "@nyc-tron/native-controls/XYPad";
 
 - Id: `@nyc-tron/native-controls/XYPad#XYPad`
 - Package: `@nyc-tron/native-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/native-controls#XYPad` (package root barrel; use the subpath import above)
 

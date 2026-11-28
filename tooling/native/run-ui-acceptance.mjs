@@ -6,6 +6,7 @@ import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { MAESTRO, nativeElementCenter, parseHierarchy, requirePassedFlow, requireReferenceHostBounds, requireSemanticLabels } from "./ui-evidence.mjs";
 import { recordNativeArtifact } from "./native-artifact.mjs";
+import { printFlowFailure } from "./flow-failure.mjs";
 import { warmNativeBundle } from "./metro-warmup.mjs";
 import { classifyInitialUiTransportFailure, maestroSessionLimits, retainInitialUiTransportFailure, withInitialUiTransportRecovery } from "./ui-transport.mjs";
 
@@ -118,12 +119,18 @@ function hierarchy(name) {
 function flow(name, labels, screenshots) {
   const directory = join(output, name), junit = join(directory, "report.xml");
   mkdirSync(directory);
-  run(maestro, ["--device", deviceId, "--platform", platform, "--no-ansi", "test",
-    // Retain the same native driver for each flow and hierarchy capture. The
-    // default iOS close uninstalls XCTest, whose next startup can take focus.
-    "--no-reinstall-driver", "--format", "junit", "--output", junit,
-    "--test-output-dir", join(directory, "artifacts"), "--debug-output", join(directory, "debug"),
-    join(repo, "tooling/native/ui-flows", name + ".yaml")], { timeout: 360000, log: name + "-maestro.log" });
+  try {
+    run(maestro, ["--device", deviceId, "--platform", platform, "--no-ansi", "test",
+      // Retain the same native driver for each flow and hierarchy capture. The
+      // default iOS close uninstalls XCTest, whose next startup can take focus.
+      "--no-reinstall-driver", "--format", "junit", "--output", junit,
+      "--test-output-dir", join(directory, "artifacts"), "--debug-output", join(directory, "debug"),
+      join(repo, "tooling/native/ui-flows", name + ".yaml")], { timeout: maestroSessionLimits.flowTimeoutMs, log: name + "-maestro.log" });
+  } catch (error) {
+    // Maestro's console names only the failed flow; print which command failed and why.
+    printFlowFailure({ label: platform + "/" + name, junit, debug: join(directory, "debug") });
+    throw error;
+  }
   const result = requirePassedFlow(readFileSync(junit, "utf8"));
   const tree = hierarchy(name);
   requireSemanticLabels(tree, labels);

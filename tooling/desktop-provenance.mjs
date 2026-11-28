@@ -6,8 +6,12 @@ import { isMainModule } from './library-components.mjs';
 const packages=['@nyc-tron/core','@nyc-tron/windows-fluent'];
 const history='docs/completion/reports/standalone-v1-2026-11-23-desktop-provenance';
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+// The candidate is whatever version the workspace packages carry now (rc.3, then
+// 1.0.0); the reviewed baseline stays the published rc.2 snapshots.
+export const BASELINE='1.0.0-rc.2';
+export const CANDIDATE=JSON.parse(readFileSync(new URL('../packages/core/package.json',import.meta.url),'utf8')).version;
 export function reverseInternalReleaseIdentity(candidate){
- const mapIdentity=id=>{for(const name of packages){const from=name+'@1.0.0-rc.3/';if(id.startsWith(from))return name+'@1.0.0-rc.2/'+id.slice(from.length);}return id;};
+ const mapIdentity=id=>{for(const name of packages){const from=name+'@'+CANDIDATE+'/';if(id.startsWith(from))return name+'@'+BASELINE+'/'+id.slice(from.length);}return id;};
  const reversed=structuredClone(candidate);
  // Only graph identity locations may change. Signatures and export conditions
  // remain completely untouched, including any public string literal types.
@@ -17,7 +21,7 @@ export function reverseInternalReleaseIdentity(candidate){
  for(const [id,record]of Object.entries(reversed.externalTypes??{})){
   const mapped=mapIdentity(id);
   if(Object.hasOwn(external,mapped))throw Error('Release identity key collision: '+mapped);
-  if(packages.includes(record.package)&&record.version==='1.0.0-rc.3')record.version='1.0.0-rc.2';
+  if(packages.includes(record.package)&&record.version===CANDIDATE)record.version=BASELINE;
   external[mapped]=record;
  }
  reversed.externalTypes=external;
@@ -29,7 +33,7 @@ export function proveIdentityOnly(beforeBytes,candidateBytes){
  return {originalSha256:sha(beforeBytes),candidateSha256:sha(candidateBytes),reversedSha256:sha(reversed),originalBytes:beforeBytes.length,candidateBytes:candidateBytes.length,exactOriginalByteEquality:true};
 }
 export function collectProof(root=process.cwd()){
- return {schemaVersion:1,kind:'desktop-release-provenance',from:'1.0.0-rc.2',to:'1.0.0-rc.3',allowedInternalPackages:packages,checker:'tooling/api-signatures.mjs (unchanged; no normalization)',snapshots:['windows','macos'].map(lane=>{const original=history+'/api-signatures-'+lane+'-rc2.json',candidate='docs/api-signatures-'+lane+'.json';return {lane,original,candidate,...proveIdentityOnly(readFileSync(resolve(root,original)),readFileSync(resolve(root,candidate)))};})};
+ return {schemaVersion:1,kind:'desktop-release-provenance',from:BASELINE,to:CANDIDATE,allowedInternalPackages:packages,checker:'tooling/api-signatures.mjs (unchanged; no normalization)',snapshots:['windows','macos'].map(lane=>{const original=history+'/api-signatures-'+lane+'-rc2.json',candidate='docs/api-signatures-'+lane+'.json';return {lane,original,candidate,...proveIdentityOnly(readFileSync(resolve(root,original)),readFileSync(resolve(root,candidate)))};})};
 }
 if(isMainModule(import.meta.url)){
  const proof=collectProof();

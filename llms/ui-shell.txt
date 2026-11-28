@@ -12,7 +12,7 @@ import { AdaptiveDock } from "@nyc-tron/ui/components/shell/AdaptiveDock";
 
 - Id: `@nyc-tron/ui/components/shell/AdaptiveDock#AdaptiveDock`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -66,7 +66,7 @@ import { AssetBrowser } from "@nyc-tron/ui/components/shell/AssetBrowser";
 
 - Id: `@nyc-tron/ui/components/shell/AssetBrowser#AssetBrowser`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -126,7 +126,7 @@ import { ContextMenu } from "@nyc-tron/ui/components/shell/ContextMenu";
 
 - Id: `@nyc-tron/ui/components/shell/ContextMenu#ContextMenu`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -174,7 +174,7 @@ import { ContextualToolbar } from "@nyc-tron/ui/components/shell/ContextualToolb
 
 - Id: `@nyc-tron/ui/components/shell/ContextualToolbar#ContextualToolbar`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -224,7 +224,7 @@ import { DocumentTabBar } from "@nyc-tron/ui/components/shell/DocumentTabBar";
 
 - Id: `@nyc-tron/ui/components/shell/DocumentTabBar#DocumentTabBar`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -275,7 +275,7 @@ import { FindReplaceContent } from "@nyc-tron/ui/components/shell/FindReplaceCon
 
 - Id: `@nyc-tron/ui/components/shell/FindReplaceContent#FindReplaceContent`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -321,7 +321,7 @@ import { FindReplacePopover } from "@nyc-tron/ui/components/shell/FindReplacePop
 
 - Id: `@nyc-tron/ui/components/shell/FindReplacePopover#FindReplacePopover`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 - Also exported as: `@nyc-tron/expo-controls/FindReplacePopover#FindReplacePopover`
 
@@ -378,7 +378,7 @@ import { FocusAndA11yLayer } from "@nyc-tron/ui/components/shell/FocusAndA11yLay
 
 - Id: `@nyc-tron/ui/components/shell/FocusAndA11yLayer#FocusAndA11yLayer`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -414,7 +414,7 @@ import { HistoryPanel } from "@nyc-tron/ui/components/shell/HistoryPanel";
 
 - Id: `@nyc-tron/ui/components/shell/HistoryPanel#HistoryPanel`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -463,7 +463,7 @@ import { InspectorPanel } from "@nyc-tron/ui/components/shell/InspectorPanel";
 
 - Id: `@nyc-tron/ui/components/shell/InspectorPanel#InspectorPanel`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -508,7 +508,7 @@ import { InspectorSearch } from "@nyc-tron/ui/components/shell/InspectorSearch";
 
 - Id: `@nyc-tron/ui/components/shell/InspectorSearch#InspectorSearch`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -554,7 +554,7 @@ import { InspectorSection } from "@nyc-tron/ui/components/shell/InspectorSection
 
 - Id: `@nyc-tron/ui/components/shell/InspectorSection#InspectorSection`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -603,7 +603,7 @@ import { KeyboardShortcutHUD } from "@nyc-tron/ui/components/shell/KeyboardShort
 
 - Id: `@nyc-tron/ui/components/shell/KeyboardShortcutHUD#KeyboardShortcutHUD`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -652,7 +652,7 @@ import { MenuButton } from "@nyc-tron/ui/components/shell/MenuButton";
 
 - Id: `@nyc-tron/ui/components/shell/MenuButton#MenuButton`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -703,7 +703,7 @@ import { NumericScrubField } from "@nyc-tron/ui/components/shell/NumericScrubFie
 
 - Id: `@nyc-tron/ui/components/shell/NumericScrubField#NumericScrubField`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 - Also exported as: `@nyc-tron/ui/components/shell/PrecisionScrubber#PrecisionScrubber`
 
@@ -766,7 +766,7 @@ import { PaneSplitter } from "@nyc-tron/ui/components/shell/PaneSplitter";
 
 - Id: `@nyc-tron/ui/components/shell/PaneSplitter#PaneSplitter`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -829,7 +829,7 @@ import { PrecisionScrubber } from "@nyc-tron/ui/components/shell/PrecisionScrubb
 
 - Id: `@nyc-tron/ui/components/shell/PrecisionScrubber#PrecisionScrubber`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/ui/components/shell/NumericScrubField#NumericScrubField`
 
@@ -892,7 +892,7 @@ import { PresetGallery } from "@nyc-tron/ui/components/shell/PresetGallery";
 
 - Id: `@nyc-tron/ui/components/shell/PresetGallery#PresetGallery`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -945,7 +945,7 @@ import { PropertyRow } from "@nyc-tron/ui/components/shell/PropertyRow";
 
 - Id: `@nyc-tron/ui/components/shell/PropertyRow#PropertyRow`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -992,7 +992,7 @@ import { RangeSlider } from "@nyc-tron/ui/components/shell/RangeSlider";
 
 - Id: `@nyc-tron/ui/components/shell/RangeSlider#RangeSlider`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1053,7 +1053,7 @@ import { RibbonTabs } from "@nyc-tron/ui/components/shell/RibbonTabs";
 
 - Id: `@nyc-tron/ui/components/shell/RibbonTabs#RibbonTabs`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1106,7 +1106,7 @@ import { RotaryKnob } from "@nyc-tron/ui/components/shell/RotaryKnob";
 
 - Id: `@nyc-tron/ui/components/shell/RotaryKnob#RotaryKnob`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1168,7 +1168,7 @@ import { SliderField } from "@nyc-tron/ui/components/shell/SliderField";
 
 - Id: `@nyc-tron/ui/components/shell/SliderField#SliderField`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1228,7 +1228,7 @@ import { SplitButton } from "@nyc-tron/ui/components/shell/SplitButton";
 
 - Id: `@nyc-tron/ui/components/shell/SplitButton#SplitButton`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1280,7 +1280,7 @@ import { StatusBar } from "@nyc-tron/ui/components/shell/StatusBar";
 
 - Id: `@nyc-tron/ui/components/shell/StatusBar#StatusBar`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1327,7 +1327,7 @@ import { ToastAndProgress } from "@nyc-tron/ui/components/shell/ToastAndProgress
 
 - Id: `@nyc-tron/ui/components/shell/ToastAndProgress#ToastAndProgress`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1375,7 +1375,7 @@ import { ToolRail } from "@nyc-tron/ui/components/shell/ToolRail";
 
 - Id: `@nyc-tron/ui/components/shell/ToolRail#ToolRail`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1427,7 +1427,7 @@ import { UnitInput } from "@nyc-tron/ui/components/shell/UnitInput";
 
 - Id: `@nyc-tron/ui/components/shell/UnitInput#UnitInput`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1480,7 +1480,7 @@ import { WorkspaceHost } from "@nyc-tron/ui/components/shell/WorkspaceHost";
 
 - Id: `@nyc-tron/ui/components/shell/WorkspaceHost#WorkspaceHost`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1545,7 +1545,7 @@ import { WorkspacePresetSwitcher } from "@nyc-tron/ui/components/shell/Workspace
 
 - Id: `@nyc-tron/ui/components/shell/WorkspacePresetSwitcher#WorkspacePresetSwitcher`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1603,7 +1603,7 @@ import { InspectorPanelContext } from "@nyc-tron/ui/components/shell/inspector-c
 
 - Id: `@nyc-tron/ui/components/shell/inspector-context#InspectorPanelContext`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -1638,7 +1638,7 @@ import { InspectorSectionContext } from "@nyc-tron/ui/components/shell/inspector
 
 - Id: `@nyc-tron/ui/components/shell/inspector-context#InspectorSectionContext`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:

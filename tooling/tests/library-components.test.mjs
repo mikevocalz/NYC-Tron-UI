@@ -24,7 +24,10 @@ test('every current component export is inventoried across workspace and desktop
   assert.ok(m.components.every(e => !e.importPath.includes('/components/forge/')), 'editor controls belong to @nitro-forge/editor-controls (D10)');
   assert.equal(m.components.filter(e => e.proposedStability === 'stable').length, 10);
   assert.equal(m.summary.proposedStableIdentityCount, 5);
-  assert.ok(m.components.every(e => e.stability === null && e.ownerConfirmation === 'pending'));
+  // The owner confirmed the proposed labels for 1.0.0 (docs/library/stability-review.json).
+  assert.equal(m.ownerConfirmation, 'confirmed');
+  assert.ok(m.components.every(e => e.stability === e.proposedStability && e.ownerConfirmation === 'confirmed'));
+  assert.deepEqual([...new Set(m.components.filter(e => e.stability === 'stable').map(e => e.symbol))].sort(), ['Button', 'Card', 'NavigationRail', 'NavigationShell', 'TextField']);
   for (const name of ['FieldGroup', 'AdaptiveColumns']) assert.ok(m.components.some(e => e.symbol === name));
   for (const [a, b] of [['NumericScrubField', 'PrecisionScrubber'], ['TronIcon', 'ForgeIcon']]) {
     const aa = m.components.find(e => e.symbol === a), bb = m.components.find(e => e.symbol === b);

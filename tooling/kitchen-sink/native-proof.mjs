@@ -8,7 +8,10 @@ import { requireKitchenIosExecutionTarget } from './ios-execution-target.mjs';
 import { COMPONENT_CONTRACTS, MODES, importFor } from './contracts.mjs';
 import { nativeFlow } from './native-flow.mjs';
 import { sha256, verifyInstalledConsumer } from './prepare-consumer.mjs';
-import { maestroEnvironment, verifyMaestroVersion } from './maestro-version.mjs';
+import { maestroEnvironment, verifyMaestroVersion, POSTBOOT_PROBE_TIMEOUT_MS } from './maestro-version.mjs';
+import { printFlowFailure } from '../native/flow-failure.mjs';
+
+export { printFlowFailure };
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const files = directory => readdirSync(directory, { withFileTypes: true }).flatMap(entry => entry.isDirectory() ? files(join(directory, entry.name)) : [join(directory, entry.name)]);
@@ -18,29 +21,23 @@ export function maestroFlowArguments({ device, platform, junit, directory, flow 
     ...(platform === 'ios' ? [] : ['--no-reinstall-driver']), '--format', 'junit', '--output', junit,
     '--test-output-dir', join(directory, 'artifacts'), '--debug-output', join(directory, 'debug'), flow];
 }
-/** Maestro's console output names only the failed flow. The JUnit failure
- * message, the per-command record and the debug log say which command failed
- * and why. Maestro writes the debug files into a timestamped folder under
- * --debug-output, so search the whole folder rather than one fixed path. */
-export function printFlowFailure({ label, junit, debug }, write = text => process.stderr.write(text)) {
-  const section = (name, text) => write(`--- ${label} ${name} ---\n${text}\n`);
-  try { section('report.xml', readFileSync(junit, 'utf8').split('\n').slice(-40).join('\n')); } catch {}
-  let found = [];
-  try { found = files(debug); } catch {}
-  for (const path of found.filter(file => /commands-.*\.json$/.test(file))) {
-    let commands;
-    try { commands = JSON.parse(readFileSync(path, 'utf8')); } catch (error) { section(`${relative(debug, path)} (unreadable)`, String(error)); continue; }
-    const lines = (Array.isArray(commands) ? commands : []).map((entry, index) => {
-      const command = Object.entries(entry?.command ?? {}).find(([, value]) => value)?.[0] ?? 'unknown';
-      const meta = entry?.metadata ?? {};
-      const error = meta.error?.message ?? meta.error?.localizedMessage;
-      return `${index + 1}. ${command} ${meta.status ?? 'NO STATUS'}${meta.duration === undefined ? '' : ` ${meta.duration}ms`}${error ? ` error: ${String(error).slice(0, 2000)}` : ''}`;
-    });
-    section(`${relative(debug, path)} (last 25 commands)`, lines.slice(-25).join('\n'));
-  }
-  const logs = found.filter(file => file.endsWith('maestro.log'));
-  if (!logs.length) section('debug output', found.length ? 'no maestro.log; files: ' + found.map(file => relative(debug, file)).slice(0, 30).join(', ') : 'no debug files');
-  for (const path of logs) section(`debug ${relative(debug, path)} (last 80 lines)`, readFileSync(path, 'utf8').split('\n').slice(-80).join('\n'));
+const simctl = (args, timeout) => {
+  const result = spawnSync('xcrun', ['simctl', ...args], { encoding: 'utf8', timeout, maxBuffer: 4 * 1024 * 1024 });
+  if (result.error || result.status !== 0) throw new Error(`simctl ${args[0]} failed: ${result.error?.code ?? result.status} ${(result.stderr ?? '').trim()}`);
+  return result.stdout ?? '';
+};
+const simulatorState = (device, run) => Object.values(JSON.parse(run(['list', 'devices', '--json'], 90000)).devices ?? {}).flat().find(entry => entry.udid === device)?.state ?? 'missing';
+/** Maestro only drives a simulator that simctl reports as Booted. On 2026-11-28
+ * (PR 94, kitchen-sink run 46164412328) the iPhone Duo stopped being one between
+ * the app install and the first flow, and Maestro reported it "not connected".
+ * Check before every flow, wait for the boot to finish, and print what was seen. */
+export function requireBootedSimulator(device, run = simctl, write = text => process.stderr.write(text)) {
+  const before = simulatorState(device, run);
+  if (before !== 'Booted') write(`--- simulator ${device} was ${before} before the flow; waiting for bootstatus ---\n`);
+  run(['bootstatus', device, '-b'], 420000);
+  const after = before === 'Booted' ? before : simulatorState(device, run);
+  if (after !== 'Booted') throw new Error(`Simulator ${device} is ${after}, not Booted, before the flow`);
+  return { before, after };
 }
 /** Runs against an already installed release app. CI owns its ephemeral device lifecycle;
  * local device installation/launch and interactive QA use Argent. */
@@ -52,11 +49,12 @@ export function proveNative({ consumer, platform, device, maestro, output }) {
   // output directory, and each flow can supply artifacts only from its stage.
   mkdirSync(dirname(output), { recursive: true });
   mkdirSync(output);
-  verifyMaestroVersion({ maestro, output });
+  verifyMaestroVersion({ maestro, output, timeoutMs: POSTBOOT_PROBE_TIMEOUT_MS });
   for (const mode of MODES) {
     const directory = join(output, mode); mkdirSync(directory);
     const flow = join(directory, 'flow.yaml'), junit = join(directory, 'report.xml');
     writeFileSync(flow, nativeFlow(mode));
+    if (platform === 'ios') requireBootedSimulator(device);
     const command = maestroFlowArguments({ device, platform, junit, directory, flow });
     const result = spawnSync(maestro, command, { cwd: directory, encoding: 'utf8', timeout: 600000, maxBuffer: 32 * 1024 * 1024, env: maestroEnvironment() });
     const maestroLog = (result.stdout ?? '') + (result.stderr ?? '') + `\nExit code: ${result.status}\n`;

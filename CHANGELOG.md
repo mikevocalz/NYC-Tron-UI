@@ -7,6 +7,48 @@ version per tag.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [1.0.0] - Unreleased
+
+Prepared for review; no tag or release has been created. All sixteen release
+archives carry version `1.0.0`, following the published `1.0.0-rc.2` directly
+(rc.3 was prepared but never published). Publication needs the owner's
+distribution approval; the
+[1.0.0 checklist](docs/completion/reports/V1-RELEASE-CHECKLIST.md) lists every
+remaining step.
+
+### Stability labels confirmed
+
+- The owner confirmed the 1.0.0 stable set: `Button`, `Card`, `TextField`,
+  `NavigationRail` and `NavigationShell`, from both the `@nyc-tron/ui` root and
+  their `components/...` subpaths (ten exports). Stable is a Semantic
+  Versioning promise for those APIs. The other 154 public component exports
+  ship as preview. The record is
+  [`docs/library/stability-review.json`](docs/library/stability-review.json).
+
+### Added: first-tier basics on Expo UI (#90)
+
+- `Switch`, `Checkbox`, `Radio`, `Dialog`, `AlertDialog`, `Sheet`, `Spinner`,
+  `ProgressBar`, `Toast`, `Textarea`, `Field` (with `Label` and `HelperText`)
+  and `Portal`, each on its own `@nyc-tron/ui/components/...` subpath. iOS and
+  Android render native SwiftUI and Compose controls through `@expo/ui`; web
+  uses Expo UI's universal components or a token-styled kit.
+- Behaviour and accessibility logic are ported from NYC-MON's `packages/ui`
+  (MIT); THIRD_PARTY_NOTICES.md lists every ported file.
+- `@nyc-tron/core/theme` adds `expoUiCssVariables(theme)`, which maps Tron's
+  semantic tokens onto Expo UI's `--expo-ui-*` web variables.
+
+### Added: optional default theme (#91)
+
+- `@nyc-tron/core/presets/tron` exports `tronLightTheme`, `tronDarkTheme` and
+  `tronThemeStylesheet()`; `@nyc-tron/core/theme` adds
+  `createTronTheme(base, overrides)`; `@nyc-tron/core/theme.css` ships the same
+  values for Uniwind apps to `@import`.
+- `@nyc-tron/ui/components/theme/TronThemeProvider` exports `TronThemeProvider`
+  (`theme?`, `colorScheme?`) and `useTronTheme()`. Apps that set their own CSS
+  variables keep working unchanged; components still read only semantic tokens.
+
 ### Removed (breaking): editor controls moved to Nitro Forge
 
 - Removed the 453 `@nyc-tron/ui/components/forge/*` subpaths and
@@ -43,11 +85,13 @@ version per tag.
   sections in README.md and AGENTS.md. No component source, public import or
   stability label changes.
 
-### Release candidate preparation
+### Release preparation
 
-- Prepared synchronized `1.0.0-rc.3` versions for all sixteen release packages,
-  including matching internal desktop peers. Examples retain their own versions;
-  existing consumer release pins remain unchanged until rc.3 is published.
+- Synchronized `1.0.0` versions for all sixteen release packages, including
+  matching internal desktop peers. The desktop API snapshots change only in
+  those internal version identities, which `tooling/desktop-provenance.mjs`
+  proves against the published rc.2 snapshots. Examples, the installation guide
+  and consumer release pins keep the published rc.2 URLs until 1.0.0 exists.
 - Connected publication to the exact tested core/UI tarballs, installed web,
   Android and iOS receipts, and built component documentation. The publication
   path requires the library gate for prereleases as well as stable releases.
@@ -63,10 +107,9 @@ version per tag.
 - Added a generated component documentation site, install/theming/platform guides, contributor instructions and versioning policy. Stability labels remain proposals pending owner confirmation; no stable release or rc.3 publication is claimed.
 - Preserved public imports (apart from the D10 removal above) and historical platform evidence. No acceptance or distribution-approval status changes.
 
-## [1.0.0-rc.2] - Unreleased
+## [1.0.0-rc.2] - 2026-11-14
 
-Prepared for review; no tag or release has been created by this change. The
-cohort is sixteen archives, including `@nyc-tron/app-identity` and both isolated
+The cohort is sixteen archives, including `@nyc-tron/app-identity` and both isolated
 desktop packages. Remaining checks are in the
 [rc.2 checklist](docs/completion/reports/RC2-RELEASE-CHECKLIST.md).
 
@@ -147,7 +190,7 @@ prompt.
 Reference versions in the declaration snapshots moved with the dependency
 bumps on main (React Native 0.88.1, Legend Spark 0.0.3).
 
-## [1.0.0-rc.1] - Unreleased
+## [1.0.0-rc.1] - 2026-11-11
 
 Prerelease cut from `main` at `3b80c1e`. All 15 packed packages carry version
 `1.0.0-rc.1`. Stable `1.0.0` is blocked: the v1.0.0 release run on `main`
@@ -157,8 +200,8 @@ review is pending". The prerelease channel claims neither eight-platform
 acceptance nor owner distribution review. Every row in
 `docs/completion/library-progress.json` keeps its recorded acceptance status.
 
-Changes since `v0.1.0-alpha.4`, by merged pull request. The [1.0.0] section
-below lists them in detail.
+Changes since `v0.1.0-alpha.4`, by merged pull request. The 1.0.0 program
+section below lists them in detail.
 
 - Reusable components and platform UI for the 341-component program (#54).
 - MIT license, release gates, paste support and v1.0.0 docs (#55).
@@ -171,7 +214,7 @@ below lists them in detail.
 - AppKit drag acceptance waits for laid-out drag surfaces (#65).
 - iOS touch-cancel recovery extended to the first Editor tab tap (#66).
 
-## [1.0.0] - Unreleased
+## 1.0.0 program (shipped in 1.0.0-rc.1)
 
 Built from `v0.1.0-alpha.4` plus 127 commits (`git log v0.1.0-alpha.4..HEAD`
 at `d5207cc7`: 124 commits and 3 merges, including PR #26). Scope and
@@ -296,7 +339,8 @@ Published 2026-11-06T03:56:20Z (2026-11-05 in US Eastern time).
 
 See the [GitHub release](https://github.com/mikevocalz/NYC-Tron-UI/releases/tag/v0.1.0-alpha.4).
 
-[1.0.0-rc.2]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v1.0.0-rc.1...HEAD
+[Unreleased]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v1.0.0-rc.2...HEAD
+[1.0.0]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v1.0.0-rc.2...v1.0.0
+[1.0.0-rc.2]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v1.0.0-rc.1...v1.0.0-rc.2
 [1.0.0-rc.1]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v0.1.0-alpha.4...v1.0.0-rc.1
-[1.0.0]: https://github.com/mikevocalz/NYC-Tron-UI/compare/v0.1.0-alpha.4...v1.0.0
 [0.1.0-alpha.4]: https://github.com/mikevocalz/NYC-Tron-UI/releases/tag/v0.1.0-alpha.4

@@ -12,7 +12,7 @@ import { WindowTitleBar } from "@nyc-tron/ui/components/window/WindowTitleBar";
 
 - Id: `@nyc-tron/ui/components/window/WindowTitleBar#WindowTitleBar`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:

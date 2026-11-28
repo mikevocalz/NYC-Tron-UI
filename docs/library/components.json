@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "ownerConfirmation": "pending",
-  "status": "proposed inventory; not a release approval",
+  "ownerConfirmation": "confirmed",
+  "status": "owner-confirmed component inventory; runtime release evidence is separate",
   "identity": "one entry per public package/import-path/exported-symbol component exposure; declaration identities link aliases; conditional declarations are variants of that same entry",
   "platformPolicy": {
     "tier1": {
@@ -54,11 +54,11 @@
     },
     {
       "path": "docs/api-signatures-windows.json",
-      "sha256": "bc2b17af08ce181012e79b0941b9ba2e767585721c68ece1d4d5f3b1eaa2c8c3"
+      "sha256": "4208054fed1c9318f12a853293e08fee29ea39eaace1e539f844a056e9d76430"
     },
     {
       "path": "docs/api-signatures-macos.json",
-      "sha256": "b3fa3e331b2650dcf85c15d638971b1742edd1d152f8f0b03dd6fe93d2ff5cb5"
+      "sha256": "27cb47ca9dab48f273987e115f762a34580ad6a8288ff52d0ca86c029c610141"
     },
     {
       "path": "docs/api-surface.json",
@@ -184,9 +184,9 @@
       "subpath": ".",
       "symbol": "NativeDropdown",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/expo-controls/dist/components/NativeDropdown.d.ts#NativeDropdown"
@@ -242,9 +242,9 @@
       "subpath": "./ContextMenu",
       "symbol": "ContextMenu",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/expo-controls/dist/components/ContextMenu.web.d.ts#ContextMenu"
@@ -298,9 +298,9 @@
       "subpath": "./FindReplacePopover",
       "symbol": "FindReplacePopover",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/FindReplacePopover.d.ts#FindReplacePopover"
@@ -356,9 +356,9 @@
       "subpath": "./NativeActionMenu",
       "symbol": "NativeActionMenu",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/expo-controls/dist/components/NativeActionMenu.web.d.ts#NativeActionMenu"
@@ -412,9 +412,9 @@
       "subpath": "./NativeDropdown",
       "symbol": "NativeDropdown",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/expo-controls/dist/components/NativeDropdown.d.ts#NativeDropdown"
@@ -470,9 +470,9 @@
       "subpath": "./NativePopover",
       "symbol": "NativePopover",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/expo-controls/dist/components/NativePopover.web.d.ts#NativePopover"
@@ -526,9 +526,9 @@
       "subpath": "./NativeSliderField",
       "symbol": "NativeSliderField",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/expo-controls/dist/components/NativeSliderField.web.d.ts#NativeSliderField"
@@ -582,9 +582,9 @@
       "subpath": "./NativeSplitButton",
       "symbol": "NativeSplitButton",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/expo-controls/dist/components/NativeSplitButton.web.d.ts#NativeSplitButton"
@@ -638,9 +638,9 @@
       "subpath": "./Select",
       "symbol": "Select",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/Select.d.ts#Select"
@@ -696,9 +696,9 @@
       "subpath": "./Tooltip",
       "symbol": "Tooltip",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/expo-controls/dist/components/Tooltip.web.d.ts#Tooltip"
@@ -752,9 +752,9 @@
       "subpath": "./native",
       "symbol": "ForgeIcon",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/icons/dist/TronIcon.d.ts#TronIcon"
@@ -812,9 +812,9 @@
       "subpath": "./native",
       "symbol": "ForgeIconButton",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/icons/dist/TronIcon.d.ts#TronIconButton"
@@ -872,9 +872,9 @@
       "subpath": "./native",
       "symbol": "TronIcon",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/icons/dist/TronIcon.d.ts#TronIcon"
@@ -932,9 +932,9 @@
       "subpath": "./native",
       "symbol": "TronIconButton",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/icons/dist/TronIcon.d.ts#TronIconButton"
@@ -992,9 +992,9 @@
       "subpath": "./web",
       "symbol": "ForgeIcon",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/icons/dist/TronIcon.d.ts#TronIcon"
@@ -1052,9 +1052,9 @@
       "subpath": "./web",
       "symbol": "ForgeIconButton",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/icons/dist/TronIcon.d.ts#TronIconButton"
@@ -1112,9 +1112,9 @@
       "subpath": "./web",
       "symbol": "TronIcon",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/icons/dist/TronIcon.d.ts#TronIcon"
@@ -1172,9 +1172,9 @@
       "subpath": "./web",
       "symbol": "TronIconButton",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/icons/dist/TronIcon.d.ts#TronIconButton"
@@ -1232,9 +1232,9 @@
       "subpath": "./anchored-inspector",
       "symbol": "AnchoredInspector",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/macos-appkit/dist/anchored-inspector.d.ts#AnchoredInspector"
@@ -1288,9 +1288,9 @@
       "subpath": "./button",
       "symbol": "Button",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/macos-appkit/dist/button.d.ts#Button"
@@ -1344,9 +1344,9 @@
       "subpath": "./drag-drop",
       "symbol": "DragDropView",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/macos-appkit/dist/drag-drop.d.ts#DragDropView"
@@ -1400,9 +1400,9 @@
       "subpath": "./popover",
       "symbol": "Popover",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/macos-appkit/dist/popover.d.ts#Popover"
@@ -1456,9 +1456,9 @@
       "subpath": "./segmented-control",
       "symbol": "SegmentedControl",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/macos-appkit/dist/segmented-control.d.ts#SegmentedControl"
@@ -1512,9 +1512,9 @@
       "subpath": "./select",
       "symbol": "Select",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/macos-appkit/dist/select.d.ts#Select"
@@ -1568,9 +1568,9 @@
       "subpath": "./sidebar",
       "symbol": "Sidebar",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/macos-appkit/dist/sidebar.d.ts#Sidebar"
@@ -1624,9 +1624,9 @@
       "subpath": "./sidebar",
       "symbol": "SidebarItem",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/macos-appkit/dist/sidebar.d.ts#SidebarItem"
@@ -1680,9 +1680,9 @@
       "subpath": "./split-view",
       "symbol": "SplitView",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/macos-appkit/dist/split-view.d.ts#SplitView"
@@ -1736,9 +1736,9 @@
       "subpath": "./text-field",
       "symbol": "TextField",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/macos-appkit/dist/text-field.d.ts#TextField"
@@ -1792,9 +1792,9 @@
       "subpath": "./tooltip",
       "symbol": "Tooltip",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/macos-appkit/dist/tooltip.d.ts#Tooltip"
@@ -1848,9 +1848,9 @@
       "subpath": ".",
       "symbol": "NativeChart",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/native-charts/dist/NativeChart.native.d.ts#NativeChart"
@@ -1906,9 +1906,9 @@
       "subpath": "./NativeChart",
       "symbol": "NativeChart",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/native-charts/dist/NativeChart.native.d.ts#NativeChart"
@@ -1964,9 +1964,9 @@
       "subpath": ".",
       "symbol": "ArcKnob",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/native-controls/dist/ArcKnob.d.ts#ArcKnob"
@@ -2022,9 +2022,9 @@
       "subpath": ".",
       "symbol": "DisplayP3DiscLayer",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/native-controls/dist/DisplayP3DiscLayer.d.ts#DisplayP3DiscLayer"
@@ -2080,9 +2080,9 @@
       "subpath": ".",
       "symbol": "XYPad",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/native-controls/dist/XYPad.d.ts#XYPad"
@@ -2138,9 +2138,9 @@
       "subpath": "./ArcKnob",
       "symbol": "ArcKnob",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/native-controls/dist/ArcKnob.d.ts#ArcKnob"
@@ -2196,9 +2196,9 @@
       "subpath": "./DisplayP3DiscLayer",
       "symbol": "DisplayP3DiscLayer",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/native-controls/dist/DisplayP3DiscLayer.d.ts#DisplayP3DiscLayer"
@@ -2254,9 +2254,9 @@
       "subpath": "./NativePointerInput",
       "symbol": "NativePointerInput",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/native-controls/dist/NativePointerInput.d.ts#NativePointerInput"
@@ -2310,9 +2310,9 @@
       "subpath": "./NativeVideoPlayer",
       "symbol": "NativeVideoPlayer",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/native-controls/dist/NativeVideoPlayer.d.ts#NativeVideoPlayer"
@@ -2366,9 +2366,9 @@
       "subpath": "./XYPad",
       "symbol": "XYPad",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/native-controls/dist/XYPad.d.ts#XYPad"
@@ -2424,9 +2424,9 @@
       "subpath": "./NativeNavigationRail",
       "symbol": "NativeNavigationRail",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/native-navigation/dist/NativeNavigationRail.native.d.ts#NativeNavigationRail"
@@ -2480,9 +2480,9 @@
       "subpath": ".",
       "symbol": "AdaptivePaneHost",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/panes/dist/components/AdaptivePaneHost.d.ts#AdaptivePaneHost"
@@ -2538,9 +2538,9 @@
       "subpath": "./AdaptivePaneHost",
       "symbol": "AdaptivePaneHost",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/panes/dist/components/AdaptivePaneHost.d.ts#AdaptivePaneHost"
@@ -2596,9 +2596,9 @@
       "subpath": "./SafeAreaFoldableLayout",
       "symbol": "SafeAreaFoldableLayout",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/panes/dist/components/SafeAreaFoldableLayout.d.ts#SafeAreaFoldableLayout"
@@ -2652,9 +2652,9 @@
       "subpath": ".",
       "symbol": "ReservedRegionsOverride",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/reserved-regions/dist/ReservedRegionsOverride.d.ts#ReservedRegionsOverride"
@@ -2710,9 +2710,9 @@
       "subpath": "./ReservedRegionsOverride",
       "symbol": "ReservedRegionsOverride",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/reserved-regions/dist/ReservedRegionsOverride.d.ts#ReservedRegionsOverride"
@@ -2768,9 +2768,9 @@
       "subpath": ".",
       "symbol": "Button",
       "category": "general components",
-      "stability": null,
+      "stability": "stable",
       "proposedStability": "stable",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/Button.d.ts#Button"
@@ -2844,9 +2844,9 @@
       "subpath": ".",
       "symbol": "Card",
       "category": "general components",
-      "stability": null,
+      "stability": "stable",
       "proposedStability": "stable",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/Card.d.ts#Card"
@@ -2920,9 +2920,9 @@
       "subpath": ".",
       "symbol": "NavigationRail",
       "category": "general components",
-      "stability": null,
+      "stability": "stable",
       "proposedStability": "stable",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/NavigationRail.d.ts#NavigationRail"
@@ -2996,9 +2996,9 @@
       "subpath": ".",
       "symbol": "NavigationShell",
       "category": "general components",
-      "stability": null,
+      "stability": "stable",
       "proposedStability": "stable",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/NavigationRail.d.ts#NavigationShell"
@@ -3072,9 +3072,9 @@
       "subpath": ".",
       "symbol": "TextField",
       "category": "general components",
-      "stability": null,
+      "stability": "stable",
       "proposedStability": "stable",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/TextField.d.ts#TextField"
@@ -3148,9 +3148,9 @@
       "subpath": "./components/Button",
       "symbol": "Button",
       "category": "general components",
-      "stability": null,
+      "stability": "stable",
       "proposedStability": "stable",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/Button.d.ts#Button"
@@ -3224,9 +3224,9 @@
       "subpath": "./components/Card",
       "symbol": "Card",
       "category": "general components",
-      "stability": null,
+      "stability": "stable",
       "proposedStability": "stable",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/Card.d.ts#Card"
@@ -3300,9 +3300,9 @@
       "subpath": "./components/DragGrabHandle",
       "symbol": "DragGrabHandle",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/DragGrabHandle.d.ts#DragGrabHandle"
@@ -3374,9 +3374,9 @@
       "subpath": "./components/FieldGroup",
       "symbol": "FieldGroup",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/FieldGroup.d.ts#FieldGroup"
@@ -3448,9 +3448,9 @@
       "subpath": "./components/FieldGroup",
       "symbol": "FieldSection",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/FieldGroup.d.ts#FieldSection"
@@ -3522,9 +3522,9 @@
       "subpath": "./components/IconButton",
       "symbol": "IconButton",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/IconButton.d.ts#IconButton"
@@ -3596,9 +3596,9 @@
       "subpath": "./components/List",
       "symbol": "List",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/List.d.ts#List"
@@ -3670,9 +3670,9 @@
       "subpath": "./components/List",
       "symbol": "ListItem",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/List.d.ts#ListItem"
@@ -3744,9 +3744,9 @@
       "subpath": "./components/NavigationRail",
       "symbol": "NavigationRail",
       "category": "general components",
-      "stability": null,
+      "stability": "stable",
       "proposedStability": "stable",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/NavigationRail.d.ts#NavigationRail"
@@ -3820,9 +3820,9 @@
       "subpath": "./components/NavigationRail",
       "symbol": "NavigationShell",
       "category": "general components",
-      "stability": null,
+      "stability": "stable",
       "proposedStability": "stable",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/NavigationRail.d.ts#NavigationShell"
@@ -3896,9 +3896,9 @@
       "subpath": "./components/SegmentedControl",
       "symbol": "SegmentedControl",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/SegmentedControl.d.ts#SegmentedControl"
@@ -3970,9 +3970,9 @@
       "subpath": "./components/Select",
       "symbol": "Select",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/Select.d.ts#Select"
@@ -4046,9 +4046,9 @@
       "subpath": "./components/TabBar",
       "symbol": "TabBar",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/TabBar.d.ts#TabBar"
@@ -4120,9 +4120,9 @@
       "subpath": "./components/TextField",
       "symbol": "TextField",
       "category": "general components",
-      "stability": null,
+      "stability": "stable",
       "proposedStability": "stable",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/TextField.d.ts#TextField"
@@ -4196,9 +4196,9 @@
       "subpath": "./components/Toolbar",
       "symbol": "Toolbar",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/Toolbar.d.ts#Toolbar"
@@ -4270,9 +4270,9 @@
       "subpath": "./components/content/KeyValueList",
       "symbol": "KeyValueList",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/content/KeyValueList.d.ts#KeyValueList"
@@ -4344,9 +4344,9 @@
       "subpath": "./components/data/DataTable",
       "symbol": "DataTable",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/data/DataTable.d.ts#DataTable"
@@ -4434,9 +4434,9 @@
       "subpath": "./components/data/TreeGrid",
       "symbol": "TreeGrid",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/data/TreeGrid.d.ts#TreeGrid"
@@ -4508,9 +4508,9 @@
       "subpath": "./components/feedback/Badge",
       "symbol": "Badge",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/feedback/Badge.d.ts#Badge"
@@ -4582,9 +4582,9 @@
       "subpath": "./components/feedback/Banner",
       "symbol": "Banner",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/feedback/Banner.d.ts#Banner"
@@ -4656,9 +4656,9 @@
       "subpath": "./components/feedback/EmptyState",
       "symbol": "EmptyState",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/feedback/EmptyState.d.ts#EmptyState"
@@ -4730,9 +4730,9 @@
       "subpath": "./components/feedback/ErrorMessage",
       "symbol": "ErrorMessage",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/feedback/ErrorMessage.d.ts#ErrorMessage"
@@ -4804,9 +4804,9 @@
       "subpath": "./components/feedback/ProgressBar",
       "symbol": "ProgressBar",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/feedback/ProgressBar.web.d.ts#ProgressBar"
@@ -4860,9 +4860,9 @@
       "subpath": "./components/feedback/Spinner",
       "symbol": "Spinner",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/feedback/Spinner.web.d.ts#Spinner"
@@ -4916,9 +4916,9 @@
       "subpath": "./components/feedback/Toast",
       "symbol": "Toast",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/feedback/Toast.shared.d.ts#Toast"
@@ -4972,9 +4972,9 @@
       "subpath": "./components/feedback/Toast",
       "symbol": "ToastProvider",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastProvider"
@@ -5028,9 +5028,9 @@
       "subpath": "./components/feedback/Toast",
       "symbol": "ToastViewport",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastViewport"
@@ -5084,9 +5084,9 @@
       "subpath": "./components/files/DropZone",
       "symbol": "DropZone",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/files/DropZone.web.d.ts#DropZone"
@@ -5174,9 +5174,9 @@
       "subpath": "./components/files/FileImportExportSheet",
       "symbol": "FileImportExportSheet",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/files/FileImportExportSheet.web.d.ts#FileImportExportSheet"
@@ -5248,9 +5248,9 @@
       "subpath": "./components/files/FilePicker",
       "symbol": "FilePicker",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/files/FilePicker.web.d.ts#FilePicker"
@@ -5322,9 +5322,9 @@
       "subpath": "./components/forms/Checkbox",
       "symbol": "Checkbox",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/forms/Checkbox.d.ts#Checkbox"
@@ -5378,9 +5378,9 @@
       "subpath": "./components/forms/Field",
       "symbol": "Field",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/forms/Field.d.ts#Field"
@@ -5434,9 +5434,9 @@
       "subpath": "./components/forms/Field",
       "symbol": "HelperText",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/forms/Field.d.ts#HelperText"
@@ -5490,9 +5490,9 @@
       "subpath": "./components/forms/Field",
       "symbol": "Label",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/forms/Field.d.ts#Label"
@@ -5546,9 +5546,9 @@
       "subpath": "./components/forms/Radio",
       "symbol": "Radio",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#Radio"
@@ -5602,9 +5602,9 @@
       "subpath": "./components/forms/Radio",
       "symbol": "RadioGroup",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroup"
@@ -5658,9 +5658,9 @@
       "subpath": "./components/forms/Radio",
       "symbol": "RadioGroupItem",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroupItem"
@@ -5714,9 +5714,9 @@
       "subpath": "./components/forms/SettingSwitch",
       "symbol": "SettingSwitch",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/forms/SettingSwitch.d.ts#SettingSwitch"
@@ -5770,9 +5770,9 @@
       "subpath": "./components/forms/Switch",
       "symbol": "Switch",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/forms/Switch.d.ts#Switch"
@@ -5826,9 +5826,9 @@
       "subpath": "./components/forms/Textarea",
       "symbol": "Textarea",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/forms/Textarea.d.ts#Textarea"
@@ -5882,9 +5882,9 @@
       "subpath": "./components/gestures/GestureHandlerDrag",
       "symbol": "GestureHandlerDrag",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/gestures/GestureHandlerDrag.d.ts#GestureHandlerDrag"
@@ -5972,9 +5972,9 @@
       "subpath": "./components/gestures/PanResponderDrag",
       "symbol": "PanResponderDrag",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/gestures/PanResponderDrag.d.ts#PanResponderDrag"
@@ -6056,9 +6056,9 @@
       "subpath": "./components/gestures/canvas-gesture-relations",
       "symbol": "CanvasGestureRelations",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/gestures/canvas-gesture-relations.d.ts#CanvasGestureRelations"
@@ -6112,9 +6112,9 @@
       "subpath": "./components/gestures/editor-interaction-scope",
       "symbol": "EditorInteractionScope",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/gestures/editor-interaction-scope.d.ts#EditorInteractionScope"
@@ -6168,9 +6168,9 @@
       "subpath": "./components/html",
       "symbol": "Article",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/html/semantic.web.d.ts#Article"
@@ -6242,9 +6242,9 @@
       "subpath": "./components/html",
       "symbol": "Aside",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/html/semantic.web.d.ts#Aside"
@@ -6316,9 +6316,9 @@
       "subpath": "./components/html",
       "symbol": "Footer",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/html/semantic.web.d.ts#Footer"
@@ -6390,9 +6390,9 @@
       "subpath": "./components/html",
       "symbol": "Header",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/html/semantic.web.d.ts#Header"
@@ -6464,9 +6464,9 @@
       "subpath": "./components/html",
       "symbol": "Heading",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/html/semantic.web.d.ts#Heading"
@@ -6538,9 +6538,9 @@
       "subpath": "./components/html",
       "symbol": "Input",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/html/Input.d.ts#Input"
@@ -6612,9 +6612,9 @@
       "subpath": "./components/html",
       "symbol": "Link",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/html/semantic.web.d.ts#Link"
@@ -6686,9 +6686,9 @@
       "subpath": "./components/html",
       "symbol": "Main",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/html/semantic.web.d.ts#Main"
@@ -6760,9 +6760,9 @@
       "subpath": "./components/html",
       "symbol": "Nav",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/html/semantic.web.d.ts#Nav"
@@ -6834,9 +6834,9 @@
       "subpath": "./components/html",
       "symbol": "Page",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/html/semantic.web.d.ts#Page"
@@ -6908,9 +6908,9 @@
       "subpath": "./components/html",
       "symbol": "Paragraph",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/html/semantic.web.d.ts#Paragraph"
@@ -6982,9 +6982,9 @@
       "subpath": "./components/html",
       "symbol": "Section",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/html/semantic.web.d.ts#Section"
@@ -7056,9 +7056,9 @@
       "subpath": "./components/html",
       "symbol": "Text",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/html/semantic.web.d.ts#Text"
@@ -7130,9 +7130,9 @@
       "subpath": "./components/layout/AdaptiveColumns",
       "symbol": "AdaptiveColumn",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/layout/AdaptiveColumns.d.ts#AdaptiveColumn"
@@ -7204,9 +7204,9 @@
       "subpath": "./components/layout/AdaptiveColumns",
       "symbol": "AdaptiveColumns",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/layout/AdaptiveColumns.d.ts#AdaptiveColumns"
@@ -7278,9 +7278,9 @@
       "subpath": "./components/layout/ContentFrame",
       "symbol": "ContentFrame",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/layout/ContentFrame.d.ts#ContentFrame"
@@ -7352,9 +7352,9 @@
       "subpath": "./components/navigation/CollapsibleDrawer",
       "symbol": "CollapsibleDrawer",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/navigation/CollapsibleDrawer.d.ts#CollapsibleDrawer"
@@ -7426,9 +7426,9 @@
       "subpath": "./components/overlays/AlertDialog",
       "symbol": "AlertDialog",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/overlays/AlertDialog.web.d.ts#AlertDialog"
@@ -7482,9 +7482,9 @@
       "subpath": "./components/overlays/AnchoredPopover",
       "symbol": "AnchoredPopover",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/overlays/AnchoredPopover.d.ts#AnchoredPopover"
@@ -7556,9 +7556,9 @@
       "subpath": "./components/overlays/CommandPalette",
       "symbol": "CommandPalette",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/overlays/CommandPalette.d.ts#CommandPalette"
@@ -7630,9 +7630,9 @@
       "subpath": "./components/overlays/CommandPopover",
       "symbol": "CommandPopover",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandPopover"
@@ -7704,9 +7704,9 @@
       "subpath": "./components/overlays/Dialog",
       "symbol": "Dialog",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/overlays/Dialog.web.d.ts#Dialog"
@@ -7760,9 +7760,9 @@
       "subpath": "./components/overlays/Portal",
       "symbol": "Portal",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#Portal"
@@ -7816,9 +7816,9 @@
       "subpath": "./components/overlays/Portal",
       "symbol": "PortalHost",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalHost"
@@ -7872,9 +7872,9 @@
       "subpath": "./components/overlays/Portal",
       "symbol": "PortalProvider",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProvider"
@@ -7928,9 +7928,9 @@
       "subpath": "./components/overlays/Sheet",
       "symbol": "Sheet",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/overlays/Sheet.d.ts#Sheet"
@@ -7984,9 +7984,9 @@
       "subpath": "./components/shell/AdaptiveDock",
       "symbol": "AdaptiveDock",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/AdaptiveDock.d.ts#AdaptiveDock"
@@ -8058,9 +8058,9 @@
       "subpath": "./components/shell/AssetBrowser",
       "symbol": "AssetBrowser",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/AssetBrowser.d.ts#AssetBrowser"
@@ -8132,9 +8132,9 @@
       "subpath": "./components/shell/ContextMenu",
       "symbol": "ContextMenu",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/ContextMenu.d.ts#ContextMenu"
@@ -8206,9 +8206,9 @@
       "subpath": "./components/shell/ContextualToolbar",
       "symbol": "ContextualToolbar",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/ContextualToolbar.d.ts#ContextualToolbar"
@@ -8280,9 +8280,9 @@
       "subpath": "./components/shell/DocumentTabBar",
       "symbol": "DocumentTabBar",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/DocumentTabBar.d.ts#DocumentTabBar"
@@ -8354,9 +8354,9 @@
       "subpath": "./components/shell/FindReplaceContent",
       "symbol": "FindReplaceContent",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/FindReplaceContent.d.ts#FindReplaceContent"
@@ -8428,9 +8428,9 @@
       "subpath": "./components/shell/FindReplacePopover",
       "symbol": "FindReplacePopover",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/FindReplacePopover.d.ts#FindReplacePopover"
@@ -8504,9 +8504,9 @@
       "subpath": "./components/shell/FocusAndA11yLayer",
       "symbol": "FocusAndA11yLayer",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/FocusAndA11yLayer.d.ts#FocusAndA11yLayer"
@@ -8578,9 +8578,9 @@
       "subpath": "./components/shell/HistoryPanel",
       "symbol": "HistoryPanel",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/HistoryPanel.d.ts#HistoryPanel"
@@ -8652,9 +8652,9 @@
       "subpath": "./components/shell/InspectorPanel",
       "symbol": "InspectorPanel",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/InspectorPanel.d.ts#InspectorPanel"
@@ -8726,9 +8726,9 @@
       "subpath": "./components/shell/InspectorSearch",
       "symbol": "InspectorSearch",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/InspectorSearch.d.ts#InspectorSearch"
@@ -8800,9 +8800,9 @@
       "subpath": "./components/shell/InspectorSection",
       "symbol": "InspectorSection",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/InspectorSection.d.ts#InspectorSection"
@@ -8874,9 +8874,9 @@
       "subpath": "./components/shell/KeyboardShortcutHUD",
       "symbol": "KeyboardShortcutHUD",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/KeyboardShortcutHUD.d.ts#KeyboardShortcutHUD"
@@ -8948,9 +8948,9 @@
       "subpath": "./components/shell/MenuButton",
       "symbol": "MenuButton",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/MenuButton.d.ts#MenuButton"
@@ -9022,9 +9022,9 @@
       "subpath": "./components/shell/NumericScrubField",
       "symbol": "NumericScrubField",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/PrecisionScrubber.d.ts#PrecisionScrubber"
@@ -9108,9 +9108,9 @@
       "subpath": "./components/shell/PaneSplitter",
       "symbol": "PaneSplitter",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/PaneSplitter.d.ts#PaneSplitter"
@@ -9182,9 +9182,9 @@
       "subpath": "./components/shell/PrecisionScrubber",
       "symbol": "PrecisionScrubber",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/PrecisionScrubber.d.ts#PrecisionScrubber"
@@ -9240,9 +9240,9 @@
       "subpath": "./components/shell/PresetGallery",
       "symbol": "PresetGallery",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/PresetGallery.d.ts#PresetGallery"
@@ -9314,9 +9314,9 @@
       "subpath": "./components/shell/PropertyRow",
       "symbol": "PropertyRow",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/PropertyRow.d.ts#PropertyRow"
@@ -9388,9 +9388,9 @@
       "subpath": "./components/shell/RangeSlider",
       "symbol": "RangeSlider",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/RangeSlider.d.ts#RangeSlider"
@@ -9472,9 +9472,9 @@
       "subpath": "./components/shell/RibbonTabs",
       "symbol": "RibbonTabs",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/RibbonTabs.d.ts#RibbonTabs"
@@ -9556,9 +9556,9 @@
       "subpath": "./components/shell/RotaryKnob",
       "symbol": "RotaryKnob",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/RotaryKnob.d.ts#RotaryKnob"
@@ -9640,9 +9640,9 @@
       "subpath": "./components/shell/SliderField",
       "symbol": "SliderField",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/SliderField.d.ts#SliderField"
@@ -9724,9 +9724,9 @@
       "subpath": "./components/shell/SplitButton",
       "symbol": "SplitButton",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/SplitButton.d.ts#SplitButton"
@@ -9798,9 +9798,9 @@
       "subpath": "./components/shell/StatusBar",
       "symbol": "StatusBar",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/StatusBar.d.ts#StatusBar"
@@ -9872,9 +9872,9 @@
       "subpath": "./components/shell/ToastAndProgress",
       "symbol": "ToastAndProgress",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/ToastAndProgress.d.ts#ToastAndProgress"
@@ -9956,9 +9956,9 @@
       "subpath": "./components/shell/ToolRail",
       "symbol": "ToolRail",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/ToolRail.d.ts#ToolRail"
@@ -10030,9 +10030,9 @@
       "subpath": "./components/shell/UnitInput",
       "symbol": "UnitInput",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/UnitInput.d.ts#UnitInput"
@@ -10104,9 +10104,9 @@
       "subpath": "./components/shell/WorkspaceHost",
       "symbol": "WorkspaceHost",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/WorkspaceHost.d.ts#WorkspaceHost"
@@ -10188,9 +10188,9 @@
       "subpath": "./components/shell/WorkspacePresetSwitcher",
       "symbol": "WorkspacePresetSwitcher",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/WorkspacePresetSwitcher.d.ts#WorkspacePresetSwitcher"
@@ -10262,9 +10262,9 @@
       "subpath": "./components/shell/inspector-context",
       "symbol": "InspectorPanelContext",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/inspector-context.d.ts#InspectorPanelContext"
@@ -10318,9 +10318,9 @@
       "subpath": "./components/shell/inspector-context",
       "symbol": "InspectorSectionContext",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/shell/inspector-context.d.ts#InspectorSectionContext"
@@ -10374,9 +10374,9 @@
       "subpath": "./components/theme/NightScope",
       "symbol": "NightScope",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/theme/NightScope.d.ts#NightScope"
@@ -10464,9 +10464,9 @@
       "subpath": "./components/theme/TronThemeProvider",
       "symbol": "TronThemeProvider",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/theme/TronThemeProvider.web.d.ts#TronThemeProvider"
@@ -10520,9 +10520,9 @@
       "subpath": "./components/window/WindowTitleBar",
       "symbol": "WindowTitleBar",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#WindowTitleBar"
@@ -10576,9 +10576,9 @@
       "subpath": ".",
       "symbol": "TronNavigationView",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/windows-fluent-fabric/dist/TronNavigationView.windows.d.ts#TronNavigationView"
@@ -10632,9 +10632,9 @@
       "subpath": "./drag-drop",
       "symbol": "WindowsDragSource",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/windows-fluent-fabric/dist/drag-drop.windows.d.ts#WindowsDragSource"
@@ -10688,9 +10688,9 @@
       "subpath": "./drag-drop",
       "symbol": "WindowsDropTarget",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/windows-fluent-fabric/dist/drag-drop.windows.d.ts#WindowsDropTarget"
@@ -10744,9 +10744,9 @@
       "subpath": "./navigation-host",
       "symbol": "WindowsNavigationHost",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/windows-fluent-fabric/dist/navigation-host.windows.d.ts#WindowsNavigationHost"
@@ -10800,9 +10800,9 @@
       "subpath": "./overlays",
       "symbol": "WindowsContextMenu",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/windows-fluent-fabric/dist/overlays.windows.d.ts#WindowsContextMenu"
@@ -10856,9 +10856,9 @@
       "subpath": "./overlays",
       "symbol": "WindowsInspector",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/windows-fluent-fabric/dist/overlays.windows.d.ts#WindowsInspector"
@@ -10912,9 +10912,9 @@
       "subpath": "./overlays",
       "symbol": "WindowsMenuButton",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/windows-fluent-fabric/dist/overlays.windows.d.ts#WindowsMenuButton"
@@ -10968,9 +10968,9 @@
       "subpath": "./overlays",
       "symbol": "WindowsPopover",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/windows-fluent-fabric/dist/overlays.windows.d.ts#WindowsPopover"
@@ -11024,9 +11024,9 @@
       "subpath": "./overlays",
       "symbol": "WindowsTooltip",
       "category": "general components",
-      "stability": null,
+      "stability": "preview",
       "proposedStability": "preview",
-      "ownerConfirmation": "pending",
+      "ownerConfirmation": "confirmed",
       "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
       "declarationIdentities": [
         "@nyc-tron/windows-fluent-fabric/dist/overlays.windows.d.ts#WindowsTooltip"
@@ -12482,7 +12482,7 @@
       ]
     },
     {
-      "declarationIdentity": "@nyc-tron/core@1.0.0-rc.3/dist/overlays.d.ts#CommandMenuItem",
+      "declarationIdentity": "@nyc-tron/core@1.0.0/dist/overlays.d.ts#CommandMenuItem",
       "reason": "external type-only declaration; not a React component value",
       "exports": [
         "@nyc-tron/windows-fluent-fabric/overlays#CommandMenuItem"
@@ -18205,5 +18205,10 @@
         "@nyc-tron/windows-fluent/types#validateWindowsNavigationState"
       ]
     }
-  ]
+  ],
+  "stabilityReview": {
+    "reviewer": "mikevocalz",
+    "decision": "Owner confirmed in the NYC-Tron v1 project chat on 2026-11-28 (\"Confirm those five\"): Button, Card, TextField, NavigationRail and NavigationShell are stable for 1.0.0, with their root and subpath aliases; every other public component export is preview.",
+    "proposalSha256": "15985e10df57473baba5460c56285cd473a90674c145dcbfa119446fd753a7a9"
+  }
 }

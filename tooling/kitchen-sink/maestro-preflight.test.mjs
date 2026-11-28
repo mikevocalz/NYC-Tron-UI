@@ -5,17 +5,17 @@ import { chmodSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { collectStartupDiagnostics, preflight, PREFLIGHT_DIAGNOSTIC_DELAY_MS } from './maestro-preflight.mjs';
-import { maestroEnvironment, verifyMaestroVersion, diagnosticWatchdogAllowed, stopDiagnosticWatchdog } from './maestro-version.mjs';
+import { maestroEnvironment, verifyMaestroVersion, diagnosticWatchdogAllowed, stopDiagnosticWatchdog, POSTBOOT_PROBE_TIMEOUT_MS } from './maestro-version.mjs';
 import { maestroSessionLimits } from '../native/ui-transport.mjs';
 
 test('shared bounded driver startup setting is used and recorded by exact version verification', () => {
   const output=mkdtempSync(join(tmpdir(),'tron-startup-env-'));
   const maestro=join(output,'cli');
-  writeFileSync(maestro,`#!${process.execPath}\nif(process.env.MAESTRO_DRIVER_STARTUP_TIMEOUT!=='180000')process.exit(8);console.log('2.12.1');`);chmodSync(maestro,0o755);
+  writeFileSync(maestro,`#!${process.execPath}\nif(process.env.MAESTRO_DRIVER_STARTUP_TIMEOUT!==${JSON.stringify(String(maestroSessionLimits.driverStartupMs))})process.exit(8);console.log('2.12.1');`);chmodSync(maestro,0o755);
   try {
     assert.equal(maestroEnvironment().MAESTRO_DRIVER_STARTUP_TIMEOUT,String(maestroSessionLimits.driverStartupMs));
     verifyMaestroVersion({maestro,output});
-    assert.equal(JSON.parse(readFileSync(join(output,'maestro-version.json'))).settings.MAESTRO_DRIVER_STARTUP_TIMEOUT,'180000');
+    assert.equal(JSON.parse(readFileSync(join(output,'maestro-version.json'))).settings.MAESTRO_DRIVER_STARTUP_TIMEOUT,String(maestroSessionLimits.driverStartupMs));
   } finally {rmSync(output,{recursive:true,force:true});}
 });
 
@@ -72,11 +72,11 @@ test('workflow preflight precedes expensive build and boot while native-proof re
   assert.ok(workflow.indexOf('maestro-preflight.mjs')<workflow.indexOf('prepare-ios.mjs'));
   assert.match(workflow,/if: always\(\)\n        with:\n          name: kitchen-maestro-preflight/);
   const native=readFileSync(new URL('./native-proof.mjs',import.meta.url),'utf8');
-  assert.match(native,/verifyMaestroVersion\(\{ maestro, output \}\)/);
+  assert.match(native,/verifyMaestroVersion\(\{ maestro, output, timeoutMs: POSTBOOT_PROBE_TIMEOUT_MS \}\)/);
   assert.match(native,/timeout: 600000/);
 });
 
-test('both early and postboot probes share one guarded watcher and unchanged strict cap', () => {
+test('both early and postboot probes share one guarded watcher; the early cap stays 60 s and the postboot cap covers a saturated runner', () => {
  const allowed={output:'/owned/proof',platform:'darwin',env:{GITHUB_ACTIONS:'true',RUNNER_TEMP:'/owned',JAVA_HOME:'/pinned'}};
  assert.equal(diagnosticWatchdogAllowed(allowed),true);
  for(const changed of [{platform:'linux'},{output:'/owned-foreign/proof'},{env:{...allowed.env,GITHUB_ACTIONS:'false'}},{env:{...allowed.env,JAVA_HOME:''}}]) assert.equal(diagnosticWatchdogAllowed({...allowed,...changed}),false);
@@ -84,6 +84,8 @@ test('both early and postboot probes share one guarded watcher and unchanged str
  assert.match(source,/const watchdog = startDiagnosticWatchdog\(output\)/);
  assert.match(source,/finally \{ stopDiagnosticWatchdog\(watchdog\); \}/);
  assert.match(source,/timeoutMs = 60000/);
+ assert.equal(POSTBOOT_PROBE_TIMEOUT_MS,180000);
+ assert.ok(POSTBOOT_PROBE_TIMEOUT_MS < 600000, 'the probe must stay well inside one flow budget');
  const wrapper=readFileSync(new URL('./maestro-preflight.mjs',import.meta.url),'utf8');
  assert.doesNotMatch(wrapper,/const watchdog = spawn/);
  assert.match(wrapper,/diagnosticWatchdogAllowed\(\{ output \}\)/);

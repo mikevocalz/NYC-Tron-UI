@@ -12,6 +12,14 @@ const bounded = value => Buffer.from(value ?? '', 'utf8').subarray(0, DIAGNOSTIC
 export const maestroEnvironment = () => ({ ...process.env, MAESTRO_CLI_NO_ANALYTICS: '1', MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED: 'true', MAESTRO_DRIVER_STARTUP_TIMEOUT: String(maestroSessionLimits.driverStartupMs) });
 
 export const STARTUP_DIAGNOSTIC_DELAY_MS = 40000;
+// The early preflight runs on an idle runner, before the build, and keeps the
+// 60 s cap. The post-boot probe in native-proof runs right after the simulator
+// boots and the app installs, when the macos-26-arm64 runner is saturated: on
+// 2026-11-28 (PR 94, kitchen-sink runs 46123014118 and 46163073524) the install
+// alone took 97 to 312 s and the same pinned 2.12.1 binary that answered the
+// preflight in about 3 s missed the 60 s cap, once after printing its version.
+// The version must still match exactly; only the time allowed changes.
+export const POSTBOOT_PROBE_TIMEOUT_MS = 180000;
 export function diagnosticWatchdogAllowed({ output, platform = process.platform, env = process.env }) {
   return platform === 'darwin' && env.GITHUB_ACTIONS === 'true' && Boolean(env.JAVA_HOME) && Boolean(env.RUNNER_TEMP) &&
     resolve(output).startsWith(resolve(env.RUNNER_TEMP) + sep);

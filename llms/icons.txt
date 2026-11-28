@@ -12,7 +12,7 @@ import { ForgeIcon } from "@nyc-tron/icons/native";
 
 - Id: `@nyc-tron/icons/native#ForgeIcon`
 - Package: `@nyc-tron/icons`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/icons/native#TronIcon`, `@nyc-tron/icons/web#ForgeIcon`, `@nyc-tron/icons/web#TronIcon`
 
@@ -66,7 +66,7 @@ import { ForgeIconButton } from "@nyc-tron/icons/native";
 
 - Id: `@nyc-tron/icons/native#ForgeIconButton`
 - Package: `@nyc-tron/icons`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/icons/native#TronIconButton`, `@nyc-tron/icons/web#ForgeIconButton`, `@nyc-tron/icons/web#TronIconButton`
 
@@ -125,7 +125,7 @@ import { TronIcon } from "@nyc-tron/icons/native";
 
 - Id: `@nyc-tron/icons/native#TronIcon`
 - Package: `@nyc-tron/icons`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/icons/native#ForgeIcon`, `@nyc-tron/icons/web#ForgeIcon`, `@nyc-tron/icons/web#TronIcon`
 
@@ -179,7 +179,7 @@ import { TronIconButton } from "@nyc-tron/icons/native";
 
 - Id: `@nyc-tron/icons/native#TronIconButton`
 - Package: `@nyc-tron/icons`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/icons/native#ForgeIconButton`, `@nyc-tron/icons/web#ForgeIconButton`, `@nyc-tron/icons/web#TronIconButton`
 
@@ -238,7 +238,7 @@ import { ForgeIcon } from "@nyc-tron/icons/web";
 
 - Id: `@nyc-tron/icons/web#ForgeIcon`
 - Package: `@nyc-tron/icons`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/icons/native#ForgeIcon`, `@nyc-tron/icons/native#TronIcon`, `@nyc-tron/icons/web#TronIcon`
 
@@ -292,7 +292,7 @@ import { ForgeIconButton } from "@nyc-tron/icons/web";
 
 - Id: `@nyc-tron/icons/web#ForgeIconButton`
 - Package: `@nyc-tron/icons`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/icons/native#ForgeIconButton`, `@nyc-tron/icons/native#TronIconButton`, `@nyc-tron/icons/web#TronIconButton`
 
@@ -351,7 +351,7 @@ import { TronIcon } from "@nyc-tron/icons/web";
 
 - Id: `@nyc-tron/icons/web#TronIcon`
 - Package: `@nyc-tron/icons`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/icons/native#ForgeIcon`, `@nyc-tron/icons/native#TronIcon`, `@nyc-tron/icons/web#ForgeIcon`
 
@@ -405,7 +405,7 @@ import { TronIconButton } from "@nyc-tron/icons/web";
 
 - Id: `@nyc-tron/icons/web#TronIconButton`
 - Package: `@nyc-tron/icons`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/icons/native#ForgeIconButton`, `@nyc-tron/icons/native#TronIconButton`, `@nyc-tron/icons/web#ForgeIconButton`
 

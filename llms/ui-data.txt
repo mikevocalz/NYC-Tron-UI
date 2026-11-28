@@ -12,7 +12,7 @@ import { DataTable } from "@nyc-tron/ui/components/data/DataTable";
 
 - Id: `@nyc-tron/ui/components/data/DataTable#DataTable`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: struck (the lane measurement failed it): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -70,7 +70,7 @@ import { TreeGrid } from "@nyc-tron/ui/components/data/TreeGrid";
 
 - Id: `@nyc-tron/ui/components/data/TreeGrid#TreeGrid`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:

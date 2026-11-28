@@ -6,7 +6,7 @@ Define the public contract before making a stability promise.
 
 A confirmed stable API is covered by Semantic Versioning: compatible fixes are patches; compatible additions are minors; removals, renames, incompatible types or behavior require a major. Broader support claims require their own evidence.
 
-Stable labels are not yet confirmed in the current proposed manifest. A label alone cannot satisfy release evidence.
+Stable labels follow the owner-confirmed manifest ([`docs/library/stability-review.json`](library/stability-review.json)). A label alone cannot satisfy release evidence.
 
 ## Preview components
 
