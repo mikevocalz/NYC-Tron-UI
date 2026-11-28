@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "Tron UI",
+    "slug": "nyc-tron-kitchen-sink",
+    "scheme": "nyctron-kitchen",
+    "version": "0.1.0",
+    "orientation": "default",
+    "newArchEnabled": true,
+    "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
+    "extra": { "appIdentity": { "fullName": "NYC-Tron Kitchen Sink", "launcherName": "Tron UI" } },
+    "platforms": ["ios", "android", "web"],
+    "ios": { "bundleIdentifier": "com.nyctron.kitchensink" },
+    "android": { "package": "com.nyctron.kitchensink" },
+    "web": { "bundler": "metro", "output": "single" }
+  }
+}

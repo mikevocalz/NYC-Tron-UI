@@ -1,0 +1,154 @@
+steps:
+  - echo: Restart the installed archive app; expect direct imports and a fresh
+      counter.
+  - launch: com.nyctron.kitchensink
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: alias-result
+      timeoutMs: 15000
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: imports-result
+      expectedText: "Rendering: direct imports"
+      textMatch: equals
+      timeoutMs: 5000
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: button-result
+      expectedText: "Press count: 0"
+      textMatch: equals
+      timeoutMs: 5000
+  - echo: Press the enabled action; expect counter one.
+  - tap:
+      text: Try button
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: button-result
+      expectedText: "Press count: 1"
+      textMatch: equals
+      timeoutMs: 5000
+  - echo: Switch to actual root imports and select Light; counter must remain one.
+  - tap:
+      text: Root imports
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: imports-result
+      expectedText: "Rendering: root imports"
+      textMatch: equals
+      timeoutMs: 5000
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: button-result
+      expectedText: "Press count: 1"
+      textMatch: equals
+      timeoutMs: 5000
+  - tap:
+      text: Light
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: theme-result
+      expectedText: "Appearance: light"
+      textMatch: equals
+      timeoutMs: 5000
+  - echo: Scroll to the Card and TextField fixtures; verify real component content.
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.83
+      toX: 0.5
+      toY: 0.3
+      durationMs: 400
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Raised
+      timeoutMs: 5000
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Sunken
+      timeoutMs: 5000
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        text: Transparent
+      timeoutMs: 5000
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.83
+      toX: 0.5
+      toY: 0.3
+      durationMs: 400
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: field-editable
+      timeoutMs: 5000
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.83
+      toX: 0.5
+      toY: 0.3
+      durationMs: 400
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: rail-result
+      expectedText: "Selected: library"
+      textMatch: equals
+      timeoutMs: 5000
+  - echo: Visit the native NavigationRail and NavigationShell fixtures.
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.83
+      toX: 0.5
+      toY: 0.3
+      durationMs: 400
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: visible
+      selector:
+        identifier: shell-edge
+      timeoutMs: 5000
+  - tool: gesture-swipe
+    args:
+      fromX: 0.5
+      fromY: 0.83
+      toX: 0.5
+      toY: 0.3
+      durationMs: 400
+      momentum: false
+  - tool: await-ui-element
+    args:
+      condition: text
+      selector:
+        identifier: shell-result
+      expectedText: "Physical edge: right; text: LTR"
+      textMatch: equals
+      timeoutMs: 5000

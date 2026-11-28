@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="iPhone Duo - iOS 27.2 - C898E3E4-5033-4085-B886-963EE2D0C478" tests="1" failures="0" time="234.909" timestamp="2026-11-23T04:16:34">
+    <testcase id="Kitchen sink direct imports" name="Kitchen sink direct imports" classname="Kitchen sink direct imports" file="flow.yaml" time="234.638" timestamp="2026-11-23T04:16:34" status="SUCCESS"/>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,209 @@
+name: Installed library kitchen sink
+on:
+  pull_request:
+    paths:
+      - 'examples/kitchen-sink/**'
+      - 'packages/core/**'
+      - 'packages/ui/**'
+      - 'tooling/kitchen-sink/**'
+      - 'docs/library/components.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/kitchen-sink.yml'
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - run: corepack enable
+      - run: corepack pnpm install --frozen-lockfile
+      - run: corepack pnpm --filter @nyc-tron/core --filter @nyc-tron/ui build
+      - run: node --test tooling/kitchen-sink/*.test.mjs
+      - run: node tooling/pack-release.mjs "$RUNNER_TEMP/packs" --packages core,ui
+      - name: Bind the exact tested archives
+        run: |
+          node tooling/kitchen-sink/archive-index.mjs "$RUNNER_TEMP/packs"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kitchen-candidate-archives
+          path: ${{ runner.temp }}/packs/
+          if-no-files-found: error
+  web:
+    needs: candidate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - uses: actions/download-artifact@v4
+        with:
+          name: kitchen-candidate-archives
+          path: ${{ runner.temp }}/packs
+      - run: node tooling/kitchen-sink/prepare-consumer.mjs --packs "$RUNNER_TEMP/packs" --destination "$RUNNER_TEMP/consumer"
+      - name: Install isolated browser proof tools
+        run: |
+          mkdir -p "$RUNNER_TEMP/tools"
+          npm install --prefix "$RUNNER_TEMP/tools" --no-audit --no-fund playwright@1.65.0 axe-core@4.11.0 serve-handler@6.1.6 esbuild@0.28.2
+          "$RUNNER_TEMP/tools/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Export the installed archive app
+        working-directory: ${{ runner.temp }}/consumer
+        run: npx --no-install expo export --platform web --output-dir web-export
+        env:
+          CI: '1'
+          EXPO_NO_TELEMETRY: '1'
+      - name: Execute public imports, model, declarations, rendered states and axe
+        run: |
+          node tooling/kitchen-sink/unit-proof.mjs --consumer "$RUNNER_TEMP/consumer" --tools "$RUNNER_TEMP/tools" --output "$RUNNER_TEMP/proof/unit.json"
+          node tooling/kitchen-sink/web-proof.mjs --consumer "$RUNNER_TEMP/consumer" --web-dir "$RUNNER_TEMP/consumer/web-export" --tools "$RUNNER_TEMP/tools" --output "$RUNNER_TEMP/proof/web.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kitchen-proof-web
+          path: ${{ runner.temp }}/proof/
+          if-no-files-found: error
+  android:
+    needs: candidate
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/download-artifact@v4
+        with:
+          name: kitchen-candidate-archives
+          path: ${{ runner.temp }}/packs
+      - run: node tooling/kitchen-sink/prepare-consumer.mjs --packs "$RUNNER_TEMP/packs" --destination "$RUNNER_TEMP/consumer"
+      - name: Generate and compile the installed archive Android app
+        working-directory: ${{ runner.temp }}/consumer
+        run: |
+          npx --no-install expo prebuild --platform android --no-install
+          cd android
+          ./gradlew assembleRelease --no-daemon --max-workers=4 -PreactNativeArchitectures=x86_64
+        env:
+          CI: '1'
+          EXPO_NO_TELEMETRY: '1'
+      - run: node tooling/native/install-maestro.mjs "$RUNNER_TEMP/maestro"
+      - name: Require writable KVM acceleration
+        shell: bash
+        run: |
+          set -euxo pipefail
+          trap 'kvm_status=$?; echo "::error::KVM permission setup failed at line $LINENO (exit $kvm_status)" >&2; ls -l /dev/kvm >&2 || true; exit "$kvm_status"' ERR
+          id
+          ls -l /dev/kvm
+          test -c /dev/kvm
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          sudo udevadm settle --timeout=10
+          sudo chmod 0666 /dev/kvm
+          ls -l /dev/kvm
+          test -c /dev/kvm
+          test -r /dev/kvm
+          test -w /dev/kvm
+      - name: Execute both installed import paths on an ephemeral emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          disable-linux-hw-accel: 'false'
+          emulator-options: -no-window -no-snapshot -noaudio -no-boot-anim -gpu swiftshader_indirect -camera-back none -accel on
+          pre-emulator-launch-script: '"$ANDROID_HOME/emulator/emulator" -accel-check'
+          script: |
+            adb install -r "$RUNNER_TEMP/consumer/android/app/build/outputs/apk/release/app-release.apk"
+            node tooling/kitchen-sink/native-proof.mjs --consumer "$RUNNER_TEMP/consumer" --platform android --device emulator-5554 --maestro "$RUNNER_TEMP/maestro/maestro/bin/maestro" --output "$RUNNER_TEMP/proof"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kitchen-proof-android
+          path: ${{ runner.temp }}/proof/
+          if-no-files-found: error
+  ios:
+    needs: candidate
+    runs-on: xcode-27
+    timeout-minutes: 90
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_27.1.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify pinned iOS build toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodebuild -version
+          xcrun swift --version
+          xcodebuild -version | grep -Fx 'Xcode 27.1'
+          xcodebuild -version | grep -Fx 'Build version 27A9275'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.19.0'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/download-artifact@v4
+        with:
+          name: kitchen-candidate-archives
+          path: ${{ runner.temp }}/packs
+      - run: node tooling/kitchen-sink/prepare-consumer.mjs --packs "$RUNNER_TEMP/packs" --destination "$RUNNER_TEMP/consumer"
+      - run: node tooling/native/install-maestro.mjs "$RUNNER_TEMP/maestro"
+      - name: Verify pinned Maestro before compiling or booting
+        run: node tooling/kitchen-sink/maestro-preflight.mjs --verify "$RUNNER_TEMP/kitchen-maestro-preflight" "$RUNNER_TEMP/maestro/maestro/bin/maestro"
+      - name: Generate and compile the installed archive iOS simulator app
+        working-directory: ${{ runner.temp }}/consumer
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --no-install expo prebuild --platform ios --no-install
+          cd ios
+          pod install
+          workspace=$(find . -maxdepth 1 -name '*.xcworkspace' -print -quit)
+          test -n "$workspace"
+          xcodebuild -workspace "$workspace" -scheme "$(basename "$workspace" .xcworkspace)" -configuration Release -sdk iphonesimulator -derivedDataPath "$RUNNER_TEMP/derived" -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
+        env:
+          CI: '1'
+          EXPO_NO_TELEMETRY: '1'
+      - name: Prepare the explicitly selected iPhone simulator
+        run: node tooling/kitchen-sink/prepare-ios.mjs
+      - name: Execute both installed import paths on the runner simulator
+        shell: bash
+        run: |
+          set -euo pipefail
+          app=$(find "$RUNNER_TEMP/derived/Build/Products/Release-iphonesimulator" -maxdepth 1 -name '*.app' -print -quit)
+          test -n "$app"
+          xcrun simctl install "$NYC_TRON_IOS_UDID" "$app"
+          node tooling/kitchen-sink/native-proof.mjs --consumer "$RUNNER_TEMP/consumer" --platform ios --device "$NYC_TRON_IOS_UDID" --maestro "$RUNNER_TEMP/maestro/maestro/bin/maestro" --output "$RUNNER_TEMP/proof"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kitchen-proof-ios
+          path: ${{ runner.temp }}/proof/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kitchen-ios-target
+          path: ${{ runner.temp }}/kitchen-ios-target/
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: kitchen-maestro-preflight
+          path: ${{ runner.temp }}/kitchen-maestro-preflight/
+          if-no-files-found: warn

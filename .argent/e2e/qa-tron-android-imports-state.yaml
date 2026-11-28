@@ -1,0 +1,204 @@
+{
+  "steps": [
+    {
+      "echo": "Restart the installed archive app; expect direct imports and a fresh counter."
+    },
+    {
+      "launch": "com.nyctron.kitchensink"
+    },
+    {
+      "await": {
+        "visible": {
+          "id": "alias-result"
+        }
+      }
+    },
+    {
+      "await": {
+        "idle": true
+      }
+    },
+    {
+      "await": {
+        "text": {
+          "in": {
+            "id": "imports-result"
+          },
+          "equals": "Rendering: direct imports"
+        }
+      }
+    },
+    {
+      "await": {
+        "text": {
+          "in": {
+            "id": "button-result"
+          },
+          "equals": "Press count: 0"
+        }
+      }
+    },
+    {
+      "echo": "Press the enabled action; expect counter one."
+    },
+    {
+      "tap": {
+        "text": "Try button"
+      }
+    },
+    {
+      "await": {
+        "text": {
+          "in": {
+            "id": "button-result"
+          },
+          "equals": "Press count: 1"
+        }
+      }
+    },
+    {
+      "echo": "Switch to actual root imports and select Light; counter must remain one."
+    },
+    {
+      "tap": {
+        "text": "Root imports"
+      }
+    },
+    {
+      "await": {
+        "text": {
+          "in": {
+            "id": "imports-result"
+          },
+          "equals": "Rendering: root imports"
+        }
+      }
+    },
+    {
+      "await": {
+        "text": {
+          "in": {
+            "id": "button-result"
+          },
+          "equals": "Press count: 1"
+        }
+      }
+    },
+    {
+      "tap": {
+        "text": "Light"
+      }
+    },
+    {
+      "await": {
+        "text": {
+          "in": {
+            "id": "theme-result"
+          },
+          "equals": "Appearance: light"
+        }
+      }
+    },
+    {
+      "echo": "Scroll to the Card and TextField fixtures; verify real component content."
+    },
+    {
+      "scroll-to": {
+        "target": {
+          "text": "Transparent"
+        },
+        "direction": "down"
+      }
+    },
+    {
+      "await": {
+        "visible": {
+          "text": "Raised"
+        }
+      }
+    },
+    {
+      "await": {
+        "visible": {
+          "text": "Sunken"
+        }
+      }
+    },
+    {
+      "await": {
+        "visible": {
+          "text": "Transparent"
+        }
+      }
+    },
+    {
+      "scroll-to": {
+        "target": {
+          "id": "field-editable"
+        },
+        "direction": "down"
+      }
+    },
+    {
+      "await": {
+        "visible": {
+          "id": "field-editable"
+        }
+      }
+    },
+    {
+      "scroll-to": {
+        "target": {
+          "id": "rail-result"
+        },
+        "direction": "down"
+      }
+    },
+    {
+      "await": {
+        "text": {
+          "in": {
+            "id": "rail-result"
+          },
+          "equals": "Selected: library"
+        }
+      }
+    },
+    {
+      "echo": "Visit the native NavigationRail and NavigationShell fixtures."
+    },
+    {
+      "scroll-to": {
+        "target": {
+          "id": "shell-edge"
+        },
+        "direction": "down"
+      }
+    },
+    {
+      "await": {
+        "visible": {
+          "id": "shell-edge"
+        }
+      }
+    },
+    {
+      "scroll-to": {
+        "target": {
+          "id": "shell-result"
+        },
+        "direction": "down"
+      }
+    },
+    {
+      "await": {
+        "text": {
+          "in": {
+            "id": "shell-result"
+          },
+          "equals": "Physical edge: right; text: LTR"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+# Lead fixture interaction check
+
+Used Argent Chromium CDP against the fresh installed-archive consumer on port4182. Scrolled to NavigationRail, selected Editor and collapsed its labels. The current accessibility tree retained Selected: editor, the Editor accessible name, and disabled Unavailable. The wide layout retained a horizontal rail/status arrangement. Separately inspected the actual 320px expanded-rail screenshot: the selected state and complete instructions sit below the rail at readable width. Automated viewport/container bounds and axe checks are recorded by the implementing and reviewing agents; this lead interaction used the existing wide CDP viewport and does not claim a separate native or Safari execution. No app window/orientation was changed.
