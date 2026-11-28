@@ -35,7 +35,7 @@ The generated files import each other with the default alias prefix (`@/componen
 
 - `<name>` is the `@nyc-tron/ui` export path after `./components/`, slashes kept: `Button`, `shell/UnitInput`, `forge/audio/LoudnessMeter`.
 - `root` is the root barrel (`@nyc-tron/ui`). `index` is avoided because shadcn once used `index.json` for a registry index.
-- `core/<module>` and `tokens` are support items: the `@nyc-tron/core` modules that `ui` imports. They carry `meta.support: true`. `list` returns them with the 561 ui items.
+- `core/<module>` and `tokens` are support items: the `@nyc-tron/core` modules that `ui` imports. They carry `meta.support: true`. `list` returns them with the 564 ui items.
 - Files that are not exported subpaths (helpers, `*.types.ts`, `*.shared.tsx`) are bundled into every item that imports them. When two items share one, `shadcn add` writes it once and skips the identical copy.
 
 ## Item meta

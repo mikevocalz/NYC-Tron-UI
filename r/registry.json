@@ -30267,6 +30267,37 @@
       }
     },
     {
+      "name": "shell/PrecisionScrubber",
+      "type": "registry:ui",
+      "title": "Precision Scrubber",
+      "description": "Precision Scrubber, an app shell component. Props: labels, value, unit, onPreview.",
+      "categories": [
+        "shell"
+      ],
+      "registryDependencies": [
+        "@nyc-tron/forge/inputs/PrecisionScrubber"
+      ],
+      "files": [
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/shell/PrecisionScrubber.tsx",
+          "type": "registry:ui",
+          "target": "@components/nyc-tron/ui/components/shell/PrecisionScrubber.tsx"
+        }
+      ],
+      "meta": {
+        "tier": 2,
+        "docs": "generated",
+        "platforms": [],
+        "a11yStatus": "unverified",
+        "package": "@nyc-tron/ui",
+        "subpath": "@nyc-tron/ui/components/shell/PrecisionScrubber",
+        "exports": [
+          "PrecisionScrubber",
+          "PrecisionScrubberProps"
+        ]
+      }
+    },
+    {
       "name": "shell/PresetGallery",
       "type": "registry:ui",
       "title": "Preset Gallery",
@@ -31436,6 +31467,96 @@
           "isTextEditingBinding",
           "reservedBindingReason",
           "toNativeKeyBinding"
+        ]
+      }
+    },
+    {
+      "name": "shell/precision",
+      "type": "registry:lib",
+      "title": "precision",
+      "description": "precision, an app shell helper module. Exports advancePrecisionGesture, assertRange, beginPrecisionGesture.",
+      "categories": [
+        "shell"
+      ],
+      "registryDependencies": [
+        "@nyc-tron/forge/inputs/precision"
+      ],
+      "files": [
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/shell/precision.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/shell/precision.ts"
+        }
+      ],
+      "meta": {
+        "tier": 2,
+        "docs": "generated",
+        "platforms": [],
+        "a11yStatus": "unverified",
+        "package": "@nyc-tron/ui",
+        "subpath": "@nyc-tron/ui/components/shell/precision",
+        "exports": [
+          "Point2D",
+          "PrecisionGesture",
+          "PrecisionGestureConfig",
+          "PrecisionGesturePoint",
+          "PrecisionScrubInput",
+          "RangeConfig",
+          "SCRUB_DETENT_PIXELS",
+          "SCRUB_MODE_THRESHOLD_PX",
+          "ScaleTick",
+          "ScrubMode",
+          "advancePrecisionGesture",
+          "assertRange",
+          "beginPrecisionGesture",
+          "clamp",
+          "formatStepValue",
+          "gestureToAngle",
+          "normalize",
+          "pointFromDrag",
+          "scaleTicks",
+          "scrubModeFromOffset",
+          "scrubPrecision",
+          "scrubValue",
+          "snapTypedPrecision",
+          "snapValue",
+          "stepDecimalPlaces"
+        ]
+      }
+    },
+    {
+      "name": "shell/precision-scrubber-model",
+      "type": "registry:lib",
+      "title": "precision scrubber model",
+      "description": "precision scrubber model, an app shell state model. Exports createScrubberModel, initialScrubberState.",
+      "categories": [
+        "shell"
+      ],
+      "registryDependencies": [
+        "@nyc-tron/forge/inputs/precision-scrubber-model"
+      ],
+      "files": [
+        {
+          "path": "tooling/registry/stage/packages/ui/src/components/shell/precision-scrubber-model.ts",
+          "type": "registry:lib",
+          "target": "@components/nyc-tron/ui/components/shell/precision-scrubber-model.ts"
+        }
+      ],
+      "meta": {
+        "tier": 2,
+        "docs": "generated",
+        "platforms": [],
+        "a11yStatus": "unverified",
+        "package": "@nyc-tron/ui",
+        "subpath": "@nyc-tron/ui/components/shell/precision-scrubber-model",
+        "exports": [
+          "SCRUB_PIXELS_PER_STEP",
+          "ScrubberInputs",
+          "ScrubberModel",
+          "ScrubberState",
+          "ScrubberStore",
+          "createScrubberModel",
+          "initialScrubberState"
         ]
       }
     },

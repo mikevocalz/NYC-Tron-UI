@@ -125,6 +125,21 @@
       "react-native": "./dist/components/shell/MenuButton.js",
       "default": "./dist/components/shell/MenuButton.js"
     },
+    "./components/shell/PrecisionScrubber": {
+      "types": "./dist/components/shell/PrecisionScrubber.d.ts",
+      "react-native": "./dist/components/shell/PrecisionScrubber.js",
+      "default": "./dist/components/shell/PrecisionScrubber.js"
+    },
+    "./components/shell/precision": {
+      "types": "./dist/components/shell/precision.d.ts",
+      "react-native": "./dist/components/shell/precision.js",
+      "default": "./dist/components/shell/precision.js"
+    },
+    "./components/shell/precision-scrubber-model": {
+      "types": "./dist/components/shell/precision-scrubber-model.d.ts",
+      "react-native": "./dist/components/shell/precision-scrubber-model.js",
+      "default": "./dist/components/shell/precision-scrubber-model.js"
+    },
     "./components/shell/shell-keys": {
       "types": "./dist/components/shell/shell-keys.d.ts",
       "react-native": "./dist/components/shell/shell-keys.js",

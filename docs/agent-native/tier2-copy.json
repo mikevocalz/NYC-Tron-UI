@@ -2365,6 +2365,11 @@
   "description": "Numeric Scrub Field, an app shell component. Props: labels, value, unit, onPreview."
  },
  {
+  "id": "shell/PrecisionScrubber",
+  "title": "Precision Scrubber",
+  "description": "Precision Scrubber, an app shell component. Props: labels, value, unit, onPreview."
+ },
+ {
   "id": "shell/a11y-audit",
   "title": "a 11y audit",
   "description": "a 11y audit, an app shell helper module. Exports auditAccessibility."
@@ -2418,6 +2423,16 @@
   "id": "shell/keyboard-map",
   "title": "keyboard map",
   "description": "keyboard map, an app shell helper module. Exports createKeyboardMap, isTextEditingBinding, reservedBindingReason."
+ },
+ {
+  "id": "shell/precision",
+  "title": "precision",
+  "description": "precision, an app shell helper module. Exports advancePrecisionGesture, assertRange, beginPrecisionGesture."
+ },
+ {
+  "id": "shell/precision-scrubber-model",
+  "title": "precision scrubber model",
+  "description": "precision scrubber model, an app shell state model. Exports createScrubberModel, initialScrubberState."
  },
  {
   "id": "shell/preset-model",

@@ -12,10 +12,10 @@
   "layoutPrimitivesNote": "Stack, Row, Spacer, Divider and Text (02-design-system section 5) have source under components/layout/, an R2 directory, so the same rule makes them tier 1. No hand-added entries exist; this script regenerates the whole list."
  },
  "counts": {
-  "uiSubpaths": 561,
+  "uiSubpaths": 564,
   "componentSubpaths": 391,
   "tier1": 64,
-  "tier2": 497
+  "tier2": 500
  },
  "items": [
   {
@@ -258,9 +258,9 @@
    ],
    "tier": 1,
    "why": [
-    "R4 imported by 32 files"
+    "R4 imported by 33 files"
    ],
-   "importCount": 32,
+   "importCount": 33,
    "importCountOtherPackages": 0
   },
   {
@@ -458,13 +458,16 @@
    ],
    "symbols": [
     "Stack",
-    "StackProps"
+    "StackAlign",
+    "StackJustify",
+    "StackProps",
+    "StackSpace"
    ],
    "tier": 1,
    "why": [
     "R2 core family (layout)"
    ],
-   "importCount": 0,
+   "importCount": 4,
    "importCountOtherPackages": 0
   },
   {
