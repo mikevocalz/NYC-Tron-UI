@@ -8,11 +8,13 @@ Nitro Forge. **The app owns the theme; NYC-Tron owns accessible component behavi
 and documented platform contracts.** No NYC-MON palette is imposed on consumers.
 
 > **Status: v1.0.0-rc.2 prerelease.** NYC-Tron UI is an independent UI library
-> with general components and optional professional controls. The release ships
+> of general app components. The release ships
 > sixteen GitHub Release tarballs plus `SHA256SUMS`; nothing is published to npm.
 > Stable 1.0.0 requires the library's own component evidence, documentation and
 > owner distribution approval. [Decision D9](docs/V1_DECISIONS.md#d9-standalone-ui-library-v1)
-> records that scope. The manifest, gate migration and docs surface are pending;
+> records that scope. Since [D10](docs/V1_DECISIONS.md#d10-editor-controls-move-to-nitro-forge)
+> the editor controls ship from Nitro Forge, not from Tron; rc.2 is the last
+> release that contains them. The manifest, gate migration and docs surface are pending;
 > this documentation change does not make the candidate stable. See
 > [release-gate evidence](docs/completion/reports/V1-RELEASE-GATES.md) and the
 > [Support policy](docs/SUPPORT.md) for commit-specific results and limits.
@@ -37,11 +39,16 @@ columns, live appearance choices and retained drafts.
 import { Button } from "@nyc-tron/ui/components/Button";
 import { Card } from "@nyc-tron/ui/components/Card";
 import { NavigationRail } from "@nyc-tron/ui/components/NavigationRail";
-
-// Optional professional editor controls; NO Nitro Forge engine needed:
-import { WaveformLane } from "@nyc-tron/ui/components/forge/WaveformLane";
-import { NativeSeekBar } from "@nyc-tron/ui/components/forge/NativeSeekBar";
+import { PrecisionScrubber } from "@nyc-tron/ui/components/shell/PrecisionScrubber";
 ```
+
+Editor controls such as `WaveformLane` and `NativeSeekBar` moved to
+`@nitro-forge/editor-controls` in [Nitro Forge](https://github.com/mikevocalz/nitro-forge).
+Replace `@nyc-tron/ui/components/forge/<path>` with
+`@nitro-forge/editor-controls/<path>`; [MIGRATION.md](docs/MIGRATION.md#editor-controls-moved-to-nitro-forge-d10)
+lists the three paths that stayed in Tron under `components/shell`. Both
+changes ship in the first release after v1.0.0-rc.2; rc.2 still has the old
+`components/forge/*` paths and not the `components/shell/precision*` ones.
 
 Pure layout policies are independently importable:
 
@@ -51,22 +58,21 @@ import { resolveUsableRegions } from "@nyc-tron/core/folds";
 import { validateSpatialPanelSet } from "@nyc-tron/core/spatial";
 ```
 
-The `@expo/ui` native seek bar is an *optional Expo SDK 58+ component*.
-Importing `Button` does not import it, a document engine, Viro, or Skia.
+Importing `Button` does not import `@expo/ui`, a document engine, Viro, or Skia.
 
 ## Studio/Forge boundary
 
-NYC-Tron UI is the **only shared component home**. Nitro Forge owns its Rust
-editor engines and suite applications; it imports controls from NYC-Tron, not
-the other way around:
+NYC-Tron UI owns general app UI. Nitro Forge owns its Rust editor engines, its
+suite applications and the editor controls (`@nitro-forge/editor-controls`).
+Forge imports Tron's UI; Tron never imports Forge:
 
 ```text
 Moyo / NYC-MON / Forge / other consumer apps
       |
       +-- @nyc-tron/ui/components/...       small reusable UI pieces
-      +-- @nyc-tron/ui/components/forge/... professional controls (optional)
       +-- @nyc-tron/core                  navigation/fold/spatial policies
       |
+      +-- @nitro-forge/editor-controls     editor controls, built on @nyc-tron/ui
       +-- @nitro-forge/prism               image engine only if needed
       +-- @nitro-forge/cadence             audio engine only if needed
       +-- @nitro-forge/ignition            shared document host where needed
@@ -112,8 +118,9 @@ See [Architecture](docs/ARCHITECTURE.md), [Component ownership](docs/COMPONENT_O
 
 - `@nyc-tron/ui/components/data/DataTable` turns narrow-pane rows into
   labeled mobile record cards, with TanStack sorting still available.
-- `@nyc-tron/ui/components/forge/SpreadsheetGrid` remains a horizontally
-  scrollable, touch-sized spreadsheet with a mobile stacked formula bar.
+- The spreadsheet grid (`SpreadsheetGrid`, a horizontally scrollable,
+  touch-sized grid with a mobile stacked formula bar) moved to
+  `@nitro-forge/editor-controls/SpreadsheetGrid` in D10.
 - Read [Responsive tables](docs/RESPONSIVE_TABLES.md) for full contracts,
   optional measured dimensions, and physical-device validation gaps.
 
@@ -180,9 +187,8 @@ Peers: `react` and `react-native` are required by `ui`, `panes` and
 `expo-controls` needs `expo`, `@expo/ui` and `zustand`.
 In `ui`, every peer except `react` and `react-native` is optional and only
 needed by the subpaths that import it; importing `Button` pulls none of them.
-[Support policy](docs/SUPPORT.md) lists the subpaths that need
-`react-native-skia`, and [packages/ui/README.md](packages/ui/README.md)
-covers the others.
+[packages/ui/README.md](packages/ui/README.md) lists which subpaths need
+which optional peer.
 
 To check the tarballs before pinning them, download them with the release's
 `SHA256SUMS` and verify:

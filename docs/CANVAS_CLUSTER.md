@@ -1,6 +1,6 @@
 # Canvas and layers: local source completion
 
-Phase 3 integrates the four recovered canvas workers onto alpha.3 plus the local timeline phase. Controls are public independent subpaths under `@nyc-tron/ui/components/forge/`; pure models are exported alongside them. None of these additions is in the published alpha.3 tarball.
+Phase 3 integrates the four recovered canvas workers onto alpha.3 plus the local timeline phase. Controls are public independent subpaths under `@nyc-tron/ui/components/forge/`; pure models are exported alongside them. None of these additions is in the published alpha.3 tarball. Since [D10](V1_DECISIONS.md#d10-editor-controls-move-to-nitro-forge) these controls and models are `@nitro-forge/editor-controls/<path>` in Nitro Forge; this record keeps the paths it was written with.
 
 | Directory | Controls | Domain boundary |
 | --- | --- | --- |

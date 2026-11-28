@@ -5,8 +5,11 @@ and [Support policy](SUPPORT.md).
 
 ## Current candidate
 
-NYC-Tron UI is an independent UI library with general components and optional
-professional controls. The published candidate is `v1.0.0-rc.2`. Its exact
+NYC-Tron UI is an independent UI library of general app components. The
+published candidate is `v1.0.0-rc.2`, which still contains the editor controls
+under `components/forge/*`; after rc.2 they moved to
+`@nitro-forge/editor-controls` in Nitro Forge
+([D10](V1_DECISIONS.md#d10-editor-controls-move-to-nitro-forge)). Its exact
 CI/runtime results are recorded in
 [candidate verification](completion/reports/V1-RELEASE-GATES.md); each receipt
 applies to its cited commit. [D9](V1_DECISIONS.md#d9-standalone-ui-library-v1)

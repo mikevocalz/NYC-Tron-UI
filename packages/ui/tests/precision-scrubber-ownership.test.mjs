@@ -33,7 +33,7 @@ test('preview callback replacement during a gesture restores its original host',
  f.set({onPreview:v=>replacement.push(v),value:20});a.cancel();assert.deepEqual(old,[11,10]);assert.deepEqual(replacement,[]);
 });
 test('native body and input are retained across boundary changes',()=>{
- const source=readFileSync(new URL('../src/components/forge/inputs/PrecisionScrubber.tsx',import.meta.url),'utf8');
+ const source=readFileSync(new URL('../src/components/shell/PrecisionScrubber.tsx',import.meta.url),'utf8');
  assert.doesNotMatch(source,/<PrecisionScrubberBody\s+key=/);assert.match(source,/controller.admit\(boundary\)/);assert.match(source,/controller.scoped\(boundary\)/);assert.match(source,/useEditorBoundary\(\[signature\]\)/);
 });
 

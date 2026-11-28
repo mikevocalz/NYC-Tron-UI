@@ -191,7 +191,7 @@ test("the model follows new controlled values only while idle",()=>{
  assert.equal(f.state().preview,31);
 });
 test("component keeps forced-colors, adjustable a11y and no engine imports",()=>{
- const src=readFileSync(new URL("../src/components/forge/inputs/PrecisionScrubber.tsx",import.meta.url),"utf8");
+ const src=readFileSync(new URL("../src/components/shell/PrecisionScrubber.tsx",import.meta.url),"utf8");
  assert.match(src,/forcedColorAdjust:"none"/);
  assert.match(src,/CanvasText\)"/);
  assert.match(src,/Highlight\)"/);

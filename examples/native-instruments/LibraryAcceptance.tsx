@@ -7,18 +7,13 @@ import {useStore} from 'zustand';
 import {TabBar} from '@nyc-tron/ui/components/TabBar';
 import {useReservedRegions} from '@nyc-tron/reserved-regions';
 import {foldFeaturesFromRegions,resolveUsableRegions,type Rect} from '@nyc-tron/core/folds';
-import {CanvasWorkbenchDemo} from './CanvasWorkbenchDemo';
-import {MotionWorkbenchDemo} from './MotionWorkbenchDemo';
 import {ShellDemo} from './ShellDemo';
 import {NativeOverlayDemo} from './NativeOverlayDemo';
 import {FocusAndA11yLayer} from '@nyc-tron/ui/components/shell/FocusAndA11yLayer';
 import {WorkspaceContinuityDemo} from './WorkspaceContinuityDemo';
-import {ColorManagementDemo} from './ColorManagementDemo';
-import {PhotoWorkbenchDemo} from './PhotoWorkbenchDemo';
 import {P3DiscDemo} from './P3DiscDemo';
-import {ColorAdjustmentsDemo} from './ColorAdjustmentsDemo';
 import {PointerInputDemo} from './PointerInputDemo';
-type State={family:'shell'|'management'|'adjustments'|'P3'|'photo'|'motion'|'workspace'|'overlays'|'canvas'|'pointer';viewport:Rect|null};
+type State={family:'shell'|'P3'|'workspace'|'overlays'|'pointer';viewport:Rect|null};
 function LibraryContent(){
  const local=useRef<StoreApi<State>|null>(null);local.current??=createStore<State>(()=>({family:'shell',viewport:null}));const store=local.current,state=useStore(store,s=>s);
  const host=useRef<ComponentRef<typeof View>|null>(null),regions=useReservedRegions();
@@ -28,11 +23,13 @@ function LibraryContent(){
  return <SafeAreaView style={{flex:1,backgroundColor:'#101017'}}><KeyboardAvoidingView behavior={Platform.OS==='ios'?'padding':'height'} style={{flex:1}}>
   <View ref={host} collapsable={false} onLayout={measure} style={{flex:1}}>
    <View style={[{position:'absolute',gap:8},pane?{left:pane.x,top:pane.y,width:pane.width,height:pane.height}:{inset:0}]}>
-    <ScrollView horizontal testID="library-family-scroll" style={{flexGrow:0,flexShrink:0}} contentContainerStyle={{width:Math.max(640,pane?.width??640)}}><TabBar tabs={(['shell','management','adjustments','P3','photo','motion','workspace','overlays','canvas','pointer'] as const).map(key=>({key,label:key,active:key===state.family,onPress:()=>store.setState({family:key})}))}/></ScrollView>
-    <View style={{flex:1}}>{state.family==='pointer'?<ScrollView keyboardShouldPersistTaps="handled"><PointerInputDemo/></ScrollView>:state.family==='canvas'?<CanvasWorkbenchDemo/>:state.family==='overlays'?<NativeOverlayDemo/>:state.family==='workspace'?<WorkspaceContinuityDemo/>:state.family==='shell'?<ShellDemo height={Math.max(280,(pane?.height??700)-64)}/>:state.family==='management'?<ColorManagementDemo/>:state.family==='adjustments'?<ColorAdjustmentsDemo/>:state.family==='P3'?<P3DiscDemo/>:state.family==='photo'?<PhotoWorkbenchDemo/>:<MotionWorkbenchDemo/>}</View>
+    <ScrollView horizontal testID="library-family-scroll" style={{flexGrow:0,flexShrink:0}} contentContainerStyle={{width:Math.max(640,pane?.width??640)}}><TabBar tabs={(['shell','P3','workspace','overlays','pointer'] as const).map(key=>({key,label:key,active:key===state.family,onPress:()=>store.setState({family:key})}))}/></ScrollView>
+    <View style={{flex:1}}>{state.family==='pointer'?<ScrollView keyboardShouldPersistTaps="handled"><PointerInputDemo/></ScrollView>:state.family==='overlays'?<NativeOverlayDemo/>:state.family==='workspace'?<WorkspaceContinuityDemo/>:state.family==='P3'?<P3DiscDemo/>:<ShellDemo height={Math.max(280,(pane?.height??700)-64)}/>}</View>
    </View>
   </View>
  </KeyboardAvoidingView></SafeAreaView>;
 }
-/** Standalone library acceptance consumer; no Forge or processing engine dependency. */
+/** Standalone library acceptance consumer; no Forge or processing engine dependency.
+ * The editor control demos it used to host moved to Nitro Forge
+ * (packages/editor-controls/examples/native-instruments). */
 export default function LibraryAcceptance(){return <SafeAreaProvider><FocusAndA11yLayer><LibraryContent/></FocusAndA11yLayer></SafeAreaProvider>;}

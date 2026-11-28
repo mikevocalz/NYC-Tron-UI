@@ -1,5 +1,6 @@
-// Deliberately small. Professional editor controls are NEVER imported into
-// this root barrel; use direct /components/forge/<Component> subpaths.
+// Deliberately small: import other components through their direct
+// /components/<path> subpaths. Editor controls live in Nitro Forge
+// (@nitro-forge/editor-controls), not in this package.
 export { Button } from "./components/Button.tsx";
 export type { ButtonProps, ButtonVariant, ButtonSize } from "./components/Button.tsx";
 export { Card } from "./components/Card.tsx";
