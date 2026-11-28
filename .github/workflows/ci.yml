@@ -86,6 +86,12 @@ jobs:
         run: node tooling/api-signatures.mjs
       - name: Verify the library inventory against exports and reviewed declarations
         run: node tooling/library-components.mjs
+      # The docs catalog reads React Native declarations from the docs
+      # tooling install (website/package-lock.json); no website build runs.
+      - name: Install the documentation tooling read by the docs catalog
+        run: npm --prefix website ci --ignore-scripts
+      - name: Verify llms.txt, llms-full.txt and the agent registry against the inventory
+        run: node tooling/llms.mjs --check
       # A changed public API stops the step above. Keep the candidate snapshot
       # so a reviewer can diff it and commit it with an explicit --write.
       - name: Write the candidate declaration snapshot for review
