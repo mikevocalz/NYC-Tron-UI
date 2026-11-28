@@ -51,6 +51,8 @@ export function NavigationRail({
           accessibilityRole="tab"
           accessibilityLabel={item.label}
           accessibilityState={{selected,disabled:!!item.disabled}}
+          aria-selected={selected}
+          aria-disabled={!!item.disabled}
           {...{className:joinClasses(
             "flex-row w-full min-h-11 items-center gap-2",
             !unstyled&&"rounded-control px-3 focus-visible:ring-2 focus-visible:ring-focus",
@@ -59,7 +61,7 @@ export function NavigationRail({
             itemClassName,selected&&selectedItemClassName
           )}}
         >
-          {item.icon ? <View accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
+          {item.icon ? <View accessibilityElementsHidden aria-hidden importantForAccessibility="no-hide-descendants">
             {item.icon}
           </View> : null}
           {!collapsed ?

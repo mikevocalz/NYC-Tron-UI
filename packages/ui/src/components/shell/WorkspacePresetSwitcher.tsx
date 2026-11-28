@@ -84,6 +84,9 @@ export function WorkspacePresetSwitcher({
   const store=local.current;
   const dialog=useStore(store,s=>s.dialog);
   const trigger=useRef<ComponentRef<typeof Pressable>>(null);
+  const nameInput=useRef<ComponentRef<typeof TextField>>(null);
+  const nameSelectionTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
+  const cancelNameSelection=()=>{if(nameSelectionTimer.current!==null){clearTimeout(nameSelectionTimer.current);nameSelectionTimer.current=null;}};
   const styled=!unstyled,nameId=useId();
   const can=presetActions(saved);
 
@@ -94,7 +97,7 @@ export function WorkspacePresetSwitcher({
   const focusTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
   useLayoutEffect(()=>{snapshot.current={boundary,scope,disabled,presets,onSelect,onSaveAs,onRename,onDuplicate,onDelete,onReset,onUndoDelete,undoable};});
   const undoScope=useRef(scope);
-  useLayoutEffect(()=>{if(undoScope.current!==scope){lastUndo.current=undefined;undoScope.current=scope;}return()=>{snapshot.current=null;if(focusTimer.current!==null)clearTimeout(focusTimer.current);};},[scope]);
+  useLayoutEffect(()=>{if(undoScope.current!==scope){lastUndo.current=undefined;undoScope.current=scope;}return()=>{snapshot.current=null;cancelNameSelection();if(focusTimer.current!==null)clearTimeout(focusTimer.current);};},[scope]);
   useLayoutEffect(()=>{store.setState({dialog:undefined});},[boundary,store]);
   const current=()=>!disabled&&snapshot.current?.boundary===boundary?snapshot.current:null;
   const openDialog=(draft:DialogDraft)=>store.setState(state=>({nextSession:state.nextSession+1,dialog:{...draft,session:state.nextSession}}));
@@ -195,9 +198,22 @@ export function WorkspacePresetSwitcher({
           </>:named?<>
             <Text accessibilityRole="header" {...{className:joinClasses("text-start",styled&&"text-lg font-semibold text-text")}}>
               {named.kind==="save"?"Save layout as a new preset":`Rename “${active.name}”`}</Text>
-            <TextField id={`${nameId}-workspace-preset-name`} label="Preset name" value={named.draft} autoFocus selectTextOnFocus
+            <TextField id={`${nameId}-workspace-preset-name`} label="Preset name" value={named.draft} ref={nameInput} autoFocus selectTextOnFocus={Platform.OS!=="web"}
               maxLength={PRESET_NAME_MAX*2+20} returnKeyType="done" onSubmitEditing={submitName}
-              onChangeText={draft=>{const open=store.getState().dialog;if(current()&&open?.session===named.session&&open.kind!=='delete')store.setState({dialog:{...open,draft}});}}
+              onFocus={()=>{
+                if(Platform.OS!=="web")return;
+                cancelNameSelection();
+                const input=nameInput.current;
+                // Safari needs deferred selection. Unlike RNW's unconditional
+                // selectTextOnFocus timer, abandon it as soon as editing starts.
+                nameSelectionTimer.current=setTimeout(()=>{
+                  nameSelectionTimer.current=null;
+                  if(current()&&store.getState().dialog?.session===named.session&&nameInput.current===input)
+                    (input as unknown as {select?:()=>void}|null)?.select?.();
+                },0);
+              }}
+              onBlur={cancelNameSelection}
+              onChangeText={draft=>{const open=store.getState().dialog;if(current()&&open?.session===named.session&&open.kind!=='delete'){cancelNameSelection();store.setState({dialog:{...open,draft}});}}}
               {...(named.submitted&&problem?{errorText:presetNameMessage(problem,named.draft)}
                 :{helperText:`Up to ${PRESET_NAME_MAX} characters.`})}/>
             <View style={{flexDirection:"row",justifyContent:"flex-end",gap:8,flexWrap:"wrap"}}>

@@ -1,7 +1,8 @@
 # Qt, React Native and Forge integration
 
-The 341-capability roster already has 332 local implementations and nine pinned
-external providers. Reuse those public controls through the RN Qt renderer.
+The historical Forge correspondence map records reusable controls and pinned
+external providers for its application acceptance program. It is a downstream
+case study, not NYC-Tron library scope. Reuse public controls through the RN Qt renderer.
 NYC-Tron owns reusable UI; Nitro Forge owns its separately installed engines and
 typed adapters. A Qt counterpart is a useful API comparison, not permission to
 duplicate either owner.
@@ -10,8 +11,8 @@ duplicate either owner.
 its public entry, a Qt counterpart profile, target-selected dependencies and
 missing named React Native APIs. [The JSON report](component-coverage.json)
 also includes the selected source files, transitive local import paths and
-external revisions. It preserves the original roster and its eight-platform
-acceptance ledger. QNX and Marathon are assessed separately here.
+external revisions. It preserves a dated source correspondence snapshot. Forge owns its
+application acceptance ledger and platform requirements. QNX and Marathon are assessed separately here.
 
 The [reviewed RN profile](react-native-api.json) pins published commit
 `404ad9dab676ce876e8a3e367743111b7d605417` and its 30 named exports. Both target

@@ -84,6 +84,8 @@ jobs:
       - name: Verify reachable public declarations and dependency type boundaries
         id: signatures
         run: node tooling/api-signatures.mjs
+      - name: Verify the library inventory against exports and reviewed declarations
+        run: node tooling/library-components.mjs
       # A changed public API stops the step above. Keep the candidate snapshot
       # so a reviewer can diff it and commit it with an explicit --write.
       - name: Write the candidate declaration snapshot for review
@@ -96,8 +98,6 @@ jobs:
           name: api-signatures-candidate
           path: ${{ runner.temp }}/api-signatures-candidate.json
           if-no-files-found: warn
-      - name: Verify the complete component ledger and reviewed public exports
-        run: node tooling/verify-component-program.mjs
       - name: Pack every package and check release tarball contents
         run: node tooling/pack-release.mjs "$RUNNER_TEMP/nyc-tron-packs"
       - name: Install the dependency-free tarballs in a fresh project and import them

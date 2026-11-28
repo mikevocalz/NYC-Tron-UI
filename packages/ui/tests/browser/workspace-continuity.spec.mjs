@@ -10,3 +10,20 @@ test('changing documents closes rename/delete dialogs even when both documents r
 test('mode/revision replacement closes a draft, and rapid text input applies once to its intended preset',async({page})=>{await selectPersonal(page);const first=(await session(page)).canvasInstance;await action(page,'Rename');await page.getByRole('textbox',{name:'Preset name',exact:true}).fill('Old mode draft');await page.getByRole('tab',{name:'Color',exact:true}).evaluate(el=>el.click());await expect(page.getByRole('dialog',{name:'Rename preset',exact:true})).toHaveCount(0);expect((await session(page)).canvasInstance).toBe(first);await selectPersonal(page);await action(page,'Rename');const field=page.getByRole('textbox',{name:'Preset name',exact:true});await field.fill('');await field.pressSequentially('Rapid workspace name');await field.press('Enter');await expect(page.getByRole('button',{name:'Workspace preset: Rapid workspace name',exact:true})).toBeFocused();expect((await state(page)).events.filter(e=>e.includes(':rename:')).length).toBe(1);});
 test('mode and document boundaries cancel active divider drags without a layout write',async({page})=>{const first=(await session(page)).canvasInstance;let b=await page.getByRole('separator',{name:'Resize left dock',exact:true}).boundingBox();await page.mouse.move(b.x+b.width/2,b.y+b.height/2);await page.mouse.down();await page.mouse.move(b.x+b.width/2+50,b.y+b.height/2,{steps:5});await page.getByRole('tab',{name:'Color',exact:true}).evaluate(el=>el.click());await page.mouse.up();expect((await state(page)).events.some(e=>e.includes(':layout:'))).toBe(false);expect((await session(page)).canvasInstance).toBe(first);b=await page.getByRole('separator',{name:'Resize right dock',exact:true}).boundingBox();await page.mouse.move(b.x+b.width/2,b.y+b.height/2);await page.mouse.down();await page.mouse.move(b.x+b.width/2-50,b.y+b.height/2,{steps:5});await page.getByRole('button',{name:'Next workspace document',exact:true}).evaluate(el=>el.click());await page.mouse.up();expect((await state(page)).events.some(e=>e.includes(':layout:'))).toBe(false);expect((await session(page)).layouts).toEqual({});});
 test('controlled divider acknowledgements retain focus for repeated keyboard steps and saved mode layouts',async({page})=>{const divider=page.getByRole('separator',{name:'Resize left dock',exact:true});await divider.focus();await page.keyboard.press('ArrowRight');await expect(divider).toBeFocused();await page.keyboard.press('ArrowRight');const s=await session(page);expect(s.layouts.edit.left.size).toBe(212);expect((await state(page)).events.filter(e=>e.includes(':layout:')).length).toBe(2);await page.getByRole('tab',{name:'Color',exact:true}).click();await page.getByRole('tab',{name:'Edit',exact:true}).click();expect((await session(page)).layouts.edit.left.size).toBe(212);expect(await divider.getAttribute('aria-valuenow')).toBe('212');});
+test('a pending focus-selection timer cannot replace the first typed character in a preset name',async({page})=>{
+ await selectPersonal(page);await action(page,'Rename');
+ const field=page.getByRole('textbox',{name:'Preset name',exact:true});
+ await expect(field).toBeVisible();
+ await page.clock.install();await page.clock.pauseAt(new Date(Date.now()+100));
+ // An idle focus still selects the existing name using the deferred path.
+ await field.evaluate(el=>el.blur());await field.focus();await page.clock.runFor(1);
+ expect(await field.evaluate(el=>[el.selectionStart,el.selectionEnd])).toEqual([0,'Personal'.length]);
+ // Force the former RNW focus timer to run between the first two keystrokes.
+ await field.evaluate(el=>el.blur());await field.fill('');
+ await field.pressSequentially('R');await page.clock.runFor(1);
+ await field.pressSequentially('apid workspace name');
+ await expect(field).toHaveValue('Rapid workspace name');
+ await field.press('Enter');await page.clock.runFor(1);
+ await expect(page.getByRole('button',{name:'Workspace preset: Rapid workspace name',exact:true})).toBeFocused();
+ expect((await state(page)).events.filter(e=>e.includes(':rename:'))).toEqual(['document-a:rename:personal:Rapid workspace name']);
+});

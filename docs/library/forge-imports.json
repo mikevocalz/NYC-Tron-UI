@@ -1,0 +1,3993 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Forge row-to-import lookup only; not library scope, inventory or a release gate",
+  "programHome": "https://github.com/mikevocalz/nitro-forge/blob/5902e64d6ad01090f5e9a40f8402ec0cbcb39a71/docs/completion/library-progress.json",
+  "sourceLedgerDigestEncoding": "SHA-256 of JSON.stringify(parsed ledger); not raw ledger bytes or a Git blob id",
+  "sourceLedgerSha256": "d71f0a2f33dd96523c3a18e864cd725b0414b83b035eb86392d9883efcd486d1",
+  "baselineRows": 341,
+  "addedRows": 5,
+  "rows": {
+    "A-01": {
+      "name": "WorkspaceHost",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/WorkspaceHost"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-workspace-shell.md",
+        "P04-workspace-native-proof.json"
+      ]
+    },
+    "A-02": {
+      "name": "WorkspacePresetSwitcher",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/WorkspacePresetSwitcher"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-workspace-shell.md",
+        "P04-workspace-native-proof.json"
+      ]
+    },
+    "A-03": {
+      "name": "AdaptiveDock",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/AdaptiveDock"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-workspace-shell.md",
+        "P04-workspace-native-proof.json"
+      ]
+    },
+    "A-04": {
+      "name": "PaneSplitter",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/PaneSplitter"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-workspace-shell.md",
+        "P04-workspace-native-proof.json"
+      ]
+    },
+    "A-05": {
+      "name": "DocumentTabBar",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/DocumentTabBar"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-command-controls.md"
+      ]
+    },
+    "A-06": {
+      "name": "ToolRail",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/ToolRail"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-command-controls.md"
+      ]
+    },
+    "A-07": {
+      "name": "ContextualToolbar",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/ContextualToolbar"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-command-controls.md"
+      ]
+    },
+    "A-08": {
+      "name": "RibbonTabs",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/RibbonTabs"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-command-controls.md"
+      ]
+    },
+    "A-09": {
+      "name": "InspectorPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/InspectorPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
+    },
+    "A-10": {
+      "name": "InspectorSection",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/InspectorSection"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
+    },
+    "A-11": {
+      "name": "PropertyRow",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/PropertyRow"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
+    },
+    "A-12": {
+      "name": "NumericScrubField",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/inputs/PrecisionScrubber",
+        "@nyc-tron/ui/components/shell/NumericScrubField"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-state-and-public-api.md"
+      ]
+    },
+    "A-13": {
+      "name": "UnitInput",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/UnitInput"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-motion-settings.md"
+      ]
+    },
+    "A-14": {
+      "name": "SliderField",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/SliderField"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
+    },
+    "A-15": {
+      "name": "RangeSlider",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/RangeSlider"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
+    },
+    "A-16": {
+      "name": "RotaryKnob",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/RotaryKnob"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
+    },
+    "A-17": {
+      "name": "SplitButton",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/SplitButton"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-command-controls.md"
+      ]
+    },
+    "A-18": {
+      "name": "CommandPalette",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/overlays/CommandPalette"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-overlays-and-transfer.md"
+      ]
+    },
+    "A-19": {
+      "name": "ContextMenu",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/expo-controls/ContextMenu",
+        "@nyc-tron/ui/components/shell/ContextMenu"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-overlays-and-transfer.md",
+        "P04-native-overlays.md",
+        "P04-native-overlays-proof.json"
+      ]
+    },
+    "A-20": {
+      "name": "NativePopover",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/expo-controls/NativePopover"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-overlays-and-transfer.md",
+        "P04-native-overlays.md",
+        "P04-native-overlays-proof.json"
+      ]
+    },
+    "A-21": {
+      "name": "InspectorSearch",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/InspectorSearch"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-inspector-precision.md"
+      ]
+    },
+    "A-22": {
+      "name": "AssetBrowser",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/AssetBrowser"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-shell-library.md"
+      ]
+    },
+    "A-23": {
+      "name": "PresetGallery",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/PresetGallery"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-overlays-and-transfer.md"
+      ]
+    },
+    "A-24": {
+      "name": "HistoryPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/HistoryPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-shell-library.md"
+      ]
+    },
+    "A-25": {
+      "name": "StatusBar",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/StatusBar"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-overlays-and-transfer.md"
+      ]
+    },
+    "A-26": {
+      "name": "ToastAndProgress",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/ToastAndProgress"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-shell-library.md"
+      ]
+    },
+    "A-27": {
+      "name": "KeyboardShortcutHUD",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/KeyboardShortcutHUD"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-overlays-and-transfer.md"
+      ]
+    },
+    "A-28": {
+      "name": "FocusAndA11yLayer",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/shell/FocusAndA11yLayer"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-overlays-and-transfer.md",
+        "P04-native-overlays.md",
+        "P04-native-overlays-proof.json"
+      ]
+    },
+    "A-29": {
+      "name": "FindReplacePopover",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/expo-controls/FindReplacePopover",
+        "@nyc-tron/ui/components/shell/FindReplacePopover"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-shell-library.md"
+      ]
+    },
+    "A-30": {
+      "name": "FileImportExportSheet",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/files/FileImportExportSheet"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P04-overlays-and-transfer.md"
+      ]
+    },
+    "B-01": {
+      "name": "GPUCanvasViewport",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/canvas/GPUCanvasViewport"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-gpu-viewport.md",
+        "P05-native-canvas.md",
+        "P05-native-canvas-proof.json",
+        "P05-android-merged-manifest-proof.json"
+      ]
+    },
+    "B-02": {
+      "name": "CanvasPanZoom",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/canvas/CanvasPanZoom"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-canvas-navigation.md",
+        "P05-native-canvas.md",
+        "P05-native-canvas-proof.json"
+      ]
+    },
+    "B-03": {
+      "name": "CanvasRuler",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/canvas/CanvasRuler"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-rulers.md"
+      ]
+    },
+    "B-04": {
+      "name": "SnapGridOverlay",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/canvas/SnapGridOverlay"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-snapping-and-pivot.md"
+      ]
+    },
+    "B-05": {
+      "name": "SmartGuides",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/canvas/SmartGuides"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-snapping-and-pivot.md"
+      ]
+    },
+    "B-06": {
+      "name": "SelectionBounds",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/selection/SelectionBounds"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-selection-bounds.md"
+      ]
+    },
+    "B-07": {
+      "name": "MultiSelectionControls",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/selection/MultiSelectionControls"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-multi-selection.md"
+      ]
+    },
+    "B-08": {
+      "name": "TransformOriginHandle",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/canvas/TransformOriginHandle"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-snapping-and-pivot.md"
+      ]
+    },
+    "B-09": {
+      "name": "LayerStack",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/layers/LayerStack"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-layer-tree.md"
+      ]
+    },
+    "B-10": {
+      "name": "LayerThumbnail",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/layers/LayerThumbnail"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-thumbnail-resources.md"
+      ]
+    },
+    "B-11": {
+      "name": "LayerBlendAndOpacity",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/layers/LayerBlendAndOpacity"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-layer-blend.md"
+      ]
+    },
+    "B-12": {
+      "name": "MaskThumbnailAndEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/layers/MaskThumbnailAndEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-mask-and-clipping.md"
+      ]
+    },
+    "B-13": {
+      "name": "ClippingMaskControls",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/layers/ClippingMaskControls"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-mask-and-clipping.md"
+      ]
+    },
+    "B-14": {
+      "name": "ArtboardNavigator",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/layers/ArtboardNavigator"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-artboard-navigation.md"
+      ]
+    },
+    "B-15": {
+      "name": "BrushPresetBrowser",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/ink/BrushPresetBrowser"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
+    },
+    "B-16": {
+      "name": "BrushDynamicsInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/ink/BrushDynamicsInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
+    },
+    "B-17": {
+      "name": "InkStrokePreview",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/ink/InkStrokePreview"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
+    },
+    "B-18": {
+      "name": "EraserModePicker",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/ink/EraserModePicker"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
+    },
+    "B-19": {
+      "name": "SelectionMarquee",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/selection/SelectionMarquee"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-selection-tools-batch.md"
+      ]
+    },
+    "B-20": {
+      "name": "MagicSelectionControls",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/selection/MagicSelectionControls"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-selection-tools-batch.md"
+      ]
+    },
+    "B-21": {
+      "name": "PenNodeEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/vector/PenNodeEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
+    },
+    "B-22": {
+      "name": "ShapeBuilder",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/vector/ShapeBuilder"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
+    },
+    "B-23": {
+      "name": "FillStrokeInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/vector/FillStrokeInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
+    },
+    "B-24": {
+      "name": "GradientOnCanvasHandles",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/vector/GradientOnCanvasHandles"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
+    },
+    "B-25": {
+      "name": "AlignDistributePanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/canvas/AlignDistributePanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
+    },
+    "B-26": {
+      "name": "GuidedCropAndStraighten",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/canvas/GuidedCropAndStraighten"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
+    },
+    "B-27": {
+      "name": "CanvasCompareView",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/layers/CanvasCompareView"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
+    },
+    "B-28": {
+      "name": "FloatingPaletteUndockHandle",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/FloatingPaletteUndockHandle"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-vector-and-crop-batch.md"
+      ]
+    },
+    "B-29": {
+      "name": "BrushTaperControl",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/ink/BrushTaperControl"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
+    },
+    "B-30": {
+      "name": "ColorDropCanvasTarget",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/canvas-tools/ColorDropCanvasTarget"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-selection-tools-batch.md"
+      ]
+    },
+    "B-31": {
+      "name": "ReferenceImageBoard",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/canvas-tools/ReferenceImageBoard"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-selection-tools-batch.md"
+      ]
+    },
+    "B-32": {
+      "name": "TimelapsePlaybackExporter",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/ink/TimelapsePlaybackExporter"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
+    },
+    "B-33": {
+      "name": "BrushStabilizationPreview",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/ink/BrushStabilizationPreview"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
+    },
+    "B-34": {
+      "name": "GestureCustomizationPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/canvas-tools/GestureCustomizationPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P05-selection-tools-batch.md"
+      ]
+    },
+    "C-01": {
+      "name": "ColorPickerDialog",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/ColorPickerDialog"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
+    },
+    "C-02": {
+      "name": "SVColorField",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/SVColorField"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
+    },
+    "C-03": {
+      "name": "ColorWheel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/ColorWheel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
+    },
+    "C-04": {
+      "name": "HueSlider",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/HueSlider"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
+    },
+    "C-05": {
+      "name": "AlphaSlider",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/AlphaSlider"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
+    },
+    "C-06": {
+      "name": "ColorChannels",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/ColorChannelFields"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
+    },
+    "C-07": {
+      "name": "PrintColorChannels",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/PrintColorChannels"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-management.md",
+        "P07-color-specification.md"
+      ]
+    },
+    "C-08": {
+      "name": "WideGamutChannels",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/WideGamutChannels"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-management.md"
+      ]
+    },
+    "C-09": {
+      "name": "ColorSpaceChooser",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/ColorSpaceChooser"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-management.md"
+      ]
+    },
+    "C-10": {
+      "name": "GamutWarning",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/GamutWarning"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-management.md",
+        "P07-color-specification.md"
+      ]
+    },
+    "C-11": {
+      "name": "EyedropperTool",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/EyedropperTool"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
+    },
+    "C-12": {
+      "name": "ForegroundBackgroundChips",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/ForegroundBackgroundChips"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
+    },
+    "C-13": {
+      "name": "SwatchGrid",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/SwatchGrid"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
+    },
+    "C-14": {
+      "name": "ThemeColorReferences",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/ThemeColorReferences"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-management.md"
+      ]
+    },
+    "C-15": {
+      "name": "SpotAndGlobalColorEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/SpotAndGlobalColorEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-management.md",
+        "P07-color-specification.md"
+      ]
+    },
+    "C-16": {
+      "name": "GradientStopEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/GradientStopEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-adjustments.md",
+        "P07-color-specification.md"
+      ]
+    },
+    "C-17": {
+      "name": "GradientMeshEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/GradientMeshEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-adjustments.md",
+        "P07-color-specification.md"
+      ]
+    },
+    "C-18": {
+      "name": "ColorHarmonyAssistant",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/ColorHarmonyAssistant"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
+    },
+    "C-19": {
+      "name": "LiveHistogram",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/LiveHistogram"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-adjustments.md",
+        "P07-color-specification.md"
+      ]
+    },
+    "C-20": {
+      "name": "LevelsEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/LevelsEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
+    },
+    "C-21": {
+      "name": "CurvesEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/CurvesEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-adjustments.md",
+        "P07-color-specification.md"
+      ]
+    },
+    "C-22": {
+      "name": "ColorGradingWheels",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/ColorGradingWheels"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-adjustments.md",
+        "P07-color-specification.md"
+      ]
+    },
+    "C-23": {
+      "name": "HSLSecondaryEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/HSLSecondaryEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-adjustments.md"
+      ]
+    },
+    "C-24": {
+      "name": "VideoScopesPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/VideoScopesPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-adjustments.md",
+        "P07-color-specification.md"
+      ]
+    },
+    "C-25": {
+      "name": "SoftProofControls",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/SoftProofControls"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-management.md",
+        "P07-color-specification.md"
+      ]
+    },
+    "C-26": {
+      "name": "FloatingColorPalette",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/color/FloatingColorPalette"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-existing-color-review.md"
+      ]
+    },
+    "C-27": {
+      "name": "ColorDiscPicker",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/native-controls/DisplayP3DiscLayer",
+        "@nyc-tron/ui/components/forge/color/ColorDiscPicker"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P07-color-specification.md",
+        "P07-native-p3.md"
+      ]
+    },
+    "D-01": {
+      "name": "NativeVideoPlayer",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/native-controls/NativeVideoPlayer"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
+    },
+    "D-02": {
+      "name": "SourceMonitor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/SourceMonitor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
+    },
+    "D-03": {
+      "name": "ProgramMonitor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/ProgramMonitor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
+    },
+    "D-04": {
+      "name": "NativeSeekBar",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/NativeSeekBar",
+        "@nyc-tron/ui/components/forge/timeline/SeekBar"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
+    },
+    "D-05": {
+      "name": "FrameAccurateScrubber",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
+    },
+    "D-06": {
+      "name": "TransportControls",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/TransportControls"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
+    },
+    "D-07": {
+      "name": "PlaybackRateMenu",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/PlaybackRateMenu"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
+    },
+    "D-08": {
+      "name": "TimecodeDisplay",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/TimecodeDisplay"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
+    },
+    "D-09": {
+      "name": "JKLShuttleController",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/JKLShuttleController"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
+    },
+    "D-10": {
+      "name": "TimelineRuler",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/TimelineRuler"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
+    },
+    "D-11": {
+      "name": "TimelinePlayhead",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/TimelinePlayhead"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
+    },
+    "D-12": {
+      "name": "InOutRangeHandles",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/InOutRangeHandles"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
+    },
+    "D-13": {
+      "name": "LoopRangeBar",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/LoopRangeBar"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-transport-and-navigation.md"
+      ]
+    },
+    "D-14": {
+      "name": "TimelineZoomAndScroll",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/TimelineZoomAndScroll"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
+    },
+    "D-15": {
+      "name": "TimelineClipLane",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/TimelineClipLane"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
+    },
+    "D-16": {
+      "name": "VideoFilmstrip",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/VideoFilmstrip"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
+    },
+    "D-17": {
+      "name": "AudioClipWaveform",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/AudioClipWaveform"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
+    },
+    "D-18": {
+      "name": "TrackHeaders",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/TrackHeaders"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
+    },
+    "D-19": {
+      "name": "ClipTrimHandles",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/ClipTrimHandles"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
+    },
+    "D-20": {
+      "name": "RazorSplitTool",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/RazorSplitTool"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
+    },
+    "D-21": {
+      "name": "RollSlipSlideControls",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/RollSlipSlideControls"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
+    },
+    "D-22": {
+      "name": "DragReorderAndRipple",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/DragReorderAndRipple"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
+    },
+    "D-23": {
+      "name": "TransitionHandles",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/TransitionHandles"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
+    },
+    "D-24": {
+      "name": "TimelineMarkers",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/TimelineMarkers"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
+    },
+    "D-25": {
+      "name": "SafeAreaOverlay",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/SafeAreaOverlay"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
+    },
+    "D-26": {
+      "name": "ScopesDock",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/ScopesDock"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
+    },
+    "D-27": {
+      "name": "MulticamAngleViewer",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/MulticamAngleViewer"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
+    },
+    "D-28": {
+      "name": "RenderCacheIndicator",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/RenderCacheIndicator"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
+    },
+    "D-29": {
+      "name": "ExportMonitor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/ExportMonitor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
+    },
+    "D-30": {
+      "name": "PictureInPictureControls",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/PictureInPictureControls"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-monitors-and-media.md"
+      ]
+    },
+    "D-31": {
+      "name": "OverlayAndEffectsTrackStack",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/OverlayAndEffectsTrackStack"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
+    },
+    "D-32": {
+      "name": "VideoSpeedRampCurve",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/VideoSpeedRampCurve"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
+    },
+    "D-33": {
+      "name": "AutoCaptionTranscriptTimeline",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/AutoCaptionTranscriptTimeline"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
+    },
+    "D-34": {
+      "name": "CaptionWordTimingHandles",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/CaptionWordTimingHandles"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
+    },
+    "D-35": {
+      "name": "AutoReframeGuides",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/AutoReframeGuides"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
+    },
+    "D-36": {
+      "name": "VideoStabilizationInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/VideoStabilizationInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
+    },
+    "D-37": {
+      "name": "TransitionPresetBrowser",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/TransitionPresetBrowser"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
+    },
+    "D-38": {
+      "name": "VideoEffectsBrowser",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/VideoEffectsBrowser"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
+    },
+    "D-39": {
+      "name": "MotionTrackingOverlay",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/MotionTrackingOverlay"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
+    },
+    "D-40": {
+      "name": "CoverFramePicker",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/CoverFramePicker"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
+    },
+    "D-41": {
+      "name": "BatchEditPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/BatchEditPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-timeline-editing.md"
+      ]
+    },
+    "D-42": {
+      "name": "VideoQualityInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/VideoQualityInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
+    },
+    "D-43": {
+      "name": "StickerMotionLane",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/timeline/StickerMotionLane"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P08-video-production-tools.md"
+      ]
+    },
+    "E-01": {
+      "name": "NativeAudioTransport",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/NativeAudioTransport"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
+    },
+    "E-02": {
+      "name": "WaveformLane",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/WaveformLane"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
+    },
+    "E-03": {
+      "name": "StereoMultichannelWaveform",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/StereoMultichannelWaveform"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
+    },
+    "E-04": {
+      "name": "LiveRecordingWaveform",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/LiveRecordingWaveform"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
+    },
+    "E-05": {
+      "name": "SpectrogramView",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/SpectrogramView"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
+    },
+    "E-06": {
+      "name": "RecordingArmButton",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/RecordingArmButton"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
+    },
+    "E-07": {
+      "name": "InputMonitorToggle",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/InputMonitorToggle"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
+    },
+    "E-08": {
+      "name": "DeviceAndChannelPicker",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/DeviceAndChannelPicker"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
+    },
+    "E-09": {
+      "name": "AudioClipTrimAndFade",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/AudioClipTrimAndFade"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
+    },
+    "E-10": {
+      "name": "ClipGainEnvelope",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/ClipGainEnvelope"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
+    },
+    "E-11": {
+      "name": "AutomationLane",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/AutomationLane"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
+    },
+    "E-12": {
+      "name": "AutomationModePicker",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/AutomationModePicker"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
+    },
+    "E-13": {
+      "name": "MixingConsole",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/MixingConsole"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
+    },
+    "E-14": {
+      "name": "VerticalFader",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/VerticalFader"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
+    },
+    "E-15": {
+      "name": "PanAndBalanceControl",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/PanAndBalanceControl"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
+    },
+    "E-16": {
+      "name": "RealtimePeakMeter",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/RealtimePeakMeter"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
+    },
+    "E-17": {
+      "name": "LoudnessMeter",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/LoudnessMeter"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
+    },
+    "E-18": {
+      "name": "SoloMuteButtons",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/SoloMuteButtons"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
+    },
+    "E-19": {
+      "name": "BusAndRoutingMatrix",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/BusAndRoutingMatrix"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
+    },
+    "E-20": {
+      "name": "InsertEffectRack",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/InsertEffectRack"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
+    },
+    "E-21": {
+      "name": "EQFrequencyGraph",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/EQFrequencyGraph"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
+    },
+    "E-22": {
+      "name": "DynamicsTransferGraph",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/DynamicsTransferGraph"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
+    },
+    "E-23": {
+      "name": "PluginPresetBrowser",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/PluginPresetBrowser"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
+    },
+    "E-24": {
+      "name": "MIDIPianoRoll",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/midi/MIDIPianoRoll"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
+    },
+    "E-25": {
+      "name": "MIDIVelocityLane",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/midi/MIDIVelocityLane"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
+    },
+    "E-26": {
+      "name": "StepSequencer",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/midi/StepSequencer"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
+    },
+    "E-27": {
+      "name": "TempoAndMetronome",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/TempoAndMetronome"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-mixer-analysis-and-midi.md"
+      ]
+    },
+    "E-28": {
+      "name": "TakePlaylistAndComping",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/TakePlaylistAndComping"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
+    },
+    "E-29": {
+      "name": "LoopPunchRecording",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/LoopPunchRecording"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
+    },
+    "E-30": {
+      "name": "SampleEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/SampleEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
+    },
+    "E-31": {
+      "name": "AudioVideoSync",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/AudioVideoSync"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
+    },
+    "E-32": {
+      "name": "LatencyCalibrationPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/LatencyCalibrationPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-clip-and-recording-workflows.md"
+      ]
+    },
+    "E-33": {
+      "name": "SurroundPanView",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/SurroundPanView"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-input-and-automation.md"
+      ]
+    },
+    "E-34": {
+      "name": "VoiceIsolationPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/VoiceIsolationPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
+    },
+    "E-35": {
+      "name": "BeatDetectionMarkerLane",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/BeatDetectionMarkerLane"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
+    },
+    "E-36": {
+      "name": "SoundEffectsLibrary",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/SoundEffectsLibrary"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
+    },
+    "E-37": {
+      "name": "SpeechTranscriptTakeReview",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/SpeechTranscriptTakeReview"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
+    },
+    "E-38": {
+      "name": "VoiceoverCountdownAndTakeBin",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/VoiceoverCountdownAndTakeBin"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
+    },
+    "E-39": {
+      "name": "AudioEffectsPresetPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/AudioEffectsPresetPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
+    },
+    "E-40": {
+      "name": "NoiseReductionMonitor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/NoiseReductionMonitor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
+    },
+    "E-41": {
+      "name": "AutoDuckEnvelopePanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/AutoDuckEnvelopePanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P09-processing-and-speech.md"
+      ]
+    },
+    "F-01": {
+      "name": "PhotoLibraryGrid",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/PhotoLibraryGrid"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-catalog.md"
+      ]
+    },
+    "F-02": {
+      "name": "CatalogFilterBar",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/CatalogFilterBar"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-catalog.md"
+      ]
+    },
+    "F-03": {
+      "name": "RatingAndFlagControl",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/RatingAndFlagControl"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-develop.md"
+      ]
+    },
+    "F-04": {
+      "name": "RAWDevelopPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/RAWDevelopPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-develop.md"
+      ]
+    },
+    "F-05": {
+      "name": "ExposureAndWhiteBalance",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/ExposureAndWhiteBalance"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-develop.md"
+      ]
+    },
+    "F-06": {
+      "name": "ToneAndPresence",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/ToneAndPresence"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-develop.md"
+      ]
+    },
+    "F-07": {
+      "name": "EightBandColorMixer",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/EightBandColorMixer"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-develop.md"
+      ]
+    },
+    "F-08": {
+      "name": "LensCorrectionPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/LensCorrectionPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-develop.md"
+      ]
+    },
+    "F-09": {
+      "name": "LocalMaskBrush",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/LocalMaskBrush"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-masks.md"
+      ]
+    },
+    "F-10": {
+      "name": "LinearRadialGradientMask",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/LinearRadialGradientMask"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-masks.md"
+      ]
+    },
+    "F-11": {
+      "name": "LuminanceColorRangeMask",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/LuminanceColorRangeMask"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-masks.md"
+      ]
+    },
+    "F-12": {
+      "name": "BeforeAfterCompare",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/BeforeAfterCompare"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-catalog.md"
+      ]
+    },
+    "F-13": {
+      "name": "PresetFilmstrip",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/PresetFilmstrip"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-workflows.md"
+      ]
+    },
+    "F-14": {
+      "name": "BatchExportPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/BatchExportPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-workflows.md"
+      ]
+    },
+    "F-15": {
+      "name": "PhotoVersionHistoryBrowser",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/PhotoVersionHistoryBrowser"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-workflows.md"
+      ]
+    },
+    "F-16": {
+      "name": "CleanupAndRetouchPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/CleanupAndRetouchPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-masks.md"
+      ]
+    },
+    "F-17": {
+      "name": "PresetManager",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/PresetManager"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-workflows.md"
+      ]
+    },
+    "F-18": {
+      "name": "PhotoMetadataInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/photo/PhotoMetadataInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P10-photo-catalog.md"
+      ]
+    },
+    "G-01": {
+      "name": "CompositionLayerTree",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/CompositionLayerTree"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-composition-tree.md"
+      ]
+    },
+    "G-02": {
+      "name": "MotionKeyframeTimeline",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/MotionKeyframeTimeline"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-keyframe-timeline.md"
+      ]
+    },
+    "G-03": {
+      "name": "KeyframeValueGraph",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/KeyframeValueGraph"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-motion-curves.md"
+      ]
+    },
+    "G-04": {
+      "name": "KeyframeSpeedGraph",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/KeyframeSpeedGraph"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-motion-curves.md"
+      ]
+    },
+    "G-05": {
+      "name": "EasingPresetGallery",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/EasingPresetGallery"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-render-and-easing.md"
+      ]
+    },
+    "G-06": {
+      "name": "MotionPathEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/MotionPathEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-motion-path.md"
+      ]
+    },
+    "G-07": {
+      "name": "Transform3DInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/Transform3DInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-motion-settings.md"
+      ]
+    },
+    "G-08": {
+      "name": "CameraAndLightControls",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/CameraAndLightControls"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-motion-settings.md"
+      ]
+    },
+    "G-09": {
+      "name": "MatteAndMaskPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/MatteAndMaskPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-motion-settings.md"
+      ]
+    },
+    "G-10": {
+      "name": "EffectStackAndInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/EffectStackAndInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-effect-stack.md"
+      ]
+    },
+    "G-11": {
+      "name": "ExpressionEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/ExpressionEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-expression-editor.md",
+        "P11-native-motion.md",
+        "P11-native-motion-proof.json"
+      ]
+    },
+    "G-12": {
+      "name": "ParticleEmitterControls",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/ParticleEmitterControls"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-motion-settings.md"
+      ]
+    },
+    "G-13": {
+      "name": "TimeRemapCurve",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/TimeRemapCurve"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-motion-curves.md"
+      ]
+    },
+    "G-14": {
+      "name": "NodeGraphEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/NodeGraphEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-node-graph.md",
+        "P11-native-motion.md",
+        "P11-native-motion-proof.json"
+      ]
+    },
+    "G-15": {
+      "name": "RenderQueuePanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/motion/RenderQueuePanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P11-render-and-easing.md"
+      ]
+    },
+    "H-01": {
+      "name": "PaginatedTextCanvas",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/PaginatedTextCanvas"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
+    },
+    "H-02": {
+      "name": "TextSelectionAndCaret",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/TextSelectionAndCaret"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
+    },
+    "H-03": {
+      "name": "RichTextRibbon",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/RichTextRibbon"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
+    },
+    "H-04": {
+      "name": "TypographyInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/TypographyInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
+    },
+    "H-05": {
+      "name": "ParagraphStylesGallery",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/ParagraphStylesGallery"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
+    },
+    "H-06": {
+      "name": "ParagraphRuler",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/ParagraphRuler"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
+    },
+    "H-07": {
+      "name": "BulletsNumberingEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/BulletsNumberingEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
+    },
+    "H-08": {
+      "name": "InsertTableGrid",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/InsertTableGrid"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
+    },
+    "H-09": {
+      "name": "TableLayoutInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/TableLayoutInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
+    },
+    "H-10": {
+      "name": "HeadersFootersEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/HeadersFootersEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
+    },
+    "H-11": {
+      "name": "PageSetupPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/PageSetupPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-layout-and-formatting.md"
+      ]
+    },
+    "H-12": {
+      "name": "TextWrapAndFrames",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/TextWrapAndFrames"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
+    },
+    "H-13": {
+      "name": "CommentsAndReviewRail",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/CommentsAndReviewRail"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
+    },
+    "H-14": {
+      "name": "TrackChangesView",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/TrackChangesView"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
+    },
+    "H-15": {
+      "name": "NavigationOutline",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/NavigationOutline"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
+    },
+    "H-16": {
+      "name": "TableOfContentsEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/TableOfContentsEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
+    },
+    "H-17": {
+      "name": "FootnoteCitationEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/FootnoteCitationEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
+    },
+    "H-18": {
+      "name": "SpellGrammarPopover",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/SpellGrammarPopover"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
+    },
+    "H-19": {
+      "name": "MailMergeFieldPicker",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/MailMergeFieldPicker"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
+    },
+    "H-20": {
+      "name": "LayoutSpreadNavigator",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/LayoutSpreadNavigator"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-text-surfaces-and-references.md"
+      ]
+    },
+    "H-21": {
+      "name": "DocumentReadAloudTransport",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/DocumentReadAloudTransport"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
+    },
+    "H-22": {
+      "name": "DictationSessionPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/document/DictationSessionPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P12-review-and-structure.md"
+      ]
+    },
+    "I-01": {
+      "name": "VirtualSpreadsheetGrid",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/SpreadsheetGrid",
+        "@nyc-tron/ui/components/forge/spreadsheet/VirtualSpreadsheetGrid"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
+    },
+    "I-02": {
+      "name": "CellSelectionOverlay",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/CellSelectionOverlay"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
+    },
+    "I-03": {
+      "name": "FormulaBar",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/FormulaBar"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
+    },
+    "I-04": {
+      "name": "NameBox",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/NameBox"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
+    },
+    "I-05": {
+      "name": "FormulaAutocomplete",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/FormulaAutocomplete"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
+    },
+    "I-06": {
+      "name": "ReferenceColorizer",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
+    },
+    "I-07": {
+      "name": "FillHandleAndAutoFill",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/FillHandleAndAutoFill"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-grid-and-formula-controls.md"
+      ]
+    },
+    "I-08": {
+      "name": "SheetTabs",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/SheetTabs"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-sheet-management-and-charts.md"
+      ]
+    },
+    "I-09": {
+      "name": "CellFormatInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/CellFormatInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
+    },
+    "I-10": {
+      "name": "ConditionalFormatRules",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/ConditionalFormatRules"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
+    },
+    "I-11": {
+      "name": "ValidationDropdown",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/ValidationDropdown"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
+    },
+    "I-12": {
+      "name": "SortFilterHeader",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/SortFilterHeader"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
+    },
+    "I-13": {
+      "name": "ChartBuilder",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/ChartBuilder"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-sheet-management-and-charts.md"
+      ]
+    },
+    "I-14": {
+      "name": "SparklineEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/SparklineEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-sheet-management-and-charts.md"
+      ]
+    },
+    "I-15": {
+      "name": "PivotFieldList",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/PivotFieldList"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
+    },
+    "I-16": {
+      "name": "TableStyleGallery",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/TableStyleGallery"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
+    },
+    "I-17": {
+      "name": "FreezeSplitControls",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/FreezeSplitControls"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-sheet-management-and-charts.md"
+      ]
+    },
+    "I-18": {
+      "name": "RangeComments",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/RangeComments"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-sheet-management-and-charts.md"
+      ]
+    },
+    "I-19": {
+      "name": "DataImportWizard",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/DataImportWizard"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
+    },
+    "I-20": {
+      "name": "SpreadsheetCardsView",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/SpreadsheetCardsView"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-sheet-management-and-charts.md"
+      ]
+    },
+    "I-21": {
+      "name": "SavedSheetViewManager",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/spreadsheet/SavedSheetViewManager"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P13-formatting-and-data-tools.md"
+      ]
+    },
+    "J-01": {
+      "name": "SlideFilmstrip",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/SlideFilmstrip"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-canvas-deck-and-native-ink.md"
+      ]
+    },
+    "J-02": {
+      "name": "SlideSorter",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/SlideSorter"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-canvas-deck-and-native-ink.md"
+      ]
+    },
+    "J-03": {
+      "name": "MasterLayoutEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/MasterLayoutEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
+    },
+    "J-04": {
+      "name": "ThemeAndTemplateGallery",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/ThemeAndTemplateGallery"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
+    },
+    "J-05": {
+      "name": "SlideCanvas",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/SlideCanvas"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-canvas-deck-and-native-ink.md"
+      ]
+    },
+    "J-06": {
+      "name": "ShapePresetGallery",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/ShapePresetGallery"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
+    },
+    "J-07": {
+      "name": "ConnectorAndDiagramTools",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/ConnectorAndDiagramTools"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-diagrams-morph-and-media.md"
+      ]
+    },
+    "J-08": {
+      "name": "TransitionPicker",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/TransitionPicker"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
+    },
+    "J-09": {
+      "name": "SlideAnimationPane",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/SlideAnimationPane"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-canvas-deck-and-native-ink.md"
+      ]
+    },
+    "J-10": {
+      "name": "MorphPreview",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/MorphPreview"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-diagrams-morph-and-media.md"
+      ]
+    },
+    "J-11": {
+      "name": "SlideNotesEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/SlideNotesEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
+    },
+    "J-12": {
+      "name": "PresenterView",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/PresenterView"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
+    },
+    "J-13": {
+      "name": "RehearsalTimers",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/RehearsalTimers"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-authoring-and-presenter.md"
+      ]
+    },
+    "J-14": {
+      "name": "InkAndLaserPointer",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/InkAndLaserPointer"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-canvas-deck-and-native-ink.md"
+      ]
+    },
+    "J-15": {
+      "name": "MediaInsertInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/MediaInsertInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-diagrams-morph-and-media.md"
+      ]
+    },
+    "J-16": {
+      "name": "ChartAndTableEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/slides/ChartAndTableEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P14-diagrams-morph-and-media.md"
+      ]
+    },
+    "K-01": {
+      "name": "VirtualPDFPageViewer",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/VirtualPDFPageViewer"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-viewer-selection-and-text.md"
+      ]
+    },
+    "K-02": {
+      "name": "PDFThumbnailSidebar",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/PDFThumbnailSidebar"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
+    },
+    "K-03": {
+      "name": "PDFPageLayoutSelector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/PDFPageLayoutSelector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-viewer-selection-and-text.md"
+      ]
+    },
+    "K-04": {
+      "name": "TextSearchResults",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/TextSearchResults"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
+    },
+    "K-05": {
+      "name": "PDFTextSelection",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/PDFTextSelection"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-viewer-selection-and-text.md"
+      ]
+    },
+    "K-06": {
+      "name": "AnnotationToolbar",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/AnnotationToolbar"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
+    },
+    "K-07": {
+      "name": "CommentsThreadPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/CommentsThreadPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
+    },
+    "K-08": {
+      "name": "SignatureStampTool",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/SignatureStampTool"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
+    },
+    "K-09": {
+      "name": "PDFFormFieldEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/PDFFormFieldEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
+    },
+    "K-10": {
+      "name": "PageReorderOrganizer",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/PageReorderOrganizer"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
+    },
+    "K-11": {
+      "name": "ExtractMergeSplitDialog",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/ExtractMergeSplitDialog"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
+    },
+    "K-12": {
+      "name": "BookmarkOutline",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/BookmarkOutline"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-viewer-selection-and-text.md"
+      ]
+    },
+    "K-13": {
+      "name": "HyperlinkInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/HyperlinkInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
+    },
+    "K-14": {
+      "name": "RedactionReviewTool",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/RedactionReviewTool"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
+    },
+    "K-15": {
+      "name": "EncryptPermissionsPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/EncryptPermissionsPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
+    },
+    "K-16": {
+      "name": "PDFCompareOverlay",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/PDFCompareOverlay"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
+    },
+    "K-17": {
+      "name": "PrintAndExportPreview",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/PrintAndExportPreview"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-organization-and-output.md"
+      ]
+    },
+    "K-18": {
+      "name": "PDFReadAloudTransport",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/PDFReadAloudTransport"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
+    },
+    "K-19": {
+      "name": "PDFVoiceNoteAttachment",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/PDFVoiceNoteAttachment"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
+    },
+    "K-20": {
+      "name": "PDFScanSession",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/PDFScanSession"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-signatures-forms-and-capture.md"
+      ]
+    },
+    "K-21": {
+      "name": "PDFInlineTextEdit",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/pdf/PDFInlineTextEdit"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P15-viewer-selection-and-text.md"
+      ]
+    },
+    "L-01": {
+      "name": "FrameAndComponentTree",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/FrameAndComponentTree"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
+    },
+    "L-02": {
+      "name": "AutoLayoutInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/AutoLayoutInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
+    },
+    "L-03": {
+      "name": "HugFillFixedSizeControls",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/HugFillFixedSizeControls"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
+    },
+    "L-04": {
+      "name": "ConstraintsPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/ConstraintsPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
+    },
+    "L-05": {
+      "name": "ComponentVariantPicker",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/ComponentVariantPicker"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
+    },
+    "L-06": {
+      "name": "ReusableStylesPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/ReusableStylesPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
+    },
+    "L-07": {
+      "name": "VariablesAndModes",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/VariablesAndModes"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-layout-styles-and-variables.md"
+      ]
+    },
+    "L-08": {
+      "name": "PrototypeConnectionTool",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/PrototypeConnectionTool"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
+    },
+    "L-09": {
+      "name": "InteractionTriggerEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/InteractionTriggerEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
+    },
+    "L-10": {
+      "name": "PrototypePreviewPlayer",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/PrototypePreviewPlayer"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
+    },
+    "L-11": {
+      "name": "FlowOverview",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/FlowOverview"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
+    },
+    "L-12": {
+      "name": "DevHandoffInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/DevHandoffInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
+    },
+    "L-13": {
+      "name": "CollaborationPresence",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/CollaborationPresence"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
+    },
+    "L-14": {
+      "name": "CommentPins",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/CommentPins"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
+    },
+    "L-15": {
+      "name": "MultiExportSlices",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/design/MultiExportSlices"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P16-prototypes-collaboration-and-handoff.md"
+      ]
+    },
+    "M-01": {
+      "name": "Native3DViewport",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/Native3DViewport"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
+    },
+    "M-02": {
+      "name": "ViewCubeAndAxisGizmo",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/ViewCubeAndAxisGizmo"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
+    },
+    "M-03": {
+      "name": "TransformGizmo3D",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/TransformGizmo3D"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
+    },
+    "M-04": {
+      "name": "UVEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/UVEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
+    },
+    "M-05": {
+      "name": "TextureSetPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/TextureSetPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
+    },
+    "M-06": {
+      "name": "PBRMaterialInspector",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/PBRMaterialInspector"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
+    },
+    "M-07": {
+      "name": "TextureBrush3D",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/TextureBrush3D"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
+    },
+    "M-08": {
+      "name": "TextureMaskAndGenerator",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/TextureMaskAndGenerator"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
+    },
+    "M-09": {
+      "name": "BakingMapPanel",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/BakingMapPanel"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-native-viewport-and-texturing.md"
+      ]
+    },
+    "M-10": {
+      "name": "NodeGraphCanvas",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/NodeGraphCanvas"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
+    },
+    "M-11": {
+      "name": "NodeLibrarySearch",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/NodeLibrarySearch"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
+    },
+    "M-12": {
+      "name": "LiveNodeThumbnail",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/LiveNodeThumbnail"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
+    },
+    "M-13": {
+      "name": "DraftingCommandLine",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/DraftingCommandLine"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
+    },
+    "M-14": {
+      "name": "ObjectSnapsAndOrtho",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/ObjectSnapsAndOrtho"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
+    },
+    "M-15": {
+      "name": "DimensionsAndHatching",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/DimensionsAndHatching"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
+    },
+    "M-16": {
+      "name": "PaperSpaceLayout",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/PaperSpaceLayout"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
+    },
+    "M-17": {
+      "name": "ParametricConstraintEditor",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/cad/ParametricConstraintEditor"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P17-graphs-and-drafting.md"
+      ]
+    },
+    "N-01": {
+      "name": "NativePointerRouter",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/native-controls/NativePointerInput",
+        "@nyc-tron/native-controls/pointer-input"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
+    },
+    "N-02": {
+      "name": "PenPairingDialog",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/devices/PenPairingDialog"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P06-brush-and-ink-batch.md"
+      ]
+    },
+    "N-03": {
+      "name": "LogitechMuseSpatialInk",
+      "kind": "baseline",
+      "importPaths": [],
+      "ownership": "external; no Tron import invented",
+      "externalOwners": [
+        {
+          "repository": "mikevocalz/nitro-forge",
+          "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+          "sourcePaths": [
+            "packages/spatial-ink/src/muse.ts"
+          ],
+          "publicExports": [
+            "@nitro-forge/spatial-ink"
+          ]
+        },
+        {
+          "repository": "mikevocalz/viro",
+          "revision": "e84a1a9a37168a835f7730e09016917b9d49c6ef",
+          "sourcePaths": [
+            "ios/ViroReact/VisionOS/ViroSpatialStylusPose.swift",
+            "ios/ViroReact/VisionOS/ViroImmersiveRenderer.swift",
+            "components/VisionOS/ViroVisionOSModule.ts"
+          ],
+          "publicExports": [
+            "@reactvision/react-viro:ViroVisionOSModule"
+          ]
+        }
+      ],
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
+    },
+    "N-04": {
+      "name": "PalmRejectionAndPrediction",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/native-controls/pointer-input"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
+    },
+    "N-05": {
+      "name": "HapticsAndFeedback",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/platform-services/haptics"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
+    },
+    "N-06": {
+      "name": "VoiceOverTalkBackSupport",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/inputs/PrecisionScrubber",
+        "@nyc-tron/ui/components/shell/FocusAndA11yLayer",
+        "@nyc-tron/ui/components/shell/a11y-audit"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
+    },
+    "N-07": {
+      "name": "HardwareKeyboardMap",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/hardware-keys",
+        "@nyc-tron/ui/components/shell/keyboard-map"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
+    },
+    "N-08": {
+      "name": "SafeAreaFoldableLayout",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/core/folds",
+        "@nyc-tron/panes/AdaptivePaneHost",
+        "@nyc-tron/panes/SafeAreaFoldableLayout"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
+    },
+    "N-09": {
+      "name": "XRPresentationAdapter",
+      "kind": "baseline",
+      "importPaths": [],
+      "ownership": "external; no Tron import invented",
+      "externalOwners": [
+        {
+          "repository": "mikevocalz/nitro-forge",
+          "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+          "sourcePaths": [
+            "packages/board/src/xr/presentation.ts",
+            "packages/board/src/xr/ViroDocumentSurface.tsx"
+          ],
+          "publicExports": [
+            "@nitro-forge/board/xr",
+            "@nitro-forge/board/xr/viro"
+          ]
+        }
+      ],
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
+    },
+    "N-10": {
+      "name": "OfflineCheckpointAndAutosave",
+      "kind": "baseline",
+      "importPaths": [],
+      "ownership": "external; no Tron import invented",
+      "externalOwners": [
+        {
+          "repository": "mikevocalz/nitro-forge",
+          "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+          "sourcePaths": [
+            "packages/ignition/src/autosave.ts",
+            "packages/ignition/src/autosave-mmkv.ts",
+            "packages/board/src/offline-mmkv.ts",
+            "examples/native-cadence/patches/react-native-mmkv@4.3.2.patch",
+            "examples/native-cadence/verify-board-offline.ts",
+            "examples/native-cadence/verify-native-runtime.ts"
+          ],
+          "publicExports": [
+            "@nitro-forge/ignition/autosave",
+            "@nitro-forge/ignition/autosave/mmkv",
+            "@nitro-forge/board/offline/mmkv"
+          ]
+        }
+      ],
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
+    },
+    "N-11": {
+      "name": "CollaborationAdapter",
+      "kind": "baseline",
+      "importPaths": [],
+      "ownership": "external; no Tron import invented",
+      "externalOwners": [
+        {
+          "repository": "mikevocalz/nitro-forge",
+          "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+          "sourcePaths": [
+            "packages/ignition/src/collaboration.ts",
+            "packages/ignition/src/collaboration-http.ts",
+            "packages/board/src/offline-yjs.ts",
+            "packages/board/src/offline-sync.ts"
+          ],
+          "publicExports": [
+            "@nitro-forge/ignition/collaboration",
+            "@nitro-forge/ignition/collaboration-http",
+            "@nitro-forge/board/offline/yjs",
+            "@nitro-forge/board/offline/sync"
+          ]
+        }
+      ],
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
+    },
+    "N-12": {
+      "name": "NativeFileAndShareAdapter",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/platform-services/documents"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
+    },
+    "N-13": {
+      "name": "LongTaskScheduler",
+      "kind": "baseline",
+      "importPaths": [],
+      "ownership": "external; no Tron import invented",
+      "externalOwners": [
+        {
+          "repository": "mikevocalz/nitro-forge",
+          "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+          "sourcePaths": [
+            "packages/ignition/src/specs/ForgeTask.nitro.ts",
+            "packages/ignition/cpp/NitroForgeV1/HybridForgeTask.hpp",
+            "packages/ignition/cpp/NitroForgeV1/SerialQueue.hpp"
+          ],
+          "publicExports": [
+            "@nitro-forge/ignition/nitro"
+          ]
+        }
+      ],
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
+    },
+    "N-14": {
+      "name": "MediaCache",
+      "kind": "baseline",
+      "importPaths": [],
+      "ownership": "external; no Tron import invented",
+      "externalOwners": [
+        {
+          "repository": "mikevocalz/nitro-forge",
+          "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+          "sourcePaths": [
+            "packages/ignition/src/specs/ForgeMediaCache.nitro.ts",
+            "packages/ignition/cpp/NitroForgeV1/ByteCache.hpp",
+            "packages/ignition/cpp/NitroForgeV1/HybridForgeMediaCache.hpp"
+          ],
+          "publicExports": [
+            "@nitro-forge/ignition/nitro"
+          ]
+        }
+      ],
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
+    },
+    "N-15": {
+      "name": "UndoTransactionCoordinator",
+      "kind": "baseline",
+      "importPaths": [],
+      "ownership": "external; no Tron import invented",
+      "externalOwners": [
+        {
+          "repository": "mikevocalz/nitro-forge",
+          "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+          "sourcePaths": [
+            "packages/ignition/src/transactions.ts",
+            "rust/nf-sys/src/batch_tests.rs"
+          ],
+          "publicExports": [
+            "@nitro-forge/ignition/transactions"
+          ]
+        }
+      ],
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
+    },
+    "N-16": {
+      "name": "NativeBinaryTransport",
+      "kind": "baseline",
+      "importPaths": [],
+      "ownership": "external; no Tron import invented",
+      "externalOwners": [
+        {
+          "repository": "mikevocalz/nitro-forge",
+          "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+          "sourcePaths": [
+            "packages/ignition/src/specs/ForgeDocument.nitro.ts",
+            "packages/ignition/cpp/NitroForgeV1/HybridForgeDocument.hpp"
+          ],
+          "publicExports": [
+            "@nitro-forge/ignition/nitro"
+          ]
+        }
+      ],
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
+    },
+    "N-17": {
+      "name": "NativePlaybackLifecycle",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/platform-services/playback",
+        "@nyc-tron/platform-services/playback-policy"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
+    },
+    "N-18": {
+      "name": "TestAndTelemetryAdapter",
+      "kind": "baseline",
+      "importPaths": [],
+      "ownership": "external; no Tron import invented",
+      "externalOwners": [
+        {
+          "repository": "mikevocalz/nitro-forge",
+          "revision": "cc4893b29f6182c71705a64785a41f5bbf3f5507",
+          "sourcePaths": [
+            "packages/telemetry/src/telemetry.ts",
+            "packages/telemetry/src/instrument.ts",
+            "packages/telemetry/src/testing.ts"
+          ],
+          "publicExports": [
+            "@nitro-forge/telemetry",
+            "@nitro-forge/telemetry/testing"
+          ]
+        }
+      ],
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
+    },
+    "N-19": {
+      "name": "NativeMediaDecoderSurface",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/native-controls/NativeVideoPlayer",
+        "@nyc-tron/platform-services/media"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "reports/V1-PLATFORM-CLOSURE.md"
+      ]
+    },
+    "N-20": {
+      "name": "AudioInterruptionRecoveryDialog",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/audio/AudioInterruptionRecoveryDialog"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
+    },
+    "N-21": {
+      "name": "AccessiblePrecisionScrubControl",
+      "kind": "baseline",
+      "importPaths": [
+        "@nyc-tron/ui/components/forge/platform/AccessiblePrecisionScrubControl",
+        "@nyc-tron/ui/components/gestures/GestureHandlerDrag"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "P02-P03-final-platform-and-media-controls.md"
+      ]
+    },
+    "W-01": {
+      "name": "WindowChromeController",
+      "kind": "addition",
+      "importPaths": [
+        "@nyc-tron/core/window-chrome"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "reports/T2-WINDOW-CHROME.md"
+      ]
+    },
+    "W-02": {
+      "name": "WindowTitleBar",
+      "kind": "addition",
+      "importPaths": [
+        "@nyc-tron/ui/components/window/WindowTitleBar"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "reports/T2-WINDOW-CHROME.md",
+        "evidence/t2-window-chrome/2026-11-12-ac63d19/web-argent/RECEIPT.md"
+      ]
+    },
+    "W-03": {
+      "name": "MacOSWindowChrome",
+      "kind": "addition",
+      "importPaths": [
+        "@nyc-tron/macos-appkit/window-chrome"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "reports/T2-WINDOW-CHROME.md",
+        "evidence/t2-window-chrome/2026-11-13-6c8c82e/RECEIPT.md",
+        "evidence/t2-window-chrome/2026-11-13-6c8c82e/appkit/window-chrome.json"
+      ]
+    },
+    "W-04": {
+      "name": "WindowsCaptionChrome",
+      "kind": "addition",
+      "importPaths": [
+        "@nyc-tron/windows-fluent-fabric/window-chrome"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "reports/T2-WINDOW-CHROME.md",
+        "evidence/t2-window-chrome/2026-11-13-6c8c82e/RECEIPT.md",
+        "evidence/t2-window-chrome/2026-11-13-6c8c82e/winui/window-chrome.json"
+      ]
+    },
+    "W-05": {
+      "name": "WindowControlsInset",
+      "kind": "addition",
+      "importPaths": [
+        "@nyc-tron/reserved-regions/payload"
+      ],
+      "ownership": "Tron source lookup",
+      "evidence": [
+        "reports/T2-WINDOW-CHROME.md"
+      ]
+    }
+  }
+}

@@ -1,0 +1,496 @@
+{
+  "status": "blocked",
+  "channel": "stable",
+  "version": "1.0.0",
+  "library": {
+    "status": "blocked",
+    "componentCount": 478,
+    "ownerConfirmation": "pending",
+    "manifestSha256": "fe69d799340ce7d29bf7358cc1d8975b0ad1e3d0dbcb1e38a2723b822428ba20",
+    "stableCount": 0,
+    "previewCount": 0,
+    "unconfirmedCount": 478,
+    "planningTargetCount": 10,
+    "planningOnly": true,
+    "tier1": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "tier2": "Published historical Spark macOS/RNW Windows lists; unmeasured exports are not verified.",
+    "tier3": "visionOS, Quest, PICO and physical hardware are not verified for 1.0.0.",
+    "components": [
+      {
+        "id": "@nyc-tron/ui#Button",
+        "stability": null,
+        "proposedStability": "stable",
+        "status": "not verified",
+        "missing": [
+          "exports",
+          "declarations",
+          "unit",
+          "accessibility",
+          "web",
+          "ios",
+          "android"
+        ],
+        "checks": [
+          {
+            "kind": "exports",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "declarations",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "unit",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "accessibility",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "web",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "ios",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "android",
+            "status": "NOT RUN"
+          }
+        ],
+        "documentation": "Library readiness: missing or stale documentation index"
+      },
+      {
+        "id": "@nyc-tron/ui#Card",
+        "stability": null,
+        "proposedStability": "stable",
+        "status": "not verified",
+        "missing": [
+          "exports",
+          "declarations",
+          "unit",
+          "accessibility",
+          "web",
+          "ios",
+          "android"
+        ],
+        "checks": [
+          {
+            "kind": "exports",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "declarations",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "unit",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "accessibility",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "web",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "ios",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "android",
+            "status": "NOT RUN"
+          }
+        ],
+        "documentation": "Library readiness: missing or stale documentation index"
+      },
+      {
+        "id": "@nyc-tron/ui#NavigationRail",
+        "stability": null,
+        "proposedStability": "stable",
+        "status": "not verified",
+        "missing": [
+          "exports",
+          "declarations",
+          "unit",
+          "accessibility",
+          "web",
+          "ios",
+          "android"
+        ],
+        "checks": [
+          {
+            "kind": "exports",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "declarations",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "unit",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "accessibility",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "web",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "ios",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "android",
+            "status": "NOT RUN"
+          }
+        ],
+        "documentation": "Library readiness: missing or stale documentation index"
+      },
+      {
+        "id": "@nyc-tron/ui#NavigationShell",
+        "stability": null,
+        "proposedStability": "stable",
+        "status": "not verified",
+        "missing": [
+          "exports",
+          "declarations",
+          "unit",
+          "accessibility",
+          "web",
+          "ios",
+          "android"
+        ],
+        "checks": [
+          {
+            "kind": "exports",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "declarations",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "unit",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "accessibility",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "web",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "ios",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "android",
+            "status": "NOT RUN"
+          }
+        ],
+        "documentation": "Library readiness: missing or stale documentation index"
+      },
+      {
+        "id": "@nyc-tron/ui#TextField",
+        "stability": null,
+        "proposedStability": "stable",
+        "status": "not verified",
+        "missing": [
+          "exports",
+          "declarations",
+          "unit",
+          "accessibility",
+          "web",
+          "ios",
+          "android"
+        ],
+        "checks": [
+          {
+            "kind": "exports",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "declarations",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "unit",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "accessibility",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "web",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "ios",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "android",
+            "status": "NOT RUN"
+          }
+        ],
+        "documentation": "Library readiness: missing or stale documentation index"
+      },
+      {
+        "id": "@nyc-tron/ui/components/Button#Button",
+        "stability": null,
+        "proposedStability": "stable",
+        "status": "not verified",
+        "missing": [
+          "exports",
+          "declarations",
+          "unit",
+          "accessibility",
+          "web",
+          "ios",
+          "android"
+        ],
+        "checks": [
+          {
+            "kind": "exports",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "declarations",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "unit",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "accessibility",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "web",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "ios",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "android",
+            "status": "NOT RUN"
+          }
+        ],
+        "documentation": "Library readiness: missing or stale documentation index"
+      },
+      {
+        "id": "@nyc-tron/ui/components/Card#Card",
+        "stability": null,
+        "proposedStability": "stable",
+        "status": "not verified",
+        "missing": [
+          "exports",
+          "declarations",
+          "unit",
+          "accessibility",
+          "web",
+          "ios",
+          "android"
+        ],
+        "checks": [
+          {
+            "kind": "exports",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "declarations",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "unit",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "accessibility",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "web",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "ios",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "android",
+            "status": "NOT RUN"
+          }
+        ],
+        "documentation": "Library readiness: missing or stale documentation index"
+      },
+      {
+        "id": "@nyc-tron/ui/components/NavigationRail#NavigationRail",
+        "stability": null,
+        "proposedStability": "stable",
+        "status": "not verified",
+        "missing": [
+          "exports",
+          "declarations",
+          "unit",
+          "accessibility",
+          "web",
+          "ios",
+          "android"
+        ],
+        "checks": [
+          {
+            "kind": "exports",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "declarations",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "unit",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "accessibility",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "web",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "ios",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "android",
+            "status": "NOT RUN"
+          }
+        ],
+        "documentation": "Library readiness: missing or stale documentation index"
+      },
+      {
+        "id": "@nyc-tron/ui/components/NavigationRail#NavigationShell",
+        "stability": null,
+        "proposedStability": "stable",
+        "status": "not verified",
+        "missing": [
+          "exports",
+          "declarations",
+          "unit",
+          "accessibility",
+          "web",
+          "ios",
+          "android"
+        ],
+        "checks": [
+          {
+            "kind": "exports",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "declarations",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "unit",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "accessibility",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "web",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "ios",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "android",
+            "status": "NOT RUN"
+          }
+        ],
+        "documentation": "Library readiness: missing or stale documentation index"
+      },
+      {
+        "id": "@nyc-tron/ui/components/TextField#TextField",
+        "stability": null,
+        "proposedStability": "stable",
+        "status": "not verified",
+        "missing": [
+          "exports",
+          "declarations",
+          "unit",
+          "accessibility",
+          "web",
+          "ios",
+          "android"
+        ],
+        "checks": [
+          {
+            "kind": "exports",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "declarations",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "unit",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "accessibility",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "web",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "ios",
+            "status": "NOT RUN"
+          },
+          {
+            "kind": "android",
+            "status": "NOT RUN"
+          }
+        ],
+        "documentation": "Library readiness: missing or stale documentation index"
+      }
+    ],
+    "blockers": [
+      "owner stable/preview confirmation is pending",
+      "release evidence requires a clean source commit"
+    ],
+    "receiptCount": 0
+  },
+  "blockers": [
+    "owner stable/preview confirmation is pending",
+    "release evidence requires a clean source commit",
+    "owner distribution review is pending",
+    "the sixteen actual release archives and SHA256SUMS are required"
+  ]
+}

@@ -7,14 +7,23 @@ independent layout work in NYC-MON, Moyo Learn, the universal spatial starter an
 Nitro Forge. **The app owns the theme; NYC-Tron owns accessible component behavior
 and documented platform contracts.** No NYC-MON palette is imposed on consumers.
 
-> **Status: v1.0.0 release candidate.** The planned distribution is 15 GitHub
-> Release tarballs plus `SHA256SUMS`; package versions do not imply that a v1
-> release has been published. Nothing is published to npm. The completion target
-> includes all 341 canonical rows, including the twelve N rows previously
-> deferred to native/Forge integration. Implementation ownership and platform
-> acceptance are recorded separately. See [v1.0.0 decisions](docs/V1_DECISIONS.md),
-> [release-gate evidence](docs/completion/reports/V1-RELEASE-GATES.md), and
-> [Support policy](docs/SUPPORT.md) for the actual scope and verified targets.
+> **Status: v1.0.0-rc.2 prerelease.** NYC-Tron UI is an independent UI library
+> with general components and optional professional controls. The release ships
+> sixteen GitHub Release tarballs plus `SHA256SUMS`; nothing is published to npm.
+> Stable 1.0.0 requires the library's own component evidence, documentation and
+> owner distribution approval. [Decision D9](docs/V1_DECISIONS.md#d9-standalone-ui-library-v1)
+> records that scope. The manifest, gate migration and docs surface are pending;
+> this documentation change does not make the candidate stable. See
+> [release-gate evidence](docs/completion/reports/V1-RELEASE-GATES.md) and the
+> [Support policy](docs/SUPPORT.md) for commit-specific results and limits.
+
+## Documentation and examples
+
+The [documentation app](website/README.md) builds a page for every exported
+component, with generated props, examples, accessibility notes and platform
+records. Run it locally with `npm --prefix website ci --ignore-scripts`,
+`npm --prefix website run build`, then `npm --prefix website start`. Its
+stability labels remain proposals awaiting owner confirmation.
 
 ## Use only the parts you need
 
@@ -116,7 +125,7 @@ See [Architecture](docs/ARCHITECTURE.md), [Component ownership](docs/COMPONENT_O
 | `@nyc-tron/geometry` | Supported | Corner-cut path geometry and standalone overlay placement; pure functions |
 | `@nyc-tron/icons` | Supported | Original 24px outline/filled icon catalog with native and web renderers |
 | `@nyc-tron/panes` | Supported | Master/Detail/Inspector host over `@nyc-tron/core/pane-plan` |
-| `@nyc-tron/ui` | Supported | React Native components, one subpath per component (551 export keys at this commit) |
+| `@nyc-tron/ui` | Supported | React Native components and independent per-component subpaths; inventory in `docs/api-surface.json` |
 | `@nyc-tron/expo-controls` | Supported | Expo 58 SwiftUI/Compose picker, action menus, popovers and tooltips |
 | `@nyc-tron/native-controls` | Supported | SwiftUI and Jetpack Compose instruments (ArcKnob, XYPad, Display P3 disc, video player) |
 | `@nyc-tron/native-navigation` | Supported | Expo SDK 58 navigation rail: Material3 NavigationRail on Android, SwiftUI on iOS |

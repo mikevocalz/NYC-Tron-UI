@@ -63,6 +63,8 @@ export function Button({
       accessibilityRole="button"
       accessibilityLabel={rest.accessibilityLabel??title}
       accessibilityState={{...rest.accessibilityState,disabled:off,busy:loading}}
+      aria-disabled={off}
+      aria-busy={loading}
       onPress={onPress}
     >
       {loading ? <ActivityIndicator accessibilityLabel="Loading" /> : null}

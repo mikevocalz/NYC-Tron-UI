@@ -1,4 +1,5 @@
 import { spawn, spawnSync } from "node:child_process";
+import { commandFailureDetail } from "./command-diagnostics.mjs";
 import { createHash } from "node:crypto";
 import { appendFileSync, closeSync, existsSync, mkdirSync, openSync, readFileSync, readdirSync, realpathSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve, sep } from "node:path";
@@ -31,11 +32,11 @@ function run(file, args, { optional = false, timeout = 30000, log, cwd, extraEnv
   const started = Date.now();
   const result = spawnSync(file, args, { cwd, env: { ...env, ...extraEnv }, encoding: "utf8", timeout, maxBuffer: 32 * 1024 * 1024 });
   appendFileSync(join(output, "commands.jsonl"), JSON.stringify({ file, args, elapsedMs: Date.now() - started,
-    status: result.status, error: result.error?.message }) + "\n");
+    status: result.status, signal: result.signal, error: result.error?.message }) + "\n");
   if (log) writeFileSync(join(output, log), (result.stdout ?? "") + (result.stderr ?? ""));
   if (result.error || result.status !== 0) {
     if (optional) return "";
-    throw new Error(file + " failed: " + (result.error?.message ?? result.stderr?.slice(-4000) ?? result.status));
+    throw new Error(file + " failed: " + commandFailureDetail(result));
   }
   return result.stdout;
 }

@@ -1,0 +1,11 @@
+# AppKit generated-consumer archive path
+
+AppKit preparation in [run 45110882895](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/45110882895) copied the validated rc.3 core archive into the generated consumer, then npm tried to open the example template's rc.2 filename. Preparation rewrote the adapter dependency but left the core dependency pointing at the historical example pin.
+
+The generated consumer now sets its core file dependency from `sharedCore.filename`, returned only after copySharedCore verifies the requested checkout version, package identity, regular-file input, SHA256SUMS binding, original checksum and copied bytes. The example manifest remains unchanged. No archive validation, installed-version pin, lock integrity, installed-byte comparison or final shared-core provenance check is bypassed or weakened.
+
+The regression exercises the actual preparation CLI in temporary repositories for rc.2 and rc.3, creates real core tarballs/checksums and inspects the generated manifest at the first npm invocation. A child-process preload intercepts only npm and deliberately stops there; no package download or Spark/native build is performed. Both generated manifests point to the actual copied archive, and all other manifest fields/dependencies match the original template except the existing adapter-source bootstrap dependency. The copied archive bytes and original template bytes are checked. A checksum-valid archive with the wrong internal version is rejected before copying or invoking npm.
+
+Against the original preparation code, the rc.3 test failed with actual `file:vendor/nyc-tron-core-1.0.0-rc.2.tgz` versus expected rc.3; rc.2 and mismatch rejection passed. After the one-line correction, all seven shared-archive/pre-install tests pass. The complete existing AppKit archive/driver/transport/device-name regression invocation passed all sixteen tests with zero failures/skips. Existing driver-client tests required permission to bind their task-local Unix socket; no device was used.
+
+The new cases extend shared-archives.test.mjs, already included in the AppKit workflow. The full Spark compile, native runtime and remote CI rerun remain separate, unclaimed outcomes. No public API, native source, example pin, owner approval or Git remote state changes in this follow-up.

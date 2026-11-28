@@ -1,0 +1,3 @@
+# Lead browser interaction check
+
+Used Argent Chromium CDP on the reviewed fixed-product fixture with gesture-handler3.3.0. Selected Personal through the preset menu, reopened it, navigated by keyboard to Rename, typed Rapid workspace name with zero configured inter-key delay, and submitted Enter. The resulting accessibility tree and screenshot show the full name, closed dialog and focus on Workspace preset: Rapid workspace name. This is a lead interaction check, separate from the writer/reviewer controlled-clock reproduction. It does not claim Safari or native runtime coverage. No production/user data was involved; the fixture uses its own in-memory Zustand store.

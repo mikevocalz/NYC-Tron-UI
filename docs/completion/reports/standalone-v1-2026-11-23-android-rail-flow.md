@@ -1,0 +1,11 @@
+# Native kitchen rail scrolling correction
+
+The Android job in [run 45110606401](https://github.com/mikevocalz/NYC-Tron-UI/actions/runs/45110606401/job/137482009241) passed build, acceleration, boot and installation, then failed to locate Editor. The failure hierarchy records rail-demo at bounds [37,615][245,616]: a one-pixel visible container with no exposed Editor or Unavailable descendants. Scrolling to that container therefore did not establish visibility of its actions.
+
+The generated direct/root flows now scroll to Editor itself, scoped with childOf rail-demo, before tapping the same scoped item. They also scroll to the scoped Unavailable item before asserting it remains disabled. The selected Editor, selected-result, collapse behavior, retained draft and physical left/right/RTL assertions remain present. Scoping prevents the later shell-rail, which has the same item names and shared selected state, from supplying false rail acceptance. No coordinates, viewport changes, visibility-percentage relaxation, optional steps or assertion removal are introduced.
+
+NavigationRail renders its Pressable tabs directly under its test-ID View. The [pinned Maestro 2.12.1 selector source](https://github.com/mobile-dev-inc/maestro/blob/cli-2.12.1/maestro-orchestra/src/main/java/maestro/orchestra/yaml/YamlElementSelector.kt) includes childOf; the [official selector reference](https://docs.maestro.dev/reference/selectors/relational-selectors) documents direct-parent matching. The [official scrollUntilVisible reference](https://docs.maestro.dev/reference/commands-available/scrolluntilvisible) permits compound element selectors.
+
+Both focused direct/root regression cases pass, checking actual-item scrolling order, scoped tap/state assertions, preserved retained-state/layout checks and absence of container-only visibility or coordinate shortcuts. All 28 kitchen startup/proof/regression tests pass with zero skips/failures. This is flow/source verification; a successful native rerun has not been claimed. The lead owns actual Android QA and CI validation. No application/API/native configuration or acceptance receipt was changed.
+
+Failure hierarchy SHA256: 06ff6538e413a2e9eb43777626e3ec7fc1fb2b92d0a57fe7e732b8ed016f68a3.

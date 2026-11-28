@@ -1,14 +1,15 @@
+import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildQtCoverage, checkReactNativeApi, createSourceAuditor, renderQtCoverage, selectRuntimeExport, validateQtRows, verifyGeneratedReport } from "../qt-component-coverage.mjs";
-import { parseCanonicalBaseline } from "../verify-component-program.mjs";
+import { buildQtCoverage, checkReactNativeApi, createSourceAuditor, renderQtCoverage, selectRuntimeExport, validateQtRows, verifyGeneratedReport } from "../../qt-component-coverage.mjs";
+import { parseCanonicalBaseline, readLegacyProgramBaseline } from "../../../docs/completion/reports/2026-11-22-forge-program/historical-program-reader.mjs";
 
-const root = fileURLToPath(new URL("../..", import.meta.url));
-const canonical = parseCanonicalBaseline(readFileSync(join(root, "docs/completion/baseline-roster.tsv")));
+const root = fileURLToPath(new URL("../../..", import.meta.url));
+const canonical = parseCanonicalBaseline(readLegacyProgramBaseline(root));
 
 function fixture(t) {
   const directory = mkdtempSync(join(tmpdir(), "nyc-tron-qt-"));
@@ -31,15 +32,19 @@ function fixture(t) {
   return { directory, write };
 }
 
-test("the checked-in map covers the exact frozen roster and matches current source resolution", () => {
-  const report = buildQtCoverage();
-  assert.equal(report.summary.canonical, 341);
-  assert.equal(report.summary.local + report.summary.external, 341);
+test("the dated map preserves its pinned source graph, frozen roster and unverified acceptance", () => {
+  const archive = "docs/completion/reports/2026-11-23-qt-case-study";
+  const record = JSON.parse(readFileSync(join(root, archive, "ARCHIVE.json"), "utf8"));
+  assert.equal(record.sourceRevision,"0cdebcb7358598f296e043f8ffa5c1ee62c0545e");
+  for (const [name, expected] of Object.entries(record.sha256)) assert.equal(createHash("sha256").update(readFileSync(join(root,archive,name))).digest("hex"),expected);
+  const report = JSON.parse(readFileSync(join(root,archive,"component-coverage.json"),"utf8"));
+  validateQtRows(report.components, canonical);
+  assert.equal(report.summary.canonical, canonical.length);
+  assert.equal(report.summary.local + report.summary.external, canonical.length);
   assert.deepEqual(report.components.map(({ id, name }) => ({ id, name })), canonical);
-  assert.deepEqual(report, JSON.parse(readFileSync(join(root, "docs/qt/component-coverage.json"), "utf8")));
-  verifyGeneratedReport(join(root, "docs/qt/component-coverage.md"), renderQtCoverage(report));
+  verifyGeneratedReport(join(root, archive, "component-coverage.md"), renderQtCoverage(report));
   for (const target of ["qnx", "marathon"]) {
-    assert.equal(Object.values(report.summary.targets[target].classifications).reduce((sum, count) => sum + count, 0), 341);
+    assert.equal(Object.values(report.summary.targets[target].classifications).reduce((sum, count) => sum + count, 0), canonical.length);
     assert.equal(report.summary.targets[target].runtimeAccepted, 0);
   }
 });
@@ -56,7 +61,7 @@ test("generated-report validation accepts Windows checkouts but rejects stale co
     assert.doesNotThrow(() => verifyGeneratedReport(path, canonical));
     writeFileSync(path, canonical);
     assert.doesNotThrow(() => verifyGeneratedReport(path, windows));
-    for (const changed of [windows.replace("341", "340"), windows + " ", windows.replace(/\r\n$/, "")]) {
+    for (const changed of [windows.replace("Historical Forge", "Changed Forge"), windows + " ", windows.replace(/\r\n$/, "")]) {
       assert.notEqual(changed, windows, "the stale fixture must change the report");
       writeFileSync(path, changed);
       assert.throws(() => verifyGeneratedReport(path, canonical), /is stale/);
@@ -69,7 +74,7 @@ test("generated-report validation accepts Windows checkouts but rejects stale co
 test("row validation rejects scope loss, unsupported mappings and static-to-runtime promotion", () => {
   const rows = JSON.parse(readFileSync(join(root, "docs/qt/component-coverage.json"), "utf8")).components;
   for (const [mutate, pattern] of [
-    [value => value.pop(), /341 canonical rows/],
+    [value => value.pop(), new RegExp(canonical.length + " canonical rows")],
     [value => value[1].id = value[0].id, /duplicate canonical/],
     [value => value[0].name = "InventedControl", /renamed/],
     [value => value[0].qtProfile = "automatic-native-support", /Unknown Qt profile/],

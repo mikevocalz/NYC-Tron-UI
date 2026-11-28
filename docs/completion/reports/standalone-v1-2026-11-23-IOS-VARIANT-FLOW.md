@@ -1,0 +1,13 @@
+# Ordered native button-variant traversal
+
+Draft flow repair; hosted acceptance of this new flow is NOTRUN. No native pass or release promotion is claimed.
+
+Run45120535258 headab8eefe5, fresh-host iOS job137518366692, retained kitchen-proof-ios artifact14794579019 contains the actual failure. Pinned Maestro2.12.1 version verification passed in25,703ms. Direct JUnit identifies iPhone Duo / iOS27.2 / C898E3E4-5033-4085-B886-963EE2D0C478 and reports ERROR after125.131seconds: `No visible element found: id: button-small`. There is no root flow or passing receipt.
+
+The command artifact has18entries. Initial launch, import identity, primary press and Press count1 assertion completed. Secondary, Ghost and Danger visibility assertions also completed. Sequence17 then searched UP for button-small and failed after31,765ms. The retained failure screenshot shows the screen scrolled back to the lab header and first button row, with Danger clipped at the bottom. Its hierarchy does not contain button-small. This is a concrete traversal-direction error; a new startup or transport failure is not claimed.
+
+The fixture renders primary/secondary/ghost/danger in its first wrapping row, then disabled/loading/small in the next wrapping row, with the counter beneath both. The flow previously searched UP for every variant from the counter, eventually returning above the small target. It now returns UP to the primary once after the counter assertion, then traverses DOWN through secondary, ghost, danger, disabled, loading and small in fixture order before continuing to cards. This explicit order supersedes historical flow-order descriptions. Disabled/loading enabled:false assertions remain mandatory; this adds no button tap or state change.
+
+Validation: `node --test tooling/kitchen-sink/*.test.mjs` passed71tests, zero failures/skips. Two new regressions bind the post-counter UP reveal, complete ordered DOWN traversal, disabled/loading semantics and continuation to cards in both import modes. An independent before/after generated-flow comparison verified the exact sorted multiset of all27assertVisible blocks per mode is unchanged. Target selection, JUnit identity/parser, fresh driver, version/archive pins, timeouts, clearState, screenshots, candidate provenance and all later state/layout checks are untouched. No app/window/orientation change or local device action.
+
+Applied the standalone engineering code-review skill's correctness, security, performance and maintainability checks to the narrow diff: no new input/execution surface or unbounded operation; the correction follows rendered source order and keeps all acceptance checks. Independent review is still required before publication; hosted both-mode proof is required after it.

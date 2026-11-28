@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "baselineSha256": "a1fd6593a84f899dc2946e6337fde7c59897607701516b6d64732d51d44b75db",
-  "scope": "341 canonical capabilities. Qt counterparts are conceptual; source reachability is not render, interaction, engine, native-provider or device acceptance.",
+  "scope": "Historical Forge correspondence snapshot (2026-11-22), not library inventory. Qt counterparts are conceptual; source reachability is not render, interaction, engine, native-provider or device acceptance.",
   "reactNativeApiProfile": {
     "schemaVersion": 1,
     "repository": "mikevocalz/react-native-qnx",
@@ -20356,6 +20356,7 @@
         "additionalDependencies": [],
         "reactNativeExports": [
           "ActivityIndicator",
+          "Platform",
           "Pressable",
           "Text",
           "TextInput",
@@ -20405,6 +20406,7 @@
           "additionalDependencies": [],
           "reactNativeExports": [
             "ActivityIndicator",
+            "Platform",
             "Pressable",
             "Text",
             "TextInput",
@@ -20453,6 +20455,7 @@
           "additionalDependencies": [],
           "reactNativeExports": [
             "ActivityIndicator",
+            "Platform",
             "Pressable",
             "Text",
             "TextInput",

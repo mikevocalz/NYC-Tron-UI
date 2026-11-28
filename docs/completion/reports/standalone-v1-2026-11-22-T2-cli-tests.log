@@ -1,0 +1,32 @@
+✔ all direct component export targets are actual independent files (7.095083ms)
+✔ Forge controls never import engine packages or app-specific palettes (1.431ms)
+✔ waveform preserves real signal extrema and bounds view work (0.761292ms)
+✔ frame math returns whole bounded frames and SMPTE display (0.227209ms)
+✔ RGBA math is document-agnostic and validates channels (0.133166ms)
+✔ Spreadsheet window virtualizes both rows and columns without allocating full sheet (0.184958ms)
+✔ data tables switch to labeled record cards in portrait and narrow split panes (0.143291ms)
+✔ Tally mobile grid keeps all spreadsheet columns, touch targets and formula input (0.201875ms)
+✔ responsive implementation measures host panes, not window screen dimensions (0.233709ms)
+✔ portrait-landscape and foldable split resize retain selected sheet region (0.186875ms)
+✔ every semantic token a component uses is documented for consumers (61.202416ms)
+✔ interactive controls keep screen-reader semantics (0.236083ms)
+✔ components take colors from theme tokens, not hardcoded hex values (16.726625ms)
+✔ every adjustable control can be adjusted by a screen reader (18.625ms)
+✔ accessibilityRole only uses values Android's enum accepts (16.961208ms)
+✔ data grids expose grid semantics instead of per-cell buttons (0.307333ms)
+✔ every current component export is inventoried across workspace and desktop packages, without alias loss (1451.543833ms)
+✔ semantic classifier resolves compound and alias declarations and rejects unresolved component returns (133.166291ms)
+✔ ambiguous graph imports fail rather than selecting the first declaration (0.157042ms)
+✔ export and condition drift fail before any manifest is accepted (1620.44425ms)
+✔ lookup accounts for baseline and added rows independently and never fabricates external imports (17.57475ms)
+✔ CRLF checkout text preserves complete inventory fingerprints and generated checks without hiding value drift (5125.605875ms)
+✔ CLI entry guards safely ignore stdin and non-entry imports (161.592875ms)
+✔ both CLIs run and reject drift when invoked through a symlink or Windows junction (4538.625459ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13345.676792

@@ -1,0 +1,19 @@
+$ python3 <temporary-link-check-script>
+[Machine-specific temporary path redacted; script and actual output follow.]
+
+Script executed:
+from pathlib import Path
+import re
+files=['README.md','AGENTS.md','docs/SUPPORT.md','docs/ROSTER.md','docs/V1_DECISIONS.md','docs/completion/reports/standalone-v1-2026-11-22-T1.md']
+missing=[]
+for filename in files:
+    p=Path(filename)
+    for target in re.findall(r'\]\(([^)]+)\)',p.read_text()):
+        if re.match(r'^[a-z]+://|^#',target): continue
+        dest=p.parent/target.split('#')[0]
+        if not dest.exists(): missing.append((filename,target))
+assert not missing,missing
+print(f'PASS: local Markdown link targets in {len(files)} changed documents exist')
+
+Output:
+PASS: local Markdown link targets in 6 changed documents exist

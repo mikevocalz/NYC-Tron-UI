@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "status": "development preparation; not release eligible",
+  "sourceCommit": "26742419a77dab1bc58704c238e9982b6e107069",
+  "sourceDirty": true,
+  "version": "1.0.0-rc.3",
+  "expectedArchiveCount": 16,
+  "actualArchiveCount": 16,
+  "missingPackages": [],
+  "checksumManifestSha256": "2d3a362e7df9819ddfdc2dea2c40402154081b53311af82cd0b6e4105ece7277",
+  "nativeDesktopRuntime": "NOT RUN; package TypeScript builds and prepack checks only",
+  "archives": [
+    {
+      "package": "@nyc-tron/app-identity",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-app-identity-1.0.0-rc.3.tgz",
+      "sha256": "d41642d943f9123d50bd1f9296776111a217d100da1444101fb13e8198935e67"
+    },
+    {
+      "package": "@nyc-tron/core",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-core-1.0.0-rc.3.tgz",
+      "sha256": "5aa8b5abb48df5e7bfbef28cf5676d37f453511c874d2c3f1ee735e0008211d6"
+    },
+    {
+      "package": "@nyc-tron/expo-controls",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-expo-controls-1.0.0-rc.3.tgz",
+      "sha256": "1b498fd074c27b965c405004ce6321e93280d318760adc4568a518e3ba6ce71a"
+    },
+    {
+      "package": "@nyc-tron/geometry",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-geometry-1.0.0-rc.3.tgz",
+      "sha256": "f3e7774af3062f9b531ab6238f83e438ef05d2cb084c73c0587a68279a8502d7"
+    },
+    {
+      "package": "@nyc-tron/hardware-keys",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-hardware-keys-1.0.0-rc.3.tgz",
+      "sha256": "de4d0d5a0d9ed2b36845ea8bce02a871b2a5614f3e71a6c4f56187a54a369a24"
+    },
+    {
+      "package": "@nyc-tron/icons",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-icons-1.0.0-rc.3.tgz",
+      "sha256": "d59f713d2f8d6a5e3599a9c6a41440de51adef6603825b2ec96fefd5a091dc9e"
+    },
+    {
+      "package": "@nyc-tron/macos-appkit",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-macos-appkit-1.0.0-rc.3.tgz",
+      "sha256": "f1915be7e68fb09d2115c85409a388c30bd83aadf52aceb2f5b4424437a9c6f2"
+    },
+    {
+      "package": "@nyc-tron/native-charts",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-native-charts-1.0.0-rc.3.tgz",
+      "sha256": "e543265382983be90e0a4af156abcb8bad9550bbf8d1858a20100420e7020d31"
+    },
+    {
+      "package": "@nyc-tron/native-controls",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-native-controls-1.0.0-rc.3.tgz",
+      "sha256": "67a10679fe31b5c6efb740d211a3aae28490cf376350112685e3dd50135b3373"
+    },
+    {
+      "package": "@nyc-tron/native-navigation",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-native-navigation-1.0.0-rc.3.tgz",
+      "sha256": "00aab4f2170789d77befaabf2cd1e9d61c9b373c3b51430c5d911525c82cb8e8"
+    },
+    {
+      "package": "@nyc-tron/panes",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-panes-1.0.0-rc.3.tgz",
+      "sha256": "282f075ebdba8cab7488d210313a46c969ab6474e9143e9ba57211ffa99f3420"
+    },
+    {
+      "package": "@nyc-tron/platform-services",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-platform-services-1.0.0-rc.3.tgz",
+      "sha256": "2ec2890ef70f7ff6c3d7bb3c2a36dfabc5310e57bb1c5b5e956fe6111f81766a"
+    },
+    {
+      "package": "@nyc-tron/reserved-regions",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-reserved-regions-1.0.0-rc.3.tgz",
+      "sha256": "d3a06b8d81e687e633f53ae449e42916b7bb1fade5e4a877187f64ff444f8c53"
+    },
+    {
+      "package": "@nyc-tron/ui",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-ui-1.0.0-rc.3.tgz",
+      "sha256": "84d2b7cc6417a0c051e6d4e170d402b136237f2c2bdca56677e8e9ce91636331"
+    },
+    {
+      "package": "@nyc-tron/windows-fluent",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-windows-fluent-1.0.0-rc.3.tgz",
+      "sha256": "55d7b9c76e04664edebd4d51a7543ffba6066d6fa2a375cea47db359b864fa95"
+    },
+    {
+      "package": "@nyc-tron/windows-fluent-fabric",
+      "version": "1.0.0-rc.3",
+      "filename": "nyc-tron-windows-fluent-fabric-1.0.0-rc.3.tgz",
+      "sha256": "0f578b0a3c3b0a1dbfb227c0159a6c14a71d58f5357a942922a598717e642c4d"
+    }
+  ]
+}

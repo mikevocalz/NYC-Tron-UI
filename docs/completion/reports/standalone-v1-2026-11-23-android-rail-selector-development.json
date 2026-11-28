@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "kind": "development-fixture-check",
+  "eligibleForCandidateAcceptance": false,
+  "sourceDirty": true,
+  "librarySourceCommit": "f0dd6ddf6358391ae5a358155c9497c0b92d66ab",
+  "libraryArchives": [
+    {
+      "package": "@nyc-tron/core",
+      "filename": "nyc-tron-core-1.0.0-rc.3.tgz",
+      "version": "1.0.0-rc.3",
+      "sha256": "5aa8b5abb48df5e7bfbef28cf5676d37f453511c874d2c3f1ee735e0008211d6",
+      "integrity": "sha512-Qbcs1AG4fMX3HmrHK4k9Lwtk4O1G/fBTl72V5eZolLCwesdhR7FMfAAOSfimwre0G8S8lSMoIFFOn5Y7ek8ddQ=="
+    },
+    {
+      "package": "@nyc-tron/ui",
+      "filename": "nyc-tron-ui-1.0.0-rc.3.tgz",
+      "version": "1.0.0-rc.3",
+      "sha256": "4e58b673dfd93b7e9347240e818c592680eb480ae2f4bcb711af12a85bcf7b51",
+      "integrity": "sha512-8XcG0ubRpo16msh/PDkC7BYLwSlj4u7m9mh9TNqUenIQM9/DtGn/zfIFl8Y1K82VsieC8blZINcENl0KvtpApg=="
+    }
+  ],
+  "fixtureSourceSha256": "888e24953f76a24714c255d903002b9d0a2d9a8095d5b5b0cf30e96141f03ccb",
+  "status": "passed",
+  "assertions": 32,
+  "cases": [
+    {
+      "importMode": "direct",
+      "status": "passed",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "expandedAndCollapsedUniqueNames": true,
+      "selected": "editor",
+      "disabled": "Unavailable"
+    },
+    {
+      "importMode": "root",
+      "status": "passed",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "expandedAndCollapsedUniqueNames": true,
+      "selected": "editor",
+      "disabled": "Unavailable"
+    }
+  ],
+  "fullWebChecks": {
+    "assertions": {
+      "passed": 124,
+      "failed": 0,
+      "skipped": 0
+    },
+    "appearanceImportCases": 4,
+    "receiptSha256": "02c2051f6978918297f335964a433f2f8465292bd7e7901b1ab8c377a4b7f2b3",
+    "candidateSourceCommit": "f0dd6ddf6358391ae5a358155c9497c0b92d66ab",
+    "candidateSourceDirty": true,
+    "eligibleForCurrentCandidateAcceptance": false
+  }
+}
