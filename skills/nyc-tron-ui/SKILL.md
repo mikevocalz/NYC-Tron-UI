@@ -50,7 +50,6 @@ cannot share an app with the 0.88 packages.
 import { Button } from "@nyc-tron/ui/components/Button";
 import { TextField } from "@nyc-tron/ui/components/TextField";
 import { Dialog } from "@nyc-tron/ui/components/overlays/Dialog";
-import { WaveformLane } from "@nyc-tron/ui/components/forge/WaveformLane";
 ```
 
 - Use the exact `import` string from the registry item or group file.
@@ -58,8 +57,9 @@ import { WaveformLane } from "@nyc-tron/ui/components/forge/WaveformLane";
   `@nyc-tron/native-controls` ...) when a subpath exports the same component.
   Registry items with `"preferred": false` are such barrel exports; use their
   `preferredId`.
-- Professional controls live under `@nyc-tron/ui/components/forge/`. They are
-  optional and need no document or editor engine.
+- Editor controls (waveforms, timelines, color and canvas tools) are not part
+  of this library. They ship from `@nitro-forge/editor-controls`; do not look
+  for a `@nyc-tron/ui/components/forge/` path.
 - Pure layout policies come from `@nyc-tron/core/<subpath>`
   (`navigation`, `folds`, `pane-plan`, `theme` ...), not from UI components.
 

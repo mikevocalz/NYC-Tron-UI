@@ -4,7 +4,7 @@ import {createStore,type StoreApi} from 'zustand/vanilla';
 import {useStore} from 'zustand';
 import {Toolbar} from '../Toolbar.tsx';
 import {joinClasses} from '../styles.ts';
-import {webToggleProps} from '../forge/toggle-a11y.ts';
+import {webToggleProps} from '../forms/toggle-a11y.ts';
 import {MenuButton} from './MenuButton.tsx';
 import {itemsForSelection,splitOverflow,validateToolbarItems,overflowDescription,type ToolbarItemSpec} from './contextual-toolbar-model.ts';
 

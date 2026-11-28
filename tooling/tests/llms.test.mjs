@@ -69,7 +69,7 @@ test('the committed registry is built from the committed inventory', () => {
   assert.equal(registry.ownerConfirmation, inventory.ownerConfirmation);
   assert.deepEqual(registry.platformPolicy, inventory.platformPolicy);
   assert.equal(registry.summary.componentCount, inventory.components.length);
-  assert.ok(registry.items.length > 400, 'an empty inventory must not pass vacuously');
+  assert.ok(registry.items.length > 100, 'an empty inventory must not pass vacuously');
   const byId = new Map(registry.items.map(i => [i.id, i]));
   assert.equal(byId.size, registry.items.length, 'one registry item per inventory id');
   for (const c of inventory.components) {

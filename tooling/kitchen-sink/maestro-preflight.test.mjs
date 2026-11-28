@@ -105,6 +105,17 @@ test('cleanup kills an in-flight owned diagnostic child with its watchdog group'
  } finally {stopDiagnosticWatchdog(watchdog);rmSync(root,{recursive:true,force:true});}
 });
 
+test('cleanup tolerates a watchdog group that already exited and only fails on real errors', () => {
+ const fail=code=>()=>{const error=new Error(code);error.code=code;throw error;};
+ // macOS returns EPERM from killpg when only the exited (unreaped) leader is left.
+ assert.doesNotThrow(()=>stopDiagnosticWatchdog({pid:4242},fail('EPERM')));
+ assert.doesNotThrow(()=>stopDiagnosticWatchdog({pid:4242},fail('ESRCH')));
+ assert.throws(()=>stopDiagnosticWatchdog({pid:4242},fail('EINVAL')),/EINVAL/);
+ const calls=[];stopDiagnosticWatchdog({pid:4242},(pid,signal)=>calls.push([pid,signal]));
+ assert.deepEqual(calls,[[-4242,'SIGKILL']]);
+ assert.doesNotThrow(()=>stopDiagnosticWatchdog(undefined,fail('EINVAL')));
+});
+
 test('invalid watchdog owner cannot inspect processes or broaden ancestry to PID1', () => {
  const output=mkdtempSync(join(tmpdir(),'tron-invalid-watchdog-'));
  try {

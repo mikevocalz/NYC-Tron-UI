@@ -2,6 +2,12 @@
   "schemaVersion": 1,
   "purpose": "Forge row-to-import lookup only; not library scope, inventory or a release gate",
   "programHome": "https://github.com/mikevocalz/nitro-forge/blob/5902e64d6ad01090f5e9a40f8402ec0cbcb39a71/docs/completion/library-progress.json",
+  "editorControls": {
+    "package": "@nitro-forge/editor-controls",
+    "repository": "https://github.com/mikevocalz/nitro-forge",
+    "migrationRecord": "docs/library/editor-controls-migration.json",
+    "note": "importPaths are Tron exports; forgeImportPaths name the editor controls Nitro Forge owns since D10 and are not resolved by Tron."
+  },
   "sourceLedgerDigestEncoding": "SHA-256 of JSON.stringify(parsed ledger); not raw ledger bytes or a Git blob id",
   "sourceLedgerSha256": "d71f0a2f33dd96523c3a18e864cd725b0414b83b035eb86392d9883efcd486d1",
   "baselineRows": 341,
@@ -136,8 +142,8 @@
       "name": "NumericScrubField",
       "kind": "baseline",
       "importPaths": [
-        "@nyc-tron/ui/components/forge/inputs/PrecisionScrubber",
-        "@nyc-tron/ui/components/shell/NumericScrubField"
+        "@nyc-tron/ui/components/shell/NumericScrubField",
+        "@nyc-tron/ui/components/shell/PrecisionScrubber"
       ],
       "ownership": "Tron source lookup",
       "evidence": [
@@ -353,10 +359,11 @@
     "B-01": {
       "name": "GPUCanvasViewport",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/canvas/GPUCanvasViewport"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/canvas/GPUCanvasViewport"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-gpu-viewport.md",
         "P05-native-canvas.md",
@@ -367,10 +374,11 @@
     "B-02": {
       "name": "CanvasPanZoom",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/canvas/CanvasPanZoom"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/canvas/CanvasPanZoom"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-canvas-navigation.md",
         "P05-native-canvas.md",
@@ -380,10 +388,11 @@
     "B-03": {
       "name": "CanvasRuler",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/canvas/CanvasRuler"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/canvas/CanvasRuler"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-rulers.md"
       ]
@@ -391,10 +400,11 @@
     "B-04": {
       "name": "SnapGridOverlay",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/canvas/SnapGridOverlay"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/canvas/SnapGridOverlay"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-snapping-and-pivot.md"
       ]
@@ -402,10 +412,11 @@
     "B-05": {
       "name": "SmartGuides",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/canvas/SmartGuides"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/canvas/SmartGuides"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-snapping-and-pivot.md"
       ]
@@ -413,10 +424,11 @@
     "B-06": {
       "name": "SelectionBounds",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/selection/SelectionBounds"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/selection/SelectionBounds"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-selection-bounds.md"
       ]
@@ -424,10 +436,11 @@
     "B-07": {
       "name": "MultiSelectionControls",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/selection/MultiSelectionControls"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/selection/MultiSelectionControls"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-multi-selection.md"
       ]
@@ -435,10 +448,11 @@
     "B-08": {
       "name": "TransformOriginHandle",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/canvas/TransformOriginHandle"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/canvas/TransformOriginHandle"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-snapping-and-pivot.md"
       ]
@@ -446,10 +460,11 @@
     "B-09": {
       "name": "LayerStack",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/layers/LayerStack"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/layers/LayerStack"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-layer-tree.md"
       ]
@@ -457,10 +472,11 @@
     "B-10": {
       "name": "LayerThumbnail",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/layers/LayerThumbnail"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/layers/LayerThumbnail"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-thumbnail-resources.md"
       ]
@@ -468,10 +484,11 @@
     "B-11": {
       "name": "LayerBlendAndOpacity",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/layers/LayerBlendAndOpacity"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/layers/LayerBlendAndOpacity"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-layer-blend.md"
       ]
@@ -479,10 +496,11 @@
     "B-12": {
       "name": "MaskThumbnailAndEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/layers/MaskThumbnailAndEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/layers/MaskThumbnailAndEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-mask-and-clipping.md"
       ]
@@ -490,10 +508,11 @@
     "B-13": {
       "name": "ClippingMaskControls",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/layers/ClippingMaskControls"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/layers/ClippingMaskControls"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-mask-and-clipping.md"
       ]
@@ -501,10 +520,11 @@
     "B-14": {
       "name": "ArtboardNavigator",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/layers/ArtboardNavigator"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/layers/ArtboardNavigator"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-artboard-navigation.md"
       ]
@@ -512,10 +532,11 @@
     "B-15": {
       "name": "BrushPresetBrowser",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/ink/BrushPresetBrowser"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/ink/BrushPresetBrowser"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P06-brush-and-ink-batch.md"
       ]
@@ -523,10 +544,11 @@
     "B-16": {
       "name": "BrushDynamicsInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/ink/BrushDynamicsInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/ink/BrushDynamicsInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P06-brush-and-ink-batch.md"
       ]
@@ -534,10 +556,11 @@
     "B-17": {
       "name": "InkStrokePreview",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/ink/InkStrokePreview"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/ink/InkStrokePreview"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P06-brush-and-ink-batch.md"
       ]
@@ -545,10 +568,11 @@
     "B-18": {
       "name": "EraserModePicker",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/ink/EraserModePicker"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/ink/EraserModePicker"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P06-brush-and-ink-batch.md"
       ]
@@ -556,10 +580,11 @@
     "B-19": {
       "name": "SelectionMarquee",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/selection/SelectionMarquee"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/selection/SelectionMarquee"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-selection-tools-batch.md"
       ]
@@ -567,10 +592,11 @@
     "B-20": {
       "name": "MagicSelectionControls",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/selection/MagicSelectionControls"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/selection/MagicSelectionControls"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-selection-tools-batch.md"
       ]
@@ -578,10 +604,11 @@
     "B-21": {
       "name": "PenNodeEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/vector/PenNodeEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/vector/PenNodeEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-vector-and-crop-batch.md"
       ]
@@ -589,10 +616,11 @@
     "B-22": {
       "name": "ShapeBuilder",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/vector/ShapeBuilder"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/vector/ShapeBuilder"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-vector-and-crop-batch.md"
       ]
@@ -600,10 +628,11 @@
     "B-23": {
       "name": "FillStrokeInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/vector/FillStrokeInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/vector/FillStrokeInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-vector-and-crop-batch.md"
       ]
@@ -611,10 +640,11 @@
     "B-24": {
       "name": "GradientOnCanvasHandles",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/vector/GradientOnCanvasHandles"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/vector/GradientOnCanvasHandles"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-vector-and-crop-batch.md"
       ]
@@ -622,10 +652,11 @@
     "B-25": {
       "name": "AlignDistributePanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/canvas/AlignDistributePanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/canvas/AlignDistributePanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-vector-and-crop-batch.md"
       ]
@@ -633,10 +664,11 @@
     "B-26": {
       "name": "GuidedCropAndStraighten",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/canvas/GuidedCropAndStraighten"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/canvas/GuidedCropAndStraighten"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-vector-and-crop-batch.md"
       ]
@@ -644,10 +676,11 @@
     "B-27": {
       "name": "CanvasCompareView",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/layers/CanvasCompareView"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/layers/CanvasCompareView"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-vector-and-crop-batch.md"
       ]
@@ -655,10 +688,11 @@
     "B-28": {
       "name": "FloatingPaletteUndockHandle",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/FloatingPaletteUndockHandle"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/FloatingPaletteUndockHandle"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-vector-and-crop-batch.md"
       ]
@@ -666,10 +700,11 @@
     "B-29": {
       "name": "BrushTaperControl",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/ink/BrushTaperControl"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/ink/BrushTaperControl"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P06-brush-and-ink-batch.md"
       ]
@@ -677,10 +712,11 @@
     "B-30": {
       "name": "ColorDropCanvasTarget",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/canvas-tools/ColorDropCanvasTarget"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/canvas-tools/ColorDropCanvasTarget"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-selection-tools-batch.md"
       ]
@@ -688,10 +724,11 @@
     "B-31": {
       "name": "ReferenceImageBoard",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/canvas-tools/ReferenceImageBoard"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/canvas-tools/ReferenceImageBoard"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-selection-tools-batch.md"
       ]
@@ -699,10 +736,11 @@
     "B-32": {
       "name": "TimelapsePlaybackExporter",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/ink/TimelapsePlaybackExporter"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/ink/TimelapsePlaybackExporter"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P06-brush-and-ink-batch.md"
       ]
@@ -710,10 +748,11 @@
     "B-33": {
       "name": "BrushStabilizationPreview",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/ink/BrushStabilizationPreview"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/ink/BrushStabilizationPreview"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P06-brush-and-ink-batch.md"
       ]
@@ -721,10 +760,11 @@
     "B-34": {
       "name": "GestureCustomizationPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/canvas-tools/GestureCustomizationPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/canvas-tools/GestureCustomizationPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P05-selection-tools-batch.md"
       ]
@@ -732,10 +772,11 @@
     "C-01": {
       "name": "ColorPickerDialog",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/ColorPickerDialog"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/ColorPickerDialog"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-existing-color-review.md"
       ]
@@ -743,10 +784,11 @@
     "C-02": {
       "name": "SVColorField",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/SVColorField"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/SVColorField"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-adjustments.md"
       ]
@@ -754,10 +796,11 @@
     "C-03": {
       "name": "ColorWheel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/ColorWheel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/ColorWheel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-existing-color-review.md"
       ]
@@ -765,10 +808,11 @@
     "C-04": {
       "name": "HueSlider",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/HueSlider"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/HueSlider"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-adjustments.md"
       ]
@@ -776,10 +820,11 @@
     "C-05": {
       "name": "AlphaSlider",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/AlphaSlider"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/AlphaSlider"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-existing-color-review.md"
       ]
@@ -787,10 +832,11 @@
     "C-06": {
       "name": "ColorChannels",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/ColorChannelFields"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/ColorChannelFields"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-existing-color-review.md"
       ]
@@ -798,10 +844,11 @@
     "C-07": {
       "name": "PrintColorChannels",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/PrintColorChannels"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/PrintColorChannels"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-management.md",
         "P07-color-specification.md"
@@ -810,10 +857,11 @@
     "C-08": {
       "name": "WideGamutChannels",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/WideGamutChannels"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/WideGamutChannels"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-management.md"
       ]
@@ -821,10 +869,11 @@
     "C-09": {
       "name": "ColorSpaceChooser",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/ColorSpaceChooser"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/ColorSpaceChooser"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-management.md"
       ]
@@ -832,10 +881,11 @@
     "C-10": {
       "name": "GamutWarning",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/GamutWarning"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/GamutWarning"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-management.md",
         "P07-color-specification.md"
@@ -844,10 +894,11 @@
     "C-11": {
       "name": "EyedropperTool",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/EyedropperTool"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/EyedropperTool"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-adjustments.md"
       ]
@@ -855,10 +906,11 @@
     "C-12": {
       "name": "ForegroundBackgroundChips",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/ForegroundBackgroundChips"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/ForegroundBackgroundChips"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-existing-color-review.md"
       ]
@@ -866,10 +918,11 @@
     "C-13": {
       "name": "SwatchGrid",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/SwatchGrid"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/SwatchGrid"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-existing-color-review.md"
       ]
@@ -877,10 +930,11 @@
     "C-14": {
       "name": "ThemeColorReferences",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/ThemeColorReferences"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/ThemeColorReferences"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-management.md"
       ]
@@ -888,10 +942,11 @@
     "C-15": {
       "name": "SpotAndGlobalColorEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/SpotAndGlobalColorEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/SpotAndGlobalColorEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-management.md",
         "P07-color-specification.md"
@@ -900,10 +955,11 @@
     "C-16": {
       "name": "GradientStopEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/GradientStopEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/GradientStopEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-adjustments.md",
         "P07-color-specification.md"
@@ -912,10 +968,11 @@
     "C-17": {
       "name": "GradientMeshEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/GradientMeshEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/GradientMeshEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-adjustments.md",
         "P07-color-specification.md"
@@ -924,10 +981,11 @@
     "C-18": {
       "name": "ColorHarmonyAssistant",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/ColorHarmonyAssistant"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/ColorHarmonyAssistant"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-existing-color-review.md"
       ]
@@ -935,10 +993,11 @@
     "C-19": {
       "name": "LiveHistogram",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/LiveHistogram"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/LiveHistogram"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-adjustments.md",
         "P07-color-specification.md"
@@ -947,10 +1006,11 @@
     "C-20": {
       "name": "LevelsEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/LevelsEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/LevelsEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-adjustments.md"
       ]
@@ -958,10 +1018,11 @@
     "C-21": {
       "name": "CurvesEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/CurvesEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/CurvesEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-adjustments.md",
         "P07-color-specification.md"
@@ -970,10 +1031,11 @@
     "C-22": {
       "name": "ColorGradingWheels",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/ColorGradingWheels"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/ColorGradingWheels"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-adjustments.md",
         "P07-color-specification.md"
@@ -982,10 +1044,11 @@
     "C-23": {
       "name": "HSLSecondaryEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/HSLSecondaryEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/HSLSecondaryEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-adjustments.md"
       ]
@@ -993,10 +1056,11 @@
     "C-24": {
       "name": "VideoScopesPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/VideoScopesPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/VideoScopesPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-adjustments.md",
         "P07-color-specification.md"
@@ -1005,10 +1069,11 @@
     "C-25": {
       "name": "SoftProofControls",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/SoftProofControls"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/SoftProofControls"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-management.md",
         "P07-color-specification.md"
@@ -1017,10 +1082,11 @@
     "C-26": {
       "name": "FloatingColorPalette",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/color/FloatingColorPalette"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/FloatingColorPalette"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-existing-color-review.md"
       ]
@@ -1029,10 +1095,12 @@
       "name": "ColorDiscPicker",
       "kind": "baseline",
       "importPaths": [
-        "@nyc-tron/native-controls/DisplayP3DiscLayer",
-        "@nyc-tron/ui/components/forge/color/ColorDiscPicker"
+        "@nyc-tron/native-controls/DisplayP3DiscLayer"
       ],
-      "ownership": "Tron source lookup",
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/color/ColorDiscPicker"
+      ],
+      "ownership": "Tron source lookup; editor controls moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P07-color-specification.md",
         "P07-native-p3.md"
@@ -1052,10 +1120,11 @@
     "D-02": {
       "name": "SourceMonitor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/SourceMonitor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/SourceMonitor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-monitors-and-media.md"
       ]
@@ -1063,10 +1132,11 @@
     "D-03": {
       "name": "ProgramMonitor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/ProgramMonitor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/ProgramMonitor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-monitors-and-media.md"
       ]
@@ -1074,11 +1144,12 @@
     "D-04": {
       "name": "NativeSeekBar",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/NativeSeekBar",
-        "@nyc-tron/ui/components/forge/timeline/SeekBar"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/NativeSeekBar",
+        "@nitro-forge/editor-controls/timeline/SeekBar"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-transport-and-navigation.md"
       ]
@@ -1086,10 +1157,11 @@
     "D-05": {
       "name": "FrameAccurateScrubber",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/FrameAccurateScrubber"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/FrameAccurateScrubber"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P02-P03-final-platform-and-media-controls.md"
       ]
@@ -1097,10 +1169,11 @@
     "D-06": {
       "name": "TransportControls",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/TransportControls"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/TransportControls"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-transport-and-navigation.md"
       ]
@@ -1108,10 +1181,11 @@
     "D-07": {
       "name": "PlaybackRateMenu",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/PlaybackRateMenu"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/PlaybackRateMenu"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-transport-and-navigation.md"
       ]
@@ -1119,10 +1193,11 @@
     "D-08": {
       "name": "TimecodeDisplay",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/TimecodeDisplay"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/TimecodeDisplay"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-transport-and-navigation.md"
       ]
@@ -1130,10 +1205,11 @@
     "D-09": {
       "name": "JKLShuttleController",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/JKLShuttleController"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/JKLShuttleController"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-transport-and-navigation.md"
       ]
@@ -1141,10 +1217,11 @@
     "D-10": {
       "name": "TimelineRuler",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/TimelineRuler"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/TimelineRuler"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-transport-and-navigation.md"
       ]
@@ -1152,10 +1229,11 @@
     "D-11": {
       "name": "TimelinePlayhead",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/TimelinePlayhead"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/TimelinePlayhead"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-transport-and-navigation.md"
       ]
@@ -1163,10 +1241,11 @@
     "D-12": {
       "name": "InOutRangeHandles",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/InOutRangeHandles"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/InOutRangeHandles"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-transport-and-navigation.md"
       ]
@@ -1174,10 +1253,11 @@
     "D-13": {
       "name": "LoopRangeBar",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/LoopRangeBar"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/LoopRangeBar"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-transport-and-navigation.md"
       ]
@@ -1185,10 +1265,11 @@
     "D-14": {
       "name": "TimelineZoomAndScroll",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/TimelineZoomAndScroll"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/TimelineZoomAndScroll"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-timeline-editing.md"
       ]
@@ -1196,10 +1277,11 @@
     "D-15": {
       "name": "TimelineClipLane",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/TimelineClipLane"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/TimelineClipLane"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-timeline-editing.md"
       ]
@@ -1207,10 +1289,11 @@
     "D-16": {
       "name": "VideoFilmstrip",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/VideoFilmstrip"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/VideoFilmstrip"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-monitors-and-media.md"
       ]
@@ -1218,10 +1301,11 @@
     "D-17": {
       "name": "AudioClipWaveform",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/AudioClipWaveform"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/AudioClipWaveform"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-monitors-and-media.md"
       ]
@@ -1229,10 +1313,11 @@
     "D-18": {
       "name": "TrackHeaders",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/TrackHeaders"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/TrackHeaders"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-timeline-editing.md"
       ]
@@ -1240,10 +1325,11 @@
     "D-19": {
       "name": "ClipTrimHandles",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/ClipTrimHandles"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/ClipTrimHandles"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-timeline-editing.md"
       ]
@@ -1251,10 +1337,11 @@
     "D-20": {
       "name": "RazorSplitTool",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/RazorSplitTool"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/RazorSplitTool"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-timeline-editing.md"
       ]
@@ -1262,10 +1349,11 @@
     "D-21": {
       "name": "RollSlipSlideControls",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/RollSlipSlideControls"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/RollSlipSlideControls"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-timeline-editing.md"
       ]
@@ -1273,10 +1361,11 @@
     "D-22": {
       "name": "DragReorderAndRipple",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/DragReorderAndRipple"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/DragReorderAndRipple"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-timeline-editing.md"
       ]
@@ -1284,10 +1373,11 @@
     "D-23": {
       "name": "TransitionHandles",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/TransitionHandles"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/TransitionHandles"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-timeline-editing.md"
       ]
@@ -1295,10 +1385,11 @@
     "D-24": {
       "name": "TimelineMarkers",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/TimelineMarkers"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/TimelineMarkers"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-timeline-editing.md"
       ]
@@ -1306,10 +1397,11 @@
     "D-25": {
       "name": "SafeAreaOverlay",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/SafeAreaOverlay"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/SafeAreaOverlay"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-timeline-editing.md"
       ]
@@ -1317,10 +1409,11 @@
     "D-26": {
       "name": "ScopesDock",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/ScopesDock"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/ScopesDock"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-monitors-and-media.md"
       ]
@@ -1328,10 +1421,11 @@
     "D-27": {
       "name": "MulticamAngleViewer",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/MulticamAngleViewer"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/MulticamAngleViewer"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-monitors-and-media.md"
       ]
@@ -1339,10 +1433,11 @@
     "D-28": {
       "name": "RenderCacheIndicator",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/RenderCacheIndicator"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/RenderCacheIndicator"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-monitors-and-media.md"
       ]
@@ -1350,10 +1445,11 @@
     "D-29": {
       "name": "ExportMonitor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/ExportMonitor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/ExportMonitor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-video-production-tools.md"
       ]
@@ -1361,10 +1457,11 @@
     "D-30": {
       "name": "PictureInPictureControls",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/PictureInPictureControls"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/PictureInPictureControls"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-monitors-and-media.md"
       ]
@@ -1372,10 +1469,11 @@
     "D-31": {
       "name": "OverlayAndEffectsTrackStack",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/OverlayAndEffectsTrackStack"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/OverlayAndEffectsTrackStack"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-timeline-editing.md"
       ]
@@ -1383,10 +1481,11 @@
     "D-32": {
       "name": "VideoSpeedRampCurve",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/VideoSpeedRampCurve"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/VideoSpeedRampCurve"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-video-production-tools.md"
       ]
@@ -1394,10 +1493,11 @@
     "D-33": {
       "name": "AutoCaptionTranscriptTimeline",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/AutoCaptionTranscriptTimeline"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/AutoCaptionTranscriptTimeline"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-video-production-tools.md"
       ]
@@ -1405,10 +1505,11 @@
     "D-34": {
       "name": "CaptionWordTimingHandles",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/CaptionWordTimingHandles"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/CaptionWordTimingHandles"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-video-production-tools.md"
       ]
@@ -1416,10 +1517,11 @@
     "D-35": {
       "name": "AutoReframeGuides",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/AutoReframeGuides"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/AutoReframeGuides"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-video-production-tools.md"
       ]
@@ -1427,10 +1529,11 @@
     "D-36": {
       "name": "VideoStabilizationInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/VideoStabilizationInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/VideoStabilizationInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-video-production-tools.md"
       ]
@@ -1438,10 +1541,11 @@
     "D-37": {
       "name": "TransitionPresetBrowser",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/TransitionPresetBrowser"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/TransitionPresetBrowser"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-timeline-editing.md"
       ]
@@ -1449,10 +1553,11 @@
     "D-38": {
       "name": "VideoEffectsBrowser",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/VideoEffectsBrowser"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/VideoEffectsBrowser"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-video-production-tools.md"
       ]
@@ -1460,10 +1565,11 @@
     "D-39": {
       "name": "MotionTrackingOverlay",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/MotionTrackingOverlay"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/MotionTrackingOverlay"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-video-production-tools.md"
       ]
@@ -1471,10 +1577,11 @@
     "D-40": {
       "name": "CoverFramePicker",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/CoverFramePicker"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/CoverFramePicker"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-video-production-tools.md"
       ]
@@ -1482,10 +1589,11 @@
     "D-41": {
       "name": "BatchEditPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/BatchEditPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/BatchEditPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-timeline-editing.md"
       ]
@@ -1493,10 +1601,11 @@
     "D-42": {
       "name": "VideoQualityInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/VideoQualityInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/VideoQualityInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-video-production-tools.md"
       ]
@@ -1504,10 +1613,11 @@
     "D-43": {
       "name": "StickerMotionLane",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/timeline/StickerMotionLane"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/timeline/StickerMotionLane"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P08-video-production-tools.md"
       ]
@@ -1515,10 +1625,11 @@
     "E-01": {
       "name": "NativeAudioTransport",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/NativeAudioTransport"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/NativeAudioTransport"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-input-and-automation.md"
       ]
@@ -1526,10 +1637,11 @@
     "E-02": {
       "name": "WaveformLane",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/WaveformLane"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/WaveformLane"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-clip-and-recording-workflows.md"
       ]
@@ -1537,10 +1649,11 @@
     "E-03": {
       "name": "StereoMultichannelWaveform",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/StereoMultichannelWaveform"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/StereoMultichannelWaveform"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-input-and-automation.md"
       ]
@@ -1548,10 +1661,11 @@
     "E-04": {
       "name": "LiveRecordingWaveform",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/LiveRecordingWaveform"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/LiveRecordingWaveform"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-input-and-automation.md"
       ]
@@ -1559,10 +1673,11 @@
     "E-05": {
       "name": "SpectrogramView",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/SpectrogramView"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/SpectrogramView"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-mixer-analysis-and-midi.md"
       ]
@@ -1570,10 +1685,11 @@
     "E-06": {
       "name": "RecordingArmButton",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/RecordingArmButton"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/RecordingArmButton"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-input-and-automation.md"
       ]
@@ -1581,10 +1697,11 @@
     "E-07": {
       "name": "InputMonitorToggle",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/InputMonitorToggle"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/InputMonitorToggle"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-input-and-automation.md"
       ]
@@ -1592,10 +1709,11 @@
     "E-08": {
       "name": "DeviceAndChannelPicker",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/DeviceAndChannelPicker"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/DeviceAndChannelPicker"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-input-and-automation.md"
       ]
@@ -1603,10 +1721,11 @@
     "E-09": {
       "name": "AudioClipTrimAndFade",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/AudioClipTrimAndFade"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/AudioClipTrimAndFade"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-clip-and-recording-workflows.md"
       ]
@@ -1614,10 +1733,11 @@
     "E-10": {
       "name": "ClipGainEnvelope",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/ClipGainEnvelope"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/ClipGainEnvelope"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-clip-and-recording-workflows.md"
       ]
@@ -1625,10 +1745,11 @@
     "E-11": {
       "name": "AutomationLane",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/AutomationLane"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/AutomationLane"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-input-and-automation.md"
       ]
@@ -1636,10 +1757,11 @@
     "E-12": {
       "name": "AutomationModePicker",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/AutomationModePicker"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/AutomationModePicker"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-input-and-automation.md"
       ]
@@ -1647,10 +1769,11 @@
     "E-13": {
       "name": "MixingConsole",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/MixingConsole"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/MixingConsole"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-mixer-analysis-and-midi.md"
       ]
@@ -1658,10 +1781,11 @@
     "E-14": {
       "name": "VerticalFader",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/VerticalFader"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/VerticalFader"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-input-and-automation.md"
       ]
@@ -1669,10 +1793,11 @@
     "E-15": {
       "name": "PanAndBalanceControl",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/PanAndBalanceControl"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/PanAndBalanceControl"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-input-and-automation.md"
       ]
@@ -1680,10 +1805,11 @@
     "E-16": {
       "name": "RealtimePeakMeter",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/RealtimePeakMeter"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/RealtimePeakMeter"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-input-and-automation.md"
       ]
@@ -1691,10 +1817,11 @@
     "E-17": {
       "name": "LoudnessMeter",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/LoudnessMeter"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/LoudnessMeter"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-mixer-analysis-and-midi.md"
       ]
@@ -1702,10 +1829,11 @@
     "E-18": {
       "name": "SoloMuteButtons",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/SoloMuteButtons"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/SoloMuteButtons"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-mixer-analysis-and-midi.md"
       ]
@@ -1713,10 +1841,11 @@
     "E-19": {
       "name": "BusAndRoutingMatrix",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/BusAndRoutingMatrix"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/BusAndRoutingMatrix"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-mixer-analysis-and-midi.md"
       ]
@@ -1724,10 +1853,11 @@
     "E-20": {
       "name": "InsertEffectRack",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/InsertEffectRack"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/InsertEffectRack"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-mixer-analysis-and-midi.md"
       ]
@@ -1735,10 +1865,11 @@
     "E-21": {
       "name": "EQFrequencyGraph",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/EQFrequencyGraph"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/EQFrequencyGraph"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-mixer-analysis-and-midi.md"
       ]
@@ -1746,10 +1877,11 @@
     "E-22": {
       "name": "DynamicsTransferGraph",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/DynamicsTransferGraph"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/DynamicsTransferGraph"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-mixer-analysis-and-midi.md"
       ]
@@ -1757,10 +1889,11 @@
     "E-23": {
       "name": "PluginPresetBrowser",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/PluginPresetBrowser"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/PluginPresetBrowser"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-mixer-analysis-and-midi.md"
       ]
@@ -1768,10 +1901,11 @@
     "E-24": {
       "name": "MIDIPianoRoll",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/midi/MIDIPianoRoll"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/midi/MIDIPianoRoll"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-mixer-analysis-and-midi.md"
       ]
@@ -1779,10 +1913,11 @@
     "E-25": {
       "name": "MIDIVelocityLane",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/midi/MIDIVelocityLane"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/midi/MIDIVelocityLane"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-mixer-analysis-and-midi.md"
       ]
@@ -1790,10 +1925,11 @@
     "E-26": {
       "name": "StepSequencer",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/midi/StepSequencer"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/midi/StepSequencer"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-mixer-analysis-and-midi.md"
       ]
@@ -1801,10 +1937,11 @@
     "E-27": {
       "name": "TempoAndMetronome",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/TempoAndMetronome"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/TempoAndMetronome"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-mixer-analysis-and-midi.md"
       ]
@@ -1812,10 +1949,11 @@
     "E-28": {
       "name": "TakePlaylistAndComping",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/TakePlaylistAndComping"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/TakePlaylistAndComping"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-clip-and-recording-workflows.md"
       ]
@@ -1823,10 +1961,11 @@
     "E-29": {
       "name": "LoopPunchRecording",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/LoopPunchRecording"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/LoopPunchRecording"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-clip-and-recording-workflows.md"
       ]
@@ -1834,10 +1973,11 @@
     "E-30": {
       "name": "SampleEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/SampleEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/SampleEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-clip-and-recording-workflows.md"
       ]
@@ -1845,10 +1985,11 @@
     "E-31": {
       "name": "AudioVideoSync",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/AudioVideoSync"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/AudioVideoSync"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-clip-and-recording-workflows.md"
       ]
@@ -1856,10 +1997,11 @@
     "E-32": {
       "name": "LatencyCalibrationPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/LatencyCalibrationPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/LatencyCalibrationPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-clip-and-recording-workflows.md"
       ]
@@ -1867,10 +2009,11 @@
     "E-33": {
       "name": "SurroundPanView",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/SurroundPanView"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/SurroundPanView"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-input-and-automation.md"
       ]
@@ -1878,10 +2021,11 @@
     "E-34": {
       "name": "VoiceIsolationPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/VoiceIsolationPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/VoiceIsolationPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-processing-and-speech.md"
       ]
@@ -1889,10 +2033,11 @@
     "E-35": {
       "name": "BeatDetectionMarkerLane",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/BeatDetectionMarkerLane"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/BeatDetectionMarkerLane"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-processing-and-speech.md"
       ]
@@ -1900,10 +2045,11 @@
     "E-36": {
       "name": "SoundEffectsLibrary",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/SoundEffectsLibrary"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/SoundEffectsLibrary"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-processing-and-speech.md"
       ]
@@ -1911,10 +2057,11 @@
     "E-37": {
       "name": "SpeechTranscriptTakeReview",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/SpeechTranscriptTakeReview"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/SpeechTranscriptTakeReview"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-processing-and-speech.md"
       ]
@@ -1922,10 +2069,11 @@
     "E-38": {
       "name": "VoiceoverCountdownAndTakeBin",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/VoiceoverCountdownAndTakeBin"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/VoiceoverCountdownAndTakeBin"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-processing-and-speech.md"
       ]
@@ -1933,10 +2081,11 @@
     "E-39": {
       "name": "AudioEffectsPresetPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/AudioEffectsPresetPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/AudioEffectsPresetPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-processing-and-speech.md"
       ]
@@ -1944,10 +2093,11 @@
     "E-40": {
       "name": "NoiseReductionMonitor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/NoiseReductionMonitor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/NoiseReductionMonitor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-processing-and-speech.md"
       ]
@@ -1955,10 +2105,11 @@
     "E-41": {
       "name": "AutoDuckEnvelopePanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/AutoDuckEnvelopePanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/AutoDuckEnvelopePanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P09-processing-and-speech.md"
       ]
@@ -1966,10 +2117,11 @@
     "F-01": {
       "name": "PhotoLibraryGrid",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/PhotoLibraryGrid"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/PhotoLibraryGrid"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-catalog.md"
       ]
@@ -1977,10 +2129,11 @@
     "F-02": {
       "name": "CatalogFilterBar",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/CatalogFilterBar"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/CatalogFilterBar"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-catalog.md"
       ]
@@ -1988,10 +2141,11 @@
     "F-03": {
       "name": "RatingAndFlagControl",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/RatingAndFlagControl"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/RatingAndFlagControl"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-develop.md"
       ]
@@ -1999,10 +2153,11 @@
     "F-04": {
       "name": "RAWDevelopPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/RAWDevelopPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/RAWDevelopPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-develop.md"
       ]
@@ -2010,10 +2165,11 @@
     "F-05": {
       "name": "ExposureAndWhiteBalance",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/ExposureAndWhiteBalance"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/ExposureAndWhiteBalance"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-develop.md"
       ]
@@ -2021,10 +2177,11 @@
     "F-06": {
       "name": "ToneAndPresence",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/ToneAndPresence"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/ToneAndPresence"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-develop.md"
       ]
@@ -2032,10 +2189,11 @@
     "F-07": {
       "name": "EightBandColorMixer",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/EightBandColorMixer"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/EightBandColorMixer"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-develop.md"
       ]
@@ -2043,10 +2201,11 @@
     "F-08": {
       "name": "LensCorrectionPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/LensCorrectionPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/LensCorrectionPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-develop.md"
       ]
@@ -2054,10 +2213,11 @@
     "F-09": {
       "name": "LocalMaskBrush",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/LocalMaskBrush"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/LocalMaskBrush"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-masks.md"
       ]
@@ -2065,10 +2225,11 @@
     "F-10": {
       "name": "LinearRadialGradientMask",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/LinearRadialGradientMask"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/LinearRadialGradientMask"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-masks.md"
       ]
@@ -2076,10 +2237,11 @@
     "F-11": {
       "name": "LuminanceColorRangeMask",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/LuminanceColorRangeMask"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/LuminanceColorRangeMask"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-masks.md"
       ]
@@ -2087,10 +2249,11 @@
     "F-12": {
       "name": "BeforeAfterCompare",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/BeforeAfterCompare"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/BeforeAfterCompare"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-catalog.md"
       ]
@@ -2098,10 +2261,11 @@
     "F-13": {
       "name": "PresetFilmstrip",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/PresetFilmstrip"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/PresetFilmstrip"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-workflows.md"
       ]
@@ -2109,10 +2273,11 @@
     "F-14": {
       "name": "BatchExportPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/BatchExportPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/BatchExportPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-workflows.md"
       ]
@@ -2120,10 +2285,11 @@
     "F-15": {
       "name": "PhotoVersionHistoryBrowser",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/PhotoVersionHistoryBrowser"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/PhotoVersionHistoryBrowser"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-workflows.md"
       ]
@@ -2131,10 +2297,11 @@
     "F-16": {
       "name": "CleanupAndRetouchPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/CleanupAndRetouchPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/CleanupAndRetouchPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-masks.md"
       ]
@@ -2142,10 +2309,11 @@
     "F-17": {
       "name": "PresetManager",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/PresetManager"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/PresetManager"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-workflows.md"
       ]
@@ -2153,10 +2321,11 @@
     "F-18": {
       "name": "PhotoMetadataInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/photo/PhotoMetadataInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/photo/PhotoMetadataInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P10-photo-catalog.md"
       ]
@@ -2164,10 +2333,11 @@
     "G-01": {
       "name": "CompositionLayerTree",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/CompositionLayerTree"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/CompositionLayerTree"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-composition-tree.md"
       ]
@@ -2175,10 +2345,11 @@
     "G-02": {
       "name": "MotionKeyframeTimeline",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/MotionKeyframeTimeline"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/MotionKeyframeTimeline"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-keyframe-timeline.md"
       ]
@@ -2186,10 +2357,11 @@
     "G-03": {
       "name": "KeyframeValueGraph",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/KeyframeValueGraph"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/KeyframeValueGraph"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-motion-curves.md"
       ]
@@ -2197,10 +2369,11 @@
     "G-04": {
       "name": "KeyframeSpeedGraph",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/KeyframeSpeedGraph"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/KeyframeSpeedGraph"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-motion-curves.md"
       ]
@@ -2208,10 +2381,11 @@
     "G-05": {
       "name": "EasingPresetGallery",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/EasingPresetGallery"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/EasingPresetGallery"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-render-and-easing.md"
       ]
@@ -2219,10 +2393,11 @@
     "G-06": {
       "name": "MotionPathEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/MotionPathEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/MotionPathEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-motion-path.md"
       ]
@@ -2230,10 +2405,11 @@
     "G-07": {
       "name": "Transform3DInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/Transform3DInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/Transform3DInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-motion-settings.md"
       ]
@@ -2241,10 +2417,11 @@
     "G-08": {
       "name": "CameraAndLightControls",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/CameraAndLightControls"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/CameraAndLightControls"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-motion-settings.md"
       ]
@@ -2252,10 +2429,11 @@
     "G-09": {
       "name": "MatteAndMaskPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/MatteAndMaskPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/MatteAndMaskPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-motion-settings.md"
       ]
@@ -2263,10 +2441,11 @@
     "G-10": {
       "name": "EffectStackAndInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/EffectStackAndInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/EffectStackAndInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-effect-stack.md"
       ]
@@ -2274,10 +2453,11 @@
     "G-11": {
       "name": "ExpressionEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/ExpressionEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/ExpressionEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-expression-editor.md",
         "P11-native-motion.md",
@@ -2287,10 +2467,11 @@
     "G-12": {
       "name": "ParticleEmitterControls",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/ParticleEmitterControls"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/ParticleEmitterControls"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-motion-settings.md"
       ]
@@ -2298,10 +2479,11 @@
     "G-13": {
       "name": "TimeRemapCurve",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/TimeRemapCurve"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/TimeRemapCurve"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-motion-curves.md"
       ]
@@ -2309,10 +2491,11 @@
     "G-14": {
       "name": "NodeGraphEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/NodeGraphEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/NodeGraphEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-node-graph.md",
         "P11-native-motion.md",
@@ -2322,10 +2505,11 @@
     "G-15": {
       "name": "RenderQueuePanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/motion/RenderQueuePanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/motion/RenderQueuePanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P11-render-and-easing.md"
       ]
@@ -2333,10 +2517,11 @@
     "H-01": {
       "name": "PaginatedTextCanvas",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/PaginatedTextCanvas"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/PaginatedTextCanvas"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-text-surfaces-and-references.md"
       ]
@@ -2344,10 +2529,11 @@
     "H-02": {
       "name": "TextSelectionAndCaret",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/TextSelectionAndCaret"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/TextSelectionAndCaret"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-text-surfaces-and-references.md"
       ]
@@ -2355,10 +2541,11 @@
     "H-03": {
       "name": "RichTextRibbon",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/RichTextRibbon"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/RichTextRibbon"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-review-and-structure.md"
       ]
@@ -2366,10 +2553,11 @@
     "H-04": {
       "name": "TypographyInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/TypographyInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/TypographyInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-layout-and-formatting.md"
       ]
@@ -2377,10 +2565,11 @@
     "H-05": {
       "name": "ParagraphStylesGallery",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/ParagraphStylesGallery"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/ParagraphStylesGallery"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-layout-and-formatting.md"
       ]
@@ -2388,10 +2577,11 @@
     "H-06": {
       "name": "ParagraphRuler",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/ParagraphRuler"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/ParagraphRuler"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-layout-and-formatting.md"
       ]
@@ -2399,10 +2589,11 @@
     "H-07": {
       "name": "BulletsNumberingEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/BulletsNumberingEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/BulletsNumberingEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-review-and-structure.md"
       ]
@@ -2410,10 +2601,11 @@
     "H-08": {
       "name": "InsertTableGrid",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/InsertTableGrid"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/InsertTableGrid"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-layout-and-formatting.md"
       ]
@@ -2421,10 +2613,11 @@
     "H-09": {
       "name": "TableLayoutInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/TableLayoutInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/TableLayoutInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-layout-and-formatting.md"
       ]
@@ -2432,10 +2625,11 @@
     "H-10": {
       "name": "HeadersFootersEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/HeadersFootersEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/HeadersFootersEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-layout-and-formatting.md"
       ]
@@ -2443,10 +2637,11 @@
     "H-11": {
       "name": "PageSetupPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/PageSetupPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/PageSetupPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-layout-and-formatting.md"
       ]
@@ -2454,10 +2649,11 @@
     "H-12": {
       "name": "TextWrapAndFrames",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/TextWrapAndFrames"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/TextWrapAndFrames"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-text-surfaces-and-references.md"
       ]
@@ -2465,10 +2661,11 @@
     "H-13": {
       "name": "CommentsAndReviewRail",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/CommentsAndReviewRail"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/CommentsAndReviewRail"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-review-and-structure.md"
       ]
@@ -2476,10 +2673,11 @@
     "H-14": {
       "name": "TrackChangesView",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/TrackChangesView"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/TrackChangesView"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-review-and-structure.md"
       ]
@@ -2487,10 +2685,11 @@
     "H-15": {
       "name": "NavigationOutline",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/NavigationOutline"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/NavigationOutline"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-review-and-structure.md"
       ]
@@ -2498,10 +2697,11 @@
     "H-16": {
       "name": "TableOfContentsEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/TableOfContentsEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/TableOfContentsEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-review-and-structure.md"
       ]
@@ -2509,10 +2709,11 @@
     "H-17": {
       "name": "FootnoteCitationEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/FootnoteCitationEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/FootnoteCitationEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-text-surfaces-and-references.md"
       ]
@@ -2520,10 +2721,11 @@
     "H-18": {
       "name": "SpellGrammarPopover",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/SpellGrammarPopover"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/SpellGrammarPopover"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-text-surfaces-and-references.md"
       ]
@@ -2531,10 +2733,11 @@
     "H-19": {
       "name": "MailMergeFieldPicker",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/MailMergeFieldPicker"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/MailMergeFieldPicker"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-text-surfaces-and-references.md"
       ]
@@ -2542,10 +2745,11 @@
     "H-20": {
       "name": "LayoutSpreadNavigator",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/LayoutSpreadNavigator"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/LayoutSpreadNavigator"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-text-surfaces-and-references.md"
       ]
@@ -2553,10 +2757,11 @@
     "H-21": {
       "name": "DocumentReadAloudTransport",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/DocumentReadAloudTransport"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/DocumentReadAloudTransport"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-review-and-structure.md"
       ]
@@ -2564,10 +2769,11 @@
     "H-22": {
       "name": "DictationSessionPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/document/DictationSessionPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/document/DictationSessionPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P12-review-and-structure.md"
       ]
@@ -2575,11 +2781,12 @@
     "I-01": {
       "name": "VirtualSpreadsheetGrid",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/SpreadsheetGrid",
-        "@nyc-tron/ui/components/forge/spreadsheet/VirtualSpreadsheetGrid"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/SpreadsheetGrid",
+        "@nitro-forge/editor-controls/spreadsheet/VirtualSpreadsheetGrid"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-grid-and-formula-controls.md"
       ]
@@ -2587,10 +2794,11 @@
     "I-02": {
       "name": "CellSelectionOverlay",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/CellSelectionOverlay"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/CellSelectionOverlay"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-grid-and-formula-controls.md"
       ]
@@ -2598,10 +2806,11 @@
     "I-03": {
       "name": "FormulaBar",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/FormulaBar"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/FormulaBar"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-grid-and-formula-controls.md"
       ]
@@ -2609,10 +2818,11 @@
     "I-04": {
       "name": "NameBox",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/NameBox"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/NameBox"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-grid-and-formula-controls.md"
       ]
@@ -2620,10 +2830,11 @@
     "I-05": {
       "name": "FormulaAutocomplete",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/FormulaAutocomplete"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/FormulaAutocomplete"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-grid-and-formula-controls.md"
       ]
@@ -2631,10 +2842,11 @@
     "I-06": {
       "name": "ReferenceColorizer",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/ReferenceColorizer"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/ReferenceColorizer"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-grid-and-formula-controls.md"
       ]
@@ -2642,10 +2854,11 @@
     "I-07": {
       "name": "FillHandleAndAutoFill",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/FillHandleAndAutoFill"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/FillHandleAndAutoFill"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-grid-and-formula-controls.md"
       ]
@@ -2653,10 +2866,11 @@
     "I-08": {
       "name": "SheetTabs",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/SheetTabs"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/SheetTabs"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-sheet-management-and-charts.md"
       ]
@@ -2664,10 +2878,11 @@
     "I-09": {
       "name": "CellFormatInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/CellFormatInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/CellFormatInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-formatting-and-data-tools.md"
       ]
@@ -2675,10 +2890,11 @@
     "I-10": {
       "name": "ConditionalFormatRules",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/ConditionalFormatRules"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/ConditionalFormatRules"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-formatting-and-data-tools.md"
       ]
@@ -2686,10 +2902,11 @@
     "I-11": {
       "name": "ValidationDropdown",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/ValidationDropdown"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/ValidationDropdown"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-formatting-and-data-tools.md"
       ]
@@ -2697,10 +2914,11 @@
     "I-12": {
       "name": "SortFilterHeader",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/SortFilterHeader"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/SortFilterHeader"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-formatting-and-data-tools.md"
       ]
@@ -2708,10 +2926,11 @@
     "I-13": {
       "name": "ChartBuilder",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/ChartBuilder"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/ChartBuilder"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-sheet-management-and-charts.md"
       ]
@@ -2719,10 +2938,11 @@
     "I-14": {
       "name": "SparklineEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/SparklineEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/SparklineEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-sheet-management-and-charts.md"
       ]
@@ -2730,10 +2950,11 @@
     "I-15": {
       "name": "PivotFieldList",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/PivotFieldList"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/PivotFieldList"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-formatting-and-data-tools.md"
       ]
@@ -2741,10 +2962,11 @@
     "I-16": {
       "name": "TableStyleGallery",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/TableStyleGallery"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/TableStyleGallery"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-formatting-and-data-tools.md"
       ]
@@ -2752,10 +2974,11 @@
     "I-17": {
       "name": "FreezeSplitControls",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/FreezeSplitControls"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/FreezeSplitControls"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-sheet-management-and-charts.md"
       ]
@@ -2763,10 +2986,11 @@
     "I-18": {
       "name": "RangeComments",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/RangeComments"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/RangeComments"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-sheet-management-and-charts.md"
       ]
@@ -2774,10 +2998,11 @@
     "I-19": {
       "name": "DataImportWizard",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/DataImportWizard"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/DataImportWizard"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-formatting-and-data-tools.md"
       ]
@@ -2785,10 +3010,11 @@
     "I-20": {
       "name": "SpreadsheetCardsView",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/SpreadsheetCardsView"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/SpreadsheetCardsView"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-sheet-management-and-charts.md"
       ]
@@ -2796,10 +3022,11 @@
     "I-21": {
       "name": "SavedSheetViewManager",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/spreadsheet/SavedSheetViewManager"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/spreadsheet/SavedSheetViewManager"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P13-formatting-and-data-tools.md"
       ]
@@ -2807,10 +3034,11 @@
     "J-01": {
       "name": "SlideFilmstrip",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/SlideFilmstrip"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/SlideFilmstrip"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-canvas-deck-and-native-ink.md"
       ]
@@ -2818,10 +3046,11 @@
     "J-02": {
       "name": "SlideSorter",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/SlideSorter"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/SlideSorter"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-canvas-deck-and-native-ink.md"
       ]
@@ -2829,10 +3058,11 @@
     "J-03": {
       "name": "MasterLayoutEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/MasterLayoutEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/MasterLayoutEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-authoring-and-presenter.md"
       ]
@@ -2840,10 +3070,11 @@
     "J-04": {
       "name": "ThemeAndTemplateGallery",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/ThemeAndTemplateGallery"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/ThemeAndTemplateGallery"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-authoring-and-presenter.md"
       ]
@@ -2851,10 +3082,11 @@
     "J-05": {
       "name": "SlideCanvas",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/SlideCanvas"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/SlideCanvas"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-canvas-deck-and-native-ink.md"
       ]
@@ -2862,10 +3094,11 @@
     "J-06": {
       "name": "ShapePresetGallery",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/ShapePresetGallery"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/ShapePresetGallery"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-authoring-and-presenter.md"
       ]
@@ -2873,10 +3106,11 @@
     "J-07": {
       "name": "ConnectorAndDiagramTools",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/ConnectorAndDiagramTools"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/ConnectorAndDiagramTools"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-diagrams-morph-and-media.md"
       ]
@@ -2884,10 +3118,11 @@
     "J-08": {
       "name": "TransitionPicker",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/TransitionPicker"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/TransitionPicker"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-authoring-and-presenter.md"
       ]
@@ -2895,10 +3130,11 @@
     "J-09": {
       "name": "SlideAnimationPane",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/SlideAnimationPane"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/SlideAnimationPane"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-canvas-deck-and-native-ink.md"
       ]
@@ -2906,10 +3142,11 @@
     "J-10": {
       "name": "MorphPreview",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/MorphPreview"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/MorphPreview"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-diagrams-morph-and-media.md"
       ]
@@ -2917,10 +3154,11 @@
     "J-11": {
       "name": "SlideNotesEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/SlideNotesEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/SlideNotesEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-authoring-and-presenter.md"
       ]
@@ -2928,10 +3166,11 @@
     "J-12": {
       "name": "PresenterView",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/PresenterView"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/PresenterView"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-authoring-and-presenter.md"
       ]
@@ -2939,10 +3178,11 @@
     "J-13": {
       "name": "RehearsalTimers",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/RehearsalTimers"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/RehearsalTimers"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-authoring-and-presenter.md"
       ]
@@ -2950,10 +3190,11 @@
     "J-14": {
       "name": "InkAndLaserPointer",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/InkAndLaserPointer"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/InkAndLaserPointer"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-canvas-deck-and-native-ink.md"
       ]
@@ -2961,10 +3202,11 @@
     "J-15": {
       "name": "MediaInsertInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/MediaInsertInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/MediaInsertInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-diagrams-morph-and-media.md"
       ]
@@ -2972,10 +3214,11 @@
     "J-16": {
       "name": "ChartAndTableEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/slides/ChartAndTableEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/slides/ChartAndTableEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P14-diagrams-morph-and-media.md"
       ]
@@ -2983,10 +3226,11 @@
     "K-01": {
       "name": "VirtualPDFPageViewer",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/VirtualPDFPageViewer"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/VirtualPDFPageViewer"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-viewer-selection-and-text.md"
       ]
@@ -2994,10 +3238,11 @@
     "K-02": {
       "name": "PDFThumbnailSidebar",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/PDFThumbnailSidebar"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/PDFThumbnailSidebar"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-organization-and-output.md"
       ]
@@ -3005,10 +3250,11 @@
     "K-03": {
       "name": "PDFPageLayoutSelector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/PDFPageLayoutSelector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/PDFPageLayoutSelector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-viewer-selection-and-text.md"
       ]
@@ -3016,10 +3262,11 @@
     "K-04": {
       "name": "TextSearchResults",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/TextSearchResults"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/TextSearchResults"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-signatures-forms-and-capture.md"
       ]
@@ -3027,10 +3274,11 @@
     "K-05": {
       "name": "PDFTextSelection",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/PDFTextSelection"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/PDFTextSelection"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-viewer-selection-and-text.md"
       ]
@@ -3038,10 +3286,11 @@
     "K-06": {
       "name": "AnnotationToolbar",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/AnnotationToolbar"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/AnnotationToolbar"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-signatures-forms-and-capture.md"
       ]
@@ -3049,10 +3298,11 @@
     "K-07": {
       "name": "CommentsThreadPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/CommentsThreadPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/CommentsThreadPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-signatures-forms-and-capture.md"
       ]
@@ -3060,10 +3310,11 @@
     "K-08": {
       "name": "SignatureStampTool",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/SignatureStampTool"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/SignatureStampTool"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-signatures-forms-and-capture.md"
       ]
@@ -3071,10 +3322,11 @@
     "K-09": {
       "name": "PDFFormFieldEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/PDFFormFieldEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/PDFFormFieldEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-signatures-forms-and-capture.md"
       ]
@@ -3082,10 +3334,11 @@
     "K-10": {
       "name": "PageReorderOrganizer",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/PageReorderOrganizer"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/PageReorderOrganizer"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-organization-and-output.md"
       ]
@@ -3093,10 +3346,11 @@
     "K-11": {
       "name": "ExtractMergeSplitDialog",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/ExtractMergeSplitDialog"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/ExtractMergeSplitDialog"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-organization-and-output.md"
       ]
@@ -3104,10 +3358,11 @@
     "K-12": {
       "name": "BookmarkOutline",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/BookmarkOutline"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/BookmarkOutline"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-viewer-selection-and-text.md"
       ]
@@ -3115,10 +3370,11 @@
     "K-13": {
       "name": "HyperlinkInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/HyperlinkInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/HyperlinkInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-organization-and-output.md"
       ]
@@ -3126,10 +3382,11 @@
     "K-14": {
       "name": "RedactionReviewTool",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/RedactionReviewTool"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/RedactionReviewTool"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-organization-and-output.md"
       ]
@@ -3137,10 +3394,11 @@
     "K-15": {
       "name": "EncryptPermissionsPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/EncryptPermissionsPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/EncryptPermissionsPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-organization-and-output.md"
       ]
@@ -3148,10 +3406,11 @@
     "K-16": {
       "name": "PDFCompareOverlay",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/PDFCompareOverlay"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/PDFCompareOverlay"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-organization-and-output.md"
       ]
@@ -3159,10 +3418,11 @@
     "K-17": {
       "name": "PrintAndExportPreview",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/PrintAndExportPreview"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/PrintAndExportPreview"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-organization-and-output.md"
       ]
@@ -3170,10 +3430,11 @@
     "K-18": {
       "name": "PDFReadAloudTransport",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/PDFReadAloudTransport"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/PDFReadAloudTransport"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-signatures-forms-and-capture.md"
       ]
@@ -3181,10 +3442,11 @@
     "K-19": {
       "name": "PDFVoiceNoteAttachment",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/PDFVoiceNoteAttachment"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/PDFVoiceNoteAttachment"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-signatures-forms-and-capture.md"
       ]
@@ -3192,10 +3454,11 @@
     "K-20": {
       "name": "PDFScanSession",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/PDFScanSession"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/PDFScanSession"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-signatures-forms-and-capture.md"
       ]
@@ -3203,10 +3466,11 @@
     "K-21": {
       "name": "PDFInlineTextEdit",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/pdf/PDFInlineTextEdit"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/pdf/PDFInlineTextEdit"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P15-viewer-selection-and-text.md"
       ]
@@ -3214,10 +3478,11 @@
     "L-01": {
       "name": "FrameAndComponentTree",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/FrameAndComponentTree"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/FrameAndComponentTree"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-layout-styles-and-variables.md"
       ]
@@ -3225,10 +3490,11 @@
     "L-02": {
       "name": "AutoLayoutInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/AutoLayoutInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/AutoLayoutInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-layout-styles-and-variables.md"
       ]
@@ -3236,10 +3502,11 @@
     "L-03": {
       "name": "HugFillFixedSizeControls",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/HugFillFixedSizeControls"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/HugFillFixedSizeControls"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-layout-styles-and-variables.md"
       ]
@@ -3247,10 +3514,11 @@
     "L-04": {
       "name": "ConstraintsPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/ConstraintsPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/ConstraintsPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-layout-styles-and-variables.md"
       ]
@@ -3258,10 +3526,11 @@
     "L-05": {
       "name": "ComponentVariantPicker",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/ComponentVariantPicker"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/ComponentVariantPicker"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-layout-styles-and-variables.md"
       ]
@@ -3269,10 +3538,11 @@
     "L-06": {
       "name": "ReusableStylesPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/ReusableStylesPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/ReusableStylesPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-layout-styles-and-variables.md"
       ]
@@ -3280,10 +3550,11 @@
     "L-07": {
       "name": "VariablesAndModes",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/VariablesAndModes"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/VariablesAndModes"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-layout-styles-and-variables.md"
       ]
@@ -3291,10 +3562,11 @@
     "L-08": {
       "name": "PrototypeConnectionTool",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/PrototypeConnectionTool"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/PrototypeConnectionTool"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-prototypes-collaboration-and-handoff.md"
       ]
@@ -3302,10 +3574,11 @@
     "L-09": {
       "name": "InteractionTriggerEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/InteractionTriggerEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/InteractionTriggerEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-prototypes-collaboration-and-handoff.md"
       ]
@@ -3313,10 +3586,11 @@
     "L-10": {
       "name": "PrototypePreviewPlayer",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/PrototypePreviewPlayer"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/PrototypePreviewPlayer"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-prototypes-collaboration-and-handoff.md"
       ]
@@ -3324,10 +3598,11 @@
     "L-11": {
       "name": "FlowOverview",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/FlowOverview"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/FlowOverview"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-prototypes-collaboration-and-handoff.md"
       ]
@@ -3335,10 +3610,11 @@
     "L-12": {
       "name": "DevHandoffInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/DevHandoffInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/DevHandoffInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-prototypes-collaboration-and-handoff.md"
       ]
@@ -3346,10 +3622,11 @@
     "L-13": {
       "name": "CollaborationPresence",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/CollaborationPresence"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/CollaborationPresence"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-prototypes-collaboration-and-handoff.md"
       ]
@@ -3357,10 +3634,11 @@
     "L-14": {
       "name": "CommentPins",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/CommentPins"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/CommentPins"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-prototypes-collaboration-and-handoff.md"
       ]
@@ -3368,10 +3646,11 @@
     "L-15": {
       "name": "MultiExportSlices",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/design/MultiExportSlices"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/design/MultiExportSlices"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P16-prototypes-collaboration-and-handoff.md"
       ]
@@ -3379,10 +3658,11 @@
     "M-01": {
       "name": "Native3DViewport",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/Native3DViewport"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/Native3DViewport"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-native-viewport-and-texturing.md"
       ]
@@ -3390,10 +3670,11 @@
     "M-02": {
       "name": "ViewCubeAndAxisGizmo",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/ViewCubeAndAxisGizmo"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/ViewCubeAndAxisGizmo"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-native-viewport-and-texturing.md"
       ]
@@ -3401,10 +3682,11 @@
     "M-03": {
       "name": "TransformGizmo3D",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/TransformGizmo3D"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/TransformGizmo3D"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-native-viewport-and-texturing.md"
       ]
@@ -3412,10 +3694,11 @@
     "M-04": {
       "name": "UVEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/UVEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/UVEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-native-viewport-and-texturing.md"
       ]
@@ -3423,10 +3706,11 @@
     "M-05": {
       "name": "TextureSetPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/TextureSetPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/TextureSetPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-native-viewport-and-texturing.md"
       ]
@@ -3434,10 +3718,11 @@
     "M-06": {
       "name": "PBRMaterialInspector",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/PBRMaterialInspector"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/PBRMaterialInspector"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-native-viewport-and-texturing.md"
       ]
@@ -3445,10 +3730,11 @@
     "M-07": {
       "name": "TextureBrush3D",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/TextureBrush3D"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/TextureBrush3D"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-native-viewport-and-texturing.md"
       ]
@@ -3456,10 +3742,11 @@
     "M-08": {
       "name": "TextureMaskAndGenerator",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/TextureMaskAndGenerator"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/TextureMaskAndGenerator"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-native-viewport-and-texturing.md"
       ]
@@ -3467,10 +3754,11 @@
     "M-09": {
       "name": "BakingMapPanel",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/BakingMapPanel"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/BakingMapPanel"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-native-viewport-and-texturing.md"
       ]
@@ -3478,10 +3766,11 @@
     "M-10": {
       "name": "NodeGraphCanvas",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/NodeGraphCanvas"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/NodeGraphCanvas"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-graphs-and-drafting.md"
       ]
@@ -3489,10 +3778,11 @@
     "M-11": {
       "name": "NodeLibrarySearch",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/NodeLibrarySearch"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/NodeLibrarySearch"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-graphs-and-drafting.md"
       ]
@@ -3500,10 +3790,11 @@
     "M-12": {
       "name": "LiveNodeThumbnail",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/LiveNodeThumbnail"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/LiveNodeThumbnail"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-graphs-and-drafting.md"
       ]
@@ -3511,10 +3802,11 @@
     "M-13": {
       "name": "DraftingCommandLine",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/DraftingCommandLine"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/DraftingCommandLine"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-graphs-and-drafting.md"
       ]
@@ -3522,10 +3814,11 @@
     "M-14": {
       "name": "ObjectSnapsAndOrtho",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/ObjectSnapsAndOrtho"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/ObjectSnapsAndOrtho"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-graphs-and-drafting.md"
       ]
@@ -3533,10 +3826,11 @@
     "M-15": {
       "name": "DimensionsAndHatching",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/DimensionsAndHatching"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/DimensionsAndHatching"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-graphs-and-drafting.md"
       ]
@@ -3544,10 +3838,11 @@
     "M-16": {
       "name": "PaperSpaceLayout",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/PaperSpaceLayout"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/PaperSpaceLayout"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-graphs-and-drafting.md"
       ]
@@ -3555,10 +3850,11 @@
     "M-17": {
       "name": "ParametricConstraintEditor",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/cad/ParametricConstraintEditor"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/cad/ParametricConstraintEditor"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P17-graphs-and-drafting.md"
       ]
@@ -3578,10 +3874,11 @@
     "N-02": {
       "name": "PenPairingDialog",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/devices/PenPairingDialog"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/devices/PenPairingDialog"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P06-brush-and-ink-batch.md"
       ]
@@ -3645,8 +3942,8 @@
       "name": "VoiceOverTalkBackSupport",
       "kind": "baseline",
       "importPaths": [
-        "@nyc-tron/ui/components/forge/inputs/PrecisionScrubber",
         "@nyc-tron/ui/components/shell/FocusAndA11yLayer",
+        "@nyc-tron/ui/components/shell/PrecisionScrubber",
         "@nyc-tron/ui/components/shell/a11y-audit"
       ],
       "ownership": "Tron source lookup",
@@ -3909,10 +4206,11 @@
     "N-20": {
       "name": "AudioInterruptionRecoveryDialog",
       "kind": "baseline",
-      "importPaths": [
-        "@nyc-tron/ui/components/forge/audio/AudioInterruptionRecoveryDialog"
+      "importPaths": [],
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/audio/AudioInterruptionRecoveryDialog"
       ],
-      "ownership": "Tron source lookup",
+      "ownership": "moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P02-P03-final-platform-and-media-controls.md"
       ]
@@ -3921,10 +4219,12 @@
       "name": "AccessiblePrecisionScrubControl",
       "kind": "baseline",
       "importPaths": [
-        "@nyc-tron/ui/components/forge/platform/AccessiblePrecisionScrubControl",
         "@nyc-tron/ui/components/gestures/GestureHandlerDrag"
       ],
-      "ownership": "Tron source lookup",
+      "forgeImportPaths": [
+        "@nitro-forge/editor-controls/platform/AccessiblePrecisionScrubControl"
+      ],
+      "ownership": "Tron source lookup; editor controls moved to @nitro-forge/editor-controls (D10)",
       "evidence": [
         "P02-P03-final-platform-and-media-controls.md"
       ]

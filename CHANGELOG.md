@@ -7,6 +7,32 @@ version per tag.
 
 ## [Unreleased]
 
+### Removed (breaking): editor controls moved to Nitro Forge
+
+- Removed the 453 `@nyc-tron/ui/components/forge/*` subpaths and
+  `packages/ui/src/components/forge`. The editor controls now ship from
+  `@nitro-forge/editor-controls` in
+  [Nitro Forge](https://github.com/mikevocalz/nitro-forge), which imports Tron's
+  general UI. Decision: [D10](docs/V1_DECISIONS.md#d10-editor-controls-move-to-nitro-forge).
+- Migration:
+  - `@nyc-tron/ui/components/forge/<path>` -> `@nitro-forge/editor-controls/<path>`
+  - `@nyc-tron/ui/components/forge/inputs/precision` -> `@nyc-tron/ui/components/shell/precision`
+  - `@nyc-tron/ui/components/forge/inputs/precision-scrubber-model` -> `@nyc-tron/ui/components/shell/precision-scrubber-model`
+  - `@nyc-tron/ui/components/forge/inputs/PrecisionScrubber` -> `@nyc-tron/ui/components/shell/PrecisionScrubber`
+  - The full list is in `docs/library/editor-controls-migration.json`; see
+    [MIGRATION.md](docs/MIGRATION.md#editor-controls-moved-to-nitro-forge-d10).
+- Added 20 general subpaths the controls build on: `components/feedback/announce`,
+  `components/forms/{toggle-a11y,SettingSwitch}`,
+  `components/gestures/{canvas-gesture-relations,adjust-keys,canvas-responder,coordinate-admission,editor-interaction-scope,local-pointer,measured-drop-owner,useEditorPan,useLocalPointer,value-gesture}`,
+  `components/shell/{precision,precision-scrubber-model,PrecisionScrubber,useOwnedAction}`,
+  `components/local-store`, `components/styles` and `components/useLocalStore`.
+- The library manifest now lists 163 general component exports and no
+  `professional controls` category. `@nyc-tron/core`'s `advancedNativeCatalog`
+  drops the InstrumentKnob, InstrumentXYPad, PatchGraph and ImageCropOverlay
+  prototypes, whose sources moved.
+- v1.0.0-rc.2 still contains the removed subpaths. Dated evidence
+  (`docs/desktop-support.json`, `docs/qt/`, `docs/completion/`) is unchanged.
+
 ### Agent documentation
 
 - Added `llms.txt`, `llms-full.txt`, per-group files under `llms/` and a
@@ -28,13 +54,14 @@ version per tag.
   Pending stability labels, missing checks and dirty-source evidence cannot
   authorize publication. Stable distribution still requires the owner's exact
   sixteen-archive approval.
-- This is a release proposal, not a published release. No public import, prop
-  signature, acceptance status or owner approval changes.
+- This is a release proposal, not a published release. Apart from the D10
+  removal above, no public import, prop signature, acceptance status or owner
+  approval changes.
 
 ### Standalone library documentation
 
 - Added a generated component documentation site, install/theming/platform guides, contributor instructions and versioning policy. Stability labels remain proposals pending owner confirmation; no stable release or rc.3 publication is claimed.
-- Preserved public imports and historical platform evidence. No acceptance or distribution-approval status changes.
+- Preserved public imports (apart from the D10 removal above) and historical platform evidence. No acceptance or distribution-approval status changes.
 
 ## [1.0.0-rc.2] - Unreleased
 

@@ -16,13 +16,19 @@ export function diagnosticWatchdogAllowed({ output, platform = process.platform,
   return platform === 'darwin' && env.GITHUB_ACTIONS === 'true' && Boolean(env.JAVA_HOME) && Boolean(env.RUNNER_TEMP) &&
     resolve(output).startsWith(resolve(env.RUNNER_TEMP) + sep);
 }
-export function stopDiagnosticWatchdog(child) {
+export function stopDiagnosticWatchdog(child, kill = (pid, signal) => process.kill(pid, signal)) {
   // The child is a detached POSIX group created exclusively by this probe.
   // Kill the group, including an in-flight synchronous ps/jcmd child, rather
   // than losing that child's timeout timer when its watchdog parent exits.
   if (!child?.pid) return;
-  try { process.kill(-child.pid, 'SIGKILL'); }
-  catch (error) { if (error.code !== 'ESRCH') throw error; }
+  try { kill(-child.pid, 'SIGKILL'); }
+  catch (error) {
+    // ESRCH: the group is gone. EPERM: macOS refuses killpg when no member
+    // can be signalled, which happens once the watchdog has exited during the
+    // blocking probe and only its unreaped zombie is left. The group is ours,
+    // so a live member would have been signalled; nothing is left running.
+    if (error.code !== 'ESRCH' && error.code !== 'EPERM') throw error;
+  }
 }
 function startDiagnosticWatchdog(output) {
   if (!diagnosticWatchdogAllowed({ output })) return;

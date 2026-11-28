@@ -38,7 +38,7 @@ Props:
 - `onPlanChange?: ((plan: PanePlan) => void) | undefined`
 - `posture?: "flat" | "book" | "tabletop" | undefined`
 - `regions?: readonly ReservedRegion[] | undefined`
-- Inherits 113 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 113 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -101,7 +101,7 @@ Props:
 - `regions?: readonly ReservedRegion[] | undefined`
 - `safeAreaInsets: { top: number; right: number; bottom: number; left: number; }` (required)
 - `style?: ____ViewStyleProp_Internal | undefined`
-- Inherits 111 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 111 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 

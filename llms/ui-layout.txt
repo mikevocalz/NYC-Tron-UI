@@ -19,7 +19,7 @@ Props:
 - `className?: string | undefined`
 - `grow?: number | undefined`
 - `minWidth: number` (required)
-- Inherits 114 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 114 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -56,7 +56,7 @@ import { AdaptiveColumns } from "@nyc-tron/ui/components/layout/AdaptiveColumns"
 Props:
 - `className?: string | undefined`
 - `gap: number` (required)
-- Inherits 114 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 114 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -94,7 +94,7 @@ Props:
 - `align?: "center" | "start" | "end" | undefined`
 - `className?: string | undefined`
 - `maxWidth: number` (required)
-- Inherits 114 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 114 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 

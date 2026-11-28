@@ -22,7 +22,7 @@ Props:
 - `size?: BadgeSize | undefined`
 - `tone?: BadgeTone | undefined`
 - `unstyled?: boolean | undefined`
-- Inherits 113 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 113 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -69,7 +69,7 @@ Props:
 - `titleClassName?: string | undefined`
 - `tone: StatusTone` (required)
 - `unstyled?: boolean | undefined`
-- Inherits 112 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 112 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -118,7 +118,7 @@ Props:
 - `titleLevel?: 1 | 2 | 3 | 4 | 5 | 6 | undefined`
 - `tone?: string | undefined`
 - `unstyled?: boolean | undefined`
-- Inherits 113 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 113 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -159,7 +159,7 @@ Props:
 - `messageClassName?: string | undefined`
 - `surface?: "page" | "night" | undefined`
 - `unstyled?: boolean | undefined`
-- Inherits 113 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 113 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -214,7 +214,7 @@ Props:
 - `value?: number | undefined`
 - `valueClassName?: string | undefined`
 - `valueText?: ((value: number, context: ProgressValueContext) => string) | undefined`
-- Inherits 110 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 110 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -257,7 +257,7 @@ Props:
 - `ref?: React.Ref<any> | undefined`
 - `size?: SpinnerSize | undefined`
 - `unstyled?: boolean | undefined`
-- Inherits 111 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 111 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -307,7 +307,7 @@ Props:
 - `titleClassName?: string | undefined`
 - `tone?: ToastTone | undefined`
 - `unstyled?: boolean | undefined`
-- Inherits 112 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 112 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -394,7 +394,7 @@ Props:
 - `placement?: ToastPlacement | undefined`
 - `toastClassName?: string | undefined`
 - `unstyled?: boolean | undefined`
-- Inherits 113 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 113 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 

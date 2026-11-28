@@ -6,10 +6,14 @@ revision, Git blob `d60f539b263863027ec7593ffaea38304ad1e5d8`.
 Read official Expo skills and relevant native platform API docs before making
 native changes. Preserve the existing Moyo and NYC-MON product contracts.
 
-1. **One UI owner:** generic and Forge/editor controls live under
+1. **One UI owner:** general app components live under
    `packages/ui/src/components/` and expose per-component package subpaths.
-   Engine operations are never defined or copied here. No import from
-   `@nitro-forge/*` in this repository.
+   Editor controls (canvas, layers, timeline, audio, spreadsheet, office and
+   similar) belong to `@nitro-forge/editor-controls` in Nitro Forge
+   ([D10](docs/V1_DECISIONS.md#d10-editor-controls-move-to-nitro-forge)); do
+   not add them or a `components/forge/` tree here. Engine operations are never
+   defined or copied here. No import from or dependency on `@nitro-forge/*` in
+   this repository; `tooling/verify-packages.mjs` enforces both.
 2. **The app owns style.** Tailwind v4 + Uniwind CSS, tokens, fonts, radius,
    border geometry, motion and density come from the consuming app. No global
    NYC-MON theme, hardcoded palettes, duplicate styling stack, or raw HTML UI.
@@ -65,14 +69,20 @@ NYC-Tron measurements.
 
 ## Approved v1 completion checkpoint
 
-User direction (2026-11-22): NYC-Tron UI is an independent UI library with
-general components and optional professional controls. Nitro Forge consumes
-Tron; Tron never imports, waits on, or is gated by Forge. Forge owns its
-component acceptance program. Tron's v1 scope comes from its public exports
-and its own library evidence, documentation and distribution review, as
-recorded in [D9](docs/V1_DECISIONS.md#d9-standalone-ui-library-v1).
+User direction (2026-11-22): NYC-Tron UI is an independent UI library.
+Nitro Forge consumes Tron; Tron never imports, waits on, or is gated by Forge.
+Forge owns its component acceptance program. Tron's v1 scope comes from its
+public exports and its own library evidence, documentation and distribution
+review, as recorded in [D9](docs/V1_DECISIONS.md#d9-standalone-ui-library-v1).
 
-Preserve all public APIs and dated evidence. The manifest, program handoff and
+User direction (2026-11-27 and 2026-11-28,
+[D10](docs/V1_DECISIONS.md#d10-editor-controls-move-to-nitro-forge)): Tron
+ships general app components only. The editor controls moved to
+`@nitro-forge/editor-controls`, which removed the 453 `./components/forge/*`
+subpaths and added 20 general subpaths. That removal is the one exception to
+D9's rule that no public import path is removed.
+
+Preserve all other public APIs and dated evidence. The manifest, program handoff and
 stable-gate migration land separately; this decision does not change validators
 or acceptance statuses. Stable publication still requires the owner's own
 comment approving the exact version and sixteen-archive checksum binding.
@@ -85,7 +95,8 @@ report archive. The standalone release gate reads `docs/library/components.json`
 candidate evidence. The read-only historical reader lives inside the dated
 archive; Qt correspondence and archived program rows cannot block Tron release.
 Qt correspondence is a dated downstream case study, and the Forge import map
-is a lookup only. Do not change acceptance or owner-approval records to make
+is a lookup only; since D10 it reads moved rows from
+`docs/library/editor-controls-migration.json`. Do not change acceptance or owner-approval records to make
 this intermediate transition pass.
 
 ## For AI agents

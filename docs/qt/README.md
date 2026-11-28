@@ -85,20 +85,28 @@ zero.
 
 ## Regenerate and check
 
-After changing a public export, source dependency, counterpart assignment or
-the reviewed RN API profile, run:
+The report is a dated snapshot of revision
+`5a1ea4db5149ec4fa93aa0ea26c2a9cda409534c`, the last one before
+[D10](../V1_DECISIONS.md#d10-editor-controls-move-to-nitro-forge) moved the
+editor controls to `@nitro-forge/editor-controls`. Most of its rows and links
+point at `packages/ui/src/components/forge/`, which no longer exists here, so
+the generator reads an extracted checkout of that revision instead of the
+working tree:
 
 ```sh
-node tooling/qt-component-coverage.mjs --write
-node tooling/qt-component-coverage.mjs
-node --test tooling/tests/qt-component-coverage.test.mjs
+mkdir -p /tmp/tron-5a1ea4db
+git archive 5a1ea4db5149ec4fa93aa0ea26c2a9cda409534c | tar -x -C /tmp/tron-5a1ea4db
+node tooling/qt-component-coverage.mjs --source-root /tmp/tron-5a1ea4db
+node tooling/qt-component-coverage.mjs --source-root /tmp/tron-5a1ea4db --write
+corepack pnpm verify:qt
 ```
 
-Check an actual RN-QNX checkout or extracted package before claiming that the
-API profile matches an installed consumer:
+Without `--source-root` the tool stops and says why. Check an actual RN-QNX
+checkout or extracted package before claiming that the API profile matches an
+installed consumer:
 
 ```sh
-node tooling/qt-component-coverage.mjs --check-rn-api /absolute/path/to/PublicAPI.js
+node tooling/qt-component-coverage.mjs --source-root /tmp/tron-5a1ea4db --check-rn-api /absolute/path/to/PublicAPI.js
 ```
 
 The verifier rejects missing or renamed canonical rows, unknown counterpart

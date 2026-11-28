@@ -8,7 +8,7 @@ Install one component, connect your theme and read the evidence for your target 
 
 ### Start with your app
 
-NYC-Tron is an independent UI library for React Native and Expo. It ships general components and optional professional controls. Import only the pieces you need; no Forge engine is required.
+NYC-Tron is an independent UI library for React Native and Expo. It ships general app components. Import only the pieces you need. Editor controls such as faders, timelines and color pickers live in Nitro Forge’s @nitro-forge/editor-controls, which builds on Tron.
 
 The current release is v1.0.0-rc.2. The new stable/preview list is a proposal awaiting owner confirmation. A passing install or source check does not certify every component on every platform.
 
@@ -36,7 +36,7 @@ cd my-app
 
 npm 12 requires --allow-remote=all for remote tarballs; npm 11 ignores the flag. Use npm for these URLs rather than expo install: the tested Expo CLI path rejects remote URLs. The command updates package.json and the npm lockfile.
 
-Core and UI are enough for Button. Optional professional controls can require additional peers; inspect their import and platform notes before adding them.
+Core and UI are enough for Button. Some components need optional peers; inspect their import and platform notes before adding them.
 
 ```
 npm install --allow-remote=all \
@@ -137,11 +137,11 @@ Historical D5 measurements retain their rc.1 archive, date and graph. They are n
 
 ## Migration (migration)
 
-Move between candidates while preserving public imports, app state and platform contracts.
+Move between candidates: the editor-control import change, app state and platform contracts.
 
 ### From rc.2 to the standalone library candidate
 
-Keep the current public import paths, including components/forge. No neutral-path migration or public export removal is authorized by this work. Nitro Forge consumes Tron as a library and owns its own acceptance program.
+Breaking: the owner moved the editor controls to Nitro Forge (decision D10, 2026-11-28). Replace each @nyc-tron/ui/components/forge/<path> import with @nitro-forge/editor-controls/<path>. The three precision helpers stayed in Tron: components/forge/inputs/precision, precision-scrubber-model and PrecisionScrubber are now components/shell/precision, precision-scrubber-model and PrecisionScrubber. docs/library/editor-controls-migration.json lists every removed subpath with its replacement. Every other public import path is unchanged.
 
 Compare generated API snapshots, manifests and release checksum files before upgrading. Install the exact candidate’s core and UI archives together. Keep desktop adapter archives from their independently tested lanes.
 
@@ -158,6 +158,8 @@ Release history and the work proposed for the next candidate.
 ### Unreleased: standalone library v1 work
 
 Recorded independent library scope; generated per-export inventory and proposed stability labels; adopted the downstream component program in Forge draft changes.
+
+Breaking (D10): removed the 453 components/forge subpaths. The editor controls are now @nitro-forge/editor-controls in Nitro Forge; the precision helpers moved to components/shell. Added 20 general subpaths the controls build on. See the migration guide.
 
 This documentation site and kitchen-sink work are proposed. rc.3 has not been published by this slice, and the owner distribution review remains pending. No acceptance value or public API is promoted by these docs.
 

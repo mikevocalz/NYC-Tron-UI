@@ -124,7 +124,7 @@ test("handle keeps its label, Escape cancel and the optional-peer boundary",()=>
  assert.match(handle,/accessibilityLabel=\{label\}/);
  assert.match(handle,/keyboardKey\(event\)==="Escape"\)controller\.cancel\(\)/);
  assert.match(handle,/touches===1\)controller\.move\(point\);else controller\.cancel\(\)/);
- for(const file of ["DragGrabHandle.tsx","forge/inputs/PrecisionScrubber.tsx","gestures/PanResponderDrag.tsx","gestures/gesture-handler-config.ts"]){
+ for(const file of ["DragGrabHandle.tsx","shell/PrecisionScrubber.tsx","gestures/PanResponderDrag.tsx","gestures/gesture-handler-config.ts"]){
   const src=readFileSync(new URL("../src/components/"+file,import.meta.url),"utf8");
   assert.ok(!/^import\s+(?!type)[^;]*from\s+["']react-native-gesture-handler["']/m.test(src),file+" loads the optional peer");
   assert.ok(!/@nitro-forge\//.test(src),file);

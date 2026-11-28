@@ -36,7 +36,7 @@ Props:
 - `sortable?: boolean | undefined`
 - `unstyled?: boolean | undefined`
 - `width?: number | undefined`
-- Inherits 113 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 113 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -92,7 +92,7 @@ Props:
 - `rowHeight?: number | undefined`
 - `selectedIds?: readonly string[] | undefined`
 - `unstyled?: boolean | undefined`
-- Inherits 113 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 113 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 

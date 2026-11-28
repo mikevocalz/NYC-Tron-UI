@@ -8,9 +8,9 @@
                               v
      @nyc-tron/ui/components/{Button,Card,NavigationRail,...}
                               |
-                 per-component opt-in imports
+     per-component opt-in imports (general app UI only)
                               |
-        @nyc-tron/ui/components/forge/{WaveformLane,...}
+     Nitro Forge: @nitro-forge/editor-controls/{audio/WaveformLane,...}
                               |
                behavior only, NO editor engines
                               |
@@ -18,6 +18,11 @@
                               |
                  Rust / Nitro v1 / WASM engines
 ```
+
+Since [D10](V1_DECISIONS.md#d10-editor-controls-move-to-nitro-forge) the
+editor controls (canvas, layers, timeline, audio, spreadsheet, office and
+similar) live in `@nitro-forge/editor-controls`, which imports Tron's general
+components. Tron has no `components/forge` tree.
 
 **Dependency direction is one-way: `Nitro Forge -> NYC-Tron UI`, never
 `NYC-Tron UI -> Nitro Forge`.** Each app can install one or more Forge
@@ -117,9 +122,10 @@ layout transition using the product's existing Zustand store or engine session.
 1. Publish stable base contracts and per-component exports with test coverage.
 2. Review and extract existing NYC-MON components one by one (preserve license
    notices), with theme decoupling and before/after snapshots.
-3. Migrate Forge reusable controls out of its private `studio-ui` provider
-   into this `components/forge` tree; leave stateful document engines in
-   `@nitro-forge/*` and keep adapters during transition.
+3. Migrate Forge reusable controls out of its private `studio-ui` provider.
+   They were built in a `components/forge` tree here and moved to
+   `@nitro-forge/editor-controls` in D10; stateful document engines stay in
+   `@nitro-forge/*`.
 4. Implement native WinUI/AppKit/SwiftUI/Compose adapters separately,
    including native menus, dropdowns, drawers and focus.
 5. Validate two genuinely different consumer themes (Moyo and NYC-MON),

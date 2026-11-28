@@ -177,7 +177,7 @@ Props:
 - `options?: readonly NativeDropdownOption[] | undefined`
 - `testID?: string | undefined`: Used to locate this view in end-to-end tests. > This disables the 'layout-only view removal' optimization for this view! See https://reactnative.dev/docs/view#testid
 - `value: string` (required)
-- Inherits 112 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 112 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -379,7 +379,7 @@ Props:
 - `triggerClassName?: string | undefined`
 - `unstyled?: boolean | undefined`
 - `value: string` (required)
-- Inherits 112 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 112 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 

@@ -37,13 +37,22 @@ This file is a record of provenance, not legal advice or a legal sign-off.
 - NeonBlade UI (https://github.com/vprix21/neonblade-ui), MIT, Copyright (c)
   2026 NeuronRush. Its vocabulary underlies the NYC-MON corner-cut source. Text
   preserved verbatim in `licenses/NEONBLADE-MIT.txt`.
-- Nitro Forge (`mikevocalz/nitro-forge`), the owner's own repository:
-  `packages/ui/src/components/forge/waveform.ts` (min/max extrema math from the
-  draft media-ui WaveformLane, PR #25) and the icon extraction in
-  `packages/icons`. Nitro Forge draft PRs #25, #26, #32, #34 and #35 are
-  references only; they are not merged, packaged or certified here.
+- Nitro Forge (`mikevocalz/nitro-forge`), the owner's own repository: the
+  icon extraction in `packages/icons`. Nitro Forge draft PRs #25, #26, #32, #34
+  and #35 are references only; they are not merged, packaged or certified here.
+  `waveform.ts` (min/max extrema math from the draft media-ui WaveformLane,
+  PR #25) moved back to Nitro Forge with the editor controls (D10, below).
 
-## ArtCraft family
+## ArtCraft family (moved to Nitro Forge, D10)
+
+No file in this repository uses ArtCraft code any more. The 23 ported files
+listed below were editor controls under `packages/ui/src/components/forge/`.
+Under [D10](docs/V1_DECISIONS.md#d10-editor-controls-move-to-nitro-forge) they
+moved unchanged, headers included, to `packages/editor-controls/src/` in Nitro
+Forge (`@nitro-forge/editor-controls`); a file at `forge/<path>` here is at
+`src/<path>` there. This section stays as the provenance record for the
+releases up to v1.0.0-rc.2 that shipped them. The ArtCraft license texts stay
+in `licenses/` until Nitro Forge carries its own copies.
 
 All five upstreams below are licensed MIT or Apache-2.0 at the user's option,
 Copyright (c) 2026 ArtCraft Team and the respective project contributors. Both
@@ -62,9 +71,10 @@ https://github.com/artcraft-android/procraft-android, commit
 `licenses/ProCraft-NOTICE.txt`. Kotlin paths below are under
 `android/app/src/main/java/io/github/artcraftandroid/procraft/ui/`.
 
-All NYC-Tron paths are under `packages/ui/src/components/forge/`.
+All paths were under `packages/ui/src/components/forge/` (now Nitro Forge
+`packages/editor-controls/src/`).
 
-| NYC-Tron file | ProCraft source |
+| Former NYC-Tron file | ProCraft source |
 | --- | --- |
 | `color/wheel-geometry.ts` | `ColorPanel.kt` (`Disc` picker ring and disc geometry) |
 | `color/floating-palette.ts` | `ColorPanel.kt` (`UndockHandle` and floating palette) |
@@ -95,7 +105,7 @@ https://github.com/artcraft-android/filmcraft-android, commit
 `licenses/FilmCraft-NOTICE.txt`. Kotlin paths are under
 `apps/filmcraft-android/android/app/src/main/java/io/github/artcraftandroid/filmcraft/ui/editor/`.
 
-| NYC-Tron file | FilmCraft source |
+| Former NYC-Tron file | FilmCraft source |
 | --- | --- |
 | `packages/ui/src/components/forge/timeline/ruler.ts` | `TimelineMath.kt` (`rulerStep`, `rulerLabel`) |
 | `packages/ui/src/components/forge/timeline/ClipTrimHandles.tsx` | `Timeline.kt` (trim drag handles) |
@@ -108,7 +118,7 @@ https://github.com/artcraft-android/gridcraft-android, commit
 `ATTRIBUTION.md` lists assets; none are used. Kotlin paths are under
 `apps/gridcraft-android/android/app/src/main/java/io/github/artcraftandroid/gridcraft/ui/editor/`.
 
-| NYC-Tron file | GridCraft source |
+| Former NYC-Tron file | GridCraft source |
 | --- | --- |
 | `packages/ui/src/components/forge/spreadsheet/reference-colors.ts` | `FormulaRefs.kt` (per-reference color assignment) |
 | `packages/ui/src/components/forge/spreadsheet/cards-model.ts` | `Cards.kt` (card title and preview-field model) |
@@ -120,7 +130,7 @@ https://github.com/artcraft-android/wordcraft-android, commit
 `b2b7cf913c6f61604062e2db30962f32ec921b11`. Texts: `licenses/WordCraft-MIT.txt`,
 `licenses/WordCraft-Apache-2.0.txt`, `licenses/WordCraft-NOTICE.txt`.
 
-| NYC-Tron file | WordCraft source |
+| Former NYC-Tron file | WordCraft source |
 | --- | --- |
 | `packages/ui/src/components/forge/office/read-aloud-model.ts` | `crates/engine/src/speech.rs` (sentence splitting, abbreviation and initial rules, spoken-text tidying, word spans, speed limits) |
 
@@ -130,11 +140,11 @@ https://github.com/artcraft-android/pdfcraft-android, commit
 `c643244e0e00c1f0b746ceaff4661a91921e907e`. Texts: `licenses/PdfCraft-MIT.txt`,
 `licenses/PdfCraft-Apache-2.0.txt`, `licenses/PdfCraft-NOTICE.txt`.
 
-| NYC-Tron file | PdfCraft source |
+| Former NYC-Tron file | PdfCraft source |
 | --- | --- |
 | `packages/ui/src/components/forge/pdf/search-model.ts` | `apps/pdfcraft-android/android/app/src/main/java/io/github/artcraftandroid/pdfcraft/ui/viewer/Search.kt` (search from the current page with wrap-round, page-ordered hit insertion, wrapping next and previous) |
 
-That is 23 files with ArtCraft headers: 16 ProCraft, 2 FilmCraft, 3 GridCraft,
+That was 23 files with ArtCraft headers: 16 ProCraft, 2 FilmCraft, 3 GridCraft,
 1 WordCraft, 1 PdfCraft.
 
 ## Floating UI coordinate placement
@@ -157,10 +167,12 @@ https://github.com/AudioKit/Controls (commit
 2022 Aurelius Prochazka. Text: `licenses/AudioKit-Controls-MIT.txt`. Details are
 in `packages/native-controls/THIRD_PARTY_NOTICES.md`.
 
-## React Native Skia (optional peer)
+## React Native Skia (former optional peer)
 
-`GPUCanvasViewport` uses `react-native-skia` (tested at 3.10.0) through an optional peer
-dependency. Its implementation is not copied and its native binaries are not
+Since D10 no NYC-Tron package uses or declares `react-native-skia`.
+`GPUCanvasViewport`, which used it, moved to `@nitro-forge/editor-controls`.
+Up to v1.0.0-rc.2, `GPUCanvasViewport` used `react-native-skia` (tested at
+3.10.0) through an optional peer dependency. Its implementation is not copied and its native binaries are not
 bundled. MIT, Copyright 2026-present William Candillon; Copyright 2021-2026
 Shopify Inc. Text: `licenses/REACT-NATIVE-SKIA-MIT.txt`. The runtime's Dawn,
 Graphite and CanvasKit dependencies keep their own notices, which apply to apps

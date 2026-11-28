@@ -2,6 +2,9 @@
  * Historical design/audit registry, not a current completion claim. Current
  * source ownership and acceptance live in docs/completion/library-progress.json.
  * These are cross-app NYC-Tron contracts; engine-backed behavior lives in Forge.
+ * The InstrumentKnob, InstrumentXYPad, PatchGraph and ImageCropOverlay
+ * prototypes left this list when their sources moved to
+ * @nitro-forge/editor-controls (docs/V1_DECISIONS.md D10).
  */
 export type ComponentStage="prototype"|"contract"|"planned";
 export type AdvancedComponent=Readonly<{
@@ -20,11 +23,7 @@ const planned=(id:string,category:string):AdvancedComponent=>({
  id,category,stage:"planned",owner:"@nyc-tron/ui",platforms:extended
 });
 export const advancedNativeCatalog:readonly AdvancedComponent[]=[
- prototype("InstrumentKnob","precision","packages/ui/src/components/forge/inputs/InstrumentKnob.tsx"),
- prototype("InstrumentXYPad","precision","packages/ui/src/components/forge/inputs/InstrumentXYPad.tsx"),
  prototype("TreeGrid","data","packages/ui/src/components/data/TreeGrid.tsx"),
- prototype("PatchGraph","graph","packages/ui/src/components/forge/graph/PatchGraph.tsx"),
- prototype("ImageCropOverlay","graphics","packages/ui/src/components/forge/graphics/ImageCropOverlay.tsx"),
  prototype("CommandPopover","overlays","packages/ui/src/components/overlays/CommandPopover.tsx"),
  {id:"SpatialRayAndPinchContract",category:"spatial",stage:"contract",owner:"@nyc-tron/core",
    sourcePath:"packages/core/src/spatial-interactions.ts",platforms:extended},

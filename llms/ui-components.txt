@@ -30,7 +30,7 @@ Props:
 - `title: string` (required)
 - `unstyled?: boolean | undefined`
 - `variant?: ButtonVariant | undefined`
-- Inherits 128 React Native props from PressableProps, ViewProps (react-native@0.88.1 declarations).
+- Inherits 128 React Native props from PressableProps, ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (interactive fixture available):
 
@@ -66,7 +66,7 @@ Props:
 - `padded?: boolean | undefined`
 - `surface?: CardSurface | undefined`
 - `unstyled?: boolean | undefined`
-- Inherits 113 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 113 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (interactive fixture available):
 
@@ -106,7 +106,7 @@ Props:
 - `onStart: () => void` (required)
 - `transport?: any`
 - `unstyled?: boolean | undefined`
-- Inherits 112 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 112 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -147,7 +147,7 @@ import { FieldGroup } from "@nyc-tron/ui/components/FieldGroup";
 Props:
 - `children?: React.ReactNode`
 - `className?: string | undefined`
-- Inherits 113 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 113 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -192,7 +192,7 @@ Props:
 - `titleClassName?: string | undefined`
 - `titleUppercase?: boolean | undefined`
 - `unstyled?: boolean | undefined`
-- Inherits 112 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 112 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -241,7 +241,7 @@ Props:
 - `targetSize?: number | undefined`
 - `unstyled?: boolean | undefined`
 - `variant?: IconButtonVariant | undefined`
-- Inherits 125 React Native props from PressableProps, ViewProps (react-native@0.88.1 declarations).
+- Inherits 125 React Native props from PressableProps, ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -284,7 +284,7 @@ Props:
 - `children?: React.ReactNode`
 - `className?: string | undefined`
 - `unstyled?: boolean | undefined`
-- Inherits 111 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 111 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -332,7 +332,7 @@ Props:
 - `titleClassName?: string | undefined`
 - `trailing?: React.ReactNode`
 - `unstyled?: boolean | undefined`
-- Inherits 111 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 111 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -379,7 +379,7 @@ Props:
 - `selectedId: string | null` (required)
 - `selectedItemClassName?: string | undefined`
 - `unstyled?: boolean | undefined`
-- Inherits 113 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 113 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (interactive fixture available):
 
@@ -422,7 +422,7 @@ Props:
 - `edge: "left" | "right"` (required)
 - `isRTL?: boolean | undefined`
 - `rail: React.ReactNode` (required)
-- Inherits 113 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 113 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (interactive fixture available):
 
@@ -469,7 +469,7 @@ Props:
 - `segmentStyle?: StyleProp<ViewStyle> | ((state: { selected: boolean; disabled: boolean; pressed: boolean; }) => StyleProp<ViewStyle>) | undefined`
 - `unstyled?: boolean | undefined`
 - `value: "" | T` (required)
-- Inherits 110 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 110 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -521,7 +521,7 @@ Props:
 - `triggerClassName?: string | undefined`
 - `unstyled?: boolean | undefined`
 - `value: string` (required)
-- Inherits 112 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 112 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -569,7 +569,7 @@ Props:
 - `tabClassName?: string | undefined`
 - `tabs: readonly TabBarTab[]` (required)
 - `unstyled?: boolean | undefined`
-- Inherits 111 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 111 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -616,7 +616,7 @@ Props:
 - `ref?: React.Ref<any> | undefined`
 - `startAdornment?: React.ReactNode`
 - `unstyled?: boolean | undefined`
-- Inherits 181 React Native props from TextInputProps, ViewProps (react-native@0.88.1 declarations).
+- Inherits 181 React Native props from TextInputProps, ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (interactive fixture available):
 
@@ -658,7 +658,7 @@ Props:
 - `title?: string | undefined`
 - `titleClassName?: string | undefined`
 - `unstyled?: boolean | undefined`
-- Inherits 112 React Native props from ViewProps (react-native@0.88.1 declarations).
+- Inherits 112 React Native props from ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 
@@ -947,7 +947,7 @@ Props:
 - `className?: string | undefined`
 - `id?: string | undefined`
 - `type?: InputType | undefined`
-- Inherits 180 React Native props from TextInputProps, ViewProps (react-native@0.88.1 declarations).
+- Inherits 180 React Native props from TextInputProps, ViewProps (react-native@0.88.1, react-native@0.88.1/types_generated/Libraries/Components/View/ViewPropTypes.d.ts#GestureResponderHandlers declarations).
 
 Example (platform example; runtime verification pending):
 

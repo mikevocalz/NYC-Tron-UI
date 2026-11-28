@@ -308,7 +308,7 @@ function indexText(registry, fullSize) {
     '- [Guides](' + raw(GROUP_DIR + '/guides.txt') + '): ' + registry.guides.map(g => g.title.toLowerCase()).join(', '),
     '- [Full reference](' + raw('llms-full.txt') + '): every component and guide in one file (about ' + Math.round(fullSize / 1024) + ' KB); prefer one group file below',
     '', '## General components', '', ...general.map(group),
-    '', '## Professional controls', '', 'Optional editor controls under `@nyc-tron/ui/components/forge/`. They need no document engine.', '', ...professional.map(group),
+    ...(professional.length ? ['', '## Other components', '', ...professional.map(group)] : []),
     '', '## Optional', '',
     '- [Theme tokens](' + raw('docs/THEME_TOKENS.md') + '): semantic variables the app must define, with reference light and dark values',
     '- [Support policy](' + raw('docs/SUPPORT.md') + '): runtime lanes, peers and the desktop support lists',

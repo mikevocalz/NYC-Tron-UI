@@ -60,12 +60,14 @@ CSS clip-path on web, etc.), not pass polygons directly to AppKit/WinUI.
 ## Forge 2046 — professional studio
 
 Forge supplies its own theme variables, editor keyboard bindings, motion and
-document lifecycle. UI components import directly from NYC-Tron:
+document lifecycle. Its editor controls live in Nitro Forge's
+`@nitro-forge/editor-controls` package, which is built on NYC-Tron's general
+components; NYC-Tron itself does not depend on Forge:
 
 ```tsx
-import { WaveformLane } from '@nyc-tron/ui/components/forge/WaveformLane';
-import { NativeSeekBar } from '@nyc-tron/ui/components/forge/NativeSeekBar';
-import { FRAME_RATES } from '@nyc-tron/ui/components/forge/timebase';
+import { WaveformLane } from '@nitro-forge/editor-controls/WaveformLane';
+import { NativeSeekBar } from '@nitro-forge/editor-controls/NativeSeekBar';
+import { FRAME_RATES } from '@nitro-forge/editor-controls/timebase';
 
 <NativeSeekBar
   frame={playheadFrame}

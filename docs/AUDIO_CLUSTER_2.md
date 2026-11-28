@@ -2,6 +2,8 @@
 
 The recovered audio worker files are integrated after phases 2 and 3. Twenty-one component/model subpaths are added under `@nyc-tron/ui/components/forge/audio/` and `/midi/`. These additions remain unpublished; production alpha.3 tarballs do not contain them.
 
+Since [D10](V1_DECISIONS.md#d10-editor-controls-move-to-nitro-forge) these subpaths are `@nitro-forge/editor-controls/audio/*` and `/midi/*` in Nitro Forge. This record keeps the paths it was written with.
+
 | Surface | Behavior and ownership |
 | --- | --- |
 | BusAndRoutingMatrix | Output to master/bus, post-fader send add/edit/remove; measured cards/grid layout |

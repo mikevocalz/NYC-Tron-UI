@@ -1,6 +1,6 @@
 import {useContext,useLayoutEffect,useRef} from 'react';
 import {usePanGesture} from 'react-native-gesture-handler';
-import {CanvasGestureRelations} from '../forge/canvas/canvas-gesture-relations.ts';
+import {CanvasGestureRelations} from './canvas-gesture-relations.ts';
 
 /** RNGH 3 single-contact editing, composed with the containing canvas navigator. */
 export function useEditorPan({disabled=false,boundary=0,onBegin,onMove,onRelease,onCancel}: {

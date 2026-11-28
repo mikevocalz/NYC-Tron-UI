@@ -4,9 +4,11 @@ Applies to the v1.0.0 library candidate. Scope: [decision D9](V1_DECISIONS.md#d9
 
 ## Candidate scope and verified behavior
 
-NYC-Tron UI ships general components and optional professional controls.
-Support claims follow each component's measured behavior and runtime lane.
-Forge consumes this library and owns its application acceptance program.
+NYC-Tron UI ships general app components. Support claims follow each
+component's measured behavior and runtime lane. Nitro Forge consumes this
+library, owns its application acceptance program and, since
+[D10](V1_DECISIONS.md#d10-editor-controls-move-to-nitro-forge), ships the
+editor controls as `@nitro-forge/editor-controls`.
 
 The new library gate will require iOS, Android and web evidence for components
 confirmed `stable`. macOS (Spark) and Windows (RNW) retain their measured support
@@ -167,6 +169,13 @@ harness. The same job is green on 8f62ec3 (run 43438354753). Between d92b1c1
 install-path scripts, the README, SUPPORT.md, `desktop-support.json` and
 the evidence folder. The lists therefore describe the code at 8f62ec3.
 
+These lists measured the rc.1 archive, which still contained the editor
+controls. Rows that name `forge/...` or `components/forge/...` describe code
+that moved to `@nitro-forge/editor-controls` in D10; they are kept as measured
+and say nothing about Forge's package. The precision helpers measured as
+`components/forge/inputs/precision*` are now `components/shell/precision*` and
+have not been measured under their new paths.
+
 All 166 exports without components (hooks, models, helpers) load on both
 lanes. The lists are in [desktop-support.json](desktop-support.json); the
 full matrix is in [the evidence folder](completion/evidence/T4-desktop-ui-coverage-20261112).
@@ -246,7 +255,7 @@ repository moved to or a version it holds, with the reason.
 | react-native-windows | 0.85.0 | Current. |
 | react-native-macos | 0.83.0 | Current. |
 | react-native-gesture-handler | 3.5.0 (dev and example) | Optional peer `>=3.3.0 <4` (D5 decision 1), tested against 3.3.0, 3.4.0 and 3.5.0. 3.3.0 is the newest 3.3.x and runs in the `gesture-handler-floor` workflow; 3.4.0 is the version on the P05 native canvas proof; 3.5.0 is the workspace pin. |
-| react-native-skia | 3.10.0 (dev and example) | Tested at 3.10.0. The peer range stays `>=3.9.1 <4`. |
+| react-native-skia | 3.10.0 (dev and example) | Tested at 3.10.0. No longer a `@nyc-tron/ui` peer after D10; the editor controls that use it moved to Nitro Forge. |
 | uniwind | 1.13.2 | Current. |
 | mediabunny | 1.65.2 | Current. |
 | zustand | 5.1.0 | Bumped from 5.0.16; peer range stays `^5.0.0`. |
@@ -264,7 +273,7 @@ release of React or React Native satisfies the range but is not tested and
 not guaranteed to work. Expo-coupled peers use caret ranges (`expo ^58.0.0`,
 `@expo/ui ^58.0.0`), and a few `ui` peers carry explicit caps
 (`react-native-gesture-handler >=3.3.0 <4`, `uniwind >=1.12.2 <2`,
-`react-native-skia >=3.9.1 <4`, `expo-drag-drop-content-view >=0.9.2 <1`).
+`expo-drag-drop-content-view >=0.9.2 <1`).
 
 Whether to cap `react-native` is an open owner decision listed in
 [v1.0.0 decisions](V1_DECISIONS.md) D1 as a blocker for npm publishing.
@@ -276,34 +285,13 @@ Repository tooling (tests, build, pack) needs Node `>=24.19.0`, from the root
 
 ## Optional peer: react-native-skia
 
-`@nyc-tron/ui` declares `react-native-skia` (`>=3.9.1 <4`) as an optional
-peer. The package name is `react-native-skia`; `@shopify/react-native-skia`
-appears nowhere in the manifests or sources.
-
-Four source files in `packages/ui` import it directly:
-
-- `src/components/forge/canvas/GPUCanvasViewport.tsx`
-- `src/components/forge/canvas/graphite-frame.ts` (type-only import)
-- `src/components/forge/ink/InkStrokePreview.tsx`
-- `src/components/forge/slides/InkAndLaserPointer.tsx`
-
-Following relative imports from those files gives six export subpaths that
-need it:
-
-| Subpath | How |
-|---|---|
-| `@nyc-tron/ui/components/forge/canvas/GPUCanvasViewport` | direct import |
-| `@nyc-tron/ui/components/forge/canvas/graphite-frame` | type-only import; the emitted JS does not import Skia |
-| `@nyc-tron/ui/components/forge/ink/InkStrokePreview` | direct import |
-| `@nyc-tron/ui/components/forge/slides/InkAndLaserPointer` | direct import |
-| `@nyc-tron/ui/components/forge/ink/BrushStabilizationPreview` | imports `InkStrokePreview` |
-| `@nyc-tron/ui/components/forge/pdf/SignatureStampTool` | imports `InkAndLaserPointer` |
-
-The emitted `dist/` JS imports `react-native-skia` in three files:
-`GPUCanvasViewport.js`, `InkStrokePreview.js` and `InkAndLaserPointer.js`.
-The clean basic UI consumer now installs and runs without Skia and the other
-unrelated optional peers; the installed-consumer gate asserts those absences.
-The specialized paths listed above still require their declared Skia peer.
+Since D10, `@nyc-tron/ui` no longer declares `react-native-skia` or
+`expo-linear-gradient`. The only files that imported them were editor controls
+(`GPUCanvasViewport`, `InkStrokePreview`, `InkAndLaserPointer`,
+`ColorPickerDialog`, `HsvPicker` and the controls built on them), and those
+moved to `@nitro-forge/editor-controls`. Install Skia in apps that use those
+Forge controls. The clean basic UI consumer installs and runs without either
+package; the installed-consumer gate asserts that.
 See [installed-consumer evidence](completion/reports/V1-RELEASE-GATES.md#what-the-installed-consumer-gate-proves).
 
 ## Reporting problems
