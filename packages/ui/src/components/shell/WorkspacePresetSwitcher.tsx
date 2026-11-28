@@ -4,7 +4,7 @@ import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import {Button} from "../Button.tsx";
 import {TextField} from "../TextField.tsx";
-import {announce} from "../forge/announce.ts";
+import {announce} from "../feedback/announce.ts";
 import {placePopover,type Rect2D} from "../overlays/popover-position.ts";
 import {joinClasses} from "../styles.ts";
 import {MenuButton,type CommandMenuItem} from "./MenuButton.tsx";

@@ -1,24 +1,14 @@
 import {AppRegistry,ScrollView,Text,View} from "react-native";
 import {create} from "zustand";
-import {LayerStack} from "../../../src/components/forge/layers/LayerStack.tsx";
-import {moveLayer,removeLayer,type LayerRow} from "../../../src/components/forge/layers/layer-model.ts";
 import {TabBar} from "../../../src/components/TabBar.tsx";
 import {Select} from "../../../src/components/Select.tsx";
 
-// Nitro Forge Design Studio gaps: LayerStack rows in docked panels of a
-// given width (?w=320|360|390), TabBar in narrow panes, and Select groups.
-const initialLayers:LayerRow[]=[
-  {id:"title",name:"Headline",visible:true,opacity:1,kind:"text"},
-  {id:"badge",name:"Badge",visible:true,opacity:0.8,kind:"vector",kindLabel:"Ellipse",
-    thumbnail:{fill:"#e0402a",label:"red fill"}},
-  {id:"card",name:"Card background with a long name",visible:false,opacity:0.6,kind:"vector",kindLabel:"Rectangle",
-    thumbnail:{fill:"#f4c430",label:"yellow fill"}},
-  {id:"photo",name:"Skyline",visible:true,opacity:1,kind:"raster",kindLabel:"Raster",locked:true,
-    thumbnail:{fill:"#3a6ea5",label:"skyline photo"}},
-];
-type Demo={layers:LayerRow[];previews:number;commits:string[];tab:string;tab3:string;font:string};
-const useDemo=create<Demo>(()=>({layers:initialLayers,previews:0,commits:[],tab:"document",tab3:"layers",font:"inter"}));
-const patch=(id:string,f:(l:LayerRow)=>LayerRow)=>useDemo.setState(s=>({layers:s.layers.map(l=>l.id===id?f(l):l)}));
+// Nitro Forge Design Studio gaps: TabBar in narrow panes and Select groups
+// (?w=320|360|390 sets the select panel width). The LayerStack panel half of
+// this page moved with the editor controls to Nitro Forge's
+// packages/editor-controls/tests/browser lane.
+type Demo={tab:string;tab3:string;font:string};
+const useDemo=create<Demo>(()=>({tab:"document",tab3:"layers",font:"inter"}));
 
 const q=new URLSearchParams(location.search);
 const width=Number(q.get("w")??390);
@@ -37,16 +27,6 @@ function Panel({title,width:w,children,testID,clip=true}:{title:string;width:num
 function Fixture(){
   const s=useDemo();
   return <ScrollView contentContainerStyle={{padding:16,gap:20,alignItems:"flex-start"}}>
-    <Panel title={"Layers panel, "+width+" wide"} width={width} testID="layer-panel">
-      <LayerStack layers={s.layers} selectedId="badge"
-        onSelect={()=>{}}
-        onToggleVisible={id=>patch(id,l=>({...l,visible:!l.visible}))}
-        onOpacityPreview={()=>useDemo.setState(d=>({previews:d.previews+1}))}
-        onOpacityCommit={(id,opacity)=>{patch(id,l=>({...l,opacity}));useDemo.setState(d=>({commits:[...d.commits,id+"="+opacity]}));}}
-        onMove={(id,to)=>useDemo.setState(d=>({layers:moveLayer(d.layers,id,to)}))}
-        onRename={(id,name)=>patch(id,l=>({...l,name}))}
-        onRemove={id=>useDemo.setState(d=>({layers:removeLayer(d.layers,id)}))}/>
-    </Panel>
     <Panel title="One tab with icon, 200 wide" width={200} testID="tabs-one">
       {/* Forge's dock header: the TabBar in a flex:1 cell beside a close button. */}
       <View style={{flexDirection:"row",alignItems:"center",padding:5}}>
@@ -94,7 +74,7 @@ function Fixture(){
       </View>
     </Panel>
     <Text testID="state" {...{className:"text-text-muted"}}>
-      {"layers "+s.layers.map(l=>l.id+":"+l.opacity).join(",")+" previews "+s.previews+" commits "+s.commits.join(",")+" font "+s.font}
+      {"font "+s.font}
     </Text>
   </ScrollView>;
 }

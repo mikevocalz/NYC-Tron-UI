@@ -9,13 +9,12 @@ import {fileURLToPath} from "node:url";
 const here=dirname(fileURLToPath(import.meta.url));
 const css=execFileSync(resolve(here,"node_modules/.bin/tailwindcss"),["-i",resolve(here,"theme.css")],{cwd:here,encoding:"utf8"});
 // One bundle per fixture: fixture.tsx at "/", primitives.tsx at "/primitives",
-// and each fixtures/<name>.tsx at "/<name>".
-const fixtures=[["spreadsheet",resolve(here,"spreadsheet.tsx")],["",resolve(here,"fixture.tsx")],["primitives",resolve(here,"primitives.tsx")],
+// and each fixtures/<name>.tsx at "/<name>". The editor-control fixtures moved
+// with the controls to Nitro Forge (packages/editor-controls/tests/browser).
+const fixtures=[["",resolve(here,"fixture.tsx")],["primitives",resolve(here,"primitives.tsx")],
   ...readdirSync(resolve(here,"fixtures")).filter(f=>f.endsWith(".tsx")).map(f=>[f.slice(0,-4),resolve(here,"fixtures",f)])];
 const uiRequire=createRequire(resolve(here,"../../package.json"));
 const bundleOf=entry=>build({
-  // CanvasKit's browser branch never invokes its optional Node filesystem imports.
-  external:['fs','path'],
   plugins:[{name:"public-ui-exports",setup(builder){
     builder.onResolve({filter:/^react-native\/(?:asset-registry|Libraries\/Image\/AssetRegistry)$/},args=>({path:args.path,external:true}));
     builder.onResolve({filter:/^@nyc-tron\/ui(?:\/|$)/},args=>({path:uiRequire.resolve(args.path)}));
@@ -27,7 +26,6 @@ const bundleOf=entry=>build({
   // whose own node_modules (after a workspace install) would otherwise win.
   alias:{"react-native":resolve(here,"rn-shim.tsx"),
     "react-native-gesture-handler":resolve(here,"../../node_modules/react-native-gesture-handler"),
-    "react-native-skia":resolve(here,"../../node_modules/react-native-skia"),
     react:resolve(here,"node_modules/react"),"react-dom":resolve(here,"node_modules/react-dom"),
     zustand:resolve(here,"node_modules/zustand"),
     // Uniwind's web ScopedTheme, reproduced (see uniwind-shim.tsx).
@@ -48,8 +46,7 @@ createServer(async(req,res)=>{
  try{
   const path=(req.url??"/").split("?")[0];
   const name=path.slice(1);
-  if(path==="/skia/canvaskit.wasm"){res.writeHead(200,{"Content-Type":"application/wasm"});res.end(readFileSync(createRequire(uiRequire.resolve("react-native-skia/package.json")).resolve("canvaskit-wasm/bin/full/canvaskit.wasm")));}
-  else if(path==="/decoder.webm"){res.writeHead(200,{"Content-Type":"video/webm"});res.end(readFileSync(resolve(here,"../../../platform-services/tests/fixtures/decoder.webm")));}
+  if(path==="/decoder.webm"){res.writeHead(200,{"Content-Type":"video/webm"});res.end(readFileSync(resolve(here,"../../../platform-services/tests/fixtures/decoder.webm")));}
   else if(path==="/bundle.js"){const script=await bundleFor("");res.writeHead(200,{"Content-Type":"text/javascript"});res.end(script);}
   else if(name.endsWith(".js")&&entries.has(name.slice(0,-3))){const script=await bundleFor(name.slice(0,-3));res.writeHead(200,{"Content-Type":"text/javascript"});res.end(script);}
   else if(path==="/theme.css"){res.writeHead(200,{"Content-Type":"text/css"});res.end(css);}

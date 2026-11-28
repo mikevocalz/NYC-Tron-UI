@@ -3,5 +3,5 @@
  * supplies bounded numeric entry, pointer precision modes, cancellation,
  * screen-reader adjustment and one async-aware commit boundary.
  */
-export {PrecisionScrubber as NumericScrubField} from "../forge/inputs/PrecisionScrubber.tsx";
-export type {PrecisionScrubberProps as NumericScrubFieldProps} from "../forge/inputs/PrecisionScrubber.tsx";
+export {PrecisionScrubber as NumericScrubField} from "./PrecisionScrubber.tsx";
+export type {PrecisionScrubberProps as NumericScrubFieldProps} from "./PrecisionScrubber.tsx";

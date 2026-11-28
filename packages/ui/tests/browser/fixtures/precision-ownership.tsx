@@ -2,7 +2,7 @@ import {useRef} from 'react';
 import {AppRegistry,Text,View} from 'react-native';
 import {create} from 'zustand';
 import {Button} from '../../../src/components/Button.tsx';
-import {PrecisionScrubber} from '../../../src/components/forge/inputs/PrecisionScrubber.tsx';
+import {PrecisionScrubber} from '../../../src/components/shell/PrecisionScrubber.tsx';
 import {SliderField} from '../../../src/components/shell/SliderField.tsx';
 import {RangeSlider} from '../../../src/components/shell/RangeSlider.tsx';
 import {RotaryKnob} from '../../../src/components/shell/RotaryKnob.tsx';

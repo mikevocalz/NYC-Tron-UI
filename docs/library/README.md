@@ -7,8 +7,12 @@ Each component entry represents one public import path and exported symbol.
 public imports. Conditional declaration targets are variants of the same entry.
 Every other public symbol has an explicit exclusion and reason.
 
-The manifest currently proposes 478 component exports with 456 declaration
-identities. This includes two exported React 19 context providers, which the
+The manifest currently proposes 163 component exports with 142 declaration
+identities, all in the one `general components` category. Before
+[D10](../V1_DECISIONS.md#d10-editor-controls-move-to-nitro-forge) it also
+listed the editor controls under `components/forge/*` as `professional
+controls`; those moved to `@nitro-forge/editor-controls`, and the generator
+now fails if a `components/forge/*` export comes back. This includes two exported React 19 context providers, which the
 older desktop inventory did not measure. File counts and export-subpath counts
 include helpers and types and are not component counts.
 
@@ -20,7 +24,7 @@ proposed list. These proposals are not evidence that a component passes T3.
 
 The initial stable proposal consists of `Button`, `Card`, `NavigationRail`,
 `NavigationShell` and `TextField` in `@nyc-tron/ui`. Their five root imports and
-five direct imports account for ten public exports. The other 468 exports are
+five direct imports account for ten public exports. The other 153 exports are
 proposed as preview pending evidence and owner confirmation. The root controls
 cover the initial install, form and adaptive-navigation tasks; this proposal
 does not reduce the evidence required for any stable component.
@@ -60,7 +64,12 @@ archive bytes.
 
 [forge-imports.json](forge-imports.json) is a separate downstream row-to-import
 lookup, including the baseline and five later window additions. It preserves
-external owners without inventing Tron imports. It contains no acceptance
+external owners without inventing Tron imports. Rows whose controls moved in
+D10 carry `forgeImportPaths` (`@nitro-forge/editor-controls/...`) instead of
+Tron `importPaths`; the tool reads them from
+[editor-controls-migration.json](editor-controls-migration.json), the frozen
+list of the 453 removed subpaths and their replacements, and fails if a moved
+subpath is still a Tron export. It contains no acceptance
 statuses and does not determine this manifest or release readiness.
 
 `tooling/library-cross-reference.mjs --ledger <full-ledger.json> --write`

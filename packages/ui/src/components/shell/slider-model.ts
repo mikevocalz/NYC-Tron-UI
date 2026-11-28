@@ -1,6 +1,6 @@
-import {assertRange,clamp,gestureToAngle,normalize,snapValue,type RangeConfig} from "../forge/inputs/precision.ts";
+import {assertRange,clamp,gestureToAngle,normalize,snapValue,type RangeConfig} from "./precision.ts";
 
-export type {RangeConfig} from "../forge/inputs/precision.ts";
+export type {RangeConfig} from "./precision.ts";
 
 /**
  * Snapped value under a point on a slider track. `offset` is measured from

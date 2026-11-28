@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {assertRange,clamp,snapValue,scrubValue,normalize,pointFromDrag,gestureToAngle} from "../src/components/forge/inputs/precision.ts";
+import {assertRange,clamp,snapValue,scrubValue,normalize,pointFromDrag,gestureToAngle} from "../src/components/shell/precision.ts";
 import {visibleTreeRows} from "../src/components/data/tree-grid.ts";
 test("precision instruments quantize, clamp and respect detents",()=>{
  const r={min:-12,max:12,step:0.5,detents:[0,6]};

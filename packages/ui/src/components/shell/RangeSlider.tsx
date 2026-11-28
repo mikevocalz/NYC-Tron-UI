@@ -2,7 +2,7 @@ import {useLayoutEffect,useRef,type ComponentRef} from "react";
 import {I18nManager,Platform,Text,View,type ViewProps} from "react-native";
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
-import {assertRange,formatStepValue,stepDecimalPlaces,type RangeConfig} from "../forge/inputs/precision.ts";
+import {assertRange,formatStepValue,stepDecimalPlaces,type RangeConfig} from "./precision.ts";
 import {createDragController,type DragController} from "../gestures/drag-controller.ts";
 import type {DragPoint,DragTransport} from "../gestures/drag-transport.ts";
 import {PanResponderDrag} from "../gestures/PanResponderDrag.tsx";

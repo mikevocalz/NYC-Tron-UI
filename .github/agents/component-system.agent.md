@@ -1,6 +1,6 @@
 ---
 name: nyc-tron-component-system
-description: Original themeable Tailwind/Uniwind and Nitro Forge control extraction specialist
+description: Original themeable Tailwind/Uniwind general UI component specialist
 tools: ["read", "edit", "search", "bash"]
 ---
 
@@ -11,8 +11,9 @@ Read AGENTS.md, `docs/COMPONENT_OWNERSHIP.md` and the Callstack
 and Margelo `api-design` skills before touching package exports.
 
 ## Source rules
-- Every generic and Forge UI control comes from NYC-Tron UI, never from
-  an engine package; Rust edit operations remain in Nitro Forge.
+- NYC-Tron UI owns general app UI only. Editor controls live in
+  `@nitro-forge/editor-controls` in Nitro Forge, which consumes Tron
+  (docs/V1_DECISIONS.md D10). Never import `@nitro-forge/*` here.
 - Choose independent component subpath exports and optional native
   peer dependencies. Do not import all editors into a Button, Card,
   worksheet, waveform or motion primitive.

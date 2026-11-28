@@ -299,9 +299,19 @@ export function verifyGeneratedReport(path, contents) {
   }
 }
 
+// D10 moved the editor controls to @nitro-forge/editor-controls, so the current
+// tree no longer holds the sources most rows name. docs/qt/component-coverage.*
+// stays the dated snapshot of the last tree that did; regenerate or check it
+// against an extracted copy of that revision, e.g.
+//   git archive <revision> | tar -x -C <dir>
+//   node tooling/qt-component-coverage.mjs --source-root <dir>
+export const QT_REPORT_SOURCE_REVISION = "5a1ea4db5149ec4fa93aa0ea26c2a9cda409534c";
+
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2);
-  const report = buildQtCoverage();
+  const sourceIndex = args.indexOf("--source-root");
+  if (sourceIndex < 0 || !args[sourceIndex + 1]) fail(`the report is a dated snapshot of revision ${QT_REPORT_SOURCE_REVISION} (before D10 moved the editor controls to Nitro Forge). Pass --source-root <extracted checkout of that revision>`);
+  const report = buildQtCoverage({ rootDir: resolve(args[sourceIndex + 1]) });
   const rnIndex = args.indexOf("--check-rn-api");
   if (rnIndex >= 0) {
     if (!args[rnIndex + 1]) fail("--check-rn-api requires an actual PublicAPI.js path");

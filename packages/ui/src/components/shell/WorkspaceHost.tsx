@@ -3,7 +3,7 @@ import {Platform,Pressable,ScrollView,Text,View,type LayoutChangeEvent,type View
 import {createStore,type StoreApi} from "zustand/vanilla";
 import {useStore} from "zustand";
 import type {FoldFeature} from "@nyc-tron/core/folds";
-import {announce} from "../forge/announce.ts";
+import {announce} from "../feedback/announce.ts";
 import type {Rect2D} from "../overlays/popover-position.ts";
 import {joinClasses} from "../styles.ts";
 import {AdaptiveDock,type DockPanel} from "./AdaptiveDock.tsx";

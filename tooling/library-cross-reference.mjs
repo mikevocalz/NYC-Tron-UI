@@ -15,7 +15,28 @@ const sourcePath = value => {
 };
 const runtimeTargets = value => typeof value === 'string' ? /\.js$/.test(value) ? [value] : [] : value && typeof value === 'object' ? Object.values(value).flatMap(runtimeTargets) : [];
 
-export function generateCrossReference(ledger, { rootDir = root } = {}) {
+// D10 moved the editor controls to @nitro-forge/editor-controls. The frozen
+// migration record maps each removed subpath (by its former runtime files) to
+// its replacement, so rows that pointed at Tron's old forge paths now name the
+// Forge import, or the Tron shell path for the three precision helpers.
+export const MIGRATION_RECORD = 'docs/library/editor-controls-migration.json';
+export function movedImports(migration, exports) {
+  const moved = new Map();
+  for (const [subpath, entry] of Object.entries(migration.subpaths ?? {})) {
+    if (!subpath.startsWith('./components/forge/')) throw new Error('Migration record lists a non-editor-control subpath ' + subpath);
+    if ([...exports.values()].some(paths => paths.has('@nyc-tron/ui' + subpath.slice(1)))) throw new Error('Moved subpath is still a Tron export: ' + subpath);
+    const tron = entry.replacement.startsWith('@nyc-tron/');
+    if (!tron && entry.replacement !== migration.destination.package + '/' + subpath.slice('./components/forge/'.length)) throw new Error('Unexpected replacement for ' + subpath);
+    if (tron && ![...exports.values()].some(paths => paths.has(entry.replacement))) throw new Error('Relocated replacement is not a Tron export: ' + entry.replacement);
+    for (const target of entry.runtimeTargets) {
+      if (!moved.has(target)) moved.set(target, { tron: new Set(), forge: new Set() });
+      moved.get(target)[tron ? 'tron' : 'forge'].add(entry.replacement);
+    }
+  }
+  return moved;
+}
+
+export function generateCrossReference(ledger, { rootDir = root, migration = json(join(rootDir, MIGRATION_RECORD)) } = {}) {
   if (!Array.isArray(ledger.components) || !Array.isArray(ledger.additions)) throw new Error('Cross-reference requires a full ledger, not a moved-ledger pointer');
   const exports = new Map();
   for (const directory of packageDirectories(rootDir)) {
@@ -26,19 +47,28 @@ export function generateCrossReference(ledger, { rootDir = root } = {}) {
       exports.get(source).add(manifest.name + (subpath === '.' ? '' : subpath.slice(1)));
     }
   }
+  const moved = movedImports(migration, exports);
   const rows = {}, ids = new Set();
   for (const [kind, list] of [['baseline', ledger.components], ['addition', ledger.additions]]) for (const row of list) {
     if (ids.has(row.id)) throw new Error('Duplicate lookup row ' + row.id);
     ids.add(row.id);
-    const imports = [...new Set(row.sourceCandidates.flatMap(source => [...(exports.get(sourcePath(source).replace('/src/', '/dist/').replace(/\.tsx?$/, '.js')) ?? [])]))].sort();
-    if (row.libraryScope && ['implemented', 'partial'].includes(row.implementationReview) && !imports.length) throw new Error('No public import for local lookup row ' + row.id);
+    const targets = row.sourceCandidates.map(source => sourcePath(source).replace('/src/', '/dist/').replace(/\.tsx?$/, '.js'));
+    const imports = [...new Set(targets.flatMap(target => [...(exports.get(target) ?? []), ...(moved.get(target)?.tron ?? [])]))].sort();
+    const forgeImports = [...new Set(targets.flatMap(target => [...(moved.get(target)?.forge ?? [])]))].sort();
+    if (row.libraryScope && ['implemented', 'partial'].includes(row.implementationReview) && !imports.length && !forgeImports.length) throw new Error('No public import for local lookup row ' + row.id);
     rows[row.id] = { name: row.name, kind, importPaths: imports,
-      ownership: row.externalImplementation ? 'external; no Tron import invented' : 'Tron source lookup',
+      ...(forgeImports.length ? { forgeImportPaths: forgeImports } : {}),
+      ownership: row.externalImplementation ? 'external; no Tron import invented'
+        : forgeImports.length && !imports.length ? 'moved to ' + migration.destination.package + ' (D10)'
+        : forgeImports.length ? 'Tron source lookup; editor controls moved to ' + migration.destination.package + ' (D10)'
+        : 'Tron source lookup',
       ...(row.externalImplementation ? { externalOwners: row.externalImplementation.owners } : {}),
       evidence: row.evidence ?? [] };
   }
   return { schemaVersion: 1, purpose: 'Forge row-to-import lookup only; not library scope, inventory or a release gate',
     programHome: 'https://github.com/mikevocalz/nitro-forge/blob/5902e64d6ad01090f5e9a40f8402ec0cbcb39a71/docs/completion/library-progress.json',
+    editorControls: { package: migration.destination.package, repository: migration.destination.repository, migrationRecord: MIGRATION_RECORD,
+      note: 'importPaths are Tron exports; forgeImportPaths name the editor controls Nitro Forge owns since D10 and are not resolved by Tron.' },
     sourceLedgerDigestEncoding: 'SHA-256 of JSON.stringify(parsed ledger); not raw ledger bytes or a Git blob id',
     sourceLedgerSha256: createHash('sha256').update(JSON.stringify(ledger)).digest('hex'),
     baselineRows: ledger.components.length, addedRows: ledger.additions.length, rows };
