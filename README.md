@@ -17,6 +17,14 @@ and documented platform contracts.** No NYC-MON palette is imposed on consumers.
 > [release-gate evidence](docs/completion/reports/V1-RELEASE-GATES.md) and the
 > [Support policy](docs/SUPPORT.md) for commit-specific results and limits.
 
+## Documentation and examples
+
+The [documentation app](website/README.md) builds a page for every exported
+component, with generated props, examples, accessibility notes and platform
+records. Run it locally with `npm --prefix website ci --ignore-scripts`,
+`npm --prefix website run build`, then `npm --prefix website start`. Its
+stability labels remain proposals awaiting owner confirmation.
+
 ## Use only the parts you need
 
 For the Expo Exact-inspired presentation direction, read
