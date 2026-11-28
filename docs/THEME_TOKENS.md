@@ -2,7 +2,8 @@
 
 NYC-Tron components ship no colors. Their default (non-`unstyled`) recipes use
 the Tailwind v4 utilities below, and the consuming app's theme CSS must define
-the matching variables for both light and dark appearance. A missing variable
+the matching variables for both light and dark appearance, either its own or
+the optional default in "Default theme and TronThemeProvider". A missing variable
 does not fail the build; the utility silently produces no style, so text can
 end up in the platform-default black on a dark surface.
 
@@ -178,6 +179,123 @@ light `primary` (the reference dark value is `#7aa7ff`) they are low
 contrast; pass a darker `color` or a darker dark-mode `primary` if that
 matters for your palette.
 
+## Default theme and TronThemeProvider
+
+Theming through the app's own CSS variables, as above, stays the default and
+needs nothing below. For apps that want a working palette without writing
+one, NYC-Tron ships an optional neutral default theme and a provider.
+Components are unchanged: they still read only the semantic tokens, so an
+app can override single tokens or replace the default entirely.
+
+| Export | Import path |
+| --- | --- |
+| `tronLightTheme`, `tronDarkTheme`, `tronThemeStylesheet()` | `@nyc-tron/core/presets/tron` |
+| `createTronTheme(base, overrides)`, `TronThemeOverrides` | `@nyc-tron/core/theme` |
+| Default stylesheet (CSS `@import` only) | `@nyc-tron/core/theme.css` |
+| `TronThemeProvider`, `useTronTheme()` | `@nyc-tron/ui/components/theme/TronThemeProvider` |
+
+### Stylesheet
+
+```css
+@import "tailwindcss";
+@import "uniwind";
+@import "@nyc-tron/core/theme.css";
+@source "../node_modules/@nyc-tron/ui/dist/components";
+```
+
+The file puts the radius tokens in `@theme` and every token under Uniwind's
+`light` and `dark` variants, with the values in the table below. To change a
+token, redefine it in your own stylesheet after the import. Import it from
+CSS: a JavaScript import of `@nyc-tron/core/theme.css` resolves to the
+presets module, not the stylesheet. `light` is a Uniwind variant, so a
+Tailwind app without Uniwind uses the CSS under "Reference light and dark
+values" instead.
+
+### Provider
+
+```tsx
+import { createTronTheme } from "@nyc-tron/core/theme";
+import { tronLightTheme } from "@nyc-tron/core/presets/tron";
+import { TronThemeProvider, useTronTheme } from "@nyc-tron/ui/components/theme/TronThemeProvider";
+
+// Default theme, light or dark from the system appearance.
+<TronThemeProvider>{app}</TronThemeProvider>
+
+// Fixed appearance.
+<TronThemeProvider colorScheme="dark">{app}</TronThemeProvider>
+
+// One token changed; the rest validated from the base.
+const brand = createTronTheme(tronLightTheme, { colors: { primary: "#6d28d9" } });
+<TronThemeProvider theme={brand}>{app}</TronThemeProvider>
+```
+
+| Prop | Default | Meaning |
+| --- | --- | --- |
+| `theme` | `tronLightTheme`, or `tronDarkTheme` when the scheme is dark | Used as-is in every appearance when set |
+| `colorScheme` | `"system"` | `"light"`, `"dark"`, or `"system"` (React Native `useColorScheme()`, light when unknown) |
+| `children` | | |
+
+`useTronTheme()` returns `{ theme, colorScheme, variables }` from the nearest
+provider, or `null` when there is none.
+
+The provider passes the theme to Uniwind's `ScopedVariables` (Uniwind is an
+optional peer; this subpath needs it):
+
+- **Web:** a `display: contents` element whose inline style sets every Tron
+  token and the `--expo-ui-*` variables listed above, so components and
+  @expo/ui's universal Switch, Checkbox and TextInput below it take the
+  theme's colors through the cascade.
+- **iOS and Android:** Uniwind resolves `className` utilities below the
+  provider against the theme's tokens; tokens the theme leaves out fall
+  through to the app's Uniwind theme. Native @expo/ui controls (SwiftUI,
+  Compose) draw with platform colors and read no CSS variables.
+- The app's stylesheet must still declare the tokens, for example with the
+  import above, or Tailwind does not generate the utilities the components
+  use. With a Uniwind release that has no `ScopedVariables`, the theme is
+  available through `useTronTheme()` only.
+
+Checked here: unit and source tests, type checking and the package build.
+The provider has not been run on an iOS or Android device or simulator, or
+in a browser test, in this change.
+
+### Default values
+
+| Token | Light | Dark |
+| --- | --- | --- |
+| `primary` | `#1f5fd1` | `#7aa7ff` |
+| `onPrimary` | `#ffffff` | `#0b1730` |
+| `surfaceRaised` | `#ffffff` | `#1b1f26` |
+| `surfaceSunken` | `#f1f3f6` | `#12151a` |
+| `border` | `#7a8799` | `#6b7584` |
+| `text` | `#15181d` | `#e8ebf0` |
+| `textMuted` | `#5a626e` | `#a3abb7` |
+| `danger` | `#b42318` | `#ff8a80` |
+| `onDanger` | `#ffffff` | `#2b0703` |
+| `accent` | `#1f7a6d` | `#5fd0bf` |
+| `info` | `#1d5fa8` | `#8ab8ff` |
+| `success` | `#1e7a3c` | `#6fd08c` |
+| `focus` | `#1f5fd1` | `#7aa7ff` |
+| `controlRadius` / `cardRadius` | 8 / 12 | 8 / 12 |
+
+`shape.borderWidth` is 1, `density` is `comfortable` and motion is 120 / 240
+ms in both. They are the reference values above with a darker light `border`
+and a lighter dark `border`, so a bordered input meets WCAG 1.4.11 on its own.
+Measured WCAG 2.1 contrast, light / dark:
+
+| Pair | Light | Dark |
+| --- | --- | --- |
+| `text` on `surfaceRaised` / `surfaceSunken` | 17.79 / 16.01 | 13.83 / 15.31 |
+| `textMuted` on `surfaceRaised` / `surfaceSunken` | 6.16 / 5.54 | 7.14 / 7.90 |
+| `onPrimary` on `primary` | 5.81 | 7.46 |
+| `onDanger` on `danger` | 6.57 | 8.11 |
+| `border` against `surfaceRaised` / `surfaceSunken` | 3.65 / 3.28 | 3.54 / 3.92 |
+| `focus` against `surfaceRaised` / `surfaceSunken` | 5.81 / 5.22 | 6.93 / 7.67 |
+
+`packages/core/tests/tron-theme.test.mjs` fails if a text pair drops below
+4.5:1, `border`, `focus` or a status color drops below 3:1 against either
+surface, or `theme.css` stops matching the TypeScript values. The web Switch
+thumb limit above still applies to the dark `primary`.
+
 ## Decision records
 
 **2026-11-04: align `TronTheme` keys with the class tokens (BUILD).**
@@ -218,3 +336,10 @@ mapping is published as CSS for apps that use @expo/ui directly and as
 `EXPO_UI_TOKEN_MAP` / `expoUiCssVariables` in core, and
 `packages/core/tests/expo-ui-theme.test.mjs` fails if the CSS block and the
 map disagree. No new Tron tokens were added.
+
+**2026-11-28: optional default theme and `TronThemeProvider` (BUILD).**
+The owner asked for provider theming like React Native Paper or NativeBase:
+wrap the app, get a working light and dark theme, override tokens. The
+provider and presets are additive. Components still read only the semantic
+tokens and hardcode no colors, the app-owned CSS variable path is unchanged,
+and the presets stay off the core barrel. No new tokens were added.

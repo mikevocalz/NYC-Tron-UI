@@ -10,7 +10,11 @@ import { validateSpatialPanelSet } from "@nyc-tron/core/spatial";
 ```
 
 Subpaths: `navigation`, `folds`, `spatial`, `spatial-interactions`, `theme`,
-`advanced-catalog`, `presets/infrax`, `pane-plan`, `window-lifecycle`. No peer dependencies.
+`advanced-catalog`, `presets/infrax`, `presets/tron`, `theme.css`, `pane-plan`, `window-lifecycle`. No peer dependencies.
+
+`presets/tron` holds the optional default `tronLightTheme` and `tronDarkTheme`;
+`theme.css` is the same values as a Uniwind stylesheet for CSS `@import`
+(docs/THEME_TOKENS.md, "Default theme and TronThemeProvider").
 
 `window-lifecycle` owns the pure window registry, drag ownership and layout
 restoration model. Native host adapters supply observed display/window events

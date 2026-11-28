@@ -10,9 +10,11 @@
     "./overlays",
     "./pane-plan",
     "./presets/infrax",
+    "./presets/tron",
     "./spatial",
     "./spatial-interactions",
     "./theme",
+    "./theme.css",
     "./window-chrome",
     "./window-lifecycle"
   ],
@@ -654,6 +656,7 @@
     "./components/shell/workspace-model",
     "./components/shell/workspace-preset-model",
     "./components/theme/NightScope",
+    "./components/theme/TronThemeProvider",
     "./components/window/WindowTitleBar"
   ],
   "@nyc-tron/windows-fluent": [

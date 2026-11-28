@@ -50,7 +50,7 @@
   "inputs": [
     {
       "path": "docs/api-signatures.json",
-      "sha256": "01080d83d7ef0ec5ea5e5eaebdf1ebba2e3284f2cd7ead9b8d04279922c18931"
+      "sha256": "b5de738eeb3622636730f282ff2bebde30f566beeccd9136105b8ea34acbb2ea"
     },
     {
       "path": "docs/api-signatures-windows.json",
@@ -62,7 +62,7 @@
     },
     {
       "path": "docs/api-surface.json",
-      "sha256": "a747178b186b55275d4d1b2aee6d7800284b54f2408b467814f01bf11599a665"
+      "sha256": "f9af64fd959fea6185d9e265a4d1087596464b9409a2f7e54d89178b4c8b1746"
     },
     {
       "path": "docs/desktop-support.json",
@@ -71,11 +71,11 @@
   ],
   "summary": {
     "packageCount": 16,
-    "publicSymbolExportCount": 4039,
-    "componentCount": 498,
-    "declarationIdentityCount": 476,
+    "publicSymbolExportCount": 4055,
+    "componentCount": 499,
+    "declarationIdentityCount": 477,
     "proposedStable": 10,
-    "proposedPreview": 488,
+    "proposedPreview": 489,
     "proposedStableIdentityCount": 5
   },
   "packages": [
@@ -87,7 +87,7 @@
     },
     {
       "package": "@nyc-tron/core",
-      "exportCount": 12,
+      "exportCount": 14,
       "componentExposureCount": 0,
       "snapshot": "docs/api-signatures.json"
     },
@@ -159,8 +159,8 @@
     },
     {
       "package": "@nyc-tron/ui",
-      "exportCount": 568,
-      "componentExposureCount": 444,
+      "exportCount": 569,
+      "componentExposureCount": 445,
       "snapshot": "docs/api-signatures.json"
     },
     {
@@ -36967,6 +36967,62 @@
       ]
     },
     {
+      "id": "@nyc-tron/ui/components/theme/TronThemeProvider#TronThemeProvider",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/theme/TronThemeProvider",
+      "subpath": "./components/theme/TronThemeProvider",
+      "symbol": "TronThemeProvider",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/theme/TronThemeProvider.web.d.ts#TronThemeProvider"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/theme/TronThemeProvider.web.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/theme/TronThemeProvider.web.d.ts#TronThemeProvider"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/theme/TronThemeProvider.web.d.ts#TronThemeProvider",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
       "id": "@nyc-tron/ui/components/window/WindowTitleBar#WindowTitleBar",
       "package": "@nyc-tron/ui",
       "importPath": "@nyc-tron/ui/components/window/WindowTitleBar",
@@ -38274,6 +38330,30 @@
       ]
     },
     {
+      "declarationIdentity": "@nyc-tron/core/dist/presets/tron.d.ts#tronDarkTheme",
+      "reason": "non-callable exported value",
+      "exports": [
+        "@nyc-tron/core/presets/tron#tronDarkTheme",
+        "@nyc-tron/core/theme.css#tronDarkTheme"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/core/dist/presets/tron.d.ts#tronLightTheme",
+      "reason": "non-callable exported value",
+      "exports": [
+        "@nyc-tron/core/presets/tron#tronLightTheme",
+        "@nyc-tron/core/theme.css#tronLightTheme"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/core/dist/presets/tron.d.ts#tronThemeStylesheet",
+      "reason": "callable model/helper with a non-React return type",
+      "exports": [
+        "@nyc-tron/core/presets/tron#tronThemeStylesheet",
+        "@nyc-tron/core/theme.css#tronThemeStylesheet"
+      ]
+    },
+    {
       "declarationIdentity": "@nyc-tron/core/dist/spatial-interactions.d.ts#Hit3",
       "reason": "type-only declaration",
       "exports": [
@@ -38458,6 +38538,14 @@
       ]
     },
     {
+      "declarationIdentity": "@nyc-tron/core/dist/theme.d.ts#TronThemeOverrides",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/core#TronThemeOverrides",
+        "@nyc-tron/core/theme#TronThemeOverrides"
+      ]
+    },
+    {
       "declarationIdentity": "@nyc-tron/core/dist/theme.d.ts#TronThemeShape",
       "reason": "type-only declaration",
       "exports": [
@@ -38471,6 +38559,14 @@
       "exports": [
         "@nyc-tron/core#TronTheme",
         "@nyc-tron/core/theme#TronTheme"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/core/dist/theme.d.ts#createTronTheme",
+      "reason": "callable model/helper with a non-React return type",
+      "exports": [
+        "@nyc-tron/core#createTronTheme",
+        "@nyc-tron/core/theme#createTronTheme"
       ]
     },
     {
@@ -58977,6 +59073,41 @@
       "reason": "type-only declaration",
       "exports": [
         "@nyc-tron/ui/components/theme/NightScope#NightScopeProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/theme/TronThemeProvider.shared.d.ts#useTronTheme",
+      "reason": "callable model/helper with a non-React return type",
+      "exports": [
+        "@nyc-tron/ui/components/theme/TronThemeProvider#useTronTheme"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/theme/TronThemeProvider.types.d.ts#TronThemeContextValue",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/theme/TronThemeProvider#TronThemeContextValue"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/theme/TronThemeProvider.types.d.ts#TronThemeProviderProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/theme/TronThemeProvider#TronThemeProviderProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/theme/theme-provider-model.d.ts#TronColorSchemePreference",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/theme/TronThemeProvider#TronColorSchemePreference"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/theme/theme-provider-model.d.ts#TronResolvedColorScheme",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/theme/TronThemeProvider#TronResolvedColorScheme"
       ]
     },
     {

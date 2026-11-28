@@ -55,6 +55,17 @@
       "react-native": "./dist/presets/infrax.js",
       "default": "./dist/presets/infrax.js"
     },
+    "./presets/tron": {
+      "types": "./dist/presets/tron.d.ts",
+      "react-native": "./dist/presets/tron.js",
+      "default": "./dist/presets/tron.js"
+    },
+    "./theme.css": {
+      "style": "./dist/presets/tron-theme.css",
+      "types": "./dist/presets/tron.d.ts",
+      "react-native": "./dist/presets/tron.js",
+      "default": "./dist/presets/tron.js"
+    },
     "./pane-plan": {
       "types": "./dist/pane-plan.d.ts",
       "react-native": "./dist/pane-plan.js",
@@ -78,7 +89,7 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "build": "tsc --project tsconfig.build.json",
+    "build": "tsc --project tsconfig.build.json && node -e \"require('fs').copyFileSync('src/presets/tron-theme.css','dist/presets/tron-theme.css')\"",
     "prepack": "pnpm build"
   },
   "main": "./dist/index.js",

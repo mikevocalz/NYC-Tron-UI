@@ -3,10 +3,10 @@
   "verification": {
     "path": "website/generated/verification.json"
   },
-  "manifestSha256": "94791f35e426f289d242c2adf8964f12af2bdce03fad9ccdec91a26eacfde0ff",
+  "manifestSha256": "68ad5ea79aebe64446afce0c002fc53fb39653f509d1cb9d4aa10bc6a516636b",
   "ownerConfirmation": "pending",
   "source": "website/src/App.tsx",
-  "componentCount": 498,
+  "componentCount": 499,
   "components": [
     {
       "id": "@nyc-tron/expo-controls#NativeDropdown",
@@ -13982,6 +13982,34 @@
       "dataSha256": "08a33dfb01d7878c5e233acc7a96ec4b8aecbc5cc6f5e071c3e7879b78ffad7a",
       "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
       "exampleSha256": "1101f3156e6b50b23a05120338b5379224b932d9d5fb64ec1a9df6da372498c0",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/theme/TronThemeProvider#TronThemeProvider",
+      "importPath": "@nyc-tron/ui/components/theme/TronThemeProvider",
+      "symbol": "TronThemeProvider",
+      "route": "/components/ui-tronthemeprovider-23a3f07446/",
+      "page": "website/dist/components/ui-tronthemeprovider-23a3f07446/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-tronthemeprovider-23a3f07446.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/theme/TronThemeProvider.web.d.ts#TronThemeProvider"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-tronthemeprovider-23a3f07446.tsx",
+      "pageSha256": "cd5336a2b3c1feafdf9ef5a7b331ce30e97a1f2446a45c5ef1944f25a87aacbc",
+      "dataSha256": "9c55bf442e639ec697bd65ed0d0786f159b22efeab013425d0705989c9bc8660",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "de8107140094bba68e2660221417a91368338331af291b0c58e472e12c05e789",
       "exampleStatus": "platform example; runtime verification pending",
       "unresolvedExampleProps": []
     },

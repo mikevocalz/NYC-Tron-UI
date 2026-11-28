@@ -182,6 +182,9 @@
             "TronThemeInput": [
               "@nyc-tron/core/dist/theme.d.ts#TronThemeInput"
             ],
+            "TronThemeOverrides": [
+              "@nyc-tron/core/dist/theme.d.ts#TronThemeOverrides"
+            ],
             "TronThemeShape": [
               "@nyc-tron/core/dist/theme.d.ts#TronThemeShape"
             ],
@@ -208,6 +211,9 @@
             ],
             "advancedNativeCatalog": [
               "@nyc-tron/core/dist/advanced-catalog.d.ts#advancedNativeCatalog"
+            ],
+            "createTronTheme": [
+              "@nyc-tron/core/dist/theme.d.ts#createTronTheme"
             ],
             "expoUiCssVariables": [
               "@nyc-tron/core/dist/theme.d.ts#expoUiCssVariables"
@@ -518,6 +524,27 @@
           }
         }
       ],
+      "./presets/tron": [
+        {
+          "target": "./dist/presets/tron.d.ts",
+          "conditions": {
+            "types": "./dist/presets/tron.d.ts",
+            "react-native": "./dist/presets/tron.js",
+            "default": "./dist/presets/tron.js"
+          },
+          "symbols": {
+            "tronDarkTheme": [
+              "@nyc-tron/core/dist/presets/tron.d.ts#tronDarkTheme"
+            ],
+            "tronLightTheme": [
+              "@nyc-tron/core/dist/presets/tron.d.ts#tronLightTheme"
+            ],
+            "tronThemeStylesheet": [
+              "@nyc-tron/core/dist/presets/tron.d.ts#tronThemeStylesheet"
+            ]
+          }
+        }
+      ],
       "./spatial": [
         {
           "target": "./dist/spatial.d.ts",
@@ -623,8 +650,14 @@
             "TronThemeInput": [
               "@nyc-tron/core/dist/theme.d.ts#TronThemeInput"
             ],
+            "TronThemeOverrides": [
+              "@nyc-tron/core/dist/theme.d.ts#TronThemeOverrides"
+            ],
             "TronThemeShape": [
               "@nyc-tron/core/dist/theme.d.ts#TronThemeShape"
+            ],
+            "createTronTheme": [
+              "@nyc-tron/core/dist/theme.d.ts#createTronTheme"
             ],
             "expoUiCssVariables": [
               "@nyc-tron/core/dist/theme.d.ts#expoUiCssVariables"
@@ -634,6 +667,28 @@
             ],
             "validateTheme": [
               "@nyc-tron/core/dist/theme.d.ts#validateTheme"
+            ]
+          }
+        }
+      ],
+      "./theme.css": [
+        {
+          "target": "./dist/presets/tron.d.ts",
+          "conditions": {
+            "style": "./dist/presets/tron-theme.css",
+            "types": "./dist/presets/tron.d.ts",
+            "react-native": "./dist/presets/tron.js",
+            "default": "./dist/presets/tron.js"
+          },
+          "symbols": {
+            "tronDarkTheme": [
+              "@nyc-tron/core/dist/presets/tron.d.ts#tronDarkTheme"
+            ],
+            "tronLightTheme": [
+              "@nyc-tron/core/dist/presets/tron.d.ts#tronLightTheme"
+            ],
+            "tronThemeStylesheet": [
+              "@nyc-tron/core/dist/presets/tron.d.ts#tronThemeStylesheet"
             ]
           }
         }
@@ -19261,6 +19316,37 @@
           }
         }
       ],
+      "./components/theme/TronThemeProvider": [
+        {
+          "target": "./dist/components/theme/TronThemeProvider.web.d.ts",
+          "conditions": {
+            "types": "./dist/components/theme/TronThemeProvider.web.d.ts",
+            "browser": "./dist/components/theme/TronThemeProvider.web.js",
+            "react-native": "./dist/components/theme/TronThemeProvider.native.js",
+            "default": "./dist/components/theme/TronThemeProvider.web.js"
+          },
+          "symbols": {
+            "TronColorSchemePreference": [
+              "@nyc-tron/ui/dist/components/theme/theme-provider-model.d.ts#TronColorSchemePreference"
+            ],
+            "TronResolvedColorScheme": [
+              "@nyc-tron/ui/dist/components/theme/theme-provider-model.d.ts#TronResolvedColorScheme"
+            ],
+            "TronThemeContextValue": [
+              "@nyc-tron/ui/dist/components/theme/TronThemeProvider.types.d.ts#TronThemeContextValue"
+            ],
+            "TronThemeProvider": [
+              "@nyc-tron/ui/dist/components/theme/TronThemeProvider.web.d.ts#TronThemeProvider"
+            ],
+            "TronThemeProviderProps": [
+              "@nyc-tron/ui/dist/components/theme/TronThemeProvider.types.d.ts#TronThemeProviderProps"
+            ],
+            "useTronTheme": [
+              "@nyc-tron/ui/dist/components/theme/TronThemeProvider.shared.d.ts#useTronTheme"
+            ]
+          }
+        }
+      ],
       "./components/window/WindowTitleBar": [
         {
           "target": "./dist/components/window/WindowTitleBar.d.ts",
@@ -19922,6 +20008,30 @@
         "typescript@6.0.3/lib/lib.es5.d.ts#Record"
       ]
     },
+    "@nyc-tron/core/dist/presets/tron.d.ts#tronDarkTheme": {
+      "signatures": [
+        "export declare const tronDarkTheme: TronTheme;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/theme.d.ts#TronTheme"
+      ]
+    },
+    "@nyc-tron/core/dist/presets/tron.d.ts#tronLightTheme": {
+      "signatures": [
+        "export declare const tronLightTheme: TronTheme;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/theme.d.ts#TronTheme"
+      ]
+    },
+    "@nyc-tron/core/dist/presets/tron.d.ts#tronThemeStylesheet": {
+      "signatures": [
+        "export declare function tronThemeStylesheet(light?: TronTheme, dark?: TronTheme): string;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/theme.d.ts#TronTheme"
+      ]
+    },
     "@nyc-tron/core/dist/spatial-interactions.d.ts#Hit3": {
       "signatures": [
         "export type Hit3 = Readonly<{\n    id: string;\n    distance: number;\n    point: Vec3;\n}>;"
@@ -20118,11 +20228,33 @@
         "typescript@6.0.3/lib/lib.es5.d.ts#Partial"
       ]
     },
+    "@nyc-tron/core/dist/theme.d.ts#TronThemeOverrides": {
+      "signatures": [
+        "export interface TronThemeOverrides {\n    readonly colors?: Partial<TronThemeColors> & Partial<TronThemeColorAliases>;\n    readonly shape?: Partial<TronThemeShape>;\n    readonly density?: TronTheme[\"density\"];\n    readonly motion?: Partial<TronTheme[\"motion\"]>;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/theme.d.ts#TronTheme",
+        "@nyc-tron/core/dist/theme.d.ts#TronThemeColorAliases",
+        "@nyc-tron/core/dist/theme.d.ts#TronThemeColors",
+        "@nyc-tron/core/dist/theme.d.ts#TronThemeShape",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Partial"
+      ]
+    },
     "@nyc-tron/core/dist/theme.d.ts#TronThemeShape": {
       "signatures": [
         "export interface TronThemeShape {\n    readonly controlRadius: number;\n    readonly cardRadius: number;\n    readonly borderWidth: number;\n    readonly surfaceRadius: number;\n}"
       ],
       "references": []
+    },
+    "@nyc-tron/core/dist/theme.d.ts#createTronTheme": {
+      "signatures": [
+        "export declare function createTronTheme(base: TronTheme | TronThemeInput, overrides?: TronThemeOverrides): TronTheme;"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/theme.d.ts#TronTheme",
+        "@nyc-tron/core/dist/theme.d.ts#TronThemeInput",
+        "@nyc-tron/core/dist/theme.d.ts#TronThemeOverrides"
+      ]
     },
     "@nyc-tron/core/dist/theme.d.ts#expoUiCssVariables": {
       "signatures": [
@@ -49231,6 +49363,58 @@
       "references": [
         "@types/react@19.3.0/index.d.ts#React.ReactNode"
       ]
+    },
+    "@nyc-tron/ui/dist/components/theme/TronThemeProvider.shared.d.ts#useTronTheme": {
+      "signatures": [
+        "export declare function useTronTheme(): TronThemeContextValue | null;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/theme/TronThemeProvider.types.d.ts#TronThemeContextValue"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/theme/TronThemeProvider.types.d.ts#TronThemeContextValue": {
+      "signatures": [
+        "export interface TronThemeContextValue {\n    readonly theme: TronTheme;\n    readonly colorScheme: TronResolvedColorScheme;\n    readonly variables: Readonly<Record<string, string>>;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/theme.d.ts#TronTheme",
+        "@nyc-tron/ui/dist/components/theme/theme-provider-model.d.ts#TronResolvedColorScheme",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Readonly",
+        "typescript@6.0.3/lib/lib.es5.d.ts#Record"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/theme/TronThemeProvider.types.d.ts#TronThemeProviderProps": {
+      "signatures": [
+        "export interface TronThemeProviderProps {\n    theme?: TronTheme;\n    colorScheme?: TronColorSchemePreference;\n    children?: ReactNode;\n}"
+      ],
+      "references": [
+        "@nyc-tron/core/dist/theme.d.ts#TronTheme",
+        "@nyc-tron/ui/dist/components/theme/theme-provider-model.d.ts#TronColorSchemePreference",
+        "@types/react@19.3.0/index.d.ts#React.ReactNode"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/theme/TronThemeProvider.web.d.ts#TronThemeProvider": {
+      "signatures": [
+        "export declare function TronThemeProvider(props: TronThemeProviderProps): import(\"react\").JSX.Element;"
+      ],
+      "references": [
+        "@nyc-tron/ui/dist/components/theme/TronThemeProvider.types.d.ts#TronThemeProviderProps",
+        "@types/react@19.3.0/index.d.ts#$module",
+        "@types/react@19.3.0/index.d.ts#React.JSX",
+        "@types/react@19.3.0/index.d.ts#React.JSX.Element"
+      ]
+    },
+    "@nyc-tron/ui/dist/components/theme/theme-provider-model.d.ts#TronColorSchemePreference": {
+      "signatures": [
+        "export type TronColorSchemePreference = \"light\" | \"dark\" | \"system\";"
+      ],
+      "references": []
+    },
+    "@nyc-tron/ui/dist/components/theme/theme-provider-model.d.ts#TronResolvedColorScheme": {
+      "signatures": [
+        "export type TronResolvedColorScheme = \"light\" | \"dark\";"
+      ],
+      "references": []
     },
     "@nyc-tron/ui/dist/components/window/WindowTitleBar.d.ts#CAPTION_TARGET_WIDTH": {
       "signatures": [
