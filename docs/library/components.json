@@ -54,11 +54,11 @@
     },
     {
       "path": "docs/api-signatures-windows.json",
-      "sha256": "bc2b17af08ce181012e79b0941b9ba2e767585721c68ece1d4d5f3b1eaa2c8c3"
+      "sha256": "4208054fed1c9318f12a853293e08fee29ea39eaace1e539f844a056e9d76430"
     },
     {
       "path": "docs/api-signatures-macos.json",
-      "sha256": "b3fa3e331b2650dcf85c15d638971b1742edd1d152f8f0b03dd6fe93d2ff5cb5"
+      "sha256": "27cb47ca9dab48f273987e115f762a34580ad6a8288ff52d0ca86c029c610141"
     },
     {
       "path": "docs/api-surface.json",
@@ -12482,7 +12482,7 @@
       ]
     },
     {
-      "declarationIdentity": "@nyc-tron/core@1.0.0-rc.3/dist/overlays.d.ts#CommandMenuItem",
+      "declarationIdentity": "@nyc-tron/core@1.0.0/dist/overlays.d.ts#CommandMenuItem",
       "reason": "external type-only declaration; not a React component value",
       "exports": [
         "@nyc-tron/windows-fluent-fabric/overlays#CommandMenuItem"
