@@ -50,7 +50,7 @@
   "inputs": [
     {
       "path": "docs/api-signatures.json",
-      "sha256": "f90137324b00f27615ac1171117049f936966b5a4e2318b6f6b0e4cb44a19eca"
+      "sha256": "01080d83d7ef0ec5ea5e5eaebdf1ebba2e3284f2cd7ead9b8d04279922c18931"
     },
     {
       "path": "docs/api-signatures-windows.json",
@@ -62,7 +62,7 @@
     },
     {
       "path": "docs/api-surface.json",
-      "sha256": "b3dca064ce1e91715ffe187e24e63891fc7a0e91f943b7ffa776a2a23ce3037c"
+      "sha256": "a747178b186b55275d4d1b2aee6d7800284b54f2408b467814f01bf11599a665"
     },
     {
       "path": "docs/desktop-support.json",
@@ -71,11 +71,11 @@
   ],
   "summary": {
     "packageCount": 16,
-    "publicSymbolExportCount": 3961,
-    "componentCount": 478,
-    "declarationIdentityCount": 456,
+    "publicSymbolExportCount": 4039,
+    "componentCount": 498,
+    "declarationIdentityCount": 476,
     "proposedStable": 10,
-    "proposedPreview": 468,
+    "proposedPreview": 488,
     "proposedStableIdentityCount": 5
   },
   "packages": [
@@ -159,8 +159,8 @@
     },
     {
       "package": "@nyc-tron/ui",
-      "exportCount": 556,
-      "componentExposureCount": 424,
+      "exportCount": 568,
+      "componentExposureCount": 444,
       "snapshot": "docs/api-signatures.json"
     },
     {
@@ -4793,6 +4793,286 @@
         {
           "path": "docs/api-signatures.json",
           "declaration": "@nyc-tron/ui/dist/components/feedback/ErrorMessage.d.ts#ErrorMessage",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/feedback/ProgressBar#ProgressBar",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/feedback/ProgressBar",
+      "subpath": "./components/feedback/ProgressBar",
+      "symbol": "ProgressBar",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/feedback/ProgressBar.web.d.ts#ProgressBar"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/feedback/ProgressBar.web.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/ProgressBar.web.d.ts#ProgressBar"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/feedback/ProgressBar.web.d.ts#ProgressBar",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/feedback/Spinner#Spinner",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/feedback/Spinner",
+      "subpath": "./components/feedback/Spinner",
+      "symbol": "Spinner",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/feedback/Spinner.web.d.ts#Spinner"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/feedback/Spinner.web.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/Spinner.web.d.ts#Spinner"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/feedback/Spinner.web.d.ts#Spinner",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/feedback/Toast#Toast",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/feedback/Toast",
+      "subpath": "./components/feedback/Toast",
+      "symbol": "Toast",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/feedback/Toast.shared.d.ts#Toast"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/feedback/Toast.web.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/Toast.shared.d.ts#Toast"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/feedback/Toast.shared.d.ts#Toast",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/feedback/Toast#ToastProvider",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/feedback/Toast",
+      "subpath": "./components/feedback/Toast",
+      "symbol": "ToastProvider",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastProvider"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/feedback/Toast.web.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastProvider"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastProvider",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/feedback/Toast#ToastViewport",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/feedback/Toast",
+      "subpath": "./components/feedback/Toast",
+      "symbol": "ToastViewport",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastViewport"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/feedback/Toast.web.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastViewport"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastViewport",
           "kind": "public declaration snapshot; not runtime acceptance"
         }
       ]
@@ -31771,6 +32051,510 @@
       ]
     },
     {
+      "id": "@nyc-tron/ui/components/forms/Checkbox#Checkbox",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/forms/Checkbox",
+      "subpath": "./components/forms/Checkbox",
+      "symbol": "Checkbox",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/forms/Checkbox.d.ts#Checkbox"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/forms/Checkbox.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Checkbox.d.ts#Checkbox"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Checkbox.d.ts#Checkbox",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Field#Field",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/forms/Field",
+      "subpath": "./components/forms/Field",
+      "symbol": "Field",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/forms/Field.d.ts#Field"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/forms/Field.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Field.d.ts#Field"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Field.d.ts#Field",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Field#HelperText",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/forms/Field",
+      "subpath": "./components/forms/Field",
+      "symbol": "HelperText",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/forms/Field.d.ts#HelperText"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/forms/Field.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Field.d.ts#HelperText"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Field.d.ts#HelperText",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Field#Label",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/forms/Field",
+      "subpath": "./components/forms/Field",
+      "symbol": "Label",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/forms/Field.d.ts#Label"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/forms/Field.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Field.d.ts#Label"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Field.d.ts#Label",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Radio#Radio",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/forms/Radio",
+      "subpath": "./components/forms/Radio",
+      "symbol": "Radio",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#Radio"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/forms/Radio.web.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#Radio"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#Radio",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Radio#RadioGroup",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/forms/Radio",
+      "subpath": "./components/forms/Radio",
+      "symbol": "RadioGroup",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroup"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/forms/Radio.web.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroup"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroup",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Radio#RadioGroupItem",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/forms/Radio",
+      "subpath": "./components/forms/Radio",
+      "symbol": "RadioGroupItem",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroupItem"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/forms/Radio.web.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroupItem"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroupItem",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Switch#Switch",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/forms/Switch",
+      "subpath": "./components/forms/Switch",
+      "symbol": "Switch",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/forms/Switch.d.ts#Switch"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/forms/Switch.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Switch.d.ts#Switch"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Switch.d.ts#Switch",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Textarea#Textarea",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/forms/Textarea",
+      "subpath": "./components/forms/Textarea",
+      "symbol": "Textarea",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/forms/Textarea.d.ts#Textarea"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/forms/Textarea.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Textarea.d.ts#Textarea"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Textarea.d.ts#Textarea",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
       "id": "@nyc-tron/ui/components/gestures/GestureHandlerDrag#GestureHandlerDrag",
       "package": "@nyc-tron/ui",
       "importPath": "@nyc-tron/ui/components/gestures/GestureHandlerDrag",
@@ -33203,6 +33987,62 @@
       ]
     },
     {
+      "id": "@nyc-tron/ui/components/overlays/AlertDialog#AlertDialog",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/overlays/AlertDialog",
+      "subpath": "./components/overlays/AlertDialog",
+      "symbol": "AlertDialog",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/overlays/AlertDialog.web.d.ts#AlertDialog"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/overlays/AlertDialog.web.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/AlertDialog.web.d.ts#AlertDialog"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/overlays/AlertDialog.web.d.ts#AlertDialog",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
       "id": "@nyc-tron/ui/components/overlays/AnchoredPopover#AnchoredPopover",
       "package": "@nyc-tron/ui",
       "importPath": "@nyc-tron/ui/components/overlays/AnchoredPopover",
@@ -33420,6 +34260,286 @@
         {
           "path": "docs/api-signatures.json",
           "declaration": "@nyc-tron/ui/dist/components/overlays/CommandPopover.d.ts#CommandPopover",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/overlays/Dialog#Dialog",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/overlays/Dialog",
+      "subpath": "./components/overlays/Dialog",
+      "symbol": "Dialog",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/overlays/Dialog.web.d.ts#Dialog"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/overlays/Dialog.web.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/Dialog.web.d.ts#Dialog"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/overlays/Dialog.web.d.ts#Dialog",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/overlays/Portal#Portal",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/overlays/Portal",
+      "subpath": "./components/overlays/Portal",
+      "symbol": "Portal",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#Portal"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/overlays/Portal.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#Portal"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#Portal",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/overlays/Portal#PortalHost",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/overlays/Portal",
+      "subpath": "./components/overlays/Portal",
+      "symbol": "PortalHost",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalHost"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/overlays/Portal.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalHost"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalHost",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/overlays/Portal#PortalProvider",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/overlays/Portal",
+      "subpath": "./components/overlays/Portal",
+      "symbol": "PortalProvider",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProvider"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/overlays/Portal.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProvider"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProvider",
+          "kind": "public declaration snapshot; not runtime acceptance"
+        }
+      ]
+    },
+    {
+      "id": "@nyc-tron/ui/components/overlays/Sheet#Sheet",
+      "package": "@nyc-tron/ui",
+      "importPath": "@nyc-tron/ui/components/overlays/Sheet",
+      "subpath": "./components/overlays/Sheet",
+      "symbol": "Sheet",
+      "category": "general components",
+      "stability": null,
+      "proposedStability": "preview",
+      "ownerConfirmation": "pending",
+      "stabilityReason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete.",
+      "declarationIdentities": [
+        "@nyc-tron/ui/dist/components/overlays/Sheet.d.ts#Sheet"
+      ],
+      "variants": [
+        {
+          "target": "./dist/components/overlays/Sheet.d.ts",
+          "snapshot": "docs/api-signatures.json",
+          "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/Sheet.d.ts#Sheet"
+        }
+      ],
+      "aliases": [],
+      "platforms": {
+        "ios": {
+          "status": "not verified"
+        },
+        "android": {
+          "status": "not verified"
+        },
+        "web": {
+          "status": "not verified"
+        },
+        "macos": {
+          "status": "not verified"
+        },
+        "windows": {
+          "status": "not verified"
+        },
+        "visionos": {
+          "status": "not verified"
+        },
+        "quest": {
+          "status": "not verified"
+        },
+        "pico": {
+          "status": "not verified"
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/overlays/Sheet.d.ts#Sheet",
           "kind": "public declaration snapshot; not runtime acceptance"
         }
       ]
@@ -37290,6 +38410,14 @@
       ]
     },
     {
+      "declarationIdentity": "@nyc-tron/core/dist/theme.d.ts#EXPO_UI_TOKEN_MAP",
+      "reason": "non-callable exported value",
+      "exports": [
+        "@nyc-tron/core#EXPO_UI_TOKEN_MAP",
+        "@nyc-tron/core/theme#EXPO_UI_TOKEN_MAP"
+      ]
+    },
+    {
       "declarationIdentity": "@nyc-tron/core/dist/theme.d.ts#TRON_NATIVE_METRICS",
       "reason": "non-callable exported value",
       "exports": [
@@ -37343,6 +38471,14 @@
       "exports": [
         "@nyc-tron/core#TronTheme",
         "@nyc-tron/core/theme#TronTheme"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/core/dist/theme.d.ts#expoUiCssVariables",
+      "reason": "callable model/helper with a non-React return type",
+      "exports": [
+        "@nyc-tron/core#expoUiCssVariables",
+        "@nyc-tron/core/theme#expoUiCssVariables"
       ]
     },
     {
@@ -39859,6 +40995,160 @@
       "reason": "type-only declaration",
       "exports": [
         "@nyc-tron/ui/components/feedback/ErrorMessage#ErrorMessageProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/ProgressBar.types.d.ts#ProgressBarProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/ProgressBar#ProgressBarProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/ProgressBar.types.d.ts#ProgressBarSize",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/ProgressBar#ProgressBarSize"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/ProgressBar.types.d.ts#ProgressBarTone",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/ProgressBar#ProgressBarTone"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/Spinner.types.d.ts#SpinnerProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Spinner#SpinnerProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/Spinner.types.d.ts#SpinnerSize",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Spinner#SpinnerSize"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/Toast.shared.d.ts#useToast",
+      "reason": "callable model/helper with a non-React return type",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#useToast"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastApi",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastApi"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastInsets",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastInsets"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastPlacement",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastPlacement"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastProviderProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastProviderProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/Toast.types.d.ts#ToastViewportProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastViewportProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/progress-model.d.ts#ProgressValueContext",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/ProgressBar#ProgressValueContext"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastAction",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastAction"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastItem",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastItem"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastLive",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastLive"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastOptions",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastOptions"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastSnapshot",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastSnapshot"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastStoreOptions",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastStoreOptions"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastStore",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastStore"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#ToastTone",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#ToastTone"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/feedback/toast-model.d.ts#createToastStore",
+      "reason": "callable model/helper with a non-React return type",
+      "exports": [
+        "@nyc-tron/ui/components/feedback/Toast#createToastStore"
       ]
     },
     {
@@ -55298,6 +56588,90 @@
       ]
     },
     {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Checkbox.types.d.ts#CheckboxProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Checkbox#CheckboxProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Field.d.ts#FieldProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Field#FieldProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Field.d.ts#FieldRenderProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Field#FieldRenderProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Field.d.ts#HelperTextProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Field#HelperTextProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Field.d.ts#LabelProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Field#LabelProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Field.d.ts#useFieldIds",
+      "reason": "callable model/helper with a non-React return type",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Field#useFieldIds"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Field.d.ts#useField",
+      "reason": "callable model/helper with a non-React return type",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Field#useField"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Radio.types.d.ts#RadioGroupItemProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Radio#RadioGroupItemProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Radio.types.d.ts#RadioGroupProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Radio#RadioGroupProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Radio.types.d.ts#RadioProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Radio#RadioProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Switch.types.d.ts#SwitchProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Switch#SwitchProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/Textarea.types.d.ts#TextareaProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Textarea#TextareaProps"
+      ]
+    },
+    {
       "declarationIdentity": "@nyc-tron/ui/dist/components/forms/choice-keys.d.ts#ChoiceAxis",
       "reason": "type-only declaration",
       "exports": [
@@ -55361,6 +56735,34 @@
       ]
     },
     {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/field-model.d.ts#CounterState",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Textarea#CounterState"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldControlProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Field#FieldControlProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldIds",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Field#FieldIds"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/field-model.d.ts#FieldState",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Field#FieldState"
+      ]
+    },
+    {
       "declarationIdentity": "@nyc-tron/ui/dist/components/forms/option-groups.d.ts#OptionGroup",
       "reason": "type-only declaration",
       "exports": [
@@ -55379,6 +56781,20 @@
       "reason": "callable model/helper with a non-React return type",
       "exports": [
         "@nyc-tron/ui/components/forms/option-groups#validateOptionGroups"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/toggle-model.d.ts#CheckedState",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Checkbox#CheckedState"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/forms/toggle-model.d.ts#SwitchSize",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/forms/Switch#SwitchSize"
       ]
     },
     {
@@ -55558,6 +56974,13 @@
       ]
     },
     {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/AlertDialog.types.d.ts#AlertDialogProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/AlertDialog#AlertDialogProps"
+      ]
+    },
+    {
       "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/CommandPalette.d.ts#CommandPaletteProps",
       "reason": "type-only declaration",
       "exports": [
@@ -55569,6 +56992,41 @@
       "reason": "type-only declaration",
       "exports": [
         "@nyc-tron/ui/components/overlays/CommandPopover#CommandPopoverProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/Dialog.types.d.ts#DialogProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/Dialog#DialogProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalHostProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/Portal#PortalHostProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/Portal#PortalProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProviderProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/Portal#PortalProviderProps"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/Sheet.types.d.ts#SheetProps",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/Sheet#SheetProps"
       ]
     },
     {
@@ -55675,6 +57133,34 @@
       ]
     },
     {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#AlertDialogTone",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/AlertDialog#AlertDialogTone"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#DialogDismissReason",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/Dialog#DialogDismissReason"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#DialogInsets",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/Dialog#DialogInsets"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/dialog-model.d.ts#DialogSize",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/Dialog#DialogSize"
+      ]
+    },
+    {
       "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/focus-cycle.d.ts#cycleFocusIndex",
       "reason": "callable model/helper with a non-React return type",
       "exports": [
@@ -55714,6 +57200,34 @@
       "reason": "callable model/helper with a non-React return type",
       "exports": [
         "@nyc-tron/ui/components/overlays/measure-anchor#windowRegions"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#PortalEntry",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/Portal#PortalEntry"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#PortalStore",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/Portal#PortalStore"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/portal-store.d.ts#createPortalStore",
+      "reason": "callable model/helper with a non-React return type",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/Portal#createPortalStore"
+      ]
+    },
+    {
+      "declarationIdentity": "@nyc-tron/ui/dist/components/overlays/sheet-model.d.ts#SheetSnapPoint",
+      "reason": "type-only declaration",
+      "exports": [
+        "@nyc-tron/ui/components/overlays/Sheet#SheetSnapPoint"
       ]
     },
     {
