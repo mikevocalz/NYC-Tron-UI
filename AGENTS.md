@@ -10,9 +10,13 @@ native changes. Preserve the existing Moyo and NYC-MON product contracts.
    `packages/ui/src/components/` and expose per-component package subpaths.
    Engine operations are never defined or copied here. No import from
    `@nitro-forge/*` in this repository.
-2. **The app owns style.** Tailwind v4 + Uniwind CSS, tokens, fonts, radius,
-   border geometry, motion and density come from the consuming app. No global
-   NYC-MON theme, hardcoded palettes, duplicate styling stack, or raw HTML UI.
+2. **Components never hardcode colors.** Every recipe reads the semantic
+   tokens (docs/THEME_TOKENS.md) through Tailwind v4 + Uniwind CSS. Tron ships
+   an optional neutral default light/dark theme (`@nyc-tron/core/presets/tron`,
+   `@nyc-tron/core/theme.css`) and `TronThemeProvider`; the consuming app can
+   override any token or replace the theme entirely, and fonts, radius,
+   density and motion stay app-overridable. No NYC-MON palette, duplicate
+   styling stack, or raw HTML UI.
 3. **Platform implementations must be real.** Windows native Fluent
    NavigationView, macOS AppKit controls, iOS SwiftUI and Android Compose are
    separate adapter workstreams. Do not claim them implemented by RN Views.
