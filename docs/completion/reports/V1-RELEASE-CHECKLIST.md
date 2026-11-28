@@ -22,25 +22,27 @@ choose the `@nyc-tron` scope owner and add a publish step.
 | --- | --- |
 | Sixteen package versions and exact internal desktop peers | `1.0.0` everywhere. |
 | Desktop API snapshots | Only the internal `@nyc-tron/core` and `@nyc-tron/windows-fluent` version identities change; `tooling/desktop-provenance.mjs` proves the snapshots equal the published rc.2 snapshots once that relabel is reversed. |
-| Inventory, API, registry and LLM files | Regenerated: 164 public component exports, 10 proposed stable and 154 proposed preview. |
+| Inventory, API, registry and LLM files | Regenerated: 164 public component exports, 10 stable and 154 preview, owner-confirmed. |
 | CHANGELOG | `[1.0.0]` section lists everything since rc.2. |
 | Pull request checks | Every check green on the release-preparation pull request. |
 
 ## What only the owner can do
 
-`node tooling/release-readiness.mjs --version 1.0.0` reports exactly three
-blockers, in this order of work:
+The stable/preview labels are confirmed (step 1 below is done), so two owner
+steps remain. With the labels confirmed, `node tooling/release-readiness.mjs
+--version 1.0.0` also lists the per-component library evidence the release
+workflow gathers from the installed archives; run locally it reports those as
+missing, which is expected.
 
-1. **Confirm the stable/preview labels.** The proposal marks five components
-   stable (Button, Card, TextField, NavigationRail and NavigationShell, ten
-   exports with their aliases) and the other 154 exports preview. Stable is a
-   semver promise for that public API. The confirmation is recorded in
-   [`docs/library/stability-review.json`](../../library/stability-review.json)
-   with `status: "confirmed"`, `approval.reviewer: "mikevocalz"`, a decision
-   reference, `approval.proposalSha256` and one label per export. The current
-   proposal digest is
-   `15985e10df57473baba5460c56285cd473a90674c145dcbfa119446fd753a7a9`; it changes
-   whenever an export is added, removed or relabelled.
+1. **Confirm the stable/preview labels. Done 2026-11-28.** The owner confirmed
+   Button, Card, TextField, NavigationRail and NavigationShell as stable (ten
+   exports with their root and subpath aliases); the other 154 exports are
+   preview. Stable is a semver promise for that public API. The record is
+   [`docs/library/stability-review.json`](../../library/stability-review.json),
+   bound to proposal digest
+   `15985e10df57473baba5460c56285cd473a90674c145dcbfa119446fd753a7a9`. If an
+   export is added, removed or relabelled the digest changes and the labels must
+   be confirmed again.
 2. **Build the candidate archives.** Run the release workflow for `1.0.0`. It
    runs every CI gate, packs the sixteen archives and keeps them with
    `SHA256SUMS` as the `release-candidate-v1.0.0` artifact before the stable

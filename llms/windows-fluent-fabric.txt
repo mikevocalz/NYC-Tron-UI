@@ -12,7 +12,7 @@ import { TronNavigationView } from "@nyc-tron/windows-fluent-fabric";
 
 - Id: `@nyc-tron/windows-fluent-fabric#TronNavigationView`
 - Package: `@nyc-tron/windows-fluent-fabric`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -63,7 +63,7 @@ import { WindowsDragSource } from "@nyc-tron/windows-fluent-fabric/drag-drop";
 
 - Id: `@nyc-tron/windows-fluent-fabric/drag-drop#WindowsDragSource`
 - Package: `@nyc-tron/windows-fluent-fabric`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -120,7 +120,7 @@ import { WindowsDropTarget } from "@nyc-tron/windows-fluent-fabric/drag-drop";
 
 - Id: `@nyc-tron/windows-fluent-fabric/drag-drop#WindowsDropTarget`
 - Package: `@nyc-tron/windows-fluent-fabric`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -176,7 +176,7 @@ import { WindowsNavigationHost } from "@nyc-tron/windows-fluent-fabric/navigatio
 
 - Id: `@nyc-tron/windows-fluent-fabric/navigation-host#WindowsNavigationHost`
 - Package: `@nyc-tron/windows-fluent-fabric`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -216,7 +216,7 @@ import { WindowsContextMenu } from "@nyc-tron/windows-fluent-fabric/overlays";
 
 - Id: `@nyc-tron/windows-fluent-fabric/overlays#WindowsContextMenu`
 - Package: `@nyc-tron/windows-fluent-fabric`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -264,7 +264,7 @@ import { WindowsInspector } from "@nyc-tron/windows-fluent-fabric/overlays";
 
 - Id: `@nyc-tron/windows-fluent-fabric/overlays#WindowsInspector`
 - Package: `@nyc-tron/windows-fluent-fabric`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -317,7 +317,7 @@ import { WindowsMenuButton } from "@nyc-tron/windows-fluent-fabric/overlays";
 
 - Id: `@nyc-tron/windows-fluent-fabric/overlays#WindowsMenuButton`
 - Package: `@nyc-tron/windows-fluent-fabric`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -365,7 +365,7 @@ import { WindowsPopover } from "@nyc-tron/windows-fluent-fabric/overlays";
 
 - Id: `@nyc-tron/windows-fluent-fabric/overlays#WindowsPopover`
 - Package: `@nyc-tron/windows-fluent-fabric`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -418,7 +418,7 @@ import { WindowsTooltip } from "@nyc-tron/windows-fluent-fabric/overlays";
 
 - Id: `@nyc-tron/windows-fluent-fabric/overlays#WindowsTooltip`
 - Package: `@nyc-tron/windows-fluent-fabric`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:

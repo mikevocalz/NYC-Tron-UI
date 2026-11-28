@@ -12,7 +12,7 @@ import { ContextMenu } from "@nyc-tron/expo-controls/ContextMenu";
 
 - Id: `@nyc-tron/expo-controls/ContextMenu#ContextMenu`
 - Package: `@nyc-tron/expo-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -57,7 +57,7 @@ import { FindReplacePopover } from "@nyc-tron/expo-controls/FindReplacePopover";
 
 - Id: `@nyc-tron/expo-controls/FindReplacePopover#FindReplacePopover`
 - Package: `@nyc-tron/expo-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/ui/components/shell/FindReplacePopover#FindReplacePopover`
 
@@ -114,7 +114,7 @@ import { NativeActionMenu } from "@nyc-tron/expo-controls/NativeActionMenu";
 
 - Id: `@nyc-tron/expo-controls/NativeActionMenu#NativeActionMenu`
 - Package: `@nyc-tron/expo-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -161,7 +161,7 @@ import { NativeDropdown } from "@nyc-tron/expo-controls/NativeDropdown";
 
 - Id: `@nyc-tron/expo-controls/NativeDropdown#NativeDropdown`
 - Package: `@nyc-tron/expo-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/expo-controls#NativeDropdown` (package root barrel; use the subpath import above)
 
@@ -212,7 +212,7 @@ import { NativePopover } from "@nyc-tron/expo-controls/NativePopover";
 
 - Id: `@nyc-tron/expo-controls/NativePopover#NativePopover`
 - Package: `@nyc-tron/expo-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -263,7 +263,7 @@ import { NativeSliderField } from "@nyc-tron/expo-controls/NativeSliderField";
 
 - Id: `@nyc-tron/expo-controls/NativeSliderField#NativeSliderField`
 - Package: `@nyc-tron/expo-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -315,7 +315,7 @@ import { NativeSplitButton } from "@nyc-tron/expo-controls/NativeSplitButton";
 
 - Id: `@nyc-tron/expo-controls/NativeSplitButton#NativeSplitButton`
 - Package: `@nyc-tron/expo-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -361,7 +361,7 @@ import { Select } from "@nyc-tron/expo-controls/Select";
 
 - Id: `@nyc-tron/expo-controls/Select#Select`
 - Package: `@nyc-tron/expo-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/ui/components/Select#Select`
 
@@ -414,7 +414,7 @@ import { Tooltip } from "@nyc-tron/expo-controls/Tooltip";
 
 - Id: `@nyc-tron/expo-controls/Tooltip#Tooltip`
 - Package: `@nyc-tron/expo-controls`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:

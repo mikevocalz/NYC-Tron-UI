@@ -267,7 +267,7 @@ function guidesText(registry) {
 }
 
 const SUMMARY = registry => 'Independent, themeable UI library for React Native 0.88 and Expo SDK 58 (iOS, Android and web, plus isolated Windows and macOS adapters). ' +
-  registry.summary.componentCount + ' public component exports in ' + registry.groups.length + ' groups, each imported from its own package subpath. The consuming app owns theme tokens and state. Packages ship as GitHub Release tarballs, not npm. Stability labels are proposals awaiting owner confirmation; platform statuses are recorded measurements, not device sign-off.';
+  registry.summary.componentCount + ' public component exports in ' + registry.groups.length + ' groups, each imported from its own package subpath. The consuming app owns theme tokens and state. Packages ship as GitHub Release tarballs, not npm. ' + (registry.ownerConfirmation === 'confirmed' ? 'Stability labels follow the owner-confirmed manifest' : 'Stability labels are proposals awaiting owner confirmation') + '; platform statuses are recorded measurements, not device sign-off.';
 
 const RULES = [
   'Rules for agents writing app code with this library:',

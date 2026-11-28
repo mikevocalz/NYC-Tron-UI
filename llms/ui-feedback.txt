@@ -12,7 +12,7 @@ import { Badge } from "@nyc-tron/ui/components/feedback/Badge";
 
 - Id: `@nyc-tron/ui/components/feedback/Badge#Badge`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -53,7 +53,7 @@ import { Banner } from "@nyc-tron/ui/components/feedback/Banner";
 
 - Id: `@nyc-tron/ui/components/feedback/Banner#Banner`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -102,7 +102,7 @@ import { EmptyState } from "@nyc-tron/ui/components/feedback/EmptyState";
 
 - Id: `@nyc-tron/ui/components/feedback/EmptyState#EmptyState`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -150,7 +150,7 @@ import { ErrorMessage } from "@nyc-tron/ui/components/feedback/ErrorMessage";
 
 - Id: `@nyc-tron/ui/components/feedback/ErrorMessage#ErrorMessage`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -191,7 +191,7 @@ import { ProgressBar } from "@nyc-tron/ui/components/feedback/ProgressBar";
 
 - Id: `@nyc-tron/ui/components/feedback/ProgressBar#ProgressBar`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -245,7 +245,7 @@ import { Spinner } from "@nyc-tron/ui/components/feedback/Spinner";
 
 - Id: `@nyc-tron/ui/components/feedback/Spinner#Spinner`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -289,7 +289,7 @@ import { Toast } from "@nyc-tron/ui/components/feedback/Toast";
 
 - Id: `@nyc-tron/ui/components/feedback/Toast#Toast`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -339,7 +339,7 @@ import { ToastProvider } from "@nyc-tron/ui/components/feedback/Toast";
 
 - Id: `@nyc-tron/ui/components/feedback/Toast#ToastProvider`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -383,7 +383,7 @@ import { ToastViewport } from "@nyc-tron/ui/components/feedback/Toast";
 
 - Id: `@nyc-tron/ui/components/feedback/Toast#ToastViewport`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:

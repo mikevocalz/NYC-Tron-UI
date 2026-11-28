@@ -12,7 +12,7 @@ import { Button } from "@nyc-tron/ui/components/Button";
 
 - Id: `@nyc-tron/ui/components/Button#Button`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed stable; owner confirmation pending, no label approved
+- Stability: stable (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 - Also exported as: `@nyc-tron/ui#Button` (package root barrel; use the subpath import above)
 
@@ -56,7 +56,7 @@ import { Card } from "@nyc-tron/ui/components/Card";
 
 - Id: `@nyc-tron/ui/components/Card#Card`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed stable; owner confirmation pending, no label approved
+- Stability: stable (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 - Also exported as: `@nyc-tron/ui#Card` (package root barrel; use the subpath import above)
 
@@ -91,7 +91,7 @@ import { DragGrabHandle } from "@nyc-tron/ui/components/DragGrabHandle";
 
 - Id: `@nyc-tron/ui/components/DragGrabHandle#DragGrabHandle`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -141,7 +141,7 @@ import { FieldGroup } from "@nyc-tron/ui/components/FieldGroup";
 
 - Id: `@nyc-tron/ui/components/FieldGroup#FieldGroup`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -180,7 +180,7 @@ import { FieldSection } from "@nyc-tron/ui/components/FieldGroup";
 
 - Id: `@nyc-tron/ui/components/FieldGroup#FieldSection`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -225,7 +225,7 @@ import { IconButton } from "@nyc-tron/ui/components/IconButton";
 
 - Id: `@nyc-tron/ui/components/IconButton#IconButton`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -276,7 +276,7 @@ import { List } from "@nyc-tron/ui/components/List";
 
 - Id: `@nyc-tron/ui/components/List#List`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -316,7 +316,7 @@ import { ListItem } from "@nyc-tron/ui/components/List";
 
 - Id: `@nyc-tron/ui/components/List#ListItem`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -364,7 +364,7 @@ import { NavigationRail } from "@nyc-tron/ui/components/NavigationRail";
 
 - Id: `@nyc-tron/ui/components/NavigationRail#NavigationRail`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed stable; owner confirmation pending, no label approved
+- Stability: stable (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 - Also exported as: `@nyc-tron/ui#NavigationRail` (package root barrel; use the subpath import above)
 
@@ -411,7 +411,7 @@ import { NavigationShell } from "@nyc-tron/ui/components/NavigationRail";
 
 - Id: `@nyc-tron/ui/components/NavigationRail#NavigationShell`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed stable; owner confirmation pending, no label approved
+- Stability: stable (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 - Also exported as: `@nyc-tron/ui#NavigationShell` (package root barrel; use the subpath import above)
 
@@ -453,7 +453,7 @@ import { SegmentedControl } from "@nyc-tron/ui/components/SegmentedControl";
 
 - Id: `@nyc-tron/ui/components/SegmentedControl#SegmentedControl`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -503,7 +503,7 @@ import { Select } from "@nyc-tron/ui/components/Select";
 
 - Id: `@nyc-tron/ui/components/Select#Select`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 - Also exported as: `@nyc-tron/expo-controls/Select#Select`
 
@@ -557,7 +557,7 @@ import { TabBar } from "@nyc-tron/ui/components/TabBar";
 
 - Id: `@nyc-tron/ui/components/TabBar#TabBar`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -601,7 +601,7 @@ import { TextField } from "@nyc-tron/ui/components/TextField";
 
 - Id: `@nyc-tron/ui/components/TextField#TextField`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed stable; owner confirmation pending, no label approved
+- Stability: stable (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 - Also exported as: `@nyc-tron/ui#TextField` (package root barrel; use the subpath import above)
 
@@ -646,7 +646,7 @@ import { Toolbar } from "@nyc-tron/ui/components/Toolbar";
 
 - Id: `@nyc-tron/ui/components/Toolbar#Toolbar`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -691,7 +691,7 @@ import { Article } from "@nyc-tron/ui/components/html";
 
 - Id: `@nyc-tron/ui/components/html#Article`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -740,7 +740,7 @@ import { Aside } from "@nyc-tron/ui/components/html";
 
 - Id: `@nyc-tron/ui/components/html#Aside`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -789,7 +789,7 @@ import { Footer } from "@nyc-tron/ui/components/html";
 
 - Id: `@nyc-tron/ui/components/html#Footer`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -838,7 +838,7 @@ import { Header } from "@nyc-tron/ui/components/html";
 
 - Id: `@nyc-tron/ui/components/html#Header`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -887,7 +887,7 @@ import { Heading } from "@nyc-tron/ui/components/html";
 
 - Id: `@nyc-tron/ui/components/html#Heading`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -939,7 +939,7 @@ import { Input } from "@nyc-tron/ui/components/html";
 
 - Id: `@nyc-tron/ui/components/html#Input`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -979,7 +979,7 @@ import { Link } from "@nyc-tron/ui/components/html";
 
 - Id: `@nyc-tron/ui/components/html#Link`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1034,7 +1034,7 @@ import { Main } from "@nyc-tron/ui/components/html";
 
 - Id: `@nyc-tron/ui/components/html#Main`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1083,7 +1083,7 @@ import { Nav } from "@nyc-tron/ui/components/html";
 
 - Id: `@nyc-tron/ui/components/html#Nav`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1132,7 +1132,7 @@ import { Page } from "@nyc-tron/ui/components/html";
 
 - Id: `@nyc-tron/ui/components/html#Page`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1181,7 +1181,7 @@ import { Paragraph } from "@nyc-tron/ui/components/html";
 
 - Id: `@nyc-tron/ui/components/html#Paragraph`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1232,7 +1232,7 @@ import { Section } from "@nyc-tron/ui/components/html";
 
 - Id: `@nyc-tron/ui/components/html#Section`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -1281,7 +1281,7 @@ import { Text } from "@nyc-tron/ui/components/html";
 
 - Id: `@nyc-tron/ui/components/html#Text`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:

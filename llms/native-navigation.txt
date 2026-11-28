@@ -12,7 +12,7 @@ import { NativeNavigationRail } from "@nyc-tron/native-navigation/NativeNavigati
 
 - Id: `@nyc-tron/native-navigation/NativeNavigationRail#NativeNavigationRail`
 - Package: `@nyc-tron/native-navigation`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:

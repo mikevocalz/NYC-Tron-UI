@@ -12,7 +12,7 @@ import { AdaptiveColumn } from "@nyc-tron/ui/components/layout/AdaptiveColumns";
 
 - Id: `@nyc-tron/ui/components/layout/AdaptiveColumns#AdaptiveColumn`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -50,7 +50,7 @@ import { AdaptiveColumns } from "@nyc-tron/ui/components/layout/AdaptiveColumns"
 
 - Id: `@nyc-tron/ui/components/layout/AdaptiveColumns#AdaptiveColumns`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -87,7 +87,7 @@ import { ContentFrame } from "@nyc-tron/ui/components/layout/ContentFrame";
 
 - Id: `@nyc-tron/ui/components/layout/ContentFrame#ContentFrame`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: supported (recorded measurement): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:

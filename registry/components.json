@@ -14,11 +14,11 @@
   "inputs": [
     {
       "path": "docs/library/components.json",
-      "sha256": "bd75e0db187051f67b5740c958c25a2ebeedf3d1704d90f65efa948cda9456ce"
+      "sha256": "1accc73af8cc3f79800683b0882167cd0104224ec4df99f4d90366a8c9d5b09c"
     }
   ],
-  "ownerConfirmation": "pending",
-  "status": "proposed inventory; not a release approval",
+  "ownerConfirmation": "confirmed",
+  "status": "owner-confirmed component inventory; runtime release evidence is separate",
   "platformPolicy": {
     "tier1": {
       "platforms": [
@@ -79,7 +79,7 @@
           "title": "Start with your app",
           "paragraphs": [
             "NYC-Tron is an independent UI library for React Native and Expo. It ships general app components. Import only the pieces you need. Editor controls such as faders, timelines and color pickers live in Nitro Forge’s @nitro-forge/editor-controls, which builds on Tron.",
-            "The current release is v1.0.0-rc.2. The new stable/preview list is a proposal awaiting owner confirmation. A passing install or source check does not certify every component on every platform."
+            "The current release is v1.0.0-rc.2. The stable/preview list follows the confirmed manifest. A passing install or source check does not certify every component on every platform."
           ],
           "links": [
             {
@@ -285,7 +285,7 @@
           "title": "Stable components",
           "paragraphs": [
             "A confirmed stable API is covered by Semantic Versioning: compatible fixes are patches; compatible additions are minors; removals, renames, incompatible types or behavior require a major. Broader support claims require their own evidence.",
-            "Stable labels are not yet confirmed in the current proposed manifest. A label alone cannot satisfy release evidence."
+            "Stable labels follow the owner-confirmed manifest. A label alone cannot satisfy release evidence."
           ],
           "links": []
         },
@@ -821,9 +821,9 @@
       "group": "expo-controls",
       "docs": "llms/expo-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -940,9 +940,9 @@
       "group": "expo-controls",
       "docs": "llms/expo-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -1035,9 +1035,9 @@
       "group": "expo-controls",
       "docs": "llms/expo-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -1172,9 +1172,9 @@
       "group": "expo-controls",
       "docs": "llms/expo-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -1273,9 +1273,9 @@
       "group": "expo-controls",
       "docs": "llms/expo-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -1392,9 +1392,9 @@
       "group": "expo-controls",
       "docs": "llms/expo-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -1514,9 +1514,9 @@
       "group": "expo-controls",
       "docs": "llms/expo-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -1632,9 +1632,9 @@
       "group": "expo-controls",
       "docs": "llms/expo-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -1732,9 +1732,9 @@
       "group": "expo-controls",
       "docs": "llms/expo-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -1860,9 +1860,9 @@
       "group": "expo-controls",
       "docs": "llms/expo-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -1952,9 +1952,9 @@
       "group": "icons",
       "docs": "llms/icons.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -2104,9 +2104,9 @@
       "group": "icons",
       "docs": "llms/icons.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -2267,9 +2267,9 @@
       "group": "icons",
       "docs": "llms/icons.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -2419,9 +2419,9 @@
       "group": "icons",
       "docs": "llms/icons.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -2582,9 +2582,9 @@
       "group": "icons",
       "docs": "llms/icons.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -2734,9 +2734,9 @@
       "group": "icons",
       "docs": "llms/icons.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -2897,9 +2897,9 @@
       "group": "icons",
       "docs": "llms/icons.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -3049,9 +3049,9 @@
       "group": "icons",
       "docs": "llms/icons.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -3208,9 +3208,9 @@
       "group": "macos-appkit",
       "docs": "llms/macos-appkit.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -3325,9 +3325,9 @@
       "group": "macos-appkit",
       "docs": "llms/macos-appkit.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -3387,9 +3387,9 @@
       "group": "macos-appkit",
       "docs": "llms/macos-appkit.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -3493,9 +3493,9 @@
       "group": "macos-appkit",
       "docs": "llms/macos-appkit.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -3610,9 +3610,9 @@
       "group": "macos-appkit",
       "docs": "llms/macos-appkit.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -3671,9 +3671,9 @@
       "group": "macos-appkit",
       "docs": "llms/macos-appkit.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -3733,9 +3733,9 @@
       "group": "macos-appkit",
       "docs": "llms/macos-appkit.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -3807,9 +3807,9 @@
       "group": "macos-appkit",
       "docs": "llms/macos-appkit.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -3889,9 +3889,9 @@
       "group": "macos-appkit",
       "docs": "llms/macos-appkit.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -4026,9 +4026,9 @@
       "group": "macos-appkit",
       "docs": "llms/macos-appkit.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -4092,9 +4092,9 @@
       "group": "macos-appkit",
       "docs": "llms/macos-appkit.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -4165,9 +4165,9 @@
       "group": "native-charts",
       "docs": "llms/native-charts.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -4259,9 +4259,9 @@
       "group": "native-charts",
       "docs": "llms/native-charts.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -4353,9 +4353,9 @@
       "group": "native-controls",
       "docs": "llms/native-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -4473,9 +4473,9 @@
       "group": "native-controls",
       "docs": "llms/native-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -4542,9 +4542,9 @@
       "group": "native-controls",
       "docs": "llms/native-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -4651,9 +4651,9 @@
       "group": "native-controls",
       "docs": "llms/native-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -4771,9 +4771,9 @@
       "group": "native-controls",
       "docs": "llms/native-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -4838,9 +4838,9 @@
       "group": "native-controls",
       "docs": "llms/native-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -4921,9 +4921,9 @@
       "group": "native-controls",
       "docs": "llms/native-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -5040,9 +5040,9 @@
       "group": "native-controls",
       "docs": "llms/native-controls.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -5147,9 +5147,9 @@
       "group": "native-navigation",
       "docs": "llms/native-navigation.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -5262,9 +5262,9 @@
       "group": "panes",
       "docs": "llms/panes.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -5432,9 +5432,9 @@
       "group": "panes",
       "docs": "llms/panes.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -5600,9 +5600,9 @@
       "group": "panes",
       "docs": "llms/panes.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -5784,9 +5784,9 @@
       "group": "reserved-regions",
       "docs": "llms/reserved-regions.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -5853,9 +5853,9 @@
       "group": "reserved-regions",
       "docs": "llms/reserved-regions.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -5922,9 +5922,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "stable",
         "proposed": "stable",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required."
       },
       "platforms": {
@@ -6056,9 +6056,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "stable",
         "proposed": "stable",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required."
       },
       "platforms": {
@@ -6147,9 +6147,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "stable",
         "proposed": "stable",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required."
       },
       "platforms": {
@@ -6265,9 +6265,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "stable",
         "proposed": "stable",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required."
       },
       "platforms": {
@@ -6362,9 +6362,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "stable",
         "proposed": "stable",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required."
       },
       "platforms": {
@@ -6482,9 +6482,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "stable",
         "proposed": "stable",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required."
       },
       "platforms": {
@@ -6616,9 +6616,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "stable",
         "proposed": "stable",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required."
       },
       "platforms": {
@@ -6705,9 +6705,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -6824,9 +6824,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -6900,9 +6900,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -7006,9 +7006,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -7136,9 +7136,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -7222,9 +7222,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -7350,9 +7350,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "stable",
         "proposed": "stable",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required."
       },
       "platforms": {
@@ -7468,9 +7468,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "stable",
         "proposed": "stable",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required."
       },
       "platforms": {
@@ -7563,9 +7563,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -7692,9 +7692,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -7823,9 +7823,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -7931,9 +7931,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "stable",
         "proposed": "stable",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Existing root UI contract proposed as the initial stable target; all individual T3 evidence and owner confirmation are still required."
       },
       "platforms": {
@@ -8049,9 +8049,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -8155,9 +8155,9 @@
       "group": "ui-content",
       "docs": "llms/ui-content.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -8265,9 +8265,9 @@
       "group": "ui-data",
       "docs": "llms/ui-data.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -8431,9 +8431,9 @@
       "group": "ui-data",
       "docs": "llms/ui-data.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -8586,9 +8586,9 @@
       "group": "ui-feedback",
       "docs": "llms/ui-feedback.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -8680,9 +8680,9 @@
       "group": "ui-feedback",
       "docs": "llms/ui-feedback.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -8805,9 +8805,9 @@
       "group": "ui-feedback",
       "docs": "llms/ui-feedback.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -8930,9 +8930,9 @@
       "group": "ui-feedback",
       "docs": "llms/ui-feedback.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -9020,9 +9020,9 @@
       "group": "ui-feedback",
       "docs": "llms/ui-feedback.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -9177,9 +9177,9 @@
       "group": "ui-feedback",
       "docs": "llms/ui-feedback.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -9280,9 +9280,9 @@
       "group": "ui-feedback",
       "docs": "llms/ui-feedback.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -9413,9 +9413,9 @@
       "group": "ui-feedback",
       "docs": "llms/ui-feedback.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -9520,9 +9520,9 @@
       "group": "ui-feedback",
       "docs": "llms/ui-feedback.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -9617,9 +9617,9 @@
       "group": "ui-files",
       "docs": "llms/ui-files.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -9762,9 +9762,9 @@
       "group": "ui-files",
       "docs": "llms/ui-files.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -9906,9 +9906,9 @@
       "group": "ui-files",
       "docs": "llms/ui-files.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -10032,9 +10032,9 @@
       "group": "ui-forms",
       "docs": "llms/ui-forms.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -10185,9 +10185,9 @@
       "group": "ui-forms",
       "docs": "llms/ui-forms.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -10329,9 +10329,9 @@
       "group": "ui-forms",
       "docs": "llms/ui-forms.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -10426,9 +10426,9 @@
       "group": "ui-forms",
       "docs": "llms/ui-forms.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -10533,9 +10533,9 @@
       "group": "ui-forms",
       "docs": "llms/ui-forms.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -10657,9 +10657,9 @@
       "group": "ui-forms",
       "docs": "llms/ui-forms.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -10780,9 +10780,9 @@
       "group": "ui-forms",
       "docs": "llms/ui-forms.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -10904,9 +10904,9 @@
       "group": "ui-forms",
       "docs": "llms/ui-forms.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -10992,9 +10992,9 @@
       "group": "ui-forms",
       "docs": "llms/ui-forms.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -11131,9 +11131,9 @@
       "group": "ui-forms",
       "docs": "llms/ui-forms.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -11291,9 +11291,9 @@
       "group": "ui-gestures",
       "docs": "llms/ui-gestures.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -11380,9 +11380,9 @@
       "group": "ui-gestures",
       "docs": "llms/ui-gestures.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -11469,9 +11469,9 @@
       "group": "ui-gestures",
       "docs": "llms/ui-gestures.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -11532,9 +11532,9 @@
       "group": "ui-gestures",
       "docs": "llms/ui-gestures.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -11595,9 +11595,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -11725,9 +11725,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -11855,9 +11855,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -11985,9 +11985,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -12115,9 +12115,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -12260,9 +12260,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -12347,9 +12347,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -12507,9 +12507,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -12637,9 +12637,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -12767,9 +12767,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -12897,9 +12897,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -13037,9 +13037,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -13167,9 +13167,9 @@
       "group": "ui-components",
       "docs": "llms/ui-components.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -13307,9 +13307,9 @@
       "group": "ui-layout",
       "docs": "llms/ui-layout.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -13386,9 +13386,9 @@
       "group": "ui-layout",
       "docs": "llms/ui-layout.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -13460,9 +13460,9 @@
       "group": "ui-layout",
       "docs": "llms/ui-layout.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -13539,9 +13539,9 @@
       "group": "ui-navigation",
       "docs": "llms/ui-navigation.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -13689,9 +13689,9 @@
       "group": "ui-overlays",
       "docs": "llms/ui-overlays.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -13872,9 +13872,9 @@
       "group": "ui-overlays",
       "docs": "llms/ui-overlays.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -13992,9 +13992,9 @@
       "group": "ui-overlays",
       "docs": "llms/ui-overlays.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -14132,9 +14132,9 @@
       "group": "ui-overlays",
       "docs": "llms/ui-overlays.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -14282,9 +14282,9 @@
       "group": "ui-overlays",
       "docs": "llms/ui-overlays.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -14475,9 +14475,9 @@
       "group": "ui-overlays",
       "docs": "llms/ui-overlays.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -14542,9 +14542,9 @@
       "group": "ui-overlays",
       "docs": "llms/ui-overlays.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -14629,9 +14629,9 @@
       "group": "ui-overlays",
       "docs": "llms/ui-overlays.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -14696,9 +14696,9 @@
       "group": "ui-overlays",
       "docs": "llms/ui-overlays.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -14839,9 +14839,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -14979,9 +14979,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -15129,9 +15129,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -15241,9 +15241,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -15357,9 +15357,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -15483,9 +15483,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -15585,9 +15585,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -15724,9 +15724,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -15793,9 +15793,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -15903,9 +15903,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -16013,9 +16013,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -16123,9 +16123,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -16238,9 +16238,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -16358,9 +16358,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -16483,9 +16483,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -16649,9 +16649,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -16830,9 +16830,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -16994,9 +16994,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -17129,9 +17129,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -17244,9 +17244,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -17405,9 +17405,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -17536,9 +17536,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -17702,9 +17702,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -17858,9 +17858,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -17984,9 +17984,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -18104,9 +18104,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -18214,9 +18214,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -18345,9 +18345,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -18485,9 +18485,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -18660,9 +18660,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -18805,9 +18805,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -18868,9 +18868,9 @@
       "group": "ui-shell",
       "docs": "llms/ui-shell.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -18931,9 +18931,9 @@
       "group": "ui-theme",
       "docs": "llms/ui-theme.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -19000,9 +19000,9 @@
       "group": "ui-theme",
       "docs": "llms/ui-theme.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -19072,9 +19072,9 @@
       "group": "ui-window",
       "docs": "llms/ui-window.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -19210,9 +19210,9 @@
       "group": "windows-fluent-fabric",
       "docs": "llms/windows-fluent-fabric.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -19332,9 +19332,9 @@
       "group": "windows-fluent-fabric",
       "docs": "llms/windows-fluent-fabric.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -19434,9 +19434,9 @@
       "group": "windows-fluent-fabric",
       "docs": "llms/windows-fluent-fabric.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -19531,9 +19531,9 @@
       "group": "windows-fluent-fabric",
       "docs": "llms/windows-fluent-fabric.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -19603,9 +19603,9 @@
       "group": "windows-fluent-fabric",
       "docs": "llms/windows-fluent-fabric.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -19711,9 +19711,9 @@
       "group": "windows-fluent-fabric",
       "docs": "llms/windows-fluent-fabric.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -19843,9 +19843,9 @@
       "group": "windows-fluent-fabric",
       "docs": "llms/windows-fluent-fabric.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -19951,9 +19951,9 @@
       "group": "windows-fluent-fabric",
       "docs": "llms/windows-fluent-fabric.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {
@@ -20083,9 +20083,9 @@
       "group": "windows-fluent-fabric",
       "docs": "llms/windows-fluent-fabric.txt",
       "stability": {
-        "label": null,
+        "label": "preview",
         "proposed": "preview",
-        "ownerConfirmation": "pending",
+        "ownerConfirmation": "confirmed",
         "reason": "Shipped public component proposed as preview until its individual library evidence packet and owner-confirmed semver promise are complete."
       },
       "platforms": {

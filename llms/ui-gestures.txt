@@ -12,7 +12,7 @@ import { GestureHandlerDrag } from "@nyc-tron/ui/components/gestures/GestureHand
 
 - Id: `@nyc-tron/ui/components/gestures/GestureHandlerDrag#GestureHandlerDrag`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: struck (the lane measurement failed it): macos, windows; not verified: ios, android, web, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -56,7 +56,7 @@ import { PanResponderDrag } from "@nyc-tron/ui/components/gestures/PanResponderD
 
 - Id: `@nyc-tron/ui/components/gestures/PanResponderDrag#PanResponderDrag`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico (desktop measurements: docs/desktop-support.json)
 
 Props:
@@ -100,7 +100,7 @@ import { CanvasGestureRelations } from "@nyc-tron/ui/components/gestures/canvas-
 
 - Id: `@nyc-tron/ui/components/gestures/canvas-gesture-relations#CanvasGestureRelations`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:
@@ -136,7 +136,7 @@ import { EditorInteractionScope } from "@nyc-tron/ui/components/gestures/editor-
 
 - Id: `@nyc-tron/ui/components/gestures/editor-interaction-scope#EditorInteractionScope`
 - Package: `@nyc-tron/ui`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:

@@ -12,7 +12,7 @@ import { NativeChart } from "@nyc-tron/native-charts/NativeChart";
 
 - Id: `@nyc-tron/native-charts/NativeChart#NativeChart`
 - Package: `@nyc-tron/native-charts`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/native-charts#NativeChart` (package root barrel; use the subpath import above)
 

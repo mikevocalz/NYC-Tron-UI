@@ -12,7 +12,7 @@ import { AdaptivePaneHost } from "@nyc-tron/panes/AdaptivePaneHost";
 
 - Id: `@nyc-tron/panes/AdaptivePaneHost#AdaptivePaneHost`
 - Package: `@nyc-tron/panes`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/panes#AdaptivePaneHost` (package root barrel; use the subpath import above)
 
@@ -73,7 +73,7 @@ import { SafeAreaFoldableLayout } from "@nyc-tron/panes/SafeAreaFoldableLayout";
 
 - Id: `@nyc-tron/panes/SafeAreaFoldableLayout#SafeAreaFoldableLayout`
 - Package: `@nyc-tron/panes`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 
 Props:

@@ -25,7 +25,8 @@ The [documentation app](website/README.md) builds a page for every exported
 component, with generated props, examples, accessibility notes and platform
 records. Run it locally with `npm --prefix website ci --ignore-scripts`,
 `npm --prefix website run build`, then `npm --prefix website start`. Its
-stability labels remain proposals awaiting owner confirmation.
+stability labels follow the owner-confirmed manifest: Button, Card, TextField,
+NavigationRail and NavigationShell are stable; every other export is preview.
 
 ## For AI agents
 

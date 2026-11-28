@@ -14,9 +14,18 @@ Nothing yet.
 Prepared for review; no tag or release has been created. All sixteen release
 archives carry version `1.0.0`, following the published `1.0.0-rc.2` directly
 (rc.3 was prepared but never published). Publication needs the owner's
-stable/preview confirmation and distribution approval; the
+distribution approval; the
 [1.0.0 checklist](docs/completion/reports/V1-RELEASE-CHECKLIST.md) lists every
 remaining step.
+
+### Stability labels confirmed
+
+- The owner confirmed the 1.0.0 stable set: `Button`, `Card`, `TextField`,
+  `NavigationRail` and `NavigationShell`, from both the `@nyc-tron/ui` root and
+  their `components/...` subpaths (ten exports). Stable is a Semantic
+  Versioning promise for those APIs. The other 154 public component exports
+  ship as preview. The record is
+  [`docs/library/stability-review.json`](docs/library/stability-review.json).
 
 ### Added: first-tier basics on Expo UI (#90)
 

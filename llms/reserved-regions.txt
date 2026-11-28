@@ -12,7 +12,7 @@ import { ReservedRegionsOverride } from "@nyc-tron/reserved-regions/ReservedRegi
 
 - Id: `@nyc-tron/reserved-regions/ReservedRegionsOverride#ReservedRegionsOverride`
 - Package: `@nyc-tron/reserved-regions`; category: general components
-- Stability: proposed preview; owner confirmation pending, no label approved
+- Stability: preview (owner-confirmed)
 - Platforms: not verified: ios, android, web, macos, windows, visionos, quest, pico
 - Also exported as: `@nyc-tron/reserved-regions#ReservedRegionsOverride` (package root barrel; use the subpath import above)
 
