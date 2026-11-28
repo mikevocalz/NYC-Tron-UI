@@ -1,6 +1,6 @@
 # NYC-Tron UI
 
-> Themeable React Native and Expo component library (1.0.0-rc.2, release candidate, not on npm). 565 documentation pages: 64 hand-reviewed, 501 generated from type declarations. The app owns the theme: components read 13 colour variables and 2 radius variables.
+> Themeable React Native and Expo component library (1.0.0-rc.2, release candidate, not on npm). 568 documentation pages: 64 hand-reviewed, 504 generated from type declarations. The app owns the theme: components read 13 colour variables and 2 radius variables.
 
 Each page is raw markdown at `https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/<id>.md`, where `<id>` is the registry item id (the path under `components/`, for example `shell/UnitInput`). Every page has the same eight sections: Purpose, Install, Props, Variants, States, A11y, Example, Do/Don't. Pages marked `docs: "generated"` in their front matter were produced from `docs/api-signatures.json` and the source, not written by a person.
 
@@ -94,7 +94,7 @@ Stack, Row, Spacer, Divider and Text exist under `packages/ui/src/components/lay
 - [Night Scope](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/theme/NightScope.md): Wrapper that applies a named Uniwind theme scheme to its subtree, for React Native and web. a11y reviewed-pass.
 - [Window Title Bar](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/window/WindowTitleBar.md): Custom window title bar with macOS or Windows close, minimize and zoom controls and an edited marker, for React Native. a11y reviewed-fail.
 
-## Components, generated (501, one line per group)
+## Components, generated (504, one line per group)
 These pages are generated. Each group line names how many pages it holds and links to one of them; replace the file name to read another.
 - [components](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/html.md): 1 pages (0 components, 1 modules), UI. For example Html.
 - [core](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/core/folds.md): 4 pages (0 components, 4 modules), @nyc-tron/core support modules the registry copies next to ui items. For example Folds, Overlays, WindowChrome.
@@ -130,13 +130,13 @@ These pages are generated. Each group line names how many pages it holds and lin
 - [navigation](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/navigation/drawer-model.md): 1 pages (0 components, 1 modules), navigation. For example DrawerModel.
 - [overlays](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/overlays/anchored-popover-types.md): 7 pages (0 components, 7 modules), overlay. For example AnchoredPopoverTypes, CommandFilter, FocusCycle.
 - [root](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/root.md): 1 pages (0 components, 1 modules), root barrel. For example UiRoot.
-- [shell](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/shell/NumericScrubField.md): 25 pages (0 components, 25 modules), app shell. For example NumericScrubField, A11yAudit, A11yModel.
+- [shell](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/docs/components/shell/NumericScrubField.md): 28 pages (0 components, 28 modules), app shell. For example NumericScrubField, PrecisionScrubber, A11yAudit.
 
 ## Limits stated plainly
 - **Native-only packages are not installable by shadcn.** 55 subpaths in 9 packages ship native code (hardware-keys 2, macos-appkit 17, native-charts 3, native-controls 7, native-navigation 3, platform-services 7, reserved-regions 3, windows-fluent 3, windows-fluent-fabric 10). A registry add copies files and cannot run pod install, gradle, CMake, nitrogen or a WinUI build. Install them from the release tarball. List: [registry-excluded.json](https://raw.githubusercontent.com/mikevocalz/NYC-Tron-UI/main/registry-excluded.json).
 - **Engine facades are not registry items.** cadence, folio, pitch, prism, quill, splice, tally and studio-layout need the Rust engine, which ships as a GitHub release tarball.
 - **Registry install is unverified until the live check.** The CLI's acceptance of raw.githubusercontent.com content types was checked against a local server only. Registry URLs use ref `main`, a moving ref, until the owner cuts a release tag. They resolve only after this branch is merged to main. Before that, test against a local server. Until a clean app installs from the live URL, use the tarball path.
-- **Accessibility statuses come from reading source, not from rendering.** Of the 64 hand-reviewed items: 23 reviewed-pass, 21 reviewed-fail, 20 unverified. Nothing was rendered and no screen reader was run. `verified` is reserved for a rendered check and no page has it. The 501 generated pages say `declared` when the source sets an accessibility prop and `unverified` when it sets none.
+- **Accessibility statuses come from reading source, not from rendering.** Of the 64 hand-reviewed items: 23 reviewed-pass, 21 reviewed-fail, 20 unverified. Nothing was rendered and no screen reader was run. `verified` is reserved for a rendered check and no page has it. The 504 generated pages say `declared` when the source sets an accessibility prop and `unverified` when it sets none.
 - **Touch targets: 44pt passes Apple, 44dp is 4dp under Android's 48dp guideline.** 41 hand-reviewed items size a control with the literal 44 (finding F08 in docs/agent-native/05-accessibility-review.md). WCAG 2.1 AA has no target-size criterion, so this is a guideline finding, not a conformance failure.
 - **Icons: 47 glyphs are drawn; 42 of 1,463 catalog ids resolve to one; 6 drawn glyphs are not catalog ids.** An unresolved icon name renders nothing. Do not read the catalog size as availability.
 - **No component preview exists.** The components are React Native, and nothing here renders them. Pages carry types, props, tokens and a type-checked example only.

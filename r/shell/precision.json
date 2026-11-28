@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/precision",
+  "title": "precision",
+  "description": "precision, an app shell helper module. Exports advancePrecisionGesture, assertRange, beginPrecisionGesture.",
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/precision"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/precision.ts",
+      "content": "/** Shell alias for the forge input module, so `@nyc-tron/ui/components/shell/precision` resolves on this branch as it does on main. */\nexport * from \"@/components/nyc-tron/ui/components/forge/inputs/precision\";\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/precision.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/precision",
+    "exports": [
+      "Point2D",
+      "PrecisionGesture",
+      "PrecisionGestureConfig",
+      "PrecisionGesturePoint",
+      "PrecisionScrubInput",
+      "RangeConfig",
+      "SCRUB_DETENT_PIXELS",
+      "SCRUB_MODE_THRESHOLD_PX",
+      "ScaleTick",
+      "ScrubMode",
+      "advancePrecisionGesture",
+      "assertRange",
+      "beginPrecisionGesture",
+      "clamp",
+      "formatStepValue",
+      "gestureToAngle",
+      "normalize",
+      "pointFromDrag",
+      "scaleTicks",
+      "scrubModeFromOffset",
+      "scrubPrecision",
+      "scrubValue",
+      "snapTypedPrecision",
+      "snapValue",
+      "stepDecimalPlaces"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

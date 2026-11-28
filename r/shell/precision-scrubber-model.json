@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/precision-scrubber-model",
+  "title": "precision scrubber model",
+  "description": "precision scrubber model, an app shell state model. Exports createScrubberModel, initialScrubberState.",
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/precision-scrubber-model"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/precision-scrubber-model.ts",
+      "content": "/** Shell alias for the forge input module, so `@nyc-tron/ui/components/shell/precision-scrubber-model` resolves on this branch as it does on main. */\nexport * from \"@/components/nyc-tron/ui/components/forge/inputs/precision-scrubber-model\";\n",
+      "type": "registry:lib",
+      "target": "@components/nyc-tron/ui/components/shell/precision-scrubber-model.ts"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/precision-scrubber-model",
+    "exports": [
+      "SCRUB_PIXELS_PER_STEP",
+      "ScrubberInputs",
+      "ScrubberModel",
+      "ScrubberState",
+      "ScrubberStore",
+      "createScrubberModel",
+      "initialScrubberState"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:lib"
+}

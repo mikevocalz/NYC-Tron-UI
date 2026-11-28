@@ -5900,6 +5900,17 @@
   "markdown": "docs/components/shell/PaneSplitter.md"
  },
  {
+  "id": "shell/PrecisionScrubber",
+  "name": "PrecisionScrubberModule",
+  "title": "Precision Scrubber",
+  "description": "Precision Scrubber, an app shell component. Props: labels, value, unit, onPreview.",
+  "category": "shell",
+  "tier": 2,
+  "a11yStatus": "unverified",
+  "platforms": [],
+  "markdown": "docs/components/shell/PrecisionScrubber.md"
+ },
+ {
   "id": "shell/PresetGallery",
   "name": "PresetGallery",
   "title": "Preset Gallery",
@@ -6182,6 +6193,28 @@
   "a11yStatus": "unverified",
   "platforms": [],
   "markdown": "docs/components/shell/keyboard-map.md"
+ },
+ {
+  "id": "shell/precision",
+  "name": "PrecisionModule",
+  "title": "precision",
+  "description": "precision, an app shell helper module. Exports advancePrecisionGesture, assertRange, beginPrecisionGesture.",
+  "category": "shell",
+  "tier": 2,
+  "a11yStatus": "unverified",
+  "platforms": [],
+  "markdown": "docs/components/shell/precision.md"
+ },
+ {
+  "id": "shell/precision-scrubber-model",
+  "name": "PrecisionScrubberModelModule",
+  "title": "precision scrubber model",
+  "description": "precision scrubber model, an app shell state model. Exports createScrubberModel, initialScrubberState.",
+  "category": "shell",
+  "tier": 2,
+  "a11yStatus": "unverified",
+  "platforms": [],
+  "markdown": "docs/components/shell/precision-scrubber-model.md"
  },
  {
   "id": "shell/preset-model",

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "shell/PrecisionScrubber",
+  "title": "Precision Scrubber",
+  "description": "Precision Scrubber, an app shell component. Props: labels, value, unit, onPreview.",
+  "registryDependencies": [
+    "@nyc-tron/forge/inputs/PrecisionScrubber"
+  ],
+  "files": [
+    {
+      "path": "packages/ui/src/components/shell/PrecisionScrubber.tsx",
+      "content": "/** Shell alias for the forge input module, so `@nyc-tron/ui/components/shell/PrecisionScrubber` resolves on this branch as it does on main. */\nexport * from \"@/components/nyc-tron/ui/components/forge/inputs/PrecisionScrubber\";\n",
+      "type": "registry:ui",
+      "target": "@components/nyc-tron/ui/components/shell/PrecisionScrubber.tsx"
+    }
+  ],
+  "meta": {
+    "tier": 2,
+    "docs": "generated",
+    "platforms": [],
+    "a11yStatus": "unverified",
+    "package": "@nyc-tron/ui",
+    "subpath": "@nyc-tron/ui/components/shell/PrecisionScrubber",
+    "exports": [
+      "PrecisionScrubber",
+      "PrecisionScrubberProps"
+    ]
+  },
+  "categories": [
+    "shell"
+  ],
+  "type": "registry:ui"
+}

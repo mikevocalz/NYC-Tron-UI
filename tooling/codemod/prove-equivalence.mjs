@@ -39,6 +39,9 @@ const INFRA = {
   "packages/ui/tests/color-hsv.test.mjs": "source-text assertion now accepts size.touch",
   "packages/ui/tests/shell-inspector.test.mjs": "source-text assertion now accepts size.touch",
   "packages/ui/tests/vertical-fader-config.test.mjs": "import mock gained a tokens.ts entry (space 1=4, 2=8; opacity 50=0.5), the values the rewrite replaced",
+  "packages/ui/src/components/shell/PrecisionScrubber.tsx": "one-line re-export of forge/inputs/PrecisionScrubber for the shell subpath main exports, not codemod output",
+  "packages/ui/src/components/shell/precision.ts": "one-line re-export of forge/inputs/precision for the shell subpath main exports, not codemod output",
+  "packages/ui/src/components/shell/precision-scrubber-model.ts": "one-line re-export of forge/inputs/precision-scrubber-model for the shell subpath main exports, not codemod output",
 };
 
 const git = (...a) => execFileSync("git", a, { cwd: root, encoding: "utf8", maxBuffer: 1 << 28 });

@@ -11,7 +11,7 @@ Read this file first. Read one component page second, never the whole corpus.
 
 ## 1. Find an item
 
-565 documentation pages exist: 64 hand-reviewed (tier 1) and 501 generated from type declarations (tier 2). Each page has the same eight sections: Purpose, Install, Props, Variants, States, A11y, Example, Do/Don't.
+568 documentation pages exist: 64 hand-reviewed (tier 1) and 504 generated from type declarations (tier 2). Each page has the same eight sections: Purpose, Install, Props, Variants, States, A11y, Example, Do/Don't.
 
 | Goal | Command or file |
 |---|---|

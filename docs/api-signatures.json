@@ -17779,6 +17779,24 @@
           }
         }
       ],
+      "./components/shell/PrecisionScrubber": [
+        {
+          "target": "./dist/components/shell/PrecisionScrubber.d.ts",
+          "conditions": {
+            "types": "./dist/components/shell/PrecisionScrubber.d.ts",
+            "react-native": "./dist/components/shell/PrecisionScrubber.js",
+            "default": "./dist/components/shell/PrecisionScrubber.js"
+          },
+          "symbols": {
+            "PrecisionScrubber": [
+              "@nyc-tron/ui/dist/components/forge/inputs/PrecisionScrubber.d.ts#PrecisionScrubber"
+            ],
+            "PrecisionScrubberProps": [
+              "@nyc-tron/ui/dist/components/forge/inputs/PrecisionScrubber.d.ts#PrecisionScrubberProps"
+            ]
+          }
+        }
+      ],
       "./components/shell/PresetGallery": [
         {
           "target": "./dist/components/shell/PresetGallery.d.ts",
@@ -18498,6 +18516,126 @@
             ],
             "toNativeKeyBinding": [
               "@nyc-tron/ui/dist/components/shell/keyboard-map.d.ts#toNativeKeyBinding"
+            ]
+          }
+        }
+      ],
+      "./components/shell/precision": [
+        {
+          "target": "./dist/components/shell/precision.d.ts",
+          "conditions": {
+            "types": "./dist/components/shell/precision.d.ts",
+            "react-native": "./dist/components/shell/precision.js",
+            "default": "./dist/components/shell/precision.js"
+          },
+          "symbols": {
+            "Point2D": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#Point2D"
+            ],
+            "PrecisionGesture": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#PrecisionGesture"
+            ],
+            "PrecisionGestureConfig": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#PrecisionGestureConfig"
+            ],
+            "PrecisionGesturePoint": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#PrecisionGesturePoint"
+            ],
+            "PrecisionScrubInput": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#PrecisionScrubInput"
+            ],
+            "RangeConfig": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#RangeConfig"
+            ],
+            "SCRUB_DETENT_PIXELS": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#SCRUB_DETENT_PIXELS"
+            ],
+            "SCRUB_MODE_THRESHOLD_PX": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#SCRUB_MODE_THRESHOLD_PX"
+            ],
+            "ScaleTick": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#ScaleTick"
+            ],
+            "ScrubMode": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#ScrubMode"
+            ],
+            "advancePrecisionGesture": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#advancePrecisionGesture"
+            ],
+            "assertRange": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#assertRange"
+            ],
+            "beginPrecisionGesture": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#beginPrecisionGesture"
+            ],
+            "clamp": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#clamp"
+            ],
+            "formatStepValue": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#formatStepValue"
+            ],
+            "gestureToAngle": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#gestureToAngle"
+            ],
+            "normalize": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#normalize"
+            ],
+            "pointFromDrag": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#pointFromDrag"
+            ],
+            "scaleTicks": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#scaleTicks"
+            ],
+            "scrubModeFromOffset": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#scrubModeFromOffset"
+            ],
+            "scrubPrecision": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#scrubPrecision"
+            ],
+            "scrubValue": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#scrubValue"
+            ],
+            "snapTypedPrecision": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#snapTypedPrecision"
+            ],
+            "snapValue": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#snapValue"
+            ],
+            "stepDecimalPlaces": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision.d.ts#stepDecimalPlaces"
+            ]
+          }
+        }
+      ],
+      "./components/shell/precision-scrubber-model": [
+        {
+          "target": "./dist/components/shell/precision-scrubber-model.d.ts",
+          "conditions": {
+            "types": "./dist/components/shell/precision-scrubber-model.d.ts",
+            "react-native": "./dist/components/shell/precision-scrubber-model.js",
+            "default": "./dist/components/shell/precision-scrubber-model.js"
+          },
+          "symbols": {
+            "SCRUB_PIXELS_PER_STEP": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision-scrubber-model.d.ts#SCRUB_PIXELS_PER_STEP"
+            ],
+            "ScrubberInputs": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision-scrubber-model.d.ts#ScrubberInputs"
+            ],
+            "ScrubberModel": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision-scrubber-model.d.ts#ScrubberModel"
+            ],
+            "ScrubberState": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision-scrubber-model.d.ts#ScrubberState"
+            ],
+            "ScrubberStore": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision-scrubber-model.d.ts#ScrubberStore"
+            ],
+            "createScrubberModel": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision-scrubber-model.d.ts#createScrubberModel"
+            ],
+            "initialScrubberState": [
+              "@nyc-tron/ui/dist/components/forge/inputs/precision-scrubber-model.d.ts#initialScrubberState"
             ]
           }
         }
