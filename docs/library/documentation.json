@@ -3,10 +3,10 @@
   "verification": {
     "path": "website/generated/verification.json"
   },
-  "manifestSha256": "83a8f926b34acaa150442f9533f4e6c05f7dbd926e2e905c5e313e6128614bd6",
+  "manifestSha256": "94791f35e426f289d242c2adf8964f12af2bdce03fad9ccdec91a26eacfde0ff",
   "ownerConfirmation": "pending",
   "source": "website/src/App.tsx",
-  "componentCount": 478,
+  "componentCount": 498,
   "components": [
     {
       "id": "@nyc-tron/expo-controls#NativeDropdown",
@@ -2087,6 +2087,148 @@
       "dataSha256": "f1e5f4e865c32d15804269a644f3df000d05c37b22c685e0747daa55485bc0dd",
       "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
       "exampleSha256": "31c00488cf803fea95857d5fefd1d0deb3252873976311265be8636f4f3cdadc",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/feedback/ProgressBar#ProgressBar",
+      "importPath": "@nyc-tron/ui/components/feedback/ProgressBar",
+      "symbol": "ProgressBar",
+      "route": "/components/ui-progressbar-f5c9553339/",
+      "page": "website/dist/components/ui-progressbar-f5c9553339/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-progressbar-f5c9553339.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/feedback/ProgressBar.web.d.ts#ProgressBar"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-progressbar-f5c9553339.tsx",
+      "pageSha256": "0959fb0d665199d824e35b3788c3b1ed32c99d8e0cf1b722915882dc7edae069",
+      "dataSha256": "27b69a9e613e72f34af50658f46eacbb2ccd59294246abee0c762131b2015385",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "b8594fe31a82bbd20715381c1fb1c64e1c760db79747a008506f5dab36831fbd",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/feedback/Spinner#Spinner",
+      "importPath": "@nyc-tron/ui/components/feedback/Spinner",
+      "symbol": "Spinner",
+      "route": "/components/ui-spinner-e86967a5e9/",
+      "page": "website/dist/components/ui-spinner-e86967a5e9/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-spinner-e86967a5e9.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/feedback/Spinner.web.d.ts#Spinner"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance.",
+        "Source-declared roles: progressbar. Verify the active role, name and value in the mounted host; source inspection is not assistive-technology output."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-spinner-e86967a5e9.tsx",
+      "pageSha256": "c610c927402a03919d540c6c5d651eb88ca2a6395f6a558802a59a4349ff693f",
+      "dataSha256": "580bf891dd2e2bccae33d9076285ceee791f61f233c6b3c0215f0402cdb34329",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "d7140e75cc2d5e4f0df00f53c14718a4576cbe982d02df5e07d15d13ba735dfc",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/feedback/Toast#Toast",
+      "importPath": "@nyc-tron/ui/components/feedback/Toast",
+      "symbol": "Toast",
+      "route": "/components/ui-toast-f8c2258767/",
+      "page": "website/dist/components/ui-toast-f8c2258767/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-toast-f8c2258767.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/feedback/Toast.shared.d.ts#Toast"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance.",
+        "Source-declared roles: alert, button, region, status. Verify the active role, name and value in the mounted host; source inspection is not assistive-technology output."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-toast-f8c2258767.tsx",
+      "pageSha256": "b4212b61fbfaeb1dfe4e2e736d95869d5f80f950fff707abebaad23173083142",
+      "dataSha256": "24fd42363ac9c0e4f6e137dc9c8c6f669d68976987e9b5e8c5aa88d0d64c1c44",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "7be3ef286bf600514caf05ae0772f76bdbf2b7edbbd302ffb86f9d62935c03bf",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/feedback/Toast#ToastProvider",
+      "importPath": "@nyc-tron/ui/components/feedback/Toast",
+      "symbol": "ToastProvider",
+      "route": "/components/ui-toastprovider-c0edd8ec90/",
+      "page": "website/dist/components/ui-toastprovider-c0edd8ec90/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-toastprovider-c0edd8ec90.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastProvider"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-toastprovider-c0edd8ec90.tsx",
+      "pageSha256": "eb248ce2c5413c61200abc9d8642e97537e421a2255614e152ce4ab4d6bf785a",
+      "dataSha256": "66b669edd0badc30abe0e61dabdb0eb6e26cafc80388cdbcd46a419115a0f7f6",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "9094a7568fd8ae926d82966868f7fe7ee33078cf3dde582f01de79d400f1e6da",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/feedback/Toast#ToastViewport",
+      "importPath": "@nyc-tron/ui/components/feedback/Toast",
+      "symbol": "ToastViewport",
+      "route": "/components/ui-toastviewport-63d8e33292/",
+      "page": "website/dist/components/ui-toastviewport-63d8e33292/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-toastviewport-63d8e33292.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/feedback/Toast.web.d.ts#ToastViewport"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-toastviewport-63d8e33292.tsx",
+      "pageSha256": "dfcad33e85eafae06121912e64e0079505ecaf27955cf8afa8100633c8ea0c8e",
+      "dataSha256": "49061dd175f17905e46f579c4ec3935529a2e2764f8b07fd379a5b214d1e720a",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "d76b86994d5f2dced590b812c5301a79ad49d66c6281e97e25f4287239c58c62",
       "exampleStatus": "platform example; runtime verification pending",
       "unresolvedExampleProps": []
     },
@@ -11851,6 +11993,263 @@
       "unresolvedExampleProps": []
     },
     {
+      "id": "@nyc-tron/ui/components/forms/Checkbox#Checkbox",
+      "importPath": "@nyc-tron/ui/components/forms/Checkbox",
+      "symbol": "Checkbox",
+      "route": "/components/ui-checkbox-7ef663cf13/",
+      "page": "website/dist/components/ui-checkbox-7ef663cf13/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-checkbox-7ef663cf13.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Checkbox.d.ts#Checkbox"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-checkbox-7ef663cf13.tsx",
+      "pageSha256": "d5938f1dbc3cd75d6519b85185b527fdd16b8cc0370d9956e30e8d86bd3f52e4",
+      "dataSha256": "44863cc70f2b1c298e8eb32a838408352315ec666f40d9b50deaf780662cacf8",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "05bfa7e1c38cb166c2fba6fca74421bada6b67d8a949d02a6ae31582855e5f02",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Field#Field",
+      "importPath": "@nyc-tron/ui/components/forms/Field",
+      "symbol": "Field",
+      "route": "/components/ui-field-7de30399d0/",
+      "page": "website/dist/components/ui-field-7de30399d0/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-field-7de30399d0.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Field.d.ts#Field"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance.",
+        "Keep the visible label associated with the control. Announce value and validation changes; offer a keyboard or non-drag alternative."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-field-7de30399d0.tsx",
+      "pageSha256": "1b0dfa4a4346fbf935402c7af6e56fc8a67f556db67062a7ff301c9eff19a4db",
+      "dataSha256": "7ec104b91d770bd2beb60161ffde7d0ffe44eac6fad74521744131509a584e23",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "331290826d1f79369292e5a32adff11e2fbd41a1db68e47025eace4d378f3cb4",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Field#HelperText",
+      "importPath": "@nyc-tron/ui/components/forms/Field",
+      "symbol": "HelperText",
+      "route": "/components/ui-helpertext-91b98e7a97/",
+      "page": "website/dist/components/ui-helpertext-91b98e7a97/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-helpertext-91b98e7a97.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Field.d.ts#HelperText"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-helpertext-91b98e7a97.tsx",
+      "pageSha256": "b00a02cd6152f0386bda4d9aed0dfde8438ee57e6b3699f1c3d60bafd25e96f1",
+      "dataSha256": "e08aae583f6b6de5ceae9aac558e853a391f9a997209e5c9e11395141a9e18ed",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "9fd200cd6830f07292e776a617ea9d4402e16292e296d0c6b648270370764758",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Field#Label",
+      "importPath": "@nyc-tron/ui/components/forms/Field",
+      "symbol": "Label",
+      "route": "/components/ui-label-b048bd0386/",
+      "page": "website/dist/components/ui-label-b048bd0386/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-label-b048bd0386.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Field.d.ts#Label"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-label-b048bd0386.tsx",
+      "pageSha256": "8dbf2a41d372f0ffe3873d8b154a95c70f3235e2fde42b914ac7a8355fce73f2",
+      "dataSha256": "0073ce7c5ad8712650c49e8eaef59c98b71b347fe3a116c7e04a5aa2a0f9dc2e",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "1bf605c0a930fe9ce94ee815fb3d385fd066fb18ba51995beced87401c5cbb6b",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Radio#Radio",
+      "importPath": "@nyc-tron/ui/components/forms/Radio",
+      "symbol": "Radio",
+      "route": "/components/ui-radio-8a7c3a7301/",
+      "page": "website/dist/components/ui-radio-8a7c3a7301/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-radio-8a7c3a7301.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#Radio"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance.",
+        "Source-declared roles: radio, radiogroup. Verify the active role, name and value in the mounted host; source inspection is not assistive-technology output."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-radio-8a7c3a7301.tsx",
+      "pageSha256": "0cc8375fd9eec3e043f310d94091aba74325140a099bf0b7ee0e708fccd4c07c",
+      "dataSha256": "de7bec7ec17633275d3e747f2f1adc15b26aba56aeb21711abdb7962b36de856",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "0f2e0d3f94e8dcc10a05892945365b7981aeece0bebfef23c51af7d7e5f2f42e",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Radio#RadioGroup",
+      "importPath": "@nyc-tron/ui/components/forms/Radio",
+      "symbol": "RadioGroup",
+      "route": "/components/ui-radiogroup-e64ea45c31/",
+      "page": "website/dist/components/ui-radiogroup-e64ea45c31/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-radiogroup-e64ea45c31.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroup"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance.",
+        "Source-declared roles: radio, radiogroup. Verify the active role, name and value in the mounted host; source inspection is not assistive-technology output."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-radiogroup-e64ea45c31.tsx",
+      "pageSha256": "4bbd1fe66521ceaba11ec2d481bcc16af7f0dce6df8c63f3ac006ecd84683773",
+      "dataSha256": "458d05a372318e1c5b332423e41bb9bad5f8f118288d248ed8624d2d85fa48d6",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "aded64772cb1008c6a8ce2d0300bfc4da57c7acb7815944604afd3242eec3441",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Radio#RadioGroupItem",
+      "importPath": "@nyc-tron/ui/components/forms/Radio",
+      "symbol": "RadioGroupItem",
+      "route": "/components/ui-radiogroupitem-42ef7fb2bc/",
+      "page": "website/dist/components/ui-radiogroupitem-42ef7fb2bc/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-radiogroupitem-42ef7fb2bc.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Radio.web.d.ts#RadioGroupItem"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance.",
+        "Source-declared roles: radio, radiogroup. Verify the active role, name and value in the mounted host; source inspection is not assistive-technology output."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-radiogroupitem-42ef7fb2bc.tsx",
+      "pageSha256": "27d41270a045026568a2370e2078d21f8b97cf28d455359e9081f84011f9003a",
+      "dataSha256": "91797cf26e23f3718198954fe9d531f072e8b6350c1b5efc893628dad002a717",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "4c4ceacde24539e1c59950fc0de495f6f58ec7b3ec80857e7ec6684fa6f850d0",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Switch#Switch",
+      "importPath": "@nyc-tron/ui/components/forms/Switch",
+      "symbol": "Switch",
+      "route": "/components/ui-switch-cd7895cdc5/",
+      "page": "website/dist/components/ui-switch-cd7895cdc5/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-switch-cd7895cdc5.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Switch.d.ts#Switch"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance.",
+        "Source-declared roles: switch. Verify the active role, name and value in the mounted host; source inspection is not assistive-technology output."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-switch-cd7895cdc5.tsx",
+      "pageSha256": "7df8ba83bc715c76e461fd6f728dbf922f21dd977a23624bab5d2098397b6444",
+      "dataSha256": "ee15ca1074474abdc88a2facf6b95c03d20e58a3799a88f50a53732db7c07e9a",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "d79c732658c2cd1b7a676df141db81211a9e5f32887409fbde4219ef9b247b41",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/forms/Textarea#Textarea",
+      "importPath": "@nyc-tron/ui/components/forms/Textarea",
+      "symbol": "Textarea",
+      "route": "/components/ui-textarea-e648b4987e/",
+      "page": "website/dist/components/ui-textarea-e648b4987e/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-textarea-e648b4987e.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/forms/Textarea.d.ts#Textarea"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-textarea-e648b4987e.tsx",
+      "pageSha256": "ac3d4f890e7a552e4c941eae355b90ea639ca2e1ec1c70ab306dd88aa9336e73",
+      "dataSha256": "65e396dd8b4bbb1d4b7fcfdec3fbe180b21ba66e9213b08dd81318bb3d5d346f",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "5cc9b1981e29095b6cbbb59393e6f2a7266dc059c494cc5f025f7f921d6044d3",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
       "id": "@nyc-tron/ui/components/gestures/GestureHandlerDrag#GestureHandlerDrag",
       "importPath": "@nyc-tron/ui/components/gestures/GestureHandlerDrag",
       "symbol": "GestureHandlerDrag",
@@ -12397,6 +12796,35 @@
       "unresolvedExampleProps": []
     },
     {
+      "id": "@nyc-tron/ui/components/overlays/AlertDialog#AlertDialog",
+      "importPath": "@nyc-tron/ui/components/overlays/AlertDialog",
+      "symbol": "AlertDialog",
+      "route": "/components/ui-alertdialog-14a35f0ca3/",
+      "page": "website/dist/components/ui-alertdialog-14a35f0ca3/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-alertdialog-14a35f0ca3.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/overlays/AlertDialog.web.d.ts#AlertDialog"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance.",
+        "Source-declared roles: alertdialog. Verify the active role, name and value in the mounted host; source inspection is not assistive-technology output."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-alertdialog-14a35f0ca3.tsx",
+      "pageSha256": "c6baf54912c2433b2dda3d01a3ab6ca695de4c60d1e0363e45ca850ea49760f1",
+      "dataSha256": "cdde8496cd6e7a0edb6d0c23156f29baf5eeb9caff7b2868a2be299c8c6e3003",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "9d0e0659847844077d4dc44001a84e09eadda46647cf1564e2005ad341c5e71e",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
       "id": "@nyc-tron/ui/components/overlays/AnchoredPopover#AnchoredPopover",
       "importPath": "@nyc-tron/ui/components/overlays/AnchoredPopover",
       "symbol": "AnchoredPopover",
@@ -12480,6 +12908,148 @@
       "dataSha256": "fbe58540519e8db4810b9f9567a986beb94a667523260204bede6f276338f6f5",
       "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
       "exampleSha256": "07b30c41dc75f2b1c8c9a798f22c2bcafffc0b8ab5491bd9c937ea72a0392867",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/overlays/Dialog#Dialog",
+      "importPath": "@nyc-tron/ui/components/overlays/Dialog",
+      "symbol": "Dialog",
+      "route": "/components/ui-dialog-a4ee6f5679/",
+      "page": "website/dist/components/ui-dialog-a4ee6f5679/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-dialog-a4ee6f5679.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/overlays/Dialog.web.d.ts#Dialog"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance.",
+        "Source-declared roles: dialog, header, heading. Verify the active role, name and value in the mounted host; source inspection is not assistive-technology output."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-dialog-a4ee6f5679.tsx",
+      "pageSha256": "d53a7bc360be2c27286e222eb815d7c5ad6813b6707a164bafb784f17650def0",
+      "dataSha256": "92b6ac32a9cd0e2f71be6584fd99db61537726ddffdaef7a196d5feef8df158d",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "70710d0b1ff7033ee96c4a3958f1180c658ffddbf3f5279284768bc43a0f9049",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/overlays/Portal#Portal",
+      "importPath": "@nyc-tron/ui/components/overlays/Portal",
+      "symbol": "Portal",
+      "route": "/components/ui-portal-fed33efe36/",
+      "page": "website/dist/components/ui-portal-fed33efe36/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-portal-fed33efe36.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#Portal"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-portal-fed33efe36.tsx",
+      "pageSha256": "f5addd37b96ee681d422b196382f8b8d8f72d4369c61bf360fdf02f5d6e166d6",
+      "dataSha256": "d54251f8a1b4847e701732ba1816952375ae003b6934cf7e9e474b6ef842bde1",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "be8406362b1fd0843cac87e1c1ab6ed98f71406462953171194c4d10ea307243",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/overlays/Portal#PortalHost",
+      "importPath": "@nyc-tron/ui/components/overlays/Portal",
+      "symbol": "PortalHost",
+      "route": "/components/ui-portalhost-231462a3cd/",
+      "page": "website/dist/components/ui-portalhost-231462a3cd/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-portalhost-231462a3cd.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalHost"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-portalhost-231462a3cd.tsx",
+      "pageSha256": "5540a9f9c7c172e86c733533e9ebcf3f55b0f5880a9504d0a2deb1ee28546d5b",
+      "dataSha256": "b8c2de1ba313b5051cd783073b0103e923538addfdecd4481dd7a51d62adf55a",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "dec9fb31e969701d1f0ab9d156883a7a39eaa70d7ccf043fc0cdeb9cbfcdd53a",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/overlays/Portal#PortalProvider",
+      "importPath": "@nyc-tron/ui/components/overlays/Portal",
+      "symbol": "PortalProvider",
+      "route": "/components/ui-portalprovider-9e3732eead/",
+      "page": "website/dist/components/ui-portalprovider-9e3732eead/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-portalprovider-9e3732eead.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/overlays/Portal.d.ts#PortalProvider"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-portalprovider-9e3732eead.tsx",
+      "pageSha256": "0a35397c550c8a85bdc27a9ab3c04eabe183c75988f7e65dfb13dba16009ccb6",
+      "dataSha256": "8a76d42105f50929beb0978f7d76a20cc1492a1619b02e29b891eef1d72ecab7",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "220ef75e6ff08c8d6dad52d04fcce2369d965626e2b677c289a9285094d406cd",
+      "exampleStatus": "platform example; runtime verification pending",
+      "unresolvedExampleProps": []
+    },
+    {
+      "id": "@nyc-tron/ui/components/overlays/Sheet#Sheet",
+      "importPath": "@nyc-tron/ui/components/overlays/Sheet",
+      "symbol": "Sheet",
+      "route": "/components/ui-sheet-b4f2f1dd09/",
+      "page": "website/dist/components/ui-sheet-b4f2f1dd09/index.html",
+      "pageSource": "website/src/App.tsx",
+      "data": "website/dist/data/components/ui-sheet-b4f2f1dd09.json",
+      "propsSources": [
+        {
+          "snapshot": "docs/api-signatures.json",
+          "declaration": "@nyc-tron/ui/dist/components/overlays/Sheet.d.ts#Sheet"
+        }
+      ],
+      "accessibilityNotes": [
+        "Provide a meaningful accessible name for interactive content. Preserve focus order, text scaling and reduced-motion preferences.",
+        "The platform table records measured support, not screen-reader speech or physical input acceptance.",
+        "Source-declared roles: button, header, heading. Verify the active role, name and value in the mounted host; source inspection is not assistive-technology output."
+      ],
+      "stability": null,
+      "proposedStability": "preview",
+      "example": "website/generated/examples/ui-sheet-b4f2f1dd09.tsx",
+      "pageSha256": "5c2d10b9bbd8fe1a1723914be366ba890b741e368628733ba4fd4ce6ae6358c7",
+      "dataSha256": "8d91e404f24b7db79042549d1141ca2a04a3506c85e4589ba85de7d96bc14a7a",
+      "pageSourceSha256": "19f535315af55c75ec0e108d80c1a321a22c9c590a82a986e7705dd480431b2f",
+      "exampleSha256": "424405b548a035be3a7b22830b77471301c7e4631b9cf0a2c1dfde07e67fca5b",
       "exampleStatus": "platform example; runtime verification pending",
       "unresolvedExampleProps": []
     },

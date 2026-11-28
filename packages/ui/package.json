@@ -441,6 +441,81 @@
       "react-native": "./dist/components/TextField.js",
       "default": "./dist/components/TextField.js"
     },
+    "./components/feedback/Spinner": {
+      "types": "./dist/components/feedback/Spinner.web.d.ts",
+      "browser": "./dist/components/feedback/Spinner.web.js",
+      "react-native": "./dist/components/feedback/Spinner.native.js",
+      "default": "./dist/components/feedback/Spinner.web.js"
+    },
+    "./components/feedback/ProgressBar": {
+      "types": "./dist/components/feedback/ProgressBar.web.d.ts",
+      "browser": "./dist/components/feedback/ProgressBar.web.js",
+      "react-native": "./dist/components/feedback/ProgressBar.native.js",
+      "default": "./dist/components/feedback/ProgressBar.web.js"
+    },
+    "./components/feedback/Toast": {
+      "types": "./dist/components/feedback/Toast.web.d.ts",
+      "browser": "./dist/components/feedback/Toast.web.js",
+      "react-native": "./dist/components/feedback/Toast.native.js",
+      "default": "./dist/components/feedback/Toast.web.js"
+    },
+    "./components/forms/Switch": {
+      "types": "./dist/components/forms/Switch.d.ts",
+      "qnx": "./dist/components/forms/Switch.kit.js",
+      "marathon": "./dist/components/forms/Switch.kit.js",
+      "browser": "./dist/components/forms/Switch.js",
+      "react-native": "./dist/components/forms/Switch.native.js",
+      "default": "./dist/components/forms/Switch.js"
+    },
+    "./components/forms/Checkbox": {
+      "types": "./dist/components/forms/Checkbox.d.ts",
+      "qnx": "./dist/components/forms/Checkbox.kit.js",
+      "marathon": "./dist/components/forms/Checkbox.kit.js",
+      "browser": "./dist/components/forms/Checkbox.js",
+      "react-native": "./dist/components/forms/Checkbox.native.js",
+      "default": "./dist/components/forms/Checkbox.js"
+    },
+    "./components/forms/Radio": {
+      "types": "./dist/components/forms/Radio.web.d.ts",
+      "browser": "./dist/components/forms/Radio.web.js",
+      "react-native": "./dist/components/forms/Radio.native.js",
+      "default": "./dist/components/forms/Radio.web.js"
+    },
+    "./components/forms/Textarea": {
+      "types": "./dist/components/forms/Textarea.d.ts",
+      "qnx": "./dist/components/forms/Textarea.kit.js",
+      "marathon": "./dist/components/forms/Textarea.kit.js",
+      "browser": "./dist/components/forms/Textarea.js",
+      "react-native": "./dist/components/forms/Textarea.native.js",
+      "default": "./dist/components/forms/Textarea.js"
+    },
+    "./components/overlays/Dialog": {
+      "types": "./dist/components/overlays/Dialog.web.d.ts",
+      "browser": "./dist/components/overlays/Dialog.web.js",
+      "react-native": "./dist/components/overlays/Dialog.native.js",
+      "default": "./dist/components/overlays/Dialog.web.js"
+    },
+    "./components/overlays/Sheet": {
+      "types": "./dist/components/overlays/Sheet.d.ts",
+      "react-native": "./dist/components/overlays/Sheet.js",
+      "default": "./dist/components/overlays/Sheet.js"
+    },
+    "./components/overlays/AlertDialog": {
+      "types": "./dist/components/overlays/AlertDialog.web.d.ts",
+      "browser": "./dist/components/overlays/AlertDialog.web.js",
+      "react-native": "./dist/components/overlays/AlertDialog.native.js",
+      "default": "./dist/components/overlays/AlertDialog.web.js"
+    },
+    "./components/forms/Field": {
+      "types": "./dist/components/forms/Field.d.ts",
+      "react-native": "./dist/components/forms/Field.js",
+      "default": "./dist/components/forms/Field.js"
+    },
+    "./components/overlays/Portal": {
+      "types": "./dist/components/overlays/Portal.d.ts",
+      "react-native": "./dist/components/overlays/Portal.js",
+      "default": "./dist/components/overlays/Portal.js"
+    },
     "./components/shell/SplitButton": {
       "types": "./dist/components/shell/SplitButton.d.ts",
       "react-native": "./dist/components/shell/SplitButton.js",
