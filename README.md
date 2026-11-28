@@ -25,6 +25,31 @@ records. Run it locally with `npm --prefix website ci --ignore-scripts`,
 `npm --prefix website run build`, then `npm --prefix website start`. Its
 stability labels remain proposals awaiting owner confirmation.
 
+## For AI agents
+
+Coding agents should start at [llms.txt](llms.txt), a short index in the
+[llms.txt](https://llmstxt.org/) format that links one text file per component
+group under [llms/](llms/). [llms-full.txt](llms-full.txt) holds every component
+and guide in one file. [registry/components.json](registry/components.json) is
+the machine-readable index (schema: [registry/schema.json](registry/schema.json)):
+one item per public component export with its import statement, props summary,
+minimal example, accessibility notes, proposed stability and recorded platform
+status. The registry indexes package imports; it is not a copy-in source
+registry. The agent rules are in
+[skills/nyc-tron-ui/SKILL.md](skills/nyc-tron-ui/SKILL.md).
+
+All of these files are generated from `docs/library/components.json` and the
+documentation catalog. After an inventory change, install the docs tooling and
+regenerate them:
+
+```sh
+npm --prefix website ci --ignore-scripts
+node tooling/llms.mjs --write
+```
+
+CI runs `node tooling/llms.mjs --check` and fails when the committed copies are
+stale.
+
 ## Use only the parts you need
 
 For the Expo Exact-inspired presentation direction, read
